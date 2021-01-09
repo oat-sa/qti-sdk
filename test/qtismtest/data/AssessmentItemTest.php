@@ -792,7 +792,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testSetLabelWrongType()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The label argument must be a string with at most 256 characters.");
+        $this->expectExceptionMessage('The label argument must be a string with at most 256 characters.');
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
         $assessmentItem->setLabel(1337);
@@ -819,7 +819,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testSetToolNameWrongType()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The toolName argument must be a string with at most 256 characters.");
+        $this->expectExceptionMessage('The toolName argument must be a string with at most 256 characters.');
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
         $assessmentItem->setToolName(9999);
@@ -828,7 +828,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testSetToolVersionWrongType()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The toolVersion argument must be a string with at most 256 characters.");
+        $this->expectExceptionMessage('The toolVersion argument must be a string with at most 256 characters.');
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
         $assessmentItem->setToolVersion(9999);

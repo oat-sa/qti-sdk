@@ -19,7 +19,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
     public function testMarshall()
     {
         $div = new Div();
-        $div->setContent(new FlowCollection([new TextRun("This is text...")]));
+        $div->setContent(new FlowCollection([new TextRun('This is text...')]));
         $content = new FlowCollection();
         $content[] = $div;
         $feedback = new FeedbackBlock('outcome1', 'please_show_me', ShowHide::SHOW);
@@ -38,7 +38,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
     public function testMarshallXmlBase()
     {
         $div = new Div();
-        $div->setContent(new FlowCollection([new TextRun("This is text...")]));
+        $div->setContent(new FlowCollection([new TextRun('This is text...')]));
         $content = new FlowCollection();
         $content[] = $div;
         $feedback = new FeedbackBlock('outcome1', 'please_show_me', ShowHide::SHOW);

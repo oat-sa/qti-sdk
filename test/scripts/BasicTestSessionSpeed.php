@@ -187,7 +187,7 @@ unset($storage);
 unset($test);
 $end = microtime();
 
-echo "Beginning of the session + persistance (" . spentTime($start, $end) . ")\n";
+echo 'Beginning of the session + persistance (' . spentTime($start, $end) . ")\n";
 
 // Retrieving session + make an attemp + persistance.
 $start = microtime();
@@ -204,7 +204,7 @@ unset($session);
 unset($storage);
 unset($test);
 
-echo "Retrieving session + attempt 1 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
+echo 'Retrieving session + attempt 1 + persistance (' . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attemp + persistance.
 $start = microtime();
@@ -221,7 +221,7 @@ unset($session);
 unset($storage);
 unset($test);
 
-echo "Retrieving session + attempt 2 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
+echo 'Retrieving session + attempt 2 + persistance (' . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attemp + persistance.
 $start = microtime();
@@ -237,7 +237,7 @@ $end = microtime();
 unset($session);
 unset($storage);
 unset($test);
-echo "Retrieving session + attempt 3 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n";
+echo 'Retrieving session + attempt 3 + persistance (' . spentTime($start, $end, $averageAttempt) . ")\n";
 
 // Retrieving session + make an attemp + persistance.
 $start = microtime();
@@ -257,13 +257,13 @@ unset($session);
 unset($storage);
 unset($test);
 
-echo "Retrieving session + attempt 4 + persistance (" . spentTime($start, $end, $averageAttempt) . ")\n\n";
+echo 'Retrieving session + attempt 4 + persistance (' . spentTime($start, $end, $averageAttempt) . ")\n\n";
 
-echo "Average attempt time = " . (array_sum($averageAttempt) / count($averageAttempt)) . "\n";
-echo "Effective average attempt time = " . (array_sum($effectiveAverageAttempt) / count($effectiveAverageAttempt)) . "\n";
-echo "Retrieve average time = " . (array_sum($averageRetrieve) / count($averageRetrieve)) . "\n";
-echo "Persist average time = " . (array_sum($averagePersist) / count($averagePersist)) . "\n";
-echo "MoveNext average time = " . (array_sum($averageNext) / count($averageNext)) . "\n";
-echo "Load average time = " . (array_sum($averageLoad) / count($averageLoad)) . "\n";
-echo "Neighbourhood average time = " . (array_sum($averageNeighbourhood) / count($averageNeighbourhood)) . "\n";
+echo 'Average attempt time = ' . (array_sum($averageAttempt) / count($averageAttempt)) . "\n";
+echo 'Effective average attempt time = ' . (array_sum($effectiveAverageAttempt) / count($effectiveAverageAttempt)) . "\n";
+echo 'Retrieve average time = ' . (array_sum($averageRetrieve) / count($averageRetrieve)) . "\n";
+echo 'Persist average time = ' . (array_sum($averagePersist) / count($averagePersist)) . "\n";
+echo 'MoveNext average time = ' . (array_sum($averageNext) / count($averageNext)) . "\n";
+echo 'Load average time = ' . (array_sum($averageLoad) / count($averageLoad)) . "\n";
+echo 'Neighbourhood average time = ' . (array_sum($averageNeighbourhood) / count($averageNeighbourhood)) . "\n";
 echo "Number correct = ${numberCorrect}\n";

@@ -95,7 +95,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         unlink($mFile->getPath());
 
         $this->expectException(FileManagerException::class);
-        $this->expectExceptionMessage("An error occurred while retrieving a QTI FileSystemFile object.");
+        $this->expectExceptionMessage('An error occurred while retrieving a QTI FileSystemFile object.');
 
         $manager->retrieve($mFile->getIdentifier());
     }

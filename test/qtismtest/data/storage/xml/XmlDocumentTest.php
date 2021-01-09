@@ -228,7 +228,7 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument('2.1');
 
-        $expectedMsg = "Cannot load QTI from an empty string.";
+        $expectedMsg = 'Cannot load QTI from an empty string.';
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
         $this->expectExceptionCode( XmlStorageException::READ);
@@ -332,7 +332,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc->setFilesystem($this->getOutputFileSystem());
         $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
 
-        $expectedMsg = "An error occurred while saving QTI-XML file";
+        $expectedMsg = 'An error occurred while saving QTI-XML file';
         $this->expectException(XmlStorageException::class);
 
         $doc->save('../../../../../../../../unknown/location.xml');

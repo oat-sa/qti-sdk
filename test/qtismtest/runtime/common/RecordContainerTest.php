@@ -79,12 +79,12 @@ class RecordContainerTest extends QtiSmTestCase
 
         $value = new Value(15, BaseType::INTEGER);
         $value->setPartOfRecord(true);
-        $value->setFieldIdentifier("val1");
+        $value->setFieldIdentifier('val1');
         $valueCollection[] = $value;
 
         $value = new Value('string', BaseType::STRING);
         $value->setPartOfRecord(true);
-        $value->setFieldIdentifier("val2");
+        $value->setFieldIdentifier('val2');
         $valueCollection[] = $value;
 
         $record = RecordContainer::createFromDataModel($valueCollection);

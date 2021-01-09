@@ -635,7 +635,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession = $this->instantiateBasicAssessmentItemSession();
 
         $this->expectException(AssessmentItemSessionException::class);
-        $this->expectExceptionMessage("Cannot switch from state NOTSELECTED to state SUSPENDED.");
+        $this->expectExceptionMessage('Cannot switch from state NOTSELECTED to state SUSPENDED.');
 
         $itemSession->suspend();
     }
@@ -645,7 +645,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession = $this->instantiateBasicAssessmentItemSession();
 
         $this->expectException(AssessmentItemSessionException::class);
-        $this->expectExceptionMessage("Cannot switch from state NOTSELECTED to state INTERACTING.");
+        $this->expectExceptionMessage('Cannot switch from state NOTSELECTED to state INTERACTING.');
 
         $itemSession->beginCandidateSession();
     }
@@ -655,7 +655,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession = $this->instantiateBasicAssessmentItemSession();
 
         $this->expectException(AssessmentItemSessionException::class);
-        $this->expectExceptionMessage("Cannot switch from state NOTSELECTED to state SUSPENDED.");
+        $this->expectExceptionMessage('Cannot switch from state NOTSELECTED to state SUSPENDED.');
 
         $itemSession->endCandidateSession();
     }

@@ -44,18 +44,18 @@ $responses = new State(
 
 $itemSession->endAttempt($responses);
 
-echo "numAttempts: " . $itemSession['numAttempts'] . "\n";
-echo "completionStatus: " . $itemSession['completionStatus'] . "\n";
-echo "RESPONSE: " . $itemSession['RESPONSE'] . "\n";
-echo "SCORE: " . $itemSession['SCORE'] . "\n";
+echo 'numAttempts: ' . $itemSession['numAttempts'] . "\n";
+echo 'completionStatus: ' . $itemSession['completionStatus'] . "\n";
+echo 'RESPONSE: ' . $itemSession['RESPONSE'] . "\n";
+echo 'SCORE: ' . $itemSession['SCORE'] . "\n";
 
 $itemSession->beginAttempt();
 $responses['RESPONSE'][1]->setValue('O');
 $itemSession->endAttempt();
 
 echo "\nnumAttempts: " . $itemSession['numAttempts'] . "\n";
-echo "completionStatus: " . $itemSession['completionStatus'] . "\n";
-echo "RESPONSE: " . $itemSession['RESPONSE'] . "\n";
-echo "SCORE: " . $itemSession['SCORE'] . "\n";
+echo 'completionStatus: ' . $itemSession['completionStatus'] . "\n";
+echo 'RESPONSE: ' . $itemSession['RESPONSE'] . "\n";
+echo 'SCORE: ' . $itemSession['SCORE'] . "\n";
 
 $itemSession->endItemSession();

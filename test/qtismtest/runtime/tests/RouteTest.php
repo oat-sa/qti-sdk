@@ -416,7 +416,7 @@ class RouteTest extends QtiSmRouteTestCase
         $route = new Route();
 
         $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage("Cannot get the last RouteItem of the Route while it is empty.");
+        $this->expectExceptionMessage('Cannot get the last RouteItem of the Route while it is empty.');
 
         $lastRouteItem = $route->getLastRouteItem();
     }
@@ -426,7 +426,7 @@ class RouteTest extends QtiSmRouteTestCase
         $route = new Route();
 
         $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage("Cannot get the first RouteItem of the Route while it is empty.");
+        $this->expectExceptionMessage('Cannot get the first RouteItem of the Route while it is empty.');
 
         $lastRouteItem = $route->getFirstRouteItem();
     }
@@ -436,7 +436,7 @@ class RouteTest extends QtiSmRouteTestCase
         $route = new Route();
 
         $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage("Cannot determine if the current RouteItem is the last of its TestPart when the Route is empty.");
+        $this->expectExceptionMessage('Cannot determine if the current RouteItem is the last of its TestPart when the Route is empty.');
 
         $lastRouteItem = $route->isLastOfTestPart();
     }
@@ -446,7 +446,7 @@ class RouteTest extends QtiSmRouteTestCase
         $route = new Route();
 
         $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage("Cannot determine if the current RouteItem is the first of its TestPart when the Route is empty.");
+        $this->expectExceptionMessage('Cannot determine if the current RouteItem is the first of its TestPart when the Route is empty.');
 
         $firstRouteItem = $route->isFirstOfTestPart();
     }
@@ -595,7 +595,7 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = self::buildSimpleRoute(Route::class, 2, 1);
         $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage("Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification.");
+        $this->expectExceptionMessage('Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification.');
         $route->branch('Q2');
     }
 
@@ -603,7 +603,7 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = self::buildSimpleRoute(Route::class, 2, 1);
         $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage("Cannot branch to the same testPart.");
+        $this->expectExceptionMessage('Cannot branch to the same testPart.');
         $route->branch('T1');
     }
 
@@ -662,7 +662,7 @@ class RouteTest extends QtiSmRouteTestCase
         $route->addRouteItem($assessmentItemRef2, $assessmentSection2, $testPart2, $assessmentTest);
 
         $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage("Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification.");
+        $this->expectExceptionMessage('Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification.');
 
         $route->branch('S2');
     }
@@ -676,7 +676,7 @@ class RouteTest extends QtiSmRouteTestCase
         $routeItem = new RouteItem($assessmentItemRef, $assessmentSection, $testPart, new AssessmentTest('Test', 'Test'));
 
         $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage("No such RouteItem object referenced in the Route.");
+        $this->expectExceptionMessage('No such RouteItem object referenced in the Route.');
 
         $route->getRouteItemPosition($routeItem);
     }

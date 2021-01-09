@@ -582,7 +582,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         try {
             $session = $storage->retrieve($sessionId);
         } catch (StorageException $e) {
-            $this->assertTrue(true, "An Exception should be thrown because the test session does not exist anymore.");
+            $this->assertTrue(true, 'An Exception should be thrown because the test session does not exist anymore.');
         }
     }
 

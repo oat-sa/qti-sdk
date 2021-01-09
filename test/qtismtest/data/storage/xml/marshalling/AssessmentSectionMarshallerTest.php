@@ -103,8 +103,8 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
     public function testMarshallRecursive()
     {
         // sub1
-        $identifier = "sub1AssessmentSection";
-        $title = "Sub1 Assessment Section";
+        $identifier = 'sub1AssessmentSection';
+        $title = 'Sub1 Assessment Section';
         $visible = true;
         $sub1 = new AssessmentSection($identifier, $title, $visible);
         $sub1Parts = new SectionPartCollection();
@@ -113,8 +113,8 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $sub1->setSectionParts($sub1Parts);
 
         // sub21
-        $identifier = "sub21AssessmentSection";
-        $title = "Sub21 Assessment Section";
+        $identifier = 'sub21AssessmentSection';
+        $title = 'Sub21 Assessment Section';
         $visible = false;
         $sub21 = new AssessmentSection($identifier, $title, $visible);
         $sub21Parts = new SectionPartCollection();
@@ -122,8 +122,8 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $sub21->setSectionParts($sub21Parts);
 
         // sub22
-        $identifier = "sub22AssessmentSection";
-        $title = "Sub22 Assessment Section";
+        $identifier = 'sub22AssessmentSection';
+        $title = 'Sub22 Assessment Section';
         $visible = true;
         $sub22 = new AssessmentSection($identifier, $title, $visible);
         $sub22Parts = new SectionPartCollection();
@@ -131,8 +131,8 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $sub22->setSectionParts($sub22Parts);
 
         // sub2
-        $identifier = "sub2AssessmentSection";
-        $title = "Sub2 Assessment Section";
+        $identifier = 'sub2AssessmentSection';
+        $title = 'Sub2 Assessment Section';
         $visible = true;
         $sub2 = new AssessmentSection($identifier, $title, $visible);
         $sub2Parts = new SectionPartCollection();
@@ -142,8 +142,8 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $sub2->setSectionParts($sub2Parts);
 
         // root
-        $identifier = "rootAssessmentSection";
-        $title = "Root Assessment Section";
+        $identifier = 'rootAssessmentSection';
+        $title = 'Root Assessment Section';
         $visible = true;
         $root = new AssessmentSection($identifier, $title, $visible);
         $root->setSectionParts(new SectionPartCollection([$sub1, $sub2]));

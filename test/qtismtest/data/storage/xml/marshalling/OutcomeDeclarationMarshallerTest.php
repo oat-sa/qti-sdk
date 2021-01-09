@@ -30,7 +30,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
     public function testMarshall21()
     {
         // Initialize a minimal outcomeDeclaration.
-        $identifier = "outcome1";
+        $identifier = 'outcome1';
         $cardinality = Cardinality::SINGLE;
         $baseType = BaseType::INTEGER;
 

@@ -155,7 +155,7 @@ class TestPartMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
 
         $this->expectException(UnmarshallingException::class);
-        $this->expectExceptionMessage("A testPart element must contain at least one assessmentSection.");
+        $this->expectExceptionMessage('A testPart element must contain at least one assessmentSection.');
 
         $marshaller->unmarshall($element);
     }

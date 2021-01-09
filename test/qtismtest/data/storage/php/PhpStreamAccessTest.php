@@ -402,7 +402,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
     {
         $access = new PhpStreamAccess($this->getStream());
         $access->writeColon();
-        $this->assertEquals(":", $this->getStream()->getBinary());
+        $this->assertEquals(':', $this->getStream()->getBinary());
     }
 
     public function testWriteColonClosedStream()
@@ -447,7 +447,7 @@ class PhpStreamAccessTest extends QtiSmTestCase
     {
         $access = new PhpStreamAccess($this->getStream());
         $access->writePaamayimNekudotayim();
-        $this->assertEquals("::", $this->getStream()->getBinary());
+        $this->assertEquals('::', $this->getStream()->getBinary());
     }
 
     public function testWritePaamayimNekudotayimClosedStream()

@@ -21,7 +21,7 @@ class QtiPLTest extends QtiSmTestCase
 
         $this->assertEquals(
             "preCondition(variable[identifier=\"Q02.RESPONSE\"]() == 'C')",
-            $renderer->render($test->getComponentByIdentifier("Q01")->getPreConditions()[0])
+            $renderer->render($test->getComponentByIdentifier('Q01')->getPreConditions()[0])
         );
     }
 
@@ -33,8 +33,8 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "branchRule[target=\"Q1\"](correct[identifier=\"Q1\"]() == true)",
-            $renderer->render($test->getComponentByIdentifier("Q2")->getBranchRules()[0])
+            'branchRule[target="Q1"](correct[identifier="Q1"]() == true)',
+            $renderer->render($test->getComponentByIdentifier('Q2')->getBranchRules()[0])
         );
     }
 
@@ -46,8 +46,8 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "include()",
-            $renderer->render($test->getComponentsByClassName("include")[0])
+            'include()',
+            $renderer->render($test->getComponentsByClassName('include')[0])
         );
     }
 
@@ -59,14 +59,14 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "if (isNull(variable[identifier=\"response-X\"]())) {
-    setOutcomeValue[identifier=\"score-X\"](0);
-} elseif (variable[identifier=\"response-X\"]() == correct[identifier=\"response-X\"]()) {
-    setOutcomeValue[identifier=\"score-X\"](variable[identifier=\"maxscore-X\"]());
+            'if (isNull(variable[identifier="response-X"]())) {
+    setOutcomeValue[identifier="score-X"](0);
+} elseif (variable[identifier="response-X"]() == correct[identifier="response-X"]()) {
+    setOutcomeValue[identifier="score-X"](variable[identifier="maxscore-X"]());
 } else {
-    setOutcomeValue[identifier=\"score-X\"](0);
-}",
-            $renderer->render($test->getComponentsByClassName("responseCondition")[0])
+    setOutcomeValue[identifier="score-X"](0);
+}',
+            $renderer->render($test->getComponentsByClassName('responseCondition')[0])
         );
 
         $doc = new XmlDocument();
@@ -74,10 +74,10 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "if (isNull(variable[identifier=\"response-X\"]())) {
-    setOutcomeValue[identifier=\"score-X\"](0);
-}",
-            $renderer->render($test->getComponentsByClassName("responseCondition")[0])
+            'if (isNull(variable[identifier="response-X"]())) {
+    setOutcomeValue[identifier="score-X"](0);
+}',
+            $renderer->render($test->getComponentsByClassName('responseCondition')[0])
         );
 
         $doc = new XmlDocument();
@@ -85,16 +85,16 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "if (isNull(variable[identifier=\"response-X\"]())) {
-    setOutcomeValue[identifier=\"score-X\"](0);
-} elseif (variable[identifier=\"response-X\"]() == correct[identifier=\"response-X\"]()) {
-    setOutcomeValue[identifier=\"score-X\"](variable[identifier=\"maxscore-X\"]());
-} elseif (variable[identifier=\"response-Y\"]() == correct[identifier=\"response-Y\"]()) {
-    setOutcomeValue[identifier=\"score-Y\"](variable[identifier=\"maxscore-Y\"]());
+            'if (isNull(variable[identifier="response-X"]())) {
+    setOutcomeValue[identifier="score-X"](0);
+} elseif (variable[identifier="response-X"]() == correct[identifier="response-X"]()) {
+    setOutcomeValue[identifier="score-X"](variable[identifier="maxscore-X"]());
+} elseif (variable[identifier="response-Y"]() == correct[identifier="response-Y"]()) {
+    setOutcomeValue[identifier="score-Y"](variable[identifier="maxscore-Y"]());
 } else {
-    setOutcomeValue[identifier=\"score-X\"](0);
-}",
-            $renderer->render($test->getComponentsByClassName("responseCondition")[0])
+    setOutcomeValue[identifier="score-X"](0);
+}',
+            $renderer->render($test->getComponentsByClassName('responseCondition')[0])
         );
 
         $doc = new XmlDocument();
@@ -102,16 +102,16 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "if (isNull(variable[identifier=\"response-X\"]())) {
-    setOutcomeValue[identifier=\"score-X\"](0);
-} elseif (variable[identifier=\"response-X\"]() == correct[identifier=\"response-X\"]()) {
-    lookupOutcomeValue[identifier=\"score-X\"](true == true);
-} elseif (variable[identifier=\"response-Y\"]() == correct[identifier=\"response-Y\"]()) {
+            'if (isNull(variable[identifier="response-X"]())) {
+    setOutcomeValue[identifier="score-X"](0);
+} elseif (variable[identifier="response-X"]() == correct[identifier="response-X"]()) {
+    lookupOutcomeValue[identifier="score-X"](true == true);
+} elseif (variable[identifier="response-Y"]() == correct[identifier="response-Y"]()) {
     exitResponse();
 } else {
-    setOutcomeValue[identifier=\"score-X\"](0);
-}",
-            $renderer->render($test->getComponentsByClassName("responseCondition")[0])
+    setOutcomeValue[identifier="score-X"](0);
+}',
+            $renderer->render($test->getComponentsByClassName('responseCondition')[0])
         );
     }
 
@@ -123,16 +123,16 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "if (true) {
+            'if (true) {
     exitTemplate();
 } elseif (false) {
-    setTemplateValue[identifier=\"Q01\"](\"Template\");
+    setTemplateValue[identifier="Q01"]("Template");
 } elseif (true) {
-    setCorrectResponse[identifier=\"Q01\"](true);
+    setCorrectResponse[identifier="Q01"](true);
 } else {
     templateConstraint(3);
-}",
-            $renderer->render($test->getComponentsByClassName("templateCondition")[0])
+}',
+            $renderer->render($test->getComponentsByClassName('templateCondition')[0])
         );
 
         $doc = new XmlDocument();
@@ -140,10 +140,10 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "if (true) {
-    setDefaultValue[identifier=\"Q01\"](true);
-}",
-            $renderer->render($test->getComponentsByClassName("templateCondition")[0])
+            'if (true) {
+    setDefaultValue[identifier="Q01"](true);
+}',
+            $renderer->render($test->getComponentsByClassName('templateCondition')[0])
         );
     }
 
@@ -155,16 +155,16 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "if (true) {
+            'if (true) {
     exitTest();
 } elseif (false) {
     exitTest();
 } elseif (true) {
     exitTest();
 } else {
-    setOutcomeValue[identifier=\"Q01\"](false);
-}",
-            $renderer->render($test->getComponentsByClassName("outcomeCondition")[0])
+    setOutcomeValue[identifier="Q01"](false);
+}',
+            $renderer->render($test->getComponentsByClassName('outcomeCondition')[0])
         );
 
         $doc = new XmlDocument();
@@ -172,10 +172,10 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "if (true) {
+            'if (true) {
     exitTest();
-}",
-            $renderer->render($test->getComponentsByClassName("outcomeCondition")[0])
+}',
+            $renderer->render($test->getComponentsByClassName('outcomeCondition')[0])
         );
     }
 
@@ -187,16 +187,16 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "if (true) {
+            'if (true) {
         exitTest();
 } elseif (false) {
         exitTest();
 } elseif (true) {
         exitTest();
 } else {
-        setOutcomeValue[identifier=\"Q01\"](false);
-}",
-            $renderer->render($test->getComponentsByClassName("outcomeCondition")[0])
+        setOutcomeValue[identifier="Q01"](false);
+}',
+            $renderer->render($test->getComponentsByClassName('outcomeCondition')[0])
         );
 
         $renderer = new QtiPLRenderer(new ConditionRenderingOptions(-8));
@@ -205,10 +205,10 @@ class QtiPLTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $this->assertEquals(
-            "if (true) {
+            'if (true) {
 exitTest();
-}",
-            $renderer->render($test->getComponentsByClassName("outcomeCondition")[0])
+}',
+            $renderer->render($test->getComponentsByClassName('outcomeCondition')[0])
         );
     }
 }

@@ -16,7 +16,7 @@ class FieldValueMarshallerTest extends QtiSmTestCase
 {
     public function testMarshall()
     {
-        $fieldIdentifier = "myField";
+        $fieldIdentifier = 'myField';
 
         $component = new FieldValue(new ExpressionCollection([new Variable('recordVar')]), $fieldIdentifier);
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);

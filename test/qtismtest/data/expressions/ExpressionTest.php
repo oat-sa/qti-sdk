@@ -51,7 +51,7 @@ class ExpressionTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
-        $this->assertEquals("true == true", $renderer->render($itemq3->getBranchRules()[0]->getExpression()));
+        $this->assertEquals('true == true', $renderer->render($itemq3->getBranchRules()[0]->getExpression()));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingexpressions.xml');
@@ -59,7 +59,7 @@ class ExpressionTest extends QtiSmTestCase
 
         // Getting the right branchingexpressionsQtiPL answers
 
-        $handle = fopen(self::samplesDir() . 'custom/tests/branchingexpressionsQtiPL.txt', "r");
+        $handle = fopen(self::samplesDir() . 'custom/tests/branchingexpressionsQtiPL.txt', 'r');
         $qtiPLExpressions = [];
         $maxTest = 56;
 
@@ -67,7 +67,7 @@ class ExpressionTest extends QtiSmTestCase
             $lineNumber = 1;
 
             while (($line = fgets($handle)) !== false && $lineNumber < $maxTest) {
-                $qtiPLExpressions["Q" . $lineNumber] = trim(substr($line, strpos($line, "@") + 1));
+                $qtiPLExpressions['Q' . $lineNumber] = trim(substr($line, strpos($line, '@') + 1));
                 $lineNumber++;
             }
 
@@ -76,7 +76,7 @@ class ExpressionTest extends QtiSmTestCase
 
         for ($i = 1; $i < $maxTest; $i++) {
             $this->assertEquals(
-                $qtiPLExpressions["Q" . $i],
+                $qtiPLExpressions['Q' . $i],
                 $renderer->render($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression())
             );
         }
@@ -91,7 +91,7 @@ class ExpressionTest extends QtiSmTestCase
 
         // Getting the right coverageforQtiPL answers
 
-        $handle = fopen(self::samplesDir() . 'custom/tests/coverageforQtiPLanswers.txt', "r");
+        $handle = fopen(self::samplesDir() . 'custom/tests/coverageforQtiPLanswers.txt', 'r');
         $qtiPLExpressions = [];
         $maxTest = 36 + 1;
 
@@ -99,7 +99,7 @@ class ExpressionTest extends QtiSmTestCase
             $lineNumber = 1;
 
             while (($line = fgets($handle)) !== false && $lineNumber < $maxTest) {
-                $qtiPLExpressions["Q" . $lineNumber] = trim(substr($line, strpos($line, "@") + 1));
+                $qtiPLExpressions['Q' . $lineNumber] = trim(substr($line, strpos($line, '@') + 1));
                 $lineNumber++;
             }
 
@@ -108,7 +108,7 @@ class ExpressionTest extends QtiSmTestCase
 
         for ($i = 1; $i < $maxTest; $i++) {
             $this->assertEquals(
-                $qtiPLExpressions["Q" . $i],
+                $qtiPLExpressions['Q' . $i],
                 $renderer->render($test->getComponentByIdentifier('Q' . $i)->getBranchRules()[0]->getExpression())
             );
         }

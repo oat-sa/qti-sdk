@@ -104,7 +104,7 @@ class ValueMarshallerTest extends QtiSmTestCase
 
     public function testMarshallNoBaseTypeButForcedAndEntities()
     {
-        $value = "Hello <b>bold</b>";
+        $value = 'Hello <b>bold</b>';
         $baseType = BaseType::STRING;
         $component = new Value($value, $baseType);
 

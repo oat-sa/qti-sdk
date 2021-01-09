@@ -40,7 +40,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
             [2, 2],
             [0, 2],
             [1, 0],
-            [1, 0, "/.+/iu"],
+            [1, 0, '/.+/iu'],
         ];
     }
 

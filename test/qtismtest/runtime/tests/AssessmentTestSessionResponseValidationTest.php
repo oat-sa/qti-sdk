@@ -49,7 +49,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q01).");
+            $this->assertFalse(true, 'An exception should be thrown (Q01).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q01.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -99,7 +99,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this->assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -122,7 +122,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this->assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -138,7 +138,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this->assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -195,7 +195,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this->assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -232,7 +232,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this->assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -262,7 +262,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this->assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -327,7 +327,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q04).");
+            $this->assertFalse(true, 'An exception should be thrown (Q04).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q04.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -393,7 +393,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q01).");
+            $this->assertFalse(true, 'An exception should be thrown (Q01).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q01.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -420,7 +420,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q01).");
+            $this->assertFalse(true, 'An exception should be thrown (Q01).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
             $this->assertEquals("The Item Session 'Q01.0' is not allowed to be skipped.", $e->getMessage());
@@ -470,7 +470,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this->assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -493,7 +493,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this->assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -509,7 +509,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this->assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -566,7 +566,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this->assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -603,7 +603,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this->assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -633,7 +633,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this->assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
             $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
@@ -851,7 +851,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this->assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
             $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
             $this->assertEquals("The Item Session 'Q03.0' is not allowed to be skipped.", $e->getMessage());

@@ -77,7 +77,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
 
         $this->getStream()->close();
         $this->expectException(PhpMarshallingException::class);
-        $this->expectExceptionMessage("An error occurred while marshalling a QtiDatatype object.");
+        $this->expectExceptionMessage('An error occurred while marshalling a QtiDatatype object.');
 
         $marshaller->marshall();
     }
@@ -89,7 +89,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
 
         $this->getStream()->close();
         $this->expectException(PhpMarshallingException::class);
-        $this->expectExceptionMessage("An error occurred while marshalling a QtiDatatype object.");
+        $this->expectExceptionMessage('An error occurred while marshalling a QtiDatatype object.');
 
         $marshaller->marshall();
     }
@@ -97,11 +97,11 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
     public function testMarshallDurationClosedStream()
     {
         $ctx = $this->createMarshallingContext();
-        $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiDuration("PT30S"));
+        $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiDuration('PT30S'));
 
         $this->getStream()->close();
         $this->expectException(PhpMarshallingException::class);
-        $this->expectExceptionMessage("An error occurred while marshalling a QtiDatatype object.");
+        $this->expectExceptionMessage('An error occurred while marshalling a QtiDatatype object.');
 
         $marshaller->marshall();
     }
@@ -109,11 +109,11 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
     public function testMarshallIdentifierClosedStream()
     {
         $ctx = $this->createMarshallingContext();
-        $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiIdentifier("MYID"));
+        $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiIdentifier('MYID'));
 
         $this->getStream()->close();
         $this->expectException(PhpMarshallingException::class);
-        $this->expectExceptionMessage("An error occurred while marshalling a QtiDatatype object.");
+        $this->expectExceptionMessage('An error occurred while marshalling a QtiDatatype object.');
 
         $marshaller->marshall();
     }
@@ -125,7 +125,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
 
         $this->getStream()->close();
         $this->expectException(PhpMarshallingException::class);
-        $this->expectExceptionMessage("An error occurred while marshalling a QtiDatatype object.");
+        $this->expectExceptionMessage('An error occurred while marshalling a QtiDatatype object.');
 
         $marshaller->marshall();
     }

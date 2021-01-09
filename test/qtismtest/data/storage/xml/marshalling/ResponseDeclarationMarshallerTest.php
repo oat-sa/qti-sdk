@@ -26,7 +26,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
     public function testMarshallMinimal()
     {
         // Initialize a minimal responseDeclaration.
-        $identifier = "response1";
+        $identifier = 'response1';
         $cardinality = Cardinality::SINGLE;
         $baseType = BaseType::INTEGER;
 
@@ -43,7 +43,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
 
     public function testMarshallCorrectResponse()
     {
-        $identifier = "response2";
+        $identifier = 'response2';
         $cardinality = Cardinality::MULTIPLE;
         $baseType = BaseType::DURATION;
 

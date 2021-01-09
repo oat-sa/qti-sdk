@@ -39,7 +39,7 @@ class UtilsTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingpathwithpre2.xml');
         $test = $doc->getDocumentComponent();
-        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
+        $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
         $this->assertEquals(
             $test->getComponentByIdentifier('Q01'),
@@ -57,7 +57,7 @@ class UtilsTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections.xml');
         $test = $doc->getDocumentComponent();
-        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
+        $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
         $this->assertEquals(
             $test->getComponentByIdentifier('Q05'),
@@ -79,7 +79,7 @@ class UtilsTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingtestparts.xml');
         $test = $doc->getDocumentComponent();
-        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
+        $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
         $this->assertEquals(
             $test->getComponentByIdentifier('Q06'),
@@ -91,7 +91,7 @@ class UtilsTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections2.xml');
         $test = $doc->getDocumentComponent();
-        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
+        $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
         $this->assertEquals(
             $test->getComponentByIdentifier('Q04'),
@@ -126,7 +126,7 @@ class UtilsTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingpathwithpre2.xml');
         $test = $doc->getDocumentComponent();
-        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
+        $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
         $this->assertEquals(
             $test->getComponentByIdentifier('Q01'),
@@ -144,7 +144,7 @@ class UtilsTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections.xml');
         $test = $doc->getDocumentComponent();
-        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
+        $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
         $this->assertEquals(
             $test->getComponentByIdentifier('Q08'),
@@ -166,7 +166,7 @@ class UtilsTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingtestparts.xml');
         $test = $doc->getDocumentComponent();
-        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
+        $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
         $this->assertEquals(
             $test->getComponentByIdentifier('Q05'),
@@ -178,7 +178,7 @@ class UtilsTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingsubsections2.xml');
         $test = $doc->getDocumentComponent();
-        $sections = $test->getComponentsByClassName("assessmentSection")->getArrayCopy();
+        $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
         $this->assertEquals(
             $test->getComponentByIdentifier('Q03'),

@@ -216,7 +216,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
         $this->assertTrue($session['duration']->equals(new QtiDuration('PT30S')));
 
         $this->expectException(AssessmentItemSessionException::class);
-        $this->expectExceptionMessage("The maximum time to be spent on the item session has been reached.");
+        $this->expectExceptionMessage('The maximum time to be spent on the item session has been reached.');
 
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
     }

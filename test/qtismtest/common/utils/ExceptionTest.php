@@ -33,14 +33,14 @@ class ExceptionTest extends QtiSmTestCase
         // With class name.
         $expected = "[Exception] This is a 2nd error message!\n";
         $expected .= "Caused by:\n";
-        $expected .= "[Exception] This is an error message!";
+        $expected .= '[Exception] This is an error message!';
 
         $this->assertEquals($expected, ExceptionUtils::formatMessage($e2));
 
         // No class name.
         $expected = "This is a 2nd error message!\n";
         $expected .= "Caused by:\n";
-        $expected .= "This is an error message!";
+        $expected .= 'This is an error message!';
 
         $this->assertEquals($expected, ExceptionUtils::formatMessage($e2, false));
     }

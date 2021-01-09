@@ -16,7 +16,7 @@ class AssociateInteractionTest extends QtiSmTestCase
     public function testCreateNoAssociableChoices()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("An AssociateInteraction object must be composed of at lease one SimpleAssociableChoice object, none given.");
+        $this->expectExceptionMessage('An AssociateInteraction object must be composed of at lease one SimpleAssociableChoice object, none given.');
         $associateInteraction = new AssociateInteraction('RESPONSE', new SimpleAssociableChoiceCollection());
     }
 

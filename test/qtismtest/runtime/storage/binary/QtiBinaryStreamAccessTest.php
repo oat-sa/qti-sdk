@@ -555,7 +555,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
             // MULTIPLE or ORDERED container.
             $this->assertEquals($originalValue->getCardinality(), $readValue->getCardinality());
             $this->assertEquals($readValue->getBaseType(), $readValue->getBaseType());
-            $this->assertTrue($readValue->equals($originalValue), $originalValue . " != " . $readValue);
+            $this->assertTrue($readValue->equals($originalValue), $originalValue . ' != ' . $readValue);
         } elseif ($originalValue instanceof Comparable) {
             // Complex QTI Runtime object.
             $this->assertTrue($readValue->equals($originalValue));
@@ -1234,7 +1234,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $session->beginItemSession();
 
         $this->expectException(QtiBinaryStreamAccessException::class);
-        $this->expectExceptionMessage("No assessmentItemRef found in the assessmentTest tree structure.");
+        $this->expectExceptionMessage('No assessmentItemRef found in the assessmentTest tree structure.');
 
         $access->writeAssessmentItemSession($wrongSeeker, $session);
     }
@@ -1255,7 +1255,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $stream->close();
 
         $this->expectException(QtiBinaryStreamAccessException::class);
-        $this->expectExceptionMessage("An error occurred while writing an assessment item session.");
+        $this->expectExceptionMessage('An error occurred while writing an assessment item session.');
 
         $access->writeAssessmentItemSession($seeker, $session);
     }
