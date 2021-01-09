@@ -2,6 +2,8 @@
 
 namespace qti\customOperators\math\graph;
 
+use Exception;
+use oat\beeme\Parser;
 use qtism\common\enums\BaseType;
 use qtism\common\datatypes\QtiInteger as QtismInteger;
 use qtism\common\datatypes\QtiString as QtismString;
@@ -23,7 +25,7 @@ class CountPointsThatSatisfyEquation extends CustomOperatorProcessor
             
             if (($points instanceof MultipleContainer || $points instanceof OrderedContainer) && ($points->getBaseType() === BaseType::POINT || $points->getBaseType() === BaseType::STRING) && $equation instanceof QtismString) {
                 // Check every Point X,Y against the equation...
-                $math = new \oat\beeme\Parser();
+                $math = new Parser();
                 $math->setConstant('#pi', M_PI);
                 
                 try {
@@ -56,7 +58,7 @@ class CountPointsThatSatisfyEquation extends CustomOperatorProcessor
                             $returnValue->setValue($returnValue->getValue() + 1);
                         }
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     // If an error occurs e.g. invalid expression, the NULL value is returned.
                     return null;
                 }

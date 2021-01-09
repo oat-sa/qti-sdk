@@ -4,13 +4,13 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use DOMElement;
+use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\enums\BaseType;
 use qtism\data\state\CorrectResponse;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtismtest\QtiSmTestCase;
-use qtism\common\datatypes\QtiDirectedPair;
 
 /**
  * Class CorrectResponseMarshallerTest
