@@ -162,7 +162,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      */
     protected function check($expected, $value)
     {
-        if (is_null($expected)) {
+        if ($expected === null) {
             $this::assertTrue($value === null);
         } else {
             $this::assertInstanceOf(QtiFloat::class, $value);

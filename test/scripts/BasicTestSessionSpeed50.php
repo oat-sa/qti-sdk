@@ -34,7 +34,7 @@ function loadTestDefinition(array &$average = null)
     $phpDoc = new PhpDocument();
     $phpDoc->load(__DIR__ . '/../../test/samples/custom/php/linear_50_items.php');
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 
@@ -72,7 +72,7 @@ function spentTime($start, $end, array &$registration = null)
     //var_dump('(' . $endTime[0] . '+' . $endTime[1] . ') - (' . $startTime[0] . '+' . $startTime[1] . ')');
     $time = ($endTime[0] + $endTime[1]) - ($startTime[0] + $startTime[1]);
 
-    if (!is_null($registration)) {
+    if ($registration !== null) {
         $registration[] = $time;
     }
 
@@ -92,7 +92,7 @@ function attempt(AssessmentTestSession $session, $identifier, array &$average = 
     $session->beginAttempt();
     $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier($identifier))]));
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 }
@@ -110,7 +110,7 @@ function retrieve(AbstractStorage $storage, $sessionId, array &$average = null)
 
     $session = $storage->retrieve($sessionId);
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 
@@ -129,7 +129,7 @@ function persist(AbstractStorage $storage, AssessmentTestSession $session, &$ave
 
     $storage->persist($session);
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 }
@@ -147,7 +147,7 @@ function moveNext(AssessmentTestSession $session, array &$average)
 
     $session->moveNext();
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 }
@@ -161,7 +161,7 @@ function neighbourhood(AssessmentTestSession $session, array &$average = null)
     $start = microtime();
     $neighbourhood = $session->getPossibleJumps();
 
-    if (is_null($average) === false) {
+    if ($average !== null) {
         spentTime($start, microtime(), $average);
     }
 }

@@ -501,7 +501,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      */
     protected function assertEqualsRounded($expected, $value)
     {
-        if (is_null($expected)) {
+        if ($expected === null) {
             $this::assertSame(null, $value);
         } elseif (is_infinite($expected)) {
             if ($expected > 0) {

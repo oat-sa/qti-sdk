@@ -2076,7 +2076,7 @@ class AssessmentTestSession extends State
 
                 $expressionEngine = new ExpressionEngine($expression, $this);
 
-                if (is_null($variable) === false) {
+                if ($variable !== null) {
                     $val = $expressionEngine->process();
                     $variable->setDefaultValue($val);
                     $variable->applyDefaultValue();
@@ -2848,7 +2848,7 @@ class AssessmentTestSession extends State
                 $showHide = $feedbackRef->getShowHide();
 
                 $match = false;
-                if (is_null($outcomeValue) === false) {
+                if ($outcomeValue !== null) {
                     $match = ($outcomeValue instanceof QtiScalar) ? $outcomeValue->equals($identifierValue) : $outcomeValue->contains($identifierValue);
                 }
 
