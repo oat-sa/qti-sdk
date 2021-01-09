@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p1"
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_result_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_result_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd">
 </assessmentResult>
