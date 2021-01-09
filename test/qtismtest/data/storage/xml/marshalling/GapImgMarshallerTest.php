@@ -28,7 +28,10 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMax="1" matchMin="1" templateIdentifier="templateIdentifier1" showHide="hide"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>', $dom->saveXML($element));
+        $this->assertEquals(
+            '<gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMax="1" matchMin="1" templateIdentifier="templateIdentifier1" showHide="hide"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>',
+            $dom->saveXML($element)
+        );
     }
 
     /**
@@ -116,8 +119,8 @@ class GapImgMarshallerTest extends QtiSmTestCase
     {
         $element = $this->createDOMElement('
 	        <gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMin="1" matchMax="1" showHide="hide" templateIdentifier="templateIdentifier1">
-	          <object data="http://imagine.us/myimg.png" type="image/png"/>
-	        </gapImg>
+              <object data="http://imagine.us/myimg.png" type="image/png"/>
+            </gapImg>
 	    ');
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);

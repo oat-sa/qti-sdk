@@ -31,7 +31,10 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<selectPointInteraction responseIdentifier="RESPONSE" maxChoices="1" minChoices="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="./myimg.png" type="image/png"/></selectPointInteraction>', $dom->saveXML($element));
+        $this->assertEquals(
+            '<selectPointInteraction responseIdentifier="RESPONSE" maxChoices="1" minChoices="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="./myimg.png" type="image/png"/></selectPointInteraction>',
+            $dom->saveXML($element)
+        );
     }
 
     /**
@@ -54,12 +57,12 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall21()
     {
-        $element = $this->createDOMElement('
-            <selectPointInteraction responseIdentifier="RESPONSE" minChoices="1" maxChoices="1" xml:base="/home/jerome">
+        $element = $this->createDOMElement(
+            '<selectPointInteraction responseIdentifier="RESPONSE" minChoices="1" maxChoices="1" xml:base="/home/jerome">
               <prompt>Prompt...</prompt>
               <object data="./myimg.png" type="image/png"/>
-            </selectPointInteraction>
-        ');
+            </selectPointInteraction>'
+        );
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(SelectPointInteraction::class, $component);

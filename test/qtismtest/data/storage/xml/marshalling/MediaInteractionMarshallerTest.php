@@ -44,9 +44,12 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
-            <mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>        
-        ');
+        $element = $this->createDOMElement(
+            '<mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome">
+                <prompt>Prompt...</prompt>
+                <object data="my-video.mp4" type="video/mp4" width="400" height="300"/>
+            </mediaInteraction>'
+        );
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(MediaInteraction::class, $component);

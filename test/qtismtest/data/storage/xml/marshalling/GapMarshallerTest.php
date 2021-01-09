@@ -72,7 +72,10 @@ class GapMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gap identifier="gap1" templateIdentifier="tpl-gap" showHide="hide" required="true" id="my-gap" class="gaps"/>', $dom->saveXML($element));
+        $this->assertEquals(
+            '<gap identifier="gap1" templateIdentifier="tpl-gap" showHide="hide" required="true" id="my-gap" class="gaps"/>',
+            $dom->saveXML($element)
+        );
     }
 
     /**

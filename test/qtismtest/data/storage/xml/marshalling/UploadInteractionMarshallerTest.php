@@ -33,9 +33,11 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshall()
     {
-        $element = $this->createDOMElement('
-            <uploadInteraction id="my-upload" responseIdentifier="RESPONSE" xml:base="/home/jerome"><prompt>Prompt...</prompt></uploadInteraction>    
-        ');
+        $element = $this->createDOMElement(
+            '<uploadInteraction id="my-upload" responseIdentifier="RESPONSE" xml:base="/home/jerome">
+                <prompt>Prompt...</prompt>
+            </uploadInteraction>'
+        );
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this->assertInstanceOf(UploadInteraction::class, $component);
