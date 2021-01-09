@@ -31,7 +31,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression($pattern);
         $operands = new OperandsCollection([$string]);
         $processor = new PatternMatchProcessor($expression, $operands);
-        $this->assertSame($expected, $processor->process()->getValue());
+        $this::assertSame($expected, $processor->process()->getValue());
     }
 
     /**
@@ -45,7 +45,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression($pattern);
         $operands = new OperandsCollection([$string]);
         $processor = new PatternMatchProcessor($expression, $operands);
-        $this->assertSame(null, $processor->process());
+        $this::assertSame(null, $processor->process());
     }
 
     public function testNotEnougOperands()
@@ -89,10 +89,10 @@ class PatternMatchProcessorTest extends QtiSmTestCase
         $processor = new PatternMatchProcessor($expression, $operands);
         try {
             $result = $processor->process();
-            $this->assertFalse(true);
+            $this::assertFalse(true);
         } catch (OperatorProcessingException $e) {
-            $this->assertTrue(true);
-            $this->assertEquals(OperatorProcessingException::RUNTIME_ERROR, $e->getCode());
+            $this::assertTrue(true);
+            $this::assertEquals(OperatorProcessingException::RUNTIME_ERROR, $e->getCode());
         }
     }
 

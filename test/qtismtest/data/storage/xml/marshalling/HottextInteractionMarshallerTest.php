@@ -41,7 +41,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<hottextInteraction responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><div>This is a <hottext identifier="hot1"/> text...</div></hottextInteraction>',
             $dom->saveXML($element)
         );
@@ -57,27 +57,27 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(HottextInteraction::class, $component);
-        $this->assertEquals(1, $component->getMaxChoices());
-        $this->assertEquals(0, $component->getMinChoices());
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertInstanceOf(HottextInteraction::class, $component);
+        $this::assertEquals(1, $component->getMaxChoices());
+        $this::assertEquals(0, $component->getMinChoices());
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
 
-        $this->assertTrue($component->hasPrompt());
+        $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
 
         $content = $component->getContent();
         $div = $content[0];
-        $this->assertInstanceOf(Div::class, $div);
+        $this::assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
 
-        $this->assertInstanceOf(TextRun::class, $divContent[0]);
-        $this->assertEquals('This is a ', $divContent[0]->getContent());
+        $this::assertInstanceOf(TextRun::class, $divContent[0]);
+        $this::assertEquals('This is a ', $divContent[0]->getContent());
 
-        $this->assertInstanceOf(Hottext::class, $divContent[1]);
-        $this->assertEquals('hot1', $divContent[1]->getIdentifier());
+        $this::assertInstanceOf(Hottext::class, $divContent[1]);
+        $this::assertEquals('hot1', $divContent[1]->getIdentifier());
 
-        $this->assertInstanceOf(TextRun::class, $divContent[2]);
-        $this->assertEquals(' text...', $divContent[2]->getContent());
+        $this::assertInstanceOf(TextRun::class, $divContent[2]);
+        $this::assertEquals(' text...', $divContent[2]->getContent());
     }
 }

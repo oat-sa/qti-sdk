@@ -18,6 +18,6 @@ class VersionTest extends QtiSmTestCase
         $ser = serialize($dom);
         $dom = unserialize($ser);
 
-        $this->assertEquals('http://www.imsglobal.org/xsd/imsqti_v2p2', $dom->documentElement->namespaceURI);
+        $this::assertEquals('http://www.imsglobal.org/xsd/imsqti_v2p2', $dom->documentElement->namespaceURI);
     }
 }

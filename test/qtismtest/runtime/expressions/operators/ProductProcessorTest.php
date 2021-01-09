@@ -29,9 +29,9 @@ class ProductProcessorTest extends QtiSmTestCase
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
 
-        $this->assertInstanceOf(Processable::class, $productProcessor);
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(1, $result->getValue());
+        $this::assertInstanceOf(Processable::class, $productProcessor);
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(1, $result->getValue());
     }
 
     public function testNary()
@@ -42,8 +42,8 @@ class ProductProcessorTest extends QtiSmTestCase
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
 
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(-96, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(-96, $result->getValue());
     }
 
     public function testComplex()
@@ -56,8 +56,8 @@ class ProductProcessorTest extends QtiSmTestCase
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
 
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-1354.5, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(-1354.5, $result->getValue());
     }
 
     public function testInvalidOperandsOne()
@@ -88,7 +88,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10), null]);
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
-        $this->assertTrue($result === null);
+        $this::assertTrue($result === null);
     }
 
     public function testNotEnoughOperands()

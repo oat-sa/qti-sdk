@@ -21,7 +21,7 @@ class StringTest extends QtiSmTestCase
     public function testEmptyString()
     {
         $string = new QtiString('');
-        $this->assertEquals('', $string->getValue());
+        $this::assertEquals('', $string->getValue());
     }
 
     /**
@@ -33,7 +33,7 @@ class StringTest extends QtiSmTestCase
     public function testEqual($str, $val)
     {
         $qtiString = new QtiString($str);
-        $this->assertTrue($qtiString->equals($val));
+        $this::assertTrue($qtiString->equals($val));
     }
 
     /**
@@ -59,7 +59,7 @@ class StringTest extends QtiSmTestCase
     public function testNotEqual($str, $val)
     {
         $qtiString = new QtiString($str);
-        $this->assertFalse($qtiString->equals($val));
+        $this::assertFalse($qtiString->equals($val));
     }
 
     /**

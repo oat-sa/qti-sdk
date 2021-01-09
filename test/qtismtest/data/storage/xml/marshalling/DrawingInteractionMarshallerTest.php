@@ -27,7 +27,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<drawingInteraction id="my-drawings" class="draw-it" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><object data="my-canvas.png" type="image/png"/></drawingInteraction>', $dom->saveXML($element));
+        $this::assertEquals('<drawingInteraction id="my-drawings" class="draw-it" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><object data="my-canvas.png" type="image/png"/></drawingInteraction>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -40,16 +40,16 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(DrawingInteraction::class, $component);
-        $this->assertEquals('my-drawings', $component->getId());
-        $this->assertEquals('draw-it', $component->getClass());
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertInstanceOf(DrawingInteraction::class, $component);
+        $this::assertEquals('my-drawings', $component->getId());
+        $this::assertEquals('draw-it', $component->getClass());
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
 
         $object = $component->getObject();
-        $this->assertEquals('my-canvas.png', $object->getData());
-        $this->assertEquals('image/png', $object->getType());
+        $this::assertEquals('my-canvas.png', $object->getData());
+        $this::assertEquals('image/png', $object->getType());
 
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
     }
 }

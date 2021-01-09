@@ -44,11 +44,11 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
             </candidateResponse>
         ');
 
-        $this->assertInstanceOf(CandidateResponse::class, $candidateResponse);
+        $this::assertInstanceOf(CandidateResponse::class, $candidateResponse);
 
-        $this->assertTrue($candidateResponse->hasValues());
-        $this->assertInstanceOf(ValueCollection::class, $candidateResponse->getValues());
-        $this->assertEquals(2, $candidateResponse->getValues()->count());
+        $this::assertTrue($candidateResponse->hasValues());
+        $this::assertInstanceOf(ValueCollection::class, $candidateResponse->getValues());
+        $this::assertEquals(2, $candidateResponse->getValues()->count());
     }
 
     public function testUnmarshallMinimal()
@@ -58,10 +58,10 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
             <candidateResponse />
         ');
 
-        $this->assertInstanceOf(CandidateResponse::class, $candidateResponse);
+        $this::assertInstanceOf(CandidateResponse::class, $candidateResponse);
 
-        $this->assertFalse($candidateResponse->hasValues());
-        $this->assertNull($candidateResponse->getValues());
+        $this::assertFalse($candidateResponse->hasValues());
+        $this::assertNull($candidateResponse->getValues());
     }
 
     public function testMarshall()
@@ -76,14 +76,14 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
+        $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
+        $this::assertEquals($component->getQtiClassName(), $element->nodeName);
 
-        $this->assertEquals(2, $element->getElementsByTagName('value')->length);
+        $this::assertEquals(2, $element->getElementsByTagName('value')->length);
         /** @var DOMElement $node */
         foreach ($element->childNodes as $node) {
-            $this->assertEquals('value', $node->nodeName);
+            $this::assertEquals('value', $node->nodeName);
         }
     }
 
@@ -94,17 +94,17 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
+        $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
-        $this->assertFalse($element->hasAttributes());
-        $this->assertFalse($element->hasChildNodes());
+        $this::assertEquals($component->getQtiClassName(), $element->nodeName);
+        $this::assertFalse($element->hasAttributes());
+        $this::assertFalse($element->hasChildNodes());
     }
 
     public function testGetExpectedQtiClassName()
     {
         $component = new CandidateResponse();
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
-        $this->assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
+        $this::assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
     }
 }

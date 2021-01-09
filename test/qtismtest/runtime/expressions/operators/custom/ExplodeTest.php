@@ -73,7 +73,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new MultipleContainer(BaseType::FLOAT), new MultipleContainer(BaseType::FLOAT)]);
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testExplodeOne()
@@ -83,9 +83,9 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertSame(5, count($result));
-        $this->assertEquals(['Hello', 'World', 'This', 'Is', 'Me'], $result->getArrayCopy());
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertSame(5, count($result));
+        $this::assertEquals(['Hello', 'World', 'This', 'Is', 'Me'], $result->getArrayCopy());
     }
 
     public function testExplodeTwo()
@@ -96,9 +96,9 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertSame(1, count($result));
-        $this->assertEquals(['Hello World!'], $result->getArrayCopy());
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertSame(1, count($result));
+        $this::assertEquals(['Hello World!'], $result->getArrayCopy());
     }
 
     public function testExplodeThree()
@@ -108,9 +108,9 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertSame(2, count($result));
-        $this->assertEquals(['Hello', 'World!'], $result->getArrayCopy());
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertSame(2, count($result));
+        $this::assertEquals(['Hello', 'World!'], $result->getArrayCopy());
     }
 
     /**

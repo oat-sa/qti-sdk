@@ -24,7 +24,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<modalFeedback outcomeIdentifier="outcome1" identifier="hello" showHide="show" title="Modal Feedback Example">Please show me!</modalFeedback>', $dom->saveXML($element));
+        $this::assertEquals('<modalFeedback outcomeIdentifier="outcome1" identifier="hello" showHide="show" title="Modal Feedback Example">Please show me!</modalFeedback>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -34,14 +34,14 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
 	    ');
 
         $modalFeedback = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(ModalFeedback::class, $modalFeedback);
-        $this->assertEquals('outcome1', $modalFeedback->getOutcomeIdentifier());
-        $this->assertEquals('hello', $modalFeedback->getIdentifier());
-        $this->assertEquals(ShowHide::SHOW, $modalFeedback->getShowHide());
-        $this->assertEquals('Modal Feedback Example', $modalFeedback->getTitle());
+        $this::assertInstanceOf(ModalFeedback::class, $modalFeedback);
+        $this::assertEquals('outcome1', $modalFeedback->getOutcomeIdentifier());
+        $this::assertEquals('hello', $modalFeedback->getIdentifier());
+        $this::assertEquals(ShowHide::SHOW, $modalFeedback->getShowHide());
+        $this::assertEquals('Modal Feedback Example', $modalFeedback->getTitle());
 
         $content = $modalFeedback->getContent();
-        $this->assertEquals(1, count($content));
-        $this->assertEquals('Please show me!', $content[0]->getContent());
+        $this::assertEquals(1, count($content));
+        $this::assertEquals('Please show me!', $content[0]->getContent());
     }
 }

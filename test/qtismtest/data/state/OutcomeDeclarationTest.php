@@ -41,26 +41,26 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 
     public function testExternalScoredAccessors()
     {
-        $this->assertFalse($this->subject->isExternallyScored());
-        $this->assertFalse($this->subject->isScoredByHuman());
-        $this->assertFalse($this->subject->isScoredByExternalMachine());
+        $this::assertFalse($this->subject->isExternallyScored());
+        $this::assertFalse($this->subject->isScoredByHuman());
+        $this::assertFalse($this->subject->isScoredByExternalMachine());
 
         $this->subject->setExternalScored(ExternalScored::getConstantByName('human'));
 
-        $this->assertTrue($this->subject->isExternallyScored());
-        $this->assertTrue($this->subject->isScoredByHuman());
-        $this->assertFalse($this->subject->isScoredByExternalMachine());
+        $this::assertTrue($this->subject->isExternallyScored());
+        $this::assertTrue($this->subject->isScoredByHuman());
+        $this::assertFalse($this->subject->isScoredByExternalMachine());
 
         $this->subject->setExternalScored(ExternalScored::getConstantByName('externalMachine'));
 
-        $this->assertTrue($this->subject->isExternallyScored());
-        $this->assertFalse($this->subject->isScoredByHuman());
-        $this->assertTrue($this->subject->isScoredByExternalMachine());
+        $this::assertTrue($this->subject->isExternallyScored());
+        $this::assertFalse($this->subject->isScoredByHuman());
+        $this::assertTrue($this->subject->isScoredByExternalMachine());
 
         $this->subject->setExternalScored();
 
-        $this->assertFalse($this->subject->isExternallyScored());
-        $this->assertFalse($this->subject->isScoredByHuman());
-        $this->assertFalse($this->subject->isScoredByExternalMachine());
+        $this::assertFalse($this->subject->isExternallyScored());
+        $this::assertFalse($this->subject->isScoredByHuman());
+        $this::assertFalse($this->subject->isScoredByExternalMachine());
     }
 }

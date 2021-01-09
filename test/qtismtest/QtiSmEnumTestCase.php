@@ -21,8 +21,8 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
     {
         $refCount = count($this->getNames());
 
-        $this->assertEquals($refCount, count($this->getConstants()));
-        $this->assertEquals($refCount, count($this->getKeys()));
+        $this::assertEquals($refCount, count($this->getConstants()));
+        $this::assertEquals($refCount, count($this->getKeys()));
     }
 
     public function testAsArray()
@@ -35,8 +35,8 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
 
         for ($i = 0; $i < count($keys); $i++) {
             $key = $keys[$i];
-            $this->assertTrue(isset($array[$key]));
-            $this->assertEquals($constants[$i], $array[$key]);
+            $this::assertTrue(isset($array[$key]));
+            $this::assertEquals($constants[$i], $array[$key]);
         }
     }
 
@@ -48,13 +48,13 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
 
         for ($i = 0; $i < count($names); $i++) {
             $name = $names[$i];
-            $this->assertEquals(
+            $this::assertEquals(
                 $constants[$i],
                 $enumerationName::getConstantByName($name)
             );
         }
 
-        $this->assertFalse($enumerationName::getConstantByName($this->getUnknownConstantName()));
+        $this::assertFalse($enumerationName::getConstantByName($this->getUnknownConstantName()));
     }
 
     public function testGetNameByConstant()
@@ -65,13 +65,13 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
 
         for ($i = 0; $i < count($constants); $i++) {
             $constant = $constants[$i];
-            $this->assertEquals(
+            $this::assertEquals(
                 $names[$i],
                 $enumerationName::getNameByConstant($constant)
             );
         }
 
-        $this->assertFalse($enumerationName::getNameByConstant($this->getUnknownConstantValue()));
+        $this::assertFalse($enumerationName::getNameByConstant($this->getUnknownConstantValue()));
     }
 
     /**

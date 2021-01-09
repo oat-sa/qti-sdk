@@ -27,7 +27,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<selectPointInteraction responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./myimg.png" type="image/png"/></selectPointInteraction>',
             $dom->saveXML($element)
         );
@@ -43,17 +43,17 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
         );
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(SelectPointInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertEquals(1, $component->getMaxChoices());
-        $this->assertEquals(0, $component->getMinChoices());
+        $this::assertInstanceOf(SelectPointInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertEquals(1, $component->getMaxChoices());
+        $this::assertEquals(0, $component->getMinChoices());
 
-        $this->assertTrue($component->hasPrompt());
+        $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
 
         $object = $component->getObject();
-        $this->assertEquals('./myimg.png', $object->getData());
-        $this->assertEquals('image/png', $object->getType());
+        $this::assertEquals('./myimg.png', $object->getData());
+        $this::assertEquals('image/png', $object->getType());
     }
 }

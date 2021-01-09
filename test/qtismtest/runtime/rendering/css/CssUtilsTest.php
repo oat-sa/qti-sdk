@@ -19,7 +19,7 @@ class CssUtilsTest extends QtiSmTestCase
      */
     public function testMapSelector($selector, $expected, $map)
     {
-        $this->assertEquals($expected, CssUtils::mapSelector($selector, $map));
+        $this::assertEquals($expected, CssUtils::mapSelector($selector, $map));
     }
 
     /**

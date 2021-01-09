@@ -17,7 +17,7 @@ class PhpUtilsTest extends QtiSmTestCase
      */
     public function testDoubleQuotedPhpString($input, $expected)
     {
-        $this->assertEquals($expected, PhpUtils::doubleQuotedPhpString($input));
+        $this::assertEquals($expected, PhpUtils::doubleQuotedPhpString($input));
     }
 
     /**

@@ -13,8 +13,8 @@ class RubricBlockRefMarshallerTest extends QtiSmTestCase
     public function testUnmarshall()
     {
         $ref = $this->createComponentFromXml('<rubricBlockRef identifier="R01" href="./R01.xml"/>');
-        $this->assertEquals('R01', $ref->getIdentifier());
-        $this->assertEquals('./R01.xml', $ref->getHref());
+        $this::assertEquals('R01', $ref->getIdentifier());
+        $this::assertEquals('./R01.xml', $ref->getHref());
     }
 
     public function testMarshall()
@@ -23,8 +23,8 @@ class RubricBlockRefMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory()->createMarshaller($ref);
         $elt = $marshaller->marshall($ref);
 
-        $this->assertEquals('rubricBlockRef', $elt->nodeName);
-        $this->assertEquals('R01', $elt->getAttribute('identifier'));
-        $this->assertEquals('./R01.xml', $elt->getAttribute('href'));
+        $this::assertEquals('rubricBlockRef', $elt->nodeName);
+        $this::assertEquals('R01', $elt->getAttribute('identifier'));
+        $this::assertEquals('./R01.xml', $elt->getAttribute('href'));
     }
 }

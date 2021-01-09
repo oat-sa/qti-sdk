@@ -23,8 +23,8 @@ class OrderedContainerTest extends QtiSmTestCase
      */
     public function testEqualsValid(OrderedContainer $containerA, OrderedContainer $containerB)
     {
-        $this->assertTrue($containerA->equals($containerB));
-        $this->assertTrue($containerB->equals($containerA));
+        $this::assertTrue($containerA->equals($containerB));
+        $this::assertTrue($containerB->equals($containerA));
     }
 
     /**
@@ -34,16 +34,16 @@ class OrderedContainerTest extends QtiSmTestCase
      */
     public function testEqualsInvalid(OrderedContainer $containerA, OrderedContainer $containerB)
     {
-        $this->assertFalse($containerA->equals($containerB));
-        $this->assertFalse($containerB->equals($containerA));
+        $this::assertFalse($containerA->equals($containerB));
+        $this::assertFalse($containerB->equals($containerA));
     }
 
     public function testCreationEmpty()
     {
         $container = new OrderedContainer(BaseType::INTEGER);
-        $this->assertEquals(0, count($container));
-        $this->assertEquals(BaseType::INTEGER, $container->getBaseType());
-        $this->assertEquals(Cardinality::ORDERED, $container->getCardinality());
+        $this::assertEquals(0, count($container));
+        $this::assertEquals(BaseType::INTEGER, $container->getBaseType());
+        $this::assertEquals(Cardinality::ORDERED, $container->getCardinality());
     }
 
     /**
@@ -74,6 +74,6 @@ class OrderedContainerTest extends QtiSmTestCase
     public function testEqualsNull()
     {
         $container = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]);
-        $this->assertFalse($container->equals(null));
+        $this::assertFalse($container->equals(null));
     }
 }

@@ -21,10 +21,10 @@ class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('assessmentSectionRef', $element->nodeName);
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
-        $this->assertEquals($href, $element->getAttribute('href'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('assessmentSectionRef', $element->nodeName);
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertEquals($href, $element->getAttribute('href'));
     }
 
     public function testUnmarshall()
@@ -36,8 +36,8 @@ class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(AssessmentSectionRef::class, $component);
-        $this->assertEquals('mySectionRef', $component->getIdentifier());
-        $this->assertEquals('http://www.rdfabout.com', $component->getHref());
+        $this::assertInstanceOf(AssessmentSectionRef::class, $component);
+        $this::assertEquals('mySectionRef', $component->getIdentifier());
+        $this::assertEquals('http://www.rdfabout.com', $component->getHref());
     }
 }

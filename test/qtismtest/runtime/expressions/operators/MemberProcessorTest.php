@@ -33,13 +33,13 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = $mult;
         $processor = new MemberProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertEquals(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertEquals(false, $result->getValue());
 
         $mult[] = new QtiFloat(10.1);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertEquals(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertEquals(true, $result->getValue());
     }
 
     public function testOrdered()
@@ -51,13 +51,13 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = $ordered;
         $processor = new MemberProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertEquals(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertEquals(false, $result->getValue());
 
         $ordered[] = new QtiPair('A', 'B');
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertEquals(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertEquals(true, $result->getValue());
     }
 
     public function testNull()
@@ -70,14 +70,14 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::INTEGER);
         $processor = new MemberProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
 
         // fist operand is null.
         $operands->reset();
         $operands[] = null;
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testDifferentBaseTypeOne()
@@ -154,8 +154,8 @@ class MemberProcessorTest extends QtiSmTestCase
         $processor = new MemberProcessor($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
     }
 
     /**

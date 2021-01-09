@@ -58,16 +58,16 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
 
         /** @var AssessmentResult $assessmentResult */
         $assessmentResult = $this->createComponentFromXml($xml);
-        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
+        $this::assertInstanceOf(AssessmentResult::class, $assessmentResult);
 
         $context = $assessmentResult->getContext();
-        $this->assertFalse($context->hasSourcedId());
-        $this->assertFalse($context->hasSessionIdentifiers());
+        $this::assertFalse($context->hasSourcedId());
+        $this::assertFalse($context->hasSessionIdentifiers());
 
-        $this->assertFalse($assessmentResult->hasTestResult());
-        $this->assertEquals(null, $assessmentResult->getTestResult());
-        $this->assertFalse($assessmentResult->hasItemResults());
-        $this->assertEquals(null, $assessmentResult->getItemResults());
+        $this::assertFalse($assessmentResult->hasTestResult());
+        $this::assertEquals(null, $assessmentResult->getTestResult());
+        $this::assertFalse($assessmentResult->hasItemResults());
+        $this::assertEquals(null, $assessmentResult->getItemResults());
     }
 
     public function testUnmarshall()
@@ -162,24 +162,24 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
 
         /** @var AssessmentResult $assessmentResult */
         $assessmentResult = $this->createComponentFromXml($xml);
-        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
+        $this::assertInstanceOf(AssessmentResult::class, $assessmentResult);
 
         $context = $assessmentResult->getContext();
-        $this->assertEquals('fixture-sourcedId', $context->getSourcedId());
-        $this->assertEquals(2, $context->getSessionIdentifiers()->count());
+        $this::assertEquals('fixture-sourcedId', $context->getSourcedId());
+        $this::assertEquals(2, $context->getSessionIdentifiers()->count());
 
-        $this->assertTrue($assessmentResult->hasTestResult());
-        $this->assertEquals(2, $assessmentResult->getTestResult()->getItemVariables()->count());
+        $this::assertTrue($assessmentResult->hasTestResult());
+        $this::assertEquals(2, $assessmentResult->getTestResult()->getItemVariables()->count());
 
-        $this->assertTrue($assessmentResult->hasItemResults());
-        $this->assertEquals(2, $assessmentResult->getItemResults()->count());
-        $this->assertEquals(3, $assessmentResult->getItemResults()[0]->getItemVariables()->count());
-        $this->assertTrue($assessmentResult->getItemResults()[0]->hasCandidateComment());
-        $this->assertEquals(2, $assessmentResult->getItemResults()[1]->getItemVariables()->count());
-        $this->assertFalse($assessmentResult->getItemResults()[1]->hasCandidateComment());
+        $this::assertTrue($assessmentResult->hasItemResults());
+        $this::assertEquals(2, $assessmentResult->getItemResults()->count());
+        $this::assertEquals(3, $assessmentResult->getItemResults()[0]->getItemVariables()->count());
+        $this::assertTrue($assessmentResult->getItemResults()[0]->hasCandidateComment());
+        $this::assertEquals(2, $assessmentResult->getItemResults()[1]->getItemVariables()->count());
+        $this::assertFalse($assessmentResult->getItemResults()[1]->hasCandidateComment());
 
         $assessmentResult = $this->createComponentFromXml($xml);
-        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
+        $this::assertInstanceOf(AssessmentResult::class, $assessmentResult);
     }
 
     public function testUnmarshallWithoutTestResult()
@@ -218,15 +218,15 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
 
         /** @var AssessmentResult $assessmentResult */
         $assessmentResult = $this->createComponentFromXml($xml);
-        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
+        $this::assertInstanceOf(AssessmentResult::class, $assessmentResult);
 
-        $this->assertFalse($assessmentResult->hasTestResult());
+        $this::assertFalse($assessmentResult->hasTestResult());
 
-        $this->assertTrue($assessmentResult->hasItemResults());
-        $this->assertEquals(2, $assessmentResult->getItemResults()->count());
+        $this::assertTrue($assessmentResult->hasItemResults());
+        $this::assertEquals(2, $assessmentResult->getItemResults()->count());
 
         $assessmentResult = $this->createComponentFromXml($xml);
-        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
+        $this::assertInstanceOf(AssessmentResult::class, $assessmentResult);
     }
 
     public function testMarshall()
@@ -329,13 +329,13 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
+        $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
+        $this::assertEquals($component->getQtiClassName(), $element->nodeName);
 
-        $this->assertEquals(1, $element->getElementsByTagName('context')->length);
-        $this->assertEquals(1, $element->getElementsByTagName('testResult')->length);
-        $this->assertEquals(2, $element->getElementsByTagName('itemResult')->length);
+        $this::assertEquals(1, $element->getElementsByTagName('context')->length);
+        $this::assertEquals(1, $element->getElementsByTagName('testResult')->length);
+        $this::assertEquals(2, $element->getElementsByTagName('itemResult')->length);
     }
 
     public function testUnmarshallMinimal()
@@ -347,12 +347,12 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
+        $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
+        $this::assertEquals($component->getQtiClassName(), $element->nodeName);
 
-        $this->assertEquals(1, $element->getElementsByTagName('context')->length);
-        $this->assertEquals(0, $element->getElementsByTagName('testResult')->length);
-        $this->assertEquals(0, $element->getElementsByTagName('itemResult')->length);
+        $this::assertEquals(1, $element->getElementsByTagName('context')->length);
+        $this::assertEquals(0, $element->getElementsByTagName('testResult')->length);
+        $this::assertEquals(0, $element->getElementsByTagName('itemResult')->length);
     }
 }

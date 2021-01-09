@@ -18,8 +18,8 @@ class ExpressionProcessorFactoryTest extends QtiSmTestCase
 
         $factory = new ExpressionProcessorFactory();
         $processor = $factory->createProcessor($expression);
-        $this->assertInstanceOf(BaseValueProcessor::class, $processor);
-        $this->assertEquals('baseValue', $processor->getExpression()->getQtiClassName());
+        $this::assertInstanceOf(BaseValueProcessor::class, $processor);
+        $this::assertEquals('baseValue', $processor->getExpression()->getQtiClassName());
     }
 
     public function testCreateProcessorNoProcessor()

@@ -28,7 +28,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1" matchMax="1">This is ... <strong>strong</strong>!</simpleAssociableChoice>', $dom->saveXML($element));
+        $this::assertEquals('<simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1" matchMax="1">This is ... <strong>strong</strong>!</simpleAssociableChoice>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -40,14 +40,14 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(SimpleAssociableChoice::class, $component);
-        $this->assertEquals('qti-simpleAssociableChoice', $component->getClass());
-        $this->assertEquals('choice_1', $component->getIdentifier());
-        $this->assertEquals(1, $component->getMatchMin());
-        $this->assertEquals(2, $component->getMatchMax());
+        $this::assertInstanceOf(SimpleAssociableChoice::class, $component);
+        $this::assertEquals('qti-simpleAssociableChoice', $component->getClass());
+        $this::assertEquals('choice_1', $component->getIdentifier());
+        $this::assertEquals(1, $component->getMatchMin());
+        $this::assertEquals(2, $component->getMatchMax());
 
         $content = $component->getContent();
-        $this->assertInstanceOf(FlowStaticCollection::class, $content);
-        $this->assertEquals(3, count($content));
+        $this::assertInstanceOf(FlowStaticCollection::class, $content);
+        $this::assertEquals(3, count($content));
     }
 }

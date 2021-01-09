@@ -28,24 +28,24 @@ class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($elt);
 
         $section = $marshaller->unmarshall($elt);
-        $this->assertInstanceOf(ExtendedAssessmentSection::class, $section);
-        $this->assertEquals('S01', $section->getIdentifier());
-        $this->assertEquals('Section 01', $section->getTitle());
-        $this->assertTrue($section->isVisible());
+        $this::assertInstanceOf(ExtendedAssessmentSection::class, $section);
+        $this::assertEquals('S01', $section->getIdentifier());
+        $this::assertEquals('Section 01', $section->getTitle());
+        $this::assertTrue($section->isVisible());
 
         $sectionParts = $section->getSectionParts();
-        $this->assertEquals(1, count($sectionParts));
-        $this->assertInstanceOf(AssessmentSectionRef::class, $sectionParts['SR01']);
-        $this->assertEquals('SR01', $sectionParts['SR01']->getIdentifier());
-        $this->assertEquals('./SR01.xml', $sectionParts['SR01']->getHref());
+        $this::assertEquals(1, count($sectionParts));
+        $this::assertInstanceOf(AssessmentSectionRef::class, $sectionParts['SR01']);
+        $this::assertEquals('SR01', $sectionParts['SR01']->getIdentifier());
+        $this::assertEquals('./SR01.xml', $sectionParts['SR01']->getHref());
 
         $rubricBlockRefs = $section->getRubricBlockRefs();
-        $this->assertEquals(1, count($rubricBlockRefs));
-        $this->assertInstanceOf(RubricBlockRef::class, $rubricBlockRefs['R01']);
-        $this->assertEquals('R01', $rubricBlockRefs['R01']->getIdentifier());
-        $this->assertEquals('./R01.xml', $rubricBlockRefs['R01']->getHref());
+        $this::assertEquals(1, count($rubricBlockRefs));
+        $this::assertInstanceOf(RubricBlockRef::class, $rubricBlockRefs['R01']);
+        $this::assertEquals('R01', $rubricBlockRefs['R01']->getIdentifier());
+        $this::assertEquals('./R01.xml', $rubricBlockRefs['R01']->getHref());
 
-        $this->assertEquals(0, count($section->getRubricBlocks()));
+        $this::assertEquals(0, count($section->getRubricBlocks()));
     }
 
     public function testMarshall()
@@ -58,21 +58,21 @@ class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($section);
         $elt = $marshaller->marshall($section);
 
-        $this->assertEquals('assessmentSection', $elt->nodeName);
-        $this->assertEquals('S01', $elt->getAttribute('identifier'));
-        $this->assertEquals('Section 01', $elt->getAttribute('title'));
-        $this->assertEquals('true', $elt->getAttribute('visible'));
+        $this::assertEquals('assessmentSection', $elt->nodeName);
+        $this::assertEquals('S01', $elt->getAttribute('identifier'));
+        $this::assertEquals('Section 01', $elt->getAttribute('title'));
+        $this::assertEquals('true', $elt->getAttribute('visible'));
 
         $assessmentSectionRefElts = $elt->getElementsByTagName('assessmentSectionRef');
-        $this->assertEquals(1, $assessmentSectionRefElts->length);
+        $this::assertEquals(1, $assessmentSectionRefElts->length);
         $assessmentSectionRefElt = $assessmentSectionRefElts->item(0);
-        $this->assertEquals('SR01', $assessmentSectionRefElt->getAttribute('identifier'));
-        $this->assertEquals('./SR01.xml', $assessmentSectionRefElt->getAttribute('href'));
+        $this::assertEquals('SR01', $assessmentSectionRefElt->getAttribute('identifier'));
+        $this::assertEquals('./SR01.xml', $assessmentSectionRefElt->getAttribute('href'));
 
         $rubricBlockRefElts = $elt->getElementsByTagName('rubricBlockRef');
-        $this->assertEquals(1, $rubricBlockRefElts->length);
+        $this::assertEquals(1, $rubricBlockRefElts->length);
         $rubricBlockRefElt = $rubricBlockRefElts->item(0);
-        $this->assertEquals('R01', $rubricBlockRefElt->getAttribute('identifier'));
-        $this->assertEquals('./R01.xml', $rubricBlockRefElt->getAttribute('href'));
+        $this::assertEquals('R01', $rubricBlockRefElt->getAttribute('identifier'));
+        $this::assertEquals('./R01.xml', $rubricBlockRefElt->getAttribute('href'));
     }
 }

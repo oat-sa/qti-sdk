@@ -30,7 +30,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 
         // We should arrive at section 2.
         $testSession->moveNext();
-        $this->assertEquals('S02', $testSession->getCurrentAssessmentSection()->getIdentifier());
+        $this::assertEquals('S02', $testSession->getCurrentAssessmentSection()->getIdentifier());
     }
 
     public function testExitSectionEndOfTest()
@@ -49,12 +49,12 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should be at the end of the test.
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
 
         // All session closed (parano mode)?
         $itemSessions = $testSession->getAssessmentItemSessions('Q01');
         $q01Session = $itemSessions[0];
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
     }
 
     public function testExitSectionPreconditionsEndOfTest()
@@ -73,12 +73,12 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should be at the end of the test.
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
 
         // All session closed (parano mode again)?
         $itemSessions = $testSession->getAssessmentItemSessions('Q01');
         $q01Session = $itemSessions[0];
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
     }
 
     public function testExitTestPart()
@@ -95,7 +95,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 
         // We should arrive at testPart 2
         $testSession->moveNext();
-        $this->assertEquals('P02', $testSession->getCurrentTestPart()->getIdentifier());
+        $this::assertEquals('P02', $testSession->getCurrentTestPart()->getIdentifier());
     }
 
     public function testExitTestPartEndOfTest()
@@ -114,12 +114,12 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should be at the end of the test.
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
 
         // All session closed (parano mode all over again)?
         $itemSessions = $testSession->getAssessmentItemSessions('Q01');
         $q01Session = $itemSessions[0];
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
     }
 
     public function testExitTestPartPreconditionsEndOfTest()
@@ -138,12 +138,12 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should be at the end of the test.
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
 
         // All session closed (parano mode again)?
         $itemSessions = $testSession->getAssessmentItemSessions('Q01');
         $q01Session = $itemSessions[0];
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
     }
 
     public function testExitTest()
@@ -160,6 +160,6 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 
         // We should arrive at section 2.
         $testSession->moveNext();
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
 }

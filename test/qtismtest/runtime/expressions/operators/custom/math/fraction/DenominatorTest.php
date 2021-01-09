@@ -49,7 +49,7 @@ class DenominatorTest extends QtiSmTestCase
         $operator = new Denominator($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertEquals(2, $result->getValue());
+        $this::assertEquals(2, $result->getValue());
     }
 
     public function testReturnsNullOne()
@@ -63,7 +63,7 @@ class DenominatorTest extends QtiSmTestCase
         $operator = new Denominator($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertNull($result);
+        $this::assertNull($result);
     }
 
     public function testReturnsNullTwo()
@@ -77,6 +77,6 @@ class DenominatorTest extends QtiSmTestCase
         $operator = new Denominator($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertNull($result);
+        $this::assertNull($result);
     }
 }

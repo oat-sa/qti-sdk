@@ -28,10 +28,10 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('assessmentItemRef', $element->nodeName);
-        $this->assertEquals('Q01', $element->getAttribute('identifier'));
-        $this->assertEquals('./q01.xml', $element->getAttribute('href'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('assessmentItemRef', $element->nodeName);
+        $this::assertEquals('Q01', $element->getAttribute('identifier'));
+        $this::assertEquals('./q01.xml', $element->getAttribute('href'));
     }
 
     public function testUnmarshallMinimal()
@@ -43,13 +43,13 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $component);
-        $this->assertFalse($component->isTimeDependent());
-        $this->assertFalse($component->isAdaptive());
-        $this->assertEquals(0, count($component->getOutcomeDeclarations()));
-        $this->assertEquals(0, count($component->getResponseDeclarations()));
-        $this->assertEquals('Q01', $component->getIdentifier());
-        $this->assertEquals('./q01.xml', $component->getHref());
+        $this::assertInstanceOf(ExtendedAssessmentItemRef::class, $component);
+        $this::assertFalse($component->isTimeDependent());
+        $this::assertFalse($component->isAdaptive());
+        $this::assertEquals(0, count($component->getOutcomeDeclarations()));
+        $this::assertEquals(0, count($component->getResponseDeclarations()));
+        $this::assertEquals('Q01', $component->getIdentifier());
+        $this::assertEquals('./q01.xml', $component->getHref());
     }
 
     public function testMarshallModerate()
@@ -75,25 +75,25 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('assessmentItemRef', $element->nodeName);
-        $this->assertEquals('Q01', $element->getAttribute('identifier'));
-        $this->assertEquals('./q01.xml', $element->getAttribute('href'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('assessmentItemRef', $element->nodeName);
+        $this::assertEquals('Q01', $element->getAttribute('identifier'));
+        $this::assertEquals('./q01.xml', $element->getAttribute('href'));
 
         $weightElts = $element->getElementsByTagName('weight');
-        $this->assertEquals(2, $weightElts->length);
-        $this->assertEquals('W01', $weightElts->item(0)->getAttribute('identifier'));
-        $this->assertEquals('W02', $weightElts->item(1)->getAttribute('identifier'));
+        $this::assertEquals(2, $weightElts->length);
+        $this::assertEquals('W01', $weightElts->item(0)->getAttribute('identifier'));
+        $this::assertEquals('W02', $weightElts->item(1)->getAttribute('identifier'));
 
         $responseDeclarationElts = $element->getElementsByTagName('responseDeclaration');
-        $this->assertEquals(2, $responseDeclarationElts->length);
-        $this->assertEquals('R01', $responseDeclarationElts->item(0)->getAttribute('identifier'));
-        $this->assertEquals('R02', $responseDeclarationElts->item(1)->getAttribute('identifier'));
+        $this::assertEquals(2, $responseDeclarationElts->length);
+        $this::assertEquals('R01', $responseDeclarationElts->item(0)->getAttribute('identifier'));
+        $this::assertEquals('R02', $responseDeclarationElts->item(1)->getAttribute('identifier'));
 
         $outcomeDeclarationElts = $element->getElementsByTagName('outcomeDeclaration');
-        $this->assertEquals(2, $outcomeDeclarationElts->length);
-        $this->assertEquals('O01', $outcomeDeclarationElts->item(0)->getAttribute('identifier'));
-        $this->assertEquals('O02', $outcomeDeclarationElts->item(1)->getAttribute('identifier'));
+        $this::assertEquals(2, $outcomeDeclarationElts->length);
+        $this::assertEquals('O01', $outcomeDeclarationElts->item(0)->getAttribute('identifier'));
+        $this::assertEquals('O02', $outcomeDeclarationElts->item(1)->getAttribute('identifier'));
     }
 
     public function testUnmarshallModerate()
@@ -116,22 +116,22 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $component);
-        $this->assertEquals('Q01', $component->getIdentifier());
-        $this->assertTrue($component->isTimeDependent());
-        $this->assertTrue($component->isAdaptive());
-        $this->assertEquals('./q01.xml', $component->getHref());
+        $this::assertInstanceOf(ExtendedAssessmentItemRef::class, $component);
+        $this::assertEquals('Q01', $component->getIdentifier());
+        $this::assertTrue($component->isTimeDependent());
+        $this::assertTrue($component->isAdaptive());
+        $this::assertEquals('./q01.xml', $component->getHref());
 
         $weights = $component->getWeights();
-        $this->assertEquals('W01', $weights['W01']->getIdentifier());
-        $this->assertEquals('W02', $weights['W02']->getIdentifier());
+        $this::assertEquals('W01', $weights['W01']->getIdentifier());
+        $this::assertEquals('W02', $weights['W02']->getIdentifier());
 
         $responseDeclarations = $component->getResponseDeclarations();
-        $this->assertEquals('R01', $responseDeclarations['R01']->getIdentifier());
-        $this->assertEquals('R02', $responseDeclarations['R02']->getIdentifier());
+        $this::assertEquals('R01', $responseDeclarations['R01']->getIdentifier());
+        $this::assertEquals('R02', $responseDeclarations['R02']->getIdentifier());
 
         $outcomeDeclarations = $component->getOutcomeDeclarations();
-        $this->assertEquals('O01', $outcomeDeclarations['O01']->getIdentifier());
-        $this->assertEquals('O02', $outcomeDeclarations['O02']->getIdentifier());
+        $this::assertEquals('O01', $outcomeDeclarations['O01']->getIdentifier());
+        $this::assertEquals('O02', $outcomeDeclarations['O02']->getIdentifier());
     }
 }

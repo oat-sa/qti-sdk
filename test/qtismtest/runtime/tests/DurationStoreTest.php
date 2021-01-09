@@ -26,12 +26,12 @@ class DurationStoreTest extends QtiSmTestCase
         $data[] = new OutcomeVariable('duration3', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT2S'));
         $durations = new DurationStore($data);
 
-        $this->assertInstanceOf(DurationStore::class, $durations);
-        $this->assertTrue($durations['duration1']->equals(new QtiDuration('PT0S')));
-        $this->assertTrue($durations['duration2']->equals(new QtiDuration('PT1S')));
-        $this->assertTrue($durations['duration3']->equals(new QtiDuration('PT2S')));
+        $this::assertInstanceOf(DurationStore::class, $durations);
+        $this::assertTrue($durations['duration1']->equals(new QtiDuration('PT0S')));
+        $this::assertTrue($durations['duration2']->equals(new QtiDuration('PT1S')));
+        $this::assertTrue($durations['duration3']->equals(new QtiDuration('PT2S')));
 
-        $this->assertTrue(isset($durations['duration1']));
+        $this::assertTrue(isset($durations['duration1']));
     }
 
     public function testInstantiationWrongBaseType()
@@ -74,8 +74,8 @@ class DurationStoreTest extends QtiSmTestCase
     {
         $durations = new DurationStore();
         $durations->setVariable(new OutcomeVariable('duration1', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S')));
-        $this->assertInstanceOf(OutcomeVariable::class, $durations->getVariable('duration1'));
-        $this->assertTrue($durations['duration1']->equals(new QtiDuration('PT0S')));
+        $this::assertInstanceOf(OutcomeVariable::class, $durations->getVariable('duration1'));
+        $this::assertTrue($durations['duration1']->equals(new QtiDuration('PT0S')));
     }
 
     public function testSetVariableWrongBaseType()

@@ -44,14 +44,14 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null]);
         $processor = new ContainerSizeProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertSame(0, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertSame(0, $result->getValue());
 
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertSame(0, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertSame(0, $result->getValue());
     }
 
     public function testWrongCardinalityOne()
@@ -79,13 +79,13 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('String!')]);
         $processor = new ContainerSizeProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEquals(1, $result->getValue());
+        $this::assertEquals(1, $result->getValue());
 
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(2, 3), new QtiPoint(3, 4)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(3, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(3, $result->getValue());
     }
 
     /**

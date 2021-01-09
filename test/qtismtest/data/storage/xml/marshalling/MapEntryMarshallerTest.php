@@ -20,11 +20,11 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::INTEGER]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('mapEntry', $element->nodeName);
-        $this->assertEquals('1337', $element->getAttribute('mapKey'));
-        $this->assertEquals('1.377', $element->getAttribute('mappedValue'));
-        $this->assertEquals('true', $element->getAttribute('caseSensitive'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('mapEntry', $element->nodeName);
+        $this::assertEquals('1337', $element->getAttribute('mapKey'));
+        $this::assertEquals('1.377', $element->getAttribute('mappedValue'));
+        $this::assertEquals('true', $element->getAttribute('caseSensitive'));
     }
 
     public function testUnmarshall21()
@@ -36,12 +36,12 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(MapEntry::class, $component);
-        $this->assertIsInt($component->getMapKey());
-        $this->assertEquals(1337, $component->getMapKey());
-        $this->assertIsFloat($component->getMappedValue());
-        $this->assertEquals(1.377, $component->getMappedValue());
-        $this->assertIsBool($component->isCaseSensitive());
-        $this->assertEquals(true, $component->isCaseSensitive());
+        $this::assertInstanceOf(MapEntry::class, $component);
+        $this::assertIsInt($component->getMapKey());
+        $this::assertEquals(1337, $component->getMapKey());
+        $this::assertIsFloat($component->getMappedValue());
+        $this::assertEquals(1.377, $component->getMappedValue());
+        $this::assertIsBool($component->isCaseSensitive());
+        $this::assertEquals(true, $component->isCaseSensitive());
     }
 }

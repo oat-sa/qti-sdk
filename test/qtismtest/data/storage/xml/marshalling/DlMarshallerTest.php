@@ -28,36 +28,36 @@ class DlMarshallerTest extends QtiSmTestCase
             </dl>
         ');
 
-        $this->assertInstanceOf(Dl::class, $dl);
-        $this->assertEquals('my-description-list', $dl->getId());
+        $this::assertInstanceOf(Dl::class, $dl);
+        $this::assertEquals('my-description-list', $dl->getId());
         $dlContent = $dl->getContent();
-        $this->assertEquals(4, count($dlContent));
+        $this::assertEquals(4, count($dlContent));
 
         $dt1 = $dlContent[0];
-        $this->assertInstanceOf(Dt::class, $dt1);
+        $this::assertInstanceOf(Dt::class, $dt1);
         $dt1Content = $dt1->getContent();
-        $this->assertEquals(1, count($dt1Content));
-        $this->assertEquals('Cola', $dt1Content[0]->getContent());
+        $this::assertEquals(1, count($dt1Content));
+        $this::assertEquals('Cola', $dt1Content[0]->getContent());
 
         $dd1 = $dlContent[1];
-        $this->assertInstanceOf(Dd::class, $dd1);
-        $this->assertEquals('soda', $dd1->getClass());
+        $this::assertInstanceOf(Dd::class, $dd1);
+        $this::assertEquals('soda', $dd1->getClass());
         $dd1Content = $dd1->getContent();
-        $this->assertEquals(1, count($dd1Content));
-        $this->assertEquals('Black sparkling soda.', $dd1Content[0]->getContent());
+        $this::assertEquals(1, count($dd1Content));
+        $this::assertEquals('Black sparkling soda.', $dd1Content[0]->getContent());
 
         $dt2 = $dlContent[2];
-        $this->assertInstanceOf(Dt::class, $dt2);
-        $this->assertEquals('beverage', $dt2->getClass());
+        $this::assertInstanceOf(Dt::class, $dt2);
+        $this::assertEquals('beverage', $dt2->getClass());
         $dt2Content = $dt2->getContent();
-        $this->assertEquals(1, count($dt2Content));
-        $this->assertEquals('Tea', $dt2Content[0]->getContent());
+        $this::assertEquals(1, count($dt2Content));
+        $this::assertEquals('Tea', $dt2Content[0]->getContent());
 
         $dd2 = $dlContent[3];
-        $this->assertInstanceOf(Dd::class, $dd2);
+        $this::assertInstanceOf(Dd::class, $dd2);
         $dd2Content = $dd2->getContent();
-        $this->assertEquals(1, count($dd2Content));
-        $this->assertEquals('Hot water with something.', $dd2Content[0]->getContent());
+        $this::assertEquals(1, count($dd2Content));
+        $this::assertEquals('Hot water with something.', $dd2Content[0]->getContent());
     }
 
     public function testMarshall()
@@ -82,6 +82,6 @@ class DlMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<dl id="my-description-list"><dt>Cola</dt><dd class="soda">Black sparkling soda.</dd><dt class="beverage">Tea</dt><dd>Hot water with something</dd></dl>', $dom->saveXML($element));
+        $this::assertEquals('<dl id="my-description-list"><dt>Cola</dt><dd class="soda">Black sparkling soda.</dd><dt class="beverage">Tea</dt><dd>Hot water with something</dd></dl>', $dom->saveXML($element));
     }
 }

@@ -32,7 +32,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, $qtiDatatype);
         $marshaller->marshall();
 
-        $this->assertEquals($expectedInStream, $this->getStream()->getBinary());
+        $this::assertEquals($expectedInStream, $this->getStream()->getBinary());
     }
 
     public function testMarshallWrongDataType()

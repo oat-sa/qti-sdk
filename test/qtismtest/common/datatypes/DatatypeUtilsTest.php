@@ -16,7 +16,7 @@ class DatatypeUtilsTest extends QtiSmTestCase
      */
     public function testIsQtiIntegerValid($value)
     {
-        $this->assertTrue(Utils::isQtiInteger($value));
+        $this::assertTrue(Utils::isQtiInteger($value));
     }
 
     /**
@@ -25,7 +25,7 @@ class DatatypeUtilsTest extends QtiSmTestCase
      */
     public function testIsQtiIntegerInvalid($value)
     {
-        $this->assertFalse(Utils::isQtiInteger($value));
+        $this::assertFalse(Utils::isQtiInteger($value));
     }
 
     /**

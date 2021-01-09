@@ -21,7 +21,7 @@ class PhpCollectionMarshallerTest extends QtiSmPhpMarshallerTestCase
         $expected = '$array_0 = array();' . "\n";
         $expected .= '$integercollection_0 = new ' . IntegerCollection::class . '($array_0);' . "\n";
 
-        $this->assertEquals($expected, $this->getStream()->getBinary());
+        $this::assertEquals($expected, $this->getStream()->getBinary());
     }
 
     public function testIntegerCollection()
@@ -44,6 +44,6 @@ class PhpCollectionMarshallerTest extends QtiSmPhpMarshallerTestCase
         $expected .= '$array_0 = array($integer_0, $integer_1, $integer_2);' . "\n";
         $expected .= '$integercollection_0 = new ' . IntegerCollection::class . '($array_0);' . "\n";
 
-        $this->assertEquals($expected, $this->getStream()->getBinary());
+        $this::assertEquals($expected, $this->getStream()->getBinary());
     }
 }

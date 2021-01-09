@@ -52,9 +52,9 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     {
         $unmarshaller = self::createUnmarshaller();
         if ($expectedScalar !== null) {
-            $this->assertTrue($unmarshaller->unmarshall($json)->equals($expectedScalar));
+            $this::assertTrue($unmarshaller->unmarshall($json)->equals($expectedScalar));
         } else {
-            $this->assertSame($expectedScalar, $unmarshaller->unmarshall($json));
+            $this::assertSame($expectedScalar, $unmarshaller->unmarshall($json));
         }
     }
 
@@ -70,7 +70,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     {
         $unmarshaller = self::createUnmarshaller();
         $value = $unmarshaller->unmarshall($json);
-        $this->assertTrue($expectedComplex->equals($value));
+        $this::assertTrue($expectedComplex->equals($value));
     }
 
     /**
@@ -85,7 +85,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     {
         $unmarshaller = self::createUnmarshaller();
         $value = $unmarshaller->unmarshall($json);
-        $this->assertTrue($expectedFile->equals($value));
+        $this::assertTrue($expectedFile->equals($value));
 
         // cleanup.
         $fileManager = new FileSystemFileManager();
@@ -116,7 +116,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
 
         $unmarshaller = self::createUnmarshaller();
         $value = $unmarshaller->unmarshall($json);
-        $this->assertTrue($expectedFile->equals($value));
+        $this::assertTrue($expectedFile->equals($value));
     }
 
     /**
@@ -130,7 +130,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     public function testUnmarshallList(MultipleContainer $expectedContainer, $json)
     {
         $unmarshaller = self::createUnmarshaller();
-        $this->assertTrue($expectedContainer->equals($unmarshaller->unmarshall($json)));
+        $this::assertTrue($expectedContainer->equals($unmarshaller->unmarshall($json)));
     }
 
     public function testUnmarshallListException()
@@ -153,7 +153,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     public function testUnmarshallRecord(RecordContainer $expectedRecord, $json)
     {
         $unmarshaller = self::createUnmarshaller();
-        $this->assertTrue($expectedRecord->equals($unmarshaller->unmarshall($json)));
+        $this::assertTrue($expectedRecord->equals($unmarshaller->unmarshall($json)));
     }
 
     /**
@@ -211,18 +211,18 @@ class JsonUnmarshallerTest extends QtiSmTestCase
 
         $unmarshaller = self::createUnmarshaller();
         $state = $unmarshaller->unmarshall($json);
-        $this->assertEquals(4, count($state));
-        $this->assertEquals(['RESPONSE1', 'RESPONSE2', 'RESPONSE3', 'RESPONSE4'], array_keys($state));
+        $this::assertEquals(4, count($state));
+        $this::assertEquals(['RESPONSE1', 'RESPONSE2', 'RESPONSE3', 'RESPONSE4'], array_keys($state));
 
         $response1 = new QtiIdentifier('ChoiceA');
         $response2 = new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('_id1'), new QtiIdentifier('id2'), new QtiIdentifier('ID3')]);
         $response3 = new RecordContainer(['rock' => new QtiIdentifier('Paper')]);
         $response4 = null;
 
-        $this->assertTrue($response1->equals($state['RESPONSE1']));
-        $this->assertTrue($response2->equals($state['RESPONSE2']));
-        $this->assertTrue($response3->equals($state['RESPONSE3']));
-        $this->assertSame($response4, $state['RESPONSE4']);
+        $this::assertTrue($response1->equals($state['RESPONSE1']));
+        $this::assertTrue($response2->equals($state['RESPONSE2']));
+        $this::assertTrue($response3->equals($state['RESPONSE3']));
+        $this::assertSame($response4, $state['RESPONSE4']);
     }
 
     /**

@@ -32,17 +32,17 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('testFeedback', $element->nodeName);
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
-        $this->assertEquals($outcomeIdentifier, $element->getAttribute('outcomeIdentifier'));
-        $this->assertEquals('', $element->getAttribute('title'));
-        $this->assertEquals('atEnd', $element->getAttribute('access'));
-        $this->assertEquals('show', $element->getAttribute('showHide'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('testFeedback', $element->nodeName);
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertEquals($outcomeIdentifier, $element->getAttribute('outcomeIdentifier'));
+        $this::assertEquals('', $element->getAttribute('title'));
+        $this::assertEquals('atEnd', $element->getAttribute('access'));
+        $this::assertEquals('show', $element->getAttribute('showHide'));
 
         $content = $element->getElementsByTagName('div');
-        $this->assertEquals(1, $content->length);
-        $this->assertEquals(1, $content->item(0)->getElementsByTagName('p')->length);
+        $this::assertEquals(1, $content->length);
+        $this::assertEquals(1, $content->item(0)->getElementsByTagName('p')->length);
     }
 
     public function testUnmarshall()
@@ -56,12 +56,12 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(TestFeedback::class, $component);
-        $this->assertEquals('myIdentifier1', $component->getIdentifier());
-        $this->assertEquals(TestFeedbackAccess::AT_END, $component->getAccess());
-        $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
-        $this->assertEquals('my title', $component->getTitle());
-        $this->assertEquals('<p>Have a nice test!</p>', $component->getContent());
+        $this::assertInstanceOf(TestFeedback::class, $component);
+        $this::assertEquals('myIdentifier1', $component->getIdentifier());
+        $this::assertEquals(TestFeedbackAccess::AT_END, $component->getAccess());
+        $this::assertEquals(ShowHide::SHOW, $component->getShowHide());
+        $this::assertEquals('my title', $component->getTitle());
+        $this::assertEquals('<p>Have a nice test!</p>', $component->getContent());
     }
 
     /**
@@ -79,7 +79,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $class = new ReflectionClass(TestFeedbackMarshaller::class);
         $method = $class->getMethod('extractContent');
         $method->setAccessible(true);
-        $this->assertEquals($method->invokeArgs(null, [$element]), $expectedContent);
+        $this::assertEquals($method->invokeArgs(null, [$element]), $expectedContent);
     }
 
     /**

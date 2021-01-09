@@ -27,7 +27,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gapText identifier="gapText1" matchMax="1">My var is <printedVariable identifier="var1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></gapText>', $dom->saveXML($element));
+        $this::assertEquals('<gapText identifier="gapText1" matchMax="1">My var is <printedVariable identifier="var1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></gapText>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -39,13 +39,13 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapText = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(GapText::class, $gapText);
-        $this->assertEquals('gapText1', $gapText->getIdentifier());
-        $this->assertEquals(1, $gapText->getMatchMax());
-        $this->assertEquals(0, $gapText->getMatchMin());
-        $this->assertFalse($gapText->isFixed());
-        $this->assertFalse($gapText->hasTemplateIdentifier());
-        $this->assertEquals(ShowHide::SHOW, $gapText->getShowHide());
+        $this::assertInstanceOf(GapText::class, $gapText);
+        $this::assertEquals('gapText1', $gapText->getIdentifier());
+        $this::assertEquals(1, $gapText->getMatchMax());
+        $this::assertEquals(0, $gapText->getMatchMin());
+        $this::assertFalse($gapText->isFixed());
+        $this::assertFalse($gapText->hasTemplateIdentifier());
+        $this::assertEquals(ShowHide::SHOW, $gapText->getShowHide());
     }
 
     public function testUnmarshallComplexContentForQti22()
@@ -55,18 +55,18 @@ class GapTextMarshallerTest extends QtiSmTestCase
 	    ');
 
         $gapText = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(GapText::class, $gapText);
-        $this->assertEquals('gapText1', $gapText->getIdentifier());
-        $this->assertEquals(1, $gapText->getMatchMax());
-        $this->assertEquals(0, $gapText->getMatchMin());
-        $this->assertFalse($gapText->isFixed());
-        $this->assertFalse($gapText->hasTemplateIdentifier());
-        $this->assertEquals(ShowHide::SHOW, $gapText->getShowHide());
+        $this::assertInstanceOf(GapText::class, $gapText);
+        $this::assertEquals('gapText1', $gapText->getIdentifier());
+        $this::assertEquals(1, $gapText->getMatchMax());
+        $this::assertEquals(0, $gapText->getMatchMin());
+        $this::assertFalse($gapText->isFixed());
+        $this::assertFalse($gapText->hasTemplateIdentifier());
+        $this::assertEquals(ShowHide::SHOW, $gapText->getShowHide());
 
-        $this->assertCount(3, $gapText->getContent());
-        $this->assertInstanceOf(TextRun::class, $gapText->getContent()[0]);
-        $this->assertInstanceOf(Strong::class, $gapText->getContent()[1]);
-        $this->assertInstanceOf(TextRun::class, $gapText->getContent()[2]);
+        $this::assertCount(3, $gapText->getContent());
+        $this::assertInstanceOf(TextRun::class, $gapText->getContent()[0]);
+        $this::assertInstanceOf(Strong::class, $gapText->getContent()[1]);
+        $this::assertInstanceOf(TextRun::class, $gapText->getContent()[2]);
     }
 
     public function testUnmarshallInvalid()

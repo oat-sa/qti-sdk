@@ -21,7 +21,7 @@ class XmlUtilsTest extends QtiSmTestCase
         $elt = $this->createDOMElement($originalXmlString);
         $newElt = Utils::anonimizeElement($elt);
 
-        $this->assertEquals($expectedXmlString, $newElt->ownerDocument->saveXML($newElt));
+        $this::assertEquals($expectedXmlString, $newElt->ownerDocument->saveXML($newElt));
     }
 
     /**
@@ -60,7 +60,7 @@ class XmlUtilsTest extends QtiSmTestCase
         $document->load($file);
         $location = Utils::getXsdLocation($document, $namespaceUri);
 
-        $this->assertSame($expectedLocation, $location);
+        $this::assertSame($expectedLocation, $location);
     }
 
     /**

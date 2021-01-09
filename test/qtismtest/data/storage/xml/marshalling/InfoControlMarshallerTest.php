@@ -21,12 +21,12 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $component = new InfoControl();
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals(0, $element->childNodes->length);
-        $this->assertEquals('', $element->getAttribute('id'));
-        $this->assertEquals('', $element->getAttribute('class'));
-        $this->assertEquals('', $element->getAttribute('lang'));
-        $this->assertEquals('', $element->getAttribute('label'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals(0, $element->childNodes->length);
+        $this::assertEquals('', $element->getAttribute('id'));
+        $this::assertEquals('', $element->getAttribute('class'));
+        $this::assertEquals('', $element->getAttribute('lang'));
+        $this::assertEquals('', $element->getAttribute('label'));
     }
 
     public function testMarshallMinimalWithAttributes()
@@ -34,12 +34,12 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $component = new InfoControl('myControl', 'myInfo elt', 'en-US', 'A label...');
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals(0, $element->childNodes->length);
-        $this->assertEquals('myControl', $element->getAttribute('id'));
-        $this->assertEquals('myInfo elt', $element->getAttribute('class'));
-        $this->assertEquals('en-US', $element->getAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang'));
-        $this->assertEquals('A label...', $element->getAttribute('label'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals(0, $element->childNodes->length);
+        $this::assertEquals('myControl', $element->getAttribute('id'));
+        $this::assertEquals('myInfo elt', $element->getAttribute('class'));
+        $this::assertEquals('en-US', $element->getAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang'));
+        $this::assertEquals('A label...', $element->getAttribute('label'));
     }
 
     public function testUnmarshallMinimal()
@@ -47,12 +47,12 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<infoControl/>');
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf(InfoControl::class, $component);
-        $this->assertEquals(0, count($component->getComponents()));
-        $this->assertFalse($component->hasId());
-        $this->assertFalse($component->hasClass());
-        $this->assertFalse($component->hasLang());
-        $this->assertFalse($component->hasLabel());
+        $this::assertInstanceOf(InfoControl::class, $component);
+        $this::assertEquals(0, count($component->getComponents()));
+        $this::assertFalse($component->hasId());
+        $this::assertFalse($component->hasClass());
+        $this::assertFalse($component->hasLang());
+        $this::assertFalse($component->hasLabel());
     }
 
     public function testUnmarshallMinimalWithAttributes()
@@ -60,12 +60,12 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<infoControl id="myControl" class="myInfo elt" xml:lang="en-US" label="A label..."/>');
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf(InfoControl::class, $component);
-        $this->assertEquals(0, count($component->getComponents()));
-        $this->assertEquals('myControl', $component->getId());
-        $this->assertEquals('myInfo elt', $component->getClass());
-        $this->assertEquals('en-US', $component->getLang());
-        $this->assertEquals('A label...', $component->getLabel());
+        $this::assertInstanceOf(InfoControl::class, $component);
+        $this::assertEquals(0, count($component->getComponents()));
+        $this::assertEquals('myControl', $component->getId());
+        $this::assertEquals('myInfo elt', $component->getClass());
+        $this::assertEquals('en-US', $component->getLang());
+        $this::assertEquals('A label...', $component->getLabel());
     }
 
     public function testUnmarshallComplex()
@@ -77,21 +77,21 @@ class InfoControlMarshallerTest extends QtiSmTestCase
 	    ');
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf(InfoControl::class, $component);
-        $this->assertEquals('controlMePlease', $component->getId());
+        $this::assertInstanceOf(InfoControl::class, $component);
+        $this::assertEquals('controlMePlease', $component->getId());
         $content = $component->getContent();
-        $this->assertEquals(3, count($content));
+        $this::assertEquals(3, count($content));
 
-        $this->assertInstanceOf(TextRun::class, $content[0]);
-        $this->assertEquals('This is ', ltrim($content[0]->getContent()));
+        $this::assertInstanceOf(TextRun::class, $content[0]);
+        $this::assertEquals('This is ', ltrim($content[0]->getContent()));
 
-        $this->assertInstanceOf(Em::class, $content[1]);
+        $this::assertInstanceOf(Em::class, $content[1]);
         $emContent = $content[1]->getContent();
-        $this->assertEquals(1, count($emContent));
-        $this->assertEquals('gooood', $emContent[0]->getContent());
+        $this::assertEquals(1, count($emContent));
+        $this::assertEquals('gooood', $emContent[0]->getContent());
 
-        $this->assertInstanceOf(TextRun::class, $content[2]);
-        $this->assertEquals(' !', rtrim($content[2]->getContent()));
+        $this::assertInstanceOf(TextRun::class, $content[2]);
+        $this::assertEquals(' !', rtrim($content[2]->getContent()));
     }
 
     public function testMarshallComplex()
@@ -108,6 +108,6 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<infoControl id="controlMePlease">This is <em>gooood</em> !</infoControl>', $dom->saveXML($element));
+        $this::assertEquals('<infoControl id="controlMePlease">This is <em>gooood</em> !</infoControl>', $dom->saveXML($element));
     }
 }

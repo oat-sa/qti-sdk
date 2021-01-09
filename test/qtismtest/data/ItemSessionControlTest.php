@@ -13,9 +13,9 @@ class ItemSessionControlTest extends QtiSmTestCase
     public function testIsDefault()
     {
         $itemSessionControl = new ItemSessionControl();
-        $this->assertTrue($itemSessionControl->isDefault());
+        $this::assertTrue($itemSessionControl->isDefault());
 
         $itemSessionControl->setMaxAttempts(0);
-        $this->assertFalse($itemSessionControl->isDefault());
+        $this::assertFalse($itemSessionControl->isDefault());
     }
 }

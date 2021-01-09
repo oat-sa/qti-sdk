@@ -27,24 +27,24 @@ class XmlDocumentTest extends QtiSmTestCase
 
         $search = $doc->getDocumentComponent()->getComponentsByClassName('rubricBlock');
         $rubricBlock = $search[0];
-        $this->assertInstanceOf(RubricBlock::class, $rubricBlock);
+        $this::assertInstanceOf(RubricBlock::class, $rubricBlock);
 
         $content = $rubricBlock->getContent();
         $text = $content[0];
-        $this->assertEquals('Hello there', substr(trim($text->getContent()), 0, 11));
+        $this::assertEquals('Hello there', substr(trim($text->getContent()), 0, 11));
 
         $hr = $content[2];
-        $this->assertInstanceOf(Hr::class, $hr);
+        $this::assertInstanceOf(Hr::class, $hr);
 
         $div = $content[4];
-        $this->assertInstanceOf(Div::class, $div);
+        $this::assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
-        $this->assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
+        $this::assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
 
         $a = $content[7];
-        $this->assertInstanceOf(A::class, $a);
+        $this::assertInstanceOf(A::class, $a);
         $aContent = $a->getContent();
-        $this->assertEquals('Go to somewhere...', $aContent[0]->getContent());
+        $this::assertEquals('Go to somewhere...', $aContent[0]->getContent());
     }
 
     public function testRubricBlockRuptureValidation()
@@ -57,10 +57,10 @@ class XmlDocumentTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
         $valid = $dom->schemaValidate(__DIR__ . '/../../../../../qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
-        $this->assertTrue($valid, 'Even if the content of the rubricBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
+        $this::assertTrue($valid, 'Even if the content of the rubricBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
 
         $doc->load($file);
-        $this->assertTrue(true);
+        $this::assertTrue(true);
     }
 
     public function testTemplateBlockRuptureNoValidation()
@@ -71,23 +71,23 @@ class XmlDocumentTest extends QtiSmTestCase
         // Check the content...
         $search = $doc->getDocumentComponent()->getComponentsByClassName('templateBlock');
         $templateBlock = $search[0];
-        $this->assertInstanceOf(TemplateBlock::class, $templateBlock);
+        $this::assertInstanceOf(TemplateBlock::class, $templateBlock);
 
         $content = $templateBlock->getContent();
-        $this->assertEquals('Hello there', substr(trim($content[0]->getContent()), 0, 11));
+        $this::assertEquals('Hello there', substr(trim($content[0]->getContent()), 0, 11));
 
         $hr = $content[2];
-        $this->assertInstanceOf(Hr::class, $hr);
+        $this::assertInstanceOf(Hr::class, $hr);
 
         $div = $content[4];
-        $this->assertInstanceOf(Div::class, $div);
+        $this::assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
-        $this->assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
+        $this::assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
 
         $a = $content[7];
-        $this->assertInstanceOf(A::class, $a);
+        $this::assertInstanceOf(A::class, $a);
         $aContent = $a->getContent();
-        $this->assertEquals('Go to somewhere...', $aContent[0]->getContent());
+        $this::assertEquals('Go to somewhere...', $aContent[0]->getContent());
     }
 
     public function testTemplateBlockRuptureValidation()
@@ -97,10 +97,10 @@ class XmlDocumentTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
         $valid = $dom->schemaValidate(__DIR__ . '/../../../../../qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
-        $this->assertTrue($valid, 'Even if the content of the templateBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
+        $this::assertTrue($valid, 'Even if the content of the templateBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
 
         $doc->load($file);
-        $this->assertTrue(true);
+        $this::assertTrue(true);
     }
 
     public function testFeedbackBlockRuptureNoValidation()
@@ -112,26 +112,26 @@ class XmlDocumentTest extends QtiSmTestCase
         // Let's check the content of this...
         $test = $doc->getDocumentComponent();
         $feedbacks = $test->getComponentsByClassName('feedbackBlock');
-        $this->assertEquals(1, count($feedbacks));
+        $this::assertEquals(1, count($feedbacks));
 
         $feedback = $feedbacks[0];
         $content = $feedback->getContent();
         $text = $content[0];
-        $this->assertInstanceOf(TextRun::class, $text);
-        $this->assertEquals('Hello there', substr(trim($text->getContent()), 0, 11));
+        $this::assertInstanceOf(TextRun::class, $text);
+        $this::assertEquals('Hello there', substr(trim($text->getContent()), 0, 11));
 
         $hr = $content[2];
-        $this->assertInstanceOf(Hr::class, $hr);
+        $this::assertInstanceOf(Hr::class, $hr);
 
         $div = $content[4];
-        $this->assertInstanceOf(Div::class, $div);
+        $this::assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
-        $this->assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
+        $this::assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
 
         $a = $content[7];
-        $this->assertInstanceOf(A::class, $a);
+        $this::assertInstanceOf(A::class, $a);
         $aContent = $a->getContent();
-        $this->assertEquals('Go to somewhere...', $aContent[0]->getContent());
+        $this::assertEquals('Go to somewhere...', $aContent[0]->getContent());
     }
 
     public function testFeedbackBlockRuptureValidation()
@@ -141,10 +141,10 @@ class XmlDocumentTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
         $valid = $dom->schemaValidate(__DIR__ . '/../../../../../qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
-        $this->assertTrue($valid, 'Even if the content of the feedbackBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
+        $this::assertTrue($valid, 'Even if the content of the feedbackBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
 
         $doc->load($file);
-        $this->assertTrue(true);
+        $this::assertTrue(true);
     }
 
     public function testPromptRuptureNoValidation()
@@ -155,23 +155,23 @@ class XmlDocumentTest extends QtiSmTestCase
 
         $search = $doc->getDocumentComponent()->getComponentsByClassName('prompt');
         $prompt = $search[0];
-        $this->assertInstanceOf(Prompt::class, $prompt);
+        $this::assertInstanceOf(Prompt::class, $prompt);
 
         $promptContent = $prompt->getContent();
-        $this->assertEquals('Hell ', $promptContent[0]->getContent());
+        $this::assertEquals('Hell ', $promptContent[0]->getContent());
         $div = $promptContent[1];
         $divContent = $div->getContent();
-        $this->assertEquals('YEAH!', $divContent[0]->getContent());
+        $this::assertEquals('YEAH!', $divContent[0]->getContent());
 
         $search = $doc->getDocumentComponent()->getComponentsByClassName('choiceInteraction');
         $choiceInteraction = $search[0];
-        $this->assertInstanceOf(ChoiceInteraction::class, $choiceInteraction);
+        $this::assertInstanceOf(ChoiceInteraction::class, $choiceInteraction);
 
         $simpleChoices = $choiceInteraction->getSimpleChoices();
-        $this->assertEquals(1, count($simpleChoices));
+        $this::assertEquals(1, count($simpleChoices));
 
         $simpleChoiceContent = $simpleChoices[0]->getContent();
-        $this->assertEquals('Resistance is futile!', $simpleChoiceContent[0]->getContent());
+        $this::assertEquals('Resistance is futile!', $simpleChoiceContent[0]->getContent());
     }
 
     public function testPromptRuptureValidation()
@@ -181,10 +181,10 @@ class XmlDocumentTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
         $valid = $dom->schemaValidate(__DIR__ . '/../../../../../qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
-        $this->assertTrue($valid, 'Even if the content of the prompt is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
+        $this::assertTrue($valid, 'Even if the content of the prompt is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
 
         $doc->load($file);
-        $this->assertTrue(true);
+        $this::assertTrue(true);
     }
 
     public function testAmps()
@@ -195,11 +195,11 @@ class XmlDocumentTest extends QtiSmTestCase
 
         $root = $doc->getDocumentComponent();
         $divs = $root->getComponentsByClassName('div');
-        $this->assertEquals(1, count($divs));
+        $this::assertEquals(1, count($divs));
 
         $divContent = $divs[0]->getContent();
         $divText = $divContent[0];
-        $this->assertEquals('Hello there & there! I am trying to make <you> "crazy"', $divText->getcontent());
+        $this::assertEquals('Hello there & there! I am trying to make <you> "crazy"', $divText->getcontent());
     }
 
     /**
@@ -212,7 +212,7 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $dom = new XmlDocument();
         $dom->load($file);
-        $this->assertEquals($expectedVersion, $dom->getVersion());
+        $this::assertEquals($expectedVersion, $dom->getVersion());
     }
 
     /**

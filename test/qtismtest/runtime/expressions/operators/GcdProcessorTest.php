@@ -30,7 +30,7 @@ class GcdProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection($operands);
         $processor = new GcdProcessor($expression, $operands);
-        $this->assertSame($expected, $processor->process()->getValue());
+        $this::assertSame($expected, $processor->process()->getValue());
     }
 
     public function testNotEnoughOperands()
@@ -69,7 +69,7 @@ class GcdProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection($operands);
         $processor = new GcdProcessor($expression, $operands);
-        $this->assertSame(null, $processor->process());
+        $this::assertSame(null, $processor->process());
     }
 
     /**

@@ -58,7 +58,7 @@ class NotProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null]);
         $processor = new NotProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testTrue()
@@ -67,7 +67,7 @@ class NotProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiBoolean(false)]);
         $processor = new NotProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(true, $result->getValue());
+        $this::assertSame(true, $result->getValue());
     }
 
     public function testFalse()
@@ -76,8 +76,8 @@ class NotProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiBoolean(true)]);
         $processor = new NotProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertSame(false, $result->getValue());
     }
 
     /**

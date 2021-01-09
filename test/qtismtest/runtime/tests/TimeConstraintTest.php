@@ -19,8 +19,8 @@ class TimeConstraintTest extends QtiSmTestCase
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT20S'));
 
-        $this->assertInstanceOf(AssessmentItemRef::class, $timeConstraint->getSource());
-        $this->assertInstanceOf(QtiDuration::class, $timeConstraint->getDuration());
+        $this::assertInstanceOf(AssessmentItemRef::class, $timeConstraint->getSource());
+        $this::assertInstanceOf(QtiDuration::class, $timeConstraint->getDuration());
     }
 
     public function testNoConstraints()
@@ -29,10 +29,10 @@ class TimeConstraintTest extends QtiSmTestCase
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT20S'));
 
         // No timelimits in force.
-        $this->assertFalse($timeConstraint->getMaximumRemainingTime());
-        $this->assertFalse($timeConstraint->getMinimumRemainingTime());
-        $this->assertFalse($timeConstraint->minTimeInForce());
-        $this->assertFalse($timeConstraint->maxTimeInForce());
+        $this::assertFalse($timeConstraint->getMaximumRemainingTime());
+        $this::assertFalse($timeConstraint->getMinimumRemainingTime());
+        $this::assertFalse($timeConstraint->minTimeInForce());
+        $this::assertFalse($timeConstraint->maxTimeInForce());
     }
 
     public function testNegativeTime()
@@ -43,10 +43,10 @@ class TimeConstraintTest extends QtiSmTestCase
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT20S'));
 
         $maxRemaining = $timeConstraint->getMaximumRemainingTime();
-        $this->assertEquals('PT0S', $maxRemaining->__toString());
+        $this::assertEquals('PT0S', $maxRemaining->__toString());
 
         $minRemaining = $timeConstraint->getMinimumRemainingTime();
-        $this->assertFalse($minRemaining);
+        $this::assertFalse($minRemaining);
     }
 
     public function testDoesAllowLateSubmission()
@@ -55,40 +55,40 @@ class TimeConstraintTest extends QtiSmTestCase
         $timeLimits = new TimeLimits(null, new QtiDuration('PT10S'), true);
         $assessmentItemRef->setTimeLimits($timeLimits);
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT5S'));
-        $this->assertTrue($timeConstraint->allowLateSubmission());
+        $this::assertTrue($timeConstraint->allowLateSubmission());
 
         $timeLimits->setAllowLateSubmission(false);
-        $this->assertFalse($timeConstraint->allowLateSubmission());
+        $this::assertFalse($timeConstraint->allowLateSubmission());
 
         $timeLimits->setMaxTime(null);
-        $this->assertTrue($timeConstraint->allowLateSubmission());
+        $this::assertTrue($timeConstraint->allowLateSubmission());
 
         $assessmentItemRef->setTimeLimits(null);
-        $this->assertTrue($timeConstraint->allowLateSubmission());
+        $this::assertTrue($timeConstraint->allowLateSubmission());
     }
 
     public function testRemainingTime()
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT20S'));
-        $this->assertFalse($timeConstraint->maxTimeInForce());
-        $this->assertFalse($timeConstraint->minTimeInForce());
+        $this::assertFalse($timeConstraint->maxTimeInForce());
+        $this::assertFalse($timeConstraint->minTimeInForce());
         // There's no max remaining time nor min remaining time.
-        $this->assertFalse($timeConstraint->getMaximumRemainingTime());
-        $this->assertFalse($timeConstraint->getMinimumRemainingTime());
+        $this::assertFalse($timeConstraint->getMaximumRemainingTime());
+        $this::assertFalse($timeConstraint->getMinimumRemainingTime());
 
         $timeLimits = new TimeLimits();
         $assessmentItemRef->setTimeLimits($timeLimits);
         // There's still no max nor min remaining time.
-        $this->assertFalse($timeConstraint->getMaximumRemainingTime());
-        $this->assertFalse($timeConstraint->getMinimumRemainingTime());
+        $this::assertFalse($timeConstraint->getMaximumRemainingTime());
+        $this::assertFalse($timeConstraint->getMinimumRemainingTime());
 
         $timeLimits->setMinTime(new QtiDuration('PT30S'));
-        $this->assertEquals('PT10S', $timeConstraint->getMinimumRemainingTime()->__toString());
-        $this->assertFalse($timeConstraint->getMaximumRemainingTime());
+        $this::assertEquals('PT10S', $timeConstraint->getMinimumRemainingTime()->__toString());
+        $this::assertFalse($timeConstraint->getMaximumRemainingTime());
 
         $timeLimits->setMaxTime(new QtiDuration('PT50S'));
-        $this->assertEquals('PT30S', $timeConstraint->getMaximumRemainingTime()->__toString());
+        $this::assertEquals('PT30S', $timeConstraint->getMaximumRemainingTime()->__toString());
     }
 
     public function testNonLinearNavigationMode()
@@ -100,8 +100,8 @@ class TimeConstraintTest extends QtiSmTestCase
 
         // Minimum times are applicable to assessmentSections and assessmentItems only when linear navigation
         // mode is in effect.
-        $this->assertFalse($timeConstraint->minTimeInForce());
-        $this->assertFalse($timeConstraint->getMinimumRemainingTime());
+        $this::assertFalse($timeConstraint->minTimeInForce());
+        $this::assertFalse($timeConstraint->getMinimumRemainingTime());
     }
 
     public function testLinearNavigationMode()
@@ -113,7 +113,7 @@ class TimeConstraintTest extends QtiSmTestCase
 
         // Minimum times are applicable to assessmentSections and assessmentItems only when linear navigation
         // mode is in effect, this is the case!
-        $this->assertTrue($timeConstraint->minTimeInForce());
-        $this->assertEquals('PT0S', $timeConstraint->getMinimumRemainingTime()->__toString());
+        $this::assertTrue($timeConstraint->minTimeInForce());
+        $this::assertEquals('PT0S', $timeConstraint->getMinimumRemainingTime()->__toString());
     }
 }

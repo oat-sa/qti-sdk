@@ -23,7 +23,7 @@ class GapMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<gap identifier="gap1" templateIdentifier="tpl-gap" required="true" id="my-gap" class="gaps"/>',
             $dom->saveXML($element)
         );
@@ -38,12 +38,12 @@ class GapMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gap = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Gap::class, $gap);
-        $this->assertEquals('gap1', $gap->getIdentifier());
-        $this->assertEquals('tpl-gap', $gap->getTemplateIdentifier());
-        $this->assertTrue($gap->hasTemplateIdentifier());
-        $this->assertTrue($gap->isRequired());
-        $this->assertEquals('gaps', $gap->getClass());
-        $this->assertEquals(ShowHide::HIDE, $gap->getShowHide());
+        $this::assertInstanceOf(Gap::class, $gap);
+        $this::assertEquals('gap1', $gap->getIdentifier());
+        $this::assertEquals('tpl-gap', $gap->getTemplateIdentifier());
+        $this::assertTrue($gap->hasTemplateIdentifier());
+        $this::assertTrue($gap->isRequired());
+        $this::assertEquals('gaps', $gap->getClass());
+        $this::assertEquals(ShowHide::HIDE, $gap->getShowHide());
     }
 }

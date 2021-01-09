@@ -22,8 +22,8 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument('2.1');
         $doc->load($uri);
 
-        $this->assertInstanceOf(XmlDocument::class, $doc);
-        $this->assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
+        $this::assertInstanceOf(XmlDocument::class, $doc);
+        $this::assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
     }
 
     public function testLoadFileDoesNotExist()
@@ -43,11 +43,11 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 
         try {
             $doc->load($uri);
-            $this->assertFalse(true); // An exception must have been thrown.
+            $this::assertFalse(true); // An exception must have been thrown.
         } catch (XmlStorageException $e) {
-            $this->assertIsString($e->getMessage());
-            $this->assertInstanceOf(LibXmlErrorCollection::class, $e->getErrors());
-            $this->assertGreaterThan(0, count($e->getErrors()));
+            $this::assertIsString($e->getMessage());
+            $this::assertInstanceOf(LibXmlErrorCollection::class, $e->getErrors());
+            $this::assertGreaterThan(0, count($e->getErrors()));
         }
     }
 
@@ -56,9 +56,9 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/simple_itemsessioncontrol_testpart.xml');
         $testParts = $doc->getDocumentComponent()->getTestParts();
-        $this->assertTrue($testParts['testPartId']->hasItemSessionControl());
-        $this->assertIsInt($testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
-        $this->assertEquals(0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
+        $this::assertTrue($testParts['testPartId']->hasItemSessionControl());
+        $this::assertIsInt($testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
+        $this::assertEquals(0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
     }
 
     public function testSaveSimpleItemSessionControlOnTestPart()
@@ -71,9 +71,9 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument('2.1');
         $doc->load($file);
         $testParts = $doc->getDocumentComponent()->getTestParts();
-        $this->assertTrue($testParts['testPartId']->hasItemSessionControl());
-        $this->assertIsInt($testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
-        $this->assertEquals(0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
+        $this::assertTrue($testParts['testPartId']->hasItemSessionControl());
+        $this::assertIsInt($testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
+        $this::assertEquals(0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
 
         unlink($file);
     }
@@ -85,8 +85,8 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $doc->load($uri);
         $doc->schemaValidate();
 
-        $this->assertInstanceOf(XmlDocument::class, $doc);
-        $this->assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
+        $this::assertInstanceOf(XmlDocument::class, $doc);
+        $this::assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
     }
 
     public function testItemSessionControls()
@@ -96,13 +96,13 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 
         // Q01.
         $q01 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
-        $this->assertInstanceOf(AssessmentItemRef::class, $q01);
-        $this->assertEquals(2, $q01->getItemSessionControl()->getMaxAttempts());
+        $this::assertInstanceOf(AssessmentItemRef::class, $q01);
+        $this::assertEquals(2, $q01->getItemSessionControl()->getMaxAttempts());
 
         // P02.
         $p02 = $doc->getDocumentComponent()->getComponentByIdentifier('P02');
-        $this->assertInstanceOf(TestPart::class, $p02);
-        $this->assertEquals(4, $p02->getItemSessionControl()->getMaxAttempts());
+        $this::assertInstanceOf(TestPart::class, $p02);
+        $this::assertEquals(4, $p02->getItemSessionControl()->getMaxAttempts());
     }
 
     public function testAssessmentSectionRefsInTestParts()
@@ -111,11 +111,11 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', true);
 
         $testParts = $doc->getDocumentComponent()->getTestParts();
-        $this->assertTrue(isset($testParts['T01']));
+        $this::assertTrue(isset($testParts['T01']));
 
         $sectionParts = $testParts['T01']->getAssessmentSections();
-        $this->assertTrue(isset($sectionParts['SR01']));
-        $this->assertInstanceOf(AssessmentSectionRef::class, $sectionParts['SR01']);
+        $this::assertTrue(isset($sectionParts['SR01']));
+        $this::assertInstanceOf(AssessmentSectionRef::class, $sectionParts['SR01']);
     }
 
     public function testIncludeAssessmentSectionRefsInTestParts()
@@ -127,25 +127,25 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $root = $doc->getDocumentComponent();
 
         $testParts = $root->getTestParts();
-        $this->assertTrue(isset($testParts['T01']));
+        $this::assertTrue(isset($testParts['T01']));
 
         // Check that assessmentSectionRef 'SR01' has been resolved.
         $sectionParts = $testParts['T01']->getAssessmentSections();
 
-        $this->assertTrue(isset($sectionParts['S01']));
-        $this->assertFalse(isset($sectionParts['SR01']));
-        $this->assertTrue(isset($sectionParts['S01']->getSectionParts()['S02']));
+        $this::assertTrue(isset($sectionParts['S01']));
+        $this::assertFalse(isset($sectionParts['SR01']));
+        $this::assertTrue(isset($sectionParts['S01']->getSectionParts()['S02']));
 
         // Check that the final assessmentSection contains the assessmentItemRefs.
         $assessmentItemRefs = $sectionParts['S01']->getSectionParts()['S02']->getSectionParts();
-        $this->assertEquals(3, count($assessmentItemRefs));
+        $this::assertEquals(3, count($assessmentItemRefs));
 
-        $this->assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q01']);
-        $this->assertEquals('../sections/../sections/../items/question1.xml', $assessmentItemRefs['Q01']->getHref());
-        $this->assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q02']);
-        $this->assertEquals('../sections/../sections/../items/question2.xml', $assessmentItemRefs['Q02']->getHref());
-        $this->assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q03']);
-        $this->assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
+        $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q01']);
+        $this::assertEquals('../sections/../sections/../items/question1.xml', $assessmentItemRefs['Q01']->getHref());
+        $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q02']);
+        $this::assertEquals('../sections/../sections/../items/question2.xml', $assessmentItemRefs['Q02']->getHref());
+        $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q03']);
+        $this::assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
     }
 
     /**

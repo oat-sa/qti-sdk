@@ -31,11 +31,11 @@ class BodyElementRendererTest extends QtiSmTestCase
 
         $element = $renderer->render($br)->firstChild;
 
-        $this->assertEquals('br', $element->nodeName);
-        $this->assertEquals('my-br', $element->getAttribute('id'));
-        $this->assertEquals('break down qti-bodyElement qti-br', $element->getAttribute('class'));
-        $this->assertEquals('en-US', $element->getAttribute('lang'));
-        $this->assertEquals('', $element->getAttribute('label'));
+        $this::assertEquals('br', $element->nodeName);
+        $this::assertEquals('my-br', $element->getAttribute('id'));
+        $this::assertEquals('break down qti-bodyElement qti-br', $element->getAttribute('class'));
+        $this::assertEquals('en-US', $element->getAttribute('lang'));
+        $this::assertEquals('', $element->getAttribute('label'));
     }
 
     /**
@@ -59,22 +59,22 @@ class BodyElementRendererTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $abbrRenderer->render($abbr)->firstChild;
 
-        $this->assertEquals('abbr', $element->nodeName);
-        $this->assertEquals('my-abbr', $element->getAttribute('id'));
-        $this->assertEquals('qti qti-abbr qti-bodyElement qti-abbr', $element->getAttribute('class'));
-        $this->assertEquals('abbreviation...', $element->firstChild->wholeText);
+        $this::assertEquals('abbr', $element->nodeName);
+        $this::assertEquals('my-abbr', $element->getAttribute('id'));
+        $this::assertEquals('qti qti-abbr qti-bodyElement qti-abbr', $element->getAttribute('class'));
+        $this::assertEquals('abbreviation...', $element->firstChild->wholeText);
 
         // no aria-* attributes should be found...
-        $this->assertSame('', $element->getAttribute('aria-orientation'));
-        $this->assertSame('', $element->getAttribute('aria-live'));
-        $this->assertSame('', $element->getAttribute('aria-level'));
-        $this->assertSame('', $element->getAttribute('aria-owns'));
-        $this->assertSame('', $element->getAttribute('aria-labelledby'));
-        $this->assertSame('', $element->getAttribute('aria-flowto'));
-        $this->assertSame('', $element->getAttribute('aria-label'));
-        $this->assertSame('', $element->getAttribute('aria-describedby'));
-        $this->assertSame('', $element->getAttribute('aria-controls'));
-        $this->assertSame('', $element->getAttribute('aria-hidden'));
+        $this::assertSame('', $element->getAttribute('aria-orientation'));
+        $this::assertSame('', $element->getAttribute('aria-live'));
+        $this::assertSame('', $element->getAttribute('aria-level'));
+        $this::assertSame('', $element->getAttribute('aria-owns'));
+        $this::assertSame('', $element->getAttribute('aria-labelledby'));
+        $this::assertSame('', $element->getAttribute('aria-flowto'));
+        $this::assertSame('', $element->getAttribute('aria-label'));
+        $this::assertSame('', $element->getAttribute('aria-describedby'));
+        $this::assertSame('', $element->getAttribute('aria-controls'));
+        $this::assertSame('', $element->getAttribute('aria-hidden'));
     }
 
     /**
@@ -101,16 +101,16 @@ class BodyElementRendererTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $renderer->render($span)->firstChild;
 
-        $this->assertEquals('span', $element->nodeName);
-        $this->assertEquals('horizontal', $element->getAttribute('aria-orientation'));
-        $this->assertEquals('polite', $element->getAttribute('aria-live'));
-        $this->assertEquals('5', $element->getAttribute('aria-level'));
-        $this->assertEquals('IDREF1', $element->getAttribute('aria-owns'));
-        $this->assertEquals('IDREF2', $element->getAttribute('aria-labelledby'));
-        $this->assertEquals('IDREF3', $element->getAttribute('aria-flowto'));
-        $this->assertEquals('my label', $element->getAttribute('aria-label'));
-        $this->assertEquals('IDREF4', $element->getAttribute('aria-describedby'));
-        $this->assertEquals('IDREF5', $element->getAttribute('aria-controls'));
-        $this->assertEquals('true', $element->getAttribute('aria-hidden'));
+        $this::assertEquals('span', $element->nodeName);
+        $this::assertEquals('horizontal', $element->getAttribute('aria-orientation'));
+        $this::assertEquals('polite', $element->getAttribute('aria-live'));
+        $this::assertEquals('5', $element->getAttribute('aria-level'));
+        $this::assertEquals('IDREF1', $element->getAttribute('aria-owns'));
+        $this::assertEquals('IDREF2', $element->getAttribute('aria-labelledby'));
+        $this::assertEquals('IDREF3', $element->getAttribute('aria-flowto'));
+        $this::assertEquals('my label', $element->getAttribute('aria-label'));
+        $this::assertEquals('IDREF4', $element->getAttribute('aria-describedby'));
+        $this::assertEquals('IDREF5', $element->getAttribute('aria-controls'));
+        $this::assertEquals('true', $element->getAttribute('aria-hidden'));
     }
 }

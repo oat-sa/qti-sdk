@@ -25,7 +25,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<templateDeclaration identifier="tpl1" cardinality="single" baseType="identifier"><defaultValue><value>tplx</value></defaultValue></templateDeclaration>', $dom->saveXML($element));
+        $this::assertEquals('<templateDeclaration identifier="tpl1" cardinality="single" baseType="identifier"><defaultValue><value>tplx</value></defaultValue></templateDeclaration>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -35,15 +35,15 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(TemplateDeclaration::class, $component);
-        $this->assertEquals('tpl1', $component->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $component->getCardinality());
-        $this->assertEquals(BaseType::IDENTIFIER, $component->getBaseType());
+        $this::assertInstanceOf(TemplateDeclaration::class, $component);
+        $this::assertEquals('tpl1', $component->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $component->getCardinality());
+        $this::assertEquals(BaseType::IDENTIFIER, $component->getBaseType());
 
         $default = $component->getDefaultValue();
-        $this->assertInstanceOf(DefaultValue::class, $default);
+        $this::assertInstanceOf(DefaultValue::class, $default);
         $values = $default->getValues();
-        $this->assertEquals(1, count($values));
-        $this->assertEquals('tplx', $values[0]->getValue());
+        $this::assertEquals(1, count($values));
+        $this::assertEquals('tplx', $values[0]->getValue());
     }
 }

@@ -22,27 +22,27 @@ class RecordContainerTest extends QtiSmTestCase
     public function testValid()
     {
         $record = new RecordContainer();
-        $this->assertInstanceOf(RecordContainer::class, $record);
+        $this::assertInstanceOf(RecordContainer::class, $record);
 
         $record = new RecordContainer(['key1' => new QtiInteger(1), 'key2' => new QtiString('a string'), 'key3' => new QtiPoint(10, 10)]);
-        $this->assertEquals(3, count($record));
-        $this->assertEquals(1, $record['key1']->getValue());
-        $this->assertEquals('a string', $record['key2']->getValue());
-        $this->assertTrue($record['key3']->equals(new QtiPoint(10, 10)));
-        $this->assertEquals(1, $record->occurences(new QtiInteger(1)));
-        $this->assertEquals(1, $record->occurences(new QtiPoint(10, 10)));
+        $this::assertEquals(3, count($record));
+        $this::assertEquals(1, $record['key1']->getValue());
+        $this::assertEquals('a string', $record['key2']->getValue());
+        $this::assertTrue($record['key3']->equals(new QtiPoint(10, 10)));
+        $this::assertEquals(1, $record->occurences(new QtiInteger(1)));
+        $this::assertEquals(1, $record->occurences(new QtiPoint(10, 10)));
     }
 
     public function testEquals()
     {
         $record1 = new RecordContainer(['one' => new QtiInteger(1), 'two' => new QtiInteger(2)]);
         $record2 = new RecordContainer(['two' => new QtiInteger(2), 'one' => new QtiInteger(1)]);
-        $this->assertTrue($record1->equals($record2));
-        $this->assertTrue($record2->equals($record1));
+        $this::assertTrue($record1->equals($record2));
+        $this::assertTrue($record2->equals($record1));
 
         $record3 = new RecordContainer(['three' => new QtiInteger(3), 'four' => new QtiInteger(4)]);
-        $this->assertFalse($record1->equals($record3));
-        $this->assertFalse($record3->equals($record1));
+        $this::assertFalse($record1->equals($record3));
+        $this::assertFalse($record3->equals($record1));
     }
 
     public function testInvalidInstantiationOne()
@@ -88,10 +88,10 @@ class RecordContainerTest extends QtiSmTestCase
         $valueCollection[] = $value;
 
         $record = RecordContainer::createFromDataModel($valueCollection);
-        $this->assertInstanceOf(RecordContainer::class, $record);
-        $this->assertEquals(2, count($record));
-        $this->assertEquals(15, $record['val1']->getValue());
-        $this->assertEquals('string', $record['val2']->getValue());
+        $this::assertInstanceOf(RecordContainer::class, $record);
+        $this::assertEquals(2, count($record));
+        $this::assertEquals(15, $record['val1']->getValue());
+        $this::assertEquals('string', $record['val2']->getValue());
     }
 
     public function testCreateFromDataModelNoFieldIdentifier()

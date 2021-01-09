@@ -58,33 +58,33 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('assessmentTest', $element->nodeName);
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
-        $this->assertEquals($title, $element->getAttribute('title'));
-        $this->assertEquals($toolName, $element->getAttribute('toolName'));
-        $this->assertEquals($toolVersion, $element->getAttribute('toolVersion'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('assessmentTest', $element->nodeName);
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertEquals($title, $element->getAttribute('title'));
+        $this::assertEquals($toolName, $element->getAttribute('toolName'));
+        $this::assertEquals($toolVersion, $element->getAttribute('toolVersion'));
 
         // testParts
-        $this->assertEquals(1, $element->getElementsByTagName('testPart')->length);
-        $this->assertTrue($element === $element->getElementsByTagName('testPart')->item(0)->parentNode);
+        $this::assertEquals(1, $element->getElementsByTagName('testPart')->length);
+        $this::assertTrue($element === $element->getElementsByTagName('testPart')->item(0)->parentNode);
 
         // assessmentSections
         $testPart = $element->getElementsByTagName('testPart')->item(0);
-        $this->assertEquals(1, $element->getElementsByTagName('assessmentSection')->length);
-        $this->assertTrue($testPart === $element->getElementsByTagName('assessmentSection')->item(0)->parentNode);
+        $this::assertEquals(1, $element->getElementsByTagName('assessmentSection')->length);
+        $this::assertTrue($testPart === $element->getElementsByTagName('assessmentSection')->item(0)->parentNode);
 
         // outcomeDeclarations
-        $this->assertEquals(1, $element->getElementsByTagName('outcomeDeclaration')->length);
-        $this->assertTrue($element === $element->getElementsByTagName('outcomeDeclaration')->item(0)->parentNode);
+        $this::assertEquals(1, $element->getElementsByTagName('outcomeDeclaration')->length);
+        $this::assertTrue($element === $element->getElementsByTagName('outcomeDeclaration')->item(0)->parentNode);
 
         // testFeedbacks
-        $this->assertEquals(1, $element->getElementsByTagName('testFeedback')->length);
-        $this->assertTrue($element === $element->getElementsByTagName('testFeedback')->item(0)->parentNode);
+        $this::assertEquals(1, $element->getElementsByTagName('testFeedback')->length);
+        $this::assertTrue($element === $element->getElementsByTagName('testFeedback')->item(0)->parentNode);
 
         // outcomeProcessing
-        $this->assertEquals(1, $element->getElementsByTagName('outcomeProcessing')->length);
-        $this->assertTrue($element === $element->getElementsByTagName('outcomeProcessing')->item(0)->parentNode);
+        $this::assertEquals(1, $element->getElementsByTagName('outcomeProcessing')->length);
+        $this::assertTrue($element === $element->getElementsByTagName('outcomeProcessing')->item(0)->parentNode);
     }
 
     public function testUnmarshall()
@@ -113,16 +113,16 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(AssessmentTest::class, $component);
-        $this->assertEquals('myAssessmentTest', $component->getIdentifier());
-        $this->assertEquals('My Assessment Test', $component->getTitle());
-        $this->assertEquals('QTIStateMachine', $component->getToolName());
-        $this->assertEquals('1.0b', $component->getToolVersion());
-        $this->assertTrue($component->isExclusivelyLinear());
+        $this::assertInstanceOf(AssessmentTest::class, $component);
+        $this::assertEquals('myAssessmentTest', $component->getIdentifier());
+        $this::assertEquals('My Assessment Test', $component->getTitle());
+        $this::assertEquals('QTIStateMachine', $component->getToolName());
+        $this::assertEquals('1.0b', $component->getToolVersion());
+        $this::assertTrue($component->isExclusivelyLinear());
 
-        $this->assertEquals(1, count($component->getTestFeedbacks()));
-        $this->assertEquals(1, count($component->getTestParts()));
-        $this->assertEquals(1, count($component->getOutcomeDeclarations()));
-        $this->assertInstanceOf(OutcomeProcessing::class, $component->getOutcomeProcessing());
+        $this::assertEquals(1, count($component->getTestFeedbacks()));
+        $this::assertEquals(1, count($component->getTestParts()));
+        $this::assertEquals(1, count($component->getOutcomeDeclarations()));
+        $this::assertInstanceOf(OutcomeProcessing::class, $component->getOutcomeProcessing());
     }
 }

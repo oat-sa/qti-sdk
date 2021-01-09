@@ -28,11 +28,11 @@ class MatchProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10)]);
         $processor = new MatchProcessor($expression, $operands);
-        $this->assertTrue($processor->process()->getValue() === true);
+        $this::assertTrue($processor->process()->getValue() === true);
 
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(11)]);
         $processor->setOperands($operands);
-        $this->assertFalse($processor->process()->getValue() === true);
+        $this::assertFalse($processor->process()->getValue() === true);
     }
 
     public function testContainer()
@@ -43,13 +43,13 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4), new QtiInteger(5)]);
         $processor = new MatchProcessor($expression, $operands);
 
-        $this->assertTrue($processor->process()->getValue() === true);
+        $this::assertTrue($processor->process()->getValue() === true);
 
         $operands = new OperandsCollection();
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(5), new QtiInteger(4), new QtiInteger(3), new QtiInteger(2), new QtiInteger(1)]);
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(1), new QtiInteger(6), new QtiInteger(7), new QtiInteger(8), new QtiInteger(5)]);
         $processor->setOperands($operands);
-        $this->assertFalse($processor->process()->getValue() === true);
+        $this::assertFalse($processor->process()->getValue() === true);
     }
 
     public function testFile()
@@ -65,7 +65,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = $file2;
         $processor = new MatchProcessor($expression, $operands);
 
-        $this->assertTrue($processor->process()->getValue());
+        $this::assertTrue($processor->process()->getValue());
         $fManager->delete($file1);
         $fManager->delete($file2);
 
@@ -75,7 +75,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = $file1;
         $operands[] = $file2;
 
-        $this->assertFalse($processor->process()->getValue());
+        $this::assertFalse($processor->process()->getValue());
         $fManager->delete($file1);
         $fManager->delete($file2);
     }
@@ -191,7 +191,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiFloat(15.0), null]);
         $processor = new MatchProcessor($expression, $operands);
-        $this->assertSame(null, $processor->process());
+        $this::assertSame(null, $processor->process());
     }
 
     public function testNullContainer()
@@ -201,7 +201,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10), new QtiInteger(20)]);
         $operands[] = new MultipleContainer(BaseType::INTEGER);
         $processor = new MatchProcessor($expression, $operands);
-        $this->assertSame(null, $processor->process());
+        $this::assertSame(null, $processor->process());
     }
 
     /**

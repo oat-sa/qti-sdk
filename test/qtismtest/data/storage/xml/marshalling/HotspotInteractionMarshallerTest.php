@@ -37,7 +37,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals(
+        $this::assertEquals(
             '<hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>',
             $dom->saveXML($element)
         );
@@ -50,24 +50,24 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(HotspotInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertEquals('my-hotspot', $component->getId());
-        $this->assertEquals(1, $component->getMaxChoices());
-        $this->assertEquals(0, $component->getMinChoices());
+        $this::assertInstanceOf(HotspotInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertEquals('my-hotspot', $component->getId());
+        $this::assertEquals(1, $component->getMaxChoices());
+        $this::assertEquals(0, $component->getMinChoices());
 
-        $this->assertTrue($component->hasPrompt());
+        $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
 
         $object = $component->getObject();
-        $this->assertEquals('./img/img.png', $object->getData());
-        $this->assertEquals('image/png', $object->getType());
+        $this::assertEquals('./img/img.png', $object->getData());
+        $this::assertEquals('image/png', $object->getType());
 
         $choices = $component->getHotspotChoices();
-        $this->assertEquals(3, count($choices));
-        $this->assertEquals('hotspotchoice1', $choices[0]->getIdentifier());
-        $this->assertEquals('hotspotchoice2', $choices[1]->getIdentifier());
-        $this->assertEquals('hotspotchoice3', $choices[2]->getIdentifier());
+        $this::assertEquals(3, count($choices));
+        $this::assertEquals('hotspotchoice1', $choices[0]->getIdentifier());
+        $this::assertEquals('hotspotchoice2', $choices[1]->getIdentifier());
+        $this::assertEquals('hotspotchoice3', $choices[2]->getIdentifier());
     }
 }

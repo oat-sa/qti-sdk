@@ -31,8 +31,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -47,8 +47,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -63,8 +63,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -79,8 +79,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -95,8 +95,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -111,8 +111,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -127,8 +127,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -144,8 +144,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand1, $operand2]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -160,8 +160,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -176,8 +176,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -192,8 +192,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -208,8 +208,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -224,8 +224,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -240,8 +240,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -256,8 +256,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -272,8 +272,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -288,8 +288,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -304,8 +304,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -320,8 +320,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -336,8 +336,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -352,8 +352,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -368,8 +368,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiFloat);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiFloat);
     }
 
     /**
@@ -384,7 +384,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
+        $this::assertEqualsRounded($expected, $result);
     }
 
     /**
@@ -399,7 +399,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
+        $this::assertEqualsRounded($expected, $result);
     }
 
     /**
@@ -414,8 +414,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -430,8 +430,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -446,8 +446,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -462,8 +462,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -473,15 +473,15 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     protected function assertEqualsRounded($expected, $value)
     {
         if ($expected === null) {
-            $this->assertSame(null, $value);
+            $this::assertSame(null, $value);
         } elseif (is_infinite($expected)) {
             if ($expected > 0) {
-                $this->assertTrue(is_infinite($value->getValue()) && $value->getValue() > 0);
+                $this::assertTrue(is_infinite($value->getValue()) && $value->getValue() > 0);
             } else {
-                $this->assertTrue(is_infinite($value->getValue()) && $value->getValue() < 0);
+                $this::assertTrue(is_infinite($value->getValue()) && $value->getValue() < 0);
             }
         } else {
-            $this->assertEquals(round($expected, 3), round($value->getValue(), 3));
+            $this::assertEquals(round($expected, 3), round($value->getValue(), 3));
         }
     }
 

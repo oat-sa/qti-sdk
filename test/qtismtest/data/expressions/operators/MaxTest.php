@@ -21,13 +21,13 @@ class MaxTest extends QtiSmTestCase
         $expressions[] = new BaseValue(BaseType::INTEGER, 16);
         $max = new Max($expressions);
 
-        $this->assertInstanceOf(Max::class, $max);
-        $this->assertTrue(in_array(Cardinality::SINGLE, $max->getAcceptedCardinalities()));
-        $this->assertTrue(in_array(Cardinality::MULTIPLE, $max->getAcceptedCardinalities()));
-        $this->assertTrue(in_array(Cardinality::ORDERED, $max->getAcceptedCardinalities()));
-        $this->assertTrue(in_array(BaseType::INTEGER, $max->getAcceptedBaseTypes()));
-        $this->assertTrue(in_array(BaseType::FLOAT, $max->getAcceptedBaseTypes()));
-        $this->assertEquals(1, $max->getMinOperands());
-        $this->assertEquals(-1, $max->getMaxOperands());
+        $this::assertInstanceOf(Max::class, $max);
+        $this::assertTrue(in_array(Cardinality::SINGLE, $max->getAcceptedCardinalities()));
+        $this::assertTrue(in_array(Cardinality::MULTIPLE, $max->getAcceptedCardinalities()));
+        $this::assertTrue(in_array(Cardinality::ORDERED, $max->getAcceptedCardinalities()));
+        $this::assertTrue(in_array(BaseType::INTEGER, $max->getAcceptedBaseTypes()));
+        $this::assertTrue(in_array(BaseType::FLOAT, $max->getAcceptedBaseTypes()));
+        $this::assertEquals(1, $max->getMinOperands());
+        $this::assertEquals(-1, $max->getMaxOperands());
     }
 }

@@ -42,7 +42,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<gapMatchInteraction responseIdentifier="RESPONSE"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>',
             $dom->saveXML($element)
         );
@@ -57,18 +57,18 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapMatch = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(GapMatchInteraction::class, $gapMatch);
-        $this->assertEquals('RESPONSE', $gapMatch->getResponseIdentifier());
-        $this->assertFalse($gapMatch->mustShuffle());
+        $this::assertInstanceOf(GapMatchInteraction::class, $gapMatch);
+        $this::assertEquals('RESPONSE', $gapMatch->getResponseIdentifier());
+        $this::assertFalse($gapMatch->mustShuffle());
 
         $gapChoices = $gapMatch->getGapChoices();
-        $this->assertEquals(2, count($gapChoices));
-        $this->assertInstanceOf(GapText::class, $gapChoices[0]);
-        $this->assertInstanceOf(GapImg::class, $gapChoices[1]);
+        $this::assertEquals(2, count($gapChoices));
+        $this::assertInstanceOf(GapText::class, $gapChoices[0]);
+        $this::assertInstanceOf(GapImg::class, $gapChoices[1]);
 
         $gaps = $gapMatch->getComponentsByClassName('gap');
-        $this->assertEquals(2, count($gaps));
-        $this->assertEquals('G1', $gaps[0]->getIdentifier());
-        $this->assertEquals('G2', $gaps[1]->getIdentifier());
+        $this::assertEquals(2, count($gaps));
+        $this::assertEquals('G1', $gaps[0]->getIdentifier());
+        $this::assertEquals('G2', $gaps[1]->getIdentifier());
     }
 }

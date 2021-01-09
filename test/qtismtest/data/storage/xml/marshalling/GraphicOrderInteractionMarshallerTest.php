@@ -40,7 +40,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3"><prompt>Prompt...</prompt><object data="my-img.png" type="image/png"/><hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/><hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/><hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/></graphicOrderInteraction>',
             $dom->saveXML($element)
         );
@@ -53,24 +53,24 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
          ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(GraphicOrderInteraction::class, $component);
-        $this->assertEquals('my-graphicOrder', $component->getId());
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertEquals(2, $component->getMinChoices());
-        $this->assertEquals(3, $component->getMaxChoices());
+        $this::assertInstanceOf(GraphicOrderInteraction::class, $component);
+        $this::assertEquals('my-graphicOrder', $component->getId());
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertEquals(2, $component->getMinChoices());
+        $this::assertEquals(3, $component->getMaxChoices());
 
-        $this->assertTrue($component->hasPrompt());
+        $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
 
         $object = $component->getObject();
-        $this->assertEquals('my-img.png', $object->getData());
-        $this->assertEquals('image/png', $object->getType());
+        $this::assertEquals('my-img.png', $object->getData());
+        $this::assertEquals('image/png', $object->getType());
 
         $choices = $component->getHotspotChoices();
-        $this->assertEquals(3, count($choices));
-        $this->assertEquals('choice1', $choices[0]->getIdentifier());
-        $this->assertEquals('choice2', $choices[1]->getIdentifier());
-        $this->assertEquals('choice3', $choices[2]->getIdentifier());
+        $this::assertEquals(3, count($choices));
+        $this::assertEquals('choice1', $choices[0]->getIdentifier());
+        $this::assertEquals('choice2', $choices[1]->getIdentifier());
+        $this::assertEquals('choice3', $choices[2]->getIdentifier());
     }
 }

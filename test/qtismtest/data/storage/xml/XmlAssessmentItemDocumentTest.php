@@ -25,10 +25,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
         $doc->load($uri);
-        $this->assertEquals($expectedVersion, $doc->getVersion());
+        $this::assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
+        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
     }
 
     /**
@@ -41,10 +41,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument($expectedVersion);
         $doc->loadFromString(file_get_contents($uri));
-        $this->assertEquals($expectedVersion, $doc->getVersion());
+        $this::assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
+        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
     }
 
     /**
@@ -58,20 +58,20 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
         $doc->load($uri);
-        $this->assertEquals($expectedVersion, $doc->getVersion());
+        $this::assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
+        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
 
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
 
-        $this->assertTrue(file_exists($file));
+        $this::assertTrue(file_exists($file));
         $this->testLoad($file, $expectedVersion);
 
         unlink($file);
         // Nobody else touched it?
-        $this->assertFalse(file_exists($file));
+        $this::assertFalse(file_exists($file));
     }
 
     /**
@@ -85,20 +85,20 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
         $doc->load($uri);
-        $this->assertEquals($expectedVersion, $doc->getVersion());
+        $this::assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
+        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
 
         $file = tempnam('/tmp', 'qsm');
         file_put_contents($file, $doc->saveToString());
 
-        $this->assertTrue(file_exists($file));
+        $this::assertTrue(file_exists($file));
         //$this->testLoadFromString($file, $expectedVersion);
 
         unlink($file);
         // Nobody else touched it?
-        $this->assertFalse(file_exists($file));
+        $this::assertFalse(file_exists($file));
     }
 
     public function testLoad21()
@@ -107,7 +107,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load($file);
 
-        $this->assertEquals('2.1.0', $doc->getVersion());
+        $this::assertEquals('2.1.0', $doc->getVersion());
     }
 
     public function testLoad221()
@@ -116,8 +116,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load($file, true);
 
-        $this->assertEquals('2.2.1', $doc->getVersion());
-        $this->assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml'));
+        $this::assertEquals('2.2.1', $doc->getVersion());
+        $this::assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml'));
     }
 
     public function testLoad20()
@@ -126,7 +126,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load($file);
 
-        $this->assertEquals('2.0.0', $doc->getVersion());
+        $this::assertEquals('2.0.0', $doc->getVersion());
     }
 
     /**
@@ -144,31 +144,31 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
         // Look for all template declarations.
         $templateDeclarations = $item->getTemplateDeclarations();
-        $this->assertEquals(4, count($templateDeclarations));
+        $this::assertEquals(4, count($templateDeclarations));
 
-        $this->assertEquals('PEOPLE', $templateDeclarations['PEOPLE']->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['PEOPLE']->getCardinality());
-        $this->assertEquals(BaseType::STRING, $templateDeclarations['PEOPLE']->getBaseType());
-        $this->assertFalse($templateDeclarations['PEOPLE']->isMathVariable());
-        $this->assertFalse($templateDeclarations['PEOPLE']->isParamVariable());
+        $this::assertEquals('PEOPLE', $templateDeclarations['PEOPLE']->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations['PEOPLE']->getCardinality());
+        $this::assertEquals(BaseType::STRING, $templateDeclarations['PEOPLE']->getBaseType());
+        $this::assertFalse($templateDeclarations['PEOPLE']->isMathVariable());
+        $this::assertFalse($templateDeclarations['PEOPLE']->isParamVariable());
 
-        $this->assertEquals('A', $templateDeclarations['A']->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['A']->getCardinality());
-        $this->assertEquals(BaseType::INTEGER, $templateDeclarations['A']->getBaseType());
-        $this->assertFalse($templateDeclarations['A']->isMathVariable());
-        $this->assertFalse($templateDeclarations['A']->isParamVariable());
+        $this::assertEquals('A', $templateDeclarations['A']->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations['A']->getCardinality());
+        $this::assertEquals(BaseType::INTEGER, $templateDeclarations['A']->getBaseType());
+        $this::assertFalse($templateDeclarations['A']->isMathVariable());
+        $this::assertFalse($templateDeclarations['A']->isParamVariable());
 
-        $this->assertEquals('B', $templateDeclarations['B']->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['B']->getCardinality());
-        $this->assertEquals(BaseType::INTEGER, $templateDeclarations['B']->getBaseType());
-        $this->assertFalse($templateDeclarations['B']->isMathVariable());
-        $this->assertFalse($templateDeclarations['B']->isParamVariable());
+        $this::assertEquals('B', $templateDeclarations['B']->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations['B']->getCardinality());
+        $this::assertEquals(BaseType::INTEGER, $templateDeclarations['B']->getBaseType());
+        $this::assertFalse($templateDeclarations['B']->isMathVariable());
+        $this::assertFalse($templateDeclarations['B']->isParamVariable());
 
-        $this->assertEquals('MIN', $templateDeclarations['MIN']->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['MIN']->getCardinality());
-        $this->assertEquals(BaseType::INTEGER, $templateDeclarations['MIN']->getBaseType());
-        $this->assertFalse($templateDeclarations['MIN']->isMathVariable());
-        $this->assertFalse($templateDeclarations['MIN']->isParamVariable());
+        $this::assertEquals('MIN', $templateDeclarations['MIN']->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations['MIN']->getCardinality());
+        $this::assertEquals(BaseType::INTEGER, $templateDeclarations['MIN']->getBaseType());
+        $this::assertFalse($templateDeclarations['MIN']->isMathVariable());
+        $this::assertFalse($templateDeclarations['MIN']->isParamVariable());
     }
 
     public function testWriteTemplate()
@@ -183,7 +183,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->testLoadTemplate($file);
 
         unlink($file);
-        $this->assertFalse(file_exists($file));
+        $this::assertFalse(file_exists($file));
     }
 
     /**
@@ -196,75 +196,75 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $doc->load((empty($url)) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url, true);
         $item = $doc->getDocumentComponent();
 
-        $this->assertInstanceOf(AssessmentItem::class, $item);
-        $this->assertEquals('SimpleExample', $item->getIdentifier());
-        $this->assertEquals('Example', $item->getTitle());
-        $this->assertFalse($item->isAdaptive());
-        $this->assertFalse($item->isTimeDependent());
+        $this::assertInstanceOf(AssessmentItem::class, $item);
+        $this::assertEquals('SimpleExample', $item->getIdentifier());
+        $this::assertEquals('Example', $item->getTitle());
+        $this::assertFalse($item->isAdaptive());
+        $this::assertFalse($item->isTimeDependent());
 
         // responseDeclaration
         $responseDeclarations = $item->getComponentsByClassName('responseDeclaration');
-        $this->assertEquals(1, count($responseDeclarations));
-        $this->assertEquals(BaseType::POINT, $responseDeclarations[0]->getBaseType());
-        $this->assertEquals(Cardinality::SINGLE, $responseDeclarations[0]->getCardinality());
-        $this->assertEquals('RESPONSE', $responseDeclarations[0]->getIdentifier());
+        $this::assertEquals(1, count($responseDeclarations));
+        $this::assertEquals(BaseType::POINT, $responseDeclarations[0]->getBaseType());
+        $this::assertEquals(Cardinality::SINGLE, $responseDeclarations[0]->getCardinality());
+        $this::assertEquals('RESPONSE', $responseDeclarations[0]->getIdentifier());
 
         // templateDeclarations
         $templateDeclarations = $item->getComponentsByClassName('templateDeclaration');
-        $this->assertEquals(2, count($templateDeclarations));
-        $this->assertEquals(BaseType::INTEGER, $templateDeclarations[0]->getBaseType());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations[0]->getCardinality());
-        $this->assertEquals('X', $templateDeclarations[0]->getIdentifier());
-        $this->assertEquals(BaseType::INTEGER, $templateDeclarations[1]->getBaseType());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations[1]->getCardinality());
-        $this->assertEquals('Y', $templateDeclarations[1]->getIdentifier());
+        $this::assertEquals(2, count($templateDeclarations));
+        $this::assertEquals(BaseType::INTEGER, $templateDeclarations[0]->getBaseType());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations[0]->getCardinality());
+        $this::assertEquals('X', $templateDeclarations[0]->getIdentifier());
+        $this::assertEquals(BaseType::INTEGER, $templateDeclarations[1]->getBaseType());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations[1]->getCardinality());
+        $this::assertEquals('Y', $templateDeclarations[1]->getIdentifier());
 
         // customInteraction
         $customInteractions = $item->getComponentsByClassName('customInteraction');
-        $this->assertEquals(1, count($customInteractions));
+        $this::assertEquals(1, count($customInteractions));
 
         $customInteraction = $customInteractions[0];
-        $this->assertEquals('RESPONSE', $customInteraction->getResponseIdentifier());
-        $this->assertEquals('graph1', $customInteraction->getId());
+        $this::assertEquals('RESPONSE', $customInteraction->getResponseIdentifier());
+        $this::assertEquals('graph1', $customInteraction->getId());
 
         // xml content
         $customInteractionElt = $customInteraction->getXml()->documentElement;
-        $this->assertEquals('RESPONSE', $customInteractionElt->getAttribute('responseIdentifier'));
-        $this->assertEquals('graph1', $customInteractionElt->getAttribute('id'));
+        $this::assertEquals('RESPONSE', $customInteractionElt->getAttribute('responseIdentifier'));
+        $this::assertEquals('graph1', $customInteractionElt->getAttribute('id'));
 
         $pci = 'http://www.imsglobal.org/xsd/portableCustomInteraction';
         // -- pci:portableCustomInteraction
         $portableCustomInteractionElts = $customInteractionElt->getElementsByTagNameNS($pci, 'portableCustomInteraction');
-        $this->assertEquals(1, $portableCustomInteractionElts->length);
-        $this->assertEquals('IW30MX6U48JF9120GJS', $portableCustomInteractionElts->item(0)->getAttribute('customInteractionTypeIdentifier'));
+        $this::assertEquals(1, $portableCustomInteractionElts->length);
+        $this::assertEquals('IW30MX6U48JF9120GJS', $portableCustomInteractionElts->item(0)->getAttribute('customInteractionTypeIdentifier'));
 
         // --pci:templateVariableMapping
         $templateVariableMappingElts = $customInteractionElt->getElementsByTagNameNS($pci, 'templateVariableMapping');
-        $this->assertEquals(2, $templateVariableMappingElts->length);
-        $this->assertEquals('X', $templateVariableMappingElts->item(0)->getAttribute('templateIdentifier'));
-        $this->assertEquals('areaX', $templateVariableMappingElts->item(0)->getAttribute('configurationProperty'));
-        $this->assertEquals('Y', $templateVariableMappingElts->item(1)->getAttribute('templateIdentifier'));
-        $this->assertEquals('areaY', $templateVariableMappingElts->item(1)->getAttribute('configurationProperty'));
+        $this::assertEquals(2, $templateVariableMappingElts->length);
+        $this::assertEquals('X', $templateVariableMappingElts->item(0)->getAttribute('templateIdentifier'));
+        $this::assertEquals('areaX', $templateVariableMappingElts->item(0)->getAttribute('configurationProperty'));
+        $this::assertEquals('Y', $templateVariableMappingElts->item(1)->getAttribute('templateIdentifier'));
+        $this::assertEquals('areaY', $templateVariableMappingElts->item(1)->getAttribute('configurationProperty'));
 
         // --pci:instance
         $instanceElts = $customInteractionElt->getElementsByTagNameNS($pci, 'instance');
-        $this->assertEquals(1, $instanceElts->length);
+        $this::assertEquals(1, $instanceElts->length);
 
         // --xhtml:script
         $xhtml = 'http://www.w3.org/1999/xhtml';
         $scriptElts = $instanceElts->item(0)->getElementsByTagNameNS($xhtml, 'script');
-        $this->assertEquals(2, $scriptElts->length);
-        $this->assertEquals('text/javascript', $scriptElts->item(0)->getAttribute('type'));
-        $this->assertEquals('js/graph.js', $scriptElts->item(0)->getAttribute('src'));
-        $this->assertEquals('text/javascript', $scriptElts->item(1)->getAttribute('type'));
-        $this->assertEquals(7, mb_strpos($scriptElts->item(1)->nodeValue, 'qtiCustomInteractionContext.setConfiguration(', 0, 'UTF-8'));
+        $this::assertEquals(2, $scriptElts->length);
+        $this::assertEquals('text/javascript', $scriptElts->item(0)->getAttribute('type'));
+        $this::assertEquals('js/graph.js', $scriptElts->item(0)->getAttribute('src'));
+        $this::assertEquals('text/javascript', $scriptElts->item(1)->getAttribute('type'));
+        $this::assertEquals(7, mb_strpos($scriptElts->item(1)->nodeValue, 'qtiCustomInteractionContext.setConfiguration(', 0, 'UTF-8'));
 
         // --xhtml:div
         $divElts = $instanceElts->item(0)->getElementsByTagNameNS($xhtml, 'div');
-        $this->assertEquals(1, $divElts->length);
-        $this->assertEquals('graph1_box', $divElts->item(0)->getAttribute('id'));
-        $this->assertEquals('graph', $divElts->item(0)->getAttribute('class'));
-        $this->assertEquals('width:500px; height:500px;', $divElts->item(0)->getAttribute('style'));
+        $this::assertEquals(1, $divElts->length);
+        $this::assertEquals('graph1_box', $divElts->item(0)->getAttribute('id'));
+        $this::assertEquals('graph', $divElts->item(0)->getAttribute('class'));
+        $this::assertEquals('width:500px; height:500px;', $divElts->item(0)->getAttribute('style'));
     }
 
     public function testWritePCIItem()
@@ -283,7 +283,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/pic.xml');
-        $this->assertTrue(true);
+        $this::assertTrue(true);
     }
 
     /**

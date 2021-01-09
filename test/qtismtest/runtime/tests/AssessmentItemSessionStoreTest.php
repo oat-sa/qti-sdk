@@ -20,20 +20,20 @@ class AssessmentItemSessionStoreTest extends QtiSmTestCase
         $store = new AssessmentItemSessionStore();
 
         // No session registered for $itemRef1.
-        $this->assertFalse($store->hasMultipleOccurences($itemRef1));
+        $this::assertFalse($store->hasMultipleOccurences($itemRef1));
 
         // A single session registered for $itemRef1.
         $session = new AssessmentItemSession($itemRef1, $sessionManager);
         $store->addAssessmentItemSession($session, 0);
-        $this->assertFalse($store->hasMultipleOccurences($itemRef1));
+        $this::assertFalse($store->hasMultipleOccurences($itemRef1));
 
         // Two session registered for $itemRef1.
         $session = new AssessmentItemSession($itemRef1, $sessionManager);
         $store->addAssessmentItemSession($session, 1);
-        $this->assertTrue($store->hasMultipleOccurences($itemRef1));
+        $this::assertTrue($store->hasMultipleOccurences($itemRef1));
 
-        $this->assertTrue($store->hasAssessmentItemSession($itemRef1, 0));
-        $this->assertFalse($store->hasAssessmentItemSession(new ExtendedAssessmentItemRef('Q02', './Q02.xml')));
+        $this::assertTrue($store->hasAssessmentItemSession($itemRef1, 0));
+        $this::assertFalse($store->hasAssessmentItemSession(new ExtendedAssessmentItemRef('Q02', './Q02.xml')));
     }
 
     public function testGetAllAssessmentItemSessions()
@@ -47,10 +47,10 @@ class AssessmentItemSessionStoreTest extends QtiSmTestCase
         $store->addAssessmentItemSession(new AssessmentItemSession($itemRef1, $sessionManager), 0);
         $store->addAssessmentItemSession(new AssessmentItemSession($itemRef1, $sessionManager), 1);
         $store->addAssessmentItemSession(new AssessmentItemSession($itemRef1, $sessionManager), 3);
-        $this->assertEquals(3, count($store->getAllAssessmentItemSessions()));
+        $this::assertEquals(3, count($store->getAllAssessmentItemSessions()));
 
         $store->addAssessmentItemSession(new AssessmentItemSession($itemRef2, $sessionManager), 0);
         $store->addAssessmentItemSession(new AssessmentItemSession($itemRef3, $sessionManager), 0);
-        $this->assertEquals(5, count($store->getAllAssessmentItemSessions()));
+        $this::assertEquals(5, count($store->getAllAssessmentItemSessions()));
     }
 }

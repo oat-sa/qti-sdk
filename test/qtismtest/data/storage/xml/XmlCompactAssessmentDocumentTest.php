@@ -29,7 +29,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     {
         if (empty($doc)) {
             $doc = new XmlCompactDocument('2.1');
-            $this->assertEquals('2.1.0', $doc->getVersion());
+            $this::assertEquals('2.1.0', $doc->getVersion());
 
             $file = self::samplesDir() . 'custom/interaction_mix_sachsen_compact.xml';
             $doc->load($file);
@@ -38,33 +38,33 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $doc->schemaValidate();
 
         $testParts = $doc->getDocumentComponent()->getTestParts();
-        $this->assertEquals(1, count($testParts));
+        $this::assertEquals(1, count($testParts));
         $assessmentSections = $testParts['testpartID']->getAssessmentSections();
-        $this->assertEquals(1, count($assessmentSections));
+        $this::assertEquals(1, count($assessmentSections));
         $assessmentSection = $assessmentSections['Sektion_181865064'];
-        $this->assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSection);
+        $this::assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSection);
 
         $assessmentItemRefs = $assessmentSections['Sektion_181865064']->getSectionParts();
 
         $itemCount = 0;
         foreach ($assessmentItemRefs as $k => $ref) {
-            $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $assessmentItemRefs[$k]);
-            $this->assertTrue($assessmentItemRefs[$k]->hasResponseProcessing());
-            $this->assertFalse($assessmentItemRefs[$k]->isTimeDependent());
-            $this->assertFalse($assessmentItemRefs[$k]->isAdaptive());
+            $this::assertInstanceOf(ExtendedAssessmentItemRef::class, $assessmentItemRefs[$k]);
+            $this::assertTrue($assessmentItemRefs[$k]->hasResponseProcessing());
+            $this::assertFalse($assessmentItemRefs[$k]->isTimeDependent());
+            $this::assertFalse($assessmentItemRefs[$k]->isAdaptive());
             $itemCount++;
         }
-        $this->assertEquals(13, $itemCount); // contains 13 assessmentItemRef elements.
+        $this::assertEquals(13, $itemCount); // contains 13 assessmentItemRef elements.
 
         // Pick up 3 for a test...
         $assessmentItemRef = $assessmentItemRefs['Choicemultiple_871212949'];
-        $this->assertEquals('Choicemultiple_871212949', $assessmentItemRef->getIdentifier());
+        $this::assertEquals('Choicemultiple_871212949', $assessmentItemRef->getIdentifier());
         $responseDeclarations = $assessmentItemRef->getResponseDeclarations();
-        $this->assertEquals(1, count($responseDeclarations));
-        $this->assertEquals('RESPONSE_27966883', $responseDeclarations['RESPONSE_27966883']->getIdentifier());
+        $this::assertEquals(1, count($responseDeclarations));
+        $this::assertEquals('RESPONSE_27966883', $responseDeclarations['RESPONSE_27966883']->getIdentifier());
         $outcomeDeclarations = $assessmentItemRef->getOutcomeDeclarations();
-        $this->assertEquals(10, count($outcomeDeclarations));
-        $this->assertEquals('MAXSCORE', $outcomeDeclarations['MAXSCORE']->getIdentifier());
+        $this::assertEquals(10, count($outcomeDeclarations));
+        $this::assertEquals('MAXSCORE', $outcomeDeclarations['MAXSCORE']->getIdentifier());
     }
 
     public function testSave()
@@ -76,7 +76,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
-        $this->assertTrue(file_exists($file));
+        $this::assertTrue(file_exists($file));
 
         $doc = new XmlCompactDocument('2.1');
         $doc->load($file);
@@ -85,7 +85,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this->testLoad($doc);
 
         unlink($file);
-        $this->assertFalse(file_exists($file));
+        $this::assertFalse(file_exists($file));
     }
 
     /**
@@ -98,7 +98,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $doc->load($path, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE);
 
         $schema = __DIR__ . '/../../../../../qtism/data/storage/xml/schemes/qticompact_v2p1.xsd';
-        $this->assertTrue($doc->schemaValidate($schema));
+        $this::assertTrue($doc->schemaValidate($schema));
     }
 
     /**
@@ -128,17 +128,17 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
         $newFile = tempnam('/tmp', 'qsm');
         $compactDoc->save($newFile);
-        $this->assertTrue(file_exists($newFile));
+        $this::assertTrue(file_exists($newFile));
 
         $compactDoc = new XmlCompactDocument($version);
         $compactDoc->load($newFile, true);
 
         $expectedDoc = new XmlCompactDocument($version);
         $expectedDoc->load($expectedFile, true);
-        $this->assertEquals($expectedDoc->saveToString(), $compactDoc->saveToString());
+        $this::assertEquals($expectedDoc->saveToString(), $compactDoc->saveToString());
         
         unlink($newFile);
-        $this->assertFileNotExists($newFile);
+        $this::assertFileNotExists($newFile);
     }
 
     /**
@@ -172,53 +172,53 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $doc->load($file);
         $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
 
-        $this->assertInstanceOf(XmlCompactDocument::class, $compactDoc);
-        $this->assertEquals('InteractionMixSachsen_1901710679', $compactDoc->getDocumentComponent()->getIdentifier());
-        $this->assertEquals('Interaction Mix (Sachsen)', $compactDoc->getDocumentComponent()->getTitle());
+        $this::assertInstanceOf(XmlCompactDocument::class, $compactDoc);
+        $this::assertEquals('InteractionMixSachsen_1901710679', $compactDoc->getDocumentComponent()->getIdentifier());
+        $this::assertEquals('Interaction Mix (Sachsen)', $compactDoc->getDocumentComponent()->getTitle());
 
         $outcomeDeclarations = $compactDoc->getDocumentComponent()->getOutcomeDeclarations();
-        $this->assertEquals(2, count($outcomeDeclarations));
-        $this->assertEquals('SCORE', $outcomeDeclarations['SCORE']->getIdentifier());
+        $this::assertEquals(2, count($outcomeDeclarations));
+        $this::assertEquals('SCORE', $outcomeDeclarations['SCORE']->getIdentifier());
 
         $testParts = $compactDoc->getDocumentComponent()->getTestParts();
-        $this->assertEquals(1, count($testParts));
-        $this->assertEquals('testpartID', $testParts['testpartID']->getIdentifier());
-        $this->assertEquals(NavigationMode::NONLINEAR, $testParts['testpartID']->getNavigationMode());
+        $this::assertEquals(1, count($testParts));
+        $this::assertEquals('testpartID', $testParts['testpartID']->getIdentifier());
+        $this::assertEquals(NavigationMode::NONLINEAR, $testParts['testpartID']->getNavigationMode());
 
         $assessmentSections1stLvl = $testParts['testpartID']->getAssessmentSections();
-        $this->assertEquals(1, count($assessmentSections1stLvl));
-        $this->assertEquals('Container_45665458', $assessmentSections1stLvl['Container_45665458']->getIdentifier());
+        $this::assertEquals(1, count($assessmentSections1stLvl));
+        $this::assertEquals('Container_45665458', $assessmentSections1stLvl['Container_45665458']->getIdentifier());
 
         $assessmentSections2ndLvl = $assessmentSections1stLvl['Container_45665458']->getSectionParts();
-        $this->assertEquals(1, count($assessmentSections2ndLvl));
-        $this->assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSections2ndLvl['Sektion_181865064']);
-        $this->assertEquals(0, count($assessmentSections2ndLvl['Sektion_181865064']->getRubricBlockRefs()));
-        $this->assertEquals('Sektion_181865064', $assessmentSections2ndLvl['Sektion_181865064']->getIdentifier());
+        $this::assertEquals(1, count($assessmentSections2ndLvl));
+        $this::assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSections2ndLvl['Sektion_181865064']);
+        $this::assertEquals(0, count($assessmentSections2ndLvl['Sektion_181865064']->getRubricBlockRefs()));
+        $this::assertEquals('Sektion_181865064', $assessmentSections2ndLvl['Sektion_181865064']->getIdentifier());
 
         $assessmentItemRefs = $assessmentSections2ndLvl['Sektion_181865064']->getSectionParts();
-        $this->assertEquals(13, count($assessmentItemRefs));
+        $this::assertEquals(13, count($assessmentItemRefs));
 
         // Pick up 4 for a test...
         $assessmentItemRef = $assessmentItemRefs['Hotspot_278940407'];
-        $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $assessmentItemRef);
-        $this->assertEquals('Hotspot_278940407', $assessmentItemRef->getIdentifier());
+        $this::assertInstanceOf(ExtendedAssessmentItemRef::class, $assessmentItemRef);
+        $this::assertEquals('Hotspot_278940407', $assessmentItemRef->getIdentifier());
         $responseDeclarations = $assessmentItemRef->getResponseDeclarations();
-        $this->assertEquals(1, count($responseDeclarations));
-        $this->assertEquals('RESPONSE', $responseDeclarations['RESPONSE']->getIdentifier());
+        $this::assertEquals(1, count($responseDeclarations));
+        $this::assertEquals('RESPONSE', $responseDeclarations['RESPONSE']->getIdentifier());
         $outcomeDeclarations = $assessmentItemRef->getOutcomeDeclarations();
-        $this->assertEquals(5, count($outcomeDeclarations));
-        $this->assertEquals('FEEDBACKBASIC', $outcomeDeclarations['FEEDBACKBASIC']->getIdentifier());
+        $this::assertEquals(5, count($outcomeDeclarations));
+        $this::assertEquals('FEEDBACKBASIC', $outcomeDeclarations['FEEDBACKBASIC']->getIdentifier());
 
         $file = tempnam('/tmp', 'qsm');
         $compactDoc->save($file);
-        $this->assertTrue(file_exists($file));
+        $this::assertTrue(file_exists($file));
 
         $compactDoc = new XmlCompactDocument('2.1');
         $compactDoc->load($file);
         $compactDoc->schemaValidate();
 
         unlink($file);
-        $this->assertFalse(file_exists($file));
+        $this::assertFalse(file_exists($file));
     }
 
     /**
@@ -234,20 +234,20 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         }
 
         // It validates !
-        $this->assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
+        $this::assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
 
         // Did we retrieve the section as ExtendedAssessmentSection objects?
         $sections = $doc->getDocumentComponent()->getComponentsByClassName('assessmentSection');
-        $this->assertEquals(1, count($sections));
-        $this->assertInstanceOf(ExtendedAssessmentSection::class, $sections[0]);
+        $this::assertEquals(1, count($sections));
+        $this::assertInstanceOf(ExtendedAssessmentSection::class, $sections[0]);
 
         // Retrieve rubricBlockRefs.
         $rubricBlockRefs = $doc->getDocumentComponent()->getComponentsByClassName('rubricBlockRef');
-        $this->assertEquals(1, count($rubricBlockRefs));
+        $this::assertEquals(1, count($rubricBlockRefs));
         $rubricBlockRef = $rubricBlockRefs[0];
-        $this->assertInstanceOf(RubricBlockRef::class, $rubricBlockRef);
-        $this->assertEquals('R01', $rubricBlockRef->getIdentifier());
-        $this->assertEquals('./R01.xml', $rubricBlockRef->getHref());
+        $this::assertInstanceOf(RubricBlockRef::class, $rubricBlockRef);
+        $this::assertEquals('R01', $rubricBlockRef->getIdentifier());
+        $this::assertEquals('./R01.xml', $rubricBlockRef->getHref());
     }
 
     public function testSaveRubricBlockRefs()
@@ -259,11 +259,11 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
 
-        $this->assertTrue(file_exists($file));
+        $this::assertTrue(file_exists($file));
         $this->testLoadRubricBlockRefs($doc);
 
         unlink($file);
-        $this->assertFalse(file_exists($file));
+        $this::assertFalse(file_exists($file));
     }
 
     public function testExplodeRubricBlocks()
@@ -281,27 +281,27 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $pathinfo = pathinfo($file);
 
         $path = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . 'rubricBlock_RB_S01_1.xml';
-        $this->assertTrue(file_exists($path));
+        $this::assertTrue(file_exists($path));
         unlink($path);
-        $this->assertFalse(file_exists($path));
+        $this::assertFalse(file_exists($path));
 
         $path = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . 'rubricBlock_RB_S01_2.xml';
-        $this->assertTrue(file_exists($path));
+        $this::assertTrue(file_exists($path));
         unlink($path);
-        $this->assertFalse(file_exists($path));
+        $this::assertFalse(file_exists($path));
 
         unlink($file);
 
         // Check rubricBlockRefs.
         $rubricBlockRefs = $doc->getDocumentComponent()->getComponentsByClassName('rubricBlockRef');
-        $this->assertEquals(3, count($rubricBlockRefs));
+        $this::assertEquals(3, count($rubricBlockRefs));
 
-        $this->assertEquals('./R01.xml', $rubricBlockRefs[0]->getHref());
-        $this->assertEquals('R01', $rubricBlockRefs[0]->getIdentifier());
-        $this->assertEquals('./rubricBlock_RB_S01_1.xml', $rubricBlockRefs[1]->getHref());
-        $this->assertEquals('RB_S01_1', $rubricBlockRefs[1]->getIdentifier());
-        $this->assertEquals('./rubricBlock_RB_S01_2.xml', $rubricBlockRefs[2]->getHref());
-        $this->assertEquals('RB_S01_2', $rubricBlockRefs[2]->getIdentifier());
+        $this::assertEquals('./R01.xml', $rubricBlockRefs[0]->getHref());
+        $this::assertEquals('R01', $rubricBlockRefs[0]->getIdentifier());
+        $this::assertEquals('./rubricBlock_RB_S01_1.xml', $rubricBlockRefs[1]->getHref());
+        $this::assertEquals('RB_S01_1', $rubricBlockRefs[1]->getIdentifier());
+        $this::assertEquals('./rubricBlock_RB_S01_2.xml', $rubricBlockRefs[2]->getHref());
+        $this::assertEquals('RB_S01_2', $rubricBlockRefs[2]->getIdentifier());
     }
 
     public function testCreateFromAssessmentTestInvalidAssessmentItemRefResolution()
@@ -325,7 +325,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlCompactDocument();
         $doc->load($testFile, true);
-        $this->assertEquals($expectedVersion, $doc->getVersion());
+        $this::assertEquals($expectedVersion, $doc->getVersion());
     }
 
     /**
@@ -371,7 +371,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $expected = new XmlCompactDocument($toVersion);
         $expected->load($toFile);
 
-        $this->assertEquals($expected->getDomDocument()->documentElement, $doc->getDomDocument()->documentElement);
+        $this::assertEquals($expected->getDomDocument()->documentElement, $doc->getDomDocument()->documentElement);
     }
 
     /**

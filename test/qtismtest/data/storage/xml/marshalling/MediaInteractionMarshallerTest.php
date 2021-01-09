@@ -34,7 +34,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>',
             $dom->saveXML($element)
         );
@@ -50,21 +50,21 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         );
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(MediaInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertEquals('my-media', $component->getId());
-        $this->assertFalse($component->mustAutostart());
-        $this->assertEquals(1, $component->getMinPlays());
-        $this->assertTrue($component->mustLoop());
+        $this::assertInstanceOf(MediaInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertEquals('my-media', $component->getId());
+        $this::assertFalse($component->mustAutostart());
+        $this::assertEquals(1, $component->getMinPlays());
+        $this::assertTrue($component->mustLoop());
 
         $object = $component->getObject();
-        $this->assertEquals('my-video.mp4', $object->getData());
-        $this->assertEquals('video/mp4', $object->getType());
-        $this->assertEquals(400, $object->getWidth());
-        $this->assertEquals(300, $object->getHeight());
+        $this::assertEquals('my-video.mp4', $object->getData());
+        $this::assertEquals('video/mp4', $object->getType());
+        $this::assertEquals(400, $object->getWidth());
+        $this::assertEquals(300, $object->getHeight());
 
-        $this->assertTrue($component->hasPrompt());
+        $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
     }
 }

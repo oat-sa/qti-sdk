@@ -16,7 +16,7 @@ class BaseTypeTest extends QtiSmTestCase
      */
     public function testGetConstantByNameValidBaseType($baseType)
     {
-        $this->assertIsInt(BaseType::getConstantByName($baseType));
+        $this::assertIsInt(BaseType::getConstantByName($baseType));
     }
 
     /**
@@ -25,7 +25,7 @@ class BaseTypeTest extends QtiSmTestCase
      */
     public function testGetConstantByNameInvalidBaseType($baseType)
     {
-        $this->assertFalse(BaseType::getConstantByName($baseType));
+        $this::assertFalse(BaseType::getConstantByName($baseType));
     }
 
     /**
@@ -35,7 +35,7 @@ class BaseTypeTest extends QtiSmTestCase
      */
     public function testGetNameByConstantValidBaseType($constant, $expected)
     {
-        $this->assertEquals($expected, BaseType::getNameByConstant($constant));
+        $this::assertEquals($expected, BaseType::getNameByConstant($constant));
     }
 
     /**
@@ -44,7 +44,7 @@ class BaseTypeTest extends QtiSmTestCase
      */
     public function testGetNameByConstantInvalidBaseType($constant)
     {
-        $this->assertFalse(BaseType::getNameByConstant($constant));
+        $this::assertFalse(BaseType::getNameByConstant($constant));
     }
 
     /**

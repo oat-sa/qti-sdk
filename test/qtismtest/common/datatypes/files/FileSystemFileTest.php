@@ -23,9 +23,9 @@ class FileSystemFileTest extends QtiSmTestCase
     public function testRetrieve($path, $expectedFilename, $expectedMimeType, $expectedData)
     {
         $pFile = FileSystemFile::retrieveFile($path);
-        $this->assertEquals($expectedFilename, $pFile->getFilename());
-        $this->assertEquals($expectedMimeType, $pFile->getMimeType());
-        $this->assertEquals($expectedData, $pFile->getData());
+        $this::assertEquals($expectedFilename, $pFile->getFilename());
+        $this::assertEquals($expectedMimeType, $pFile->getMimeType());
+        $this::assertEquals($expectedData, $pFile->getData());
     }
 
     /**
@@ -45,13 +45,13 @@ class FileSystemFileTest extends QtiSmTestCase
         if ($withFilename === true) {
             // Check if the name is the original one.
             $pathinfo = pathinfo($source);
-            $this->assertEquals($pathinfo['basename'], $pFile->getFilename());
+            $this::assertEquals($pathinfo['basename'], $pFile->getFilename());
         } else {
-            $this->assertEquals($withFilename, $pFile->getFilename());
+            $this::assertEquals($withFilename, $pFile->getFilename());
         }
 
-        $this->assertEquals($expectedContent, $pFile->getData());
-        $this->assertEquals($mimeType, $pFile->getMimeType());
+        $this::assertEquals($expectedContent, $pFile->getData());
+        $this::assertEquals($mimeType, $pFile->getMimeType());
 
         unlink($destination);
     }
@@ -65,9 +65,9 @@ class FileSystemFileTest extends QtiSmTestCase
                 'text/plain'
             );
 
-            $this->assertFalse(true, 'Should throw an error.');
+            $this::assertFalse(true, 'Should throw an error.');
         } catch (RuntimeException $e) {
-            $this->assertEquals("Unable to create destination directory at '/root/root/root'.", $e->getMessage());
+            $this::assertEquals("Unable to create destination directory at '/root/root/root'.", $e->getMessage());
         }
     }
 
@@ -80,7 +80,7 @@ class FileSystemFileTest extends QtiSmTestCase
                 'text/plain'
             );
         } catch (RuntimeException $e) {
-            $this->assertInstanceOf(RuntimeException::class, $e);
+            $this::assertInstanceOf(RuntimeException::class, $e);
         }
     }
 
@@ -92,9 +92,9 @@ class FileSystemFileTest extends QtiSmTestCase
                 '/root/root/root/root.txt',
                 'text/plain'
             );
-            $this->assertFalse(true, 'Should throw an error.');
+            $this::assertFalse(true, 'Should throw an error.');
         } catch (RuntimeException $e) {
-            $this->assertInstanceOf(RuntimeException::class, $e);
+            $this::assertInstanceOf(RuntimeException::class, $e);
         }
     }
 
@@ -118,7 +118,7 @@ class FileSystemFileTest extends QtiSmTestCase
 
         @fclose($stream);
 
-        $this->assertEquals($expectedData, $data);
+        $this::assertEquals($expectedData, $data);
     }
 
     public function testGetStreamError()
@@ -134,9 +134,9 @@ class FileSystemFileTest extends QtiSmTestCase
 
         try {
             $pFile->getStream();
-            $this->assertFalse(true, 'calling FileSystemFile::getStream() on a non-existing file must throw an exception!');
+            $this::assertFalse(true, 'calling FileSystemFile::getStream() on a non-existing file must throw an exception!');
         } catch (RuntimeException $e) {
-            $this->assertTrue(true);
+            $this::assertTrue(true);
         }
     }
 
@@ -189,7 +189,7 @@ class FileSystemFileTest extends QtiSmTestCase
             $destination,
             'text/plain'
         );
-        $this->assertFalse($pFile->equals(new stdClass()));
+        $this::assertFalse($pFile->equals(new stdClass()));
         @unlink($destination);
     }
 
@@ -209,7 +209,7 @@ class FileSystemFileTest extends QtiSmTestCase
             'text/css'
         );
 
-        $this->assertFalse($pFile1->equals($pFile2));
+        $this::assertFalse($pFile1->equals($pFile2));
         @unlink($destination1);
         @unlink($destination2);
     }

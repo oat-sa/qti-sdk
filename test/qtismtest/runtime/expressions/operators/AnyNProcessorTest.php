@@ -39,9 +39,9 @@ class AnyNProcessorTest extends QtiSmTestCase
         $result = $processor->process();
 
         if ($result === null) {
-            $this->assertSame($expected, $result);
+            $this::assertSame($expected, $result);
         } else {
-            $this->assertSame($expected, $result->getValue());
+            $this::assertSame($expected, $result->getValue());
         }
     }
 
@@ -90,7 +90,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $processor = new AnyNProcessor($expression, $operands);
         $processor->setState($state);
         $result = $processor->process();
-        $this->assertSame(false, $result->getValue());
+        $this::assertSame(false, $result->getValue());
     }
 
     public function testWithMaxFromVariableReference()
@@ -103,7 +103,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $processor = new AnyNProcessor($expression, $operands);
         $processor->setState($state);
         $result = $processor->process();
-        $this->assertSame(true, $result->getValue());
+        $this::assertSame(true, $result->getValue());
     }
 
     public function testMinCannotBeResolved()

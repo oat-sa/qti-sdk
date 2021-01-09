@@ -34,7 +34,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" showHide="hide" matchMax="2" matchMin="1" id="my-hot"/>', $dom->saveXML($element));
+        $this::assertEquals('<associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" showHide="hide" matchMax="2" matchMin="1" id="my-hot"/>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -44,18 +44,18 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(AssociableHotspot::class, $component);
-        $this->assertInstanceOf(Hotspot::class, $component);
-        $this->assertInstanceOf(Choice::class, $component);
+        $this::assertInstanceOf(AssociableHotspot::class, $component);
+        $this::assertInstanceOf(Hotspot::class, $component);
+        $this::assertInstanceOf(Choice::class, $component);
 
-        $this->assertEquals('hotspot1', $component->getIdentifier());
-        $this->assertEquals(QtiShape::RECT, $component->getShape());
-        $this->assertEquals('92,19,261,66', $component->getCoords()->__toString());
-        $this->assertTrue($component->isFixed());
-        $this->assertEquals(ShowHide::HIDE, $component->getShowHide());
-        $this->assertEquals(2, $component->getMatchMax());
-        $this->assertEquals(1, $component->getMatchMin());
-        $this->assertEquals('my-hot', $component->getId());
-        $this->assertFalse($component->hasHotspotLabel());
+        $this::assertEquals('hotspot1', $component->getIdentifier());
+        $this::assertEquals(QtiShape::RECT, $component->getShape());
+        $this::assertEquals('92,19,261,66', $component->getCoords()->__toString());
+        $this::assertTrue($component->isFixed());
+        $this::assertEquals(ShowHide::HIDE, $component->getShowHide());
+        $this::assertEquals(2, $component->getMatchMax());
+        $this::assertEquals(1, $component->getMatchMin());
+        $this::assertEquals('my-hot', $component->getId());
+        $this::assertFalse($component->hasHotspotLabel());
     }
 }

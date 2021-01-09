@@ -37,7 +37,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<orderInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>', $dom->saveXML($element));
+        $this::assertEquals('<orderInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -53,19 +53,19 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OrderInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertFalse($component->mustShuffle());
-        $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());
-        $this->assertTrue($component->hasPrompt());
-        $this->assertEquals(-1, $component->getMinChoices());
-        $this->assertEquals(2, $component->getMaxChoices());
+        $this::assertInstanceOf(OrderInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertFalse($component->mustShuffle());
+        $this::assertEquals(Orientation::VERTICAL, $component->getOrientation());
+        $this::assertTrue($component->hasPrompt());
+        $this::assertEquals(-1, $component->getMinChoices());
+        $this::assertEquals(2, $component->getMaxChoices());
 
         $prompt = $component->getPrompt();
         $content = $prompt->getContent();
-        $this->assertEquals('Prompt...', $content[0]->getContent());
+        $this::assertEquals('Prompt...', $content[0]->getContent());
 
         $simpleChoices = $component->getSimpleChoices();
-        $this->assertEquals(2, count($simpleChoices));
+        $this::assertEquals(2, count($simpleChoices));
     }
 }

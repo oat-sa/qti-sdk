@@ -22,7 +22,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMax="1"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>',
             $dom->saveXML($element)
         );
@@ -39,15 +39,15 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapImg = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(GapImg::class, $gapImg);
-        $this->assertEquals('my-gap', $gapImg->getId());
-        $this->assertEquals('gaps', $gapImg->getClass());
-        $this->assertEquals('gapImg1', $gapImg->getIdentifier());
-        $this->assertEquals(0, $gapImg->getMatchMin());
-        $this->assertEquals(1, $gapImg->getMatchMax());
+        $this::assertInstanceOf(GapImg::class, $gapImg);
+        $this::assertEquals('my-gap', $gapImg->getId());
+        $this::assertEquals('gaps', $gapImg->getClass());
+        $this::assertEquals('gapImg1', $gapImg->getIdentifier());
+        $this::assertEquals(0, $gapImg->getMatchMin());
+        $this::assertEquals(1, $gapImg->getMatchMax());
 
         $object = $gapImg->getObject();
-        $this->assertEquals('http://imagine.us/myimg.png', $object->getData());
-        $this->assertEquals('image/png', $object->getType());
+        $this::assertEquals('http://imagine.us/myimg.png', $object->getData());
+        $this::assertEquals('image/png', $object->getType());
     }
 }

@@ -29,43 +29,43 @@ class OrderedProcessorTest extends QtiSmTestCase
 
         $operands[] = null;
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
 
         $operands = new OperandsCollection([new OrderedContainer(BaseType::FLOAT)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
 
         $operands = new OperandsCollection([null, new QtiInteger(25), new OrderedContainer(BaseType::INTEGER)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertEquals(1, count($result));
-        $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
-        $this->assertEquals(25, $result[0]->getValue());
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertEquals(1, count($result));
+        $this::assertEquals(BaseType::INTEGER, $result->getBaseType());
+        $this::assertEquals(25, $result[0]->getValue());
 
         $operands = new OperandsCollection([null, new QtiInteger(25), new OrderedContainer(BaseType::INTEGER, [new QtiInteger(26)])]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertEquals(2, count($result));
-        $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
-        $this->assertEquals(25, $result[0]->getValue());
-        $this->assertEquals(26, $result[1]->getValue());
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertEquals(2, count($result));
+        $this::assertEquals(BaseType::INTEGER, $result->getBaseType());
+        $this::assertEquals(25, $result[0]->getValue());
+        $this::assertEquals(26, $result[1]->getValue());
 
         $operands = new OperandsCollection([new OrderedContainer(BaseType::INTEGER), new QtiInteger(25), new OrderedContainer(BaseType::INTEGER, [new QtiInteger(26)])]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertEquals(2, count($result));
-        $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
-        $this->assertEquals(25, $result[0]->getValue());
-        $this->assertEquals(26, $result[1]->getValue());
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertEquals(2, count($result));
+        $this::assertEquals(BaseType::INTEGER, $result->getBaseType());
+        $this::assertEquals(25, $result[0]->getValue());
+        $this::assertEquals(26, $result[1]->getValue());
 
         $operands = new OperandsCollection();
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testScalar()
@@ -78,17 +78,17 @@ class OrderedProcessorTest extends QtiSmTestCase
         $processor = new OrderedProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertEquals(3, count($result));
-        $this->assertEquals('String1', $result[0]->getValue());
-        $this->assertEquals('String2', $result[1]->getValue());
-        $this->assertEquals('String3', $result[2]->getValue());
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertEquals(3, count($result));
+        $this::assertEquals('String1', $result[0]->getValue());
+        $this::assertEquals('String2', $result[1]->getValue());
+        $this::assertEquals('String3', $result[2]->getValue());
 
         $operands = new OperandsCollection([new QtiString('String!')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertEquals(1, count($result));
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertEquals(1, count($result));
     }
 
     public function testContainer()
@@ -100,11 +100,11 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
         $processor = new OrderedProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertEquals(3, count($result));
-        $this->assertTrue($result[0]->equals(new QtiPoint(1, 2)));
-        $this->assertTrue($result[1]->equals(new QtiPoint(2, 3)));
-        $this->assertTrue($result[2]->equals(new QtiPoint(3, 4)));
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertEquals(3, count($result));
+        $this::assertTrue($result[0]->equals(new QtiPoint(1, 2)));
+        $this::assertTrue($result[1]->equals(new QtiPoint(2, 3)));
+        $this::assertTrue($result[2]->equals(new QtiPoint(3, 4)));
     }
 
     public function testMixed()
@@ -116,10 +116,10 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
         $processor = new OrderedProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertEquals(2, count($result));
-        $this->assertTrue($result[0]->equals(new QtiPoint(1, 2)));
-        $this->assertTrue($result[1]->equals(new QtiPoint(3, 4)));
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertEquals(2, count($result));
+        $this::assertTrue($result[0]->equals(new QtiPoint(1, 2)));
+        $this::assertTrue($result[1]->equals(new QtiPoint(3, 4)));
     }
 
     public function testWrongBaseTypeOne()

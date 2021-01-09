@@ -29,8 +29,8 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToInteger($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::INTEGER);
-        $this->assertIsInt($value);
-        $this->assertTrue($value === $expected);
+        $this::assertIsInt($value);
+        $this::assertTrue($value === $expected);
     }
 
     /**
@@ -51,8 +51,8 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToFloatValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::FLOAT);
-        $this->assertIsFloat($value);
-        $this->assertTrue($value === $expected);
+        $this::assertIsFloat($value);
+        $this::assertTrue($value === $expected);
     }
 
     /**
@@ -73,8 +73,8 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToBooleanValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::BOOLEAN);
-        $this->assertIsBool($value);
-        $this->assertTrue($expected === $value);
+        $this::assertIsBool($value);
+        $this::assertTrue($expected === $value);
     }
 
     /**
@@ -87,8 +87,8 @@ class UtilsTest extends QtiSmTestCase
     public function testIntOrIdentifierValid($string, $expected, $type)
     {
         $value = Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
-        $this->assertIsString($type);
-        $this->assertTrue($expected === $value);
+        $this::assertIsString($type);
+        $this::assertTrue($expected === $value);
     }
 
     /**
@@ -119,10 +119,10 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToPointValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::POINT);
-        $this->assertIsInt($value->getX());
-        $this->assertIsInt($value->getY());
-        $this->assertEquals($expected->getX(), $value->getX());
-        $this->assertEquals($expected->getY(), $value->getY());
+        $this::assertIsInt($value->getX());
+        $this::assertIsInt($value->getY());
+        $this::assertEquals($expected->getX(), $value->getX());
+        $this::assertEquals($expected->getY(), $value->getY());
     }
 
     /**
@@ -143,13 +143,13 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToDurationValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::DURATION);
-        $this->assertInstanceOf(QtiDuration::class, $value);
-        $this->assertEquals($value->getDays(), $expected->getDays());
-        $this->assertEquals($value->getYears(), $expected->getYears());
-        $this->assertEquals($value->getHours(), $expected->getHours());
-        $this->assertEquals($value->getMinutes(), $expected->getMinutes());
-        $this->assertEquals($value->getMonths(), $expected->getMonths());
-        $this->assertEquals($value->getSeconds(), $expected->getSeconds());
+        $this::assertInstanceOf(QtiDuration::class, $value);
+        $this::assertEquals($value->getDays(), $expected->getDays());
+        $this::assertEquals($value->getYears(), $expected->getYears());
+        $this::assertEquals($value->getHours(), $expected->getHours());
+        $this::assertEquals($value->getMinutes(), $expected->getMinutes());
+        $this::assertEquals($value->getMonths(), $expected->getMonths());
+        $this::assertEquals($value->getSeconds(), $expected->getSeconds());
     }
 
     /**
@@ -170,9 +170,9 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToPairValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::PAIR);
-        $this->assertInstanceOf(QtiPair::class, $value);
-        $this->assertEquals($expected->getFirst(), $value->getFirst());
-        $this->assertEquals($expected->getSecond(), $value->getSecond());
+        $this::assertInstanceOf(QtiPair::class, $value);
+        $this::assertEquals($expected->getFirst(), $value->getFirst());
+        $this::assertEquals($expected->getSecond(), $value->getSecond());
     }
 
     /**
@@ -193,9 +193,9 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToDirectedPairValid($string, $expected)
     {
         $value = Utils::stringToDatatype($string, BaseType::DIRECTED_PAIR);
-        $this->assertInstanceOf(QtiDirectedPair::class, $value);
-        $this->assertEquals($expected->getFirst(), $value->getFirst());
-        $this->assertEquals($expected->getSecond(), $value->getSecond());
+        $this::assertInstanceOf(QtiDirectedPair::class, $value);
+        $this::assertEquals($expected->getFirst(), $value->getFirst());
+        $this::assertEquals($expected->getSecond(), $value->getSecond());
     }
 
     /**
@@ -216,13 +216,13 @@ class UtilsTest extends QtiSmTestCase
     public function testStringToCoords($string, $shape)
     {
         $coords = Utils::stringToCoords($string, $shape);
-        $this->assertInstanceOf(QtiCoords::class, $coords);
+        $this::assertInstanceOf(QtiCoords::class, $coords);
 
         $intCoords = explode(',', $string);
-        $this->assertEquals(count($intCoords), count($coords));
+        $this::assertEquals(count($intCoords), count($coords));
 
         for ($i = 0; $i < count($intCoords); $i++) {
-            $this->assertEquals((int)$intCoords[$i], $coords[$i]);
+            $this::assertEquals((int)$intCoords[$i], $coords[$i]);
         }
     }
 
@@ -255,7 +255,7 @@ class UtilsTest extends QtiSmTestCase
      */
     public function testValidUriToSanitize($uri, $expected)
     {
-        $this->assertEquals($expected, Utils::sanitizeUri($uri));
+        $this::assertEquals($expected, Utils::sanitizeUri($uri));
     }
 
     /**

@@ -18,7 +18,7 @@ class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmTestCase
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
-        $this->assertEquals(50, $assessmentTestSession->getRouteCount());
+        $this::assertEquals(50, $assessmentTestSession->getRouteCount());
     }
 
     public function testSelectionAndOrderingOverflow()
@@ -28,7 +28,7 @@ class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmTestCase
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
-        $this->assertEquals(12, $assessmentTestSession->getRouteCount());
+        $this::assertEquals(12, $assessmentTestSession->getRouteCount());
     }
 
     public function testOrderingBasic()
@@ -38,7 +38,7 @@ class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmTestCase
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
-        $this->assertEquals(3, $assessmentTestSession->getRouteCount());
+        $this::assertEquals(3, $assessmentTestSession->getRouteCount());
     }
 
     public function testOrderingBasicFixed()
@@ -48,8 +48,8 @@ class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmTestCase
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
-        $this->assertEquals(5, $assessmentTestSession->getRouteCount());
-        $this->assertEquals('Q2', $assessmentTestSession->getRoute()->getRouteItemAt(1)->getAssessmentItemRef()->getIdentifier());
+        $this::assertEquals(5, $assessmentTestSession->getRouteCount());
+        $this::assertEquals('Q2', $assessmentTestSession->getRoute()->getRouteItemAt(1)->getAssessmentItemRef()->getIdentifier());
     }
 
     public function testOrderingVisible()
@@ -59,7 +59,7 @@ class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmTestCase
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
-        $this->assertEquals(9, $assessmentTestSession->getRouteCount());
+        $this::assertEquals(9, $assessmentTestSession->getRouteCount());
     }
 
     public function testOrderingInvisibleDontKeepTogether()
@@ -69,7 +69,7 @@ class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmTestCase
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
-        $this->assertEquals(12, $assessmentTestSession->getRouteCount());
+        $this::assertEquals(12, $assessmentTestSession->getRouteCount());
     }
 
     public function testOrderingInvisibleKeepTogether()
@@ -79,6 +79,6 @@ class AssessmentTestSessionSelectionAndOrderingTest extends QtiSmTestCase
 
         $sessionManager = new SessionManager();
         $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
-        $this->assertEquals(12, $assessmentTestSession->getRouteCount());
+        $this::assertEquals(12, $assessmentTestSession->getRouteCount());
     }
 }

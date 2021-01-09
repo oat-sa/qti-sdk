@@ -17,11 +17,11 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
 
         // Created in temp dir?
-        $this->assertTrue(strpos($mFile->getPath(), sys_get_temp_dir()) !== false);
+        $this::assertTrue(strpos($mFile->getPath(), sys_get_temp_dir()) !== false);
 
-        $this->assertEquals('I contain some text...', $mFile->getData());
-        $this->assertEquals('text/plain', $mFile->getMimeType());
-        $this->assertEquals('newname.txt', $mFile->getFilename());
+        $this::assertEquals('I contain some text...', $mFile->getData());
+        $this::assertEquals('text/plain', $mFile->getMimeType());
+        $this::assertEquals('newname.txt', $mFile->getFilename());
 
         unlink($mFile->getPath());
     }
@@ -31,8 +31,8 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $manager = new FileSystemFileManager();
         $file = $manager->createFromData('Some <em>text</em>...', 'text/html');
 
-        $this->assertEquals('Some <em>text</em>...', $file->getData());
-        $this->assertEquals('text/html', $file->getMimeType());
+        $this::assertEquals('Some <em>text</em>...', $file->getData());
+        $this::assertEquals('text/html', $file->getMimeType());
 
         $manager->delete($file);
     }
@@ -65,9 +65,9 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
 
-        $this->assertTrue(is_file($mFile->getPath()));
+        $this::assertTrue(is_file($mFile->getPath()));
         $manager->delete($mFile);
-        $this->assertFalse(is_file($mFile->getPath()));
+        $this::assertFalse(is_file($mFile->getPath()));
     }
 
     /**
@@ -79,9 +79,9 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
         $mFile = $manager->retrieve($mFile->getIdentifier());
-        $this->assertEquals('text/plain', $mFile->getMimeType());
-        $this->assertEquals('newname.txt', $mFile->getFilename());
-        $this->assertEquals('I contain some text...', $mFile->getData());
+        $this::assertEquals('text/plain', $mFile->getMimeType());
+        $this::assertEquals('newname.txt', $mFile->getFilename());
+        $this::assertEquals('I contain some text...', $mFile->getData());
         $manager->delete($mFile);
     }
 

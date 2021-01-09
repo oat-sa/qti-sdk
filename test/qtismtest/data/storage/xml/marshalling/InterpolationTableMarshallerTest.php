@@ -26,20 +26,20 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [$baseType]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('interpolationTable', $element->nodeName);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('interpolationTable', $element->nodeName);
         $entryElements = $element->getElementsByTagName('interpolationTableEntry');
-        $this->assertEquals(2, $entryElements->length);
+        $this::assertEquals(2, $entryElements->length);
 
         $entry = $entryElements->item(0);
-        $this->assertEquals('true', $entry->getAttribute('targetValue'));
-        $this->assertEquals('1.5', $entry->getAttribute('sourceValue'));
-        $this->assertEquals('true', $entry->getAttribute('includeBoundary'));
+        $this::assertEquals('true', $entry->getAttribute('targetValue'));
+        $this::assertEquals('1.5', $entry->getAttribute('sourceValue'));
+        $this::assertEquals('true', $entry->getAttribute('includeBoundary'));
 
         $entry = $entryElements->item(1);
-        $this->assertEquals('false', $entry->getAttribute('targetValue'));
-        $this->assertEquals('2.5', $entry->getAttribute('sourceValue'));
-        $this->assertEquals('false', $entry->getAttribute('includeBoundary'));
+        $this::assertEquals('false', $entry->getAttribute('targetValue'));
+        $this::assertEquals('2.5', $entry->getAttribute('sourceValue'));
+        $this::assertEquals('false', $entry->getAttribute('includeBoundary'));
     }
 
     public function testUnmarshall()
@@ -59,18 +59,18 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [$baseType]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(InterpolationTable::class, $component);
+        $this::assertInstanceOf(InterpolationTable::class, $component);
         $entries = $component->getInterpolationTableEntries();
-        $this->assertEquals(2, count($entries));
+        $this::assertEquals(2, count($entries));
 
         $entry = $entries[0];
-        $this->assertEquals(1.5, $entry->getSourceValue());
-        $this->assertEquals(true, $entry->getTargetValue());
-        $this->assertEquals(false, $entry->doesIncludeBoundary());
+        $this::assertEquals(1.5, $entry->getSourceValue());
+        $this::assertEquals(true, $entry->getTargetValue());
+        $this::assertEquals(false, $entry->doesIncludeBoundary());
 
         $entry = $entries[1];
-        $this->assertEquals(2.5, $entry->getSourceValue());
-        $this->assertEquals(false, $entry->getTargetValue());
-        $this->assertEquals(true, $entry->doesIncludeBoundary());
+        $this::assertEquals(2.5, $entry->getSourceValue());
+        $this::assertEquals(false, $entry->getTargetValue());
+        $this::assertEquals(true, $entry->doesIncludeBoundary());
     }
 }

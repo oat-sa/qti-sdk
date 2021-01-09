@@ -43,33 +43,33 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $xmlDoc = new XmlResultDocument();
         $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result.xml', true);
 
-        $this->assertEquals('2.1.0', $xmlDoc->getVersion());
+        $this::assertEquals('2.1.0', $xmlDoc->getVersion());
 
         /** @var AssessmentResult $assessmentResult */
         $assessmentResult = $xmlDoc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
+        $this::assertInstanceOf(AssessmentResult::class, $assessmentResult);
 
         $context = $assessmentResult->getContext();
-        $this->assertInstanceOf(Context::class, $context);
+        $this::assertInstanceOf(Context::class, $context);
 
         $sessionIdentifiers = $context->getSessionIdentifiers();
-        $this->assertInstanceOf(SessionIdentifierCollection::class, $sessionIdentifiers);
+        $this::assertInstanceOf(SessionIdentifierCollection::class, $sessionIdentifiers);
 
         /** @var SessionIdentifier $sessionIdentifier1 */
         $sessionIdentifier1 = $sessionIdentifiers[0];
-        $this->assertEquals('sessionIdentifier1-id', $sessionIdentifier1->getIdentifier());
-        $this->assertEquals('http://sessionIdentifier1-sourceID', $sessionIdentifier1->getSourceID());
+        $this::assertEquals('sessionIdentifier1-id', $sessionIdentifier1->getIdentifier());
+        $this::assertEquals('http://sessionIdentifier1-sourceID', $sessionIdentifier1->getSourceID());
 
         /** @var SessionIdentifier $sessionIdentifier2 */
         $sessionIdentifier2 = $sessionIdentifiers[1];
-        $this->assertEquals('sessionIdentifier2-id', $sessionIdentifier2->getIdentifier());
-        $this->assertEquals('http://sessionIdentifier2-sourceID', $sessionIdentifier2->getSourceID());
+        $this::assertEquals('sessionIdentifier2-id', $sessionIdentifier2->getIdentifier());
+        $this::assertEquals('http://sessionIdentifier2-sourceID', $sessionIdentifier2->getSourceID());
 
         $testResult = $assessmentResult->getTestResult();
-        $this->assertEquals('fixture-test-identifier', $testResult->getIdentifier());
-        $this->assertInstanceOf(DateTime::class, $testResult->getDatestamp());
+        $this::assertEquals('fixture-test-identifier', $testResult->getIdentifier());
+        $this::assertInstanceOf(DateTime::class, $testResult->getDatestamp());
 
-        $this->assertCount(2, $testResult->getItemVariables());
+        $this::assertCount(2, $testResult->getItemVariables());
     }
 
     public function testLoadMissingData()
@@ -93,7 +93,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $expectedDom = new DOMDocument();
         $expectedDom->loadXML($expected);
 
-        $this->assertEqualXMLStructure($expectedDom->firstChild, $str->firstChild);
+        $this::assertEqualXMLStructure($expectedDom->firstChild, $str->firstChild);
     }
 
     /**
@@ -107,7 +107,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $xmlDoc = new XmlResultDocument();
         $xmlDoc->load($testFile, true);
 
-        $this->assertEquals($expectedVersion, $xmlDoc->getVersion());
+        $this::assertEquals($expectedVersion, $xmlDoc->getVersion());
     }
 
     /**

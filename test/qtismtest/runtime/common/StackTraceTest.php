@@ -20,9 +20,9 @@ class StackTraceTest extends QtiSmTestCase
         $stackTraceItem = new StackTraceItem(new BaseValue(BaseType::INTEGER, 0), 'pouet');
         $stackTrace[] = $stackTraceItem;
 
-        $this->assertCount(1, $stackTrace);
-        $this->assertSame($stackTraceItem, $stackTrace->pop());
-        $this->assertCount(0, $stackTrace);
+        $this::assertCount(1, $stackTrace);
+        $this::assertSame($stackTraceItem, $stackTrace->pop());
+        $this::assertCount(0, $stackTrace);
     }
 
     public function testToString()
@@ -32,7 +32,7 @@ class StackTraceTest extends QtiSmTestCase
         $stackTrace[] = $stackTraceItem;
         $stackTrace[] = $stackTraceItem;
 
-        $this->assertEquals("pouet\npouet\n", $stackTrace . '');
+        $this::assertEquals("pouet\npouet\n", $stackTrace . '');
     }
 
     public function testAddInvalidDataType()

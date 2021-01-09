@@ -105,7 +105,7 @@ class MatchInteractionTest extends QtiSmTestCase
             ])
         );
 
-        $this->assertFalse($matchInteraction->hasMinAssociations());
+        $this::assertFalse($matchInteraction->hasMinAssociations());
     }
 
     public function testNotEnoughMatchSets()
@@ -136,7 +136,7 @@ class MatchInteractionTest extends QtiSmTestCase
             ])
         );
 
-        $this->assertSame($matchSet1, $matchInteraction->getSourceChoices());
+        $this::assertSame($matchSet1, $matchInteraction->getSourceChoices());
     }
 
     public function testGetTargetChoices()
@@ -152,6 +152,6 @@ class MatchInteractionTest extends QtiSmTestCase
             ])
         );
 
-        $this->assertSame($matchSet2, $matchInteraction->getTargetChoices());
+        $this::assertSame($matchSet2, $matchInteraction->getTargetChoices());
     }
 }

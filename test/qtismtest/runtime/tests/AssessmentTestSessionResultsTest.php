@@ -27,47 +27,47 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $factory = new SimpleResultsSubmittableTestSessionFactory();
         $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->setTestResultsSubmission(TestResultsSubmission::OUTCOME_PROCESSING);
-        $this->assertEquals(AssessmentTestSessionState::INITIAL, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::INITIAL, $testSession->getState());
         $testSession->beginTestSession();
-        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::INTERACTING, $testSession->getState());
 
         // Q01 - Failure
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
-        $this->assertSame(0.0, $testSession['Q01.SCORE']->getValue());
+        $this::assertSame(0.0, $testSession['Q01.SCORE']->getValue());
         $testSession->moveNext();
 
         // Q02 - Success
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
-        $this->assertSame(1.0, $testSession['Q02.SCORE']->getValue());
+        $this::assertSame(1.0, $testSession['Q02.SCORE']->getValue());
         $testSession->moveNext();
 
         // Q03 - Success
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC'))]));
-        $this->assertSame(1.0, $testSession['Q03.SCORE']->getValue());
+        $this::assertSame(1.0, $testSession['Q03.SCORE']->getValue());
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
 
         // -- Let's test the submitted results.
         $submittedTestResults = $testSession->getSubmittedTestResults();
         $submittedItemResults = $testSession->getSubmittedItemResults();
 
         // Test Item Q01.
-        $this->assertSame(0.0, $submittedItemResults['Q01.0.SCORE'][0]->getValue());
+        $this::assertSame(0.0, $submittedItemResults['Q01.0.SCORE'][0]->getValue());
 
         // Test Item Q02.
-        $this->assertSame(1.0, $submittedItemResults['Q02.0.SCORE'][0]->getValue());
+        $this::assertSame(1.0, $submittedItemResults['Q02.0.SCORE'][0]->getValue());
 
         // Test Item Q03.
-        $this->assertSame(1.0, $submittedItemResults['Q03.0.SCORE'][0]->getValue());
+        $this::assertSame(1.0, $submittedItemResults['Q03.0.SCORE'][0]->getValue());
 
         // Test Results.
-        $this->assertSame(0.0, $submittedTestResults['TEST_SCORE'][0]->getValue());
-        $this->assertSame(round(0.50000, 3), round($submittedTestResults['TEST_SCORE'][1]->getValue(), 3));
-        $this->assertSame(round(0.66666, 3), round($submittedTestResults['TEST_SCORE'][2]->getValue(), 3));
+        $this::assertSame(0.0, $submittedTestResults['TEST_SCORE'][0]->getValue());
+        $this::assertSame(round(0.50000, 3), round($submittedTestResults['TEST_SCORE'][1]->getValue(), 3));
+        $this::assertSame(round(0.66666, 3), round($submittedTestResults['TEST_SCORE'][2]->getValue(), 3));
     }
 
     public function testTestResultsSubmissionNonLinearEnd()
@@ -79,45 +79,45 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $factory = new SimpleResultsSubmittableTestSessionFactory();
         $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->setTestResultsSubmission(TestResultsSubmission::END);
-        $this->assertEquals(AssessmentTestSessionState::INITIAL, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::INITIAL, $testSession->getState());
         $testSession->beginTestSession();
-        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::INTERACTING, $testSession->getState());
 
         // Q01 - Failure
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
-        $this->assertSame(0.0, $testSession['Q01.SCORE']->getValue());
+        $this::assertSame(0.0, $testSession['Q01.SCORE']->getValue());
         $testSession->moveNext();
 
         // Q02 - Success
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
-        $this->assertSame(1.0, $testSession['Q02.SCORE']->getValue());
+        $this::assertSame(1.0, $testSession['Q02.SCORE']->getValue());
         $testSession->moveNext();
 
         // Q03 - Success
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC'))]));
-        $this->assertSame(1.0, $testSession['Q03.SCORE']->getValue());
+        $this::assertSame(1.0, $testSession['Q03.SCORE']->getValue());
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
 
         // -- Let's test the submitted results.
         $submittedTestResults = $testSession->getSubmittedTestResults();
         $submittedItemResults = $testSession->getSubmittedItemResults();
 
         // Test Item Q01.
-        $this->assertSame(0.0, $submittedItemResults['Q01.0.SCORE'][0]->getValue());
+        $this::assertSame(0.0, $submittedItemResults['Q01.0.SCORE'][0]->getValue());
 
         // Test Item Q02.
-        $this->assertSame(1.0, $submittedItemResults['Q02.0.SCORE'][0]->getValue());
+        $this::assertSame(1.0, $submittedItemResults['Q02.0.SCORE'][0]->getValue());
 
         // Test Item Q03.
-        $this->assertSame(1.0, $submittedItemResults['Q03.0.SCORE'][0]->getValue());
+        $this::assertSame(1.0, $submittedItemResults['Q03.0.SCORE'][0]->getValue());
 
         // Test Results (submitted once).
-        $this->assertSame(round(0.66666, 3), round($submittedTestResults['TEST_SCORE'][0]->getValue(), 3));
-        $this->assertEquals(1, count($submittedTestResults['TEST_SCORE']));
+        $this::assertSame(round(0.66666, 3), round($submittedTestResults['TEST_SCORE'][0]->getValue(), 3));
+        $this::assertEquals(1, count($submittedTestResults['TEST_SCORE']));
     }
 }
