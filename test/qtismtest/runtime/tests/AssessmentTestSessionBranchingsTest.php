@@ -118,7 +118,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
 
         // We should have reached the end.
         $this->assertFalse($testSession->isRunning());
-        $this->assertEquals($testSession->getState(), AssessmentTestSessionState::CLOSED);
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
         $this->assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
         $this->assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
         $this->assertEquals(1.0, $testSession['Q03.SCORE']->getValue());

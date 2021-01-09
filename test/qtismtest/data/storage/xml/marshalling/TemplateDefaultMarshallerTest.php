@@ -48,7 +48,7 @@ class TemplateDefaultMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(TemplateDefault::class, $component);
-        $this->assertEquals($component->getTemplateIdentifier(), 'myTemplate1');
+        $this->assertEquals('myTemplate1', $component->getTemplateIdentifier());
         $this->assertInstanceOf(NullValue::class, $component->getExpression());
     }
 }

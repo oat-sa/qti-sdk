@@ -27,9 +27,9 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $factory = new SimpleResultsSubmittableTestSessionFactory();
         $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->setTestResultsSubmission(TestResultsSubmission::OUTCOME_PROCESSING);
-        $this->assertEquals($testSession->getState(), AssessmentTestSessionState::INITIAL);
+        $this->assertEquals(AssessmentTestSessionState::INITIAL, $testSession->getState());
         $testSession->beginTestSession();
-        $this->assertEquals($testSession->getState(), AssessmentTestSessionState::INTERACTING);
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $testSession->getState());
 
         // Q01 - Failure
         $testSession->beginAttempt();
@@ -79,9 +79,9 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $factory = new SimpleResultsSubmittableTestSessionFactory();
         $testSession = $factory->createAssessmentTestSession($doc->getDocumentComponent());
         $testSession->setTestResultsSubmission(TestResultsSubmission::END);
-        $this->assertEquals($testSession->getState(), AssessmentTestSessionState::INITIAL);
+        $this->assertEquals(AssessmentTestSessionState::INITIAL, $testSession->getState());
         $testSession->beginTestSession();
-        $this->assertEquals($testSession->getState(), AssessmentTestSessionState::INTERACTING);
+        $this->assertEquals(AssessmentTestSessionState::INTERACTING, $testSession->getState());
 
         // Q01 - Failure
         $testSession->beginAttempt();

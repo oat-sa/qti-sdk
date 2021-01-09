@@ -33,9 +33,9 @@ class MatchTableMarshallerTest extends QtiSmTestCase
         $entryElements = $element->getElementsByTagName('matchTableEntry');
         $this->assertEquals(2, $entryElements->length);
         $entry = $entryElements->item(0);
-        $this->assertEquals($entry->getAttribute('targetValue'), 'A B');
-        $this->assertEquals($entry->nodeName, 'matchTableEntry');
-        $this->assertEquals($entry->getAttribute('sourceValue'), '1');
+        $this->assertEquals('A B', $entry->getAttribute('targetValue'));
+        $this->assertEquals('matchTableEntry', $entry->nodeName);
+        $this->assertEquals('1', $entry->getAttribute('sourceValue'));
     }
 
     public function testUnmarshall()

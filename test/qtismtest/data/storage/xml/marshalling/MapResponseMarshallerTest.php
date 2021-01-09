@@ -35,6 +35,6 @@ class MapResponseMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(MapResponse::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'myMapResponse1');
+        $this->assertEquals('myMapResponse1', $component->getIdentifier());
     }
 }

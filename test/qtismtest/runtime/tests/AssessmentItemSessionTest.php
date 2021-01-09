@@ -258,7 +258,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->beginAttempt();
         $itemSession->skip();
 
-        $this->assertEquals($itemSession->getState(), AssessmentItemSessionState::CLOSED);
+        $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
         $this->assertEquals(0.0, $itemSession['SCORE']->getValue());
         $this->assertEquals(null, $itemSession['RESPONSE']);
     }

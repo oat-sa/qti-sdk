@@ -26,8 +26,8 @@ class RecordContainerTest extends QtiSmTestCase
 
         $record = new RecordContainer(['key1' => new QtiInteger(1), 'key2' => new QtiString('a string'), 'key3' => new QtiPoint(10, 10)]);
         $this->assertEquals(3, count($record));
-        $this->assertEquals($record['key1']->getValue(), 1);
-        $this->assertEquals($record['key2']->getValue(), 'a string');
+        $this->assertEquals(1, $record['key1']->getValue());
+        $this->assertEquals('a string', $record['key2']->getValue());
         $this->assertTrue($record['key3']->equals(new QtiPoint(10, 10)));
         $this->assertEquals(1, $record->occurences(new QtiInteger(1)));
         $this->assertEquals(1, $record->occurences(new QtiPoint(10, 10)));

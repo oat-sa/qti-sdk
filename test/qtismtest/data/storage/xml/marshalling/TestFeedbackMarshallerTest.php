@@ -41,8 +41,8 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $this->assertEquals('show', $element->getAttribute('showHide'));
 
         $content = $element->getElementsByTagName('div');
-        $this->assertEquals($content->length, 1);
-        $this->assertEquals($content->item(0)->getElementsByTagName('p')->length, 1);
+        $this->assertEquals(1, $content->length);
+        $this->assertEquals(1, $content->item(0)->getElementsByTagName('p')->length);
     }
 
     public function testUnmarshall()

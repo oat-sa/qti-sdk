@@ -54,7 +54,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
             $this->assertFalse($assessmentItemRefs[$k]->isAdaptive());
             $itemCount++;
         }
-        $this->assertEquals($itemCount, 13); // contains 13 assessmentItemRef elements.
+        $this->assertEquals(13, $itemCount); // contains 13 assessmentItemRef elements.
 
         // Pick up 3 for a test...
         $assessmentItemRef = $assessmentItemRefs['Choicemultiple_871212949'];

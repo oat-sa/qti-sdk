@@ -204,9 +204,9 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeDeclaration::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'outcomeDeclaration1');
-        $this->assertEquals($component->getCardinality(), Cardinality::SINGLE);
-        $this->assertEquals($component->getBaseType(), BaseType::INTEGER);
+        $this->assertEquals('outcomeDeclaration1', $component->getIdentifier());
+        $this->assertEquals(Cardinality::SINGLE, $component->getCardinality());
+        $this->assertEquals(BaseType::INTEGER, $component->getBaseType());
     }
 
     public function testUnmarshallDefaultValue21()
@@ -228,9 +228,9 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeDeclaration::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'outcomeDeclaration2');
-        $this->assertEquals($component->getCardinality(), Cardinality::MULTIPLE);
-        $this->assertEquals($component->getBaseType(), BaseType::DURATION);
+        $this->assertEquals('outcomeDeclaration2', $component->getIdentifier());
+        $this->assertEquals(Cardinality::MULTIPLE, $component->getCardinality());
+        $this->assertEquals(BaseType::DURATION, $component->getBaseType());
 
         $defaultValue = $component->getDefaultValue();
         $this->assertInstanceOf(DefaultValue::class, $defaultValue);
@@ -266,9 +266,9 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(OutcomeDeclaration::class, $component);
-        $this->assertEquals($component->getIdentifier(), 'outcomeDeclarationRec');
-        $this->assertEquals($component->getCardinality(), Cardinality::RECORD);
-        $this->assertEquals($component->getBaseType(), -1);
+        $this->assertEquals('outcomeDeclarationRec', $component->getIdentifier());
+        $this->assertEquals(Cardinality::RECORD, $component->getCardinality());
+        $this->assertEquals(-1, $component->getBaseType());
         $this->assertFalse($component->hasBaseType());
 
         $this->assertTrue($component->hasDefaultValue());

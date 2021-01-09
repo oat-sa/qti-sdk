@@ -38,9 +38,9 @@ class BaseValueMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(BaseValue::class, $component);
-        $this->assertEquals($component->getBaseType(), BaseType::FLOAT);
+        $this->assertEquals(BaseType::FLOAT, $component->getBaseType());
         $this->assertIsFloat($component->getValue());
-        $this->assertEquals($component->getValue(), 27.11);
+        $this->assertEquals(27.11, $component->getValue());
     }
 
     public function testUnmarshallCDATA()
@@ -49,7 +49,7 @@ class BaseValueMarshallerTest extends QtiSmTestCase
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
         $this->assertInstanceOf(BaseValue::class, $component);
-        $this->assertEquals($component->getBaseType(), BaseType::STRING);
+        $this->assertEquals(BaseType::STRING, $component->getBaseType());
         $this->assertEquals('A string...', $component->getValue());
     }
 }

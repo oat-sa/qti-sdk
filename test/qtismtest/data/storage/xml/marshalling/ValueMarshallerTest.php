@@ -69,7 +69,7 @@ class ValueMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf(Value::class, $component);
         $this->assertIsString($component->getValue());
-        $this->assertEquals($component->getValue(), 'A B');
+        $this->assertEquals('A B', $component->getValue());
     }
 
     public function testUnmarshallNoBaseTypeButForced()
@@ -85,8 +85,8 @@ class ValueMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf(Value::class, $component);
         $this->assertInstanceOf(QtiPair::class, $component->getValue());
-        $this->assertEquals($component->getValue()->getFirst(), 'A');
-        $this->assertEquals($component->getValue()->getSecond(), 'B');
+        $this->assertEquals('A', $component->getValue()->getFirst());
+        $this->assertEquals('B', $component->getValue()->getSecond());
     }
 
     public function testUnmarshallNoBaseTypeButForcedAndEntities()
@@ -159,9 +159,9 @@ class ValueMarshallerTest extends QtiSmTestCase
 
         $this->assertInstanceOf(Value::class, $component);
         $this->assertInstanceOf(QtiPair::class, $component->getValue());
-        $this->assertEquals($component->getValue()->getFirst(), 'A');
-        $this->assertEquals($component->getValue()->getSecond(), 'B');
-        $this->assertEquals($component->getFieldIdentifier(), 'fieldIdentifier1');
+        $this->assertEquals('A', $component->getValue()->getFirst());
+        $this->assertEquals('B', $component->getValue()->getSecond());
+        $this->assertEquals('fieldIdentifier1', $component->getFieldIdentifier());
     }
 
     public function testUnmarshallBaseTypeInteger()

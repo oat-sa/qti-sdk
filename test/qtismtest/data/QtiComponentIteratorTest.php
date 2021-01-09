@@ -67,7 +67,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
             $iterations++;
         }
 
-        $this->assertEquals($iterations, 4);
+        $this->assertEquals(4, $iterations);
     }
 
     public function testClassSelection()
@@ -79,7 +79,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
         $i = 0;
 
         foreach ($iterator as $responseProcessing) {
-            $this->assertEquals($iterator->key(), 'responseProcessing');
+            $this->assertEquals('responseProcessing', $iterator->key());
             $i++;
         }
 

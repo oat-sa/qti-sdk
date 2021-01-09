@@ -62,9 +62,9 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Stylesheet::class, $component);
-        $this->assertEquals($component->getHref(), 'http://myuri.com');
-        $this->assertEquals($component->getTitle(), 'A pure stylesheet');
-        $this->assertEquals($component->getMedia(), 'screen');
-        $this->assertEquals($component->getType(), 'text/css');
+        $this->assertEquals('http://myuri.com', $component->getHref());
+        $this->assertEquals('A pure stylesheet', $component->getTitle());
+        $this->assertEquals('screen', $component->getMedia());
+        $this->assertEquals('text/css', $component->getType());
     }
 }

@@ -33,7 +33,7 @@ class MultipleContainerTest extends QtiSmTestCase
         $this->assertEquals(6, count($container));
         $this->assertEquals(BaseType::INTEGER, $container->getBaseType());
         $this->assertEquals($data, $container->getArrayCopy());
-        $this->assertEquals($container[1]->getValue(), 20);
+        $this->assertEquals(20, $container[1]->getValue());
     }
 
     public function testCreationEmptyWrongBaseType1()

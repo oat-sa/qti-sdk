@@ -37,7 +37,7 @@ class VariableMappingMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(VariableMapping::class, $component);
-        $this->assertEquals($component->getSource(), 'myIdentifier1');
-        $this->assertEquals($component->getTarget(), 'myIdentifier2');
+        $this->assertEquals('myIdentifier1', $component->getSource());
+        $this->assertEquals('myIdentifier2', $component->getTarget());
     }
 }

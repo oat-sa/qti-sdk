@@ -187,7 +187,7 @@ class TableMarshallerTest extends QtiSmTestCase
         $caption = $table->getCaption();
         $this->assertInstanceOf(Caption::class, $caption);
         $captionContent = $caption->getContent();
-        $this->assertEquals($captionContent[0]->getContent(), 'Some ');
+        $this->assertEquals('Some ', $captionContent[0]->getContent());
         $this->assertInstanceOf(Strong::class, $captionContent[1]);
         $strongContent = $captionContent[1]->getContent();
         $this->assertEquals('people', $strongContent[0]->getContent());

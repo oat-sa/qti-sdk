@@ -37,8 +37,8 @@ class RandomIntegerMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(RandomInteger::class, $component);
-        $this->assertEquals($component->getMin(), 3);
-        $this->assertEquals($component->getMax(), '{tplVariable1}');
-        $this->assertEquals($component->getStep(), 2);
+        $this->assertEquals(3, $component->getMin());
+        $this->assertEquals('{tplVariable1}', $component->getMax());
+        $this->assertEquals(2, $component->getStep());
     }
 }

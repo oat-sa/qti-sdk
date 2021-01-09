@@ -34,6 +34,6 @@ class OrderingMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this->assertInstanceOf(Ordering::class, $component);
-        $this->assertEquals($component->getShuffle(), false);
+        $this->assertEquals(false, $component->getShuffle());
     }
 }
