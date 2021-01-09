@@ -21,12 +21,12 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
         $mf = $factory->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf(ModalFeedbackRule::class, $mf);
-        $this->assertEquals('SHOW_MEH', $mf->getIdentifier());
-        $this->assertEquals('SHOW_HIM', $mf->getOutcomeIdentifier());
-        $this->assertEquals(ShowHide::SHOW, $mf->getShowHide());
-        $this->assertFalse($mf->hasTitle());
-        $this->assertSame('', $mf->getTitle());
+        $this::assertInstanceOf(ModalFeedbackRule::class, $mf);
+        $this::assertEquals('SHOW_MEH', $mf->getIdentifier());
+        $this::assertEquals('SHOW_HIM', $mf->getOutcomeIdentifier());
+        $this::assertEquals(ShowHide::SHOW, $mf->getShowHide());
+        $this::assertFalse($mf->hasTitle());
+        $this::assertSame('', $mf->getTitle());
     }
 
     public function testMarshallNoTitle()
@@ -36,11 +36,11 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($mf);
         $elt = $marshaller->marshall($mf);
 
-        $this->assertEquals('modalFeedbackRule', $elt->localName);
-        $this->assertEquals('SHOW_HIM', $elt->getAttribute('outcomeIdentifier'));
-        $this->assertEquals('SHOW_MEH', $elt->getAttribute('identifier'));
-        $this->assertEquals('show', $elt->getAttribute('showHide'));
-        $this->assertEquals('', $elt->getAttribute('title'));
+        $this::assertEquals('modalFeedbackRule', $elt->localName);
+        $this::assertEquals('SHOW_HIM', $elt->getAttribute('outcomeIdentifier'));
+        $this::assertEquals('SHOW_MEH', $elt->getAttribute('identifier'));
+        $this::assertEquals('show', $elt->getAttribute('showHide'));
+        $this::assertEquals('', $elt->getAttribute('title'));
     }
 
     /**
@@ -54,8 +54,8 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
         $mf = $factory->createMarshaller($element)->unmarshall($element);
 
-        $this->assertTrue($mf->hasTitle());
-        $this->assertSame('Beautiful Feedback!', $mf->getTitle());
+        $this::assertTrue($mf->hasTitle());
+        $this::assertSame('Beautiful Feedback!', $mf->getTitle());
     }
 
     /**
@@ -68,6 +68,6 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($mf);
         $elt = $marshaller->marshall($mf);
 
-        $this->assertEquals('Beautiful Feedback!', $elt->getAttribute('title'));
+        $this::assertEquals('Beautiful Feedback!', $elt->getAttribute('title'));
     }
 }

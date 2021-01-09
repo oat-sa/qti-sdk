@@ -22,11 +22,11 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('timeLimits', $element->nodeName);
-        $this->assertEquals(50, $element->getAttribute('minTime'));
-        $this->assertEquals(100, $element->getAttribute('maxTime'));
-        $this->assertEquals('false', $element->getAttribute('allowLateSubmission'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('timeLimits', $element->nodeName);
+        $this::assertEquals(50, $element->getAttribute('minTime'));
+        $this::assertEquals(100, $element->getAttribute('maxTime'));
+        $this::assertEquals('false', $element->getAttribute('allowLateSubmission'));
     }
 
     public function testUnmarshall()
@@ -38,12 +38,12 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(TimeLimits::class, $component);
-        $this->assertTrue($component->hasMinTime());
-        $this->assertEquals('PT50S', $component->getMinTime() . '');
-        $this->assertTrue($component->hasMaxTime());
-        $this->assertEquals('PT1M40S', $component->getMaxTime() . '');
-        $this->assertEquals(false, $component->doesAllowLateSubmission());
+        $this::assertInstanceOf(TimeLimits::class, $component);
+        $this::assertTrue($component->hasMinTime());
+        $this::assertEquals('PT50S', $component->getMinTime() . '');
+        $this::assertTrue($component->hasMaxTime());
+        $this::assertEquals('PT1M40S', $component->getMaxTime() . '');
+        $this::assertEquals(false, $component->doesAllowLateSubmission());
     }
 
     public function testUnmarshallZero()
@@ -55,6 +55,6 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(TimeLimits::class, $component);
+        $this::assertInstanceOf(TimeLimits::class, $component);
     }
 }

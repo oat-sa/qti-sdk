@@ -42,12 +42,12 @@ class StateUtilsTest extends QtiSmTestCase
         $choiceInteraction->setShuffle(true);
 
         $shuffling = StateUtils::createShufflingFromInteraction($choiceInteraction);
-        $this->assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
+        $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this->assertEquals(1, count($shufflingGroups));
-        $this->assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
-        $this->assertEquals(['id1', 'id3'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
+        $this::assertEquals(1, count($shufflingGroups));
+        $this::assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this::assertEquals(['id1', 'id3'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
 
     public function testCreateShufflingFromOrder()
@@ -60,11 +60,11 @@ class StateUtilsTest extends QtiSmTestCase
         $orderInteraction->setShuffle(true);
 
         $shuffling = StateUtils::createShufflingFromInteraction($orderInteraction);
-        $this->assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
+        $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this->assertEquals(1, count($shufflingGroups));
-        $this->assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this::assertEquals(1, count($shufflingGroups));
+        $this::assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
     }
 
     public function testCreateShufflingFromAssociateInteraction()
@@ -81,12 +81,12 @@ class StateUtilsTest extends QtiSmTestCase
         $associateInteraction->setShuffle(true);
 
         $shuffling = StateUtils::createShufflingFromInteraction($associateInteraction);
-        $this->assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
+        $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this->assertEquals(1, count($shufflingGroups));
-        $this->assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
-        $this->assertEquals(['id2'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
+        $this::assertEquals(1, count($shufflingGroups));
+        $this::assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this::assertEquals(['id2'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
 
     public function testCreateShufflingFromMatchInteraction()
@@ -111,13 +111,13 @@ class StateUtilsTest extends QtiSmTestCase
         $matchInteraction = new MatchInteraction('RESPONSE', $matchSets);
         $matchInteraction->setShuffle(true);
         $shuffling = StateUtils::createShufflingFromInteraction($matchInteraction);
-        $this->assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
+        $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this->assertEquals(2, count($shufflingGroups));
-        $this->assertEquals(['id1', 'id2'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
-        $this->assertEquals(['id2'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
-        $this->assertEquals(['id3', 'id4'], $shufflingGroups[1]->getIdentifiers()->getArrayCopy());
+        $this::assertEquals(2, count($shufflingGroups));
+        $this::assertEquals(['id1', 'id2'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this::assertEquals(['id2'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
+        $this::assertEquals(['id3', 'id4'], $shufflingGroups[1]->getIdentifiers()->getArrayCopy());
     }
 
     public function testCreateShufflingFromGapMatchInteraction()
@@ -136,12 +136,12 @@ class StateUtilsTest extends QtiSmTestCase
         $gapMatchInteraction->setShuffle(true);
 
         $shuffling = StateUtils::createShufflingFromInteraction($gapMatchInteraction);
-        $this->assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
+        $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this->assertEquals(1, count($shufflingGroups));
-        $this->assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
-        $this->assertEquals(['id3'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
+        $this::assertEquals(1, count($shufflingGroups));
+        $this::assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this::assertEquals(['id3'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
 
     public function testCreateShufflingFromInlineChoiceInteraction()
@@ -158,19 +158,19 @@ class StateUtilsTest extends QtiSmTestCase
         $inlineChoiceInteraction->setShuffle(true);
 
         $shuffling = StateUtils::createShufflingFromInteraction($inlineChoiceInteraction);
-        $this->assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
+        $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this->assertEquals(1, count($shufflingGroups));
-        $this->assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
-        $this->assertEquals(['id3'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
+        $this::assertEquals(1, count($shufflingGroups));
+        $this::assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
+        $this::assertEquals(['id3'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
 
     public function testCreateShufflingFromNonShufflableInteraction()
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
         $shuffling = StateUtils::createShufflingFromInteraction($textEntryInteraction);
-        $this->assertFalse($shuffling);
+        $this::assertFalse($shuffling);
     }
 
     public function testCreateShufflingWithShuffleFalse()
@@ -183,6 +183,6 @@ class StateUtilsTest extends QtiSmTestCase
         $choiceInteraction->setShuffle(false);
 
         $shuffling = StateUtils::createShufflingFromInteraction($choiceInteraction);
-        $this->assertFalse($shuffling);
+        $this::assertFalse($shuffling);
     }
 }

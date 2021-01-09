@@ -25,33 +25,33 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiString('one'), new QtiString('one')]);
         $processor = new StringMatchProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertSame(true, $result->getValue());
 
         $operands = new OperandsCollection([new QtiString('one'), new QtiString('oNe')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertSame(false, $result->getValue());
 
         $processor->setExpression($this->createFakeExpression(false));
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertSame(true, $result->getValue());
 
         // Binary-safe?
         $processor->setExpression($this->createFakeExpression(true));
         $operands = new OperandsCollection([new QtiString('它的工作原理'), new QtiString('它的工作原理')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertSame(true, $result->getValue());
 
         $operands = new OperandsCollection([new QtiString('它的工作原理'), new QtiString('它的原理')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertSame(false, $result->getValue());
     }
 
     public function testNull()
@@ -60,7 +60,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiString(''), null]);
         $processor = new StringMatchProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testWrongCardinality()

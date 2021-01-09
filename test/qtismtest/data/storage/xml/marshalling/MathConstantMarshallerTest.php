@@ -21,9 +21,9 @@ class MathConstantMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('mathConstant', $element->nodeName);
-        $this->assertEquals('pi', $element->getAttribute('name'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('mathConstant', $element->nodeName);
+        $this::assertEquals('pi', $element->getAttribute('name'));
     }
 
     public function testUnmarshall()
@@ -35,7 +35,7 @@ class MathConstantMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(MathConstant::class, $component);
-        $this->assertEquals(MathEnumeration::PI, $component->getName());
+        $this::assertInstanceOf(MathConstant::class, $component);
+        $this::assertEquals(MathEnumeration::PI, $component->getName());
     }
 }

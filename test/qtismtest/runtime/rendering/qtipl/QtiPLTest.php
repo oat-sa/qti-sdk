@@ -19,7 +19,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/rulesforQtiPL.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             "preCondition(variable[identifier=\"Q02.RESPONSE\"]() == 'C')",
             $renderer->render($test->getComponentByIdentifier('Q01')->getPreConditions()[0])
         );
@@ -32,7 +32,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/rulesforQtiPL.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'branchRule[target="Q1"](correct[identifier="Q1"]() == true)',
             $renderer->render($test->getComponentByIdentifier('Q2')->getBranchRules()[0])
         );
@@ -45,7 +45,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'include()',
             $renderer->render($test->getComponentsByClassName('include')[0])
         );
@@ -58,7 +58,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'if (isNull(variable[identifier="response-X"]())) {
     setOutcomeValue[identifier="score-X"](0);
 } elseif (variable[identifier="response-X"]() == correct[identifier="response-X"]()) {
@@ -73,7 +73,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/items/responseruleforQtiPL1.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'if (isNull(variable[identifier="response-X"]())) {
     setOutcomeValue[identifier="score-X"](0);
 }',
@@ -84,7 +84,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/items/responseruleforQtiPL2.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'if (isNull(variable[identifier="response-X"]())) {
     setOutcomeValue[identifier="score-X"](0);
 } elseif (variable[identifier="response-X"]() == correct[identifier="response-X"]()) {
@@ -101,7 +101,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/items/responseruleforQtiPL3.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'if (isNull(variable[identifier="response-X"]())) {
     setOutcomeValue[identifier="score-X"](0);
 } elseif (variable[identifier="response-X"]() == correct[identifier="response-X"]()) {
@@ -122,7 +122,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/items/templateruleforQtiPL1.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'if (true) {
     exitTemplate();
 } elseif (false) {
@@ -139,7 +139,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/items/templateruleforQtiPL2.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'if (true) {
     setDefaultValue[identifier="Q01"](true);
 }',
@@ -154,7 +154,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/rulesforQtiPL.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'if (true) {
     exitTest();
 } elseif (false) {
@@ -171,7 +171,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/branchingexpressions.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'if (true) {
     exitTest();
 }',
@@ -186,7 +186,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/rulesforQtiPL.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'if (true) {
         exitTest();
 } elseif (false) {
@@ -204,7 +204,7 @@ class QtiPLTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/tests/branchingexpressions.xml');
         $test = $doc->getDocumentComponent();
 
-        $this->assertEquals(
+        $this::assertEquals(
             'if (true) {
 exitTest();
 }',

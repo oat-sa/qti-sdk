@@ -34,11 +34,11 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('responseDeclaration', $element->nodeName);
-        $this->assertEquals('single', $element->getAttribute('cardinality'));
-        $this->assertEquals('integer', $element->getAttribute('baseType'));
-        $this->assertEquals('response1', $element->getAttribute('identifier'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('responseDeclaration', $element->nodeName);
+        $this::assertEquals('single', $element->getAttribute('cardinality'));
+        $this::assertEquals('integer', $element->getAttribute('baseType'));
+        $this::assertEquals('response1', $element->getAttribute('identifier'));
     }
 
     public function testMarshallCorrectResponse()
@@ -57,29 +57,29 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
 
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('responseDeclaration', $element->nodeName);
-        $this->assertEquals('multiple', $element->getAttribute('cardinality'));
-        $this->assertEquals('duration', $element->getAttribute('baseType'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('responseDeclaration', $element->nodeName);
+        $this::assertEquals('multiple', $element->getAttribute('cardinality'));
+        $this::assertEquals('duration', $element->getAttribute('baseType'));
 
         $defaultValue = $element->getElementsByTagName('correctResponse');
-        $this->assertEquals(1, $defaultValue->length);
+        $this::assertEquals(1, $defaultValue->length);
         $defaultValue = $defaultValue->item(0);
-        $this->assertEquals('correctResponse', $defaultValue->nodeName);
-        $this->assertEquals('', $defaultValue->getAttribute('interpretation'));
+        $this::assertEquals('correctResponse', $defaultValue->nodeName);
+        $this::assertEquals('', $defaultValue->getAttribute('interpretation'));
 
         $values = $defaultValue->getElementsByTagName('value');
-        $this->assertEquals(2, $values->length);
+        $this::assertEquals(2, $values->length);
 
         $value = $values->item(0);
-        $this->assertEquals('value', $value->nodeName);
-        $this->assertEquals('P2D', $value->nodeValue);
-        $this->assertEquals('', $value->getAttribute('baseType')); // No baseType because not in a record.
+        $this::assertEquals('value', $value->nodeName);
+        $this::assertEquals('P2D', $value->nodeValue);
+        $this::assertEquals('', $value->getAttribute('baseType')); // No baseType because not in a record.
 
         $value = $values->item(1);
-        $this->assertEquals('value', $value->nodeName);
-        $this->assertEquals('P2MT3H', $value->nodeValue); // No baseType because not in a record.
-        $this->assertEquals('', $value->getAttribute('baseType'));
+        $this::assertEquals('value', $value->nodeName);
+        $this::assertEquals('P2MT3H', $value->nodeValue); // No baseType because not in a record.
+        $this::assertEquals('', $value->getAttribute('baseType'));
     }
 
     public function testMarshallMapping()
@@ -99,29 +99,29 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('responseDeclaration', $element->nodeName);
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
-        $this->assertEquals('float', $element->getAttribute('baseType'));
-        $this->assertEquals('single', $element->getAttribute('cardinality'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('responseDeclaration', $element->nodeName);
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertEquals('float', $element->getAttribute('baseType'));
+        $this::assertEquals('single', $element->getAttribute('cardinality'));
 
         $correctResponses = $element->getElementsByTagName('defaultValue');
-        $this->assertEquals(0, $correctResponses->length);
+        $this::assertEquals(0, $correctResponses->length);
 
         $mapping = $element->getElementsByTagName('mapping');
-        $this->assertEquals(1, $mapping->length);
+        $this::assertEquals(1, $mapping->length);
         $entries = $mapping->item(0)->getElementsByTagName('mapEntry');
-        $this->assertEquals(2, $entries->length);
+        $this::assertEquals(2, $entries->length);
 
         $entry = $entries->item(0);
-        $this->assertEquals('mapEntry', $entry->nodeName);
-        $this->assertEquals(1.0, $entry->getAttribute('mapKey'));
-        $this->assertEquals(1.1, $entry->getAttribute('mappedValue'));
+        $this::assertEquals('mapEntry', $entry->nodeName);
+        $this::assertEquals(1.0, $entry->getAttribute('mapKey'));
+        $this::assertEquals(1.1, $entry->getAttribute('mappedValue'));
 
         $entry = $entries->item(1);
-        $this->assertEquals('mapEntry', $entry->nodeName);
-        $this->assertEquals(1.1, $entry->getAttribute('mapKey'));
-        $this->assertEquals(1.2, $entry->getAttribute('mappedValue'));
+        $this::assertEquals('mapEntry', $entry->nodeName);
+        $this::assertEquals(1.1, $entry->getAttribute('mapKey'));
+        $this::assertEquals(1.2, $entry->getAttribute('mappedValue'));
     }
 
     public function testUnmarshallMinimal()
@@ -133,10 +133,10 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ResponseDeclaration::class, $component);
-        $this->assertEquals('responseDeclaration1', $component->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $component->getCardinality());
-        $this->assertEquals(BaseType::INTEGER, $component->getBaseType());
+        $this::assertInstanceOf(ResponseDeclaration::class, $component);
+        $this::assertEquals('responseDeclaration1', $component->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $component->getCardinality());
+        $this::assertEquals(BaseType::INTEGER, $component->getBaseType());
     }
 
     public function testUnmarshallCorrectResponse()
@@ -157,23 +157,23 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ResponseDeclaration::class, $component);
-        $this->assertEquals('responseDeclaration2', $component->getIdentifier());
-        $this->assertEquals(Cardinality::MULTIPLE, $component->getCardinality());
-        $this->assertEquals(BaseType::DURATION, $component->getBaseType());
+        $this::assertInstanceOf(ResponseDeclaration::class, $component);
+        $this::assertEquals('responseDeclaration2', $component->getIdentifier());
+        $this::assertEquals(Cardinality::MULTIPLE, $component->getCardinality());
+        $this::assertEquals(BaseType::DURATION, $component->getBaseType());
 
         $correctResponse = $component->getCorrectResponse();
-        $this->assertInstanceOf(CorrectResponse::class, $correctResponse);
-        $this->assertEquals('Up to you!', $correctResponse->getInterpretation());
+        $this::assertInstanceOf(CorrectResponse::class, $correctResponse);
+        $this::assertEquals('Up to you!', $correctResponse->getInterpretation());
 
         $values = $correctResponse->getValues();
-        $this->assertEquals(2, count($values));
+        $this::assertEquals(2, count($values));
 
-        $this->assertInstanceOf(Value::class, $values[0]);
-        $this->assertInstanceOf(QtiDuration::class, $values[0]->getValue());
+        $this::assertInstanceOf(Value::class, $values[0]);
+        $this::assertInstanceOf(QtiDuration::class, $values[0]->getValue());
 
-        $this->assertInstanceOf(Value::class, $values[1]);
-        $this->assertInstanceOf(QtiDuration::class, $values[1]->getValue());
+        $this::assertInstanceOf(Value::class, $values[1]);
+        $this::assertInstanceOf(QtiDuration::class, $values[1]->getValue());
     }
 
     public function testUnmarshallMatchTable()
@@ -194,20 +194,20 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OutcomeDeclaration::class, $component);
+        $this::assertInstanceOf(OutcomeDeclaration::class, $component);
         $matchTable = $component->getLookupTable();
-        $this->assertInstanceOf(MatchTable::class, $matchTable);
+        $this::assertInstanceOf(MatchTable::class, $matchTable);
         $entries = $matchTable->getMatchTableEntries();
-        $this->assertEquals(2, count($entries));
+        $this::assertEquals(2, count($entries));
 
-        $this->assertIsInt($entries[0]->getSourceValue());
-        $this->assertEquals(1, $entries[0]->getSourceValue());
-        $this->assertIsFloat($entries[0]->getTargetValue());
-        $this->assertEquals(1.5, $entries[0]->getTargetValue());
+        $this::assertIsInt($entries[0]->getSourceValue());
+        $this::assertEquals(1, $entries[0]->getSourceValue());
+        $this::assertIsFloat($entries[0]->getTargetValue());
+        $this::assertEquals(1.5, $entries[0]->getTargetValue());
 
-        $this->assertIsInt($entries[0]->getSourceValue());
-        $this->assertEquals(2, $entries[1]->getSourceValue());
-        $this->assertIsFloat($entries[0]->getTargetValue());
-        $this->assertEquals(2.5, $entries[1]->getTargetValue());
+        $this::assertIsInt($entries[0]->getSourceValue());
+        $this::assertEquals(2, $entries[1]->getSourceValue());
+        $this::assertIsFloat($entries[0]->getTargetValue());
+        $this::assertEquals(2.5, $entries[1]->getTargetValue());
     }
 }

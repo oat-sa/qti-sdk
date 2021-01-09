@@ -29,7 +29,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><div>This is text...</div></feedbackBlock>', $dom->saveXML($element));
+        $this::assertEquals('<feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><div>This is text...</div></feedbackBlock>', $dom->saveXML($element));
     }
 
     /**
@@ -49,7 +49,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show" xml:base="/home/jerome"><div>This is text...</div></feedbackBlock>', $dom->saveXML($element));
+        $this::assertEquals('<feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show" xml:base="/home/jerome"><div>This is text...</div></feedbackBlock>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -59,19 +59,19 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(FeedbackBlock::class, $component);
-        $this->assertEquals('outcome1', $component->getOutcomeIdentifier());
-        $this->assertEquals('please_show_me', $component->getIdentifier());
-        $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
+        $this::assertInstanceOf(FeedbackBlock::class, $component);
+        $this::assertEquals('outcome1', $component->getOutcomeIdentifier());
+        $this::assertEquals('please_show_me', $component->getIdentifier());
+        $this::assertEquals(ShowHide::SHOW, $component->getShowHide());
 
         $content = $component->getContent();
-        $this->assertEquals(1, count($content));
+        $this::assertEquals(1, count($content));
         $div = $content[0];
-        $this->assertInstanceOf(Div::class, $div);
+        $this::assertInstanceOf(Div::class, $div);
 
         $divContent = $div->getContent();
-        $this->assertEquals(1, count($divContent));
-        $this->assertEquals('This is text...', $divContent[0]->getContent());
+        $this::assertEquals(1, count($divContent));
+        $this::assertEquals('This is text...', $divContent[0]->getContent());
     }
 
     /**
@@ -129,7 +129,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertEquals('/home/jerome', $component->getXmlBase());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
     }
 
     /**

@@ -63,10 +63,10 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         Utils::shuffle($node, $shufflables);
 
         // Let's check if 'choice2' is still in place...
-        $this->assertEquals('choice2', $node->getElementsByTagName('div')->item(1)->getAttribute('id'));
+        $this::assertEquals('choice2', $node->getElementsByTagName('div')->item(1)->getAttribute('id'));
         $node0Id = $node->getElementsByTagName('div')->item(0)->getAttribute('id');
         $node1Id = $node->getElementsByTagName('div')->item(2)->getAttribute('id');
-        $this->assertTrue($node0Id === 'choice1' && $node1Id === 'choice3' || $node0Id === 'choice3' && $node1Id === 'choice1');
+        $this::assertTrue($node0Id === 'choice1' && $node1Id === 'choice3' || $node0Id === 'choice3' && $node1Id === 'choice1');
     }
 
     public function testShuffleWithStatements()
@@ -96,11 +96,11 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
 
         $node->setAttribute('class', 'hello there');
 
-        $this->assertTrue(Utils::hasClass($node, 'hello'));
-        $this->assertTrue(Utils::hasClass($node, 'there'));
-        $this->assertTrue(Utils::hasClass($node, ['hello', 'there']));
-        $this->assertFalse(Utils::hasClass($node, 'unknown'));
-        $this->assertFalse(Utils::hasClass($node, ['unknown', 'class']));
+        $this::assertTrue(Utils::hasClass($node, 'hello'));
+        $this::assertTrue(Utils::hasClass($node, 'there'));
+        $this::assertTrue(Utils::hasClass($node, ['hello', 'there']));
+        $this::assertFalse(Utils::hasClass($node, 'unknown'));
+        $this::assertFalse(Utils::hasClass($node, ['unknown', 'class']));
     }
 
     public function testExtractStatements()
@@ -119,8 +119,8 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $node->appendChild($endif);
 
         $statements = Utils::extractStatements($div);
-        $this->assertEquals('qtism-if (true)', $statements[0]->data);
-        $this->assertEquals('qtism-endif', $statements[1]->data);
+        $this::assertEquals('qtism-if (true)', $statements[0]->data);
+        $this::assertEquals('qtism-endif', $statements[1]->data);
     }
 
     public function testExtractStatementsNothing()
@@ -132,7 +132,7 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $div = $dom->createElement('div');
         $node->appendChild($div);
 
-        $this->assertEquals([], Utils::extractStatements($div));
+        $this::assertEquals([], Utils::extractStatements($div));
     }
 
     public function testExtractStatementsIfOnly()
@@ -149,6 +149,6 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $node->insertBefore($if, $div);
 
         $statements = Utils::extractStatements($div);
-        $this->assertEquals([], $statements);
+        $this::assertEquals([], $statements);
     }
 }

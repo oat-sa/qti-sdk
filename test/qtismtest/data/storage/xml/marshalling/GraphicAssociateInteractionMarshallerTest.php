@@ -43,7 +43,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals(
+        $this::assertEquals(
             '<graphicAssociateInteraction id="prout" responseIdentifier="RESPONSE" minAssociations="2" maxAssociations="3"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMin="1" matchMax="2"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>',
             $dom->saveXML($element)
         );
@@ -76,7 +76,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals(
+        $this::assertEquals(
             '<graphicAssociateInteraction id="prout" responseIdentifier="RESPONSE" minAssociations="2" maxAssociations="3" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMin="1" matchMax="2"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>',
             $dom->saveXML($element)
         );
@@ -105,7 +105,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals(
+        $this::assertEquals(
             '<graphicAssociateInteraction responseIdentifier="RESPONSE" maxAssociations="3"><object data="myimg.png" type="image/png"/><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMax="2"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicAssociateInteraction>',
             $dom->saveXML($element)
         );
@@ -124,40 +124,40 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(GraphicAssociateInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertEquals('prout', $component->getId());
-        $this->assertSame(2, $component->getMinAssociations());
-        $this->assertSame(3, $component->getMaxAssociations());
+        $this::assertInstanceOf(GraphicAssociateInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertEquals('prout', $component->getId());
+        $this::assertSame(2, $component->getMinAssociations());
+        $this::assertSame(3, $component->getMaxAssociations());
 
-        $this->assertTrue($component->hasPrompt());
+        $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
 
         $object = $component->getObject();
-        $this->assertEquals('myimg.png', $object->getData());
-        $this->assertEquals('image/png', $object->getType());
+        $this::assertEquals('myimg.png', $object->getData());
+        $this::assertEquals('image/png', $object->getType());
 
         $choices = $component->getAssociableHotspots();
-        $this->assertEquals(3, count($choices));
+        $this::assertEquals(3, count($choices));
 
-        $this->assertEquals('choice1', $choices[0]->getIdentifier());
-        $this->assertEquals(2, $choices[0]->getMatchMax());
-        $this->assertEquals(1, $choices[0]->getMatchMin());
-        $this->assertEquals(QtiShape::CIRCLE, $choices[0]->getShape());
-        $this->assertTrue($choices[0]->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, [0, 0, 15])));
+        $this::assertEquals('choice1', $choices[0]->getIdentifier());
+        $this::assertEquals(2, $choices[0]->getMatchMax());
+        $this::assertEquals(1, $choices[0]->getMatchMin());
+        $this::assertEquals(QtiShape::CIRCLE, $choices[0]->getShape());
+        $this::assertTrue($choices[0]->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, [0, 0, 15])));
 
-        $this->assertEquals('choice2', $choices[1]->getIdentifier());
-        $this->assertEquals(1, $choices[1]->getMatchMax());
-        $this->assertEquals(0, $choices[1]->getMatchMin());
-        $this->assertEquals(QtiShape::CIRCLE, $choices[1]->getShape());
-        $this->assertTrue($choices[1]->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, [2, 2, 15])));
+        $this::assertEquals('choice2', $choices[1]->getIdentifier());
+        $this::assertEquals(1, $choices[1]->getMatchMax());
+        $this::assertEquals(0, $choices[1]->getMatchMin());
+        $this::assertEquals(QtiShape::CIRCLE, $choices[1]->getShape());
+        $this::assertTrue($choices[1]->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, [2, 2, 15])));
 
-        $this->assertEquals('choice3', $choices[2]->getIdentifier());
-        $this->assertEquals(1, $choices[2]->getMatchMax());
-        $this->assertEquals(0, $choices[2]->getMatchMin());
-        $this->assertEquals(QtiShape::CIRCLE, $choices[2]->getShape());
-        $this->assertTrue($choices[2]->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, [4, 4, 15])));
+        $this::assertEquals('choice3', $choices[2]->getIdentifier());
+        $this::assertEquals(1, $choices[2]->getMatchMax());
+        $this::assertEquals(0, $choices[2]->getMatchMin());
+        $this::assertEquals(QtiShape::CIRCLE, $choices[2]->getShape());
+        $this::assertTrue($choices[2]->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, [4, 4, 15])));
     }
 
     public function testUnmarshall21NoAssociableHotspot()
@@ -188,9 +188,9 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(GraphicAssociateInteraction::class, $component);
+        $this::assertInstanceOf(GraphicAssociateInteraction::class, $component);
         $choices = $component->getAssociableHotspots();
-        $this->assertEquals(2, count($choices));
+        $this::assertEquals(2, count($choices));
     }
 
     public function testUnmarshall20()
@@ -208,8 +208,8 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
 
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
 
-        $this->assertSame(0, $component->getMinAssociations());
-        $this->assertSame(3, $component->getMaxAssociations());
+        $this::assertSame(0, $component->getMinAssociations());
+        $this::assertSame(3, $component->getMaxAssociations());
     }
 
     /**
@@ -287,7 +287,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertEquals('/home/jerome', $component->getXmlBase());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
     }
 
     /**

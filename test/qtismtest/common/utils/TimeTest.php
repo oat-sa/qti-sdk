@@ -22,14 +22,14 @@ class TimeTest extends QtiSmTestCase
      */
     public function testTimeDiffSeconds(DateTime $time1, DateTime $time2, $expectedSeconds)
     {
-        $this->assertSame($expectedSeconds, TimeUtils::timeDiffSeconds($time1, $time2));
+        $this::assertSame($expectedSeconds, TimeUtils::timeDiffSeconds($time1, $time2));
     }
 
     public function testBasicToUtc()
     {
         $originalTime = DateTime::createFromFormat('Y-m-d G:i:s', '2014-07-15 16:56:20', new DateTimeZone('Europe/Luxembourg'));
         $utcTime = TimeUtils::toUtc($originalTime);
-        $this->assertEquals('2014-07-15 14:56:20', $utcTime->format('Y-m-d H:i:s'));
+        $this::assertEquals('2014-07-15 14:56:20', $utcTime->format('Y-m-d H:i:s'));
     }
 
     /**

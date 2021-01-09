@@ -31,9 +31,9 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $extendedAssessmentItemRef = ExtendedAssessmentItemRef::createFromAssessmentItemRef($assessmentItemRef);
 
-        $this->assertInstanceOf(ExtendedAssessmentItemRef::class, $extendedAssessmentItemRef);
-        $this->assertEquals('Q01', $extendedAssessmentItemRef->getIdentifier());
-        $this->assertEquals('Q01.xml', $extendedAssessmentItemRef->getHref());
+        $this::assertInstanceOf(ExtendedAssessmentItemRef::class, $extendedAssessmentItemRef);
+        $this::assertEquals('Q01', $extendedAssessmentItemRef->getIdentifier());
+        $this::assertEquals('Q01.xml', $extendedAssessmentItemRef->getHref());
     }
 
     /**
@@ -53,9 +53,9 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $extendedAssessmentItemRef = ExtendedAssessmentItemRef::createFromAssessmentItemRef($assessmentItemRef);
         $weights = $extendedAssessmentItemRef->getWeights();
 
-        $this->assertCount(1, $weights);
-        $this->assertEquals('WEIGHT', $weights['WEIGHT']->getIdentifier());
-        $this->assertEquals(2., $weights['WEIGHT']->getValue());
+        $this::assertCount(1, $weights);
+        $this::assertEquals('WEIGHT', $weights['WEIGHT']->getIdentifier());
+        $this::assertEquals(2., $weights['WEIGHT']->getValue());
     }
 
     public function testRemoveOutcomeDeclaration()
@@ -64,9 +64,9 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $outcomeDeclaration = new OutcomeDeclaration('OUTCOME', BaseType::IDENTIFIER, Cardinality::SINGLE);
         $assessmentItemRef->addOutcomeDeclaration($outcomeDeclaration);
 
-        $this->assertCount(1, $assessmentItemRef->getOutcomeDeclarations());
+        $this::assertCount(1, $assessmentItemRef->getOutcomeDeclarations());
         $assessmentItemRef->removeOutcomeDeclaration($outcomeDeclaration);
-        $this->assertCount(0, $assessmentItemRef->getOutcomeDeclarations());
+        $this::assertCount(0, $assessmentItemRef->getOutcomeDeclarations());
     }
 
     public function testRemoveResponseDeclaration()
@@ -75,9 +75,9 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $responseDeclaration = new ResponseDeclaration('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE);
         $assessmentItemRef->addResponseDeclaration($responseDeclaration);
 
-        $this->assertCount(1, $assessmentItemRef->getResponseDeclarations());
+        $this::assertCount(1, $assessmentItemRef->getResponseDeclarations());
         $assessmentItemRef->removeResponseDeclaration($responseDeclaration);
-        $this->assertCount(0, $assessmentItemRef->getResponseDeclarations());
+        $this::assertCount(0, $assessmentItemRef->getResponseDeclarations());
     }
 
     public function testAddTemplateDeclaration()
@@ -86,7 +86,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $templateDeclaration = new TemplateDeclaration('TEMPLATE', BaseType::IDENTIFIER, Cardinality::SINGLE);
         $assessmentItemRef->addTemplateDeclaration($templateDeclaration);
 
-        $this->assertCount(1, $assessmentItemRef->getTemplateDeclarations());
+        $this::assertCount(1, $assessmentItemRef->getTemplateDeclarations());
     }
 
     public function testRemoveTemplateDeclaration()
@@ -95,9 +95,9 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $templateDeclaration = new TemplateDeclaration('TEMPLATE', BaseType::IDENTIFIER, Cardinality::SINGLE);
         $assessmentItemRef->addTemplateDeclaration($templateDeclaration);
 
-        $this->assertCount(1, $assessmentItemRef->getTemplateDeclarations());
+        $this::assertCount(1, $assessmentItemRef->getTemplateDeclarations());
         $assessmentItemRef->removeTemplateDeclaration($templateDeclaration);
-        $this->assertCount(0, $assessmentItemRef->getTemplateDeclarations());
+        $this::assertCount(0, $assessmentItemRef->getTemplateDeclarations());
     }
 
     public function testRemoveModalFeedbackRule()
@@ -106,9 +106,9 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $modalFeedbackRule = new ModalFeedbackRule('OUTCOME', ShowHide::SHOW, 'MDLF');
         $assessmentItemRef->addModalFeedbackRule($modalFeedbackRule);
 
-        $this->assertCount(1, $assessmentItemRef->getModalFeedbackRules());
+        $this::assertCount(1, $assessmentItemRef->getModalFeedbackRules());
         $assessmentItemRef->removeModalFeedbackRule($modalFeedbackRule);
-        $this->assertCount(0, $assessmentItemRef->getModalFeedbackRules());
+        $this::assertCount(0, $assessmentItemRef->getModalFeedbackRules());
     }
 
     public function testRemoveShuffling()
@@ -128,9 +128,9 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
 
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
         $assessmentItemRef->addShuffling($shuffling);
-        $this->assertCount(1, $assessmentItemRef->getShufflings());
+        $this::assertCount(1, $assessmentItemRef->getShufflings());
         $assessmentItemRef->removeShuffling($shuffling);
-        $this->assertCount(0, $assessmentItemRef->getShufflings());
+        $this::assertCount(0, $assessmentItemRef->getShufflings());
     }
 
     public function testSetAdaptiveWrongType()
@@ -158,7 +158,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
         $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', 0, 1);
         $assessmentItemRef->addResponseValidityConstraint($responseValidityConstraint);
-        $this->assertCount(1, $assessmentItemRef->getResponseValidityConstraints());
+        $this::assertCount(1, $assessmentItemRef->getResponseValidityConstraints());
     }
 
     public function testRemoveResponseValidityConstraint()
@@ -166,8 +166,8 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
         $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', 0, 1);
         $assessmentItemRef->addResponseValidityConstraint($responseValidityConstraint);
-        $this->assertCount(1, $assessmentItemRef->getResponseValidityConstraints());
+        $this::assertCount(1, $assessmentItemRef->getResponseValidityConstraints());
         $assessmentItemRef->removeResponseValidityConstraint($responseValidityConstraint);
-        $this->assertCount(0, $assessmentItemRef->getResponseValidityConstraints());
+        $this::assertCount(0, $assessmentItemRef->getResponseValidityConstraints());
     }
 }

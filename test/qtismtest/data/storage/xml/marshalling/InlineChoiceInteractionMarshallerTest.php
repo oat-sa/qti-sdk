@@ -42,7 +42,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true" xml:base="/home/jerome"><inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice><inlineChoice identifier="inlineChoice2">Option2</inlineChoice><inlineChoice identifier="inlineChoice3">Option3</inlineChoice></inlineChoiceInteraction>',
             $dom->saveXML($element)
         );
@@ -66,7 +66,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false"><inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice></inlineChoiceInteraction>', $dom->saveXML($element));
+        $this::assertEquals('<inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false"><inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice></inlineChoiceInteraction>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -80,12 +80,12 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $inlineChoiceInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(InlineChoiceInteraction::class, $inlineChoiceInteraction);
-        $this->assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
-        $this->assertTrue($inlineChoiceInteraction->mustShuffle());
-        $this->assertTrue($inlineChoiceInteraction->isRequired());
-        $this->assertEquals(3, count($inlineChoiceInteraction->getComponentsByClassName('inlineChoice')));
-        $this->assertEquals('/home/jerome', $inlineChoiceInteraction->getXmlBase());
+        $this::assertInstanceOf(InlineChoiceInteraction::class, $inlineChoiceInteraction);
+        $this::assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
+        $this::assertTrue($inlineChoiceInteraction->mustShuffle());
+        $this::assertTrue($inlineChoiceInteraction->isRequired());
+        $this::assertEquals(3, count($inlineChoiceInteraction->getComponentsByClassName('inlineChoice')));
+        $this::assertEquals('/home/jerome', $inlineChoiceInteraction->getXmlBase());
     }
 
     /**
@@ -155,11 +155,11 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $inlineChoiceInteraction = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(InlineChoiceInteraction::class, $inlineChoiceInteraction);
-        $this->assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
-        $this->assertTrue($inlineChoiceInteraction->mustShuffle());
-        $this->assertFalse($inlineChoiceInteraction->isRequired());
-        $this->assertEquals(3, count($inlineChoiceInteraction->getComponentsByClassName('inlineChoice')));
+        $this::assertInstanceOf(InlineChoiceInteraction::class, $inlineChoiceInteraction);
+        $this::assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
+        $this::assertTrue($inlineChoiceInteraction->mustShuffle());
+        $this::assertFalse($inlineChoiceInteraction->isRequired());
+        $this::assertEquals(3, count($inlineChoiceInteraction->getComponentsByClassName('inlineChoice')));
     }
 
     /**

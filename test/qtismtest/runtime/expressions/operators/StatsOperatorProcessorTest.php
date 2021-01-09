@@ -112,10 +112,10 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
 
         try {
             $result = $processor->process();
-            $this->assertTrue(false); // cannot happen.
+            $this::assertTrue(false); // cannot happen.
         } catch (OperatorProcessingException $e) {
-            $this->assertTrue(true); // exception thrown, good!
-            $this->assertEquals(OperatorProcessingException::WRONG_CARDINALITY, $e->getCode());
+            $this::assertTrue(true); // exception thrown, good!
+            $this::assertEquals(OperatorProcessingException::WRONG_CARDINALITY, $e->getCode());
         }
     }
 
@@ -133,10 +133,10 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
 
         try {
             $result = $processor->process();
-            $this->assertTrue(false); // cannot happen.
+            $this::assertTrue(false); // cannot happen.
         } catch (OperatorProcessingException $e) {
-            $this->assertTrue(true); // exception thrown, good!
-            $this->assertEquals(OperatorProcessingException::WRONG_BASETYPE, $e->getCode());
+            $this::assertTrue(true); // exception thrown, good!
+            $this::assertEquals(OperatorProcessingException::WRONG_BASETYPE, $e->getCode());
         }
     }
 
@@ -163,10 +163,10 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     protected function check($expected, $value)
     {
         if (is_null($expected)) {
-            $this->assertTrue($value === null);
+            $this::assertTrue($value === null);
         } else {
-            $this->assertInstanceOf(QtiFloat::class, $value);
-            $this->assertSame(round($expected, 3), round($value->getValue(), 3));
+            $this::assertInstanceOf(QtiFloat::class, $value);
+            $this::assertSame(round($expected, 3), round($value->getValue(), 3));
         }
     }
 

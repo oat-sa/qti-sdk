@@ -29,14 +29,14 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
         $doc->load($file, true);
 
         $responseProcessings = $doc->getDocumentComponent()->getComponentsByClassName('responseProcessing');
-        $this->assertEquals(1, count($responseProcessings));
-        $this->assertEquals('template_location_rp.xml', $responseProcessings[0]->getTemplateLocation());
+        $this::assertEquals(1, count($responseProcessings));
+        $this::assertEquals('template_location_rp.xml', $responseProcessings[0]->getTemplateLocation());
 
         $doc->resolveTemplateLocation(true);
 
         $responseProcessings = $doc->getDocumentComponent()->getComponentsByClassName('responseProcessing');
-        $this->assertEquals(1, count($responseProcessings));
-        $this->assertEquals('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct', $responseProcessings[0]->getTemplate());
+        $this::assertEquals(1, count($responseProcessings));
+        $this::assertEquals('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct', $responseProcessings[0]->getTemplate());
     }
 
     /**

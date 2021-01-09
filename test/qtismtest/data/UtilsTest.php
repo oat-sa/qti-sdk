@@ -41,15 +41,15 @@ class UtilsTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
         $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q01'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('Q01'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q03'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('S02'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q05'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('TP02'), $sections)
         );
@@ -59,19 +59,19 @@ class UtilsTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
         $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q05'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('S04'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q03'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('S03'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q01'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('TP01'), $sections)
         );
-        $this->assertEquals(null, DataUtils::getFirstItem($test, $test, $sections));
+        $this::assertEquals(null, DataUtils::getFirstItem($test, $test, $sections));
     }
 
     public function testgetFirstItem2()
@@ -81,7 +81,7 @@ class UtilsTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
         $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q06'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('TP03'), $sections)
         );
@@ -93,27 +93,27 @@ class UtilsTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
         $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q04'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('S02'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q07'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('S07'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q07'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('S04'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q11'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('S13'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q99'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('S99'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             null,
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('S95'), $sections)
         );
@@ -128,15 +128,15 @@ class UtilsTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
         $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q01'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('Q01'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q04'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S02'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q08'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('TP02'), $sections)
         );
@@ -146,19 +146,19 @@ class UtilsTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
         $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q08'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S04'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q04'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S03'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q08'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('TP01'), $sections)
         );
-        $this->assertEquals(null, DataUtils::getLastItem($test, $test, $sections));
+        $this::assertEquals(null, DataUtils::getLastItem($test, $test, $sections));
     }
 
     public function testgetLastItem2()
@@ -168,7 +168,7 @@ class UtilsTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
         $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q05'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('TP03'), $sections)
         );
@@ -180,23 +180,23 @@ class UtilsTest extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
         $sections = $test->getComponentsByClassName('assessmentSection')->getArrayCopy();
 
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q03'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S02'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q06'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S07'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q10'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S13'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             $test->getComponentByIdentifier('Q99'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S98'), $sections)
         );
-        $this->assertEquals(
+        $this::assertEquals(
             null,
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S96'), $sections)
         );

@@ -51,8 +51,8 @@ class TextInteractionTest extends QtiSmTestCase
 
         $textEntryInteraction->setExpectedLength($expectedLength);
 
-        $this->assertTrue($textEntryInteraction->hasExpectedLength());
-        $this->assertEquals($expectedLength, $textEntryInteraction->getExpectedLength());
+        $this::assertTrue($textEntryInteraction->hasExpectedLength());
+        $this::assertEquals($expectedLength, $textEntryInteraction->getExpectedLength());
     }
 
     public function nonNegativeIntegersForExpectedLength(): array
@@ -81,8 +81,8 @@ class TextInteractionTest extends QtiSmTestCase
 
         $textEntryInteraction->setExpectedLength(null);
 
-        $this->assertFalse($textEntryInteraction->hasExpectedLength());
-        $this->assertNull($textEntryInteraction->getExpectedLength());
+        $this::assertFalse($textEntryInteraction->hasExpectedLength());
+        $this::assertNull($textEntryInteraction->getExpectedLength());
     }
 
     public function testSetPatternMaskWrongType()

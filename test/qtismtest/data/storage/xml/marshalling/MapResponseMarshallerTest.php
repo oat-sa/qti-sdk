@@ -20,9 +20,9 @@ class MapResponseMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('mapResponse', $element->nodeName);
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('mapResponse', $element->nodeName);
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
     }
 
     public function testUnmarshall()
@@ -34,7 +34,7 @@ class MapResponseMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(MapResponse::class, $component);
-        $this->assertEquals('myMapResponse1', $component->getIdentifier());
+        $this::assertInstanceOf(MapResponse::class, $component);
+        $this::assertEquals('myMapResponse1', $component->getIdentifier());
     }
 }

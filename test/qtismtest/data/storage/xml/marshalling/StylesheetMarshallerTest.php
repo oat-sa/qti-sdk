@@ -27,12 +27,12 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('stylesheet', $element->nodeName);
-        $this->assertEquals($uri, $element->getAttribute('href'));
-        $this->assertEquals($type, $element->getAttribute('type'));
-        $this->assertEquals($media, $element->getAttribute('media'));
-        $this->assertEquals($title, $element->getAttribute('title'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('stylesheet', $element->nodeName);
+        $this::assertEquals($uri, $element->getAttribute('href'));
+        $this::assertEquals($type, $element->getAttribute('type'));
+        $this::assertEquals($media, $element->getAttribute('media'));
+        $this::assertEquals($title, $element->getAttribute('title'));
     }
 
     public function testMarshallTwo()
@@ -44,12 +44,12 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('stylesheet', $element->nodeName);
-        $this->assertEquals($uri, $element->getAttribute('href'));
-        $this->assertEquals('text/css', $element->getAttribute('type')); // default
-        $this->assertEquals('screen', $element->getAttribute('media')); // default
-        $this->assertFalse($element->hasAttribute('title'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('stylesheet', $element->nodeName);
+        $this::assertEquals($uri, $element->getAttribute('href'));
+        $this::assertEquals('text/css', $element->getAttribute('type')); // default
+        $this::assertEquals('screen', $element->getAttribute('media')); // default
+        $this::assertFalse($element->hasAttribute('title'));
     }
 
     public function testUnmarshall()
@@ -61,10 +61,10 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Stylesheet::class, $component);
-        $this->assertEquals('http://myuri.com', $component->getHref());
-        $this->assertEquals('A pure stylesheet', $component->getTitle());
-        $this->assertEquals('screen', $component->getMedia());
-        $this->assertEquals('text/css', $component->getType());
+        $this::assertInstanceOf(Stylesheet::class, $component);
+        $this::assertEquals('http://myuri.com', $component->getHref());
+        $this::assertEquals('A pure stylesheet', $component->getTitle());
+        $this::assertEquals('screen', $component->getMedia());
+        $this::assertEquals('text/css', $component->getType());
     }
 }

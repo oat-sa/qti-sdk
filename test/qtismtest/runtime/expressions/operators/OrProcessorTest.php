@@ -66,18 +66,18 @@ class OrProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiBoolean(false), null]);
         $processor = new OrProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
 
         $operands = new OperandsCollection([new QtiBoolean(false), null, new QtiBoolean(false)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
 
         // On the other hand...
         $operands = new OperandsCollection([new QtiBoolean(false), null, new QtiBoolean(true)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertTrue($result->getValue());
+        $this::assertTrue($result->getValue());
     }
 
     public function testTrue()
@@ -86,14 +86,14 @@ class OrProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiBoolean(true)]);
         $processor = new OrProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertSame(true, $result->getValue());
 
         $operands = new OperandsCollection([new QtiBoolean(false), new QtiBoolean(true), new QtiBoolean(false)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertSame(true, $result->getValue());
     }
 
     public function testFalse()
@@ -102,14 +102,14 @@ class OrProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiBoolean(false)]);
         $processor = new OrProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertSame(false, $result->getValue());
 
         $operands = new OperandsCollection([new QtiBoolean(false), new QtiBoolean(false), new QtiBoolean(false)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertSame(false, $result->getValue());
     }
 
     /**

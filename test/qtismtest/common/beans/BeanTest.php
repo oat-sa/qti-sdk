@@ -23,133 +23,133 @@ class BeanTest extends QtiSmTestCase
     {
         $mock = new SimpleBean('Mister Bean', 'Mini Cooper');
         $bean = new Bean($mock);
-        $this->assertInstanceOf(Bean::class, $bean);
+        $this::assertInstanceOf(Bean::class, $bean);
 
         // --- Try to get information about property existence.
-        $this->assertTrue($bean->hasProperty('name'));
+        $this::assertTrue($bean->hasProperty('name'));
         // This property simply does not exist.
-        $this->assertFalse($bean->hasProperty('miniCooper'));
+        $this::assertFalse($bean->hasProperty('miniCooper'));
         // This property exists but is not annotated with @qtism-bean-property.
-        $this->assertFalse($bean->hasProperty('uselessProperty'));
+        $this::assertFalse($bean->hasProperty('uselessProperty'));
 
         // --- Try to retrieve some bean properties.
-        $this->assertInstanceOf(BeanProperty::class, $bean->getProperty('name'));
+        $this::assertInstanceOf(BeanProperty::class, $bean->getProperty('name'));
 
         // The property does not exist.
         try {
             $beanProperty = $bean->getProperty('miniCooper');
-            $this->assertFalse(true, 'An exception must be thrown because the property does not exist in the bean.');
+            $this::assertFalse(true, 'An exception must be thrown because the property does not exist in the bean.');
         } catch (BeanException $e) {
-            $this->assertEquals(BeanException::NO_PROPERTY, $e->getCode());
+            $this::assertEquals(BeanException::NO_PROPERTY, $e->getCode());
         }
 
         // The property exists but is not annotated.
         try {
             $beanProperty = $bean->getProperty('uselessProperty');
-            $this->assertFalse(true, 'An exception must be thrown because the property is not annotated.');
+            $this::assertFalse(true, 'An exception must be thrown because the property is not annotated.');
         } catch (BeanException $e) {
-            $this->assertEquals(BeanException::NO_PROPERTY, $e->getCode());
+            $this::assertEquals(BeanException::NO_PROPERTY, $e->getCode());
         }
 
         // The annotated properties are ['name', 'car'].
         $names = ['name', 'car'];
         $beanProperties = $bean->getProperties();
         for ($i = 0; $i < count($names); $i++) {
-            $this->assertEquals($names[$i], $beanProperties[$i]->getName());
+            $this::assertEquals($names[$i], $beanProperties[$i]->getName());
         }
 
         // --- Try to get information about getter existence.
-        $this->assertTrue($bean->hasGetter('name') !== false);
+        $this::assertTrue($bean->hasGetter('name') !== false);
         // Simply does not exist.
-        $this->assertFalse($bean->hasGetter('miniCooper'));
+        $this::assertFalse($bean->hasGetter('miniCooper'));
         // Exists but not related to an annotated property.
-        $this->assertFalse($bean->hasGetter('uselessProperty'));
+        $this::assertFalse($bean->hasGetter('uselessProperty'));
 
         // --- Try to retrieve some bean methods.
-        $this->assertInstanceOf(BeanMethod::class, $bean->getGetter('name'));
+        $this::assertInstanceOf(BeanMethod::class, $bean->getGetter('name'));
 
         // The getter does not exist.
         try {
             $beanMethod = $bean->getGetter('miniCooper');
-            $this->assertTrue(false, 'An exception must thrown because the getter does not exist in the bean.');
+            $this::assertTrue(false, 'An exception must thrown because the getter does not exist in the bean.');
         } catch (BeanException $e) {
-            $this->assertEquals(BeanException::NO_METHOD, $e->getCode());
+            $this::assertEquals(BeanException::NO_METHOD, $e->getCode());
         }
 
         // The getter exists but is not related to a valid bean property.
         try {
             $beanMethod = $bean->getGetter('uselessProperty');
-            $this->assertTrue(false, 'An exception must be thrown because the property targeted by the getter is not an annotated bean property.');
+            $this::assertTrue(false, 'An exception must be thrown because the property targeted by the getter is not an annotated bean property.');
         } catch (BeanException $e) {
-            $this->assertEquals(BeanException::NO_METHOD, $e->getCode());
+            $this::assertEquals(BeanException::NO_METHOD, $e->getCode());
         }
 
         $beanGetters = $bean->getGetters();
         for ($i = 0; $i < count($names); $i++) {
-            $this->assertEquals('get' . ucfirst($names[$i]), $beanGetters[$i]->getName());
+            $this::assertEquals('get' . ucfirst($names[$i]), $beanGetters[$i]->getName());
         }
 
         // --- Try to get information about setter existence.
-        $this->assertTrue($bean->hasSetter('name'));
+        $this::assertTrue($bean->hasSetter('name'));
         // Simply does not exist.
-        $this->assertFalse($bean->hasSetter('miniCooper'));
+        $this::assertFalse($bean->hasSetter('miniCooper'));
         // Exists but not related to an annotated property.
-        $this->assertFalse($bean->hasSetter('uselessProperty'));
+        $this::assertFalse($bean->hasSetter('uselessProperty'));
 
         // --- Try to retrieve some bean methods.
-        $this->assertInstanceOf(BeanMethod::class, $bean->getSetter('name'));
+        $this::assertInstanceOf(BeanMethod::class, $bean->getSetter('name'));
 
         // The getter does not exist.
         try {
             $beanMethod = $bean->getSetter('miniCooper');
-            $this->assertTrue(false, 'An exception must thrown because the setter does not exist in the bean.');
+            $this::assertTrue(false, 'An exception must thrown because the setter does not exist in the bean.');
         } catch (BeanException $e) {
-            $this->assertEquals(BeanException::NO_METHOD, $e->getCode());
+            $this::assertEquals(BeanException::NO_METHOD, $e->getCode());
         }
 
         // The getter exists but is not related to a valid bean property.
         try {
             $beanMethod = $bean->getSetter('uselessProperty');
-            $this->assertTrue(false, 'An exception must be thrown because the property targeted by the getter is not an annotated bean property.');
+            $this::assertTrue(false, 'An exception must be thrown because the property targeted by the getter is not an annotated bean property.');
         } catch (BeanException $e) {
-            $this->assertEquals(BeanException::NO_METHOD, $e->getCode());
+            $this::assertEquals(BeanException::NO_METHOD, $e->getCode());
         }
 
         $beanGetters = $bean->getSetters();
         for ($i = 0; $i < count($names); $i++) {
-            $this->assertEquals('set' . ucfirst($names[$i]), $beanGetters[$i]->getName());
+            $this::assertEquals('set' . ucfirst($names[$i]), $beanGetters[$i]->getName());
         }
 
         // --- Play with the constructor
         $beanParams = $bean->getConstructorParameters();
         // The constructor has 3 parameters but only parameters with the same
         // name as a valid bean property are returned.
-        $this->assertEquals(2, count($beanParams));
+        $this::assertEquals(2, count($beanParams));
 
         for ($i = 0; $i < count($names); $i++) {
-            $this->assertEquals($names[$i], $beanParams[$i]->getName());
+            $this::assertEquals($names[$i], $beanParams[$i]->getName());
         }
 
         $ctorGetters = $bean->getConstructorGetters();
-        $this->assertEquals(2, count($ctorGetters));
+        $this::assertEquals(2, count($ctorGetters));
 
         for ($i = 0; $i < count($names); $i++) {
-            $this->assertEquals('get' . ucfirst($names[$i]), $ctorGetters[$i]->getName());
+            $this::assertEquals('get' . ucfirst($names[$i]), $ctorGetters[$i]->getName());
         }
 
         $ctorSetters = $bean->getConstructorSetters();
-        $this->assertEquals(2, count($ctorSetters));
+        $this::assertEquals(2, count($ctorSetters));
 
         for ($i = 0; $i < count($names); $i++) {
-            $this->assertEquals('set' . ucfirst($names[$i]), $ctorSetters[$i]->getName());
+            $this::assertEquals('set' . ucfirst($names[$i]), $ctorSetters[$i]->getName());
         }
 
         // The SimpleBean class cannot be considered as a strict bean.
         try {
             $bean = new Bean($mock, true);
-            $this->assertTrue(false, 'An exception must be thrown because the SimpleBean class is not a strict bean implementation.');
+            $this::assertTrue(false, 'An exception must be thrown because the SimpleBean class is not a strict bean implementation.');
         } catch (BeanException $e) {
-            $this->assertEquals(BeanException::NOT_STRICT, $e->getCode());
+            $this::assertEquals(BeanException::NOT_STRICT, $e->getCode());
         }
     }
 
@@ -158,13 +158,13 @@ class BeanTest extends QtiSmTestCase
         // must work in unstrict mode.
         $mock = new NotStrictConstructorBean('John', 'Dunbar', 'red');
         $bean = new Bean($mock);
-        $this->assertInstanceOf(Bean::class, $bean);
+        $this::assertInstanceOf(Bean::class, $bean);
 
         try {
             $bean = new Bean($mock, true);
-            $this->assertFalse(true, 'An exception must be thrown because the NotStrictConstructorBean class provides an invalid constructor.');
+            $this::assertFalse(true, 'An exception must be thrown because the NotStrictConstructorBean class provides an invalid constructor.');
         } catch (BeanException $e) {
-            $this->assertEquals(BeanException::NOT_STRICT, $e->getCode());
+            $this::assertEquals(BeanException::NOT_STRICT, $e->getCode());
         }
     }
 
@@ -173,13 +173,13 @@ class BeanTest extends QtiSmTestCase
         // must work if no strict mode.
         $mock = new NotStrictMissingSetterBean('John', 'Dunbar', 'brown');
         $bean = new Bean($mock);
-        $this->assertInstanceOf(Bean::class, $bean);
+        $this::assertInstanceOf(Bean::class, $bean);
 
         try {
             $bean = new Bean($mock, true);
-            $this->assertTrue(false, 'An exception must be thrown because the NotStrictMissingSetterBean class has a protected bean setter that should be public.');
+            $this::assertTrue(false, 'An exception must be thrown because the NotStrictMissingSetterBean class has a protected bean setter that should be public.');
         } catch (BeanException $e) {
-            $this->assertEquals(BeanException::NOT_STRICT, $e->getCode());
+            $this::assertEquals(BeanException::NOT_STRICT, $e->getCode());
         }
     }
 
@@ -187,32 +187,32 @@ class BeanTest extends QtiSmTestCase
     {
         $mock = new StrictBean('John', 'Dunbar', 'blond', true);
         $bean = new Bean($mock, true);
-        $this->assertInstanceOf(Bean::class, $bean);
+        $this::assertInstanceOf(Bean::class, $bean);
 
-        $this->assertTrue($bean->hasConstructorParameter('firstName'));
-        $this->assertTrue($bean->hasConstructorParameter('lastName'));
-        $this->assertTrue($bean->hasConstructorParameter('hair'));
-        $this->assertTrue($bean->hasConstructorParameter('cool'));
-        $this->assertTrue($bean->hasProperty('firstName'));
-        $this->assertTrue($bean->hasProperty('lastName'));
-        $this->assertTrue($bean->hasProperty('hair'));
-        $this->assertTrue($bean->hasProperty('cool'));
-        $this->assertTrue($bean->hasGetter('firstName') !== false);
-        $this->assertTrue($bean->hasGetter('lastName') !== false);
-        $this->assertTrue($bean->hasGetter('hair') !== false);
-        $this->assertTrue($bean->hasGetter('cool') !== false);
-        $this->assertTrue($bean->hasSetter('firstName'));
-        $this->assertTrue($bean->hasSetter('lastName'));
-        $this->assertTrue($bean->hasSetter('hair'));
-        $this->assertTrue($bean->hasSetter('cool'));
+        $this::assertTrue($bean->hasConstructorParameter('firstName'));
+        $this::assertTrue($bean->hasConstructorParameter('lastName'));
+        $this::assertTrue($bean->hasConstructorParameter('hair'));
+        $this::assertTrue($bean->hasConstructorParameter('cool'));
+        $this::assertTrue($bean->hasProperty('firstName'));
+        $this::assertTrue($bean->hasProperty('lastName'));
+        $this::assertTrue($bean->hasProperty('hair'));
+        $this::assertTrue($bean->hasProperty('cool'));
+        $this::assertTrue($bean->hasGetter('firstName') !== false);
+        $this::assertTrue($bean->hasGetter('lastName') !== false);
+        $this::assertTrue($bean->hasGetter('hair') !== false);
+        $this::assertTrue($bean->hasGetter('cool') !== false);
+        $this::assertTrue($bean->hasSetter('firstName'));
+        $this::assertTrue($bean->hasSetter('lastName'));
+        $this::assertTrue($bean->hasSetter('hair'));
+        $this::assertTrue($bean->hasSetter('cool'));
 
-        $this->assertEquals('isCool', $bean->getGetter('cool')->getName());
+        $this::assertEquals('isCool', $bean->getGetter('cool')->getName());
 
-        $this->assertEquals(4, count($bean->getGetters()));
-        $this->assertEquals(0, count($bean->getGetters(true)));
+        $this::assertEquals(4, count($bean->getGetters()));
+        $this::assertEquals(0, count($bean->getGetters(true)));
 
-        $this->assertEquals(4, count($bean->getSetters()));
-        $this->assertEquals(0, count($bean->getSetters(true)));
+        $this::assertEquals(4, count($bean->getSetters()));
+        $this::assertEquals(0, count($bean->getSetters(true)));
     }
 
     public function testGetGetterByBeanProperty()
@@ -222,7 +222,7 @@ class BeanTest extends QtiSmTestCase
 
         $property = $bean->getProperty('cool');
         $getter = $bean->getGetter($property);
-        $this->assertEquals('isCool', $getter->getName());
+        $this::assertEquals('isCool', $getter->getName());
     }
 
     public function testGetSetterByBeanProperty()
@@ -232,7 +232,7 @@ class BeanTest extends QtiSmTestCase
 
         $property = $bean->getProperty('cool');
         $setter = $bean->getSetter($property);
-        $this->assertEquals('setCool', $setter->getName());
+        $this::assertEquals('setCool', $setter->getName());
     }
 
     public function testHasGetterByBeanProperty()
@@ -241,7 +241,7 @@ class BeanTest extends QtiSmTestCase
         $bean = new Bean($mock);
 
         $property = $bean->getProperty('firstName');
-        $this->assertTrue($bean->hasGetter($property) !== false);
+        $this::assertTrue($bean->hasGetter($property) !== false);
     }
 
     public function testHasSetterByBeanProperty()
@@ -250,7 +250,7 @@ class BeanTest extends QtiSmTestCase
         $bean = new Bean($mock);
 
         $property = $bean->getProperty('firstName');
-        $this->assertTrue($bean->hasSetter($property) !== false);
+        $this::assertTrue($bean->hasSetter($property) !== false);
     }
 
     public function testWrongInstanciation()

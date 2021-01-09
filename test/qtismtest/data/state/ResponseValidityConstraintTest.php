@@ -23,10 +23,10 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
     public function testSuccessfulInstantiationBasic($minConstraint, $maxConstraint, $patternMask = '')
     {
         $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', $minConstraint, $maxConstraint, $patternMask);
-        $this->assertEquals('RESPONSE', $responseValidityConstraint->getResponseIdentifier());
-        $this->assertEquals($minConstraint, $responseValidityConstraint->getMinConstraint());
-        $this->assertEquals($maxConstraint, $responseValidityConstraint->getMaxConstraint());
-        $this->assertEquals($patternMask, $responseValidityConstraint->getPatternMask());
+        $this::assertEquals('RESPONSE', $responseValidityConstraint->getResponseIdentifier());
+        $this::assertEquals($minConstraint, $responseValidityConstraint->getMinConstraint());
+        $this::assertEquals($maxConstraint, $responseValidityConstraint->getMaxConstraint());
+        $this::assertEquals($patternMask, $responseValidityConstraint->getPatternMask());
     }
 
     /**
@@ -81,11 +81,11 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
             new AssociationValidityConstraint('IDENTIFIER', 0, 1)
         );
 
-        $this->assertEquals(1, count($responseValidityConstraint->getAssociationValidityConstraints()));
-        $this->assertEquals('IDENTIFIER', $responseValidityConstraint->getAssociationValidityConstraints()[0]->getIdentifier());
+        $this::assertEquals(1, count($responseValidityConstraint->getAssociationValidityConstraints()));
+        $this::assertEquals('IDENTIFIER', $responseValidityConstraint->getAssociationValidityConstraints()[0]->getIdentifier());
 
         $responseValidityConstraint->removeAssociationValidityConstraint($responseValidityConstraint->getAssociationValidityConstraints()[0]);
-        $this->assertEquals(0, count($responseValidityConstraint->getAssociationValidityConstraints()));
+        $this::assertEquals(0, count($responseValidityConstraint->getAssociationValidityConstraints()));
 
         $associationValidityConstraints = new AssociationValidityConstraintCollection(
             [
@@ -93,7 +93,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
             ]
         );
         $responseValidityConstraint->setAssociationValidityConstraints($associationValidityConstraints);
-        $this->assertEquals(1, count($responseValidityConstraint->getAssociationValidityConstraints()));
-        $this->assertEquals('MYID', $responseValidityConstraint->getAssociationValidityConstraints()[0]->getIdentifier());
+        $this::assertEquals(1, count($responseValidityConstraint->getAssociationValidityConstraints()));
+        $this::assertEquals('MYID', $responseValidityConstraint->getAssociationValidityConstraints()[0]->getIdentifier());
     }
 }

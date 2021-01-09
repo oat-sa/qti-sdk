@@ -28,26 +28,26 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $processor = new IntegerToFloatProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(10.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(10.0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(-10);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-10.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(-10.0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(0);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(0.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(0.0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(-0);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-0.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(-0.0, $result->getValue());
     }
 
     public function testNullOne()
@@ -58,7 +58,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $processor = new IntegerToFloatProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testNullTwo()
@@ -69,7 +69,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $processor = new IntegerToFloatProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testWrongCardinality()

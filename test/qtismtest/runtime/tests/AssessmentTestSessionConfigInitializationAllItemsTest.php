@@ -32,7 +32,7 @@ class AssessmentTestSessionConfigInitializationAllItemsTest extends QtiSmAssessm
 
         $testSession->beginTestSession();
 
-        $this->assertEquals(
+        $this::assertEquals(
             $expectedCountOfItems,
             $testSession->getAssessmentItemSessionStore()->getAllAssessmentItemSessions()->count()
         );

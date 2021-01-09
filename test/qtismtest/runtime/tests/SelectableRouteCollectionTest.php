@@ -19,34 +19,34 @@ class SelectableRouteCollectionTest extends QtiSmTestCase
 
         $routes = new SelectableRouteCollection([$routeA, $routeB, $routeC]);
 
-        $this->assertTrue($routes[0] === $routeA);
-        $this->assertTrue($routes[1] === $routeB);
-        $this->assertTrue($routes[2] === $routeC);
+        $this::assertTrue($routes[0] === $routeA);
+        $this::assertTrue($routes[1] === $routeB);
+        $this::assertTrue($routes[2] === $routeC);
 
         $routeAlpha = new SelectableRoute();
         $routes->insertAt($routeAlpha, 0);
 
-        $this->assertTrue($routes[0] === $routeAlpha);
-        $this->assertTrue($routes[1] === $routeA);
-        $this->assertTrue($routes[2] === $routeB);
-        $this->assertTrue($routes[3] === $routeC);
+        $this::assertTrue($routes[0] === $routeAlpha);
+        $this::assertTrue($routes[1] === $routeA);
+        $this::assertTrue($routes[2] === $routeB);
+        $this::assertTrue($routes[3] === $routeC);
 
         $routeOmega = new SelectableRoute();
         $routes->insertAt($routeOmega, 4);
 
-        $this->assertTrue($routes[0] === $routeAlpha);
-        $this->assertTrue($routes[1] === $routeA);
-        $this->assertTrue($routes[2] === $routeB);
-        $this->assertTrue($routes[3] === $routeC);
-        $this->asserTtrue($routes[4] === $routeOmega);
+        $this::assertTrue($routes[0] === $routeAlpha);
+        $this::assertTrue($routes[1] === $routeA);
+        $this::assertTrue($routes[2] === $routeB);
+        $this::assertTrue($routes[3] === $routeC);
+        $this::asserttrue($routes[4] === $routeOmega);
 
         $routeGamma = new SelectableRoute();
         $routes->insertAt($routeGamma, 2);
-        $this->assertTrue($routes[0] === $routeAlpha);
-        $this->assertTrue($routes[1] === $routeA);
-        $this->assertTrue($routes[2] === $routeGamma);
-        $this->assertTrue($routes[3] === $routeB);
-        $this->asserTtrue($routes[4] === $routeC);
-        $this->asserTtrue($routes[5] === $routeOmega);
+        $this::assertTrue($routes[0] === $routeAlpha);
+        $this::assertTrue($routes[1] === $routeA);
+        $this::assertTrue($routes[2] === $routeGamma);
+        $this::assertTrue($routes[3] === $routeB);
+        $this::asserttrue($routes[4] === $routeC);
+        $this::asserttrue($routes[5] === $routeOmega);
     }
 }

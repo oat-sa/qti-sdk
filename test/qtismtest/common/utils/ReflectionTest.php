@@ -21,7 +21,7 @@ class ReflectionTest extends QtiSmTestCase
      */
     public function testShortClassName($expected, $object)
     {
-        $this->assertSame($expected, Reflection::shortClassName($object));
+        $this::assertSame($expected, Reflection::shortClassName($object));
     }
 
     public function testNewInstanceWithArguments()
@@ -30,9 +30,9 @@ class ReflectionTest extends QtiSmTestCase
         $args = ['A message', 12];
         $instance = Reflection::newInstance($clazz, $args);
 
-        $this->assertInstanceOf(Exception::class, $instance);
-        $this->assertEquals('A message', $instance->getMessage());
-        $this->assertEquals(12, $instance->getCode());
+        $this::assertInstanceOf(Exception::class, $instance);
+        $this::assertEquals('A message', $instance->getMessage());
+        $this::assertEquals(12, $instance->getCode());
     }
 
     public function testNewInstanceWithoutArguments()
@@ -40,7 +40,7 @@ class ReflectionTest extends QtiSmTestCase
         $clazz = new ReflectionClass(stdClass::class);
         $instance = Reflection::newInstance($clazz);
 
-        $this->assertInstanceOf(stdClass::class, $instance);
+        $this::assertInstanceOf(stdClass::class, $instance);
     }
 
     /**

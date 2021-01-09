@@ -79,7 +79,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiString(''), null]);
         $processor = new Implode($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testImplodeOne()
@@ -89,8 +89,8 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $processor = new Implode($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf(QtiString::class, $result);
-        $this->assertEquals('Hello-World', $result->getValue());
+        $this::assertInstanceOf(QtiString::class, $result);
+        $this::assertEquals('Hello-World', $result->getValue());
     }
 
     /**

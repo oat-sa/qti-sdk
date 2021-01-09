@@ -23,7 +23,7 @@ class GapMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gap identifier="gap1" fixed="true" id="my-gap" class="gaps"/>', $dom->saveXML($element));
+        $this::assertEquals('<gap identifier="gap1" fixed="true" id="my-gap" class="gaps"/>', $dom->saveXML($element));
     }
 
     /**
@@ -41,7 +41,7 @@ class GapMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gap identifier="gap1"/>', $dom->saveXML($element));
+        $this::assertEquals('<gap identifier="gap1"/>', $dom->saveXML($element));
     }
 
     /**
@@ -57,7 +57,7 @@ class GapMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gap identifier="gap1" matchGroup="identifier1 identifier2"/>', $dom->saveXML($element));
+        $this::assertEquals('<gap identifier="gap1" matchGroup="identifier1 identifier2"/>', $dom->saveXML($element));
     }
 
     public function testMarshall21()
@@ -72,7 +72,7 @@ class GapMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<gap identifier="gap1" templateIdentifier="tpl-gap" showHide="hide" required="true" id="my-gap" class="gaps"/>',
             $dom->saveXML($element)
         );
@@ -93,7 +93,7 @@ class GapMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gap identifier="gap1"/>', $dom->saveXML($element));
+        $this::assertEquals('<gap identifier="gap1"/>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -105,13 +105,13 @@ class GapMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gap = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Gap::class, $gap);
-        $this->assertEquals('gap1', $gap->getIdentifier());
-        $this->assertEquals('tpl-gap', $gap->getTemplateIdentifier());
-        $this->assertTrue($gap->hasTemplateIdentifier());
-        $this->assertTrue($gap->isRequired());
-        $this->assertEquals('gaps', $gap->getClass());
-        $this->assertEquals(ShowHide::HIDE, $gap->getShowHide());
+        $this::assertInstanceOf(Gap::class, $gap);
+        $this::assertEquals('gap1', $gap->getIdentifier());
+        $this::assertEquals('tpl-gap', $gap->getTemplateIdentifier());
+        $this::assertTrue($gap->hasTemplateIdentifier());
+        $this::assertTrue($gap->isRequired());
+        $this::assertEquals('gaps', $gap->getClass());
+        $this::assertEquals(ShowHide::HIDE, $gap->getShowHide());
     }
 
     /**
@@ -126,7 +126,7 @@ class GapMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gap = $marshaller->unmarshall($element);
-        $this->assertSame(0, count($gap->getMatchGroup()));
+        $this::assertSame(0, count($gap->getMatchGroup()));
     }
 
     public function testUnmarshall20()
@@ -138,15 +138,15 @@ class GapMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $gap = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Gap::class, $gap);
-        $this->assertEquals('gap1', $gap->getIdentifier());
-        $this->assertEquals('', $gap->getTemplateIdentifier());
-        $this->assertFalse($gap->hasTemplateIdentifier());
-        $this->assertFalse($gap->isRequired());
-        $this->assertEquals('gaps', $gap->getClass());
-        $this->assertEquals(ShowHide::SHOW, $gap->getShowHide());
-        $this->assertTrue($gap->isFixed());
-        $this->assertEquals(['identifier1', 'identifier2'], $gap->getMatchGroup()->getArrayCopy());
+        $this::assertInstanceOf(Gap::class, $gap);
+        $this::assertEquals('gap1', $gap->getIdentifier());
+        $this::assertEquals('', $gap->getTemplateIdentifier());
+        $this::assertFalse($gap->hasTemplateIdentifier());
+        $this::assertFalse($gap->isRequired());
+        $this::assertEquals('gaps', $gap->getClass());
+        $this::assertEquals(ShowHide::SHOW, $gap->getShowHide());
+        $this::assertTrue($gap->isFixed());
+        $this::assertEquals(['identifier1', 'identifier2'], $gap->getMatchGroup()->getArrayCopy());
     }
 
     /**
@@ -163,8 +163,8 @@ class GapMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $gap = $marshaller->unmarshall($element);
 
-        $this->assertFalse($gap->isRequired());
-        $this->assertFalse($gap->hasTemplateIdentifier());
-        $this->assertSame(ShowHide::SHOW, $gap->getShowHide());
+        $this::assertFalse($gap->isRequired());
+        $this::assertFalse($gap->hasTemplateIdentifier());
+        $this::assertSame(ShowHide::SHOW, $gap->getShowHide());
     }
 }

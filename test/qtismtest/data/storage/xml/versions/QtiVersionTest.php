@@ -13,7 +13,7 @@ class QtiVersionTest extends QtiSmTestCase
 {
     public function testVersionCompareValid()
     {
-        $this->assertFalse(QtiVersion::compare('2', '2.1', '='));
+        $this::assertFalse(QtiVersion::compare('2', '2.1', '='));
     }
 
     public function testVersionCompareInvalidVersion1()

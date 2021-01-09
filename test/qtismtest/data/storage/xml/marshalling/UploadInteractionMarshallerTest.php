@@ -28,7 +28,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<uploadInteraction id="my-upload" responseIdentifier="RESPONSE" type="image/png" xml:base="/home/jerome"><prompt>Prompt...</prompt></uploadInteraction>', $dom->saveXML($element));
+        $this::assertEquals('<uploadInteraction id="my-upload" responseIdentifier="RESPONSE" type="image/png" xml:base="/home/jerome"><prompt>Prompt...</prompt></uploadInteraction>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -40,14 +40,14 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase
         );
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(UploadInteraction::class, $component);
-        $this->assertEquals('my-upload', $component->getId());
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertEquals('/home/jerome', $component->getXmlBase());
+        $this::assertInstanceOf(UploadInteraction::class, $component);
+        $this::assertEquals('my-upload', $component->getId());
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
 
-        $this->assertTrue($component->hasPrompt());
+        $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
     }
 
     public function testUnmarshallNoResponseIdentifier()

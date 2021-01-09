@@ -39,9 +39,9 @@ class CorrectProcessorTest extends QtiSmTestCase
         $comparable[] = new QtiDirectedPair('C', 'D');
 
         $result = $processor->process();
-        $this->assertInstanceOf(MultipleContainer::class, $result);
-        $this->assertTrue($result->equals($comparable));
-        $this->assertTrue($comparable->equals($result));
+        $this::assertInstanceOf(MultipleContainer::class, $result);
+        $this::assertTrue($result->equals($comparable));
+        $this::assertTrue($comparable->equals($result));
     }
 
     public function testSingleCardinality()
@@ -60,8 +60,8 @@ class CorrectProcessorTest extends QtiSmTestCase
         $processor->setState(new State([$variable]));
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(20, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(20, $result->getValue());
     }
 
     public function testNull()
@@ -75,11 +75,11 @@ class CorrectProcessorTest extends QtiSmTestCase
 
         $processor = new CorrectProcessor($expr);
         $result = $processor->process(); // No state set.
-        $this->assertTrue($result === null);
+        $this::assertTrue($result === null);
 
         $processor->setState(new State([$variable]));
         $result = $processor->process();
-        $this->assertTrue($result === null);
+        $this::assertTrue($result === null);
     }
 
     public function testException()

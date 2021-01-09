@@ -51,10 +51,10 @@ class OutcomeConditionTest extends QtiSmTestCase
         );
 
         $outcomeCondition = new OutcomeCondition($outcomeIf, null, $outcomeElse);
-        $this->assertTrue($outcomeCondition->hasOutcomeElse());
+        $this::assertTrue($outcomeCondition->hasOutcomeElse());
 
         $components = $outcomeCondition->getComponents();
-        $this->assertSame($outcomeIf, $components[0]);
-        $this->assertSame($outcomeElse, $components[1]);
+        $this::assertSame($outcomeIf, $components[0]);
+        $this::assertSame($outcomeElse, $components[1]);
     }
 }

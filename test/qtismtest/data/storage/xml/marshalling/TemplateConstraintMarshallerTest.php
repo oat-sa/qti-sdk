@@ -27,7 +27,7 @@ class TemplateConstraintMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<templateConstraint><match><randomInteger min="0" max="5"/><randomInteger min="0" max="5"/></match></templateConstraint>', $dom->saveXML($element));
+        $this::assertEquals('<templateConstraint><match><randomInteger min="0" max="5"/><randomInteger min="0" max="5"/></match></templateConstraint>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -42,7 +42,7 @@ class TemplateConstraintMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateConstraint = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(TemplateConstraint::class, $templateConstraint);
-        $this->assertInstanceOf(MatchOperator::class, $templateConstraint->getExpression());
+        $this::assertInstanceOf(TemplateConstraint::class, $templateConstraint);
+        $this::assertInstanceOf(MatchOperator::class, $templateConstraint->getExpression());
     }
 }

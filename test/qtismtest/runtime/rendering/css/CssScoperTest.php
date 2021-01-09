@@ -29,7 +29,7 @@ class CssScoperTest extends QtiSmTestCase
         $cssScoper->setWebComponentFriendly($wcFriendly);
         $expected = file_get_contents($outputFile);
         $actual = $cssScoper->render($inputFile, $id);
-        $this->assertEquals($expected, $actual);
+        $this::assertEquals($expected, $actual);
     }
 
     /**
@@ -67,7 +67,7 @@ class CssScoperTest extends QtiSmTestCase
         $cssScoper = new CssScoper();
         $actual = $cssScoper->render(self::samplesDir() . 'rendering/css/css_input1.css');
         $pattern = "/^@CHARSET \"UTF-8\";\n\n#[0-9a-z]+ \\.myClass {\n    border:1px solid #fff;\n    background-color: white;\n}/u";
-        $this->assertSame(1, preg_match($pattern, $actual));
+        $this::assertSame(1, preg_match($pattern, $actual));
     }
 
     public function testOutputUnknownFile()

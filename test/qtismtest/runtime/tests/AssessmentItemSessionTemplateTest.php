@@ -30,9 +30,9 @@ class AssessmentItemSessionTemplateTest extends QtiSmAssessmentItemTestCase
         $session->beginItemSession();
 
         // Check that the templateProcessing was correctly processed.
-        $this->assertEquals('ChoiceA', $session->getVariable('RESPONSE')->getCorrectResponse()->getValue());
-        $this->assertEquals(1.0, $session['GOODSCORE']->getValue());
-        $this->assertEquals(0.0, $session['WRONGSCORE']->getValue());
+        $this::assertEquals('ChoiceA', $session->getVariable('RESPONSE')->getCorrectResponse()->getValue());
+        $this::assertEquals(1.0, $session['GOODSCORE']->getValue());
+        $this::assertEquals(0.0, $session['WRONGSCORE']->getValue());
 
         // Check that it really works...
         // With a correct response.
@@ -41,7 +41,7 @@ class AssessmentItemSessionTemplateTest extends QtiSmAssessmentItemTestCase
             [new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]
         );
         $session->endAttempt($responses);
-        $this->assertEquals(1.0, $session['SCORE']->getValue());
+        $this::assertEquals(1.0, $session['SCORE']->getValue());
 
         // With an incorrect response.
         $session->beginAttempt();
@@ -49,6 +49,6 @@ class AssessmentItemSessionTemplateTest extends QtiSmAssessmentItemTestCase
             [new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]
         );
         $session->endAttempt($responses);
-        $this->assertEquals(0.0, $session['SCORE']->getValue());
+        $this::assertEquals(0.0, $session['SCORE']->getValue());
     }
 }

@@ -18,13 +18,13 @@ class PairTest extends QtiSmTestCase
         $p3 = new QtiPair('C', 'D');
         $p4 = new QtiPair('D', 'C');
 
-        $this->assertTrue($p1->equals($p2));
-        $this->assertTrue($p2->equals($p1));
-        $this->assertFalse($p1->equals($p3));
-        $this->assertFalse($p3->equals($p1));
-        $this->assertFalse($p3->equals(1337));
-        $this->assertTrue($p3->equals($p3));
-        $this->assertTrue($p4->equals($p3));
+        $this::assertTrue($p1->equals($p2));
+        $this::assertTrue($p2->equals($p1));
+        $this::assertFalse($p1->equals($p3));
+        $this::assertFalse($p3->equals($p1));
+        $this::assertFalse($p3->equals(1337));
+        $this::assertTrue($p3->equals($p3));
+        $this::assertTrue($p4->equals($p3));
     }
 
     public function testInvalidFirstIdentifier()

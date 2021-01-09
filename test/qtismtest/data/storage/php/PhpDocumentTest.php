@@ -74,63 +74,63 @@ class PhpDocumentTest extends QtiSmTestCase
         }
 
         $assessmentTest = $doc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentTest::class, $assessmentTest);
-        $this->assertEquals('php_storage_simple', $assessmentTest->getIdentifier());
-        $this->assertEquals('PHP Storage Simple', $assessmentTest->getTitle());
+        $this::assertInstanceOf(AssessmentTest::class, $assessmentTest);
+        $this::assertEquals('php_storage_simple', $assessmentTest->getIdentifier());
+        $this::assertEquals('PHP Storage Simple', $assessmentTest->getTitle());
 
         $testParts = $assessmentTest->getTestParts();
-        $this->assertEquals(1, count($testParts));
-        $this->assertTrue(isset($testParts['P01']));
-        $this->assertEquals('P01', $testParts['P01']->getIdentifier());
-        $this->assertEquals(NavigationMode::LINEAR, $testParts['P01']->getNavigationMode());
-        $this->assertEquals(SubmissionMode::INDIVIDUAL, $testParts['P01']->getSubmissionMode());
+        $this::assertEquals(1, count($testParts));
+        $this::assertTrue(isset($testParts['P01']));
+        $this::assertEquals('P01', $testParts['P01']->getIdentifier());
+        $this::assertEquals(NavigationMode::LINEAR, $testParts['P01']->getNavigationMode());
+        $this::assertEquals(SubmissionMode::INDIVIDUAL, $testParts['P01']->getSubmissionMode());
 
         $assessmentSections = $testParts['P01']->getAssessmentSections();
-        $this->assertEquals(1, count($assessmentSections));
-        $this->assertTrue(isset($assessmentSections['S01']));
-        $this->assertEquals('S01', $assessmentSections['S01']->getIdentifier());
-        $this->assertEquals('Section1', $assessmentSections['S01']->getTitle());
-        $this->assertTrue($assessmentSections['S01']->isVisible());
+        $this::assertEquals(1, count($assessmentSections));
+        $this::assertTrue(isset($assessmentSections['S01']));
+        $this::assertEquals('S01', $assessmentSections['S01']->getIdentifier());
+        $this::assertEquals('Section1', $assessmentSections['S01']->getTitle());
+        $this::assertTrue($assessmentSections['S01']->isVisible());
 
         $assessmentItemRefs = $assessmentSections['S01']->getSectionParts();
-        $this->assertEquals(3, count($assessmentItemRefs));
-        $this->assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q01']);
-        $this->assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q02']);
-        $this->assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q03']);
+        $this::assertEquals(3, count($assessmentItemRefs));
+        $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q01']);
+        $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q02']);
+        $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q03']);
 
-        $this->assertEquals('Q01', $assessmentItemRefs['Q01']->getIdentifier());
-        $this->assertEquals('./Q01.xml', $assessmentItemRefs['Q01']->getHref());
-        $this->assertFalse(false, $assessmentItemRefs['Q01']->isTimeDependent());
-        $this->assertEquals(['mathematics', 'chemistry'], $assessmentItemRefs['Q01']->getCategories()->getArrayCopy());
+        $this::assertEquals('Q01', $assessmentItemRefs['Q01']->getIdentifier());
+        $this::assertEquals('./Q01.xml', $assessmentItemRefs['Q01']->getHref());
+        $this::assertFalse(false, $assessmentItemRefs['Q01']->isTimeDependent());
+        $this::assertEquals(['mathematics', 'chemistry'], $assessmentItemRefs['Q01']->getCategories()->getArrayCopy());
         $variableMappings = $assessmentItemRefs['Q01']->getVariableMappings();
-        $this->assertEquals(1, count($variableMappings));
-        $this->assertEquals('scoring', $variableMappings[0]->getSource());
-        $this->assertEquals('SCORE', $variableMappings[0]->getTarget());
+        $this::assertEquals(1, count($variableMappings));
+        $this::assertEquals('scoring', $variableMappings[0]->getSource());
+        $this::assertEquals('SCORE', $variableMappings[0]->getTarget());
         $weights = $assessmentItemRefs['Q01']->getWeights();
-        $this->assertEquals(1, count($weights));
-        $this->assertEquals('W01', $weights['W01']->getIdentifier());
-        $this->assertEquals(2.0, $weights['W01']->getValue());
+        $this::assertEquals(1, count($weights));
+        $this::assertEquals('W01', $weights['W01']->getIdentifier());
+        $this::assertEquals(2.0, $weights['W01']->getValue());
         $responseDeclarations = $assessmentItemRefs['Q01']->getResponseDeclarations();
-        $this->assertEquals(1, count($responseDeclarations));
-        $this->assertEquals('RESPONSE', $responseDeclarations['RESPONSE']->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $responseDeclarations['RESPONSE']->getCardinality());
-        $this->assertEquals(BaseType::IDENTIFIER, $responseDeclarations['RESPONSE']->getBaseType());
+        $this::assertEquals(1, count($responseDeclarations));
+        $this::assertEquals('RESPONSE', $responseDeclarations['RESPONSE']->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $responseDeclarations['RESPONSE']->getCardinality());
+        $this::assertEquals(BaseType::IDENTIFIER, $responseDeclarations['RESPONSE']->getBaseType());
         $values = $responseDeclarations['RESPONSE']->getCorrectResponse()->getValues();
-        $this->assertEquals(1, count($values));
-        $this->assertEquals('ChoiceA', $values[0]->getValue());
+        $this::assertEquals(1, count($values));
+        $this::assertEquals('ChoiceA', $values[0]->getValue());
         $outcomeDeclarations = $assessmentItemRefs['Q01']->getOutcomeDeclarations();
-        $this->assertEquals(1, count($outcomeDeclarations));
-        $this->assertEquals('scoring', $outcomeDeclarations['scoring']->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $outcomeDeclarations['scoring']->getCardinality());
-        $this->assertEquals(BaseType::FLOAT, $outcomeDeclarations['scoring']->getBaseType());
+        $this::assertEquals(1, count($outcomeDeclarations));
+        $this::assertEquals('scoring', $outcomeDeclarations['scoring']->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $outcomeDeclarations['scoring']->getCardinality());
+        $this::assertEquals(BaseType::FLOAT, $outcomeDeclarations['scoring']->getBaseType());
         $values = $outcomeDeclarations['scoring']->getDefaultValue()->getValues();
-        $this->assertEquals(0.0, $values[0]->getValue());
+        $this::assertEquals(0.0, $values[0]->getValue());
         $responseProcessing = $assessmentItemRefs['Q01']->getResponseProcessing();
-        $this->assertInstanceOf(ResponseProcessing::class, $responseProcessing);
-        $this->assertFalse($responseProcessing->hasTemplateLocation());
-        $this->assertFalse($responseProcessing->hasTemplate());
+        $this::assertInstanceOf(ResponseProcessing::class, $responseProcessing);
+        $this::assertFalse($responseProcessing->hasTemplateLocation());
+        $this::assertFalse($responseProcessing->hasTemplate());
         $responseRules = $responseProcessing->getResponseRules();
-        $this->assertEquals(1, count($responseRules));
+        $this::assertEquals(1, count($responseRules));
     }
 
     public function testSimpleSave()
@@ -160,12 +160,12 @@ class PhpDocumentTest extends QtiSmTestCase
 
         $customOperator = $phpDoc->getDocumentComponent();
         $xml = $customOperator->getXml();
-        $this->assertInstanceOf(CustomOperator::class, $customOperator);
-        $this->assertEquals('com.taotesting.qtism.customOperator1', $customOperator->getClass());
-        $this->assertEquals('http://qtism.taotesting.com/xsd/customOperator1.xsd', $customOperator->getDefinition());
-        $this->assertEquals('false', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'debug'));
-        $this->assertEquals('default', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'syntax'));
-        $this->assertEquals('<customOperator xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:qtism="http://qtism.taotesting.com" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" class="com.taotesting.qtism.customOperator1" definition="http://qtism.taotesting.com/xsd/customOperator1.xsd" qtism:debug="false" qtism:syntax="default">
+        $this::assertInstanceOf(CustomOperator::class, $customOperator);
+        $this::assertEquals('com.taotesting.qtism.customOperator1', $customOperator->getClass());
+        $this::assertEquals('http://qtism.taotesting.com/xsd/customOperator1.xsd', $customOperator->getDefinition());
+        $this::assertEquals('false', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'debug'));
+        $this::assertEquals('default', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'syntax'));
+        $this::assertEquals('<customOperator xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:qtism="http://qtism.taotesting.com" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" class="com.taotesting.qtism.customOperator1" definition="http://qtism.taotesting.com/xsd/customOperator1.xsd" qtism:debug="false" qtism:syntax="default">
     <baseValue baseType="string"><![CDATA[Param1Data]]></baseValue>
 </customOperator>', $xml->saveXML($xml->documentElement));
 
@@ -186,8 +186,8 @@ class PhpDocumentTest extends QtiSmTestCase
 
         $customOperator = $phpDoc->getDocumentComponent();
         $xml = $customOperator->getXml();
-        $this->assertInstanceOf(CustomOperator::class, $customOperator);
-        $this->assertEquals('<customOperator xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd">
+        $this::assertInstanceOf(CustomOperator::class, $customOperator);
+        $this::assertEquals('<customOperator xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd">
     <baseValue baseType="string"><![CDATA[Param1Data]]></baseValue>
 </customOperator>', $xml->saveXML($xml->documentElement));
 
@@ -202,13 +202,13 @@ class PhpDocumentTest extends QtiSmTestCase
         $phpDoc = new PhpDocument('2.1', $test);
 
         $selection = $test->getComponentsByClassName('selection')[0];
-        $this->assertInstanceOf(Selection::class, $selection);
+        $this::assertInstanceOf(Selection::class, $selection);
 
         $domSelection = $selection->getXml();
-        $this->assertNotNull($domSelection);
+        $this::assertNotNull($domSelection);
 
-        $this->assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveItemSelection')->length);
-        $this->assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveEngineRef')->length);
+        $this::assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveItemSelection')->length);
+        $this::assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveEngineRef')->length);
 
         $file = tempnam('/tmp', 'qsm');
         $phpDoc->save($file);
@@ -220,13 +220,13 @@ class PhpDocumentTest extends QtiSmTestCase
         $test = $phpDoc->getDocumentComponent();
 
         $selection = $test->getComponentsByClassName('selection')[0];
-        $this->assertInstanceOf(Selection::class, $selection);
+        $this::assertInstanceOf(Selection::class, $selection);
 
         $domSelection = $selection->getXml();
-        $this->assertNotNull($domSelection);
+        $this::assertNotNull($domSelection);
 
-        $this->assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveItemSelection')->length);
-        $this->assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveEngineRef')->length);
+        $this::assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveItemSelection')->length);
+        $this::assertEquals(1, $domSelection->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveEngineRef')->length);
 
         unlink($file);
     }
@@ -258,11 +258,11 @@ class PhpDocumentTest extends QtiSmTestCase
         $phpDoc = new PhpDocument();
         $phpDoc->load($file);
 
-        $this->assertInstanceOf($rootType, $phpDoc->getDocumentComponent());
-        $this->assertEquals($file, $phpDoc->getUrl());
+        $this::assertInstanceOf($rootType, $phpDoc->getDocumentComponent());
+        $this::assertEquals($file, $phpDoc->getUrl());
 
         unlink($file);
-        $this->assertFalse(file_exists($file));
+        $this::assertFalse(file_exists($file));
     }
 
     public function testLoadInteractionMixSaschsen()
@@ -279,9 +279,9 @@ class PhpDocumentTest extends QtiSmTestCase
         $phpDoc = new PhpDocument();
         $phpDoc->load($file);
 
-        $this->assertEquals('InteractionMixSachsen_1901710679', $phpDoc->getDocumentComponent()->getIdentifier());
+        $this::assertEquals('InteractionMixSachsen_1901710679', $phpDoc->getDocumentComponent()->getIdentifier());
         unlink($file);
-        $this->assertFalse(file_exists($file));
+        $this::assertFalse(file_exists($file));
     }
 
     /**
@@ -368,9 +368,9 @@ class PhpDocumentTest extends QtiSmTestCase
         $phpDoc2 = new PhpDocument('2.1');
         $phpDoc2->load($file);
 
-        $this->assertInstanceOf(Equal::class, $phpDoc2->getDocumentComponent());
-        $this->assertEquals(ToleranceMode::RELATIVE, $phpDoc2->getDocumentComponent()->getToleranceMode());
-        $this->assertEquals([5, 5], $phpDoc2->getDocumentComponent()->getTolerance());
+        $this::assertInstanceOf(Equal::class, $phpDoc2->getDocumentComponent());
+        $this::assertEquals(ToleranceMode::RELATIVE, $phpDoc2->getDocumentComponent()->getToleranceMode());
+        $this::assertEquals([5, 5], $phpDoc2->getDocumentComponent()->getTolerance());
 
         unlink($file);
     }
@@ -428,17 +428,17 @@ class PhpDocumentTest extends QtiSmTestCase
         /** @var Span $span */
         $span = $phpDoc2->getDocumentComponent();
 
-        $this->assertEquals('myid', $span->getId());
-        $this->assertEquals('myclass', $span->getClass());
-        $this->assertEquals('IDREF1 IDREF2', $span->getAriaControls());
-        $this->assertEquals('IDREF3', $span->getAriaDescribedBy());
-        $this->assertEquals('IDREF4', $span->getAriaFlowTo());
-        $this->assertEquals('My Label', $span->getAriaLabel());
-        $this->assertEquals('IDREF5', $span->getAriaLabelledBy());
-        $this->assertEquals('5', $span->getAriaLevel());
-        $this->assertEquals(AriaLive::ASSERTIVE, $span->getAriaLive());
-        $this->assertEquals(AriaOrientation::VERTICAL, $span->getAriaOrientation());
-        $this->assertEquals('IDREF6', $span->getAriaOwns());
-        $this->assertTrue($span->getAriaHidden());
+        $this::assertEquals('myid', $span->getId());
+        $this::assertEquals('myclass', $span->getClass());
+        $this::assertEquals('IDREF1 IDREF2', $span->getAriaControls());
+        $this::assertEquals('IDREF3', $span->getAriaDescribedBy());
+        $this::assertEquals('IDREF4', $span->getAriaFlowTo());
+        $this::assertEquals('My Label', $span->getAriaLabel());
+        $this::assertEquals('IDREF5', $span->getAriaLabelledBy());
+        $this::assertEquals('5', $span->getAriaLevel());
+        $this::assertEquals(AriaLive::ASSERTIVE, $span->getAriaLive());
+        $this::assertEquals(AriaOrientation::VERTICAL, $span->getAriaOrientation());
+        $this::assertEquals('IDREF6', $span->getAriaOwns());
+        $this::assertTrue($span->getAriaHidden());
     }
 }

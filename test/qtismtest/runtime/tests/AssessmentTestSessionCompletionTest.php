@@ -64,12 +64,12 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
         $session->beginTestSession();
 
         // Nothing completed at this time.
-        $this->assertSame(0, $session->numberCompleted());
+        $this::assertSame(0, $session->numberCompleted());
 
         $i = 1;
         $movedNext = 0;
         foreach ($identifiers as $identifier) {
-            $this->assertSame($i - 1 - $movedNext, $session->numberCompleted());
+            $this::assertSame($i - 1 - $movedNext, $session->numberCompleted());
 
             $session->beginAttempt();
 
@@ -82,7 +82,7 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
                 $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier($identifier))]));
             }
 
-            $this->assertSame($i - $movedNext, $session->numberCompleted());
+            $this::assertSame($i - $movedNext, $session->numberCompleted());
 
             if ($identifier !== 'moveNext') {
                 $session->moveNext();
@@ -92,10 +92,10 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
         }
 
         // Final completion check.
-        $this->assertSame($finalNumberCompleted, $session->numberCompleted());
+        $this::assertSame($finalNumberCompleted, $session->numberCompleted());
 
         // We must reach the end of the test session.
-        $this->assertFalse($session->isRunning());
+        $this::assertFalse($session->isRunning());
     }
 
     /**

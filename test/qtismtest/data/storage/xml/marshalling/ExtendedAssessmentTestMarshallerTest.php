@@ -111,7 +111,7 @@ class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<assessmentTest identifier="test1" title="A Test" toolName="qtisdk" toolVersion="0.0.0"><outcomeDeclaration identifier="COUNT" cardinality="single" baseType="integer"/><timeLimits maxTime="600" allowLateSubmission="false"/><testPart identifier="part1" navigationMode="linear" submissionMode="individual"><preCondition><baseValue baseType="boolean">true</baseValue></preCondition><branchRule target="EXIT_TESTPART"><baseValue baseType="boolean">true</baseValue></branchRule><itemSessionControl maxAttempts="1" showFeedback="false" allowReview="true" showSolution="true" allowComment="false" allowSkipping="true" validateResponses="false"/><timeLimits maxTime="100" allowLateSubmission="false"/><assessmentSection identifier="section1" required="false" fixed="false" title="My Section 1" visible="true" keepTogether="true"/><assessmentSection identifier="section2" required="false" fixed="false" title="My Section 2" visible="true" keepTogether="true"/><testFeedback access="atEnd" outcomeIdentifier="show" showHide="show" identifier="feedback1" title="hello!"><p>Prima!</p></testFeedback><testFeedbackRef identifier="feedback1" outcomeIdentifier="show" access="atEnd" showHide="show" href="./TF01.xml"/></testPart><outcomeProcessing><setOutcomeValue identifier="COUNT"><baseValue baseType="integer">1</baseValue></setOutcomeValue></outcomeProcessing><testFeedback access="atEnd" outcomeIdentifier="show" showHide="show" identifier="feedbackTest" title="hello!"><p>Good!</p></testFeedback><testFeedbackRef identifier="feedbackTest" outcomeIdentifier="show" access="atEnd" showHide="show" href="./TF02.xml"/></assessmentTest>',
             $dom->saveXML($element)
         );
@@ -158,36 +158,36 @@ class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ExtendedAssessmentTest::class, $component);
-        $this->assertEquals('test1', $component->getIdentifier());
-        $this->assertEquals('A Test', $component->getTitle());
-        $this->assertEquals('qtisdk', $component->getToolName());
-        $this->assertEquals('0.0.0', $component->getToolVersion());
-        $this->assertTrue($component->hasTimeLimits());
-        $this->assertEquals(1, count($component->getOutcomeDeclarations()));
-        $this->assertEquals(1, count($component->getTestFeedbacks()));
-        $this->assertEquals(1, count($component->getTestFeedbackRefs()));
-        $this->assertTrue($component->hasOutcomeProcessing());
+        $this::assertInstanceOf(ExtendedAssessmentTest::class, $component);
+        $this::assertEquals('test1', $component->getIdentifier());
+        $this::assertEquals('A Test', $component->getTitle());
+        $this::assertEquals('qtisdk', $component->getToolName());
+        $this::assertEquals('0.0.0', $component->getToolVersion());
+        $this::assertTrue($component->hasTimeLimits());
+        $this::assertEquals(1, count($component->getOutcomeDeclarations()));
+        $this::assertEquals(1, count($component->getTestFeedbacks()));
+        $this::assertEquals(1, count($component->getTestFeedbackRefs()));
+        $this::assertTrue($component->hasOutcomeProcessing());
 
         $testParts = $component->getTestParts();
         $testPart = $testParts['part1'];
 
-        $this->assertInstanceOf(ExtendedTestPart::class, $testPart);
-        $this->assertEquals(1, count($testPart->getPreConditions()));
-        $this->assertEquals(1, count($testPart->getBranchRules()));
-        $this->assertTrue($testPart->getItemSessionControl()->mustShowSolution());
-        $this->assertTrue($testPart->getTimeLimits()->getMaxTime()->equals(new QtiDuration('PT1M40S')));
-        $this->assertEquals(1, count($testPart->getTestFeedbacks()));
-        $this->assertEquals(1, count($testPart->getTestFeedbackRefs()));
-        $this->assertEquals(2, count($testPart->getAssessmentSections()));
+        $this::assertInstanceOf(ExtendedTestPart::class, $testPart);
+        $this::assertEquals(1, count($testPart->getPreConditions()));
+        $this::assertEquals(1, count($testPart->getBranchRules()));
+        $this::assertTrue($testPart->getItemSessionControl()->mustShowSolution());
+        $this::assertTrue($testPart->getTimeLimits()->getMaxTime()->equals(new QtiDuration('PT1M40S')));
+        $this::assertEquals(1, count($testPart->getTestFeedbacks()));
+        $this::assertEquals(1, count($testPart->getTestFeedbackRefs()));
+        $this::assertEquals(2, count($testPart->getAssessmentSections()));
 
         // Check that we got ExtendedAssessmentSections.
         $assessmentSections = $testPart->getAssessmentSections();
-        $this->assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSections['section1']);
-        $this->assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSections['section2']);
+        $this::assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSections['section1']);
+        $this::assertInstanceOf(ExtendedAssessmentSection::class, $assessmentSections['section2']);
 
         // Check that we got TestFeedbackRef instances.
         $testFeedbackRefs = $testPart->getTestFeedbackRefs();
-        $this->assertInstanceOf(TestFeedbackRef::class, $testFeedbackRefs[0]);
+        $this::assertInstanceOf(TestFeedbackRef::class, $testFeedbackRefs[0]);
     }
 }

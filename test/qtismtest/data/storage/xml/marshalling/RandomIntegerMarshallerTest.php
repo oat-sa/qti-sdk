@@ -21,10 +21,10 @@ class RandomIntegerMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals($min . '', $element->getAttribute('min'));
-        $this->assertEquals($max, $element->getAttribute('max'));
-        $this->assertEquals($step . '', $element->getAttribute('step'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals($min . '', $element->getAttribute('min'));
+        $this::assertEquals($max, $element->getAttribute('max'));
+        $this::assertEquals($step . '', $element->getAttribute('step'));
     }
 
     public function testUnmarshall()
@@ -36,9 +36,9 @@ class RandomIntegerMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(RandomInteger::class, $component);
-        $this->assertEquals(3, $component->getMin());
-        $this->assertEquals('{tplVariable1}', $component->getMax());
-        $this->assertEquals(2, $component->getStep());
+        $this::assertInstanceOf(RandomInteger::class, $component);
+        $this::assertEquals(3, $component->getMin());
+        $this::assertEquals('{tplVariable1}', $component->getMax());
+        $this::assertEquals(2, $component->getStep());
     }
 }

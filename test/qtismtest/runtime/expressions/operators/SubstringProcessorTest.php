@@ -27,15 +27,15 @@ class SubstringProcessorTest extends QtiSmTestCase
         $operands[] = new QtiString('Shell');
         $processor = new SubstringProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $operands->reset();
         $operands[] = new QtiString('Hell');
         $operands[] = new QtiString('Shell');
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testCaseInsensitive()
@@ -46,44 +46,44 @@ class SubstringProcessorTest extends QtiSmTestCase
         $operands[] = new QtiString('Shell');
         $processor = new SubstringProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $operands->reset();
         $operands[] = new QtiString('Hell');
         $operands[] = new QtiString('Shell');
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $operands->reset();
         $operands[] = new QtiString('Hello world!');
         $operands[] = new QtiString('Bye world!');
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         $operands->reset();
         $operands[] = new QtiString('Hello World!');
         $operands[] = new QtiString('hello world!');
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // Unicode ? x)
         $operands->reset();
         $operands[] = new QtiString('界您');
         $operands[] = new QtiString('世界您好！'); // Hello World!
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $operands->reset();
         $operands[] = new QtiString('假'); // 'Fake' in traditional chinese
         $operands[] = new QtiString('世界您好！'); // Hello World!
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testNull()
@@ -94,13 +94,13 @@ class SubstringProcessorTest extends QtiSmTestCase
         $operands[] = null;
         $processor = new SubstringProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
 
         $operands->reset();
         $operands[] = new QtiString(''); // in QTI, empty string considered to be NULL.
         $operands[] = new QtiString('blah!');
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testWrongBaseType()

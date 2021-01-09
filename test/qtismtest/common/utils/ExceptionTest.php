@@ -14,12 +14,12 @@ class ExceptionTest extends QtiSmTestCase
     public function testNoChaining()
     {
         $e = new Exception('This is an error message!');
-        $this->assertEquals(
+        $this::assertEquals(
             '[Exception] This is an error message!',
             ExceptionUtils::formatMessage($e)
         );
 
-        $this->assertEquals(
+        $this::assertEquals(
             'This is an error message!',
             ExceptionUtils::formatMessage($e, false)
         );
@@ -35,13 +35,13 @@ class ExceptionTest extends QtiSmTestCase
         $expected .= "Caused by:\n";
         $expected .= '[Exception] This is an error message!';
 
-        $this->assertEquals($expected, ExceptionUtils::formatMessage($e2));
+        $this::assertEquals($expected, ExceptionUtils::formatMessage($e2));
 
         // No class name.
         $expected = "This is a 2nd error message!\n";
         $expected .= "Caused by:\n";
         $expected .= 'This is an error message!';
 
-        $this->assertEquals($expected, ExceptionUtils::formatMessage($e2, false));
+        $this::assertEquals($expected, ExceptionUtils::formatMessage($e2, false));
     }
 }

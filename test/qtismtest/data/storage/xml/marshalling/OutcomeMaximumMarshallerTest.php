@@ -28,13 +28,13 @@ class OutcomeMaximumMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('outcomeMaximum', $element->nodeName);
-        $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
-        $this->assertEquals($outcomeIdentifier, $element->getAttribute('outcomeIdentifier'));
-        $this->assertEquals($weightIdentifier, $element->getAttribute('weightIdentifier'));
-        $this->assertEquals($includeCategory, $element->getAttribute('includeCategory'));
-        $this->assertEquals($excludeCategory, $element->getAttribute('excludeCategory'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('outcomeMaximum', $element->nodeName);
+        $this::assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
+        $this::assertEquals($outcomeIdentifier, $element->getAttribute('outcomeIdentifier'));
+        $this::assertEquals($weightIdentifier, $element->getAttribute('weightIdentifier'));
+        $this::assertEquals($includeCategory, $element->getAttribute('includeCategory'));
+        $this::assertEquals($excludeCategory, $element->getAttribute('excludeCategory'));
     }
 
     public function testUnmarshall()
@@ -46,11 +46,11 @@ class OutcomeMaximumMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OutcomeMaximum::class, $component);
-        $this->assertEquals('mySection1', $component->getSectionIdentifier());
-        $this->assertEquals('myOutcome1', $component->getOutcomeIdentifier());
-        $this->assertEquals('myWeight1', $component->getWeightIdentifier());
-        $this->assertEquals('cat1', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
-        $this->assertEquals('cat2 cat3', implode("\x20", $component->getExcludeCategories()->getArrayCopy()));
+        $this::assertInstanceOf(OutcomeMaximum::class, $component);
+        $this::assertEquals('mySection1', $component->getSectionIdentifier());
+        $this::assertEquals('myOutcome1', $component->getOutcomeIdentifier());
+        $this::assertEquals('myWeight1', $component->getWeightIdentifier());
+        $this::assertEquals('cat1', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
+        $this::assertEquals('cat2 cat3', implode("\x20", $component->getExcludeCategories()->getArrayCopy()));
     }
 }

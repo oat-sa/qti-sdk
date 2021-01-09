@@ -24,8 +24,8 @@ class AssociateInteractionTest extends QtiSmTestCase
     {
         $associateInteraction = new AssociateInteraction('RESPONSE', new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('identifier', 1)]));
         $associateInteraction->setMinAssociations(1);
-        $this->assertEquals(1, $associateInteraction->getMinAssociations());
-        $this->assertTrue($associateInteraction->hasMinAssociations());
+        $this::assertEquals(1, $associateInteraction->getMinAssociations());
+        $this::assertTrue($associateInteraction->hasMinAssociations());
     }
 
     public function testSetMinAssociationsWrongType()

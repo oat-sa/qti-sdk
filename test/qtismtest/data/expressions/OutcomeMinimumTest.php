@@ -13,11 +13,11 @@ class OutcomeMinimumTest extends QtiSmTestCase
     public function testOutcomeMaximum()
     {
         $outcomeMinimum = new OutcomeMinimum('SCORE', 'WEIGHT');
-        $this->assertInstanceOf(OutcomeMinimum::class, $outcomeMinimum);
-        $this->assertEquals('SCORE', $outcomeMinimum->getOutcomeIdentifier());
-        $this->assertEquals('WEIGHT', $outcomeMinimum->getWeightIdentifier());
+        $this::assertInstanceOf(OutcomeMinimum::class, $outcomeMinimum);
+        $this::assertEquals('SCORE', $outcomeMinimum->getOutcomeIdentifier());
+        $this::assertEquals('WEIGHT', $outcomeMinimum->getWeightIdentifier());
 
-        $this->assertEquals([], $outcomeMinimum->getIncludeCategories()->getArrayCopy());
-        $this->assertEquals([], $outcomeMinimum->getExcludeCategories()->getArrayCopy());
+        $this::assertEquals([], $outcomeMinimum->getIncludeCategories()->getArrayCopy());
+        $this::assertEquals([], $outcomeMinimum->getExcludeCategories()->getArrayCopy());
     }
 }

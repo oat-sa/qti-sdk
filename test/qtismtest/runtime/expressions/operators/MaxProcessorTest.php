@@ -32,7 +32,7 @@ class MaxProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::FLOAT, [new QtiFloat(10.0)]);
         $processor = new MaxProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testWrongCardinality()
@@ -44,7 +44,7 @@ class MaxProcessorTest extends QtiSmTestCase
         $operands[] = $rec;
         $processor = new MaxProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
 
         $rec['A'] = new QtiInteger(1);
         $this->expectException(ExpressionProcessingException::class);
@@ -60,12 +60,12 @@ class MaxProcessorTest extends QtiSmTestCase
         $operands[] = new QtiFloat(-0.5);
         $processor = new MaxProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
 
         $operands = new OperandsCollection([null]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testAllIntegers()
@@ -76,8 +76,8 @@ class MaxProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(-20), new QtiInteger(-10), new QtiInteger(0), new QtiInteger(10), new QtiInteger(20)]);
         $processor = new MaxProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(20, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(20, $result->getValue());
 
         $operands = new OperandsCollection();
         $operands[] = new QtiInteger(10002);
@@ -85,8 +85,8 @@ class MaxProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(100002);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(100002, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(100002, $result->getValue());
     }
 
     public function testMixed()
@@ -95,16 +95,16 @@ class MaxProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(26.4), new QtiInteger(-4), new QtiFloat(25.3)]);
         $processor = new MaxProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(26.4, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(26.4, $result->getValue());
 
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(2), new QtiInteger(3), new QtiInteger(1), new QtiInteger(4), new QtiInteger(5)]);
         $operands[] = new QtiFloat(2.4);
         $operands[] = new MultipleContainer(BaseType::FLOAT, [new QtiFloat(245.4), new QtiFloat(1337.1337)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1337.1337, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1337.1337, $result->getValue());
     }
 
     /**

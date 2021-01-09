@@ -32,7 +32,7 @@ class MatchTableTest extends QtiSmTestCase
         );
 
         $components = $matchTable->getComponents();
-        $this->assertCount(1, $components);
-        $this->assertInstanceOf(MatchTableEntry::class, $components[0]);
+        $this::assertCount(1, $components);
+        $this::assertInstanceOf(MatchTableEntry::class, $components[0]);
     }
 }

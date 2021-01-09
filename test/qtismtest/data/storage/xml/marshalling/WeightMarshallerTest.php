@@ -22,10 +22,10 @@ class WeightMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('weight', $element->nodeName);
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
-        $this->assertEquals($value . '', $element->getAttribute('value'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('weight', $element->nodeName);
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertEquals($value . '', $element->getAttribute('value'));
     }
 
     public function testUnmarshall()
@@ -37,9 +37,9 @@ class WeightMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Weight::class, $component);
-        $this->assertEquals('myWeight1', $component->getIdentifier());
-        $this->assertEquals(3.45, $component->getValue());
+        $this::assertInstanceOf(Weight::class, $component);
+        $this::assertEquals('myWeight1', $component->getIdentifier());
+        $this::assertEquals(3.45, $component->getValue());
     }
 
     public function testUnmarshallWrongIdentifier()

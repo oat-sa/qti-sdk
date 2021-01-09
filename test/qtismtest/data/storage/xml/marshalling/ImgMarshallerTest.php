@@ -51,7 +51,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<img src="my/image.png" alt="An Image..." width="30" height="40%" longdesc="A Long Description..." xml:base="/home/jerome" id="my-img" class="beautiful" xml:lang="en-YO"/>', $dom->saveXML($element));
+        $this::assertEquals('<img src="my/image.png" alt="An Image..." width="30" height="40%" longdesc="A Long Description..." xml:base="/home/jerome" id="my-img" class="beautiful" xml:lang="en-YO"/>', $dom->saveXML($element));
     }
 
     public function testMarshall22()
@@ -70,14 +70,14 @@ class ImgMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<img src="my/image.png" alt="An Image..." id="my-img" aria-flowsto="IDREF2" aria-owns="IDREF" aria-hidden="true"/>', $dom->saveXML($element));
+        $this::assertEquals('<img src="my/image.png" alt="An Image..." id="my-img" aria-flowsto="IDREF2" aria-owns="IDREF" aria-hidden="true"/>', $dom->saveXML($element));
 
         // In case of aria-hidden is false, it is not rendered.
         $img->setAriaHidden(false);
         $element = $marshaller->marshall($img);
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<img src="my/image.png" alt="An Image..." id="my-img" aria-flowsto="IDREF2" aria-owns="IDREF"/>', $dom->saveXML($element));
+        $this::assertEquals('<img src="my/image.png" alt="An Image..." id="my-img" aria-flowsto="IDREF2" aria-owns="IDREF"/>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -91,21 +91,21 @@ class ImgMarshallerTest extends QtiSmTestCase
         /** @var Img $img */
         $img = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Img::class, $img);
-        $this->assertEquals('my/image.png', $img->getSrc());
-        $this->assertEquals('An Image...', $img->getAlt());
-        $this->assertSame(30, $img->getWidth());
-        $this->assertEquals('40%', $img->getHeight());
-        $this->assertEquals('A Long Description...', $img->getLongDesc());
-        $this->assertEquals('my-img', $img->getId());
-        $this->assertEquals('beautiful', $img->getClass());
-        $this->assertEquals('en-YO', $img->getLang());
-        $this->assertEquals('/home/jerome', $img->getXmlBase());
+        $this::assertInstanceOf(Img::class, $img);
+        $this::assertEquals('my/image.png', $img->getSrc());
+        $this::assertEquals('An Image...', $img->getAlt());
+        $this::assertSame(30, $img->getWidth());
+        $this::assertEquals('40%', $img->getHeight());
+        $this::assertEquals('A Long Description...', $img->getLongDesc());
+        $this::assertEquals('my-img', $img->getId());
+        $this::assertEquals('beautiful', $img->getClass());
+        $this::assertEquals('en-YO', $img->getLang());
+        $this::assertEquals('/home/jerome', $img->getXmlBase());
 
         // aria-* attributes are ignored in QTI 2.1
-        $this->assertFalse($img->hasAriaOwns());
-        $this->assertFalse($img->getAriaHidden());
-        $this->assertFalse($img->hasAriaHidden());
+        $this::assertFalse($img->hasAriaOwns());
+        $this::assertFalse($img->getAriaHidden());
+        $this::assertFalse($img->hasAriaHidden());
     }
 
     public function testUnmarshall22()
@@ -120,10 +120,10 @@ class ImgMarshallerTest extends QtiSmTestCase
         $img = $marshaller->unmarshall($element);
 
         // aria-* attributes are NOT ignored in QTI 2.1
-        $this->assertTrue($img->hasAriaOwns());
-        $this->assertEquals('IDREF2', $img->getAriaFlowTo());
-        $this->assertTrue($img->hasAriaHidden());
-        $this->assertTrue($img->getAriaHidden());
+        $this::assertTrue($img->hasAriaOwns());
+        $this::assertEquals('IDREF2', $img->getAriaFlowTo());
+        $this::assertTrue($img->hasAriaHidden());
+        $this::assertTrue($img->getAriaHidden());
     }
 
     public function testUnmarshall22PreferFlowsTo()
@@ -138,7 +138,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $img = $marshaller->unmarshall($element);
 
         // For img components, we prefer aria-flowsto.
-        $this->assertEquals('IDREF2', $img->getAriaFlowTo());
+        $this::assertEquals('IDREF2', $img->getAriaFlowTo());
     }
 
     public function testUnmarshall22FallbackFlowTo()
@@ -154,7 +154,7 @@ class ImgMarshallerTest extends QtiSmTestCase
 
         // For img components, we prefer aria-flowsto. However, we fall back
         // to aria-flowto in cas it exists.
-        $this->assertEquals('IDREF3', $img->getAriaFlowTo());
+        $this::assertEquals('IDREF3', $img->getAriaFlowTo());
     }
 
     /**
@@ -169,8 +169,8 @@ class ImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $img = $marshaller->unmarshall($element);
 
-        $this->assertEquals('40%', $img->getHeight());
-        $this->assertEquals('30%', $img->getWidth());
+        $this::assertEquals('40%', $img->getHeight());
+        $this::assertEquals('30%', $img->getWidth());
     }
 
     /**

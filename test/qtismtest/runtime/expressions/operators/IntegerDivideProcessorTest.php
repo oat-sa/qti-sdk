@@ -25,14 +25,14 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(5)]);
         $processor = new IntegerDivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(2, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(2, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(49), new QtiInteger(-5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(-10, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(-10, $result->getValue());
     }
 
     public function testNull()
@@ -41,7 +41,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new QtiInteger(5)]);
         $processor = new IntegerDivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testDivisionByZero()
@@ -50,7 +50,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(50), new QtiInteger(0)]);
         $processor = new IntegerDivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testWrongCardinality()

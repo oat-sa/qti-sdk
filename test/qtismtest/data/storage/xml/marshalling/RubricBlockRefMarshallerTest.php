@@ -20,8 +20,8 @@ class RubricBlockRefMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
         $ref = $factory->createMarshaller($element)->unmarshall($element);
 
-        $this->assertEquals('R01', $ref->getIdentifier());
-        $this->assertEquals('./R01.xml', $ref->getHref());
+        $this::assertEquals('R01', $ref->getIdentifier());
+        $this::assertEquals('./R01.xml', $ref->getHref());
     }
 
     public function testMarshall()
@@ -31,8 +31,8 @@ class RubricBlockRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($ref);
         $elt = $marshaller->marshall($ref);
 
-        $this->assertEquals('rubricBlockRef', $elt->nodeName);
-        $this->assertEquals('R01', $elt->getAttribute('identifier'));
-        $this->assertEquals('./R01.xml', $elt->getAttribute('href'));
+        $this::assertEquals('rubricBlockRef', $elt->nodeName);
+        $this::assertEquals('R01', $elt->getAttribute('identifier'));
+        $this::assertEquals('./R01.xml', $elt->getAttribute('href'));
     }
 }

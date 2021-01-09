@@ -28,7 +28,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMax="1" matchMin="1" templateIdentifier="templateIdentifier1" showHide="hide"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>',
             $dom->saveXML($element)
         );
@@ -50,7 +50,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gapImg identifier="gapImg1" matchMax="0"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>', $dom->saveXML($element));
+        $this::assertEquals('<gapImg identifier="gapImg1" matchMax="0"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>', $dom->saveXML($element));
     }
 
     /*
@@ -65,7 +65,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($gapImg);
         $element = $marshaller->marshall($gapImg);
 
-        $this->assertEquals('true', $element->getAttribute('fixed'));
+        $this::assertEquals('true', $element->getAttribute('fixed'));
     }
 
     /*
@@ -80,7 +80,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($gapImg);
         $element = $marshaller->marshall($gapImg);
 
-        $this->assertEquals('My Label', $element->getAttribute('objectLabel'));
+        $this::assertEquals('My Label', $element->getAttribute('objectLabel'));
     }
 
     public function testMarshall20()
@@ -97,7 +97,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gapImg identifier="gapImg1" matchMax="2" matchGroup="identifier1 identifier2"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>', $dom->saveXML($element));
+        $this::assertEquals('<gapImg identifier="gapImg1" matchMax="2" matchGroup="identifier1 identifier2"><object data="http://imagine.us/myimg.png" type="image/png"/></gapImg>', $dom->saveXML($element));
     }
 
     /**
@@ -112,7 +112,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($gapImg);
         $element = $marshaller->marshall($gapImg);
 
-        $this->assertFalse($element->hasAttribute('templateIdentifier'));
+        $this::assertFalse($element->hasAttribute('templateIdentifier'));
     }
 
     public function testUnmarshall21()
@@ -126,19 +126,19 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapImg = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(GapImg::class, $gapImg);
-        $this->assertEquals('my-gap', $gapImg->getId());
-        $this->assertEquals('gaps', $gapImg->getClass());
-        $this->assertEquals('gapImg1', $gapImg->getIdentifier());
-        $this->assertEquals(1, $gapImg->getMatchMin());
-        $this->assertEquals(1, $gapImg->getMatchMax());
-        $this->assertEquals('templateIdentifier1', $gapImg->getTemplateIdentifier());
-        $this->assertEquals(ShowHide::HIDE, $gapImg->getShowHide());
-        $this->assertFalse($gapImg->isFixed());
+        $this::assertInstanceOf(GapImg::class, $gapImg);
+        $this::assertEquals('my-gap', $gapImg->getId());
+        $this::assertEquals('gaps', $gapImg->getClass());
+        $this::assertEquals('gapImg1', $gapImg->getIdentifier());
+        $this::assertEquals(1, $gapImg->getMatchMin());
+        $this::assertEquals(1, $gapImg->getMatchMax());
+        $this::assertEquals('templateIdentifier1', $gapImg->getTemplateIdentifier());
+        $this::assertEquals(ShowHide::HIDE, $gapImg->getShowHide());
+        $this::assertFalse($gapImg->isFixed());
 
         $object = $gapImg->getObject();
-        $this->assertEquals('http://imagine.us/myimg.png', $object->getData());
-        $this->assertEquals('image/png', $object->getType());
+        $this::assertEquals('http://imagine.us/myimg.png', $object->getData());
+        $this::assertEquals('image/png', $object->getType());
     }
 
     /**
@@ -154,7 +154,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapImg = $marshaller->unmarshall($element);
-        $this->assertEquals(0, count($gapImg->getMatchGroup()));
+        $this::assertEquals(0, count($gapImg->getMatchGroup()));
     }
 
     public function testUnmarshall20()
@@ -168,19 +168,19 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $gapImg = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(GapImg::class, $gapImg);
-        $this->assertEquals('my-gap', $gapImg->getId());
-        $this->assertEquals('gaps', $gapImg->getClass());
-        $this->assertEquals('gapImg1', $gapImg->getIdentifier());
-        $this->assertEquals(0, $gapImg->getMatchMin());
-        $this->assertEquals(1, $gapImg->getMatchMax());
-        $this->assertFalse($gapImg->hasTemplateIdentifier());
-        $this->assertEquals(['identifier1', 'identifier2'], $gapImg->getMatchGroup()->getArrayCopy());
-        $this->assertEquals(ShowHide::SHOW, $gapImg->getShowHide());
+        $this::assertInstanceOf(GapImg::class, $gapImg);
+        $this::assertEquals('my-gap', $gapImg->getId());
+        $this::assertEquals('gaps', $gapImg->getClass());
+        $this::assertEquals('gapImg1', $gapImg->getIdentifier());
+        $this::assertEquals(0, $gapImg->getMatchMin());
+        $this::assertEquals(1, $gapImg->getMatchMax());
+        $this::assertFalse($gapImg->hasTemplateIdentifier());
+        $this::assertEquals(['identifier1', 'identifier2'], $gapImg->getMatchGroup()->getArrayCopy());
+        $this::assertEquals(ShowHide::SHOW, $gapImg->getShowHide());
 
         $object = $gapImg->getObject();
-        $this->assertEquals('http://imagine.us/myimg.png', $object->getData());
-        $this->assertEquals('image/png', $object->getType());
+        $this::assertEquals('http://imagine.us/myimg.png', $object->getData());
+        $this::assertEquals('image/png', $object->getType());
     }
 
     /**
@@ -217,7 +217,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapImg = $marshaller->unmarshall($element);
 
-        $this->assertTrue($gapImg->isFixed());
+        $this::assertTrue($gapImg->isFixed());
     }
 
     /**
@@ -270,7 +270,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $gapImg = $marshaller->unmarshall($element);
 
         // MatchMin should be ignored in QTI 2.0.0.
-        $this->assertEquals(0, $gapImg->getMatchMin());
+        $this::assertEquals(0, $gapImg->getMatchMin());
     }
 
     public function testUnmarshallTemplateIdentifier20()
@@ -285,6 +285,6 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $gapImg = $marshaller->unmarshall($element);
 
         // TemplateIdentifier should be ignored in QTI 2.0.0.
-        $this->assertEquals('', $gapImg->getTemplateIdentifier());
+        $this::assertEquals('', $gapImg->getTemplateIdentifier());
     }
 }

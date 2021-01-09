@@ -29,7 +29,7 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<simpleChoice class="qti-simpleChoice" identifier="choice_1">This is ... <strong>strong</strong>!</simpleChoice>', $dom->saveXML($element));
+        $this::assertEquals('<simpleChoice class="qti-simpleChoice" identifier="choice_1">This is ... <strong>strong</strong>!</simpleChoice>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -41,13 +41,13 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(SimpleChoice::class, $component);
-        $this->assertEquals('qti-simpleChoice', $component->getClass());
-        $this->assertEquals('choice_1', $component->getIdentifier());
+        $this::assertInstanceOf(SimpleChoice::class, $component);
+        $this::assertEquals('qti-simpleChoice', $component->getClass());
+        $this::assertEquals('choice_1', $component->getIdentifier());
 
         $content = $component->getContent();
-        $this->assertInstanceOf(FlowStaticCollection::class, $content);
-        $this->assertEquals(3, count($content));
+        $this::assertInstanceOf(FlowStaticCollection::class, $content);
+        $this::assertEquals(3, count($content));
     }
 
     public function testMarshallSimple20()
@@ -60,7 +60,7 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<simpleChoice identifier="choice_1">Choice #1</simpleChoice>', $dom->saveXML($element));
+        $this::assertEquals('<simpleChoice identifier="choice_1">Choice #1</simpleChoice>', $dom->saveXML($element));
     }
 
     /**
@@ -81,7 +81,7 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<simpleChoice identifier="choice_1" fixed="true">Choice #1</simpleChoice>', $dom->saveXML($element));
+        $this::assertEquals('<simpleChoice identifier="choice_1" fixed="true">Choice #1</simpleChoice>', $dom->saveXML($element));
     }
 
     public function testUnmarshallSimple20()
@@ -93,14 +93,14 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(SimpleChoice::class, $component);
-        $this->assertEquals('choice_1', $component->getIdentifier());
-        $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
-        $this->assertFalse($component->hasTemplateIdentifier());
+        $this::assertInstanceOf(SimpleChoice::class, $component);
+        $this::assertEquals('choice_1', $component->getIdentifier());
+        $this::assertEquals(ShowHide::SHOW, $component->getShowHide());
+        $this::assertFalse($component->hasTemplateIdentifier());
 
         $content = $component->getContent();
-        $this->assertInstanceOf(FlowStaticCollection::class, $content);
-        $this->assertEquals(1, count($content));
+        $this::assertInstanceOf(FlowStaticCollection::class, $content);
+        $this::assertEquals(1, count($content));
     }
 
     /**
@@ -117,9 +117,9 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(SimpleChoice::class, $component);
-        $this->assertEquals('choice_1', $component->getIdentifier());
-        $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
-        $this->assertFalse($component->hasTemplateIdentifier());
+        $this::assertInstanceOf(SimpleChoice::class, $component);
+        $this::assertEquals('choice_1', $component->getIdentifier());
+        $this::assertEquals(ShowHide::SHOW, $component->getShowHide());
+        $this::assertFalse($component->hasTemplateIdentifier());
     }
 }

@@ -34,12 +34,12 @@ class RepeatProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection($initialVal);
         $processor = new RepeatProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertTrue($result->equals(new OrderedContainer(BaseType::INTEGER, $initialVal)));
+        $this::assertTrue($result->equals(new OrderedContainer(BaseType::INTEGER, $initialVal)));
 
         $expression = $this->createFakeExpression(2);
         $processor->setExpression($expression);
         $result = $processor->process();
-        $this->assertTrue($result->equals(new OrderedContainer(BaseType::INTEGER, array_merge($initialVal, $initialVal))));
+        $this::assertTrue($result->equals(new OrderedContainer(BaseType::INTEGER, array_merge($initialVal, $initialVal))));
     }
 
     public function testRepeatVariableRef()
@@ -51,7 +51,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $processor->setState(new State([new OutcomeVariable('repeat', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(2))]));
 
         $result = $processor->process();
-        $this->assertTrue($result->equals(new OrderedContainer(BaseType::INTEGER, array_merge($initialVal, $initialVal))));
+        $this::assertTrue($result->equals(new OrderedContainer(BaseType::INTEGER, array_merge($initialVal, $initialVal))));
     }
 
     public function testRepeatVariableRefNullRef()
@@ -91,7 +91,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $result = $processor->process();
 
         $comparison = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4), new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4)]);
-        $this->assertTrue($comparison->equals($result));
+        $this::assertTrue($comparison->equals($result));
     }
 
     public function testMixed()
@@ -110,7 +110,7 @@ class RepeatProcessorTest extends QtiSmTestCase
             BaseType::POINT,
             [new QtiPoint(0, 0), new QtiPoint(1, 2), new QtiPoint(2, 3), new QtiPoint(3, 4), new QtiPoint(10, 10), new QtiPoint(4, 5), new QtiPoint(0, 0), new QtiPoint(1, 2), new QtiPoint(2, 3), new QtiPoint(3, 4), new QtiPoint(10, 10), new QtiPoint(4, 5)]
         );
-        $this->assertTrue($comparison->equals($result));
+        $this::assertTrue($comparison->equals($result));
     }
 
     public function testNull()
@@ -120,7 +120,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new OrderedContainer(BaseType::INTEGER)]);
         $processor = new RepeatProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
 
         // Any sub-expressions evaluating to NULL are ignored.
         $operands = new OperandsCollection([null, new QtiString('String1'), new OrderedContainer(BaseType::STRING, [new QtiString('String2'), null]), new QtiString('String3')]);
@@ -128,7 +128,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $result = $processor->process();
 
         $comparison = new OrderedContainer(BaseType::STRING, [new QtiString('String1'), new QtiString('String2'), null, new QtiString('String3')]);
-        $this->assertTrue($result->equals($comparison));
+        $this::assertTrue($result->equals($comparison));
     }
 
     public function testWrongBaseTypeOne()

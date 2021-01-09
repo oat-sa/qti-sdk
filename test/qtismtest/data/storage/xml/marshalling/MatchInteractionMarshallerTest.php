@@ -49,7 +49,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals(
+        $this::assertEquals(
             '<matchInteraction responseIdentifier="RESPONSE" maxAssociations="2" minAssociations="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice><simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice><simpleAssociableChoice identifier="choice2B" matchMax="1">choice2B</simpleAssociableChoice></simpleMatchSet></matchInteraction>',
             $dom->saveXML($element)
         );
@@ -74,22 +74,22 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(MatchInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertTrue($component->mustShuffle());
-        $this->assertTrue($component->hasPrompt());
-        $this->assertEquals('/home/jerome', $component->getXmlBase());
+        $this::assertInstanceOf(MatchInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertTrue($component->mustShuffle());
+        $this::assertTrue($component->hasPrompt());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
 
         $matchSets = $component->getSimpleMatchSets();
         $set1 = $matchSets[0];
         $associableChoices = $set1->getSimpleAssociableChoices();
-        $this->assertEquals('choice1A', $associableChoices[0]->getIdentifier());
-        $this->assertEquals('choice1B', $associableChoices[1]->getIdentifier());
+        $this::assertEquals('choice1A', $associableChoices[0]->getIdentifier());
+        $this::assertEquals('choice1B', $associableChoices[1]->getIdentifier());
 
         $set2 = $matchSets[1];
         $associableChoices = $set2->getSimpleAssociableChoices();
-        $this->assertEquals('choice2A', $associableChoices[0]->getIdentifier());
-        $this->assertEquals('choice2B', $associableChoices[1]->getIdentifier());
+        $this::assertEquals('choice2A', $associableChoices[0]->getIdentifier());
+        $this::assertEquals('choice2B', $associableChoices[1]->getIdentifier());
     }
 
     public function testUnmarshall21NoResponseIdentifier()
@@ -156,7 +156,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals(
+        $this::assertEquals(
             '<matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="1"><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice></simpleMatchSet></matchInteraction>',
             $dom->saveXML($element)
         );
@@ -186,7 +186,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals(
+        $this::assertEquals(
             '<matchInteraction responseIdentifier="RESPONSE" shuffle="false" maxAssociations="1"><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice></simpleMatchSet></matchInteraction>',
             $dom->saveXML($element)
         );
@@ -217,7 +217,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals(
+        $this::assertEquals(
             '<matchInteraction responseIdentifier="RESPONSE" shuffle="false" maxAssociations="1"><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice></simpleMatchSet></matchInteraction>',
             $dom->saveXML($element)
         );
@@ -241,22 +241,22 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(MatchInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertTrue($component->mustShuffle());
-        $this->assertSame(2, $component->getMaxAssociations());
-        $this->assertSame(0, $component->getMinAssociations());
+        $this::assertInstanceOf(MatchInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertTrue($component->mustShuffle());
+        $this::assertSame(2, $component->getMaxAssociations());
+        $this::assertSame(0, $component->getMinAssociations());
 
         $matchSets = $component->getSimpleMatchSets();
         $set1 = $matchSets[0];
         $associableChoices = $set1->getSimpleAssociableChoices();
-        $this->assertEquals('choice1A', $associableChoices[0]->getIdentifier());
-        $this->assertEquals('choice1B', $associableChoices[1]->getIdentifier());
+        $this::assertEquals('choice1A', $associableChoices[0]->getIdentifier());
+        $this::assertEquals('choice1B', $associableChoices[1]->getIdentifier());
 
         $set2 = $matchSets[1];
         $associableChoices = $set2->getSimpleAssociableChoices();
-        $this->assertEquals('choice2A', $associableChoices[0]->getIdentifier());
-        $this->assertEquals('choice2B', $associableChoices[1]->getIdentifier());
+        $this::assertEquals('choice2A', $associableChoices[0]->getIdentifier());
+        $this::assertEquals('choice2B', $associableChoices[1]->getIdentifier());
     }
 
     /**
@@ -330,6 +330,6 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertSame(0, $component->getMinAssociations());
+        $this::assertSame(0, $component->getMinAssociations());
     }
 }

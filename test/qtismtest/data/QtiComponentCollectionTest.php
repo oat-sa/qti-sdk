@@ -46,6 +46,6 @@ class QtiComponentCollectionTest extends QtiSmTestCase
 
         $collection[] = $component;
 
-        $this->assertFalse($collection->exclusivelyContainsComponentsWithClassName('p', true));
+        $this::assertFalse($collection->exclusivelyContainsComponentsWithClassName('p', true));
     }
 }

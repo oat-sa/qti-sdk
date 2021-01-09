@@ -68,7 +68,7 @@ class ContainerTest extends QtiSmTestCase
         $container = $this->getContainer();
         $container[] = $value;
 
-        $this->assertTrue($container->contains($value));
+        $this::assertTrue($container->contains($value));
     }
 
     /**
@@ -87,10 +87,10 @@ class ContainerTest extends QtiSmTestCase
     {
         $container = $this->getContainer();
 
-        $this->assertTrue($container->isNull());
+        $this::assertTrue($container->isNull());
 
         $container[] = new QtiInteger(1);
-        $this->assertFalse($container->isNull());
+        $this::assertFalse($container->isNull());
     }
 
     /**
@@ -100,7 +100,7 @@ class ContainerTest extends QtiSmTestCase
     public function testCreateFromDataModelValid(ValueCollection $valueCollection)
     {
         $container = Container::createFromDataModel($valueCollection);
-        $this->assertInstanceOf(Container::class, $container);
+        $this::assertInstanceOf(Container::class, $container);
     }
 
     /**
@@ -110,7 +110,7 @@ class ContainerTest extends QtiSmTestCase
      */
     public function testEqualsPrimitiveValid(Container $a, Container $b)
     {
-        $this->assertTrue($a->equals($b));
+        $this::assertTrue($a->equals($b));
     }
 
     /**
@@ -120,7 +120,7 @@ class ContainerTest extends QtiSmTestCase
      */
     public function testEqualsPrimitiveInvalid(Container $a, $b)
     {
-        $this->assertFalse($a->equals($b));
+        $this::assertFalse($a->equals($b));
     }
 
     /**
@@ -131,7 +131,7 @@ class ContainerTest extends QtiSmTestCase
      */
     public function testOccurences(Container $container, $lookup, $expected)
     {
-        $this->assertEquals($expected, $container->occurences($lookup));
+        $this::assertEquals($expected, $container->occurences($lookup));
     }
 
     /**
@@ -254,15 +254,15 @@ class ContainerTest extends QtiSmTestCase
         $container[] = new QtiString('String!');
 
         $clone = clone $container;
-        $this->assertFalse($clone === $container);
-        $this->assertFalse($clone[0] === $container[0]);
-        $this->assertFalse($clone[1] === $container[1]);
-        $this->assertFalse($clone[2] === $container[2]);
-        $this->assertFalse($clone[3] === $container[3]);
-        $this->assertFalse($clone[4] === $container[4]);
-        $this->assertFalse($clone[5] === $container[5]);
-        $this->assertFalse($clone[6] === $container[6]);
-        $this->assertFalse($clone[7] === $container[7]);
+        $this::assertFalse($clone === $container);
+        $this::assertFalse($clone[0] === $container[0]);
+        $this::assertFalse($clone[1] === $container[1]);
+        $this::assertFalse($clone[2] === $container[2]);
+        $this::assertFalse($clone[3] === $container[3]);
+        $this::assertFalse($clone[4] === $container[4]);
+        $this::assertFalse($clone[5] === $container[5]);
+        $this::assertFalse($clone[6] === $container[6]);
+        $this::assertFalse($clone[7] === $container[7]);
     }
 
     public function testContains()
@@ -270,7 +270,7 @@ class ContainerTest extends QtiSmTestCase
         $pair = new QtiPair('A', 'B');
         $container = $this->getContainer();
         $container[] = $pair;
-        $this->assertTrue($container->contains(new QtiPair('A', 'B')));
+        $this::assertTrue($container->contains(new QtiPair('A', 'B')));
     }
 
     public function testContains2()
@@ -278,7 +278,7 @@ class ContainerTest extends QtiSmTestCase
         $identifier = new QtiIdentifier('test');
         $container = $this->getContainer();
         $container[] = $identifier;
-        $this->assertTrue($container->contains(new QtiIdentifier('test')));
+        $this::assertTrue($container->contains(new QtiIdentifier('test')));
     }
 
     /**
@@ -289,7 +289,7 @@ class ContainerTest extends QtiSmTestCase
      */
     public function testToString(Container $container, $expected)
     {
-        $this->assertEquals($expected, $container->__toString());
+        $this::assertEquals($expected, $container->__toString());
     }
 
     /**
@@ -340,7 +340,7 @@ class ContainerTest extends QtiSmTestCase
     public function testAlwaysMultipleCardinality()
     {
         $container = new Container();
-        $this->assertEquals(Cardinality::MULTIPLE, $container->getCardinality());
+        $this::assertEquals(Cardinality::MULTIPLE, $container->getCardinality());
     }
 
     public function testDetach()
@@ -348,11 +348,11 @@ class ContainerTest extends QtiSmTestCase
         $object = new QtiBoolean(true);
         $container = new Container([$object]);
 
-        $this->assertCount(1, $container);
+        $this::assertCount(1, $container);
 
         $container->detach($object);
 
-        $this->assertCount(0, $container);
+        $this::assertCount(0, $container);
     }
 
     public function testDetachNotFound()

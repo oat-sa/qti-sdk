@@ -37,24 +37,24 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         // $routeItemQ01 must have a single branchRule targeting Q03.
         $routeItemQ01 = $route->getRouteItemAt(0);
         $branchRules = $routeItemQ01->getBranchRules();
-        $this->assertEquals(1, count($branchRules));
-        $this->assertEquals('Q03', $branchRules[0]->getTarget());
+        $this::assertEquals(1, count($branchRules));
+        $this::assertEquals('Q03', $branchRules[0]->getTarget());
 
         // $routeItemQ02 must have a single branchRule targeting Q04.
         $routeItemQ02 = $route->getRouteItemAt(1);
         $branchRules = $routeItemQ02->getBranchRules();
-        $this->assertEquals(1, count($branchRules));
-        $this->assertEquals('Q04', $branchRules[0]->getTarget());
+        $this::assertEquals(1, count($branchRules));
+        $this::assertEquals('Q04', $branchRules[0]->getTarget());
 
         // $routeItemQ03 must have a single branchRule targeting EXIT_TEST
         $routeItemQ03 = $route->getRouteItemAt(2);
         $branchRules = $routeItemQ03->getBranchRules();
-        $this->assertEquals(1, count($branchRules));
-        $this->assertEquals('EXIT_TEST', $branchRules[0]->getTarget());
+        $this::assertEquals(1, count($branchRules));
+        $this::assertEquals('EXIT_TEST', $branchRules[0]->getTarget());
 
         // $routeItemQ04 is the end of the test and has no branchRules.
         $routeItemQ04 = $route->getRouteItemAt(3);
-        $this->assertEquals(0, count($routeItemQ04->getBranchRules()));
+        $this::assertEquals(0, count($routeItemQ04->getBranchRules()));
     }
 
     public function testBranchingSingleSectionLinear1()
@@ -72,30 +72,30 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $testSession->endAttempt($responses);
 
         // Correct? Then we should go to Q03.
-        $this->assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
+        $this::assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
         $testSession->moveNext();
 
         // Q03 - Are we there? We answer incorrect to take Q04.
-        $this->assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $responses = new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceZ'))]);
         $testSession->endAttempt($responses);
         $testSession->moveNext();
 
         // Q04 - Last item, nothing special.
-        $this->assertEquals('Q04', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q04', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $responses = new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceD'))]);
         $testSession->endAttempt($responses);
         $testSession->moveNext();
 
         // Test the global scope.
-        $this->assertFalse($testSession->isRunning());
+        $this::assertFalse($testSession->isRunning());
 
-        $this->assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
-        $this->assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
-        $this->assertEquals(0.0, $testSession['Q03.SCORE']->getValue());
-        $this->assertEquals(1.0, $testSession['Q04.SCORE']->getValue());
+        $this::assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
+        $this::assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
+        $this::assertEquals(0.0, $testSession['Q03.SCORE']->getValue());
+        $this::assertEquals(1.0, $testSession['Q04.SCORE']->getValue());
     }
 
     public function testBranchingSingleSectionLinear2()
@@ -120,12 +120,12 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $testSession->moveNext();
 
         // We should have reached the end.
-        $this->assertFalse($testSession->isRunning());
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
-        $this->assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
-        $this->assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
-        $this->assertEquals(1.0, $testSession['Q03.SCORE']->getValue());
-        $this->assertSame(null, $testSession['Q04.SCORE']); // Not eligible.
+        $this::assertFalse($testSession->isRunning());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
+        $this::assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
+        $this::assertEquals(1.0, $testSession['Q03.SCORE']->getValue());
+        $this::assertSame(null, $testSession['Q04.SCORE']); // Not eligible.
     }
 
     public function testBranchingSingleSectionNonLinear1()
@@ -147,7 +147,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $testSession->endAttempt($responses);
         $testSession->moveNext();
 
-        $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
     }
 
     public function testBranchingSingleSectionNonLinear2()
@@ -168,7 +168,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $testSession->endAttempt($responses);
         $testSession->moveNext();
 
-        $this->assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
     }
 
     /**
@@ -203,8 +203,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
             $testSession->moveNext();
         }
 
-        $this->assertEquals($expectedTarget, $testSession->getCurrentAssessmentItemRef()->getIdentifier());
-        $this->assertEquals($occurence, $testSession->getCurrentAssessmentItemRefOccurence());
+        $this::assertEquals($expectedTarget, $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals($occurence, $testSession->getCurrentAssessmentItemRefOccurence());
     }
 
     /**
@@ -226,10 +226,10 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $session->beginTestSession();
 
         // Only the first item session should be created.
-        $this->assertSame(0.0, $session['Q01.SCORE']->getValue());
-        $this->assertSame(null, $session['Q02.SCORE']);
-        $this->assertSame(null, $session['Q03.SCORE']);
-        $this->assertSame(null, $session['Q04.SCORE']);
+        $this::assertSame(0.0, $session['Q01.SCORE']->getValue());
+        $this::assertSame(null, $session['Q02.SCORE']);
+        $this::assertSame(null, $session['Q03.SCORE']);
+        $this::assertSame(null, $session['Q04.SCORE']);
 
         // Q01 - Incorrect
         $session->beginAttempt();
@@ -238,15 +238,15 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
 
         // Q04 - We should be at Q04.
         // -> because Q03 has a precondition which returns false.
-        $this->assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceD'))]));
         $session->moveNext();
 
         // Only item sessions related to Q01 and Q04 should be instantiated.
-        $this->assertSame(0.0, $session['Q01.SCORE']->getValue());
-        $this->assertSame(null, $session['Q02.SCORE']);
-        $this->assertSame(null, $session['Q03.SCORE']);
-        $this->assertSame(1.0, $session['Q04.SCORE']->getValue());
+        $this::assertSame(0.0, $session['Q01.SCORE']->getValue());
+        $this::assertSame(null, $session['Q02.SCORE']);
+        $this::assertSame(null, $session['Q03.SCORE']);
+        $this::assertSame(1.0, $session['Q04.SCORE']->getValue());
     }
 }

@@ -38,8 +38,8 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
     {
         $doc = new XmlDocument('2.1');
         $doc->load($uri);
-        $this->assertInstanceOf(XmlDocument::class, $doc);
-        $this->assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
+        $this::assertInstanceOf(XmlDocument::class, $doc);
+        $this::assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
     }
 
     /**
@@ -52,8 +52,8 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
     {
         $doc = new XmlDocument('2.1');
         $doc->loadFromString(file_get_contents($uri));
-        $this->assertInstanceOf(XmlDocument::class, $doc);
-        $this->assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
+        $this::assertInstanceOf(XmlDocument::class, $doc);
+        $this::assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
     }
 
     /**
@@ -74,10 +74,10 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $doc = new XmlDocument('2.1');
         try {
             $doc->load($file, true); // validate on load.
-            $this->assertTrue(true);
+            $this::assertTrue(true);
             unlink($file);
         } catch (XmlStorageException $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this::assertTrue(false, $e->getMessage());
             unlink($file);
         }
     }
@@ -101,10 +101,10 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $doc = new XmlDocument('2.1');
         try {
             $doc->load($file, true); // validate on load.
-            $this->assertTrue(true);
+            $this::assertTrue(true);
             unlink($file);
         } catch (XmlStorageException $e) {
-            $this->assertTrue(false, $e->getMessage());
+            $this::assertTrue(false, $e->getMessage());
             unlink($file);
         }
     }
@@ -149,65 +149,65 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 
         $assessmentTest->schemaValidate();
 
-        $this->assertInstanceOf(AssessmentTest::class, $assessmentTest->getDocumentComponent());
-        $this->assertEquals('InteractionMixSachsen_1901710679', $assessmentTest->getDocumentComponent()->getIdentifier());
-        $this->assertEquals('Interaction Mix (Sachsen)', $assessmentTest->getDocumentComponent()->getTitle());
+        $this::assertInstanceOf(AssessmentTest::class, $assessmentTest->getDocumentComponent());
+        $this::assertEquals('InteractionMixSachsen_1901710679', $assessmentTest->getDocumentComponent()->getIdentifier());
+        $this::assertEquals('Interaction Mix (Sachsen)', $assessmentTest->getDocumentComponent()->getTitle());
 
         // -- OutcomeDeclarations
         $outcomeDeclarations = $assessmentTest->getDocumentComponent()->getOutcomeDeclarations();
-        $this->assertEquals(2, count($outcomeDeclarations));
+        $this::assertEquals(2, count($outcomeDeclarations));
 
         $outcomeDeclaration = $outcomeDeclarations['SCORE'];
-        $this->assertEquals('SCORE', $outcomeDeclaration->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $outcomeDeclaration->getCardinality());
-        $this->assertEquals(BaseType::FLOAT, $outcomeDeclaration->getBaseType());
+        $this::assertEquals('SCORE', $outcomeDeclaration->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $outcomeDeclaration->getCardinality());
+        $this::assertEquals(BaseType::FLOAT, $outcomeDeclaration->getBaseType());
         $defaultValue = $outcomeDeclaration->getDefaultValue();
-        $this->assertInstanceOf(DefaultValue::class, $defaultValue);
+        $this::assertInstanceOf(DefaultValue::class, $defaultValue);
         $values = $defaultValue->getValues();
-        $this->assertInstanceOf(ValueCollection::class, $values);
-        $this->assertEquals(1, count($values));
+        $this::assertInstanceOf(ValueCollection::class, $values);
+        $this::assertEquals(1, count($values));
         $value = $values[0];
-        $this->assertInstanceOf(Value::class, $value);
-        $this->assertIsFloat($value->getValue());
-        $this->assertEquals(0.0, $value->getValue());
+        $this::assertInstanceOf(Value::class, $value);
+        $this::assertIsFloat($value->getValue());
+        $this::assertEquals(0.0, $value->getValue());
 
         $outcomeDeclaration = $outcomeDeclarations['MAXSCORE'];
-        $this->assertEquals('MAXSCORE', $outcomeDeclaration->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $outcomeDeclaration->getCardinality());
-        $this->assertEquals(BaseType::FLOAT, $outcomeDeclaration->getBaseType());
+        $this::assertEquals('MAXSCORE', $outcomeDeclaration->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $outcomeDeclaration->getCardinality());
+        $this::assertEquals(BaseType::FLOAT, $outcomeDeclaration->getBaseType());
         $defaultValue = $outcomeDeclaration->getDefaultValue();
-        $this->assertInstanceOf(DefaultValue::class, $defaultValue);
+        $this::assertInstanceOf(DefaultValue::class, $defaultValue);
         $values = $defaultValue->getValues();
-        $this->assertInstanceOf(ValueCollection::class, $values);
-        $this->assertEquals(1, count($values));
+        $this::assertInstanceOf(ValueCollection::class, $values);
+        $this::assertEquals(1, count($values));
         $value = $values[0];
-        $this->assertInstanceOf(Value::class, $value);
-        $this->assertIsFloat($value->getValue());
-        $this->assertEquals(18.0, $value->getValue());
+        $this::assertInstanceOf(Value::class, $value);
+        $this::assertIsFloat($value->getValue());
+        $this::assertEquals(18.0, $value->getValue());
 
         // -- TestParts
         $testParts = $assessmentTest->getDocumentComponent()->getTestParts();
-        $this->assertEquals(1, count($testParts));
+        $this::assertEquals(1, count($testParts));
         $testPart = $testParts['testpartID'];
-        $this->assertInstanceOf(TestPart::class, $testPart);
-        $this->assertEquals('testpartID', $testPart->getIdentifier());
-        $this->assertEquals(NavigationMode::NONLINEAR, $testPart->getNavigationMode());
-        $this->assertEquals(SubmissionMode::INDIVIDUAL, $testPart->getSubmissionMode());
+        $this::assertInstanceOf(TestPart::class, $testPart);
+        $this::assertEquals('testpartID', $testPart->getIdentifier());
+        $this::assertEquals(NavigationMode::NONLINEAR, $testPart->getNavigationMode());
+        $this::assertEquals(SubmissionMode::INDIVIDUAL, $testPart->getSubmissionMode());
 
         // -- AssessmentSections
         $assessmentSections = $testPart->getAssessmentSections();
-        $this->assertEquals(1, count($assessmentSections));
+        $this::assertEquals(1, count($assessmentSections));
         $assessmentSection = $assessmentSections['Sektion_181865064'];
-        $this->assertInstanceOf(AssessmentSection::class, $assessmentSection);
-        $this->assertEquals('Sektion_181865064', $assessmentSection->getIdentifier());
-        $this->assertFalse($assessmentSection->isFixed());
-        $this->assertFalse($assessmentSection->isVisible());
-        $this->assertEquals('Sektion', $assessmentSection->getTitle());
+        $this::assertInstanceOf(AssessmentSection::class, $assessmentSection);
+        $this::assertEquals('Sektion_181865064', $assessmentSection->getIdentifier());
+        $this::assertFalse($assessmentSection->isFixed());
+        $this::assertFalse($assessmentSection->isVisible());
+        $this::assertEquals('Sektion', $assessmentSection->getTitle());
 
         // -- AssessmentItemRefs
         $assessmentItemRefs = $assessmentSection->getSectionParts();
-        $this->assertInstanceOf(SectionPartCollection::class, $assessmentItemRefs);
-        $this->assertEquals(13, count($assessmentItemRefs));
+        $this::assertInstanceOf(SectionPartCollection::class, $assessmentItemRefs);
+        $this::assertEquals(13, count($assessmentItemRefs));
 
         $expectedItems = [
             ['Choicetruefalse_176040516', 'Choicetruefalse_176040516.xml'],
@@ -229,28 +229,28 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
             $id = $expectedItems[$i][0];
             $file = $expectedItems[$i][1];
 
-            $this->assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs[$id]);
-            $this->assertEquals($id, $assessmentItemRefs[$id]->getIdentifier());
-            $this->assertEquals($file, $assessmentItemRefs[$id]->getHref());
-            $this->assertFalse($assessmentItemRefs[$id]->isFixed());
+            $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs[$id]);
+            $this::assertEquals($id, $assessmentItemRefs[$id]->getIdentifier());
+            $this::assertEquals($file, $assessmentItemRefs[$id]->getHref());
+            $this::assertFalse($assessmentItemRefs[$id]->isFixed());
         }
 
         // OutcomeProcessing
         $outcomeProcessing = $assessmentTest->getDocumentComponent()->getOutcomeProcessing();
-        $this->assertInstanceOf(OutcomeProcessing::class, $outcomeProcessing);
-        $this->assertEquals(1, count($outcomeProcessing->getOutcomeRules()));
+        $this::assertInstanceOf(OutcomeProcessing::class, $outcomeProcessing);
+        $this::assertEquals(1, count($outcomeProcessing->getOutcomeRules()));
 
         $outcomeRules = $outcomeProcessing->getOutcomeRules();
         $setOutcomeValue = $outcomeRules[0];
-        $this->assertInstanceOf(SetOutcomeValue::class, $setOutcomeValue);
-        $this->assertEquals('SCORE', $setOutcomeValue->getIdentifier());
+        $this::assertInstanceOf(SetOutcomeValue::class, $setOutcomeValue);
+        $this::assertEquals('SCORE', $setOutcomeValue->getIdentifier());
         $sum = $setOutcomeValue->getExpression();
-        $this->assertInstanceOf(Sum::class, $sum);
+        $this::assertInstanceOf(Sum::class, $sum);
 
         $expressions = $sum->getExpressions();
         $testVariables = $expressions[0];
-        $this->assertInstanceOf(TestVariables::class, $testVariables);
-        $this->assertEquals('SCORE', $testVariables->getVariableIdentifier());
+        $this::assertInstanceOf(TestVariables::class, $testVariables);
+        $this::assertEquals('SCORE', $testVariables->getVariableIdentifier());
     }
 
     public function testWriteInteractionMixSachsen()
@@ -260,7 +260,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
-        $this->assertTrue(file_exists($file));
+        $this::assertTrue(file_exists($file));
 
         $doc = new XmlDocument('2.1');
         $doc->load($file);
@@ -269,17 +269,17 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         // correctly namespaced ?
         $dom = $doc->getDomDocument();
         $assessmentTestElt = $dom->documentElement;
-        $this->assertEquals('assessmentTest', $assessmentTestElt->nodeName);
-        $this->assertEquals('http://www.imsglobal.org/xsd/imsqti_v2p1', $assessmentTestElt->namespaceURI);
+        $this::assertEquals('assessmentTest', $assessmentTestElt->nodeName);
+        $this::assertEquals('http://www.imsglobal.org/xsd/imsqti_v2p1', $assessmentTestElt->namespaceURI);
 
         // childrend in namespace ?
         $outcomeDeclarationElts = $dom->documentElement->getElementsByTagName('outcomeDeclaration');
-        $this->assertEquals(2, $outcomeDeclarationElts->length);
+        $this::assertEquals(2, $outcomeDeclarationElts->length);
         $outcomeDeclarationElt = $outcomeDeclarationElts->item(0);
-        $this->assertEquals('http://www.imsglobal.org/xsd/imsqti_v2p1', $outcomeDeclarationElt->namespaceURI);
+        $this::assertEquals('http://www.imsglobal.org/xsd/imsqti_v2p1', $outcomeDeclarationElt->namespaceURI);
 
         unlink($file);
-        $this->assertFalse(file_exists($file));
+        $this::assertFalse(file_exists($file));
     }
 
     /**

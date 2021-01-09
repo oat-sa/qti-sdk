@@ -27,25 +27,25 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
 
         // At the beginning of the attempt, all ResponseVariables related to an endAttemptInteraction
         // must be reset to false, ignoring default values (in this case: null).
-        $this->assertFalse($session['Q01.HINT']->getValue());
+        $this::assertFalse($session['Q01.HINT']->getValue());
 
         // SHOWHINT is not related to an endAttemptInteraction. Its default value is false.
-        $this->assertFalse($session['Q01.SHOWHINT']->getValue());
+        $this::assertFalse($session['Q01.SHOWHINT']->getValue());
 
         // End of attempt using endAttemptInteraction 'HINT'.
         $session->endAttempt(new State([new ResponseVariable('HINT', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true))]));
 
-        $this->assertTrue($session['Q01.HINT']->getValue());
-        $this->assertTrue($session['Q01.SHOWHINT']->getValue());
-        $this->assertEquals(0.0, $session['Q01.SCORE']->getValue());
+        $this::assertTrue($session['Q01.HINT']->getValue());
+        $this::assertTrue($session['Q01.SHOWHINT']->getValue());
+        $this::assertEquals(0.0, $session['Q01.SCORE']->getValue());
 
         // -- Item Q01 - Second attempt. With the 'HINT', the candidate is able to give a correct response ;)!
         $session->beginAttempt();
 
         // Again, at the beginning of the attempt, all ResponseVariables bound to an endAttemptInteraction
         // are reset to false, ignoring their default values.
-        $this->assertFalse($session['Q01.HINT']->getValue());
-        $this->assertTrue($session['Q01.SHOWHINT']->getValue());
+        $this::assertFalse($session['Q01.HINT']->getValue());
+        $this::assertTrue($session['Q01.SHOWHINT']->getValue());
 
         $session->endAttempt(
             new State(
@@ -56,9 +56,9 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
             )
         );
 
-        $this->assertFalse($session['Q01.HINT']->getValue());
-        $this->assertFalse($session['Q01.SHOWHINT']->getValue());
-        $this->assertEquals(1.0, $session['Q01.SCORE']->getValue());
+        $this::assertFalse($session['Q01.HINT']->getValue());
+        $this::assertFalse($session['Q01.SHOWHINT']->getValue());
+        $this::assertEquals(1.0, $session['Q01.SCORE']->getValue());
 
         $session->moveNext();
 
@@ -66,7 +66,7 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
 
-        $this->assertEquals(1.0, $session['Q02.SCORE']->getValue());
+        $this::assertEquals(1.0, $session['Q02.SCORE']->getValue());
 
         $session->moveNext();
 
@@ -75,8 +75,8 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
 
         // At the beginning of the attempt, all ResponseVariables related to and endAttemptInteraction
         // must be reset to false, ignoring default values (in this case: null).
-        $this->assertFalse($session['Q03.HINT1']->getValue());
-        $this->assertFalse($session['Q03.HINT2']->getValue());
+        $this::assertFalse($session['Q03.HINT1']->getValue());
+        $this::assertFalse($session['Q03.HINT2']->getValue());
 
         // The candidate ends the attempt by invoking the 'HINT1' endAttemptInteraction.
         $session->endAttempt(
@@ -88,20 +88,20 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
             )
         );
 
-        $this->assertTrue($session['Q03.HINT1']->getValue());
-        $this->assertFalse($session['Q03.HINT2']->getValue());
-        $this->assertTrue($session['Q03.SHOWHINT1']->getValue());
-        $this->assertFalse($session['Q03.SHOWHINT2']->getValue());
-        $this->assertEquals(0.0, $session['Q03.SCORE']->getValue());
+        $this::assertTrue($session['Q03.HINT1']->getValue());
+        $this::assertFalse($session['Q03.HINT2']->getValue());
+        $this::assertTrue($session['Q03.SHOWHINT1']->getValue());
+        $this::assertFalse($session['Q03.SHOWHINT2']->getValue());
+        $this::assertEquals(0.0, $session['Q03.SCORE']->getValue());
 
         // -- Q03 - New attempt.
         // Unfortunately, HINT1 is not enough for the candidate to find the correct response ;) !
         $session->beginAttempt();
 
-        $this->assertFalse($session['Q03.HINT1']->getValue());
-        $this->assertFalse($session['Q03.HINT2']->getValue());
-        $this->assertTrue($session['Q03.SHOWHINT1']->getValue());
-        $this->assertFalse($session['Q03.SHOWHINT2']->getValue());
+        $this::assertFalse($session['Q03.HINT1']->getValue());
+        $this::assertFalse($session['Q03.HINT2']->getValue());
+        $this::assertTrue($session['Q03.SHOWHINT1']->getValue());
+        $this::assertFalse($session['Q03.SHOWHINT2']->getValue());
 
         $session->endAttempt(
             new State(
@@ -116,10 +116,10 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
         // -- Q03 - New attempt to ask for HINT 2.
         $session->beginAttempt();
 
-        $this->assertFalse($session['Q03.HINT1']->getValue());
-        $this->assertFalse($session['Q03.HINT2']->getValue());
-        $this->assertTrue($session['Q03.SHOWHINT1']->getValue());
-        $this->assertFalse($session['Q03.SHOWHINT2']->getValue());
+        $this::assertFalse($session['Q03.HINT1']->getValue());
+        $this::assertFalse($session['Q03.HINT2']->getValue());
+        $this::assertTrue($session['Q03.SHOWHINT1']->getValue());
+        $this::assertFalse($session['Q03.SHOWHINT2']->getValue());
 
         $session->endAttempt(
             new State(
@@ -130,11 +130,11 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
             )
         );
 
-        $this->assertFalse($session['Q03.HINT1']->getValue());
-        $this->assertTrue($session['Q03.HINT2']->getValue());
-        $this->assertTrue($session['Q03.SHOWHINT1']->getValue());
-        $this->assertTrue($session['Q03.SHOWHINT2']->getValue());
-        $this->assertEquals(0.0, $session['Q03.SCORE']->getValue());
+        $this::assertFalse($session['Q03.HINT1']->getValue());
+        $this::assertTrue($session['Q03.HINT2']->getValue());
+        $this::assertTrue($session['Q03.SHOWHINT1']->getValue());
+        $this::assertTrue($session['Q03.SHOWHINT2']->getValue());
+        $this::assertEquals(0.0, $session['Q03.SCORE']->getValue());
 
         // -- Q03 - Candidate is now able to find the appropriate response.
         $session->beginAttempt();
@@ -146,13 +146,13 @@ class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTest
             ]
         ));
 
-        $this->assertFalse($session['Q03.HINT1']->getValue());
-        $this->assertFalse($session['Q03.HINT2']->getValue());
-        $this->assertTrue($session['Q03.SHOWHINT1']->getValue());
-        $this->assertTrue($session['Q03.SHOWHINT2']->getValue());
-        $this->assertEquals(1.0, $session['Q03.SCORE']->getValue());
+        $this::assertFalse($session['Q03.HINT1']->getValue());
+        $this::assertFalse($session['Q03.HINT2']->getValue());
+        $this::assertTrue($session['Q03.SHOWHINT1']->getValue());
+        $this::assertTrue($session['Q03.SHOWHINT2']->getValue());
+        $this::assertEquals(1.0, $session['Q03.SCORE']->getValue());
 
         $session->moveNext();
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
     }
 }

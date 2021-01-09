@@ -46,7 +46,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<hottextInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><div>This is a <hottext identifier="hot1"/> text... <hottext identifier="hot2"/></div></hottextInteraction>',
             $dom->saveXML($element)
         );
@@ -71,7 +71,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<hottextInteraction responseIdentifier="RESPONSE"><div>This is a <hottext identifier="hot1"/> text...</div></hottextInteraction>', $dom->saveXML($element));
+        $this::assertEquals('<hottextInteraction responseIdentifier="RESPONSE"><div>This is a <hottext identifier="hot1"/> text...</div></hottextInteraction>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -84,29 +84,29 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(HottextInteraction::class, $component);
-        $this->assertEquals(0, $component->getMaxChoices());
-        $this->assertEquals(0, $component->getMinChoices());
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertEquals('/home/jerome', $component->getXmlBase());
+        $this::assertInstanceOf(HottextInteraction::class, $component);
+        $this::assertEquals(0, $component->getMaxChoices());
+        $this::assertEquals(0, $component->getMinChoices());
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
 
-        $this->assertTrue($component->hasPrompt());
+        $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
 
         $content = $component->getContent();
         $div = $content[0];
-        $this->assertInstanceOf(Div::class, $div);
+        $this::assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
 
-        $this->assertInstanceOf(TextRun::class, $divContent[0]);
-        $this->assertEquals('This is a ', $divContent[0]->getContent());
+        $this::assertInstanceOf(TextRun::class, $divContent[0]);
+        $this::assertEquals('This is a ', $divContent[0]->getContent());
 
-        $this->assertInstanceOf(Hottext::class, $divContent[1]);
-        $this->assertEquals('hot1', $divContent[1]->getIdentifier());
+        $this::assertInstanceOf(Hottext::class, $divContent[1]);
+        $this::assertEquals('hot1', $divContent[1]->getIdentifier());
 
-        $this->assertInstanceOf(TextRun::class, $divContent[2]);
-        $this->assertEquals(' text...', $divContent[2]->getContent());
+        $this::assertInstanceOf(TextRun::class, $divContent[2]);
+        $this::assertEquals(' text...', $divContent[2]->getContent());
     }
 
     public function testUnmarshall21InvalidContent()
@@ -153,7 +153,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(HottextInteraction::class, $component);
-        $this->assertEquals(0, $component->getMinChoices());
+        $this::assertInstanceOf(HottextInteraction::class, $component);
+        $this::assertEquals(0, $component->getMinChoices());
     }
 }

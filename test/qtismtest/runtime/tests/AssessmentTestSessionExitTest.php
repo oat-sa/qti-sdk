@@ -30,8 +30,8 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 
         // We should arrive at section 2.
         $testSession->moveNext();
-        $this->assertEquals('S02', $testSession->getCurrentAssessmentSection()->getIdentifier());
-        $this->assertTrue($testSession->isRunning());
+        $this::assertEquals('S02', $testSession->getCurrentAssessmentSection()->getIdentifier());
+        $this::assertTrue($testSession->isRunning());
     }
 
     public function testExitSectionEndOfTest()
@@ -50,17 +50,17 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should be at the end of the test.
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
 
         // All session closed (parano mode)?
         $itemSessions = $testSession->getAssessmentItemSessions('Q01');
         $q01Session = $itemSessions[0];
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
 
         // For Q02, we should not get any result because we by-passed it with the branchRule.
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
-        $this->assertEquals(false, $itemSessions);
-        $this->assertFalse($testSession->isRunning());
+        $this::assertEquals(false, $itemSessions);
+        $this::assertFalse($testSession->isRunning());
     }
 
     public function testExitSectionFromEndOfSection()
@@ -78,10 +78,10 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should be at section S02, item Q02.
         $testSession->moveNext();
 
-        $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->moveNext();
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
-        $this->assertFalse($testSession->isRunning());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertFalse($testSession->isRunning());
     }
 
     public function testExitSectionPreconditionsEndOfTest()
@@ -100,21 +100,21 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should be at the end of the test.
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
 
         // All session closed (parano mode again)?
         $itemSessions = $testSession->getAssessmentItemSessions('Q01');
         $q01Session = $itemSessions[0];
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
 
         // For Q02 and Q03, we should not get any result because we both by-passed them with the initial branchRule
         // and the ending preCondition.
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
-        $this->assertEquals(false, $itemSessions);
+        $this::assertEquals(false, $itemSessions);
 
         $itemSessions = $testSession->getAssessmentItemSessions('Q03');
-        $this->assertEquals(false, $itemSessions);
-        $this->assertFalse($testSession->isRunning());
+        $this::assertEquals(false, $itemSessions);
+        $this::assertFalse($testSession->isRunning());
     }
 
     public function testExitTestPart()
@@ -131,10 +131,10 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 
         // We should arrive at testPart 2
         $testSession->moveNext();
-        $this->assertEquals('P02', $testSession->getCurrentTestPart()->getIdentifier());
-        $this->assertTrue($testSession->isRunning());
+        $this::assertEquals('P02', $testSession->getCurrentTestPart()->getIdentifier());
+        $this::assertTrue($testSession->isRunning());
         $testSession->moveNext();
-        $this->assertFalse($testSession->isRunning());
+        $this::assertFalse($testSession->isRunning());
     }
 
     public function testExitTestPartEndOfTest()
@@ -153,17 +153,17 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should be at the end of the test.
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
 
         // All session closed (parano mode all over again)?
         $itemSessions = $testSession->getAssessmentItemSessions('Q01');
         $q01Session = $itemSessions[0];
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
 
         // For Q02, we should not get any result because we by-passed it with the branchRule.
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
-        $this->assertEquals(false, $itemSessions);
-        $this->assertFalse($testSession->isRunning());
+        $this::assertEquals(false, $itemSessions);
+        $this::assertFalse($testSession->isRunning());
     }
 
     public function testExitTestPartPreconditionsEndOfTest()
@@ -182,21 +182,21 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should be at the end of the test.
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
 
         // All session closed (parano mode again)?
         $itemSessions = $testSession->getAssessmentItemSessions('Q01');
         $q01Session = $itemSessions[0];
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $q01Session->getState());
 
         // For Q02 & Q03, we should not get any result because we both by-passed them with the initial branchRule
         // and the ending preCondition.
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
-        $this->assertEquals(false, $itemSessions);
+        $this::assertEquals(false, $itemSessions);
 
         $itemSessions = $testSession->getAssessmentItemSessions('Q03');
-        $this->assertEquals(false, $itemSessions);
-        $this->assertFalse($testSession->isRunning());
+        $this::assertEquals(false, $itemSessions);
+        $this::assertFalse($testSession->isRunning());
     }
 
     public function testExitTest()
@@ -213,7 +213,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 
         // We should arrive at section 2.
         $testSession->moveNext();
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
-        $this->assertFalse($testSession->isRunning());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertFalse($testSession->isRunning());
     }
 }

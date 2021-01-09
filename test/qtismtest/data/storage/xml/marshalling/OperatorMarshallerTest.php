@@ -36,31 +36,31 @@ class OperatorMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Sum::class, $component);
-        $this->assertEquals(2, count($component->getExpressions()));
+        $this::assertInstanceOf(Sum::class, $component);
+        $this::assertEquals(2, count($component->getExpressions()));
 
         $subExpressions = $component->getExpressions();
         $sub1 = $subExpressions[0];
         $sub2 = $subExpressions[1];
 
-        $this->assertEquals(2, count($sub1->getExpressions()));
-        $this->assertEquals(2, count($sub2->getExpressions()));
+        $this::assertEquals(2, count($sub1->getExpressions()));
+        $this::assertEquals(2, count($sub2->getExpressions()));
 
         $sub1Expressions = $sub1->getExpressions();
         $sub11 = $sub1Expressions[0];
         $sub12 = $sub1Expressions[1];
-        $this->assertIsInt($sub11->getValue());
-        $this->assertIsInt($sub12->getValue());
-        $this->assertEquals(1, $sub11->getValue());
-        $this->assertEquals(2, $sub12->getValue());
+        $this::assertIsInt($sub11->getValue());
+        $this::assertIsInt($sub12->getValue());
+        $this::assertEquals(1, $sub11->getValue());
+        $this::assertEquals(2, $sub12->getValue());
 
         $sub2Expressions = $sub2->getExpressions();
         $sub21 = $sub2Expressions[0];
         $sub22 = $sub2Expressions[1];
-        $this->assertIsInt($sub21->getValue());
-        $this->assertIsInt($sub21->getValue());
-        $this->assertEquals(3, $sub21->getValue());
-        $this->assertEquals(4, $sub22->getValue());
+        $this::assertIsInt($sub21->getValue());
+        $this::assertIsInt($sub21->getValue());
+        $this::assertEquals(3, $sub21->getValue());
+        $this::assertEquals(4, $sub22->getValue());
     }
 
     public function testMarshall()
@@ -76,24 +76,24 @@ class OperatorMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($sum);
         $element = $marshaller->marshall($sum);
 
-        $this->assertEquals('sum', $element->nodeName);
+        $this::assertEquals('sum', $element->nodeName);
 
         $sums = $element->getElementsByTagName('sum');
-        $this->assertEquals(2, $sums->length);
+        $this::assertEquals(2, $sums->length);
 
         $sum1 = $sums->item(0);
         $sum2 = $sums->item(1);
 
-        $this->assertEquals('sum', $sum1->nodeName);
+        $this::assertEquals('sum', $sum1->nodeName);
         $baseValues = $sum1->getElementsByTagName('baseValue');
-        $this->assertEquals(2, $baseValues->length);
-        $this->assertEquals('1', $baseValues->item(0)->nodeValue);
-        $this->assertEquals('2', $baseValues->item(1)->nodeValue);
+        $this::assertEquals(2, $baseValues->length);
+        $this::assertEquals('1', $baseValues->item(0)->nodeValue);
+        $this::assertEquals('2', $baseValues->item(1)->nodeValue);
 
-        $this->assertEquals('sum', $sum2->nodeName);
+        $this::assertEquals('sum', $sum2->nodeName);
         $baseValues = $sum2->getElementsByTagName('baseValue');
-        $this->assertEquals(2, $baseValues->length);
-        $this->assertEquals('3', $baseValues->item(0)->nodeValue);
-        $this->assertEquals('4', $baseValues->item(1)->nodeValue);
+        $this::assertEquals(2, $baseValues->length);
+        $this::assertEquals('3', $baseValues->item(0)->nodeValue);
+        $this::assertEquals('4', $baseValues->item(1)->nodeValue);
     }
 }

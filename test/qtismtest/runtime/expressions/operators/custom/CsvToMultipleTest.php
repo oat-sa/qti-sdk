@@ -56,8 +56,8 @@ class CsvToMultipleTest extends QtiSmTestCase {
             )
         );
 
-        $this->assertInstanceOf(MultipleContainer::class, $result);
-        $this->assertTrue($expected->equals($result));
+        $this::assertInstanceOf(MultipleContainer::class, $result);
+        $this::assertTrue($expected->equals($result));
     }
     
     /**
@@ -79,8 +79,8 @@ class CsvToMultipleTest extends QtiSmTestCase {
             )
         );
 
-        $this->assertInstanceOf(MultipleContainer::class, $result);
-        $this->assertTrue($expected->equals($result));
+        $this::assertInstanceOf(MultipleContainer::class, $result);
+        $this::assertTrue($expected->equals($result));
     }
     
     /**
@@ -96,7 +96,7 @@ class CsvToMultipleTest extends QtiSmTestCase {
         $operator = new CsvToMultiple($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertNull($result);
+        $this::assertNull($result);
     }
     
     /**
@@ -118,7 +118,7 @@ class CsvToMultipleTest extends QtiSmTestCase {
             )
         );
 
-        $this->assertInstanceOf(MultipleContainer::class, $result);
-        $this->assertTrue($expected->equals($result));
+        $this::assertInstanceOf(MultipleContainer::class, $result);
+        $this::assertTrue($expected->equals($result));
     }
 }

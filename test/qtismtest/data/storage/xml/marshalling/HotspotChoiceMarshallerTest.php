@@ -32,7 +32,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<hotspotChoice identifier="hotspotchoice1" shape="circle" coords="0,0,5" fixed="true" templateIdentifier="mytpl1" showHide="hide" hotspotLabel="This is a circle." id="my-hotspotchoice"/>', $dom->saveXML($element));
+        $this::assertEquals('<hotspotChoice identifier="hotspotchoice1" shape="circle" coords="0,0,5" fixed="true" templateIdentifier="mytpl1" showHide="hide" hotspotLabel="This is a circle." id="my-hotspotchoice"/>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -42,20 +42,20 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(HotspotChoice::class, $component);
-        $this->assertInstanceOf(Hotspot::class, $component);
-        $this->assertInstanceOf(Choice::class, $component);
+        $this::assertInstanceOf(HotspotChoice::class, $component);
+        $this::assertInstanceOf(Hotspot::class, $component);
+        $this::assertInstanceOf(Choice::class, $component);
 
-        $this->assertEquals('hotspotchoice1', $component->getIdentifier());
-        $this->assertEquals(QtiShape::CIRCLE, $component->getShape());
-        $this->assertEquals('0,0,5', $component->getCoords()->__toString());
-        $this->assertTrue($component->isFixed());
-        $this->assertEquals('mytpl1', $component->getTemplateIdentifier());
-        $this->assertTrue($component->hasTemplateIdentifier());
-        $this->assertEquals(ShowHide::HIDE, $component->getShowHide());
-        $this->assertEquals('my-hotspotchoice', $component->getId());
-        $this->assertEquals('This is a circle.', $component->getHotspotLabel());
-        $this->assertTrue($component->hasHotspotLabel());
+        $this::assertEquals('hotspotchoice1', $component->getIdentifier());
+        $this::assertEquals(QtiShape::CIRCLE, $component->getShape());
+        $this::assertEquals('0,0,5', $component->getCoords()->__toString());
+        $this::assertTrue($component->isFixed());
+        $this::assertEquals('mytpl1', $component->getTemplateIdentifier());
+        $this::assertTrue($component->hasTemplateIdentifier());
+        $this::assertEquals(ShowHide::HIDE, $component->getShowHide());
+        $this::assertEquals('my-hotspotchoice', $component->getId());
+        $this::assertEquals('This is a circle.', $component->getHotspotLabel());
+        $this::assertTrue($component->hasHotspotLabel());
     }
 
     /**
@@ -69,11 +69,11 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(HotspotChoice::class, $component);
-        $this->assertEquals('r_50', $component->getIdentifier());
-        $this->assertFalse($component->isFixed());
-        $this->assertEquals(QtiShape::CIRCLE, $component->getShape());
-        $this->assertTrue($component->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, [128, 222, 18])));
+        $this::assertInstanceOf(HotspotChoice::class, $component);
+        $this::assertEquals('r_50', $component->getIdentifier());
+        $this::assertFalse($component->isFixed());
+        $this::assertEquals(QtiShape::CIRCLE, $component->getShape());
+        $this::assertTrue($component->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, [128, 222, 18])));
     }
 
     /**

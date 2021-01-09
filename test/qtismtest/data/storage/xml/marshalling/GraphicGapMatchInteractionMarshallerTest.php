@@ -51,7 +51,7 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals(
+        $this::assertEquals(
             '<graphicGapMatchInteraction id="my-gaps" responseIdentifier="RESPONSE" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><gapImg identifier="gapImg1" matchMax="1"><object data="img1.png" type="image/png"/></gapImg><gapImg identifier="gapImg2" matchMax="1"><object data="img2.png" type="image/png"/></gapImg><gapImg identifier="gapImg3" matchMax="1"><object data="img3.png" type="image/png"/></gapImg><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMax="1"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicGapMatchInteraction>',
             $dom->saveXML($element)
         );
@@ -64,30 +64,30 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(GraphicGapMatchInteraction::class, $component);
-        $this->assertEquals('my-gaps', $component->getId());
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertInstanceOf(GraphicGapMatchInteraction::class, $component);
+        $this::assertEquals('my-gaps', $component->getId());
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
 
-        $this->assertEquals('myimg.png', $component->getObject()->getData());
-        $this->assertEquals('image/png', $component->getObject()->getType());
+        $this::assertEquals('myimg.png', $component->getObject()->getData());
+        $this::assertEquals('image/png', $component->getObject()->getType());
 
-        $this->assertTrue($component->hasPrompt());
+        $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
 
         $choices = $component->getAssociableHotspots();
-        $this->assertEquals(3, count($choices));
+        $this::assertEquals(3, count($choices));
 
-        $this->assertEquals('choice1', $choices[0]->getIdentifier());
-        $this->assertEquals('choice2', $choices[1]->getIdentifier());
-        $this->assertEquals('choice3', $choices[2]->getIdentifier());
+        $this::assertEquals('choice1', $choices[0]->getIdentifier());
+        $this::assertEquals('choice2', $choices[1]->getIdentifier());
+        $this::assertEquals('choice3', $choices[2]->getIdentifier());
 
         $gapImgs = $component->getGapImgs();
-        $this->assertEquals(3, count($gapImgs));
+        $this::assertEquals(3, count($gapImgs));
 
-        $this->assertEquals('gapImg1', $gapImgs[0]->getIdentifier());
-        $this->assertEquals('gapImg2', $gapImgs[1]->getIdentifier());
-        $this->assertEquals('gapImg3', $gapImgs[2]->getIdentifier());
+        $this::assertEquals('gapImg1', $gapImgs[0]->getIdentifier());
+        $this::assertEquals('gapImg2', $gapImgs[1]->getIdentifier());
+        $this::assertEquals('gapImg3', $gapImgs[2]->getIdentifier());
     }
 
     /**

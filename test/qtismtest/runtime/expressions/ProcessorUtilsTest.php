@@ -19,7 +19,7 @@ class ProcessorUtilsTest extends QtiSmTestCase
      */
     public function testSanitizeVariableRefValid($value, $expected)
     {
-        $ref = $this->assertEquals(Utils::sanitizeVariableRef($value), $expected);
+        $ref = $this::assertEquals(Utils::sanitizeVariableRef($value), $expected);
     }
 
     /**

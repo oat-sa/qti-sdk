@@ -22,8 +22,8 @@ class RuleProcessorFactoryTest extends QtiSmTestCase
 
         $factory = new RuleProcessorFactory();
         $processor = $factory->createProcessor($rule);
-        $this->assertInstanceOf(SetOutcomeValueProcessor::class, $processor);
-        $this->assertEquals('setOutcomeValue', $processor->getRule()->getQtiClassName());
+        $this::assertInstanceOf(SetOutcomeValueProcessor::class, $processor);
+        $this::assertEquals('setOutcomeValue', $processor->getRule()->getQtiClassName());
     }
 
     public function testCreateProcessorNoProcessor()

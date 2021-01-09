@@ -34,24 +34,24 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('B'), new QtiString('C')]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C] does not contain [C,B]
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B'), new QtiString('C')]);
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('C'), new QtiString('B')]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         // [A,B,C] does not contain [E,F]
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B'), new QtiString('C')]);
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('E'), new QtiString('F')]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testPrimitiveOrderedLeading()
@@ -64,16 +64,16 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B')]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C] does not contain [B,A]
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B'), new QtiString('C')]);
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('B'), new QtiString('A')]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testPrimitiveOrderedInBetween()
@@ -86,24 +86,24 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('B')]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C,D] does not contain [E]
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B'), new QtiString('C'), new QtiString('D')]);
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('E')]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         // [A,B,C,D] contains [B,C]
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B'), new QtiString('C'), new QtiString('D')]);
         $operands[] = new OrderedContainer(BaseType::STRING, [new QtiString('B'), new QtiString('C')]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
     }
 
     public function testPrimitiveMultipleTrailing()
@@ -116,24 +116,24 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('B'), new QtiString('C')]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C] contains [C,B]
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B'), new QtiString('C')]);
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('C'), new QtiString('B')]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C] does not contain [E,F]
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B'), new QtiString('C')]);
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('E'), new QtiString('F')]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testPrimitiveMultipleLeading()
@@ -146,16 +146,16 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B')]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C] contains [B,A]
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B'), new QtiString('C')]);
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('B'), new QtiString('A')]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
     }
 
     public function testPrimitiveMultipleInBetween()
@@ -168,24 +168,24 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('B')]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C,D] does not contain [E]
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B'), new QtiString('C'), new QtiString('D')]);
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('E')]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         // [A,B,C,D] contains [A,D]
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('A'), new QtiString('B'), new QtiString('C'), new QtiString('D')]);
         $operands[] = new MultipleContainer(BaseType::STRING, [new QtiString('A'), new QtiString('D')]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
     }
 
     public function testComplexOrderedTrailing()
@@ -198,24 +198,24 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(3, 4), new QtiPoint(5, 6)]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C] does not contain [C,B]
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4), new QtiPoint(5, 6)]);
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(5, 6), new QtiPoint(3, 4)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         // [A,B,C] does not contain [E,F]
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4), new QtiPoint(5, 6)]);
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(7, 8), new QtiPoint(9, 10)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testComplexOrderedLeading()
@@ -228,16 +228,16 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4)]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C] does not contain [B,A]
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4), new QtiPoint(5, 6)]);
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(3, 4), new QtiPoint(1, 2)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testComplexOrderedInBetween()
@@ -250,24 +250,24 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C,D] does not contain [E]
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4), new QtiPoint(5, 6), new QtiPoint(7, 8)]);
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(9, 10)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         // [A,B,C,D] contains [B,C]
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4), new QtiPoint(5, 6), new QtiPoint(7, 8)]);
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(3, 4), new QtiPoint(5, 6)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
     }
 
     public function testComplexMultipleTrailing()
@@ -280,24 +280,24 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(3, 4), new QtiPoint(5, 6)]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C] contains [C,B]
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4), new QtiPoint(5, 6)]);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(5, 6), new QtiPoint(3, 4)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C] does not contain [E,F]
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4), new QtiPoint(5, 6)]);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(9, 10), new QtiPoint(11, 12)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testComplexMultipleLeading()
@@ -310,24 +310,24 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4)]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C] contains [B,A]
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4), new QtiPoint(5, 6)]);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(3, 4), new QtiPoint(1, 2)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C] does not contain [B,D]
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4), new QtiPoint(5, 6)]);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(3, 4), new QtiPoint(7, 8)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testComplexMultipleInBetween()
@@ -340,24 +340,24 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // [A,B,C,D] does not contain [E]
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4), new QtiPoint(5, 6), new QtiPoint(7, 8)]);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(9, 10)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         // [A,B,C,D] contains [A,D]
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(3, 4), new QtiPoint(5, 6), new QtiPoint(7, 8)]);
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(7, 8)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
     }
 
     public function testMultipleOccurences()
@@ -371,7 +371,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         );
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertTrue($result->getValue());
+        $this::assertTrue($result->getValue());
     }
 
     public function testNull()
@@ -380,12 +380,12 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new MultipleContainer(BaseType::INTEGER, [new QtiInteger(25)])]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
 
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(25)])]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertSame(null, $result);
     }
 
     public function testNotSameBaseTypeOne()

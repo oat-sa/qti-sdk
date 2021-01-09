@@ -39,7 +39,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<associateInteraction responseIdentifier="RESPONSE" maxAssociations="2" minAssociations="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice><simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice></associateInteraction>',
             $dom->saveXML($element)
         );
@@ -58,20 +58,20 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(AssociateInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertFalse($component->mustShuffle());
-        $this->assertTrue($component->hasPrompt());
-        $this->assertEquals(2, $component->getMaxAssociations());
-        $this->assertEquals(0, $component->getMinAssociations());
-        $this->assertEquals('/home/jerome', $component->getXmlBase());
+        $this::assertInstanceOf(AssociateInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertFalse($component->mustShuffle());
+        $this::assertTrue($component->hasPrompt());
+        $this::assertEquals(2, $component->getMaxAssociations());
+        $this::assertEquals(0, $component->getMinAssociations());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
 
         $prompt = $component->getPrompt();
         $content = $prompt->getContent();
-        $this->assertEquals('Prompt...', $content[0]->getContent());
+        $this::assertEquals('Prompt...', $content[0]->getContent());
 
         $simpleChoices = $component->getSimpleAssociableChoices();
-        $this->assertEquals(2, count($simpleChoices));
+        $this::assertEquals(2, count($simpleChoices));
     }
 
     public function testUnmarshall21NoResponseIdentifier()
@@ -107,7 +107,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<associateInteraction responseIdentifier="RESPONSE" shuffle="false" maxAssociations="1"><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice><simpleAssociableChoice identifier="choice_2" matchMax="2">Choice #2</simpleAssociableChoice></associateInteraction>',
             $dom->saveXML($element)
         );
@@ -131,7 +131,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<associateInteraction responseIdentifier="RESPONSE" shuffle="false" maxAssociations="1"><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice></associateInteraction>', $dom->saveXML($element));
+        $this::assertEquals('<associateInteraction responseIdentifier="RESPONSE" shuffle="false" maxAssociations="1"><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice></associateInteraction>', $dom->saveXML($element));
     }
 
     public function testUnmarshall20()
@@ -146,11 +146,11 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(AssociateInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertTrue($component->mustShuffle());
-        $this->assertEquals(2, $component->getMaxAssociations());
-        $this->assertEquals(0, $component->getMinAssociations());
+        $this::assertInstanceOf(AssociateInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertTrue($component->mustShuffle());
+        $this::assertEquals(2, $component->getMaxAssociations());
+        $this::assertEquals(0, $component->getMinAssociations());
     }
 
     /**
@@ -171,7 +171,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         // Default value of minAssociations must remain unchanged...
-        $this->assertEquals(0, $component->getMinAssociations());
+        $this::assertEquals(0, $component->getMinAssociations());
     }
 
     /**

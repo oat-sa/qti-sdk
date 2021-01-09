@@ -29,11 +29,11 @@ class EqualRoundedMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('equalRounded', $element->nodeName);
-        $this->assertEquals('significantFigures', $element->getAttribute('roundingMode'));
-        $this->assertEquals($figures . '', $element->getAttribute('figures'));
-        $this->assertEquals(2, $element->getElementsByTagName('baseValue')->length);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('equalRounded', $element->nodeName);
+        $this::assertEquals('significantFigures', $element->getAttribute('roundingMode'));
+        $this::assertEquals($figures . '', $element->getAttribute('figures'));
+        $this::assertEquals(2, $element->getElementsByTagName('baseValue')->length);
     }
 
     public function testUnmarshall()
@@ -52,10 +52,10 @@ class EqualRoundedMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(EqualRounded::class, $component);
-        $this->assertIsInt($component->getFigures());
-        $this->assertEquals(3, $component->getFigures());
-        $this->assertEquals(RoundingMode::SIGNIFICANT_FIGURES, $component->getRoundingMode());
-        $this->assertEquals(2, count($component->getExpressions()));
+        $this::assertInstanceOf(EqualRounded::class, $component);
+        $this::assertIsInt($component->getFigures());
+        $this::assertEquals(3, $component->getFigures());
+        $this::assertEquals(RoundingMode::SIGNIFICANT_FIGURES, $component->getRoundingMode());
+        $this::assertEquals(2, count($component->getExpressions()));
     }
 }
