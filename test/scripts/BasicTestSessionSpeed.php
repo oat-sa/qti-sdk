@@ -137,9 +137,9 @@ function persist(AbstractStorage $storage, AssessmentTestSession $session, &$ave
 /**
  * @param AssessmentTestSession $session
  * @param array $average
- * @throws PhpStorageException
  * @throws AssessmentItemSessionException
  * @throws AssessmentTestSessionException
+ * @throws PhpStorageException
  */
 function moveNext(AssessmentTestSession $session, array &$average)
 {
