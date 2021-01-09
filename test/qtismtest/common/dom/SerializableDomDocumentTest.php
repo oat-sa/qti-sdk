@@ -13,7 +13,7 @@ class VersionTest extends QtiSmTestCase
     public function testSerialization()
     {
         $dom = new SerializableDomDocument('1.0', 'UTF-8');
-        $dom->load(self::samplesDir() . 'ims/items/2_2/choice.xml');
+        $dom->load(self::samplesDir() . 'ims/items/2_2_1/choice.xml');
 
         $ser = serialize($dom);
         $dom = unserialize($ser);

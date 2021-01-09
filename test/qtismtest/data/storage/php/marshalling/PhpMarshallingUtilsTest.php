@@ -29,8 +29,8 @@ class PhpMarshallingUtilsTest extends QtiSmTestCase
     public function variableNameDataProvider()
     {
         return [
-            [null, 0, 'nullvalue_0'],
-            [null, 1, 'nullvalue_1'],
+            [null, 0, 'scalarnullvalue_0'],
+            [null, 1, 'scalarnullvalue_1'],
             ['string!', 0, 'string_0'],
             ['string!', 2, 'string_2'],
             [-23, 0, 'integer_0'],

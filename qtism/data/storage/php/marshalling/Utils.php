@@ -75,7 +75,7 @@ class Utils
             return 'array_' . $occurence;
         } elseif ($value === null) {
             // null value?
-            return 'nullvalue_' . $occurence;
+            return 'scalarnullvalue_' . $occurence;
         } else {
             $msg = 'Cannot handle the given value.';
             throw new InvalidArgumentException($msg);

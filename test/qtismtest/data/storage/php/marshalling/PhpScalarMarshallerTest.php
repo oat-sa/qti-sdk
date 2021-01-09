@@ -41,7 +41,7 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
     public function marshallDataProvider()
     {
         return [
-            ["\$nullvalue_0 = null;\n", null],
+            ["\$scalarnullvalue_0 = null;\n", null],
             ["\$integer_0 = 10;\n", 10],
             ["\$double_0 = 10.44;\n", 10.44],
             ["\$string_0 = \"\";\n", ''],
