@@ -42,6 +42,6 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $this::assertIsFloat($component->getMappedValue());
         $this::assertEquals(1.377, $component->getMappedValue());
         $this::assertIsBool($component->isCaseSensitive());
-        $this::assertEquals(true, $component->isCaseSensitive());
+        $this::assertTrue($component->isCaseSensitive());
     }
 }

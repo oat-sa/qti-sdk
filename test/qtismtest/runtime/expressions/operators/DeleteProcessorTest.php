@@ -104,13 +104,13 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(30)]);
         $processor = new DeleteProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands->reset();
         $operands[] = new QtiInteger(10);
         $operands[] = new MultipleContainer(BaseType::INTEGER);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testDifferentBaseType()

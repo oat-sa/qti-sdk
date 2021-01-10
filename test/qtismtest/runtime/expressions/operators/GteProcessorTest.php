@@ -52,7 +52,7 @@ class GteProcessorTest extends QtiSmTestCase
         $operands[] = null;
         $processor = new GteProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseTypeOne()

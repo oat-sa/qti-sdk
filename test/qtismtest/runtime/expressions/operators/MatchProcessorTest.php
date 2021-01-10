@@ -191,7 +191,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiFloat(15.0), null]);
         $processor = new MatchProcessor($expression, $operands);
-        $this::assertSame(null, $processor->process());
+        $this::assertNull($processor->process());
     }
 
     public function testNullContainer()
@@ -201,7 +201,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10), new QtiInteger(20)]);
         $operands[] = new MultipleContainer(BaseType::INTEGER);
         $processor = new MatchProcessor($expression, $operands);
-        $this::assertSame(null, $processor->process());
+        $this::assertNull($processor->process());
     }
 
     /**

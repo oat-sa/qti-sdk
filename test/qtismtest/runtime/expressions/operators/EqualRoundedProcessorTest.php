@@ -28,12 +28,12 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiFloat(3.175), new QtiFloat(3.183)]);
         $processor = new EqualRoundedProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(true, $result->getValue());
+        $this::assertTrue($result->getValue());
 
         $operands = new OperandsCollection([new QtiFloat(3.175), new QtiFloat(3.1749)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this::assertSame(false, $result->getValue());
+        $this::assertFalse($result->getValue());
     }
 
     public function testDecimalPlaces()
@@ -42,12 +42,12 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiFloat(1.68572), new QtiFloat(1.69)]);
         $processor = new EqualRoundedProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(true, $result->getValue());
+        $this::assertTrue($result->getValue());
 
         $operands = new OperandsCollection([new QtiFloat(1.68572), new QtiFloat(1.68432)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this::assertSame(false, $result->getValue());
+        $this::assertFalse($result->getValue());
     }
 
     public function testNull()
@@ -56,7 +56,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiFloat(1.68572), null]);
         $processor = new EqualRoundedProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testVariableRef()
@@ -70,7 +70,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $processor->setState($state);
 
         $result = $processor->process();
-        $this::assertSame(true, $result->getValue());
+        $this::assertTrue($result->getValue());
     }
 
     public function testUnknownVariableRef()
@@ -85,7 +85,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
 
         $this->expectException(ExpressionProcessingException::class);
         $result = $processor->process();
-        $this::assertSame(true, $result->getValue());
+        $this::assertTrue($result->getValue());
     }
 
     public function testWrongBaseType()

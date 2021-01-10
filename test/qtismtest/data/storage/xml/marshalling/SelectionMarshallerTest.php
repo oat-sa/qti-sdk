@@ -64,7 +64,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(Selection::class, $component);
         $this::assertEquals(2, $component->getSelect());
-        $this::assertEquals(true, $component->isWithReplacement());
+        $this::assertTrue($component->isWithReplacement());
     }
 
     public function testUnmarshallValidTwo()
@@ -78,7 +78,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(Selection::class, $component);
         $this::assertEquals(2, $component->getSelect());
-        $this::assertEquals(false, $component->isWithReplacement());
+        $this::assertFalse($component->isWithReplacement());
     }
 
     public function testUnmarshallValidWithExtension()
@@ -101,7 +101,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(Selection::class, $component);
         $this::assertEquals(2, $component->getSelect());
-        $this::assertEquals(false, $component->isWithReplacement());
+        $this::assertFalse($component->isWithReplacement());
 
         $this::assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveItemSelection')->length);
         $this::assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveEngineRef')->length);

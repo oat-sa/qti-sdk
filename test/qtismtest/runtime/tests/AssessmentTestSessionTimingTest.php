@@ -32,9 +32,9 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         // Try to get a duration on a non-begun test session.
-        $this::assertSame(null, $session['P01.duration']);
-        $this::assertSame(null, $session['S01.duration']);
-        $this::assertSame(null, $session['itemsubset.duration']);
+        $this::assertNull($session['P01.duration']);
+        $this::assertNull($session['S01.duration']);
+        $this::assertNull($session['itemsubset.duration']);
 
         // Try the same on a running test session.
         $session->beginTestSession();
@@ -62,7 +62,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->moveNext();
 
         // Try to get a duration that does not exist.
-        $this::assertSame(null, $session['P02.duration']);
+        $this::assertNull($session['P02.duration']);
     }
 
     public function testTestPartTimeLimitsLinear()

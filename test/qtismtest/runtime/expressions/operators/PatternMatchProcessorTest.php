@@ -45,7 +45,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression($pattern);
         $operands = new OperandsCollection([$string]);
         $processor = new PatternMatchProcessor($expression, $operands);
-        $this::assertSame(null, $processor->process());
+        $this::assertNull($processor->process());
     }
 
     public function testNotEnougOperands()

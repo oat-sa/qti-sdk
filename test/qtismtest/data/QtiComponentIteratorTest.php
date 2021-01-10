@@ -34,7 +34,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
             $iterations++;
         }
 
-        $this::assertSame(null, $iterator->parent());
+        $this::assertNull($iterator->parent());
     }
 
     public function testNoChildComponents()

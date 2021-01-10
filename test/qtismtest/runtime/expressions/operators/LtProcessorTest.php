@@ -52,7 +52,7 @@ class LtProcessorTest extends QtiSmTestCase
         $operands[] = null;
         $processor = new LtProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseTypeOne()

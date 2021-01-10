@@ -66,7 +66,7 @@ class OutcomeVariableTest extends QtiSmTestCase
 
         // If I reinit the variable, I should see the NULL value inside.
         $variable->initialize();
-        $this::assertSame(null, $variable->getValue());
+        $this::assertNull($variable->getValue());
 
         // If I apply the default value, 0 should be inside because
         // baseType is integer, cardinality single, and no default value

@@ -40,7 +40,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new QtiInteger(5)]);
         $processor = new IntegerDivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testDivisionByZero()
@@ -49,7 +49,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(50), new QtiInteger(0)]);
         $processor = new IntegerDivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()

@@ -76,7 +76,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
         // Q01 - Correct response.
         $this::assertInstanceOf(QtiFloat::class, $session['Q01.scoring']);
         $this::assertEquals(0.0, $session['Q01.scoring']->getValue());
-        $this::assertSame(null, $session['Q01.RESPONSE']);
+        $this::assertNull($session['Q01.RESPONSE']);
 
         $session->beginAttempt();
         sleep(1);

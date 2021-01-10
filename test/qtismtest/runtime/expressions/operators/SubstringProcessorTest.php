@@ -93,13 +93,13 @@ class SubstringProcessorTest extends QtiSmTestCase
         $operands[] = null;
         $processor = new SubstringProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands->reset();
         $operands[] = new QtiString(''); // in QTI, empty string considered to be NULL.
         $operands[] = new QtiString('blah!');
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseType()

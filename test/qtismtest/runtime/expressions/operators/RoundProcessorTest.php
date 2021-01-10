@@ -92,7 +92,7 @@ class RoundProcessorTest extends QtiSmTestCase
         $operands[] = null;
         $processor = new RoundProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()

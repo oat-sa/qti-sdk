@@ -73,7 +73,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new MultipleContainer(BaseType::FLOAT), new MultipleContainer(BaseType::FLOAT)]);
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testExplodeOne()

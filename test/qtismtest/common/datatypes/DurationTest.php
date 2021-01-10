@@ -91,7 +91,7 @@ class DurationTest extends QtiSmTestCase
      */
     public function testToString(QtiDuration $duration, $expected)
     {
-        $this::assertEquals($duration->__toString(), $expected);
+        $this::assertEquals($expected, $duration->__toString());
     }
 
     public function testAdd()

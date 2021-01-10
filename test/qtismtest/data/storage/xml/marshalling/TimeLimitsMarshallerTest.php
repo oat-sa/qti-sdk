@@ -43,7 +43,7 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase
         $this::assertEquals('PT50S', $component->getMinTime() . '');
         $this::assertTrue($component->hasMaxTime());
         $this::assertEquals('PT1M40S', $component->getMaxTime() . '');
-        $this::assertEquals(false, $component->doesAllowLateSubmission());
+        $this::assertFalse($component->doesAllowLateSubmission());
     }
 
     public function testUnmarshallZero()

@@ -122,12 +122,12 @@ class AssessmentTestSessionTest extends QtiSmTestCase
                 $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
                 $this::assertInstanceOf(QtiFloat::class, $score);
                 $this::assertEquals(0.0, $score->getValue());
-                $this::assertSame(null, $response);
+                $this::assertNull($response);
             } else {
                 $score = $assessmentTestSession["Q01.${i}.SCORE"];
                 $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
-                $this::assertSame(null, $score);
-                $this::assertSame(null, $response);
+                $this::assertNull($score);
+                $this::assertNull($response);
             }
         }
     }
@@ -147,7 +147,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $this::assertEquals(20.0, $assessmentTestSession['SCORE']->getValue());
 
         // the assessment test session has no variable MAXSCORE.
-        $this::assertSame(null, $assessmentTestSession['MAXSCORE']);
+        $this::assertNull($assessmentTestSession['MAXSCORE']);
         try {
             $assessmentTestSession['MAXSCORE'] = new QtiFloat(20.0);
             // An exception must be thrown in this case!
@@ -162,7 +162,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $this::assertEquals(1.0, $assessmentTestSession['Q01.SCORE']->getValue());
 
         // Q01 has no 'MAXSCORE' variable.
-        $this::assertSame(null, $assessmentTestSession['Q01.MAXSCORE']);
+        $this::assertNull($assessmentTestSession['Q01.MAXSCORE']);
         try {
             $assessmentTestSession['Q01.MAXSCORE'] = new QtiFloat(1.0);
             // An exception must be thrown !
@@ -172,7 +172,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         }
 
         // No item Q04.
-        $this::assertSame(null, $assessmentTestSession['Q04.SCORE']);
+        $this::assertNull($assessmentTestSession['Q04.SCORE']);
         try {
             $assessmentTestSession['Q04.SCORE'] = new QtiFloat(1.0);
             // Because no such item, outofbounds.
@@ -1115,7 +1115,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
 
         $weight = $state->getWeight($identifier);
         $this::assertIsBool($weight);
-        $this::assertSame(false, $weight);
+        $this::assertFalse($weight);
     }
 
     /**
@@ -1310,7 +1310,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
 
         // Q10 - Is under no control.
         $control = $route->getRouteItemAt(9)->getItemSessionControl();
-        $this::assertSame(null, $control);
+        $this::assertNull($control);
 
         // Q13 - Must be under control of the ItemSessionControl of the parent TestPart.
         $control = $route->getRouteItemAt(12)->getItemSessionControl();

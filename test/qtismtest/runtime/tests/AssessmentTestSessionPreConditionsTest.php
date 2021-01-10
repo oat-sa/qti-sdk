@@ -60,9 +60,9 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this::assertFalse($testSession->isRunning());
         $this::assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
         $this::assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
-        $this::assertSame(null, $testSession['Q02.SCORE']);
-        $this::assertSame(null, $testSession['Q03.SCORE']);
-        $this::assertSame(null, $testSession['Q04.SCORE']);
+        $this::assertNull($testSession['Q02.SCORE']);
+        $this::assertNull($testSession['Q03.SCORE']);
+        $this::assertNull($testSession['Q04.SCORE']);
     }
 
     public function testSingleSectionNonLinear1()
@@ -120,10 +120,10 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this::assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
 
         // Other items could not be instantiated.
-        $this::assertSame(null, $testSession['Q02.SCORE']);
-        $this::assertSame(null, $testSession['Q03.SCORE']);
-        $this::assertSame(null, $testSession['Q04.SCORE']);
-        $this::assertSame(null, $testSession['Q05.SCORE']);
+        $this::assertNull($testSession['Q02.SCORE']);
+        $this::assertNull($testSession['Q03.SCORE']);
+        $this::assertNull($testSession['Q04.SCORE']);
+        $this::assertNull($testSession['Q05.SCORE']);
     }
 
     public function testKillerTestEpicWin()

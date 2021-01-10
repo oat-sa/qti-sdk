@@ -312,6 +312,6 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine = new ResponseProcessingEngine($responseProcessing, $state);
         $engine->process();
 
-        $this::assertSame(false, $state['NOTRESULT']->getValue());
+        $this::assertFalse($state['NOTRESULT']->getValue());
     }
 }

@@ -28,7 +28,7 @@ class TemplateVariableTest extends QtiSmTestCase
         $this::assertEquals(Cardinality::SINGLE, $var->getCardinality());
         $this::assertEquals(BaseType::IDENTIFIER, $var->getCardinality());
         $this::assertEquals('default', $var->getDefaultValue()->getValue());
-        $this::assertSame(null, $var->getValue());
+        $this::assertNull($var->getValue());
         $this::assertTrue($var->isParamVariable());
         $this::assertFalse($var->isMathVariable());
     }

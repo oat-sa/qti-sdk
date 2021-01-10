@@ -90,7 +90,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
         $this::assertFalse($testSession->isRunning());
 
         $this::assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
-        $this::assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
+        $this::assertNull($testSession['Q02.SCORE']); // Not eligible.
         $this::assertEquals(0.0, $testSession['Q03.SCORE']->getValue());
         $this::assertEquals(1.0, $testSession['Q04.SCORE']->getValue());
     }
@@ -120,9 +120,9 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
         $this::assertFalse($testSession->isRunning());
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
         $this::assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
-        $this::assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
+        $this::assertNull($testSession['Q02.SCORE']); // Not eligible.
         $this::assertEquals(1.0, $testSession['Q03.SCORE']->getValue());
-        $this::assertSame(null, $testSession['Q04.SCORE']); // Not eligible.
+        $this::assertNull($testSession['Q04.SCORE']); // Not eligible.
     }
 
     public function testBranchingSingleSectionNonLinear1()

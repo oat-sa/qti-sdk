@@ -57,7 +57,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $processor = new IntegerToFloatProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testNullTwo()
@@ -68,7 +68,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $processor = new IntegerToFloatProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()

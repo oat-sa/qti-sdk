@@ -84,7 +84,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiString(''), null]);
         $processor = new Implode($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testImplodeOne()

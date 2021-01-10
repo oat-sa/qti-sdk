@@ -57,7 +57,7 @@ class OutcomeProcessingEngineTest extends QtiSmTestCase
         $engine->process();
 
         // SCORE is still NULL because the 't' variable was not provided to the context.
-        $this::assertSame(null, $context['SCORE']);
+        $this::assertNull($context['SCORE']);
         $context->setVariable(new OutcomeVariable('t', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true)));
         $this::assertTrue($context['t']->getValue());
 

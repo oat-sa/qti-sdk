@@ -126,9 +126,9 @@ class VariableProcessorTest extends QtiSmTestCase
         $variableProcessor->setState($session);
 
         // non begun test session.
-        $this::assertSame(null, $variableProcessor->process());
+        $this::assertNull($variableProcessor->process());
         $variableProcessor->setExpression($occurenceVariableExpression);
-        $this::assertSame(null, $variableProcessor->process());
+        $this::assertNull($variableProcessor->process());
 
         // begun test session.
         $variableProcessor->setExpression($variableExpr);
@@ -138,7 +138,7 @@ class VariableProcessorTest extends QtiSmTestCase
         // for an item with multiple occurence, the very last instance submitted becomes
         // the item where the values will be pulled out. No instances were submitted yet
         // and NULL is returned.
-        $this::assertSame(null, $variableProcessor->process());
+        $this::assertNull($variableProcessor->process());
         $variableProcessor->setExpression($occurenceVariableExpression);
 
         // Why not NULL? Because we are in a linear test and Q01 is eligible for selection.
@@ -157,7 +157,7 @@ class VariableProcessorTest extends QtiSmTestCase
         // The value of an item variable taken from an item instantiated multiple times from the same
         // assessmentItemRef (through the use of selection withReplacement) is taken from the last instance
         // submitted if submission is simultaneous, otherwise it is undefined.
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $variableProcessor->setExpression($occurenceVariableExpression);
         $result = $variableProcessor->process();
@@ -171,7 +171,7 @@ class VariableProcessorTest extends QtiSmTestCase
 
         $variableProcessor->setExpression($variableExpr);
         $result = $variableProcessor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         // $occurenceVariableExpression still targets Q01.1
         $variableProcessor->setExpression($occurenceVariableExpression);

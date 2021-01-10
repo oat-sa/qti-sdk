@@ -69,7 +69,7 @@ class LcmProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection($operands);
         $processor = new LcmProcessor($expression, $operands);
-        $this::assertSame(null, $processor->process());
+        $this::assertNull($processor->process());
     }
 
     /**

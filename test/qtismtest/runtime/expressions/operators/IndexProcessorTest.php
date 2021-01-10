@@ -110,7 +110,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4), new QtiInteger(5)]);
         $processor = new IndexProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()
@@ -130,7 +130,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::FLOAT);
         $processor = new IndexProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testNotEnoughOperands()

@@ -39,7 +39,7 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase
         $state = new State([$outcome]);
         $processor->setState($state);
 
-        $this::assertSame(null, $state['outcome1']);
+        $this::assertNull($state['outcome1']);
         $processor->process();
         $this::assertInstanceOf(QtiPair::class, $state['outcome1']);
         $this::assertTrue($state['outcome1']->equals(new QtiPair('C', 'D')));
@@ -75,7 +75,7 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase
         $processor = new LookupOutcomeValueProcessor($rule);
         $processor->setState($state);
 
-        $this::assertSame(null, $state['outcome1']);
+        $this::assertNull($state['outcome1']);
         $processor->process();
         $this::assertInstanceOf(QtiString::class, $state['outcome1']);
         $this::assertEquals('Awesome!', $state['outcome1']->getValue());
