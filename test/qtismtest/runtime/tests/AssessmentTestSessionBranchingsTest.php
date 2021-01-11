@@ -93,7 +93,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $this::assertFalse($testSession->isRunning());
 
         $this::assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
-        $this::assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
+        $this::assertNull($testSession['Q02.SCORE']); // Not eligible.
         $this::assertEquals(0.0, $testSession['Q03.SCORE']->getValue());
         $this::assertEquals(1.0, $testSession['Q04.SCORE']->getValue());
     }
@@ -123,9 +123,9 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $this::assertFalse($testSession->isRunning());
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
         $this::assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
-        $this::assertSame(null, $testSession['Q02.SCORE']); // Not eligible.
+        $this::assertNull($testSession['Q02.SCORE']); // Not eligible.
         $this::assertEquals(1.0, $testSession['Q03.SCORE']->getValue());
-        $this::assertSame(null, $testSession['Q04.SCORE']); // Not eligible.
+        $this::assertNull($testSession['Q04.SCORE']); // Not eligible.
     }
 
     public function testBranchingSingleSectionNonLinear1()
@@ -227,9 +227,9 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
 
         // Only the first item session should be created.
         $this::assertSame(0.0, $session['Q01.SCORE']->getValue());
-        $this::assertSame(null, $session['Q02.SCORE']);
-        $this::assertSame(null, $session['Q03.SCORE']);
-        $this::assertSame(null, $session['Q04.SCORE']);
+        $this::assertNull($session['Q02.SCORE']);
+        $this::assertNull($session['Q03.SCORE']);
+        $this::assertNull($session['Q04.SCORE']);
 
         // Q01 - Incorrect
         $session->beginAttempt();
@@ -245,8 +245,8 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
 
         // Only item sessions related to Q01 and Q04 should be instantiated.
         $this::assertSame(0.0, $session['Q01.SCORE']->getValue());
-        $this::assertSame(null, $session['Q02.SCORE']);
-        $this::assertSame(null, $session['Q03.SCORE']);
+        $this::assertNull($session['Q02.SCORE']);
+        $this::assertNull($session['Q03.SCORE']);
         $this::assertSame(1.0, $session['Q04.SCORE']->getValue());
     }
 }

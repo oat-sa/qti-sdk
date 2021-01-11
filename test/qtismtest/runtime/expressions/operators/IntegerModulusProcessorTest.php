@@ -47,7 +47,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new QtiInteger(5)]);
         $processor = new IntegerModulusProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testModulusByZero()
@@ -56,7 +56,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(50), new QtiInteger(0)]);
         $processor = new IntegerModulusProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()

@@ -91,7 +91,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         // S01 -> Q01 - Correct response.
         $this::assertInstanceOf(QtiFloat::class, $session['Q01.scoring']);
         $this::assertEquals(0.0, $session['Q01.scoring']->getValue());
-        $this::assertSame(null, $session['Q01.RESPONSE']);
+        $this::assertNull($session['Q01.RESPONSE']);
 
         // The candidate begins the attempt on Q01 at 13:00:00.
         $session->setTime(new DateTime('2014-07-14T13:00:00+00:00', new DateTimeZone('UTC')));
@@ -427,7 +427,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
         $this::assertEquals(1, count($session->getPendingResponseStore()->getAllPendingResponses()));
-        $this::assertEquals(null, $session['Q01.RESPONSE']);
+        $this::assertNull($session['Q01.RESPONSE']);
         $this::assertEquals(0.0, $session['Q01.scoring']->getValue());
 
         // Q02 - Correct
@@ -437,7 +437,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
-        $this::assertSame(null, $session['Q02.RESPONSE']);
+        $this::assertNull($session['Q02.RESPONSE']);
         $this::assertEquals(0.0, $session['Q02.SCORE']->getValue());
         $this::assertEquals(2, count($session->getPendingResponseStore()->getAllPendingResponses()));
 
@@ -485,7 +485,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
         $this::assertEquals(7, count($session->getPendingResponseStore()->getAllPendingResponses()));
-        $this::assertSame(null, $session['Q07.1.RESPONSE']);
+        $this::assertNull($session['Q07.1.RESPONSE']);
         $this::assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
 
         // Q07.2 - Incorrect but in the circle
@@ -496,13 +496,13 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
         $this::assertEquals(8, count($session->getPendingResponseStore()->getAllPendingResponses()));
-        $this::assertSame(null, $session['Q07.2.RESPONSE']);
+        $this::assertNull($session['Q07.2.RESPONSE']);
         $this::assertEquals(0.0, $session['Q07.2.SCORE']->getValue());
 
         // Q07.3 - Incorrect and out of the circle
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(30, 13))]));
-        $this::assertSame(null, $session['Q07.3.RESPONSE']);
+        $this::assertNull($session['Q07.3.RESPONSE']);
         $session->moveNext();
 
         $storage->persist($session);
@@ -954,7 +954,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session->beginAttempt();
         // TPL1's responses should be applied their default values if any at the
         // beginning of the first attempt.
-        $this::assertEquals(null, $session['QTPL1.RESPONSE']);
+        $this::assertNull($session['QTPL1.RESPONSE']);
         $this::assertEquals(1.0, $session['QTPL1.GOODSCORE']->getValue());
 
         // Noisy persistence ...
@@ -963,7 +963,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->retrieve($sessionId);
 
         // TPL1's response should still be at their default.
-        $this::assertEquals(null, $session['QTPL1.RESPONSE']);
+        $this::assertNull($session['QTPL1.RESPONSE']);
 
         // -- TPL1 - Correct response.
         $candidateResponses = new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]);
@@ -991,7 +991,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
 
         // TPL2's responses should be at their default values if any at
         // the beginning of the first attempt.
-        $this::assertEquals(null, $session['QTPL2.RESPONSE']);
+        $this::assertNull($session['QTPL2.RESPONSE']);
 
         // Noisy persistence ...
         $storage->persist($session);
@@ -999,7 +999,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->retrieve($sessionId);
 
         // TPL2's response should still be at their default.
-        $this::assertEquals(null, $session['QTPL2.RESPONSE']);
+        $this::assertNull($session['QTPL2.RESPONSE']);
 
         // -- TPL2 - Incorrect response.
         $candidateResponses = new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC'))]);

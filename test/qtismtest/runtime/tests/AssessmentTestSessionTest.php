@@ -117,7 +117,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
             $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
             $this::assertInstanceOf(QtiFloat::class, $score);
             $this::assertEquals(0.0, $score->getValue());
-            $this::assertSame(null, $response);
+            $this::assertNull($response);
         }
     }
 
@@ -132,7 +132,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertEquals(20.0, $assessmentTestSession['SCORE']->getValue());
 
         // the assessment test session has no variable MAXSCORE.
-        $this::assertSame(null, $assessmentTestSession['MAXSCORE']);
+        $this::assertNull($assessmentTestSession['MAXSCORE']);
         try {
             $assessmentTestSession['MAXSCORE'] = new QtiFloat(20.0);
             // An exception must be thrown in this case!
@@ -147,7 +147,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertEquals(1.0, $assessmentTestSession['Q01.SCORE']->getValue());
 
         // Q01 has no 'MAXSCORE' variable.
-        $this::assertSame(null, $assessmentTestSession['Q01.MAXSCORE']);
+        $this::assertNull($assessmentTestSession['Q01.MAXSCORE']);
         try {
             $assessmentTestSession['Q01.MAXSCORE'] = new QtiFloat(1.0);
             // An exception must be thrown !
@@ -157,7 +157,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         }
 
         // No item Q04.
-        $this::assertSame(null, $assessmentTestSession['Q04.SCORE']);
+        $this::assertNull($assessmentTestSession['Q04.SCORE']);
         try {
             $assessmentTestSession['Q04.SCORE'] = new QtiFloat(1.0);
             // Because no such item, outofbounds.
@@ -276,7 +276,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         // !!! The Response must not be stored in the session. Indeed, it is not considered as "submitted" yet.
         // !!! No score must be computed, as the submission will occur at the end of the test part.
         // This is the same for the next items.
-        $this::assertSame(null, $session['Q01.RESPONSE']);
+        $this::assertNull($session['Q01.RESPONSE']);
         $this::assertEquals(0.0, $session['Q01.scoring']->getValue());
 
         // We must have an entry in pending responses. In addition, we should be able to
@@ -295,7 +295,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, [new QtiPair('A', 'P'), new QtiPair('C', 'M')]))]));
         $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-        $this::assertSame(null, $session['Q02.RESPONSE']);
+        $this::assertNull($session['Q02.RESPONSE']);
         $this::assertEquals(0.0, $session['Q02.SCORE']->getValue());
         $this::assertEquals(2, count($session->getPendingResponses()));
         $session->moveNext();
@@ -332,7 +332,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(102, 113))]));
         $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-        $this::assertSame(null, $session['Q07.1.RESPONSE']);
+        $this::assertNull($session['Q07.1.RESPONSE']);
         $this::assertInstanceOf(QtiFloat::class, $session['Q07.1.SCORE']);
         $this::assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
         $this::assertEquals(7, count($session->getPendingResponses()));
@@ -342,7 +342,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(103, 113))]));
         $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-        $this::assertSame(null, $session['Q07.2.RESPONSE']);
+        $this::assertNull($session['Q07.2.RESPONSE']);
         $this::assertEquals(0.0, $session['Q07.2.SCORE']->getValue());
         $this::assertEquals(8, count($session->getPendingResponses()));
         $session->moveNext();
@@ -351,7 +351,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::POINT, new QtiPoint(50, 60))]));
         $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
-        $this::assertSame(null, $session['Q07.3.RESPONSE']);
+        $this::assertNull($session['Q07.3.RESPONSE']);
         $this::assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
 
         // This triggers response processing for the test part in simultaneous mode.
@@ -994,7 +994,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 
         $weight = $state->getWeight($identifier);
         $this::assertIsBool($weight);
-        $this::assertSame(false, $weight);
+        $this::assertFalse($weight);
     }
 
     /**
@@ -1179,7 +1179,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 
         // Q10 - Is under no control.
         $control = $route->getRouteItemAt(9)->getItemSessionControl();
-        $this::assertSame(null, $control);
+        $this::assertNull($control);
 
         // Q13 - Must be under control of the ItemSessionControl of the parent TestPart.
         $control = $route->getRouteItemAt(12)->getItemSessionControl();

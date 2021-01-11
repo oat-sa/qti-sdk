@@ -28,8 +28,8 @@ class ExpressionTest extends QtiSmTestCase
         $itemq3 = $doc->getDocumentComponent()->getComponentByIdentifier('Q03');
         $itemq1 = $doc->getDocumentComponent()->getComponentByIdentifier('Q01');
 
-        $this::assertEquals(true, $itemq3->getBranchRules()[0]->getExpression()->isPure());
-        $this::assertEquals(false, $itemq1->getBranchRules()[0]->getExpression()->isPure());
+        $this::assertTrue($itemq3->getBranchRules()[0]->getExpression()->isPure());
+        $this::assertFalse($itemq1->getBranchRules()[0]->getExpression()->isPure());
 
         $doc->load(self::samplesDir() . 'custom/tests/branchingexpressions.xml');
         $test = $doc->getDocumentComponent();

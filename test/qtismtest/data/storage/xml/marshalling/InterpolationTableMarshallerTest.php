@@ -70,13 +70,13 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
 
         $entry = $entries[0];
         $this::assertEquals(1.5, $entry->getSourceValue());
-        $this::assertEquals(true, $entry->getTargetValue());
-        $this::assertEquals(false, $entry->doesIncludeBoundary());
+        $this::assertTrue($entry->getTargetValue());
+        $this::assertFalse($entry->doesIncludeBoundary());
 
         $entry = $entries[1];
         $this::assertEquals(2.5, $entry->getSourceValue());
-        $this::assertEquals(false, $entry->getTargetValue());
-        $this::assertEquals(true, $entry->doesIncludeBoundary());
+        $this::assertFalse($entry->getTargetValue());
+        $this::assertTrue($entry->doesIncludeBoundary());
     }
 
     public function testUnmarshallNonFloatDefaultValue()

@@ -41,12 +41,12 @@ class SubtractProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), null]);
         $processor = new SubtractProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::FLOAT);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseType()

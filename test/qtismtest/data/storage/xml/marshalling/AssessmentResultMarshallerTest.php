@@ -65,9 +65,9 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         $this::assertFalse($context->hasSessionIdentifiers());
 
         $this::assertFalse($assessmentResult->hasTestResult());
-        $this::assertEquals(null, $assessmentResult->getTestResult());
+        $this::assertNull($assessmentResult->getTestResult());
         $this::assertFalse($assessmentResult->hasItemResults());
-        $this::assertEquals(null, $assessmentResult->getItemResults());
+        $this::assertNull($assessmentResult->getItemResults());
     }
 
     public function testUnmarshall()

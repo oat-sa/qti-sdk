@@ -25,7 +25,7 @@ class PhpArgumentTest extends QtiSmTestCase
         // Test a null value (considered to be scalar in this context).
         $arg = new PhpArgument(null);
         $this::assertInstanceOf(PhpArgument::class, $arg);
-        $this::assertSame(null, $arg->getValue());
+        $this::assertNull($arg->getValue());
         $this::assertFalse($arg->isVariableReference());
         $this::assertTrue($arg->isScalar());
 

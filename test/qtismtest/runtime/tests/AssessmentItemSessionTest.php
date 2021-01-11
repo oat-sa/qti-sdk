@@ -80,7 +80,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
         // Response variables instantiated and set to NULL?
         $this::assertInstanceOf(ResponseVariable::class, $itemSession->getVariable('RESPONSE'));
-        $this::assertSame(null, $itemSession['RESPONSE']);
+        $this::assertNull($itemSession['RESPONSE']);
 
         // Outcome variables instantiated and set to their default if any?
         $this::assertInstanceOf(OutcomeVariable::class, $itemSession->getVariable('SCORE'));
@@ -123,7 +123,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals(0, $itemSession->getRemainingAttempts());
         // when the first attempt occurs, the response variable must get their default value.
         // in our case, no default value. The RESPONSE variable must remain NULL.
-        $this::assertSame(null, $itemSession['RESPONSE']);
+        $this::assertNull($itemSession['RESPONSE']);
         $this::assertEquals(1, $itemSession['numAttempts']->getValue());
 
         // Now, we end the attempt by providing a set of responses for the attempt. Response
@@ -317,7 +317,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
         $this::assertEquals(0.0, $itemSession['SCORE']->getValue());
-        $this::assertEquals(null, $itemSession['RESPONSE']);
+        $this::assertNull($itemSession['RESPONSE']);
     }
 
     public function testValidResponsesInForceValid()

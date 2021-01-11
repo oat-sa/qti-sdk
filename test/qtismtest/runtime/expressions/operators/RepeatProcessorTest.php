@@ -120,7 +120,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new OrderedContainer(BaseType::INTEGER)]);
         $processor = new RepeatProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         // Any sub-expressions evaluating to NULL are ignored.
         $operands = new OperandsCollection([null, new QtiString('String1'), new OrderedContainer(BaseType::STRING, [new QtiString('String2'), null]), new QtiString('String3')]);

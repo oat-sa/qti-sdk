@@ -70,7 +70,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(2), new QtiInteger(100000000)]);
         $processor = new PowerProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testUnderflow()
@@ -79,7 +79,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(-2), new QtiInteger(333333333)]);
         $processor = new PowerProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testInfinite()
@@ -98,19 +98,19 @@ class PowerProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(-20), new QtiFloat(3.4)]);
         $processor = new PowerProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands->reset();
         $operands[] = new QtiInteger(1);
         $operands[] = null;
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::FLOAT);
         $operands[] = new QtiInteger(2);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseType()

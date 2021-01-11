@@ -26,7 +26,7 @@ class RuleEngineTest extends QtiSmTestCase
         $context = new State([$outcome1]);
         $engine = new RuleEngine($rule, $context);
 
-        $this::assertSame(null, $context['outcome1']);
+        $this::assertNull($context['outcome1']);
 
         $engine->process();
         $this::assertEquals(1337, $context['outcome1']->getValue());
@@ -53,7 +53,7 @@ class RuleEngineTest extends QtiSmTestCase
         $context = new State([$outcomeVariable]);
         $engine = new RuleEngine($rule, $context);
 
-        $this::assertSame(null, $context['outcome1']);
+        $this::assertNull($context['outcome1']);
 
         $engine->process();
         $this::assertEquals('String2!', $context['outcome1']->getValue());

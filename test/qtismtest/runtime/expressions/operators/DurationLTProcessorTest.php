@@ -43,7 +43,7 @@ class DurationLTProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiDuration('P1D'), null]);
         $processor = new DurationLTProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseType()

@@ -1053,7 +1053,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this::assertFalse($session->isAttempting());
         $this::assertEquals(0.0, $session['SCORE']->getValue());
         $this::assertTrue($session['RESPONSE']->equals(new MultipleContainer(BaseType::PAIR)));
-        $this::assertSame(null, $session->getTimeReference());
+        $this::assertNull($session->getTimeReference());
         $this::assertFalse($session->hasTimeReference());
     }
 
@@ -1082,9 +1082,9 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this::assertEquals('not_attempted', $session['completionStatus']->getValue());
         $this::assertFalse($session->isAttempting());
         $this::assertEquals(0.0, $session['SCORE']->getValue());
-        $this::assertSame(null, $session['RESPONSE']);
+        $this::assertNull($session['RESPONSE']);
         $this::assertEquals(10, $session['TPL']->getValue());
-        $this::assertSame(null, $session->getTimeReference());
+        $this::assertNull($session->getTimeReference());
         $this::assertFalse($session->hasTimeReference());
     }
 
@@ -1114,7 +1114,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this::assertFalse($session->isAttempting());
         $this::assertEquals(0.0, $session['SCORE']->getValue());
         $this::assertTrue($session['RESPONSE']->equals(new MultipleContainer(BaseType::PAIR)));
-        $this::assertSame(null, $session->getTimeReference());
+        $this::assertNull($session->getTimeReference());
         $this::assertFalse($session->hasTimeReference());
     }
 

@@ -89,7 +89,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::POINT);
         $processor = new RandomProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinalityOne()

@@ -59,7 +59,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 
         // For Q02, we should not get any result because we by-passed it with the branchRule.
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
-        $this::assertEquals(false, $itemSessions);
+        $this::assertFalse($itemSessions);
         $this::assertFalse($testSession->isRunning());
     }
 
@@ -110,10 +110,10 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // For Q02 and Q03, we should not get any result because we both by-passed them with the initial branchRule
         // and the ending preCondition.
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
-        $this::assertEquals(false, $itemSessions);
+        $this::assertFalse($itemSessions);
 
         $itemSessions = $testSession->getAssessmentItemSessions('Q03');
-        $this::assertEquals(false, $itemSessions);
+        $this::assertFalse($itemSessions);
         $this::assertFalse($testSession->isRunning());
     }
 
@@ -162,7 +162,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 
         // For Q02, we should not get any result because we by-passed it with the branchRule.
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
-        $this::assertEquals(false, $itemSessions);
+        $this::assertFalse($itemSessions);
         $this::assertFalse($testSession->isRunning());
     }
 
@@ -192,10 +192,10 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // For Q02 & Q03, we should not get any result because we both by-passed them with the initial branchRule
         // and the ending preCondition.
         $itemSessions = $testSession->getAssessmentItemSessions('Q02');
-        $this::assertEquals(false, $itemSessions);
+        $this::assertFalse($itemSessions);
 
         $itemSessions = $testSession->getAssessmentItemSessions('Q03');
-        $this::assertEquals(false, $itemSessions);
+        $this::assertFalse($itemSessions);
         $this::assertFalse($testSession->isRunning());
     }
 

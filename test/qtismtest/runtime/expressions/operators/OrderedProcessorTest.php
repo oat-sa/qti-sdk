@@ -30,12 +30,12 @@ class OrderedProcessorTest extends QtiSmTestCase
 
         $operands[] = null;
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands = new OperandsCollection([new OrderedContainer(BaseType::FLOAT)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands = new OperandsCollection([null, new QtiInteger(25), new OrderedContainer(BaseType::INTEGER)]);
         $processor->setOperands($operands);
@@ -66,7 +66,7 @@ class OrderedProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testScalar()

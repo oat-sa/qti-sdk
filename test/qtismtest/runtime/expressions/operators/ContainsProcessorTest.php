@@ -380,12 +380,12 @@ class ContainsProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new MultipleContainer(BaseType::INTEGER, [new QtiInteger(25)])]);
         $processor = new ContainsProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(25)])]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testNotSameBaseTypeOne()

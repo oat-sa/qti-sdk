@@ -43,7 +43,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $this::assertIsFloat($component->getMappedValue());
         $this::assertEquals(1.377, $component->getMappedValue());
         $this::assertIsBool($component->isCaseSensitive());
-        $this::assertEquals(true, $component->isCaseSensitive());
+        $this::assertTrue($component->isCaseSensitive());
     }
 
     public function testUnmarshall21EmptyMapKeyForString()
@@ -122,6 +122,6 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         // Because default behaviour of the PHP model is true for caseSensitive,
         // make sure its not false.
         $this::assertIsBool($component->isCaseSensitive());
-        $this::assertEquals(true, $component->isCaseSensitive());
+        $this::assertTrue($component->isCaseSensitive());
     }
 }

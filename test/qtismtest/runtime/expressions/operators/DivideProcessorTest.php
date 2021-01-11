@@ -60,7 +60,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(1), new QtiInteger(0)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testDivisionByInfinite()
@@ -85,7 +85,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiFloat(INF), new QtiFloat(INF)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseTypeOne()

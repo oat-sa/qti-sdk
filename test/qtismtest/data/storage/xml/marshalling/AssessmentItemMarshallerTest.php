@@ -66,8 +66,8 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(AssessmentItem::class, $component);
         $this::assertEquals('Q01', $component->getIdentifier());
         $this::assertEquals('Test Item', $component->getTitle());
-        $this::assertEquals(false, $component->isTimeDependent());
-        $this::assertEquals(false, $component->isAdaptive());
+        $this::assertFalse($component->isTimeDependent());
+        $this::assertFalse($component->isAdaptive());
         $this::assertFalse($component->hasLang());
         $this::assertTrue($component->hasLabel());
         $this::assertEquals('My Label', $component->getLabel());
@@ -144,8 +144,8 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(AssessmentItem::class, $component);
         $this::assertEquals('Q01', $component->getIdentifier());
         $this::assertEquals('test item', $component->getTitle());
-        $this::assertEquals(false, $component->isTimeDependent());
-        $this::assertEquals(false, $component->isAdaptive());
+        $this::assertFalse($component->isTimeDependent());
+        $this::assertFalse($component->isAdaptive());
         $this::assertTrue($component->hasLang());
         $this::assertEquals('en-YO', $component->getLang());
 

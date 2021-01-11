@@ -32,7 +32,7 @@ class MinProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::FLOAT, [new QtiFloat(10.0)]);
         $processor = new MinProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()
@@ -44,7 +44,7 @@ class MinProcessorTest extends QtiSmTestCase
         $operands[] = $rec;
         $processor = new MinProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $rec['A'] = new QtiInteger(1);
         $this->expectException(ExpressionProcessingException::class);
@@ -60,12 +60,12 @@ class MinProcessorTest extends QtiSmTestCase
         $operands[] = new QtiFloat(-0.5);
         $processor = new MinProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands = new OperandsCollection([null]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testAllIntegers()

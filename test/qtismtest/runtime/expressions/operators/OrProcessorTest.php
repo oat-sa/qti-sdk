@@ -66,12 +66,12 @@ class OrProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiBoolean(false), null]);
         $processor = new OrProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands = new OperandsCollection([new QtiBoolean(false), null, new QtiBoolean(false)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
 
         // On the other hand...
         $operands = new OperandsCollection([new QtiBoolean(false), null, new QtiBoolean(true)]);
@@ -87,13 +87,13 @@ class OrProcessorTest extends QtiSmTestCase
         $processor = new OrProcessor($expression, $operands);
         $result = $processor->process();
         $this::assertInstanceOf(QtiBoolean::class, $result);
-        $this::assertSame(true, $result->getValue());
+        $this::assertTrue($result->getValue());
 
         $operands = new OperandsCollection([new QtiBoolean(false), new QtiBoolean(true), new QtiBoolean(false)]);
         $processor->setOperands($operands);
         $result = $processor->process();
         $this::assertInstanceOf(QtiBoolean::class, $result);
-        $this::assertSame(true, $result->getValue());
+        $this::assertTrue($result->getValue());
     }
 
     public function testFalse()
@@ -103,13 +103,13 @@ class OrProcessorTest extends QtiSmTestCase
         $processor = new OrProcessor($expression, $operands);
         $result = $processor->process();
         $this::assertInstanceOf(QtiBoolean::class, $result);
-        $this::assertSame(false, $result->getValue());
+        $this::assertFalse($result->getValue());
 
         $operands = new OperandsCollection([new QtiBoolean(false), new QtiBoolean(false), new QtiBoolean(false)]);
         $processor->setOperands($operands);
         $result = $processor->process();
         $this::assertInstanceOf(QtiBoolean::class, $result);
-        $this::assertSame(false, $result->getValue());
+        $this::assertFalse($result->getValue());
     }
 
     /**

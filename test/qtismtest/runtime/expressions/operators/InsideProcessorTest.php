@@ -96,7 +96,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$point]);
         $processor = new InsideProcessor($expression, $operands);
         $result = $processor->process();
-        $this::assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseTypeOne()

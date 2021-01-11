@@ -54,7 +54,7 @@ class SetDefaultValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this::assertSame(null, $state->getVariable('SCORE')->getDefaultValue());
+        $this::assertNull($state->getVariable('SCORE')->getDefaultValue());
     }
 
     public function testSetDefaultValueNoVariable()
