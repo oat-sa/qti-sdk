@@ -66,12 +66,12 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
 
-        $this::assertTrue(file_exists($file));
+        $this::assertFileExists($file);
         $this->testLoad($file, $expectedVersion);
 
         unlink($file);
         // Nobody else touched it?
-        $this::assertFalse(file_exists($file));
+        $this::assertFileNotExists($file);
     }
 
     /**
@@ -98,7 +98,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
         unlink($file);
         // Nobody else touched it?
-        $this::assertFalse(file_exists($file));
+        $this::assertFileNotExists($file);
     }
 
     public function testLoad21()
@@ -144,7 +144,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
         // Look for all template declarations.
         $templateDeclarations = $item->getTemplateDeclarations();
-        $this::assertEquals(4, count($templateDeclarations));
+        $this::assertCount(4, $templateDeclarations);
 
         $this::assertEquals('PEOPLE', $templateDeclarations['PEOPLE']->getIdentifier());
         $this::assertEquals(Cardinality::SINGLE, $templateDeclarations['PEOPLE']->getCardinality());
@@ -183,7 +183,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->testLoadTemplate($file);
 
         unlink($file);
-        $this::assertFalse(file_exists($file));
+        $this::assertFileNotExists($file);
     }
 
     /**
@@ -204,14 +204,14 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
         // responseDeclaration
         $responseDeclarations = $item->getComponentsByClassName('responseDeclaration');
-        $this::assertEquals(1, count($responseDeclarations));
+        $this::assertCount(1, $responseDeclarations);
         $this::assertEquals(BaseType::POINT, $responseDeclarations[0]->getBaseType());
         $this::assertEquals(Cardinality::SINGLE, $responseDeclarations[0]->getCardinality());
         $this::assertEquals('RESPONSE', $responseDeclarations[0]->getIdentifier());
 
         // templateDeclarations
         $templateDeclarations = $item->getComponentsByClassName('templateDeclaration');
-        $this::assertEquals(2, count($templateDeclarations));
+        $this::assertCount(2, $templateDeclarations);
         $this::assertEquals(BaseType::INTEGER, $templateDeclarations[0]->getBaseType());
         $this::assertEquals(Cardinality::SINGLE, $templateDeclarations[0]->getCardinality());
         $this::assertEquals('X', $templateDeclarations[0]->getIdentifier());
@@ -221,7 +221,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
         // customInteraction
         $customInteractions = $item->getComponentsByClassName('customInteraction');
-        $this::assertEquals(1, count($customInteractions));
+        $this::assertCount(1, $customInteractions);
 
         $customInteraction = $customInteractions[0];
         $this::assertEquals('RESPONSE', $customInteraction->getResponseIdentifier());

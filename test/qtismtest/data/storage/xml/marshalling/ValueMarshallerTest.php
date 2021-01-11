@@ -44,7 +44,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $element = $marshaller->marshall($component);
 
         $this::assertInstanceOf(DOMElement::class, $element);
-        $this::assertTrue($element->nodeValue === 'false');
+        $this::assertSame('false', $element->nodeValue);
     }
 
     public function testMarshallNoBaseType()

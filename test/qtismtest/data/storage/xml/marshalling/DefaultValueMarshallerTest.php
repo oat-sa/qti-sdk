@@ -56,7 +56,7 @@ class DefaultValueMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(DefaultValue::class, $component);
         $this::assertEquals('My Interpretation', $component->getInterpretation());
-        $this::assertEquals(1, count($component->getValues()));
+        $this::assertCount(1, $component->getValues());
 
         $values = $component->getValues();
         $this::assertInstanceOf(Value::class, $values[0]);
@@ -82,7 +82,7 @@ class DefaultValueMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(DefaultValue::class, $component);
         $this::assertEquals('', $component->getInterpretation());
-        $this::assertEquals(2, count($component->getValues()));
+        $this::assertCount(2, $component->getValues());
 
         foreach ($component->getValues() as $value) {
             $this::assertInstanceOf(Value::class, $value);
@@ -113,7 +113,7 @@ class DefaultValueMarshallerTest extends QtiSmTestCase
         $valuesCollection = $component->getValues();
         $this::assertInstanceOf(DefaultValue::class, $component);
         $this::assertEquals('', $component->getInterpretation());
-        $this::assertEquals(4, count($component->getValues()));
+        $this::assertCount(4, $component->getValues());
 
         $this::assertInstanceOf(Value::class, $valuesCollection[0]);
         $this::assertEquals('choiceA', $valuesCollection[0]->getValue());

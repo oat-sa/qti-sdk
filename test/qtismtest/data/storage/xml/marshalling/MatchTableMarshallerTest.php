@@ -56,7 +56,7 @@ class MatchTableMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(MatchTable::class, $component);
         $matchTableEntries = $component->getMatchTableEntries();
-        $this::assertEquals(2, count($matchTableEntries));
+        $this::assertCount(2, $matchTableEntries);
         $entry = $matchTableEntries[0];
         $this::assertInstanceOf(MatchTableEntry::class, $entry);
         $this::assertEquals(1, $entry->getSourceValue());

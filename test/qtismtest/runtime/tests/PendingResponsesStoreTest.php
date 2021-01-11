@@ -32,13 +32,13 @@ class PendingResponseStoreTest extends QtiSmTestCase
         $store->addPendingResponses(new PendingResponses($state1, $itemRef1));
         $store->addPendingResponses(new PendingResponses($state2, $itemRef1, 1));
 
-        $this::assertEquals(2, count($store->getAllPendingResponses()));
+        $this::assertCount(2, $store->getAllPendingResponses());
 
         $this::assertTrue($store->hasPendingResponses($itemRef1));
         $this::assertFalse($store->hasPendingResponses($itemRef3));
         $this::assertFalse($store->hasPendingResponses($itemRef1, 4));
 
-        $this::assertTrue($itemRef1 === $store->getPendingResponses($itemRef1)->getAssessmentItemRef());
-        $this::assertTrue($state2 === $store->getPendingResponses($itemRef1, 1)->getState());
+        $this::assertSame($itemRef1, $store->getPendingResponses($itemRef1)->getAssessmentItemRef());
+        $this::assertSame($state2, $store->getPendingResponses($itemRef1, 1)->getState());
     }
 }

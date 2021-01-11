@@ -209,7 +209,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 
         $session->beginAttempt();
         $timeConstraints = $session->getTimeConstraints();
-        $this::assertEquals(4, count($timeConstraints));
+        $this::assertCount(4, $timeConstraints);
 
         // AssessmentTest level
         $this::assertFalse($timeConstraints[0]->getMaximumRemainingTime());
@@ -242,7 +242,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         sleep(2);
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
         $timeConstraints = $session->getTimeConstraints(AssessmentTestPlace::ASSESSMENT_ITEM);
-        $this::assertEquals(1, count($timeConstraints));
+        $this::assertCount(1, $timeConstraints);
         $this::assertEquals('PT0S', $timeConstraints[0]->getMinimumRemainingTime()->round()->__toString());
         $this::assertEquals('PT1S', $timeConstraints[0]->getMaximumRemainingTime()->round()->__toString());
         $this::assertTrue($timeConstraints[0]->minTimeInForce());

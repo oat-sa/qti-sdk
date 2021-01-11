@@ -46,8 +46,8 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(ExtendedAssessmentItemRef::class, $component);
         $this::assertFalse($component->isTimeDependent());
         $this::assertFalse($component->isAdaptive());
-        $this::assertEquals(0, count($component->getOutcomeDeclarations()));
-        $this::assertEquals(0, count($component->getResponseDeclarations()));
+        $this::assertCount(0, $component->getOutcomeDeclarations());
+        $this::assertCount(0, $component->getResponseDeclarations());
         $this::assertEquals('Q01', $component->getIdentifier());
         $this::assertEquals('./q01.xml', $component->getHref());
     }

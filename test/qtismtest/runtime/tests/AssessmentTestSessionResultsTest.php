@@ -118,6 +118,6 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
 
         // Test Results (submitted once).
         $this::assertSame(round(0.66666, 3), round($submittedTestResults['TEST_SCORE'][0]->getValue(), 3));
-        $this::assertEquals(1, count($submittedTestResults['TEST_SCORE']));
+        $this::assertCount(1, $submittedTestResults['TEST_SCORE']);
     }
 }

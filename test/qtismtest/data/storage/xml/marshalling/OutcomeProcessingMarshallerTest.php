@@ -29,12 +29,12 @@ class OutcomeProcessingMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this::assertTrue($element->getElementsByTagName('lookupOutcomeValue')->item(0)->parentNode === $element);
-        $this::assertTrue($element->getElementsByTagName('baseValue')->item(0)->parentNode === $element->getElementsByTagName('lookupOutcomeValue')->item(0));
+        $this::assertSame($element, $element->getElementsByTagName('lookupOutcomeValue')->item(0)->parentNode);
+        $this::assertSame($element->getElementsByTagName('baseValue')->item(0)->parentNode, $element->getElementsByTagName('lookupOutcomeValue')->item(0));
         $this::assertEquals('24.3', $element->getElementsByTagName('baseValue')->item(0)->nodeValue);
 
-        $this::assertTrue($element->getElementsByTagName('setOutcomeValue')->item(0)->parentNode === $element);
-        $this::assertTrue($element->getElementsByTagName('baseValue')->item(1)->parentNode === $element->getElementsByTagName('setOutcomeValue')->item(0));
+        $this::assertSame($element, $element->getElementsByTagName('setOutcomeValue')->item(0)->parentNode);
+        $this::assertSame($element->getElementsByTagName('baseValue')->item(1)->parentNode, $element->getElementsByTagName('setOutcomeValue')->item(0));
         $this::assertEquals('true', $element->getElementsByTagName('baseValue')->item(1)->nodeValue);
     }
 

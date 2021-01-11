@@ -61,7 +61,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(InterpolationTable::class, $component);
         $entries = $component->getInterpolationTableEntries();
-        $this::assertEquals(2, count($entries));
+        $this::assertCount(2, $entries);
 
         $entry = $entries[0];
         $this::assertEquals(1.5, $entry->getSourceValue());

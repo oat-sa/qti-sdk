@@ -40,7 +40,7 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(P::class, $p);
         $this::assertEquals('my-p', $p->getId());
-        $this::assertEquals(3, count($p->getContent()));
+        $this::assertCount(3, $p->getContent());
 
         $content = $p->getContent();
         $this::assertEquals("\n                This text is\n                a ", $content[0]->getContent());

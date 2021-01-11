@@ -53,7 +53,7 @@ class StatsOperatorMarshallerTest extends QtiSmTestCase
         $this::assertEquals(Statistics::POP_VARIANCE, $component->getName());
 
         $subExpr = $component->getExpressions();
-        $this::assertEquals(1, count($subExpr));
+        $this::assertCount(1, $subExpr);
         $this::assertInstanceOf(BaseValue::class, $subExpr[0]);
         $this::assertIsFloat($subExpr[0]->getValue());
         $this::assertEquals(12.5468, $subExpr[0]->getValue());

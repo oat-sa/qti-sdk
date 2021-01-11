@@ -75,11 +75,11 @@ class CorrectProcessorTest extends QtiSmTestCase
 
         $processor = new CorrectProcessor($expr);
         $result = $processor->process(); // No state set.
-        $this::assertTrue($result === null);
+        $this::assertNull($result);
 
         $processor->setState(new State([$variable]));
         $result = $processor->process();
-        $this::assertTrue($result === null);
+        $this::assertNull($result);
     }
 
     public function testException()

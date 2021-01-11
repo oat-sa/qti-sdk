@@ -100,7 +100,7 @@ class SumProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10), null]);
         $sumProcessor = new SumProcessor($sum, $operands);
         $result = $sumProcessor->process();
-        $this::assertTrue($result === null);
+        $this::assertNull($result);
     }
 
     /**

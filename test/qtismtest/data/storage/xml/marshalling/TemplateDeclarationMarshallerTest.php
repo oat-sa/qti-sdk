@@ -43,7 +43,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
         $default = $component->getDefaultValue();
         $this::assertInstanceOf(DefaultValue::class, $default);
         $values = $default->getValues();
-        $this::assertEquals(1, count($values));
+        $this::assertCount(1, $values);
         $this::assertEquals('tplx', $values[0]->getValue());
     }
 }

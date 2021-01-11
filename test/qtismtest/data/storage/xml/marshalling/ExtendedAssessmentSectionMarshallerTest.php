@@ -34,18 +34,18 @@ class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertTrue($section->isVisible());
 
         $sectionParts = $section->getSectionParts();
-        $this::assertEquals(1, count($sectionParts));
+        $this::assertCount(1, $sectionParts);
         $this::assertInstanceOf(AssessmentSectionRef::class, $sectionParts['SR01']);
         $this::assertEquals('SR01', $sectionParts['SR01']->getIdentifier());
         $this::assertEquals('./SR01.xml', $sectionParts['SR01']->getHref());
 
         $rubricBlockRefs = $section->getRubricBlockRefs();
-        $this::assertEquals(1, count($rubricBlockRefs));
+        $this::assertCount(1, $rubricBlockRefs);
         $this::assertInstanceOf(RubricBlockRef::class, $rubricBlockRefs['R01']);
         $this::assertEquals('R01', $rubricBlockRefs['R01']->getIdentifier());
         $this::assertEquals('./R01.xml', $rubricBlockRefs['R01']->getHref());
 
-        $this::assertEquals(0, count($section->getRubricBlocks()));
+        $this::assertCount(0, $section->getRubricBlocks());
     }
 
     public function testMarshall()

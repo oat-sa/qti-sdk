@@ -29,10 +29,10 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $element = $marshaller->marshall($component);
 
         $this::assertEquals('outcomeCondition', $element->nodeName);
-        $this::assertTrue($element === $element->getElementsByTagName('outcomeIf')->item(0)->parentNode);
-        $this::assertTrue($element->getElementsByTagName('outcomeIf')->item(0) === $element->getElementsByTagName('baseValue')->item(0)->parentNode);
+        $this::assertSame($element, $element->getElementsByTagName('outcomeIf')->item(0)->parentNode);
+        $this::assertSame($element->getElementsByTagName('outcomeIf')->item(0), $element->getElementsByTagName('baseValue')->item(0)->parentNode);
         $this::assertEquals('string', $element->getElementsByTagName('baseValue')->item(1)->getAttribute('baseType'));
-        $this::assertTrue($element->getElementsByTagName('outcomeIf')->item(0) === $element->getElementsByTagName('setOutcomeValue')->item(0)->parentNode);
+        $this::assertSame($element->getElementsByTagName('outcomeIf')->item(0), $element->getElementsByTagName('setOutcomeValue')->item(0)->parentNode);
     }
 
     public function testUnmarshallConditionMinimal()
@@ -316,7 +316,7 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $outcomeRules = $component->getOutcomeIf()->getOutcomeRules();
         $this::assertInstanceOf(OutcomeCondition::class, $outcomeRules[0]);
         $this::assertInstanceOf(Equal::class, $outcomeRules[0]->getOutcomeIf()->getExpression());
-        $this::assertEquals(1, count($outcomeRules[0]->getOutcomeElseIfs()));
+        $this::assertCount(1, $outcomeRules[0]->getOutcomeElseIfs());
 
         $outcomeElseIfs = $outcomeRules[0]->getOutcomeElseIfs();
         $subOutcomeRules = $outcomeElseIfs[0]->getOutcomeRules();

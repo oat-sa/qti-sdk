@@ -36,13 +36,13 @@ class QtiComponentTest extends QtiSmTestCase
 
         // -- search by QTI class name.
         $search = $assessmentSection->getComponentsByClassName('correct');
-        $this::assertEquals(0, count($search));
+        $this::assertCount(0, $search);
 
         $search = $assessmentSection->getComponentsByClassName('assessmentItemRef');
-        $this::assertEquals(4, count($search));
+        $this::assertCount(4, $search);
 
         $search = $assessmentSection->getComponentsByClassName(['assessmentItemRef', 'correct', 'sum'], false);
-        $this::assertEquals(4, count($search));
+        $this::assertCount(4, $search);
     }
 
     public function testGetComponentByIdOrClassNameComplex()
@@ -111,26 +111,26 @@ class QtiComponentTest extends QtiSmTestCase
 
         // -- recursive class name search.
         $search = $assessmentSectionRoot->getComponentsByClassName('assessmentSection');
-        $this::assertEquals(2, count($search));
+        $this::assertCount(2, $search);
 
         $search = $assessmentSectionRoot->getComponentsByClassName('assessmentItemRef');
-        $this::assertEquals(7, count($search));
+        $this::assertCount(7, $search);
 
         $search = $assessmentSectionRoot->getComponentsByClassName(['assessmentSection', 'assessmentItemRef']);
-        $this::assertEquals(9, count($search));
+        $this::assertCount(9, $search);
 
         $search = $assessmentSectionRoot->getComponentsByClassName('microMachine');
-        $this::assertEquals(0, count($search));
+        $this::assertCount(0, $search);
 
         // -- non recursive class name search.
         $search = $assessmentSectionRoot->getComponentsByClassName('assessmentSection', false);
-        $this::assertEquals(2, count($search));
+        $this::assertCount(2, $search);
 
         $search = $assessmentSectionRoot->getComponentsByClassName('assessmentItemRef', false);
-        $this::assertEquals(0, count($search));
+        $this::assertCount(0, $search);
 
         $search = $assessmentSectionRoot->getComponentsByClassName(['assessmentSection', 'assessmentItemRef'], false);
-        $this::assertEquals(2, count($search));
+        $this::assertCount(2, $search);
     }
 
     public function testGetIdentifiableComponentsNoCollision()
@@ -161,10 +161,10 @@ class QtiComponentTest extends QtiSmTestCase
 
         $search = $assessmentSection->getIdentifiableComponents();
         $this::assertInstanceOf(QtiComponentCollection::class, $search);
-        $this::assertEquals(4, count($search));
-        $this::assertTrue($assessmentSection1a === $search[0]);
-        $this::assertTrue($assessmentItemRef1a === $search[1]);
-        $this::assertTrue($assessmentSection1b === $search[2]);
-        $this::assertTrue($assessmentItemRef1b === $search[3]);
+        $this::assertCount(4, $search);
+        $this::assertSame($assessmentSection1a, $search[0]);
+        $this::assertSame($assessmentItemRef1a, $search[1]);
+        $this::assertSame($assessmentSection1b, $search[2]);
+        $this::assertSame($assessmentItemRef1b, $search[3]);
     }
 }

@@ -64,7 +64,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
         // with a single stylesheet component within.
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'rendering/rubricblock_2.xml');
-        $this::assertEquals(1, count($doc->getDocumentComponent()->getStylesheets()));
+        $this::assertCount(1, $doc->getDocumentComponent()->getStylesheets());
 
         $renderingEngine = new XhtmlRenderingEngine();
         $renderingEngine->setStylesheetPolicy(XhtmlRenderingEngine::STYLESHEET_SEPARATE);
@@ -93,7 +93,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
 
         $doc = new XmlDocument('2.1');
         $doc->load(self::samplesDir() . 'rendering/rubricblock_3.xml');
-        $this::assertEquals(2, count($doc->getDocumentComponent()->getStylesheets()));
+        $this::assertCount(2, $doc->getDocumentComponent()->getStylesheets());
 
         $renderingEngine = new XhtmlRenderingEngine();
         $renderingEngine->setStylesheetPolicy(XhtmlRenderingEngine::STYLESHEET_SEPARATE);

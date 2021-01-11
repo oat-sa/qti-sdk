@@ -303,7 +303,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         // This is the same for the next items.
         $this::assertEquals('ChoiceA', $session['Q01.RESPONSE']->getValue());
         $this::assertEquals(0.0, $session['Q01.scoring']->getValue());
-        $this::assertEquals(1, count($session->getPendingResponses()));
+        $this::assertCount(1, $session->getPendingResponses());
 
         // Q02 - Incorrect (but SCORE = 3)
         $session->beginAttempt();
@@ -311,7 +311,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $session->moveNext();
         $this::assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, [new QtiPair('A', 'P'), new QtiPair('C', 'M')])));
         $this::assertEquals(0.0, $session['Q02.SCORE']->getValue());
-        $this::assertEquals(2, count($session->getPendingResponses()));
+        $this::assertCount(2, $session->getPendingResponses());
 
         // Q03 - Skip.
         $session->beginAttempt();
@@ -319,25 +319,25 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $session->moveNext();
         // When skipping, the pending responses consist of all response variable
         // with their default value applied.
-        $this::assertEquals(3, count($session->getPendingResponses()));
+        $this::assertCount(3, $session->getPendingResponses());
 
         // Q04 - Skip.
         $session->beginAttempt();
         $session->skip();
         $session->moveNext();
-        $this::assertEquals(4, count($session->getPendingResponses()));
+        $this::assertCount(4, $session->getPendingResponses());
 
         // Q05 - Skip.
         $session->beginAttempt();
         $session->skip();
         $session->moveNext();
-        $this::assertEquals(5, count($session->getPendingResponses()));
+        $this::assertCount(5, $session->getPendingResponses());
 
         // Q06 - Skip.
         $session->beginAttempt();
         $session->skip();
         $session->moveNext();
-        $this::assertEquals(6, count($session->getPendingResponses()));
+        $this::assertCount(6, $session->getPendingResponses());
 
         // Q07.1 - Correct.
         $session->beginAttempt();
@@ -346,7 +346,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $this::assertTrue($session['Q07.1.RESPONSE']->equals(new QtiPoint(102, 113)));
         $this::assertInstanceOf(QtiFloat::class, $session['Q07.1.SCORE']);
         $this::assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
-        $this::assertEquals(7, count($session->getPendingResponses()));
+        $this::assertCount(7, $session->getPendingResponses());
 
         // Q07.2 - Incorrect (but SCORE = 1).
         $session->beginAttempt();
@@ -354,7 +354,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $session->moveNext();
         $this::assertTrue($session['Q07.2.RESPONSE']->equals(new QtiPoint(103, 113)));
         $this::assertEquals(0.0, $session['Q07.2.SCORE']->getValue());
-        $this::assertEquals(8, count($session->getPendingResponses()));
+        $this::assertCount(8, $session->getPendingResponses());
 
         // Q07.3 - Incorrect (and SCORE = 0).
         $session->beginAttempt();
@@ -365,7 +365,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
 
         // This is the end of the test. Then, the pending responses were flushed.
         // We also have to check if the deffered response processing took place.
-        $this::assertEquals(0, count($session->getPendingResponses()));
+        $this::assertCount(0, $session->getPendingResponses());
 
         $this::assertEquals(1.0, $session['Q01.scoring']->getValue());
         $this::assertEquals(3.0, $session['Q02.SCORE']->getValue());
@@ -403,7 +403,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $this::assertEquals(['NCORRECTS01', 'NCORRECTS02', 'NCORRECTS03', 'NINCORRECT', 'NRESPONSED', 'NPRESENTED', 'NSELECTED', 'PERCENT_CORRECT'], array_keys($outcomes));
 
         // The selection of items for the test is 9.
-        $this::assertEquals(9, count($responses));
+        $this::assertCount(9, $responses);
 
         foreach ($responses as $resp) {
             $assessmentTestSession->beginAttempt();
@@ -526,7 +526,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
 
         foreach (['Q01', 'Q02', 'Q03'] as $identifier) {
             $sessions = $assessmentTestSession->getAssessmentItemSessions($identifier);
-            $this::assertEquals(1, count($sessions));
+            $this::assertCount(1, $sessions);
             $this::assertEquals($identifier, $sessions[0]->getAssessmentItem()->getIdentifier());
         }
 
@@ -550,7 +550,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $assessmentTestSession->beginTestSession();
 
         $sessions = $assessmentTestSession->getAssessmentItemSessions('Q01');
-        $this::assertEquals(3, count($sessions));
+        $this::assertCount(3, $sessions);
         for ($i = 0; $i < count($sessions); $i++) {
             $this::assertEquals('Q01', $sessions[$i]->getAssessmentItem()->getIdentifier());
         }
@@ -630,11 +630,11 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
 
         // The session has not begun, the candidate is not able to jump anywhere.
-        $this::assertEquals(0, count($session->getPossibleJumps(false)));
+        $this::assertCount(0, $session->getPossibleJumps(false));
 
         $session->beginTestSession();
         $jumps = $session->getPossibleJumps(AssessmentTestPlace::TEST_PART);
-        $this::assertEquals(6, count($jumps));
+        $this::assertCount(6, $jumps);
         $this::assertEquals('Q01', $jumps[0]->getTarget()->getAssessmentItemRef()->getIdentifier('Q01'));
         $this::assertEquals(0, $jumps[0]->getPosition());
         $this::assertEquals(AssessmentItemSessionState::INITIAL, $jumps[0]->getItemSession()->getState());
@@ -662,7 +662,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $this::assertEquals(0, $session->getCurrentAssessmentItemRefOccurence());
 
         $jumps = $session->getPossibleJumps(AssessmentTestPlace::TEST_PART);
-        $this::assertEquals(3, count($jumps));
+        $this::assertCount(3, $jumps);
         $this::assertEquals('Q07', $jumps[0]->getTarget()->getAssessmentItemRef()->getIdentifier());
         $this::assertEquals(6, $jumps[0]->getPosition());
         $this::assertEquals(AssessmentItemSessionState::INITIAL, $jumps[0]->getItemSession()->getState());
@@ -681,7 +681,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         }
 
         // This is the end of the test session so no more possible jumps.
-        $this::assertEquals(0, count($session->getPossibleJumps(false)));
+        $this::assertCount(0, $session->getPossibleJumps(false));
     }
 
     public function testPossibleJumpsWholeTest()
@@ -693,7 +693,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         $session->beginTestSession();
 
         $jumps = $session->getPossibleJumps();
-        $this::assertEquals(12, count($jumps));
+        $this::assertCount(12, $jumps);
     }
 
     public function testJumps()
@@ -1181,7 +1181,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         // Route[0] - S01 -> S01A -> Q01
         $this::assertEquals('Q01', $route->getRouteItemAt(0)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(0)->getAssessmentSections();
-        $this::assertEquals(2, count($assessmentSections));
+        $this::assertCount(2, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S01']));
         $this::assertTrue(isset($assessmentSections['S01A']));
         // The returned assessment section must be the nearest parent section.
@@ -1190,7 +1190,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         // Route[1] - S01 -> S01A -> Q02
         $this::assertEquals('Q02', $route->getRouteItemAt(1)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(1)->getAssessmentSections();
-        $this::assertEquals(2, count($assessmentSections));
+        $this::assertCount(2, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S01']));
         $this::assertTrue(isset($assessmentSections['S01A']));
 
@@ -1201,7 +1201,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         // Route[2] - S01 -> S01A -> Q03
         $this::assertEquals('Q03', $route->getRouteItemAt(2)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(2)->getAssessmentSections();
-        $this::assertEquals(2, count($assessmentSections));
+        $this::assertCount(2, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S01']));
         $this::assertTrue(isset($assessmentSections['S01A']));
         $this::assertEquals('S01A', $route->getRouteItemAt(0)->getAssessmentSection()->getIdentifier());
@@ -1209,7 +1209,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         // Route[3] - S01 -> S01B -> Q04
         $this::assertEquals('Q04', $route->getRouteItemAt(3)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(3)->getAssessmentSections();
-        $this::assertEquals(2, count($assessmentSections));
+        $this::assertCount(2, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S01']));
         $this::assertTrue(isset($assessmentSections['S01B']));
         $this::assertEquals('S01B', $route->getRouteItemAt(3)->getAssessmentSection()->getIdentifier());
@@ -1217,7 +1217,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         // Route[4] - S01 -> S01B -> Q05
         $this::assertEquals('Q05', $route->getRouteItemAt(4)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(4)->getAssessmentSections();
-        $this::assertEquals(2, count($assessmentSections));
+        $this::assertCount(2, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S01']));
         $this::assertTrue(isset($assessmentSections['S01B']));
         $this::assertEquals('S01B', $route->getRouteItemAt(4)->getAssessmentSection()->getIdentifier());
@@ -1225,7 +1225,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         // Route[5] - S01 -> S01B -> Q06
         $this::assertEquals('Q06', $route->getRouteItemAt(5)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(5)->getAssessmentSections();
-        $this::assertEquals(2, count($assessmentSections));
+        $this::assertCount(2, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S01']));
         $this::assertTrue(isset($assessmentSections['S01B']));
         $this::assertEquals('S01B', $route->getRouteItemAt(5)->getAssessmentSection()->getIdentifier());
@@ -1233,42 +1233,42 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         // Route[6] - S02 -> Q07
         $this::assertEquals('Q07', $route->getRouteItemAt(6)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(6)->getAssessmentSections();
-        $this::assertEquals(1, count($assessmentSections));
+        $this::assertCount(1, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S02']));
         $this::assertEquals('S02', $route->getRouteItemAt(6)->getAssessmentSection()->getIdentifier());
 
         // Route[7] - S02 -> Q08
         $this::assertEquals('Q08', $route->getRouteItemAt(7)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(7)->getAssessmentSections();
-        $this::assertEquals(1, count($assessmentSections));
+        $this::assertCount(1, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S02']));
         $this::assertEquals('S02', $route->getRouteItemAt(7)->getAssessmentSection()->getIdentifier());
 
         // Route[8] - S02 -> Q09
         $this::assertEquals('Q09', $route->getRouteItemAt(8)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(8)->getAssessmentSections();
-        $this::assertEquals(1, count($assessmentSections));
+        $this::assertCount(1, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S02']));
         $this::assertEquals('S02', $route->getRouteItemAt(8)->getAssessmentSection()->getIdentifier());
 
         // Route[9] - S03 -> Q10
         $this::assertEquals('Q10', $route->getRouteItemAt(9)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(9)->getAssessmentSections();
-        $this::assertEquals(1, count($assessmentSections));
+        $this::assertCount(1, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S03']));
         $this::assertEquals('S03', $route->getRouteItemAt(9)->getAssessmentSection()->getIdentifier());
 
         // Route[10] - S03 -> Q11
         $this::assertEquals('Q11', $route->getRouteItemAt(10)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(10)->getAssessmentSections();
-        $this::assertEquals(1, count($assessmentSections));
+        $this::assertCount(1, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S03']));
         $this::assertEquals('S03', $route->getRouteItemAt(10)->getAssessmentSection()->getIdentifier());
 
         // Route[11] - S03 -> Q12
         $this::assertEquals('Q12', $route->getRouteItemAt(11)->getAssessmentItemRef()->getIdentifier());
         $assessmentSections = $route->getRouteItemAt(11)->getAssessmentSections();
-        $this::assertEquals(1, count($assessmentSections));
+        $this::assertCount(1, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S03']));
         $this::assertEquals('S03', $route->getRouteItemAt(11)->getAssessmentSection()->getIdentifier());
 
@@ -1301,12 +1301,12 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         // Q01 - Must be under control of its own itemSessionControl.
         $control = $route->getRouteItemAt(0)->getItemSessionControl();
         $this::assertEquals(2, $control->getItemSessionControl()->getMaxAttempts());
-        $this::assertTrue($doc->getDocumentComponent()->getComponentByIdentifier('Q01') === $control->getOwner());
+        $this::assertSame($doc->getDocumentComponent()->getComponentByIdentifier('Q01'), $control->getOwner());
 
         // Q07 - Must be under control of the ItemSessionControl of the parent AssessmentSection.
         $control = $route->getRouteItemAt(6)->getItemSessionControl();
         $this::assertEquals(3, $control->getItemSessionControl()->getMaxAttempts());
-        $this::assertTrue($doc->getDocumentComponent()->getComponentByIdentifier('S02') === $control->getOwner());
+        $this::assertSame($doc->getDocumentComponent()->getComponentByIdentifier('S02'), $control->getOwner());
 
         // Q10 - Is under no control.
         $control = $route->getRouteItemAt(9)->getItemSessionControl();
@@ -1315,7 +1315,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
         // Q13 - Must be under control of the ItemSessionControl of the parent TestPart.
         $control = $route->getRouteItemAt(12)->getItemSessionControl();
         $this::assertEquals(4, $control->getItemSessionControl()->getMaxAttempts());
-        $this::assertTrue($doc->getDocumentComponent()->getComponentByIdentifier('P02') === $control->getOwner());
+        $this::assertSame($doc->getDocumentComponent()->getComponentByIdentifier('P02'), $control->getOwner());
     }
 
     public function testGetTimeLimits()
@@ -1330,45 +1330,45 @@ class AssessmentTestSessionTest extends QtiSmTestCase
 
         // Q01
         $timeLimits = $route->getRouteItemAt(0)->getTimeLimits();
-        $this::assertEquals(3, count($timeLimits));
+        $this::assertCount(3, $timeLimits);
         $this::assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
         $this::assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
         $this::assertEquals(50, $timeLimits[2]->getTimeLimits()->getMaxTime()->getSeconds(true));
 
         // Q02
         $timeLimits = $route->getRouteItemAt(1)->getTimeLimits();
-        $this::assertEquals(2, count($timeLimits));
+        $this::assertCount(2, $timeLimits);
         $this::assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
         $this::assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
 
         // Q08
         $timeLimits = $route->getRouteItemAt(7)->getTimeLimits();
-        $this::assertEquals(3, count($timeLimits));
+        $this::assertCount(3, $timeLimits);
         $this::assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
         $this::assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
         $this::assertEquals(150, $timeLimits[2]->getTimeLimits()->getMaxTime()->getSeconds(true));
 
         // Q12
         $timeLimits = $route->getRouteItemAt(11)->getTimeLimits();
-        $this::assertEquals(2, count($timeLimits));
+        $this::assertCount(2, $timeLimits);
         $this::assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
         $this::assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
 
         // Q13
         $timeLimits = $route->getRouteItemAt(12)->getTimeLimits();
-        $this::assertEquals(2, count($timeLimits));
+        $this::assertCount(2, $timeLimits);
         $this::assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
         $this::assertEquals(200, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
 
         // Q14
         $timeLimits = $route->getRouteItemAt(13)->getTimeLimits();
-        $this::assertEquals(1, count($timeLimits));
+        $this::assertCount(1, $timeLimits);
         $this::assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
 
         // Test item's timelimits exclusion.
         // Q01
         $timeLimits = $route->getRouteItemAt(0)->getTimeLimits(true);
-        $this::assertEquals(2, count($timeLimits));
+        $this::assertCount(2, $timeLimits);
         $this::assertEquals(600, $timeLimits[0]->getTimeLimits()->getMaxTime()->getSeconds(true));
         $this::assertEquals(400, $timeLimits[1]->getTimeLimits()->getMaxTime()->getSeconds(true));
     }
@@ -1396,7 +1396,7 @@ class AssessmentTestSessionTest extends QtiSmTestCase
 
         // S01C - Q04
         $rubricBlockRefs = $route->getRouteItemAt(3)->getRubricBlockRefs();
-        $this::assertEquals(0, count($rubricBlockRefs));
+        $this::assertCount(0, $rubricBlockRefs);
     }
 
     public function testRouteItemPosition()

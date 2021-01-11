@@ -25,7 +25,7 @@ class RecordContainerTest extends QtiSmTestCase
         $this::assertInstanceOf(RecordContainer::class, $record);
 
         $record = new RecordContainer(['key1' => new QtiInteger(1), 'key2' => new QtiString('a string'), 'key3' => new QtiPoint(10, 10)]);
-        $this::assertEquals(3, count($record));
+        $this::assertCount(3, $record);
         $this::assertEquals(1, $record['key1']->getValue());
         $this::assertEquals('a string', $record['key2']->getValue());
         $this::assertTrue($record['key3']->equals(new QtiPoint(10, 10)));
@@ -89,7 +89,7 @@ class RecordContainerTest extends QtiSmTestCase
 
         $record = RecordContainer::createFromDataModel($valueCollection);
         $this::assertInstanceOf(RecordContainer::class, $record);
-        $this::assertEquals(2, count($record));
+        $this::assertCount(2, $record);
         $this::assertEquals(15, $record['val1']->getValue());
         $this::assertEquals('string', $record['val2']->getValue());
     }

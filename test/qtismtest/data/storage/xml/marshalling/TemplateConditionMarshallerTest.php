@@ -56,7 +56,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 
         $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this::assertInstanceOf(TemplateCondition::class, $templateCondition);
-        $this::assertEquals(0, count($templateCondition->getTemplateElseIfs()));
+        $this::assertCount(0, $templateCondition->getTemplateElseIfs());
         $this::assertFalse($templateCondition->hasTemplateElse());
 
         $templateIf = $templateCondition->getTemplateIf();
@@ -68,7 +68,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this::assertTrue($templateIf->getExpression()->getValue());
 
         $templateRules = $templateIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
         $this::assertEquals('tpl1', $templateRules[0]->getIdentifier());
         $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
@@ -128,7 +128,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this::assertTrue($templateIf->getExpression()->getValue());
 
         $templateRules = $templateIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
         $this::assertEquals('tpl1', $templateRules[0]->getIdentifier());
         $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
@@ -136,7 +136,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1337, $templateRules[0]->getExpression()->getValue());
 
         $templateElseIfs = $templateCondition->getTemplateElseIfs();
-        $this::assertEquals(1, count($templateElseIfs));
+        $this::assertCount(1, $templateElseIfs);
         $templateElseIf = $templateElseIfs[0];
         $this::assertInstanceOf(TemplateElseIf::class, $templateElseIf);
         $this::assertInstanceOf(BaseValue::class, $templateElseIf->getExpression());
@@ -145,7 +145,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this::assertFalse($templateElseIf->getExpression()->getValue());
 
         $templateRules = $templateElseIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(ExitTemplate::class, $templateRules[0]);
     }
 
@@ -191,7 +191,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
 
         $templateCondition = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this::assertInstanceOf(TemplateCondition::class, $templateCondition);
-        $this::assertEquals(0, count($templateCondition->getTemplateElseIfs()));
+        $this::assertCount(0, $templateCondition->getTemplateElseIfs());
 
         $templateIf = $templateCondition->getTemplateIf();
         $this::assertInstanceOf(TemplateIf::class, $templateIf);
@@ -202,7 +202,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this::assertTrue($templateIf->getExpression()->getValue());
 
         $templateRules = $templateIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
         $this::assertEquals('tpl1', $templateRules[0]->getIdentifier());
         $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
@@ -213,7 +213,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $templateElse = $templateCondition->getTemplateElse();
         $this::assertInstanceOf(TemplateElse::class, $templateElse);
         $templateRules = $templateElse->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
 
         $setCorrectResponse = $templateRules[0];
         $this::assertInstanceOf(SetCorrectResponse::class, $setCorrectResponse);
@@ -324,13 +324,13 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $expression = $templateIf->getExpression();
         $this::assertInstanceOf(Lte::class, $expression);
         $subExpressions = $expression->getExpressions();
-        $this::assertEquals(2, count($subExpressions));
+        $this::assertCount(2, $subExpressions);
         $this::assertInstanceOf(Variable::class, $subExpressions[0]);
         $this::assertInstanceOf(BaseValue::class, $subExpressions[1]);
 
         // Entering branch (var <= 2 -----> var = 0)
         $templateRules = $templateIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $templateCondition = $templateRules[0];
         $this::assertInstanceOf(TemplateCondition::class, $templateCondition);
         $templateIf = $templateCondition->getTemplateIf();
@@ -338,12 +338,12 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $expression = $templateIf->getExpression();
         $this::assertInstanceOf(MatchOperator::class, $expression);
         $subExpressions = $expression->getExpressions();
-        $this::assertEquals(2, count($subExpressions));
+        $this::assertCount(2, $subExpressions);
         $this::assertInstanceOf(Variable::class, $subExpressions[0]);
         $this::assertInstanceOf(BaseValue::class, $subExpressions[1]);
         $this::assertEquals(0, $subExpressions[1]->getValue());
         $templateRules = $templateIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
         $this::assertEquals(BaseType::STRING, $templateRules[0]->getExpression()->getBaseType());
         $this::assertEquals('var is 0', $templateRules[0]->getExpression()->getValue());
@@ -355,12 +355,12 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $expression = $templateElseIf->getExpression();
         $this::assertInstanceOf(MatchOperator::class, $expression);
         $subExpressions = $expression->getExpressions();
-        $this::assertEquals(2, count($subExpressions));
+        $this::assertCount(2, $subExpressions);
         $this::assertInstanceOf(Variable::class, $subExpressions[0]);
         $this::assertInstanceOf(BaseValue::class, $subExpressions[1]);
         $this::assertEquals(1, $subExpressions[1]->getValue());
         $templateRules = $templateElseIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
         $this::assertEquals(BaseType::STRING, $templateRules[0]->getExpression()->getBaseType());
         $this::assertEquals('var is 1', $templateRules[0]->getExpression()->getValue());
@@ -369,26 +369,26 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this::assertTrue($templateCondition->hasTemplateElse());
         $templateElse = $templateCondition->getTemplateElse();
         $templateRules = $templateElse->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(ExitTemplate::class, $templateRules[0]);
 
         // Entering branch (var <= 5)
         $templateCondition = $root;
         $templateElseIfs = $templateCondition->getTemplateElseIfs();
-        $this::assertEquals(2, count($templateElseIfs));
+        $this::assertCount(2, $templateElseIfs);
 
         $templateElseIf = $templateElseIfs[0];
         $expression = $templateElseIf->getExpression();
         $this::assertInstanceOf(Lte::class, $expression);
         $subExpressions = $expression->getExpressions();
-        $this::assertEquals(2, count($subExpressions));
+        $this::assertCount(2, $subExpressions);
         $this::assertInstanceOf(Variable::class, $subExpressions[0]);
         $this::assertInstanceOf(BaseValue::class, $subExpressions[1]);
         $this::assertEquals(5, $subExpressions[1]->getValue());
 
         // Entering branch (var <= 5 -----> var = 3)
         $templateRules = $templateElseIf->getTemplateRules();
-        $this::assertEquals(2, count($templateRules));
+        $this::assertCount(2, $templateRules);
 
         // There's a tiny little cute exitTemplate after the next else if... :)
         $this::assertInstanceOf(ExitTemplate::class, $templateRules[1]);
@@ -400,12 +400,12 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $expression = $templateIf->getExpression();
         $this::assertInstanceOf(MatchOperator::class, $expression);
         $subExpressions = $expression->getExpressions();
-        $this::assertEquals(2, count($subExpressions));
+        $this::assertCount(2, $subExpressions);
         $this::assertInstanceOf(Variable::class, $subExpressions[0]);
         $this::assertInstanceOf(BaseValue::class, $subExpressions[1]);
         $this::assertEquals(3, $subExpressions[1]->getValue());
         $templateRules = $templateIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(SetCorrectResponse::class, $templateRules[0]);
         $this::assertEquals('RESPONSE', $templateRules[0]->getIdentifier());
         $this::assertEquals(BaseType::STRING, $templateRules[0]->getExpression()->getBaseType());
@@ -418,12 +418,12 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $expression = $templateElseIf->getExpression();
         $this::assertInstanceOf(MatchOperator::class, $expression);
         $subExpressions = $expression->getExpressions();
-        $this::assertEquals(2, count($subExpressions));
+        $this::assertCount(2, $subExpressions);
         $this::assertInstanceOf(Variable::class, $subExpressions[0]);
         $this::assertInstanceOf(BaseValue::class, $subExpressions[1]);
         $this::assertEquals(4, $subExpressions[1]->getValue());
         $templateRules = $templateElseIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(SetDefaultValue::class, $templateRules[0]);
         $this::assertEquals('qtism', $templateRules[0]->getExpression()->getValue());
         $this::assertEquals(BaseType::STRING, $templateRules[0]->getExpression()->getBaseType());
@@ -434,12 +434,12 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $expression = $templateElseIf->getExpression();
         $this::assertInstanceOf(MatchOperator::class, $expression);
         $subExpressions = $expression->getExpressions();
-        $this::assertEquals(2, count($subExpressions));
+        $this::assertCount(2, $subExpressions);
         $this::assertInstanceOf(Variable::class, $subExpressions[0]);
         $this::assertInstanceOf(BaseValue::class, $subExpressions[1]);
         $this::assertEquals(5, $subExpressions[1]->getValue());
         $templateRules = $templateElseIf->getTemplateRules();
-        $this::assertEquals(2, count($templateRules));
+        $this::assertCount(2, $templateRules);
         $this::assertInstanceOf(TemplateConstraint::class, $templateRules[0]);
         $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
         $this::assertFalse($templateRules[0]->getExpression()->getValue());
@@ -454,12 +454,12 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $expression = $templateElseIf->getExpression();
         $this::assertInstanceOf(Lte::class, $expression);
         $subExpressions = $expression->getExpressions();
-        $this::assertEquals(2, count($subExpressions));
+        $this::assertCount(2, $subExpressions);
         $this::assertInstanceOf(Variable::class, $subExpressions[0]);
         $this::assertInstanceOf(BaseValue::class, $subExpressions[1]);
         $this::assertEquals(8, $subExpressions[1]->getValue());
         $templateRules = $templateElseIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(SetCorrectResponse::class, $templateRules[0]);
         $this::assertEquals('var is <= 8', $templateRules[0]->getExpression()->getValue());
 
@@ -467,7 +467,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $templateCondition = $root;
         $templateElse = $templateCondition->getTemplateElse();
         $templateRules = $templateElse->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(TemplateConstraint::class, $templateRules[0]);
         $this::assertIsBool($templateRules[0]->getExpression()->getValue());
         $this::assertTrue($templateRules[0]->getExpression()->getValue());

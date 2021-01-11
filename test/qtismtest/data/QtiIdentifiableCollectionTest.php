@@ -18,20 +18,20 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
         $weight3 = new Weight('weight3', 1.2);
         $weights = new WeightCollection([$weight1, $weight2, $weight3]);
 
-        $this::assertTrue($weights['weight1'] === $weight1);
-        $this::assertTrue($weights['weight2'] === $weight2);
-        $this::assertTrue($weights['weight3'] === $weight3);
+        $this::assertSame($weight1, $weights['weight1']);
+        $this::assertSame($weight2, $weights['weight2']);
+        $this::assertSame($weight3, $weights['weight3']);
 
-        $this::assertTrue($weights['weightX'] === null);
+        $this::assertNull($weights['weightX']);
         $this::assertFalse(isset($weights['weightX']));
 
         // Can I address the by identifier?
-        $this::assertTrue($weights['weight2'] === $weight2);
+        $this::assertSame($weight2, $weights['weight2']);
 
         // What happens if I change the identifier of an object.
         // Is it adressable with the new identifier?
         $weight2->setIdentifier('weightX');
-        $this::assertTrue($weights['weightX'] === $weight2);
+        $this::assertSame($weight2, $weights['weightX']);
         $this::assertFalse(isset($weights['weight2']));
         $this::assertTrue(isset($weights['weightX']));
 
@@ -56,7 +56,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
         $weightBis = new Weight('weight2', 2.0);
         $weights->replace($weight2, $weightBis);
 
-        $this::assertFalse($weight2 === $weights['weight2']);
+        $this::assertNotSame($weight2, $weights['weight2']);
         $this::assertCount(3, $weights);
 
         // Is the order still respected?
@@ -104,7 +104,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
         $this::assertTrue(isset($weights['weight2']));
 
         $weight1->setIdentifier('weight2');
-        $this::assertFalse($weight1 === $weights['weight2']);
+        $this::assertNotSame($weight1, $weights['weight2']);
     }
 
     public function testRenamingOrder()

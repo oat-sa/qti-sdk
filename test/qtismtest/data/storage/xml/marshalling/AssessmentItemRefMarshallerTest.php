@@ -175,11 +175,11 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertTrue($component->isFixed());
         $this::assertTrue($component->isRequired());
 
-        $this::assertEquals(2, count($component->getVariableMappings()));
-        $this::assertEquals(1, count($component->getWeights()));
-        $this::assertEquals(1, count($component->getTemplateDefaults()));
-        $this::assertEquals(2, count($component->getPreConditions()));
-        $this::assertEquals(2, count($component->getBranchRules()));
+        $this::assertCount(2, $component->getVariableMappings());
+        $this::assertCount(1, $component->getWeights());
+        $this::assertCount(1, $component->getTemplateDefaults());
+        $this::assertCount(2, $component->getPreConditions());
+        $this::assertCount(2, $component->getBranchRules());
         $this::assertInstanceOf(TimeLimits::class, $component->getTimeLimits());
         $this::assertInstanceOf(ItemSessionControl::class, $component->getItemSessionControl());
     }

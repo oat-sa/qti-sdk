@@ -66,7 +66,7 @@ class DefaultProcessorTest extends QtiSmTestCase
         $processor = new DefaultProcessor($expr);
         $result = $processor->process();
 
-        $this::assertTrue($result === null);
+        $this::assertNull($result);
     }
 
     public function testNoDefaultValue()
@@ -79,6 +79,6 @@ class DefaultProcessorTest extends QtiSmTestCase
         $variable = ResponseVariable::createFromDataModel($variableDeclaration);
         $processor->setState(new State([$variable]));
         $result = $processor->process();
-        $this::assertTrue($result === null);
+        $this::assertNull($result);
     }
 }

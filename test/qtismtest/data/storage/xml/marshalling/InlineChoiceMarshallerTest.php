@@ -42,7 +42,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
         $this::assertEquals(ShowHide::HIDE, $component->getShowHide());
 
         $content = $component->getContent();
-        $this::assertEquals(1, count($content));
+        $this::assertCount(1, $content);
         $this::assertInstanceOf(PrintedVariable::class, $content[0]);
     }
 }

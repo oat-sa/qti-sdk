@@ -41,7 +41,7 @@ class PromptMarshallerTest extends QtiSmTestCase
         $this::assertEquals('qti-prompt', $component->getClass());
 
         $content = $component->getContent();
-        $this::assertEquals(1, count($content));
+        $this::assertCount(1, $content);
         $this::assertEquals('This is a prompt', $content[0]->getContent());
     }
 

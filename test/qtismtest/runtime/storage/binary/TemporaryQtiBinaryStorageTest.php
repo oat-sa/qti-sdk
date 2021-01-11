@@ -69,7 +69,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
         // The outcome variables composing the test-level global scope
         // must be set with their default value if any.
         foreach ($doc->getDocumentComponent()->getOutcomeDeclarations() as $outcomeDeclaration) {
-            $this::assertFalse($session[$outcomeDeclaration->getIdentifier()] === null);
+            $this::assertNotNull($session[$outcomeDeclaration->getIdentifier()]);
             $this::assertEquals(0, $session[$outcomeDeclaration->getIdentifier()]->getValue());
         }
 
@@ -227,7 +227,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
         $session->beginTestSession();
 
         // Nothing in pending responses. The test has just begun.
-        $this::assertEquals(0, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(0, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q01 - Correct
         $session->beginAttempt();
@@ -236,7 +236,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
-        $this::assertEquals(1, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(1, $session->getPendingResponseStore()->getAllPendingResponses());
         $this::assertEquals('ChoiceA', $session['Q01.RESPONSE']->getValue());
         $this::assertEquals(0.0, $session['Q01.scoring']->getValue());
 
@@ -249,7 +249,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->retrieve($test, $sessionId);
         $this::assertTrue($session['Q02.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, [new QtiPair('A', 'P'), new QtiPair('C', 'M'), new QtiPair('D', 'L')])));
         $this::assertEquals(0.0, $session['Q02.SCORE']->getValue());
-        $this::assertEquals(2, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(2, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q03 - Skip
         $session->beginAttempt();
@@ -258,7 +258,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
-        $this::assertEquals(3, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(3, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q04 - Skip
         $session->beginAttempt();
@@ -267,7 +267,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
-        $this::assertEquals(4, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(4, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q05 - Skip
         $session->beginAttempt();
@@ -276,7 +276,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
-        $this::assertEquals(5, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(5, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q06 - Skip
         $session->beginAttempt();
@@ -285,7 +285,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
-        $this::assertEquals(6, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(6, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q07.1 - Correct
         $session->beginAttempt();
@@ -294,7 +294,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
-        $this::assertEquals(7, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(7, $session->getPendingResponseStore()->getAllPendingResponses());
         $this::assertTrue($session['Q07.1.RESPONSE']->equals(new QtiPoint(102, 113)));
         $this::assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
 
@@ -305,7 +305,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($test, $sessionId);
-        $this::assertEquals(8, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(8, $session->getPendingResponseStore()->getAllPendingResponses());
         $this::assertTrue($session['Q07.2.RESPONSE']->equals(new QtiPoint(103, 114)));
         $this::assertEquals(0.0, $session['Q07.2.SCORE']->getValue());
 
@@ -319,7 +319,7 @@ class TemporaryQtiBinaryStorageTest extends QtiSmTestCase
 
         // Response processing should have taken place beauce this is the end of the current test part.
         // The Pending Response Store should be then flushed and now empty.
-        $this::assertEquals(0, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(0, $session->getPendingResponseStore()->getAllPendingResponses());
         $this::assertTrue($session['Q07.3.RESPONSE']->equals(new QtiPoint(30, 13)));
         $this::assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
         $storage->persist($session);

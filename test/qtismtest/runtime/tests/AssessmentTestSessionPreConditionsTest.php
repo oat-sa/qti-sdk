@@ -22,26 +22,26 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
 
         // Q01 - No precondtions.
         $routeItem = $route->getRouteItemAt(0);
-        $this::assertEquals(0, count($routeItem->getPreConditions()));
+        $this::assertCount(0, $routeItem->getPreConditions());
 
         // Q02 - A precondition based on Q01.SCORE.
         $routeItem = $route->getRouteItemAt(1);
         $preConditions = $routeItem->getPreConditions();
-        $this::assertEquals(1, count($preConditions));
+        $this::assertCount(1, $preConditions);
         $var = $preConditions[0]->getComponentsByClassName('variable');
         $this::assertEquals('Q01.SCORE', $var[0]->getIdentifier());
 
         // Q03 - A precondition based on Q02.SCORE.
         $routeItem = $route->getRouteItemAt(2);
         $preConditions = $routeItem->getPreConditions();
-        $this::assertEquals(1, count($preConditions));
+        $this::assertCount(1, $preConditions);
         $var = $preConditions[0]->getComponentsByClassName('variable');
         $this::assertEquals('Q02.SCORE', $var[0]->getIdentifier());
 
         // Q04 - A precondition based on Q03.SCORE.
         $routeItem = $route->getRouteItemAt(3);
         $preConditions = $routeItem->getPreConditions();
-        $this::assertEquals(1, count($preConditions));
+        $this::assertCount(1, $preConditions);
         $var = $preConditions[0]->getComponentsByClassName('variable');
         $this::assertEquals('Q03.SCORE', $var[0]->getIdentifier());
     }

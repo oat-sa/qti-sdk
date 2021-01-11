@@ -33,7 +33,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals(2, $element->getElementsByTagName('baseValue')->length);
 
         $expression = $element->getElementsByTagName('baseValue')->item(0);
-        $this::assertTrue($element === $expression->parentNode);
+        $this::assertSame($element, $expression->parentNode);
         $this::assertEquals('boolean', $expression->getAttribute('baseType'));
         $this::assertEquals('true', $expression->nodeValue);
 
@@ -41,7 +41,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('myStringVar', $setOutcomeValue->getAttribute('identifier'));
 
         $tested = $element->getElementsByTagName('baseValue')->item(1);
-        $this::assertTrue($setOutcomeValue === $tested->parentNode);
+        $this::assertSame($setOutcomeValue, $tested->parentNode);
         $this::assertEquals('Tested!', $tested->nodeValue);
         $this::assertEquals('string', $tested->getAttribute('baseType'));
     }
@@ -61,7 +61,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals(2, $element->getElementsByTagName('baseValue')->length);
 
         $expression = $element->getElementsByTagName('baseValue')->item(0);
-        $this::assertTrue($element === $expression->parentNode);
+        $this::assertSame($element, $expression->parentNode);
         $this::assertEquals('boolean', $expression->getAttribute('baseType'));
         $this::assertEquals('true', $expression->nodeValue);
 
@@ -69,7 +69,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('myStringVar', $setOutcomeValue->getAttribute('identifier'));
 
         $tested = $element->getElementsByTagName('baseValue')->item(1);
-        $this::assertTrue($setOutcomeValue === $tested->parentNode);
+        $this::assertSame($setOutcomeValue, $tested->parentNode);
         $this::assertEquals('Tested!', $tested->nodeValue);
         $this::assertEquals('string', $tested->getAttribute('baseType'));
     }
@@ -90,7 +90,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('myStringVar', $setOutcomeValue->getAttribute('identifier'));
 
         $tested = $element->getElementsByTagName('baseValue')->item(0);
-        $this::assertTrue($setOutcomeValue === $tested->parentNode);
+        $this::assertSame($setOutcomeValue, $tested->parentNode);
         $this::assertEquals('string', $tested->getAttribute('baseType'));
         $this::assertEquals('Tested!', $tested->nodeValue);
     }
@@ -114,7 +114,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this::assertInstanceOf(OutcomeIf::class, $component);
-        $this::assertEquals(1, count($component->getOutcomeRules()));
+        $this::assertCount(1, $component->getOutcomeRules());
         $this::assertInstanceOf(BaseValue::class, $component->getExpression());
 
         $outcomeRules = $component->getOutcomeRules();
@@ -144,7 +144,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this::assertInstanceOf(OutcomeElseIf::class, $component);
-        $this::assertEquals(1, count($component->getOutcomeRules()));
+        $this::assertCount(1, $component->getOutcomeRules());
         $this::assertInstanceOf(BaseValue::class, $component->getExpression());
 
         $outcomeRules = $component->getOutcomeRules();
@@ -173,7 +173,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this::assertInstanceOf(OutcomeElse::class, $component);
-        $this::assertEquals(1, count($component->getOutcomeRules()));
+        $this::assertCount(1, $component->getOutcomeRules());
 
         $outcomeRules = $component->getOutcomeRules();
         $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);

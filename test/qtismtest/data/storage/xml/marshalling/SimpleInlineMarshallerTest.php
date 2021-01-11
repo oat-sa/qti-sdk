@@ -52,7 +52,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
 
         $sentence = $em->getContent();
         $this::assertInstanceOf(InlineCollection::class, $sentence);
-        $this::assertEquals(3, count($sentence));
+        $this::assertCount(3, $sentence);
 
         $this::assertInstanceOf(TextRun::class, $sentence[0]);
         $this::assertEquals('He is ', $sentence[0]->getContent());
@@ -147,7 +147,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertFalse($span->getAriaHidden());
 
         $content = $span->getContent();
-        $this::assertSame(1, count($content));
+        $this::assertCount(1, $content);
         $this::assertEquals('I am a span', $content[0]->getContent());
     }
 
@@ -210,7 +210,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertTrue($span->getAriaHidden());
 
         $content = $span->getContent();
-        $this::assertSame(1, count($content));
+        $this::assertCount(1, $content);
         $this::assertEquals('I am a span', $content[0]->getContent());
     }
 }

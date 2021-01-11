@@ -46,6 +46,6 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
 
         $content = $component->getContent();
         $this::assertInstanceOf(FlowStaticCollection::class, $content);
-        $this::assertEquals(3, count($content));
+        $this::assertCount(3, $content);
     }
 }

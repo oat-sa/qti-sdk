@@ -70,7 +70,7 @@ class MarshallerTest extends QtiSmTestCase
         $childElements = Marshaller::getChildElements($element);
 
         $this::assertIsArray($childElements);
-        $this::assertEquals(2, count($childElements));
+        $this::assertCount(2, $childElements);
         $this::assertEquals('child', $childElements[0]->nodeName);
         $this::assertEquals('anotherChild', $childElements[1]->nodeName);
     }

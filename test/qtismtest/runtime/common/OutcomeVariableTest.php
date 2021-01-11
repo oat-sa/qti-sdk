@@ -31,7 +31,7 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testInstantiate()
     {
         $outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER);
-        $this::assertTrue($outcome->getValue() === null);
+        $this::assertNull($outcome->getValue());
 
         $outcome = new OutcomeVariable('var1', Cardinality::MULTIPLE, BaseType::INTEGER);
         $this::assertInstanceOf(MultipleContainer::class, $outcome->getValue());
@@ -50,12 +50,12 @@ class OutcomeVariableTest extends QtiSmTestCase
         $this::assertEquals('outcome1', $variable->getIdentifier());
         $this::assertEquals(BaseType::INTEGER, $variable->getBaseType());
         $this::assertEquals(Cardinality::SINGLE, $variable->getCardinality());
-        $this::assertTrue($variable->getValue() === null);
+        $this::assertNull($variable->getValue());
         $this::assertNull($variable->getViews());
         $this::assertFalse($variable->getNormalMaximum());
         $this::assertFalse($variable->getNormalMinimum());
         $this::assertFalse($variable->getMasteryValue());
-        $this::assertTrue($variable->getLookupTable() === null);
+        $this::assertNull($variable->getLookupTable());
 
         $variable->setValue(new QtiInteger(16));
         $variable->setDefaultValue(new QtiInteger(-1));
@@ -157,7 +157,7 @@ class OutcomeVariableTest extends QtiSmTestCase
 
         $defaultValue = $outcomeVariable->getDefaultValue();
         $this::assertInstanceOf(MultipleContainer::class, $defaultValue);
-        $this::assertEquals(2, count($defaultValue));
+        $this::assertCount(2, $defaultValue);
         $this::assertEquals(Cardinality::MULTIPLE, $defaultValue->getCardinality());
         $this::assertTrue($defaultValue[0]->equals(new QtiPair('A', 'B')));
         $this::assertTrue($defaultValue[1]->equals(new QtiPair('B', 'C')));
@@ -179,7 +179,7 @@ class OutcomeVariableTest extends QtiSmTestCase
 
         $defaultValue = $outcomeVariable->getDefaultValue();
         $this::assertInstanceOf(RecordContainer::class, $defaultValue);
-        $this::assertEquals(2, count($defaultValue));
+        $this::assertCount(2, $defaultValue);
 
         $this::assertInstanceOf(QtiPair::class, $defaultValue['A']);
         $this::assertInstanceOf(QtiFloat::class, $defaultValue['B']);
@@ -224,7 +224,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $matchTable = $outcomeVariable->getLookupTable();
         $this::assertInstanceOf(MatchTable::class, $matchTable);
         $matchTableEntries = $matchTable->getMatchTableEntries();
-        $this::assertEquals(2, count($matchTableEntries));
+        $this::assertCount(2, $matchTableEntries);
         $this::assertEquals(0, $matchTableEntries[0]->getSourceValue());
         $targetValue = $matchTableEntries[0]->getTargetValue();
         $this::assertTrue($targetValue->equals(new QtiPair('E', 'F')));

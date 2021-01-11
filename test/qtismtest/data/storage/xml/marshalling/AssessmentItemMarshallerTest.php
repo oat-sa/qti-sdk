@@ -149,9 +149,9 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $this::assertEquals('en-YO', $component->getLang());
 
         $responseDeclarations = $component->getResponseDeclarations();
-        $this::assertEquals(2, count($responseDeclarations));
+        $this::assertCount(2, $responseDeclarations);
 
         $outcomeDeclarations = $component->getOutcomeDeclarations();
-        $this::assertEquals(2, count($outcomeDeclarations));
+        $this::assertCount(2, $outcomeDeclarations);
     }
 }

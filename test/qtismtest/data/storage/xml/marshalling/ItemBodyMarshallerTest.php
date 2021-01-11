@@ -29,18 +29,18 @@ class ItemBodyMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(ItemBody::class, $itemBody);
         $this::assertEquals('my-body', $itemBody->getId());
         $itemBodyContent = $itemBody->getContent();
-        $this::assertEquals(2, count($itemBodyContent));
+        $this::assertCount(2, $itemBodyContent);
         $this::assertInstanceOf(H1::class, $itemBodyContent[0]);
         $this::assertInstanceOf(Div::class, $itemBodyContent[1]);
 
         $h1 = $itemBodyContent[0];
         $h1Content = $h1->getContent();
-        $this::assertEquals(1, count($h1Content));
+        $this::assertCount(1, $h1Content);
         $this::assertEquals('Super Item', $h1Content[0]->getContent());
 
         $div = $itemBodyContent[1];
         $divContent = $div->getContent();
-        $this::assertEquals(1, count($divContent));
+        $this::assertCount(1, $divContent);
         $this::assertEquals('This is some stimulus.', $divContent[0]->getContent());
     }
 

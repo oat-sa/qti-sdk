@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\ExpressionProcessingException;
 use qtism\runtime\expressions\operators\custom\Implode;
@@ -48,8 +49,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $processor = new Implode($expression, $operands);
         $this->expectException(ExpressionProcessingException::class);
         $this->expectExceptionMessage("The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts operands with a string baseType.");
-        $this->expectExceptionCode(OperatorProcessingException::WRONG_BASETYPE
-        );
+        $this->expectExceptionCode(OperatorProcessingException::WRONG_BASETYPE);
         $result = $processor->process();
     }
 
@@ -60,8 +60,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $processor = new Implode($expression, $operands);
         $this->expectException(ExpressionProcessingException::class);
         $this->expectExceptionMessage("The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts a first operand with single cardinality.");
-        $this->expectExceptionCode(OperatorProcessingException::WRONG_CARDINALITY
-        );
+        $this->expectExceptionCode(OperatorProcessingException::WRONG_CARDINALITY);
         $result = $processor->process();
     }
 
@@ -72,8 +71,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $processor = new Implode($expression, $operands);
         $this->expectException(ExpressionProcessingException::class);
         $this->expectExceptionMessage("The 'qtism.runtime.expressions.operators.custom.Implode' custom operator only accepts a second operand with multiple or ordered cardinality.");
-        $this->expectExceptionCode(OperatorProcessingException::WRONG_CARDINALITY
-        );
+        $this->expectExceptionCode(OperatorProcessingException::WRONG_CARDINALITY);
         $result = $processor->process();
     }
 
@@ -100,6 +98,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

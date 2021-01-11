@@ -44,7 +44,7 @@ class DivMarshallerTest extends QtiSmTestCase
         $this::assertEquals('ui-pane', $div->getClass());
 
         $mainContainerContent = $div->getContent();
-        $this::assertEquals(5, count($mainContainerContent));
+        $this::assertCount(5, $mainContainerContent);
         $this::assertInstanceOf(TextRun::class, $mainContainerContent[0]);
         $this::assertInstanceOf(Div::class, $mainContainerContent[1]);
         $this::assertInstanceOf(TextRun::class, $mainContainerContent[2]);
@@ -54,43 +54,43 @@ class DivMarshallerTest extends QtiSmTestCase
         $menu = $mainContainerContent[1];
         $this::assertEquals('menu', $menu->getId());
         $menuContent = $menu->getContent();
-        $this::assertEquals(3, count($menuContent));
+        $this::assertCount(3, $menuContent);
         $this::assertInstanceOf(TextRun::class, $menuContent[0]);
         $this::assertInstanceOf(Ul::class, $menuContent[1]);
         $this::assertInstanceOf(TextRun::class, $menuContent[2]);
 
         $list = $menuContent[1];
         $listContent = $list->getContent();
-        $this::assertEquals(4, count($listContent));
+        $this::assertCount(4, $listContent);
 
         $li1 = $listContent[0];
         $this::assertInstanceOf(Li::class, $li1);
         $liContent = $li1->getContent();
-        $this::assertEquals(1, count($liContent));
+        $this::assertCount(1, $liContent);
         $this::assertEquals('Start the Game', $liContent[0]->getContent());
 
         $li2 = $listContent[1];
         $this::assertInstanceOf(Li::class, $li2);
         $liContent = $li2->getContent();
-        $this::assertEquals(1, count($liContent));
+        $this::assertCount(1, $liContent);
         $this::assertEquals('Configure Inputs', $liContent[0]->getContent());
 
         $li3 = $listContent[2];
         $this::assertInstanceOf(Li::class, $li3);
         $liContent = $li3->getContent();
-        $this::assertEquals(1, count($liContent));
+        $this::assertCount(1, $liContent);
         $this::assertEquals('Hall of Fame', $liContent[0]->getContent());
 
         $li4 = $listContent[3];
         $this::assertInstanceOf(Li::class, $li4);
         $liContent = $li4->getContent();
-        $this::assertEquals(1, count($liContent));
+        $this::assertCount(1, $liContent);
         $this::assertEquals('Quit', $liContent[0]->getContent());
 
         $content = $mainContainerContent[3];
         $this::assertEquals('content', $content->getId());
         $contentContent = $content->getContent();
-        $this::assertEquals(5, count($contentContent));
+        $this::assertCount(5, $contentContent);
         $this::assertInstanceOf(TextRun::class, $contentContent[0]);
         $this::assertInstanceOf(H1::class, $contentContent[1]);
         $this::assertInstanceOf(TextRun::class, $contentContent[2]);
@@ -99,19 +99,19 @@ class DivMarshallerTest extends QtiSmTestCase
 
         $h1 = $contentContent[1];
         $h1Content = $h1->getContent();
-        $this::assertEquals(1, count($h1Content));
+        $this::assertCount(1, $h1Content);
         $this::assertEquals('Escape from Death Star', $h1Content[0]->getContent());
 
         $p = $contentContent[3];
         $this::assertEquals('short-story', $p->getClass());
         $pContent = $p->getContent();
-        $this::assertEquals(3, count($pContent));
+        $this::assertCount(3, $pContent);
         $this::assertEquals('An ', $pContent[0]->getContent());
         $this::assertEquals(' adventure.', $pContent[2]->getContent());
 
         $strong = $pContent[1];
         $strongContent = $strong->getContent();
-        $this::assertEquals(1, count($strongContent));
+        $this::assertCount(1, $strongContent);
         $this::assertEquals('incredible', $strongContent[0]->getContent());
     }
 

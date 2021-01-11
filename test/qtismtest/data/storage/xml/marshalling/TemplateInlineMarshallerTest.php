@@ -39,7 +39,7 @@ class TemplateInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals(ShowHide::SHOW, $component->getShowHide());
 
         $content = $component->getContent();
-        $this::assertEquals(1, count($content));
+        $this::assertCount(1, $content);
         $this::assertEquals('Inline ...', $content[0]->getContent());
     }
 }

@@ -30,7 +30,7 @@ class UtilsTest extends QtiSmTestCase
     {
         $value = Utils::stringToDatatype($string, BaseType::INTEGER);
         $this::assertIsInt($value);
-        $this::assertTrue($value === $expected);
+        $this::assertSame($expected, $value);
     }
 
     /**
@@ -52,7 +52,7 @@ class UtilsTest extends QtiSmTestCase
     {
         $value = Utils::stringToDatatype($string, BaseType::FLOAT);
         $this::assertIsFloat($value);
-        $this::assertTrue($value === $expected);
+        $this::assertSame($expected, $value);
     }
 
     /**
@@ -74,7 +74,7 @@ class UtilsTest extends QtiSmTestCase
     {
         $value = Utils::stringToDatatype($string, BaseType::BOOLEAN);
         $this::assertIsBool($value);
-        $this::assertTrue($expected === $value);
+        $this::assertSame($expected, $value);
     }
 
     /**
@@ -88,7 +88,7 @@ class UtilsTest extends QtiSmTestCase
     {
         $value = Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
         $this::assertIsString($type);
-        $this::assertTrue($expected === $value);
+        $this::assertSame($expected, $value);
     }
 
     /**

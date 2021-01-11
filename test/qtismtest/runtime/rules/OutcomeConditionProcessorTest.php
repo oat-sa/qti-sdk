@@ -108,7 +108,7 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
         if ($expected === null) {
             $this::assertSame($expected, $value);
         } else {
-            $this::assertTrue($expected === $value->getValue());
+            $this::assertSame($expected, $value->getValue());
         }
     }
 

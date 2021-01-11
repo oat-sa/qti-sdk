@@ -59,7 +59,7 @@ class TemplateProcessingMarshallerTest extends QtiSmTestCase
         $templateProcessing = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this::assertInstanceOf(TemplateProcessing::class, $templateProcessing);
         $templateRules = $templateProcessing->getTemplateRules();
-        $this::assertEquals(3, count($templateRules));
+        $this::assertCount(3, $templateRules);
 
         $templateConstraint = $templateRules[0];
         $this::assertInstanceOf(TemplateConstraint::class, $templateConstraint);

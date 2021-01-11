@@ -167,7 +167,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Up to you!', $correctResponse->getInterpretation());
 
         $values = $correctResponse->getValues();
-        $this::assertEquals(2, count($values));
+        $this::assertCount(2, $values);
 
         $this::assertInstanceOf(Value::class, $values[0]);
         $this::assertInstanceOf(QtiDuration::class, $values[0]->getValue());
@@ -198,7 +198,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $matchTable = $component->getLookupTable();
         $this::assertInstanceOf(MatchTable::class, $matchTable);
         $entries = $matchTable->getMatchTableEntries();
-        $this::assertEquals(2, count($entries));
+        $this::assertCount(2, $entries);
 
         $this::assertIsInt($entries[0]->getSourceValue());
         $this::assertEquals(1, $entries[0]->getSourceValue());

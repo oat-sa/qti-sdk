@@ -74,14 +74,14 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Prompt...', $promptContent[0]->getContent());
 
         $choices = $component->getAssociableHotspots();
-        $this::assertEquals(3, count($choices));
+        $this::assertCount(3, $choices);
 
         $this::assertEquals('choice1', $choices[0]->getIdentifier());
         $this::assertEquals('choice2', $choices[1]->getIdentifier());
         $this::assertEquals('choice3', $choices[2]->getIdentifier());
 
         $gapImgs = $component->getGapImgs();
-        $this::assertEquals(3, count($gapImgs));
+        $this::assertCount(3, $gapImgs);
 
         $this::assertEquals('gapImg1', $gapImgs[0]->getIdentifier());
         $this::assertEquals('gapImg2', $gapImgs[1]->getIdentifier());

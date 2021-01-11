@@ -254,15 +254,15 @@ class ContainerTest extends QtiSmTestCase
         $container[] = new QtiString('String!');
 
         $clone = clone $container;
-        $this::assertFalse($clone === $container);
-        $this::assertFalse($clone[0] === $container[0]);
-        $this::assertFalse($clone[1] === $container[1]);
-        $this::assertFalse($clone[2] === $container[2]);
-        $this::assertFalse($clone[3] === $container[3]);
-        $this::assertFalse($clone[4] === $container[4]);
-        $this::assertFalse($clone[5] === $container[5]);
-        $this::assertFalse($clone[6] === $container[6]);
-        $this::assertFalse($clone[7] === $container[7]);
+        $this::assertNotSame($clone, $container);
+        $this::assertNotSame($clone[0], $container[0]);
+        $this::assertNotSame($clone[1], $container[1]);
+        $this::assertNotSame($clone[2], $container[2]);
+        $this::assertNotSame($clone[3], $container[3]);
+        $this::assertNotSame($clone[4], $container[4]);
+        $this::assertNotSame($clone[5], $container[5]);
+        $this::assertNotSame($clone[6], $container[6]);
+        $this::assertNotSame($clone[7], $container[7]);
     }
 
     public function testContains()

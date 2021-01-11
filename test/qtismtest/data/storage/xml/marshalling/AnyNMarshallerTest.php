@@ -56,6 +56,6 @@ class AnyNMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(AnyN::class, $component);
         $this::assertEquals(1, $component->getMin());
         $this::assertEquals(2, $component->getMax());
-        $this::assertEquals(3, count($component->getExpressions()));
+        $this::assertCount(3, $component->getExpressions());
     }
 }

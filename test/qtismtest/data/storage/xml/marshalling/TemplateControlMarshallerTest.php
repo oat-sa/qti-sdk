@@ -45,7 +45,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(TemplateIf::class, $templateIf);
         $this::assertInstanceOf(BaseValue::class, $templateIf->getExpression());
         $templateRules = $templateIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
         $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }
@@ -86,7 +86,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(BaseValue::class, $templateIf->getExpression());
 
         $templateRules = $templateIf->getTemplateRules();
-        $this::assertEquals(2, count($templateRules));
+        $this::assertCount(2, $templateRules);
 
         $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
         $this::assertEquals('tpl1', $templateRules[0]->getIdentifier());
@@ -127,7 +127,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(TemplateElseIf::class, $templateElseIf);
         $this::assertInstanceOf(BaseValue::class, $templateElseIf->getExpression());
         $templateRules = $templateElseIf->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
         $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }
@@ -157,7 +157,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $templateElse = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this::assertInstanceOf(TemplateElse::class, $templateElse);
         $templateRules = $templateElse->getTemplateRules();
-        $this::assertEquals(1, count($templateRules));
+        $this::assertCount(1, $templateRules);
         $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
         $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }

@@ -89,7 +89,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10), null]);
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
-        $this::assertTrue($result === null);
+        $this::assertNull($result);
     }
 
     public function testNotEnoughOperands()

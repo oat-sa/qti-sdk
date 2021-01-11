@@ -37,14 +37,14 @@ class OperatorMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this::assertInstanceOf(Sum::class, $component);
-        $this::assertEquals(2, count($component->getExpressions()));
+        $this::assertCount(2, $component->getExpressions());
 
         $subExpressions = $component->getExpressions();
         $sub1 = $subExpressions[0];
         $sub2 = $subExpressions[1];
 
-        $this::assertEquals(2, count($sub1->getExpressions()));
-        $this::assertEquals(2, count($sub2->getExpressions()));
+        $this::assertCount(2, $sub1->getExpressions());
+        $this::assertCount(2, $sub2->getExpressions());
 
         $sub1Expressions = $sub1->getExpressions();
         $sub11 = $sub1Expressions[0];

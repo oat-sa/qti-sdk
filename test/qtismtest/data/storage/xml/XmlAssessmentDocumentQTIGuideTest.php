@@ -155,7 +155,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 
         // -- OutcomeDeclarations
         $outcomeDeclarations = $assessmentTest->getDocumentComponent()->getOutcomeDeclarations();
-        $this::assertEquals(2, count($outcomeDeclarations));
+        $this::assertCount(2, $outcomeDeclarations);
 
         $outcomeDeclaration = $outcomeDeclarations['SCORE'];
         $this::assertEquals('SCORE', $outcomeDeclaration->getIdentifier());
@@ -165,7 +165,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $this::assertInstanceOf(DefaultValue::class, $defaultValue);
         $values = $defaultValue->getValues();
         $this::assertInstanceOf(ValueCollection::class, $values);
-        $this::assertEquals(1, count($values));
+        $this::assertCount(1, $values);
         $value = $values[0];
         $this::assertInstanceOf(Value::class, $value);
         $this::assertIsFloat($value->getValue());
@@ -179,7 +179,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $this::assertInstanceOf(DefaultValue::class, $defaultValue);
         $values = $defaultValue->getValues();
         $this::assertInstanceOf(ValueCollection::class, $values);
-        $this::assertEquals(1, count($values));
+        $this::assertCount(1, $values);
         $value = $values[0];
         $this::assertInstanceOf(Value::class, $value);
         $this::assertIsFloat($value->getValue());
@@ -187,7 +187,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 
         // -- TestParts
         $testParts = $assessmentTest->getDocumentComponent()->getTestParts();
-        $this::assertEquals(1, count($testParts));
+        $this::assertCount(1, $testParts);
         $testPart = $testParts['testpartID'];
         $this::assertInstanceOf(TestPart::class, $testPart);
         $this::assertEquals('testpartID', $testPart->getIdentifier());
@@ -196,7 +196,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 
         // -- AssessmentSections
         $assessmentSections = $testPart->getAssessmentSections();
-        $this::assertEquals(1, count($assessmentSections));
+        $this::assertCount(1, $assessmentSections);
         $assessmentSection = $assessmentSections['Sektion_181865064'];
         $this::assertInstanceOf(AssessmentSection::class, $assessmentSection);
         $this::assertEquals('Sektion_181865064', $assessmentSection->getIdentifier());
@@ -207,7 +207,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         // -- AssessmentItemRefs
         $assessmentItemRefs = $assessmentSection->getSectionParts();
         $this::assertInstanceOf(SectionPartCollection::class, $assessmentItemRefs);
-        $this::assertEquals(13, count($assessmentItemRefs));
+        $this::assertCount(13, $assessmentItemRefs);
 
         $expectedItems = [
             ['Choicetruefalse_176040516', 'Choicetruefalse_176040516.xml'],
@@ -238,7 +238,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         // OutcomeProcessing
         $outcomeProcessing = $assessmentTest->getDocumentComponent()->getOutcomeProcessing();
         $this::assertInstanceOf(OutcomeProcessing::class, $outcomeProcessing);
-        $this::assertEquals(1, count($outcomeProcessing->getOutcomeRules()));
+        $this::assertCount(1, $outcomeProcessing->getOutcomeRules());
 
         $outcomeRules = $outcomeProcessing->getOutcomeRules();
         $setOutcomeValue = $outcomeRules[0];
@@ -260,7 +260,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
 
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
-        $this::assertTrue(file_exists($file));
+        $this::assertFileExists($file);
 
         $doc = new XmlDocument('2.1');
         $doc->load($file);
@@ -279,7 +279,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $this::assertEquals('http://www.imsglobal.org/xsd/imsqti_v2p1', $outcomeDeclarationElt->namespaceURI);
 
         unlink($file);
-        $this::assertFalse(file_exists($file));
+        $this::assertFileNotExists($file);
     }
 
     /**

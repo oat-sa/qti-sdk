@@ -47,10 +47,10 @@ class AssessmentItemSessionStoreTest extends QtiSmTestCase
         $store->addAssessmentItemSession(new AssessmentItemSession($itemRef1, $sessionManager), 0);
         $store->addAssessmentItemSession(new AssessmentItemSession($itemRef1, $sessionManager), 1);
         $store->addAssessmentItemSession(new AssessmentItemSession($itemRef1, $sessionManager), 3);
-        $this::assertEquals(3, count($store->getAllAssessmentItemSessions()));
+        $this::assertCount(3, $store->getAllAssessmentItemSessions());
 
         $store->addAssessmentItemSession(new AssessmentItemSession($itemRef2, $sessionManager), 0);
         $store->addAssessmentItemSession(new AssessmentItemSession($itemRef3, $sessionManager), 0);
-        $this::assertEquals(5, count($store->getAllAssessmentItemSessions()));
+        $this::assertCount(5, $store->getAllAssessmentItemSessions());
     }
 }

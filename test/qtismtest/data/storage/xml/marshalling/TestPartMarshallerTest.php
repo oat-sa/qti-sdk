@@ -124,15 +124,15 @@ class TestPartMarshallerTest extends QtiSmTestCase
         $this::assertTrue($assessmentSections['section1']->hasSelection());
 
         $assessmentSection = $assessmentSections['section1'];
-        $this::assertEquals(3, count($assessmentSection->getSectionParts()));
+        $this::assertCount(3, $assessmentSection->getSectionParts());
 
         $branchRules = $component->getBranchRules();
-        $this::assertEquals(1, count($branchRules));
+        $this::assertCount(1, $branchRules);
         $this::assertEquals('Q05', $branchRules[0]->getTarget());
         $branchRuleCondition = $this::assertInstanceOf(Equal::class, $branchRules[0]->getExpression());
 
         $preConditions = $component->getPreConditions();
-        $this::assertEquals(1, count($preConditions));
+        $this::assertCount(1, $preConditions);
         $this::assertInstanceOf(NotOperator::class, $preConditions[0]->getExpression());
 
         $this::assertTrue($component->hasItemSessionControl());

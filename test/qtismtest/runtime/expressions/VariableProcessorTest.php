@@ -42,7 +42,7 @@ class VariableProcessorTest extends QtiSmTestCase
         $this::assertInstanceOf(OutcomeVariable::class, $state->getVariable('var1'));
 
         $variableProcessor = new VariableProcessor($variableExpr);
-        $this::assertTrue($variableProcessor->process() === null); // State is raw.
+        $this::assertNull($variableProcessor->process()); // State is raw.
 
         $variableProcessor->setState($state); // State is populated with var1.
         $result = $variableProcessor->process();

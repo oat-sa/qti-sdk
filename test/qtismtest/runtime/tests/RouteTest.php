@@ -63,34 +63,34 @@ class RouteTest extends QtiSmRouteTestCase
 
         // What are the RouteItem objects involved in each AssessmentItemRef ?
         $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS1['Q1']);
-        $this::assertEquals(1, count($involved));
+        $this::assertCount(1, $involved);
         $this::assertEquals('Q1', $involved[0]->getAssessmentItemRef()->getIdentifier());
 
         $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS1['Q2']);
-        $this::assertEquals(1, count($involved));
+        $this::assertCount(1, $involved);
         $this::assertEquals('Q2', $involved[0]->getAssessmentItemRef()->getIdentifier());
 
         $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS1['Q3']);
-        $this::assertEquals(1, count($involved));
+        $this::assertCount(1, $involved);
         $this::assertEquals('Q3', $involved[0]->getAssessmentItemRef()->getIdentifier());
 
         $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS1['Q4']);
-        $this::assertEquals(1, count($involved));
+        $this::assertCount(1, $involved);
         $this::assertEquals('Q4', $involved[0]->getAssessmentItemRef()->getIdentifier());
 
         $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS2['Q5']);
-        $this::assertEquals(1, count($involved));
+        $this::assertCount(1, $involved);
         $this::assertEquals('Q5', $involved[0]->getAssessmentItemRef()->getIdentifier());
 
         $involved = $route->getRouteItemsByAssessmentItemRef($sectionPartsS2['Q6']);
-        $this::assertEquals(1, count($involved));
+        $this::assertCount(1, $involved);
         $this::assertEquals('Q6', $involved[0]->getAssessmentItemRef()->getIdentifier());
 
         // What are the RouteItem objects involded in part 'TP1'?
         $tp1RouteItems = $route->getRouteItemsByTestPart($testPart);
-        $this::assertEquals(6, count($tp1RouteItems));
+        $this::assertCount(6, $tp1RouteItems);
         $tp1RouteItems = $route->getRouteItemsByTestPart('TP1');
-        $this::assertEquals(6, count($tp1RouteItems));
+        $this::assertCount(6, $tp1RouteItems);
 
         try {
             $tp1RouteItems = $route->getRouteItemsByTestPart('TPX');
@@ -101,7 +101,7 @@ class RouteTest extends QtiSmRouteTestCase
 
         // What are the RouteItems objects involved in section 'S1'?
         $s1RouteItems = $route->getRouteItemsByAssessmentSection($assessmentSections['S1']);
-        $this::assertEquals(4, count($s1RouteItems));
+        $this::assertCount(4, $s1RouteItems);
         $this::assertEquals('Q1', $s1RouteItems[0]->getAssessmentItemRef()->getIdentifier());
         $this::assertEquals('Q2', $s1RouteItems[1]->getAssessmentItemRef()->getIdentifier());
         $this::assertEquals('Q3', $s1RouteItems[2]->getAssessmentItemRef()->getIdentifier());
@@ -109,7 +109,7 @@ class RouteTest extends QtiSmRouteTestCase
 
         // What are the RouteItems objects involved in section 'S2'?
         $s2RouteItems = $route->getRouteItemsByAssessmentSection('S2');
-        $this::assertEquals(2, count($s2RouteItems));
+        $this::assertCount(2, $s2RouteItems);
         $this::assertEquals('Q5', $s2RouteItems[0]->getAssessmentItemRef()->getIdentifier());
         $this::assertEquals('Q6', $s2RouteItems[1]->getAssessmentItemRef()->getIdentifier());
 
@@ -128,41 +128,41 @@ class RouteTest extends QtiSmRouteTestCase
         }
 
         $assessmentItemRefs = $route->getAssessmentItemRefs();
-        $this::assertEquals(6, count($assessmentItemRefs));
+        $this::assertCount(6, $assessmentItemRefs);
 
         // test to retrieve items by category.
         $mathRefs = $route->getAssessmentItemRefsByCategory('mathematics');
-        $this::assertEquals(3, count($mathRefs));
+        $this::assertCount(3, $mathRefs);
 
         $sciencesRefs = $route->getAssessmentItemRefsByCategory('sciences');
-        $this::assertEquals(1, count($sciencesRefs));
+        $this::assertCount(1, $sciencesRefs);
 
         $mathAndSciences = $route->getAssessmentItemRefsByCategory(new IdentifierCollection(['mathematics', 'sciences']));
-        $this::assertEquals(4, count($mathAndSciences));
+        $this::assertCount(4, $mathAndSciences);
 
         $expertRefs = $route->getAssessmentItemRefsByCategory('expert');
-        $this::assertEquals(2, count($expertRefs));
+        $this::assertCount(2, $expertRefs);
 
         // test to retrieve items by section.
         $section1Refs = $route->getAssessmentItemRefsBySection('S1');
-        $this::assertEquals(4, count($section1Refs));
+        $this::assertCount(4, $section1Refs);
 
         $section2Refs = $route->getAssessmentItemRefsBySection('S2');
-        $this::assertEquals(2, count($section2Refs));
+        $this::assertCount(2, $section2Refs);
 
         // test to retrieve items by section/category.
         $section1Refs = $route->getAssessmentItemRefsSubset('S1');
-        $this::assertEquals(4, count($section1Refs));
+        $this::assertCount(4, $section1Refs);
 
         $mathRefs = $route->getAssessmentItemRefsSubset('', new IdentifierCollection(['mathematics']));
-        $this::assertEquals(3, count($mathRefs));
+        $this::assertCount(3, $mathRefs);
 
         $s1MathRefs = $route->getAssessmentItemRefsSubset('S1', new IdentifierCollection(['mathematics']));
-        $this::assertEquals(2, count($s1MathRefs));
+        $this::assertCount(2, $s1MathRefs);
 
         // go by exclusion.
         $exclusionRefs = $route->getAssessmentItemRefsSubset('', null, new IdentifierCollection(['sciences', 'expert']));
-        $this::assertEquals(4, count($exclusionRefs));
+        $this::assertCount(4, $exclusionRefs);
         $this::assertTrue(isset($exclusionRefs['Q3']));
         $this::assertTrue(isset($exclusionRefs['Q4']));
         $this::assertTrue(isset($exclusionRefs['Q5']));
@@ -335,7 +335,7 @@ class RouteTest extends QtiSmRouteTestCase
     {
         $route = self::buildSimpleRoute();
         $routeItems = $route->getCurrentTestPartRouteItems();
-        $this::assertEquals(3, count($routeItems));
+        $this::assertCount(3, $routeItems);
         $this::assertEquals('Q1', $routeItems[0]->getAssessmentItemRef()->getIdentifier());
         $this::assertEquals('Q2', $routeItems[1]->getAssessmentItemRef()->getIdentifier());
         $this::assertEquals('Q3', $routeItems[2]->getAssessmentItemRef()->getIdentifier());

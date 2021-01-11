@@ -306,7 +306,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
             // MULTIPLE or ORDERED container.
             $this::assertEquals($originalValue->getCardinality(), $readValue->getCardinality());
             $this::assertEquals($readValue->getBaseType(), $readValue->getBaseType());
-            $this::assertTrue($readValue->equals($originalValue), $originalValue . ' != ' . $readValue);
+            $this::assertTrue($readValue->equals($originalValue));
         } elseif ($originalValue instanceof Comparable) {
             // Complex QTI Runtime object.
             $this::assertTrue($readValue->equals($originalValue));
@@ -596,8 +596,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this::assertEquals('P01', $routeItem->getTestPart()->getIdentifier());
         $this::assertIsInt($routeItem->getOccurence());
         $this::assertEquals(0, $routeItem->getOccurence());
-        $this::assertEquals(0, count($routeItem->getBranchRules()));
-        $this::assertEquals(0, count($routeItem->getPreConditions()));
+        $this::assertCount(0, $routeItem->getBranchRules());
+        $this::assertCount(0, $routeItem->getPreConditions());
     }
 
     public function testWriteRouteItem()
@@ -627,8 +627,8 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
         $this::assertEquals('P01', $routeItem->getTestPart()->getIdentifier());
         $this::assertIsInt($routeItem->getOccurence());
         $this::assertEquals(0, $routeItem->getOccurence());
-        $this::assertEquals(0, count($routeItem->getBranchRules()));
-        $this::assertEquals(0, count($routeItem->getPreConditions()));
+        $this::assertCount(0, $routeItem->getBranchRules());
+        $this::assertCount(0, $routeItem->getPreConditions());
     }
 
     public function testReadPendingResponses()
@@ -650,7 +650,7 @@ class QtiBinaryStreamAccessTest extends QtiSmTestCase
 
         $pendingResponses = $access->readPendingResponses($seeker);
         $state = $pendingResponses->getState();
-        $this::assertEquals(1, count($state));
+        $this::assertCount(1, $state);
         $this::assertInstanceOf(ResponseVariable::class, $state->getVariable('RESPONSE'));
         $this::assertEquals('ChoiceA', $state['RESPONSE']->getValue());
 

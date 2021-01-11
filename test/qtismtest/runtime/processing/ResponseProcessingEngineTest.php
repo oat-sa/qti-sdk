@@ -279,7 +279,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine = new ResponseProcessingEngine($responseProcessing);
         $engine->removeTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct');
 
-        $this::assertTrue(true, 'The template mapping removal should not produce any error.');
+        $this::assertTrue(true);
     }
 
     public function testNotOperator()

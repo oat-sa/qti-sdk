@@ -21,8 +21,8 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
     {
         $refCount = count($this->getNames());
 
-        $this::assertEquals($refCount, count($this->getConstants()));
-        $this::assertEquals($refCount, count($this->getKeys()));
+        $this::assertCount($refCount, $this->getConstants());
+        $this::assertCount($refCount, $this->getKeys());
     }
 
     public function testAsArray()

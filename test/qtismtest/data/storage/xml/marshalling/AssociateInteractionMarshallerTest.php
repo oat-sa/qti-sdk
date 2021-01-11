@@ -63,6 +63,6 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Prompt...', $content[0]->getContent());
 
         $simpleChoices = $component->getSimpleAssociableChoices();
-        $this::assertEquals(2, count($simpleChoices));
+        $this::assertCount(2, $simpleChoices);
     }
 }

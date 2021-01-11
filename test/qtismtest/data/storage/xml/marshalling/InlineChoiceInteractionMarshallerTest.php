@@ -61,6 +61,6 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
         $this::assertTrue($inlineChoiceInteraction->mustShuffle());
         $this::assertTrue($inlineChoiceInteraction->isRequired());
-        $this::assertEquals(3, count($inlineChoiceInteraction->getComponentsByClassName('inlineChoice')));
+        $this::assertCount(3, $inlineChoiceInteraction->getComponentsByClassName('inlineChoice'));
     }
 }

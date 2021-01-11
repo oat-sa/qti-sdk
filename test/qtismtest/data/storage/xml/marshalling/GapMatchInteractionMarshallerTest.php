@@ -62,12 +62,12 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         $this::assertFalse($gapMatch->mustShuffle());
 
         $gapChoices = $gapMatch->getGapChoices();
-        $this::assertEquals(2, count($gapChoices));
+        $this::assertCount(2, $gapChoices);
         $this::assertInstanceOf(GapText::class, $gapChoices[0]);
         $this::assertInstanceOf(GapImg::class, $gapChoices[1]);
 
         $gaps = $gapMatch->getComponentsByClassName('gap');
-        $this::assertEquals(2, count($gaps));
+        $this::assertCount(2, $gaps);
         $this::assertEquals('G1', $gaps[0]->getIdentifier());
         $this::assertEquals('G2', $gaps[1]->getIdentifier());
     }
