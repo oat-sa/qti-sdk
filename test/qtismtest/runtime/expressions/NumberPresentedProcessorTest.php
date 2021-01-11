@@ -20,9 +20,9 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
      *
      * @param NumberPresented $expression
      * @param array $expectedResults
-     * @throws PhpStorageException
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException
+     * @throws PhpStorageException
      */
     public function testNumberPresented(NumberPresented $expression, array $expectedResults)
     {

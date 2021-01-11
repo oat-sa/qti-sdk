@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\Statistics;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -28,6 +29,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      *
      * @param Container $container
      * @param float|null $expected
+     * @throws MarshallerNotFoundException
      */
     public function testMean(Container $container = null, $expected)
     {
@@ -42,6 +44,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      *
      * @param Container $container
      * @param float|null $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSampleVariance(Container $container = null, $expected)
     {
@@ -56,6 +59,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      *
      * @param Container $container
      * @param float|null $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSampleSD(Container $container = null, $expected)
     {
@@ -70,6 +74,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      *
      * @param Container $container
      * @param float|null $expected
+     * @throws MarshallerNotFoundException
      */
     public function testPopVariance(Container $container = null, $expected)
     {
@@ -84,6 +89,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      *
      * @param Container $container
      * @param float|null $expected
+     * @throws MarshallerNotFoundException
      */
     public function testPopSD(Container $container = null, $expected)
     {
@@ -96,6 +102,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @dataProvider wrongCardinalityProvider
      * @param array $operands
+     * @throws MarshallerNotFoundException
      */
     public function testWrongCardinality(array $operands)
     {
@@ -116,6 +123,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @dataProvider wrongBaseTypeProvider
      *
      * @param array $operands
+     * @throws MarshallerNotFoundException
      */
     public function testWrongBaseType(array $operands)
     {
@@ -251,6 +259,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @param $name
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($name)
     {

@@ -30,9 +30,9 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
      *
      * @param TestVariables $expression
      * @param int $expectedResult
-     * @throws PhpStorageException
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException
+     * @throws PhpStorageException
      */
     public function testTestVariables(TestVariables $expression, $expectedResult)
     {

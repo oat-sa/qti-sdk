@@ -9,6 +9,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\expressions\operators\RoundingMode;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\common\State;
@@ -126,6 +127,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
      * @param $roundingMode
      * @param $figures
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($roundingMode, $figures)
     {

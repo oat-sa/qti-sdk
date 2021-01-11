@@ -6,6 +6,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -21,9 +22,9 @@ class LcmProcessorTest extends QtiSmTestCase
 {
     /**
      * @dataProvider lcmProvider
-     *
      * @param array $operands
      * @param int $expected
+     * @throws MarshallerNotFoundException
      */
     public function testLcm(array $operands, $expected)
     {
@@ -61,8 +62,8 @@ class LcmProcessorTest extends QtiSmTestCase
 
     /**
      * @dataProvider lcmWithNullValuesProvider
-     *
      * @param array $operands
+     * @throws MarshallerNotFoundException
      */
     public function testGcdWithNullValues(array $operands)
     {
@@ -110,6 +111,7 @@ class LcmProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

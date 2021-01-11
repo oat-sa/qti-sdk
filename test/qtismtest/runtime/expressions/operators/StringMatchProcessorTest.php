@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\StringMatchProcessor;
@@ -99,6 +100,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
     /**
      * @param bool $caseSensitive
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($caseSensitive = true)
     {

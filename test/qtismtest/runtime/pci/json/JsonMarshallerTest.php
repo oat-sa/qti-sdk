@@ -182,7 +182,7 @@ class JsonMarshallerTest extends QtiSmTestCase
         $returnValue[] = [$fileHash, json_encode(
             ['base' => [FileHash::FILE_HASH_KEY => ['id' => $id, 'mime' => $mimeType, 'name' => $filename, 'data' => $sha256]]]
         )];
-        
+
         return $returnValue;
     }
 

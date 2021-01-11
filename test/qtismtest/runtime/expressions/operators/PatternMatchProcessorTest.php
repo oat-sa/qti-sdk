@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -25,6 +26,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase
      * @param string $string
      * @param string $pattern
      * @param bool $expected
+     * @throws MarshallerNotFoundException
      */
     public function testPatternMatch($string, $pattern, $expected)
     {
@@ -39,6 +41,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase
      *
      * @param string $string
      * @param string $pattern
+     * @throws MarshallerNotFoundException
      */
     public function testNull($string, $pattern)
     {
@@ -130,6 +133,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase
     /**
      * @param $pattern
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($pattern)
     {

@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\TruncateProcessor;
@@ -168,6 +169,7 @@ class TruncateProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {
@@ -195,8 +197,8 @@ class TruncateProcessorTest extends QtiSmTestCase
      * @dataProvider provider
      * @param float $val
      * @param int $expected
+     * @throws MarshallerNotFoundException
      */
-
     public function testForProvider($val, $expected)
     {
         $expression = $this->createFakeExpression();
