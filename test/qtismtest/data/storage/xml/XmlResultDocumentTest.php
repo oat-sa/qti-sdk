@@ -24,7 +24,7 @@
 namespace qtismtest\data\storage\xml;
 
 use DateTime;
-use DOMDocument;
+use InvalidArgumentException;
 use qtism\data\results\AssessmentResult;
 use qtism\data\results\Context;
 use qtism\data\results\SessionIdentifier;
@@ -86,14 +86,9 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $xmlDoc = new XmlResultDocument();
         $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result.xml', true);
 
-        $str = new DOMDocument();
-        $str->loadXML($xmlDoc->saveToString(false));
+        $expected = file_get_contents(self::samplesDir() . 'results/simple-assessment-result-saved-to-string.xml');
 
-        $expected = '<assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_result_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd"><context sourcedId="fixture-sourcedId"><sessionIdentifier sourceID="http://sessionIdentifier1-sourceID" identifier="sessionIdentifier1-id"/><sessionIdentifier sourceID="http://sessionIdentifier2-sourceID" identifier="sessionIdentifier2-id"/></context><testResult identifier="fixture-test-identifier" datestamp="2018-06-27T09:41:45.529"><responseVariable identifier="response-identifier" cardinality="single"><correctResponse><value>fixture-test-value1</value><value>fixture-test-value2</value></correctResponse><candidateResponse><value fieldIdentifier="test-id-1">fixture-test-value1</value><value fieldIdentifier="test-id-2">fixture-test-value2</value><value fieldIdentifier="test-id-3">fixture-test-value3</value></candidateResponse></responseVariable><templateVariable identifier="response-identifier" cardinality="single"><value>test1</value><value>test2</value></templateVariable></testResult><itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529" sessionStatus="final" sequenceIndex="2"><candidateComment>comment-fixture</candidateComment><responseVariable identifier="fixture-identifier" cardinality="single" baseType="string" choiceSequence="value-id-1"><correctResponse><value>fixture-value1</value><value>fixture-value2</value></correctResponse><candidateResponse><value fieldIdentifier="value-id-1">fixture-value1</value><value fieldIdentifier="value-id-2">fixture-value2</value><value fieldIdentifier="value-id-3">fixture-value3</value></candidateResponse></responseVariable><outcomeVariable identifier="fixture-identifier" cardinality="single" baseType="string" view="candidate" interpretation="fixture-interpretation" longInterpretation="http://fixture-interpretation" normalMinimum="2" normalMaximum="3" masteryValue="4"><value>fixture-value1</value><value>fixture-value2</value><value>fixture-value3</value></outcomeVariable><templateVariable identifier="fixture-identifier" cardinality="single" baseType="string"><value>fixture-value1</value><value>fixture-value2</value><value>fixture-value3</value></templateVariable></itemResult><itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45+0000" sessionStatus="final" sequenceIndex="2"><responseVariable identifier="fixture-identifier" cardinality="single" baseType="string" choiceSequence="value-id-1"><correctResponse><value>fixture-value1</value><value>fixture-value2</value></correctResponse><candidateResponse><value fieldIdentifier="value-id-1">fixture-value1</value><value fieldIdentifier="value-id-2">fixture-value2</value><value fieldIdentifier="value-id-3">fixture-value3</value></candidateResponse></responseVariable><outcomeVariable identifier="fixture-identifier" cardinality="single" baseType="string" view="candidate" interpretation="fixture-interpretation" longInterpretation="http://fixture-interpretation" normalMinimum="2" normalMaximum="3" masteryValue="4"><value>fixture-value1</value><value>fixture-value2</value><value>fixture-value3</value></outcomeVariable></itemResult></assessmentResult>';
-        $expectedDom = new DOMDocument();
-        $expectedDom->loadXML($expected);
-
-        $this::assertEqualXMLStructure($expectedDom->firstChild, $str->firstChild);
+        $this::assertEquals($expected, $xmlDoc->saveToString(true));
     }
 
     /**
@@ -121,12 +116,69 @@ class XmlResultDocumentTest extends QtiSmTestCase
         ];
     }
 
-    public function testInferVersionWithMissingNamespaceThrowsException()
+    public function testInferVersionWithMissingNamespaceReturnsDefaultVersion()
+    {
+        $xmlDoc = new XmlResultDocument();
+
+        $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-namespace.xml');
+
+        $this::assertEquals('2.1.0', $xmlDoc->getVersion());
+    }
+
+    public function testInferVersionWithWrongNamespaceThrowsException()
     {
         $xmlDoc = new XmlResultDocument();
 
         $this->expectException(XmlStorageException::class);
 
-        $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-namespace.xml');
+        $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-wrong-namespace.xml');
+    }
+
+    /**
+     * @dataProvider changeVersionProvider
+     * @param string $fromVersion
+     * @param string $fromFile
+     * @param string $toVersion
+     * @param string $toFile
+     * @throws XmlStorageException
+     */
+    public function testChangeVersion($fromVersion, $fromFile, $toVersion, $toFile)
+    {
+        $doc = new XmlResultDocument($fromVersion);
+        $doc->load($fromFile, true);
+
+        $doc->changeVersion($toVersion);
+
+        $expected = new XmlResultDocument($toVersion);
+        $expected->load($toFile, true);
+
+        $this::assertEquals($expected->getDomDocument()->documentElement, $doc->getDomDocument()->documentElement);
+    }
+
+    /**
+     * @return array
+     */
+    public function changeVersionProvider(): array
+    {
+        $path = self::samplesDir() . 'results/simple-assessment-result';
+        return [
+            ['2.1', $path . '.xml', '2.2', $path . '-v2p2.xml'],
+            ['2.2', $path . '-v2p2.xml', '2.1', $path . '.xml'],
+        ];
+    }
+
+    public function testChangeVersionWithUnknownVersionThrowsException()
+    {
+        $wrongVersion = '36.15';
+        $patchedWrongVersion = $wrongVersion . '.0';
+        $file21 = self::samplesDir() . 'results/simple-assessment-result.xml';
+
+        $doc = new XmlResultDocument('2.1');
+        $doc->load($file21, true);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('QTI Result Report is not supported for version "' . $patchedWrongVersion . '".');
+
+        $doc->changeVersion($wrongVersion);
     }
 }

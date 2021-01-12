@@ -46,7 +46,7 @@ class XmlUtilsTest extends QtiSmTestCase
             ],
         ];
     }
-    
+
     /**
      * @dataProvider getXsdLocationProvider
      *

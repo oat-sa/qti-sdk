@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p2"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_result_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_result_v2p2.xsd">
+<assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_result_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd">
   <context sourcedId="fixture-sourcedId">
     <sessionIdentifier sourceID="http://sessionIdentifier1-sourceID" identifier="sessionIdentifier1-id"/>
     <sessionIdentifier sourceID="http://sessionIdentifier2-sourceID" identifier="sessionIdentifier2-id"/>
   </context>
-  <testResult identifier="fixture-test-identifier" datestamp="2018-06-27T09:41:45.529">
+  <testResult identifier="fixture-test-identifier" datestamp="2018-06-27T09:41:45.529000Z">
     <responseVariable identifier="response-identifier" cardinality="single">
       <correctResponse>
         <value>fixture-test-value1</value>
@@ -23,8 +21,9 @@
       <value>test2</value>
     </templateVariable>
   </testResult>
-  <itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529" sessionStatus="final" sequenceIndex="2">
-    <responseVariable cardinality="single" identifier="fixture-identifier" baseType="string" choiceSequence="value-id-1">
+  <itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529000Z" sessionStatus="final" sequenceIndex="2">
+    <candidateComment>comment-fixture</candidateComment>
+    <responseVariable identifier="fixture-identifier" cardinality="single" baseType="string" choiceSequence="value-id-1">
       <correctResponse>
         <value>fixture-value1</value>
         <value>fixture-value2</value>
@@ -35,20 +34,19 @@
         <value fieldIdentifier="value-id-3">fixture-value3</value>
       </candidateResponse>
     </responseVariable>
-    <templateVariable cardinality="single" identifier="fixture-identifier" baseType="string">
-      <value>fixture-value1</value>
-      <value>fixture-value2</value>
-      <value>fixture-value3</value>
-    </templateVariable>
-    <outcomeVariable cardinality="single" identifier="fixture-identifier" baseType="string" view="candidate" interpretation="fixture-interpretation" longInterpretation="http://fixture-interpretation" normalMinimum="2" normalMaximum="3" masteryValue="4">
+    <outcomeVariable identifier="fixture-identifier" cardinality="single" baseType="string" view="candidate" interpretation="fixture-interpretation" longInterpretation="http://fixture-interpretation" normalMinimum="2" normalMaximum="3" masteryValue="4">
       <value>fixture-value1</value>
       <value>fixture-value2</value>
       <value>fixture-value3</value>
     </outcomeVariable>
-    <candidateComment>comment-fixture</candidateComment>
+    <templateVariable identifier="fixture-identifier" cardinality="single" baseType="string">
+      <value>fixture-value1</value>
+      <value>fixture-value2</value>
+      <value>fixture-value3</value>
+    </templateVariable>
   </itemResult>
-  <itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529" sessionStatus="final" sequenceIndex="2">
-    <responseVariable cardinality="single" identifier="fixture-identifier" baseType="string" choiceSequence="value-id-1">
+  <itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529000Z" sessionStatus="final" sequenceIndex="2">
+    <responseVariable identifier="fixture-identifier" cardinality="single" baseType="string" choiceSequence="value-id-1">
       <correctResponse>
         <value>fixture-value1</value>
         <value>fixture-value2</value>
@@ -59,7 +57,7 @@
         <value fieldIdentifier="value-id-3">fixture-value3</value>
       </candidateResponse>
     </responseVariable>
-    <outcomeVariable cardinality="single" identifier="fixture-identifier" baseType="string" view="candidate" interpretation="fixture-interpretation" longInterpretation="http://fixture-interpretation" normalMinimum="2" normalMaximum="3" masteryValue="4">
+    <outcomeVariable identifier="fixture-identifier" cardinality="single" baseType="string" view="candidate" interpretation="fixture-interpretation" longInterpretation="http://fixture-interpretation" normalMinimum="2" normalMaximum="3" masteryValue="4">
       <value>fixture-value1</value>
       <value>fixture-value2</value>
       <value>fixture-value3</value>
