@@ -109,13 +109,13 @@ class ExtendedTestPartMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this::assertInstanceOf(ExtendedTestPart::class, $component);
-        $this::assertEquals(1, count($component->getPreConditions()));
-        $this::assertEquals(1, count($component->getBranchRules()));
+        $this::assertCount(1, $component->getPreConditions());
+        $this::assertCount(1, $component->getBranchRules());
         $this::assertTrue($component->getItemSessionControl()->mustShowSolution());
         $this::assertTrue($component->getTimeLimits()->getMaxTime()->equals(new QtiDuration('PT1M40S')));
-        $this::assertEquals(1, count($component->getTestFeedbacks()));
-        $this::assertEquals(1, count($component->getTestFeedbackRefs()));
-        $this::assertEquals(2, count($component->getAssessmentSections()));
+        $this::assertCount(1, $component->getTestFeedbacks());
+        $this::assertCount(1, $component->getTestFeedbackRefs());
+        $this::assertCount(2, $component->getAssessmentSections());
 
         // Check that we got ExtendedAssessmentSections.
         $assessmentSections = $component->getAssessmentSections();

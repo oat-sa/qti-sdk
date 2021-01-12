@@ -312,7 +312,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiFloat(NAN)]);
         $processor = new RoundToProcessor($expr, $operands);
         $result = $processor->process();
-        $this::assertTrue($result === null);
+        $this::assertNull($result);
     }
 
     public function testInfinity()
@@ -326,11 +326,11 @@ class RoundToProcessorTest extends QtiSmTestCase
         $processor = new RoundToProcessor($expr, $operands);
         $result = $processor->process();
         $this::assertTrue(is_infinite($result->getValue()));
-        $this::assertTrue(INF === $result->getValue());
+        $this::assertSame(INF, $result->getValue());
 
         $processor->setOperands(new OperandsCollection([new QtiFloat(-INF)]));
         $result = $processor->process();
         $this::assertTrue(is_infinite($result->getValue()));
-        $this::assertTrue(-INF === $result->getValue());
+        $this::assertSame(-INF, $result->getValue());
     }
 }

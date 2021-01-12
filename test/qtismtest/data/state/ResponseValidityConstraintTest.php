@@ -81,11 +81,11 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
             new AssociationValidityConstraint('IDENTIFIER', 0, 1)
         );
 
-        $this::assertEquals(1, count($responseValidityConstraint->getAssociationValidityConstraints()));
+        $this::assertCount(1, $responseValidityConstraint->getAssociationValidityConstraints());
         $this::assertEquals('IDENTIFIER', $responseValidityConstraint->getAssociationValidityConstraints()[0]->getIdentifier());
 
         $responseValidityConstraint->removeAssociationValidityConstraint($responseValidityConstraint->getAssociationValidityConstraints()[0]);
-        $this::assertEquals(0, count($responseValidityConstraint->getAssociationValidityConstraints()));
+        $this::assertCount(0, $responseValidityConstraint->getAssociationValidityConstraints());
 
         $associationValidityConstraints = new AssociationValidityConstraintCollection(
             [
@@ -93,7 +93,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
             ]
         );
         $responseValidityConstraint->setAssociationValidityConstraints($associationValidityConstraints);
-        $this::assertEquals(1, count($responseValidityConstraint->getAssociationValidityConstraints()));
+        $this::assertCount(1, $responseValidityConstraint->getAssociationValidityConstraints());
         $this::assertEquals('MYID', $responseValidityConstraint->getAssociationValidityConstraints()[0]->getIdentifier());
     }
 }

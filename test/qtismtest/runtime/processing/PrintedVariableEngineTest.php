@@ -273,7 +273,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
             ['', 'recordEmpty', $state],
             ['a=-3;b=null;c=true', 'recordContainsNull', $state],
 
-            // -- Wrong formats.
+            // -- Invalid formats squished due to sprintf behavior in PHP 7.
             ['bla', 'positiveInteger', $state, 'bla'],
             [' yeah', 'positiveInteger', $state, '%-P yeah'],
             [' yeah', 'positiveInteger', $state, '%1$-.3w yeah'],

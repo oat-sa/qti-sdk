@@ -32,11 +32,11 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(RubricBlock::class, $rubricBlock);
         $this::assertEquals('warning', $rubricBlock->getClass());
-        $this::assertEquals(2, count($rubricBlock->getViews()));
+        $this::assertCount(2, $rubricBlock->getViews());
         $this::assertEquals('/home/jerome', $rubricBlock->getXmlBase());
 
         $rubricBlockContent = $rubricBlock->getContent();
-        $this::assertEquals(6, count($rubricBlockContent));
+        $this::assertCount(6, $rubricBlockContent);
         $this::assertInstanceOf(H3::class, $rubricBlockContent[1]);
         $this::assertEquals('Be carefull kiddo !', $rubricBlockContent[1]->getContent()[0]->getContent());
         $this::assertInstanceOf(P::class, $rubricBlockContent[3]);
@@ -44,7 +44,7 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
         $this::assertEquals('inner text', $rubricBlockContent[2]->getContent());
 
         $stylesheets = $rubricBlock->getStylesheets();
-        $this::assertEquals(1, count($stylesheets));
+        $this::assertCount(1, $stylesheets);
         $this::assertEquals('./stylesheet.css', $stylesheets[0]->getHref());
         $this::assertEquals('text/css', $stylesheets[0]->getType());
         $this::assertEquals('screen', $stylesheets[0]->getMedia());

@@ -154,7 +154,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapImg = $marshaller->unmarshall($element);
-        $this::assertEquals(0, count($gapImg->getMatchGroup()));
+        $this::assertCount(0, $gapImg->getMatchGroup());
     }
 
     public function testUnmarshall20()

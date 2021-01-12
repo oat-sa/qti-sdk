@@ -65,12 +65,12 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
         $this::assertEquals(ShowHide::SHOW, $component->getShowHide());
 
         $content = $component->getContent();
-        $this::assertEquals(1, count($content));
+        $this::assertCount(1, $content);
         $div = $content[0];
         $this::assertInstanceOf(Div::class, $div);
 
         $divContent = $div->getContent();
-        $this::assertEquals(1, count($divContent));
+        $this::assertCount(1, $divContent);
         $this::assertEquals('This is text...', $divContent[0]->getContent());
     }
 

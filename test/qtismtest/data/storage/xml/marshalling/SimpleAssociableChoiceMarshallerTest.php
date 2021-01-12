@@ -92,7 +92,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
 
         $content = $component->getContent();
         $this::assertInstanceOf(FlowStaticCollection::class, $content);
-        $this::assertEquals(3, count($content));
+        $this::assertCount(3, $content);
     }
 
     /**
@@ -110,7 +110,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $matchGroup = $component->getMatchGroup();
-        $this::assertEquals(0, count($matchGroup));
+        $this::assertCount(0, $matchGroup);
     }
 
     /**
@@ -216,7 +216,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
 
         $content = $component->getContent();
         $this::assertInstanceOf(FlowStaticCollection::class, $content);
-        $this::assertEquals(1, count($content));
+        $this::assertCount(1, $content);
     }
 
     /**

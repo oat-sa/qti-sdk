@@ -34,7 +34,7 @@ class StringCollectionTest extends QtiSmTestCase
     {
         $string = 'foobar';
         $this->collection[] = $string;
-        $this::assertEquals(1, count($this->collection));
+        $this::assertCount(1, $this->collection);
         $this::assertEquals('foobar', $this->collection[0]);
     }
 
@@ -46,7 +46,7 @@ class StringCollectionTest extends QtiSmTestCase
         $string = 'foobar';
         $this->collection[] = $string;
         unset($this->collection[0]);
-        $this::assertEquals(0, count($this->collection));
+        $this::assertCount(0, $this->collection);
     }
 
     /**

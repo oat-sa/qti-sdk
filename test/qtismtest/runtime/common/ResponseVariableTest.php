@@ -65,24 +65,24 @@ class ResponseVariableTest extends QtiSmTestCase
 
         $defaultValue = $responseVariable->getDefaultValue();
         $this::assertInstanceOf(OrderedContainer::class, $defaultValue);
-        $this::assertEquals(3, count($defaultValue));
+        $this::assertCount(3, $defaultValue);
 
         $mapping = $responseVariable->getMapping();
         $this::assertInstanceOf(Mapping::class, $mapping);
         $mapEntries = $mapping->getMapEntries();
-        $this::assertEquals(3, count($mapEntries));
+        $this::assertCount(3, $mapEntries);
         $this::assertInstanceOf(QtiPair::class, $mapEntries[0]->getMapKey());
 
         $areaMapping = $responseVariable->getAreaMapping();
         $this::assertInstanceOf(AreaMapping::class, $areaMapping);
         $areaMapEntries = $areaMapping->getAreaMapEntries();
-        $this::assertEquals(3, count($areaMapEntries));
+        $this::assertCount(3, $areaMapEntries);
         $this::assertInstanceOf(QtiCoords::class, $areaMapEntries[0]->getCoords());
 
         $this::assertTrue($responseVariable->hasCorrectResponse());
         $correctResponse = $responseVariable->getCorrectResponse();
         $this::assertInstanceOf(OrderedContainer::class, $correctResponse);
-        $this::assertEquals(2, count($correctResponse));
+        $this::assertCount(2, $correctResponse);
         $this::assertTrue($correctResponse[0]->equals(new QtiPair('A', 'B')));
         $this::assertTrue($correctResponse[1]->equals(new QtiPair('E', 'F')));
 
@@ -99,7 +99,7 @@ class ResponseVariableTest extends QtiSmTestCase
         // If I apply the default value...
         $responseVariable->applyDefaultValue();
         $this::assertInstanceOf(OrderedContainer::class, $responseVariable->getValue());
-        $this::assertEquals(3, count($responseVariable->getValue()));
+        $this::assertCount(3, $responseVariable->getValue());
         $this::assertTrue($responseVariable->getValue()->equals(new OrderedContainer(BaseType::PAIR, [new QtiPair('A', 'B'), new QtiPair('C', 'D'), new QtiPair('E', 'F')])));
     }
 

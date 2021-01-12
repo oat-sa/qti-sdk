@@ -15,6 +15,6 @@ class NullProcessorTest extends QtiSmTestCase
         $nullExpression = $this->createComponentFromXml('<null/>');
         $nullProcessor = new NullProcessor($nullExpression);
         $result = $nullProcessor->process();
-        $this::assertTrue($result === null);
+        $this::assertNull($result);
     }
 }

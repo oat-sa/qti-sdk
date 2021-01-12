@@ -60,7 +60,7 @@ class MappingMarshallerTest extends QtiSmTestCase
         $this::assertFalse($component->hasUpperBound());
 
         $mapEntries = $component->getMapEntries();
-        $this::assertEquals(1, count($mapEntries));
+        $this::assertCount(1, $mapEntries);
         $this::assertIsInt($mapEntries[0]->getMapKey());
         $this::assertEquals(1337, $mapEntries[0]->getMapKey());
         $this::assertIsFloat($mapEntries[0]->getMappedValue());

@@ -29,7 +29,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $processor = new DeleteProcessor($expression, $operands);
         $result = $processor->process();
         $this::assertInstanceOf(MultipleContainer::class, $result);
-        $this::assertEquals(3, count($result));
+        $this::assertCount(3, $result);
         $this::assertTrue($result->contains(new QtiInteger(0)));
         $this::assertTrue($result->contains(new QtiInteger(20)));
         $this::assertTrue($result->contains(new QtiInteger(30)));
@@ -41,7 +41,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(0), new QtiInteger(10), new QtiInteger(20), new QtiInteger(10), new QtiInteger(10), new QtiInteger(30)]);
         $result = $processor->process();
         $this::assertInstanceOf(MultipleContainer::class, $result);
-        $this::assertEquals(3, count($result));
+        $this::assertCount(3, $result);
         $this::assertTrue($result->contains(new QtiInteger(0)));
         $this::assertTrue($result->contains(new QtiInteger(20)));
         $this::assertTrue($result->contains(new QtiInteger(30)));
@@ -80,7 +80,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $processor = new DeleteProcessor($expression, $operands);
         $result = $processor->process();
         $this::assertInstanceOf(OrderedContainer::class, $result);
-        $this::assertEquals(2, count($result));
+        $this::assertCount(2, $result);
         $this::assertTrue($result->contains(new QtiPoint(1, 2)));
         $this::assertTrue($result->contains(new QtiPoint(3, 4)));
         $this::assertFalse($result->contains(new QtiPoint(2, 4)));
@@ -91,7 +91,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(1, 2), new QtiPoint(2, 4), new QtiPoint(2, 4), new QtiPoint(3, 4)]);
         $result = $processor->process();
         $this::assertInstanceOf(OrderedContainer::class, $result);
-        $this::assertEquals(2, count($result));
+        $this::assertCount(2, $result);
         $this::assertTrue($result->contains(new QtiPoint(1, 2)));
         $this::assertTrue($result->contains(new QtiPoint(3, 4)));
         $this::assertFalse($result->contains(new QtiPoint(2, 4)));

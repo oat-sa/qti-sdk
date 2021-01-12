@@ -29,7 +29,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
         $this::assertEquals('application/x-shockwave-flash', $object->getType());
 
         $objectContent = $object->getContent();
-        $this::assertEquals(5, count($objectContent)); // Including text nodes.
+        $this::assertCount(5, $objectContent); // Including text nodes.
 
         $param1 = $objectContent[1];
         $this::assertInstanceOf(Param::class, $param1);

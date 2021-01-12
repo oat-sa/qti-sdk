@@ -53,7 +53,7 @@ class RoundToMarshallerTest extends QtiSmTestCase
         $this::assertEquals(RoundingMode::SIGNIFICANT_FIGURES, $component->getRoundingMode());
 
         $subExpr = $component->getExpressions();
-        $this::assertEquals(1, count($subExpr));
+        $this::assertCount(1, $subExpr);
         $this::assertInstanceOf(BaseValue::class, $subExpr[0]);
         $this::assertIsFloat($subExpr[0]->getValue());
         $this::assertEquals(24.3333, $subExpr[0]->getValue());

@@ -269,7 +269,7 @@ class XmlUtilsTest extends QtiSmTestCase
         $dom->loadXML('<parent><child/><child/><parent><child/></parent></parent>');
         $element = $dom->documentElement;
 
-        $this::assertEquals(2, count(Utils::getChildElementsByTagName($element, 'child')));
+        $this::assertCount(2, Utils::getChildElementsByTagName($element, 'child'));
     }
 
     public function testGetChildElementsByTagNameMultiple()
@@ -278,7 +278,7 @@ class XmlUtilsTest extends QtiSmTestCase
         $dom->loadXML('<parent><child/><child/><grandChild/><uncle/></parent>');
         $element = $dom->documentElement;
 
-        $this::assertEquals(3, count(Utils::getChildElementsByTagName($element, ['child', 'grandChild'])));
+        $this::assertCount(3, Utils::getChildElementsByTagName($element, ['child', 'grandChild']));
     }
 
     public function testGetChildElementsByTagNameEmpty()
@@ -290,6 +290,6 @@ class XmlUtilsTest extends QtiSmTestCase
         $dom->loadXML('<parent><parent><child/></parent></parent>');
         $element = $dom->documentElement;
 
-        $this::assertEquals(0, count(Utils::getChildElementsByTagName($element, 'child')));
+        $this::assertCount(0, Utils::getChildElementsByTagName($element, 'child'));
     }
 }

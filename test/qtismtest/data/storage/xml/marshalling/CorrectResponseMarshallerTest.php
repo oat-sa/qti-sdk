@@ -56,7 +56,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(CorrectResponse::class, $component);
         $this::assertEquals('My Interpretation', $component->getInterpretation());
-        $this::assertEquals(1, count($component->getValues()));
+        $this::assertCount(1, $component->getValues());
 
         $values = $component->getValues();
         $this::assertInstanceOf(Value::class, $values[0]);
@@ -82,7 +82,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(CorrectResponse::class, $component);
         $this::assertEquals('', $component->getInterpretation());
-        $this::assertEquals(2, count($component->getValues()));
+        $this::assertCount(2, $component->getValues());
 
         foreach ($component->getValues() as $value) {
             $this::assertInstanceOf(Value::class, $value);

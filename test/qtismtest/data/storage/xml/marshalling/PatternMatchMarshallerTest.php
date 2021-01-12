@@ -49,6 +49,6 @@ class PatternMatchMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(PatternMatch::class, $component);
         $this::assertEquals('^Hello World$', $component->getPattern());
-        $this::assertEquals(1, count($component->getExpressions()));
+        $this::assertCount(1, $component->getExpressions());
     }
 }

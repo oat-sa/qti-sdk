@@ -17,7 +17,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
 
         // Created in temp dir?
-        $this::assertTrue(strpos($mFile->getPath(), sys_get_temp_dir()) !== false);
+        $this::assertNotFalse(strpos($mFile->getPath(), sys_get_temp_dir()));
 
         $this::assertEquals('I contain some text...', $mFile->getData());
         $this::assertEquals('text/plain', $mFile->getMimeType());

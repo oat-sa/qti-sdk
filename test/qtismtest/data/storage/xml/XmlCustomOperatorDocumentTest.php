@@ -35,7 +35,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $this::assertEquals('default', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'syntax'));
 
         $expressions = $customOperator->getExpressions();
-        $this::assertEquals(1, count($expressions));
+        $this::assertCount(1, $expressions);
         $this::assertInstanceOf(BaseValue::class, $expressions[0]);
         $this::assertEquals(BaseType::STRING, $expressions[0]->getBaseType());
         $this::assertEquals('Param1Data', $expressions[0]->getValue());
@@ -67,7 +67,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $this::assertInstanceOf(CustomOperator::class, $customOperator);
 
         $expressions = $customOperator->getExpressions();
-        $this::assertEquals(1, count($expressions));
+        $this::assertCount(1, $expressions);
         $this::assertInstanceOf(BaseValue::class, $expressions[0]);
         $this::assertEquals(BaseType::STRING, $expressions[0]->getBaseType());
         $this::assertEquals('Param1Data', $expressions[0]->getValue());
@@ -105,7 +105,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $this::assertEquals('default', $xml->documentElement->getAttributeNS('http://qtism.taotesting.com', 'syntax'));
 
         $expressions = $customOperator->getExpressions();
-        $this::assertEquals(1, count($expressions));
+        $this::assertCount(1, $expressions);
         $this::assertInstanceOf(BaseValue::class, $expressions[0]);
         $this::assertEquals(BaseType::STRING, $expressions[0]->getBaseType());
         $this::assertEquals('Param1Data', $expressions[0]->getValue());
@@ -174,7 +174,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
 
         // Contains two sub expressions (customOperator, baseValue).
         $expressions = $customOperator->getExpressions();
-        $this::assertEquals(2, count($expressions));
+        $this::assertCount(2, $expressions);
 
         // -- Checking customOperator (first child of customOperator).
         $customOperator = $expressions[0];
@@ -182,7 +182,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $this::assertEquals('com.taotesting.nestedCustomOperator', $customOperator->getClass());
         $this::assertFalse($customOperator->hasDefinition());
         $subExpressions = $customOperator->getExpressions();
-        $this::assertEquals(1, count($subExpressions));
+        $this::assertCount(1, $subExpressions);
         $this::assertInstanceOf(BaseValue::class, $subExpressions[0]);
         $this::assertEquals(BaseType::STRING, $subExpressions[0]->getBaseType());
         $this::assertEquals('Some data to pass to nestedCustomOperator...', $subExpressions[0]->getValue());

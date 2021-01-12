@@ -53,7 +53,7 @@ class MathOperatorMarshallerTest extends QtiSmTestCase
         $this::assertEquals(MathFunctions::SIN, $component->getName());
 
         $subExpr = $component->getExpressions();
-        $this::assertEquals(1, count($subExpr));
+        $this::assertCount(1, $subExpr);
         $this::assertInstanceOf(BaseValue::class, $subExpr[0]);
         $this::assertIsFloat($subExpr[0]->getValue());
         $this::assertEquals(1.57, $subExpr[0]->getValue());

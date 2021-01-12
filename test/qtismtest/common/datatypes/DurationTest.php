@@ -60,7 +60,7 @@ class DurationTest extends QtiSmTestCase
     {
         $d = new QtiDuration('P1DT12H'); // 1 day + 12 hours.
         $c = clone $d;
-        $this::assertFalse($c === $d);
+        $this::assertNotSame($c, $d);
         $this::assertTrue($c->equals($d));
         $this::assertEquals($d->getDays(), $c->getDays());
         $this::assertEquals($d->getHours(), $c->getHours());

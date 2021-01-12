@@ -63,6 +63,6 @@ class EqualMarshallerTest extends QtiSmTestCase
         $this::assertIsBool($component->doesIncludeUpperBound());
         $this::assertFalse($component->doesIncludeLowerBound());
         $this::assertTrue($component->doesIncludeUpperBound());
-        $this::assertEquals(2, count($component->getExpressions()));
+        $this::assertCount(2, $component->getExpressions());
     }
 }

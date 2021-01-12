@@ -43,7 +43,7 @@ class ShufflingMarshallerTest extends QtiSmTestCase
         $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
 
         $groups = $component->getShufflingGroups();
-        $this::assertEquals(2, count($groups));
+        $this::assertCount(2, $groups);
 
         $this::assertEquals(['id1', 'id2', 'id3'], $groups[0]->getIdentifiers()->getArrayCopy());
         $this::assertEquals(['id4', 'id5', 'id6'], $groups[1]->getIdentifiers()->getArrayCopy());

@@ -69,7 +69,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Prompt...', $content[0]->getContent());
 
         $simpleChoices = $component->getSimpleChoices();
-        $this::assertEquals(2, count($simpleChoices));
+        $this::assertCount(2, $simpleChoices);
     }
 
     /**
@@ -285,7 +285,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Choice #2', $component->getSimpleChoices()[1]->getContent()[0]->getContent()[0]->getContent());
 
         $simpleChoices = $component->getSimpleChoices();
-        $this::assertEquals(2, count($simpleChoices));
+        $this::assertCount(2, $simpleChoices);
     }
 
     public function testMarshall30()

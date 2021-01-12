@@ -37,12 +37,12 @@ class CustomOperatorMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(CustomOperator::class, $component);
 
         $expressions = $component->getExpressions();
-        $this::assertEquals(1, count($expressions));
+        $this::assertCount(1, $expressions);
         $this::assertInstanceOf(Equal::class, $expressions[0]);
         $this::assertEquals(ToleranceMode::EXACT, $expressions[0]->getToleranceMode());
 
         $subExpressions = $expressions[0]->getExpressions();
-        $this::assertEquals(2, count($subExpressions));
+        $this::assertCount(2, $subExpressions);
         $this::assertInstanceOf(BaseValue::class, $subExpressions[0]);
         $this::assertEquals(BaseType::INTEGER, $subExpressions[0]->getBaseType());
         $this::assertEquals(1, $subExpressions[0]->getValue());

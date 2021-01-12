@@ -59,7 +59,7 @@ class BeanTest extends QtiSmTestCase
         }
 
         // --- Try to get information about getter existence.
-        $this::assertTrue($bean->hasGetter('name') !== false);
+        $this::assertNotFalse($bean->hasGetter('name'));
         // Simply does not exist.
         $this::assertFalse($bean->hasGetter('miniCooper'));
         // Exists but not related to an annotated property.
@@ -124,21 +124,21 @@ class BeanTest extends QtiSmTestCase
         $beanParams = $bean->getConstructorParameters();
         // The constructor has 3 parameters but only parameters with the same
         // name as a valid bean property are returned.
-        $this::assertEquals(2, count($beanParams));
+        $this::assertCount(2, $beanParams);
 
         for ($i = 0; $i < count($names); $i++) {
             $this::assertEquals($names[$i], $beanParams[$i]->getName());
         }
 
         $ctorGetters = $bean->getConstructorGetters();
-        $this::assertEquals(2, count($ctorGetters));
+        $this::assertCount(2, $ctorGetters);
 
         for ($i = 0; $i < count($names); $i++) {
             $this::assertEquals('get' . ucfirst($names[$i]), $ctorGetters[$i]->getName());
         }
 
         $ctorSetters = $bean->getConstructorSetters();
-        $this::assertEquals(2, count($ctorSetters));
+        $this::assertCount(2, $ctorSetters);
 
         for ($i = 0; $i < count($names); $i++) {
             $this::assertEquals('set' . ucfirst($names[$i]), $ctorSetters[$i]->getName());
@@ -197,10 +197,10 @@ class BeanTest extends QtiSmTestCase
         $this::assertTrue($bean->hasProperty('lastName'));
         $this::assertTrue($bean->hasProperty('hair'));
         $this::assertTrue($bean->hasProperty('cool'));
-        $this::assertTrue($bean->hasGetter('firstName') !== false);
-        $this::assertTrue($bean->hasGetter('lastName') !== false);
-        $this::assertTrue($bean->hasGetter('hair') !== false);
-        $this::assertTrue($bean->hasGetter('cool') !== false);
+        $this::assertNotFalse($bean->hasGetter('firstName'));
+        $this::assertNotFalse($bean->hasGetter('lastName'));
+        $this::assertNotFalse($bean->hasGetter('hair'));
+        $this::assertNotFalse($bean->hasGetter('cool'));
         $this::assertTrue($bean->hasSetter('firstName'));
         $this::assertTrue($bean->hasSetter('lastName'));
         $this::assertTrue($bean->hasSetter('hair'));
@@ -208,11 +208,11 @@ class BeanTest extends QtiSmTestCase
 
         $this::assertEquals('isCool', $bean->getGetter('cool')->getName());
 
-        $this::assertEquals(4, count($bean->getGetters()));
-        $this::assertEquals(0, count($bean->getGetters(true)));
+        $this::assertCount(4, $bean->getGetters());
+        $this::assertCount(0, $bean->getGetters(true));
 
-        $this::assertEquals(4, count($bean->getSetters()));
-        $this::assertEquals(0, count($bean->getSetters(true)));
+        $this::assertCount(4, $bean->getSetters());
+        $this::assertCount(0, $bean->getSetters(true));
     }
 
     public function testGetGetterByBeanProperty()
@@ -241,7 +241,7 @@ class BeanTest extends QtiSmTestCase
         $bean = new Bean($mock);
 
         $property = $bean->getProperty('firstName');
-        $this::assertTrue($bean->hasGetter($property) !== false);
+        $this::assertNotFalse($bean->hasGetter($property));
     }
 
     public function testHasSetterByBeanProperty()
@@ -250,7 +250,7 @@ class BeanTest extends QtiSmTestCase
         $bean = new Bean($mock);
 
         $property = $bean->getProperty('firstName');
-        $this::assertTrue($bean->hasSetter($property) !== false);
+        $this::assertTrue($bean->hasSetter($property));
     }
 
     public function testWrongInstanciation()

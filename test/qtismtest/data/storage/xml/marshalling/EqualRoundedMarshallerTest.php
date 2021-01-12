@@ -56,6 +56,6 @@ class EqualRoundedMarshallerTest extends QtiSmTestCase
         $this::assertIsInt($component->getFigures());
         $this::assertEquals(3, $component->getFigures());
         $this::assertEquals(RoundingMode::SIGNIFICANT_FIGURES, $component->getRoundingMode());
-        $this::assertEquals(2, count($component->getExpressions()));
+        $this::assertCount(2, $component->getExpressions());
     }
 }

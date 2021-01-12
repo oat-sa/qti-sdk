@@ -40,20 +40,20 @@ class ListMarshallerTest extends QtiSmTestCase
         $this::assertEquals('my-qti-list', $ul->getClass());
 
         $listItems = $ul->getContent();
-        $this::assertEquals(2, count($listItems));
+        $this::assertCount(2, $listItems);
 
         // Check the first li node.
         $li = $listItems[0];
         $this::assertInstanceOf(Li::class, $li);
         $liContent = $li->getContent();
-        $this::assertEquals(3, count($liContent));
+        $this::assertCount(3, $liContent);
 
         $this::assertInstanceOf(TextRun::class, $liContent[0]);
         $this::assertEquals('Simple ', $liContent[0]->getContent());
 
         $this::assertInstanceOf(Strong::class, $liContent[1]);
         $strongContent = $liContent[1]->getContent();
-        $this::assertEquals(1, count($strongContent));
+        $this::assertCount(1, $strongContent);
         $this::assertEquals('text', $strongContent[0]->getContent());
 
         $this::assertInstanceOf(TextRun::class, $liContent[2]);
@@ -63,7 +63,7 @@ class ListMarshallerTest extends QtiSmTestCase
         $li = $listItems[1];
         $this::assertInstanceOf(Li::class, $li);
         $liContent = $li->getContent();
-        $this::assertEquals(3, count($liContent));
+        $this::assertCount(3, $liContent);
         $this::assertEquals(" olé\n                   ", $liContent[0]->getContent());
 
         $ol = $liContent[1];
@@ -71,11 +71,11 @@ class ListMarshallerTest extends QtiSmTestCase
         $this::assertEquals('ordered-list', $ol->getId());
 
         $listItems = $ol->getContent();
-        $this::assertEquals(1, count($listItems));
+        $this::assertCount(1, $listItems);
         $li = $listItems[0];
         $this::assertInstanceOf(Li::class, $li);
         $liContent = $li->getContent();
-        $this::assertEquals(5, count($liContent));
+        $this::assertCount(5, $liContent);
         $this::assertInstanceOf(Em::class, $liContent[1]);
         $this::assertInstanceOf(P::class, $liContent[3]);
     }

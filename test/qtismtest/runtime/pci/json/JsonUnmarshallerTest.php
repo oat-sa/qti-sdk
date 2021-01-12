@@ -112,7 +112,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
             $sha256,
             $filename,
             $id
-        );      
+        );
 
         $unmarshaller = self::createUnmarshaller();
         $value = $unmarshaller->unmarshall($json);
@@ -202,7 +202,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
 
         $unmarshaller = self::createUnmarshaller();
         $state = $unmarshaller->unmarshall($json);
-        $this::assertEquals(4, count($state));
+        $this::assertCount(4, $state);
         $this::assertEquals(['RESPONSE1', 'RESPONSE2', 'RESPONSE3', 'RESPONSE4'], array_keys($state));
 
         $response1 = new QtiIdentifier('ChoiceA');

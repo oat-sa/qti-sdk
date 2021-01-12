@@ -139,7 +139,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('image/png', $object->getType());
 
         $choices = $component->getAssociableHotspots();
-        $this::assertEquals(3, count($choices));
+        $this::assertCount(3, $choices);
 
         $this::assertEquals('choice1', $choices[0]->getIdentifier());
         $this::assertEquals(2, $choices[0]->getMatchMax());
@@ -190,7 +190,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this::assertInstanceOf(GraphicAssociateInteraction::class, $component);
         $choices = $component->getAssociableHotspots();
-        $this::assertEquals(2, count($choices));
+        $this::assertCount(2, $choices);
     }
 
     public function testUnmarshall20()

@@ -77,12 +77,12 @@ class QtiComponentIteratorTest extends QtiSmTestCase
         $iterator = new QtiComponentIterator($baseValue);
 
         $this::assertFalse($iterator->valid());
-        $this::assertSame($iterator->current(), null);
+        $this::assertNull($iterator->current());
 
         // Just try to iterate again, just for fun...
         $iterator->next();
         $this::assertFalse($iterator->valid());
-        $this::assertTrue($iterator->current() === null);
+        $this::assertNull($iterator->current());
     }
 
     public function testAvoidRecursions()

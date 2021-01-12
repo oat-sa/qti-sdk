@@ -26,12 +26,12 @@ class MarkupPostRendererTest extends QtiSmTestCase
 
         // Check content prior to test.
         $output = $doc->saveXML();
-        $this::assertTrue(mb_strpos($output, '<?xml version="1.0" encoding="UTF-8"?>', 0, 'UTF-8') === 0);
+        $this::assertSame(0, mb_strpos($output, '<?xml version="1.0" encoding="UTF-8"?>', 0, 'UTF-8'));
 
         // formatOutput + clean up XML declaration.
         $renderer = new MarkupPostRenderer(true, true);
         $output = $renderer->render($doc);
-        $this::assertTrue(mb_strpos($output, '<itemBody', 0, 'UTF-8') === 0);
+        $this::assertSame(0, mb_strpos($output, '<itemBody', 0, 'UTF-8'));
     }
 
     /**

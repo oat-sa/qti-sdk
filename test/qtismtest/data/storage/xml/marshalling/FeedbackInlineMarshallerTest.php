@@ -42,7 +42,7 @@ class FeedbackInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals(ShowHide::HIDE, $component->getShowHide());
 
         $content = $component->getContent();
-        $this::assertEquals(1, count($content));
+        $this::assertCount(1, $content);
         $this::assertEquals('This is text...', $content[0]->getContent());
     }
 }

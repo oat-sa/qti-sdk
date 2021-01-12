@@ -25,7 +25,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
         $this::assertFalse($xml->getDocumentComponent()->hasTemplate());
 
         $responseRules = $xml->getDocumentComponent()->getResponseRules();
-        $this::assertEquals(1, count($responseRules));
+        $this::assertCount(1, $responseRules);
 
         $responseCondition = $responseRules[0];
         $this::assertInstanceOf(ResponseCondition::class, $responseCondition);
@@ -35,7 +35,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
         $this::assertInstanceOf(MatchOperator::class, $match);
 
         $matchExpressions = $match->getExpressions();
-        $this::assertEquals(2, count($matchExpressions));
+        $this::assertCount(2, $matchExpressions);
         $variable = $matchExpressions[0];
         $this::assertInstanceOf(Variable::class, $variable);
         $this::assertEquals('RESPONSE', $variable->getIdentifier());

@@ -113,8 +113,7 @@ class UtilsTest extends QtiSmTestCase
             $test->getComponentByIdentifier('Q99'),
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('S99'), $sections)
         );
-        $this::assertEquals(
-            null,
+        $this::assertNull(
             DataUtils::getFirstItem($test, $test->getComponentByIdentifier('S95'), $sections)
         );
     }
@@ -196,8 +195,7 @@ class UtilsTest extends QtiSmTestCase
             $test->getComponentByIdentifier('Q99'),
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S98'), $sections)
         );
-        $this::assertEquals(
-            null,
+        $this::assertNull(
             DataUtils::getLastItem($test, $test->getComponentByIdentifier('S96'), $sections)
         );
     }

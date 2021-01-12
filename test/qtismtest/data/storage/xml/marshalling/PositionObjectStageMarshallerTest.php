@@ -56,7 +56,7 @@ class PositionObjectStageMarshallerTest extends QtiSmTestCase
         $this::assertEquals('image/jpeg', $object->getType());
 
         $interactions = $component->getPositionObjectInteractions();
-        $this::assertEquals(1, count($interactions));
+        $this::assertCount(1, $interactions);
 
         $interaction = $interactions[0];
         $this::assertEquals('RESPONSE', $interaction->getResponseIdentifier());

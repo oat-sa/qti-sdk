@@ -34,7 +34,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function testInferBaseType($value, $expectedBaseType)
     {
-        $this::assertTrue(Utils::inferBaseType($value) === $expectedBaseType);
+        $this::assertSame($expectedBaseType, Utils::inferBaseType($value));
     }
 
     /**
@@ -44,7 +44,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function testInferCardinality($value, $expectedCardinality)
     {
-        $this::assertTrue(Utils::inferCardinality($value) === $expectedCardinality);
+        $this::assertSame($expectedCardinality, Utils::inferCardinality($value));
     }
 
     /**

@@ -284,7 +284,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Up to you!', $defaultValue->getInterpretation());
 
         $values = $defaultValue->getValues();
-        $this::assertEquals(2, count($values));
+        $this::assertCount(2, $values);
 
         $this::assertInstanceOf(Value::class, $values[0]);
         $this::assertInstanceOf(QtiDuration::class, $values[0]->getValue());
@@ -323,7 +323,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Just to test records...', $defaultValue->getInterpretation());
 
         $values = $defaultValue->getValues();
-        $this::assertEquals(3, count($values));
+        $this::assertCount(3, $values);
 
         $this::assertInstanceOf(Value::class, $values[0]);
         $this::assertTrue($values[0]->hasFieldIdentifier());
@@ -369,7 +369,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $matchTable = $component->getLookupTable();
         $this::assertInstanceOf(MatchTable::class, $matchTable);
         $entries = $matchTable->getMatchTableEntries();
-        $this::assertEquals(2, count($entries));
+        $this::assertCount(2, $entries);
 
         $this::assertIsInt($entries[0]->getSourceValue());
         $this::assertEquals(1, $entries[0]->getSourceValue());

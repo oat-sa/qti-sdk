@@ -42,7 +42,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Modal Feedback Example', $modalFeedback->getTitle());
 
         $content = $modalFeedback->getContent();
-        $this::assertEquals(1, count($content));
+        $this::assertCount(1, $content);
         $this::assertEquals('Please show me!', $content[0]->getContent());
     }
 

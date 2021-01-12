@@ -45,7 +45,7 @@ class StateUtilsTest extends QtiSmTestCase
         $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this::assertEquals(1, count($shufflingGroups));
+        $this::assertCount(1, $shufflingGroups);
         $this::assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
         $this::assertEquals(['id1', 'id3'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
@@ -63,7 +63,7 @@ class StateUtilsTest extends QtiSmTestCase
         $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this::assertEquals(1, count($shufflingGroups));
+        $this::assertCount(1, $shufflingGroups);
         $this::assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
     }
 
@@ -84,7 +84,7 @@ class StateUtilsTest extends QtiSmTestCase
         $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this::assertEquals(1, count($shufflingGroups));
+        $this::assertCount(1, $shufflingGroups);
         $this::assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
         $this::assertEquals(['id2'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
@@ -114,7 +114,7 @@ class StateUtilsTest extends QtiSmTestCase
         $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this::assertEquals(2, count($shufflingGroups));
+        $this::assertCount(2, $shufflingGroups);
         $this::assertEquals(['id1', 'id2'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
         $this::assertEquals(['id2'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
         $this::assertEquals(['id3', 'id4'], $shufflingGroups[1]->getIdentifiers()->getArrayCopy());
@@ -139,7 +139,7 @@ class StateUtilsTest extends QtiSmTestCase
         $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this::assertEquals(1, count($shufflingGroups));
+        $this::assertCount(1, $shufflingGroups);
         $this::assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
         $this::assertEquals(['id3'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
@@ -161,7 +161,7 @@ class StateUtilsTest extends QtiSmTestCase
         $this::assertEquals('RESPONSE', $shuffling->getResponseIdentifier());
 
         $shufflingGroups = $shuffling->getShufflingGroups();
-        $this::assertEquals(1, count($shufflingGroups));
+        $this::assertCount(1, $shufflingGroups);
         $this::assertEquals(['id1', 'id2', 'id3'], $shufflingGroups[0]->getIdentifiers()->getArrayCopy());
         $this::assertEquals(['id3'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }

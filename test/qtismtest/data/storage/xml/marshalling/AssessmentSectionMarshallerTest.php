@@ -156,20 +156,20 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
 
         $sub1Elt = $element->getElementsByTagName('assessmentSection')->item(0);
         $this::assertEquals('sub1AssessmentSection', $sub1Elt->getAttribute('identifier'));
-        $this::assertTrue($element === $sub1Elt->parentNode);
+        $this::assertSame($element, $sub1Elt->parentNode);
         $this::assertEquals('Q02', $sub1Elt->getElementsByTagName('assessmentItemRef')->item(1)->getAttribute('identifier'));
 
         $sub2Elt = $element->getElementsByTagName('assessmentSection')->item(1);
         $this::assertEquals('sub2AssessmentSection', $sub2Elt->getAttribute('identifier'));
-        $this::assertTrue($element === $sub2Elt->parentNode);
+        $this::assertSame($element, $sub2Elt->parentNode);
 
         $sub21Elt = $element->getElementsByTagName('assessmentSection')->item(2);
         $this::assertEquals('sub21AssessmentSection', $sub21Elt->getAttribute('identifier'));
-        $this::assertTrue($sub2Elt === $sub21Elt->parentNode);
+        $this::assertSame($sub2Elt, $sub21Elt->parentNode);
 
         $sub22Elt = $element->getElementsByTagName('assessmentSection')->item(3);
         $this::assertEquals('sub22AssessmentSection', $sub22Elt->getAttribute('identifier'));
-        $this::assertTrue($sub2Elt === $sub22Elt->parentNode);
+        $this::assertSame($sub2Elt, $sub22Elt->parentNode);
     }
 
     public function testUnmarshallMinimal()
@@ -189,7 +189,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('myAssessmentSection', $component->getIdentifier());
         $this::assertEquals('A Minimal Assessment Section', $component->getTitle());
         $this::assertTrue($component->isVisible());
-        $this::assertEquals(0, count($component->getSectionParts()));
+        $this::assertCount(0, $component->getSectionParts());
     }
 
     public function testUnmarshallNotRecursive()
@@ -222,7 +222,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('A non Recursive Assessment Section', $component->getTitle());
         $this::assertTrue($component->isVisible());
         $this::assertFalse($component->mustKeepTogether());
-        $this::assertEquals(3, count($component->getSectionParts()));
+        $this::assertCount(3, $component->getSectionParts());
 
         // Is order preserved?
         $sectionParts = $component->getSectionParts();
@@ -233,8 +233,8 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(AssessmentSectionRef::class, $sectionParts['S01']);
         $this::assertEquals('S01', $sectionParts['S01']->getIdentifier());
 
-        $this::assertEquals(1, count($component->getPreconditions()));
-        $this::assertEquals(1, count($component->getBranchRules()));
+        $this::assertCount(1, $component->getPreconditions());
+        $this::assertCount(1, $component->getBranchRules());
         $this::assertTrue($component->getItemSessionControl()->doesAllowReview());
 
         // Does it contain a selection?
@@ -245,10 +245,10 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertTrue($component->hasItemSessionControl());
 
         // Does it contain a preCondition?
-        $this::assertEquals(1, count($component->getPreconditions()));
+        $this::assertCount(1, $component->getPreconditions());
 
         // Does it contain a branchRule?
-        $this::assertEquals(1, count($component->getBranchRules()));
+        $this::assertCount(1, $component->getBranchRules());
     }
 
     /**
@@ -314,7 +314,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(AssessmentSection::class, $component);
         $this::assertEquals('rootAssessmentSection', $component->getIdentifier());
-        $this::assertEquals(2, count($component->getSectionParts()));
+        $this::assertCount(2, $component->getSectionParts());
         $this::assertTrue($component->hasSelection());
         $this::assertEquals(2, $component->getSelection()->getSelect());
 
@@ -356,7 +356,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(AssessmentSection::class, $component);
         $assessmentItemRefs = $component->getSectionParts();
-        $this::assertEquals(3, count($assessmentItemRefs));
+        $this::assertCount(3, $assessmentItemRefs);
     }
 
     public function testUnmarshallDecorated()

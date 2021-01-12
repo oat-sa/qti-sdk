@@ -84,7 +84,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         // The outcome variables composing the test-level global scope
         // must be set with their default value if any.
         foreach ($doc->getDocumentComponent()->getOutcomeDeclarations() as $outcomeDeclaration) {
-            $this::assertFalse($session[$outcomeDeclaration->getIdentifier()] === null);
+            $this::assertNotNull($session[$outcomeDeclaration->getIdentifier()]);
             $this::assertEquals(0, $session[$outcomeDeclaration->getIdentifier()]->getValue());
         }
 
@@ -417,7 +417,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session->beginTestSession();
 
         // Nothing in pending responses. The test has just begun.
-        $this::assertEquals(0, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(0, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q01 - Correct
         $session->beginAttempt();
@@ -426,7 +426,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
-        $this::assertEquals(1, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(1, $session->getPendingResponseStore()->getAllPendingResponses());
         $this::assertNull($session['Q01.RESPONSE']);
         $this::assertEquals(0.0, $session['Q01.scoring']->getValue());
 
@@ -439,7 +439,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->retrieve($sessionId);
         $this::assertNull($session['Q02.RESPONSE']);
         $this::assertEquals(0.0, $session['Q02.SCORE']->getValue());
-        $this::assertEquals(2, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(2, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q03 - Skip
         $session->beginAttempt();
@@ -448,7 +448,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
-        $this::assertEquals(3, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(3, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q04 - Skip
         $session->beginAttempt();
@@ -457,7 +457,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
-        $this::assertEquals(4, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(4, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q05 - Skip
         $session->beginAttempt();
@@ -466,7 +466,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
-        $this::assertEquals(5, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(5, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q06 - Skip
         $session->beginAttempt();
@@ -475,7 +475,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
-        $this::assertEquals(6, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(6, $session->getPendingResponseStore()->getAllPendingResponses());
 
         // Q07.1 - Correct
         $session->beginAttempt();
@@ -484,7 +484,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
-        $this::assertEquals(7, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(7, $session->getPendingResponseStore()->getAllPendingResponses());
         $this::assertNull($session['Q07.1.RESPONSE']);
         $this::assertEquals(0.0, $session['Q07.1.SCORE']->getValue());
 
@@ -495,7 +495,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
 
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
-        $this::assertEquals(8, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(8, $session->getPendingResponseStore()->getAllPendingResponses());
         $this::assertNull($session['Q07.2.RESPONSE']);
         $this::assertEquals(0.0, $session['Q07.2.SCORE']->getValue());
 
@@ -510,7 +510,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
 
         // Response processing should have taken place beauce this is the end of the current test part.
         // The Pending Response Store should be then flushed and now empty.
-        $this::assertEquals(0, count($session->getPendingResponseStore()->getAllPendingResponses()));
+        $this::assertCount(0, $session->getPendingResponseStore()->getAllPendingResponses());
         $this::assertEquals(0.0, $session['Q07.3.SCORE']->getValue());
         $storage->persist($session);
         $session = $storage->retrieve($sessionId);
@@ -679,16 +679,16 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         // Related files should also be deleted.
 
         // -- Check files exists where they should be on the file system.
-        $this::assertTrue(file_exists($path1 = $session['Q01.RESPONSE']->getPath()));
-        $this::assertTrue(file_exists($path2 = $session['Q02.RESPONSE']->getPath()));
-        $this::assertTrue(file_exists($path3 = $session['Q03.RESPONSE']->getPath()));
+        $this::assertFileExists($path1 = $session['Q01.RESPONSE']->getPath());
+        $this::assertFileExists($path2 = $session['Q02.RESPONSE']->getPath());
+        $this::assertFileExists($path3 = $session['Q03.RESPONSE']->getPath());
 
         $storage->delete($session);
 
         // -- Check files that files are removed from the file system after deletion of the session.
-        $this::assertFalse(file_exists($path1));
-        $this::assertFalse(file_exists($path2));
-        $this::assertFalse(file_exists($path3));
+        $this::assertFileNotExists($path1);
+        $this::assertFileNotExists($path2);
+        $this::assertFileNotExists($path3);
     }
 
     public function testTemplateProcessingBasic1()

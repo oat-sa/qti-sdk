@@ -28,14 +28,14 @@ class StateTest extends QtiSmTestCase
     {
         $state = new State();
         $this::assertInstanceOf(State::class, $state);
-        $this::assertEquals(0, count($state));
+        $this::assertCount(0, $state);
 
         $varsArray = [];
         $varsArray[] = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::INTEGER);
         $varsArray[] = new OutcomeVariable('SCORE', Cardinality::SINGLE, BaseType::FLOAT);
 
         $state = new State($varsArray);
-        $this::assertEquals(2, count($state));
+        $this::assertCount(2, $state);
         $this::assertInstanceOf(ResponseVariable::class, $state->getVariable('RESPONSE'));
         $this::assertEquals(BaseType::INTEGER, $state->getVariable('RESPONSE')->getBaseType());
 
@@ -48,7 +48,7 @@ class StateTest extends QtiSmTestCase
         unset($state['RESPONSE']);
         $isset = isset($state['RESPONSE']);
         $this::assertFalse($isset);
-        $this::assertTrue($state['RESPONSE'] === null);
+        $this::assertNull($state['RESPONSE']);
     }
 
     public function testInstantiationInvalid()
@@ -66,9 +66,9 @@ class StateTest extends QtiSmTestCase
         $state->setVariable($response);
         $state->setVariable($score);
 
-        $this::assertTrue($state['foo'] === null);
-        $this::assertTrue($response === $state->getVariable('RESPONSE'));
-        $this::assertTrue($score === $state->getVariable('SCORE'));
+        $this::assertNull($state['foo']);
+        $this::assertSame($response, $state->getVariable('RESPONSE'));
+        $this::assertSame($score, $state->getVariable('SCORE'));
         $this::assertTrue(isset($state['SCORE']));
         $this::assertFalse(isset($state['SCOREX']));
     }
@@ -90,16 +90,16 @@ class StateTest extends QtiSmTestCase
     public function testGetAllVariables()
     {
         $state = new State();
-        $this::assertEquals(0, count($state->getAllVariables()));
+        $this::assertCount(0, $state->getAllVariables());
 
         $state->setVariable(new ResponseVariable('RESPONSE1', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25)));
-        $this::assertEquals(1, count($state->getAllVariables()));
+        $this::assertCount(1, $state->getAllVariables());
 
         $state->setVariable(new OutcomeVariable('SCORE1', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true)));
-        $this::assertEquals(2, count($state->getAllVariables()));
+        $this::assertCount(2, $state->getAllVariables());
 
         unset($state['RESPONSE1']);
-        $this::assertEquals(1, count($state->getAllVariables()));
+        $this::assertCount(1, $state->getAllVariables());
 
         $this::assertInstanceOf(VariableCollection::class, $state->getAllVariables());
     }

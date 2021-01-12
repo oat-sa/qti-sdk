@@ -79,21 +79,21 @@ class PhpDocumentTest extends QtiSmTestCase
         $this::assertEquals('PHP Storage Simple', $assessmentTest->getTitle());
 
         $testParts = $assessmentTest->getTestParts();
-        $this::assertEquals(1, count($testParts));
+        $this::assertCount(1, $testParts);
         $this::assertTrue(isset($testParts['P01']));
         $this::assertEquals('P01', $testParts['P01']->getIdentifier());
         $this::assertEquals(NavigationMode::LINEAR, $testParts['P01']->getNavigationMode());
         $this::assertEquals(SubmissionMode::INDIVIDUAL, $testParts['P01']->getSubmissionMode());
 
         $assessmentSections = $testParts['P01']->getAssessmentSections();
-        $this::assertEquals(1, count($assessmentSections));
+        $this::assertCount(1, $assessmentSections);
         $this::assertTrue(isset($assessmentSections['S01']));
         $this::assertEquals('S01', $assessmentSections['S01']->getIdentifier());
         $this::assertEquals('Section1', $assessmentSections['S01']->getTitle());
         $this::assertTrue($assessmentSections['S01']->isVisible());
 
         $assessmentItemRefs = $assessmentSections['S01']->getSectionParts();
-        $this::assertEquals(3, count($assessmentItemRefs));
+        $this::assertCount(3, $assessmentItemRefs);
         $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q01']);
         $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q02']);
         $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q03']);
@@ -103,23 +103,23 @@ class PhpDocumentTest extends QtiSmTestCase
         $this::assertFalse(false, $assessmentItemRefs['Q01']->isTimeDependent());
         $this::assertEquals(['mathematics', 'chemistry'], $assessmentItemRefs['Q01']->getCategories()->getArrayCopy());
         $variableMappings = $assessmentItemRefs['Q01']->getVariableMappings();
-        $this::assertEquals(1, count($variableMappings));
+        $this::assertCount(1, $variableMappings);
         $this::assertEquals('scoring', $variableMappings[0]->getSource());
         $this::assertEquals('SCORE', $variableMappings[0]->getTarget());
         $weights = $assessmentItemRefs['Q01']->getWeights();
-        $this::assertEquals(1, count($weights));
+        $this::assertCount(1, $weights);
         $this::assertEquals('W01', $weights['W01']->getIdentifier());
         $this::assertEquals(2.0, $weights['W01']->getValue());
         $responseDeclarations = $assessmentItemRefs['Q01']->getResponseDeclarations();
-        $this::assertEquals(1, count($responseDeclarations));
+        $this::assertCount(1, $responseDeclarations);
         $this::assertEquals('RESPONSE', $responseDeclarations['RESPONSE']->getIdentifier());
         $this::assertEquals(Cardinality::SINGLE, $responseDeclarations['RESPONSE']->getCardinality());
         $this::assertEquals(BaseType::IDENTIFIER, $responseDeclarations['RESPONSE']->getBaseType());
         $values = $responseDeclarations['RESPONSE']->getCorrectResponse()->getValues();
-        $this::assertEquals(1, count($values));
+        $this::assertCount(1, $values);
         $this::assertEquals('ChoiceA', $values[0]->getValue());
         $outcomeDeclarations = $assessmentItemRefs['Q01']->getOutcomeDeclarations();
-        $this::assertEquals(1, count($outcomeDeclarations));
+        $this::assertCount(1, $outcomeDeclarations);
         $this::assertEquals('scoring', $outcomeDeclarations['scoring']->getIdentifier());
         $this::assertEquals(Cardinality::SINGLE, $outcomeDeclarations['scoring']->getCardinality());
         $this::assertEquals(BaseType::FLOAT, $outcomeDeclarations['scoring']->getBaseType());
@@ -130,7 +130,7 @@ class PhpDocumentTest extends QtiSmTestCase
         $this::assertFalse($responseProcessing->hasTemplateLocation());
         $this::assertFalse($responseProcessing->hasTemplate());
         $responseRules = $responseProcessing->getResponseRules();
-        $this::assertEquals(1, count($responseRules));
+        $this::assertCount(1, $responseRules);
     }
 
     public function testSimpleSave()
@@ -262,7 +262,7 @@ class PhpDocumentTest extends QtiSmTestCase
         $this::assertEquals($file, $phpDoc->getUrl());
 
         unlink($file);
-        $this::assertFalse(file_exists($file));
+        $this::assertFileNotExists($file);
     }
 
     public function testLoadInteractionMixSaschsen()
@@ -281,7 +281,7 @@ class PhpDocumentTest extends QtiSmTestCase
 
         $this::assertEquals('InteractionMixSachsen_1901710679', $phpDoc->getDocumentComponent()->getIdentifier());
         unlink($file);
-        $this::assertFalse(file_exists($file));
+        $this::assertFileNotExists($file);
     }
 
     /**

@@ -117,7 +117,7 @@ class XmlDocumentTest extends QtiSmTestCase
         // Let's check the content of this...
         $test = $doc->getDocumentComponent();
         $feedbacks = $test->getComponentsByClassName('feedbackBlock');
-        $this::assertEquals(1, count($feedbacks));
+        $this::assertCount(1, $feedbacks);
 
         $feedback = $feedbacks[0];
         $content = $feedback->getContent();
@@ -173,7 +173,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $this::assertInstanceOf(ChoiceInteraction::class, $choiceInteraction);
 
         $simpleChoices = $choiceInteraction->getSimpleChoices();
-        $this::assertEquals(1, count($simpleChoices));
+        $this::assertCount(1, $simpleChoices);
 
         $simpleChoiceContent = $simpleChoices[0]->getContent();
         $this::assertEquals('Resistance is futile!', $simpleChoiceContent[0]->getContent());
@@ -200,7 +200,7 @@ class XmlDocumentTest extends QtiSmTestCase
 
         $root = $doc->getDocumentComponent();
         $divs = $root->getComponentsByClassName('div');
-        $this::assertEquals(1, count($divs));
+        $this::assertCount(1, $divs);
 
         $divContent = $divs[0]->getContent();
         $divText = $divContent[0];

@@ -22,7 +22,7 @@ class XmlAssessmentContentDocumentTest extends QtiSmTestCase
         $this::assertEquals('http://www.qtism-project.org/', $div->getXmlBase());
 
         $imgs = $div->getComponentsByClassName('img');
-        $this::assertEquals(3, count($imgs));
+        $this::assertCount(3, $imgs);
 
         $this::assertFalse($imgs[0]->hasXmlBase());
         $this::assertFalse($imgs[1]->hasXmlBase());
@@ -40,7 +40,7 @@ class XmlAssessmentContentDocumentTest extends QtiSmTestCase
         $this::assertEquals('', $div->getXmlBase());
 
         $subDivs = $div->getComponentsByClassName('div');
-        $this::assertEquals(2, count($subDivs));
+        $this::assertCount(2, $subDivs);
 
         $this::assertTrue($subDivs[0]->hasXmlBase());
         $this::assertEquals('http://www.qtism-project.org/farm/', $subDivs[0]->getXmlBase());

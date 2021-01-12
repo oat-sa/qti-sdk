@@ -105,7 +105,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('image/png', $object->getType());
 
         $choices = $component->getHotspotChoices();
-        $this::assertEquals(3, count($choices));
+        $this::assertCount(3, $choices);
         $this::assertEquals('choice1', $choices[0]->getIdentifier());
         $this::assertEquals('choice2', $choices[1]->getIdentifier());
         $this::assertEquals('choice3', $choices[2]->getIdentifier());

@@ -26,7 +26,7 @@ class AssessmentItemTest extends QtiSmTestCase
         $assessmentItem->setModalFeedbacks(new ModalFeedbackCollection([$modalFeedback1, $modalFeedback2]));
 
         $modalFeedbackRules = $assessmentItem->getModalFeedbackRules();
-        $this::assertEquals(2, count($modalFeedbackRules));
+        $this::assertCount(2, $modalFeedbackRules);
 
         $this::assertEquals('LOOKUP', $modalFeedbackRules[0]->getOutcomeIdentifier());
         $this::assertEquals('SHOWME', $modalFeedbackRules[0]->getIdentifier());

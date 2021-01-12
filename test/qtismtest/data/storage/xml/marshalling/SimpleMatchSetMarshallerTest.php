@@ -45,6 +45,6 @@ class SimpleMatchSetMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(SimpleMatchSet::class, $component);
 
         $choices = $component->getSimpleAssociableChoices();
-        $this::assertEquals(2, count($choices));
+        $this::assertCount(2, $choices);
     }
 }

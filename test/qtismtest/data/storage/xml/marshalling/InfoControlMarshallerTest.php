@@ -51,7 +51,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
         $this::assertInstanceOf(InfoControl::class, $component);
-        $this::assertEquals(0, count($component->getComponents()));
+        $this::assertCount(0, $component->getComponents());
         $this::assertFalse($component->hasId());
         $this::assertFalse($component->hasClass());
         $this::assertFalse($component->hasLang());
@@ -64,7 +64,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
         $this::assertInstanceOf(InfoControl::class, $component);
-        $this::assertEquals(0, count($component->getComponents()));
+        $this::assertCount(0, $component->getComponents());
         $this::assertEquals('myControl', $component->getId());
         $this::assertEquals('myInfo elt', $component->getClass());
         $this::assertEquals('en-US', $component->getLang());
@@ -83,7 +83,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(InfoControl::class, $component);
         $this::assertEquals('controlMePlease', $component->getId());
         $content = $component->getContent();
-        $this::assertEquals(3, count($content));
+        $this::assertCount(3, $content);
         $this::assertEquals('/home/jerome', $component->getXmlBase());
 
         $this::assertInstanceOf(TextRun::class, $content[0]);
@@ -91,7 +91,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(Em::class, $content[1]);
         $emContent = $content[1]->getContent();
-        $this::assertEquals(1, count($emContent));
+        $this::assertCount(1, $emContent);
         $this::assertEquals('gooood', $emContent[0]->getContent());
 
         $this::assertInstanceOf(TextRun::class, $content[2]);

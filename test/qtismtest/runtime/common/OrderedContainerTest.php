@@ -41,7 +41,7 @@ class OrderedContainerTest extends QtiSmTestCase
     public function testCreationEmpty()
     {
         $container = new OrderedContainer(BaseType::INTEGER);
-        $this::assertEquals(0, count($container));
+        $this::assertCount(0, $container);
         $this::assertEquals(BaseType::INTEGER, $container->getBaseType());
         $this::assertEquals(Cardinality::ORDERED, $container->getCardinality());
     }

@@ -73,24 +73,24 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase
 
         // testParts
         $this::assertEquals(1, $element->getElementsByTagName('testPart')->length);
-        $this::assertTrue($element === $element->getElementsByTagName('testPart')->item(0)->parentNode);
+        $this::assertSame($element, $element->getElementsByTagName('testPart')->item(0)->parentNode);
 
         // assessmentSections
         $testPart = $element->getElementsByTagName('testPart')->item(0);
         $this::assertEquals(1, $element->getElementsByTagName('assessmentSection')->length);
-        $this::assertTrue($testPart === $element->getElementsByTagName('assessmentSection')->item(0)->parentNode);
+        $this::assertSame($testPart, $element->getElementsByTagName('assessmentSection')->item(0)->parentNode);
 
         // outcomeDeclarations
         $this::assertEquals(1, $element->getElementsByTagName('outcomeDeclaration')->length);
-        $this::assertTrue($element === $element->getElementsByTagName('outcomeDeclaration')->item(0)->parentNode);
+        $this::assertSame($element, $element->getElementsByTagName('outcomeDeclaration')->item(0)->parentNode);
 
         // testFeedbacks
         $this::assertEquals(1, $element->getElementsByTagName('testFeedback')->length);
-        $this::assertTrue($element === $element->getElementsByTagName('testFeedback')->item(0)->parentNode);
+        $this::assertSame($element, $element->getElementsByTagName('testFeedback')->item(0)->parentNode);
 
         // outcomeProcessing
         $this::assertEquals(1, $element->getElementsByTagName('outcomeProcessing')->length);
-        $this::assertTrue($element === $element->getElementsByTagName('outcomeProcessing')->item(0)->parentNode);
+        $this::assertSame($element, $element->getElementsByTagName('outcomeProcessing')->item(0)->parentNode);
     }
 
     public function testUnmarshall()
@@ -126,9 +126,9 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase
         $this::assertEquals('1.0b', $component->getToolVersion());
         $this::assertTrue($component->isExclusivelyLinear());
 
-        $this::assertEquals(1, count($component->getTestFeedbacks()));
-        $this::assertEquals(1, count($component->getTestParts()));
-        $this::assertEquals(1, count($component->getOutcomeDeclarations()));
+        $this::assertCount(1, $component->getTestFeedbacks());
+        $this::assertCount(1, $component->getTestParts());
+        $this::assertCount(1, $component->getOutcomeDeclarations());
         $this::assertInstanceOf(OutcomeProcessing::class, $component->getOutcomeProcessing());
     }
 }

@@ -87,7 +87,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Prompt...', $content[0]->getContent());
 
         $simpleChoices = $component->getSimpleChoices();
-        $this::assertEquals(2, count($simpleChoices));
+        $this::assertCount(2, $simpleChoices);
     }
 
     public function testUnmarshall20()
@@ -118,7 +118,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Prompt...', $content[0]->getContent());
 
         $simpleChoices = $component->getSimpleChoices();
-        $this::assertEquals(2, count($simpleChoices));
+        $this::assertCount(2, $simpleChoices);
     }
 
     /**

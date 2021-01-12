@@ -47,7 +47,7 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
         $component = $factory->createMarshaller($element)->unmarshall($element);
 
         $associationValidityConstraints = $component->getAssociationValidityConstraints();
-        $this::assertEquals(2, count($associationValidityConstraints));
+        $this::assertCount(2, $associationValidityConstraints);
 
         $this::assertEquals('ID1', $associationValidityConstraints[0]->getIdentifier());
         $this::assertEquals(0, $associationValidityConstraints[0]->getMinConstraint());

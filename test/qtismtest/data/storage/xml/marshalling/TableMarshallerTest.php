@@ -155,7 +155,7 @@ class TableMarshallerTest extends QtiSmTestCase
         $thead = $table->getThead();
         $this::assertInstanceOf(Thead::class, $thead);
         $trs = $thead->getContent();
-        $this::assertEquals(1, count($trs));
+        $this::assertCount(1, $trs);
         $ths = $trs[0]->getContent();
         $this::assertEquals('firstname', $ths[0]->getId());
         $this::assertEquals(TableCellScope::COL, $ths[0]->getScope());
@@ -169,20 +169,20 @@ class TableMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Last Name', $thContent[0]->getContent());
 
         $tbodies = $table->getTbodies();
-        $this::assertEquals(1, count($tbodies));
+        $this::assertCount(1, $tbodies);
 
         $trs = $tbodies[0]->getContent();
-        $this::assertEquals(2, count($trs));
+        $this::assertCount(2, $trs);
 
         $tr1 = $trs[0];
-        $this::assertEquals(2, count($tr1->getContent()));
+        $this::assertCount(2, $tr1->getContent());
 
         $tds = $tr1->getContent();
         $tdHeaders = $tds[0]->getHeaders();
-        $this::assertEquals(1, count($tdHeaders));
+        $this::assertCount(1, $tdHeaders);
         $this::assertEquals('firstname', $tdHeaders[0]);
         $tdHeaders = $tds[1]->getHeaders();
-        $this::assertEquals(1, count($tdHeaders));
+        $this::assertCount(1, $tdHeaders);
         $this::assertEquals('lastname', $tdHeaders[0]);
         $this::assertEquals('Dunbar S.W.', $tds[1]->getAbbr());
         $tdContent = $tds[0]->getContent();
@@ -194,7 +194,7 @@ class TableMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Dunbar Smith Wayson', $tdContent[0]->getContent());
 
         $tr2 = $trs[1];
-        $this::assertEquals(2, count($tr2->getContent()));
+        $this::assertCount(2, $tr2->getContent());
 
         $caption = $table->getCaption();
         $this::assertInstanceOf(Caption::class, $caption);
@@ -206,7 +206,7 @@ class TableMarshallerTest extends QtiSmTestCase
         $this::assertEquals(' ...', $captionContent[2]->getContent());
 
         $cols = $table->getCols();
-        $this::assertEquals(2, count($cols));
+        $this::assertCount(2, $cols);
         $this::assertEquals(1, $cols[0]->getSpan());
         $this::assertEquals(1, $cols[1]->getspan());
     }

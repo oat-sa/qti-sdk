@@ -150,7 +150,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 
         // Check that the final assessmentSection contains the assessmentItemRefs.
         $assessmentItemRefs = $sectionParts['S01']->getSectionParts()['S02']->getSectionParts();
-        $this::assertEquals(3, count($assessmentItemRefs));
+        $this::assertCount(3, $assessmentItemRefs);
 
         $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q01']);
         $this::assertEquals('../sections/../sections/../items/question1.xml', $assessmentItemRefs['Q01']->getHref());

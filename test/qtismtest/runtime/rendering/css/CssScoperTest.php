@@ -24,7 +24,8 @@ class CssScoperTest extends QtiSmTestCase
      * @throws RenderingException
      * @throws MemoryStreamException
      */
-    public function testOutput($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false) {
+    public function testOutput($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false)
+    {
         $cssScoper = new CssScoper($cssMapping, $pseudoClassMapping);
         $cssScoper->setWebComponentFriendly($wcFriendly);
         $expected = file_get_contents($outputFile);

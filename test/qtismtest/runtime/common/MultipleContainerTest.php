@@ -22,7 +22,7 @@ class MultipleContainerTest extends QtiSmTestCase
     {
         $container = new MultipleContainer(BaseType::BOOLEAN);
         $this::assertEquals(BaseType::BOOLEAN, $container->getBaseType());
-        $this::assertEquals(0, count($container));
+        $this::assertCount(0, $container);
         $this::assertEquals(Cardinality::MULTIPLE, $container->getCardinality());
     }
 
@@ -30,7 +30,7 @@ class MultipleContainerTest extends QtiSmTestCase
     {
         $data = [new QtiInteger(10), new QtiInteger(20), new QtiInteger(20), new QtiInteger(30), new QtiInteger(40), new QtiInteger(50)];
         $container = new MultipleContainer(BaseType::INTEGER, $data);
-        $this::assertEquals(6, count($container));
+        $this::assertCount(6, $container);
         $this::assertEquals(BaseType::INTEGER, $container->getBaseType());
         $this::assertEquals($data, $container->getArrayCopy());
         $this::assertEquals(20, $container[1]->getValue());
@@ -63,7 +63,7 @@ class MultipleContainerTest extends QtiSmTestCase
 
         $container = MultipleContainer::createFromDataModel($valueCollection, BaseType::POINT);
         $this::assertInstanceOf(MultipleContainer::class, $container);
-        $this::assertEquals(2, count($container));
+        $this::assertCount(2, $container);
         $this::assertEquals(BaseType::POINT, $container->getBaseType());
         $this::assertEquals(Cardinality::MULTIPLE, $container->getCardinality());
         $this::assertTrue($container->contains($valueCollection[0]->getValue()));
