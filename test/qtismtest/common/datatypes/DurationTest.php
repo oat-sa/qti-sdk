@@ -78,7 +78,7 @@ class DurationTest extends QtiSmTestCase
      */
     public function testToString(QtiDuration $duration, $expected)
     {
-        $this::assertEquals($duration->__toString(), $expected);
+        $this::assertEquals($expected, $duration->__toString());
     }
 
     public function testAdd()
@@ -127,11 +127,11 @@ class DurationTest extends QtiSmTestCase
         $this::assertTrue($d1->isNegative());
     }
 
-    public function createFromDateInterval()
+    public function testCreateFromDateInterval()
     {
         $interval = new DateInterval('PT5S');
         $duration = QtiDuration::createFromDateInterval($interval);
-        $this::assertEquals(5, $duration->getSeconds(true));
+        $this::assertEquals(5, $duration->getSeconds());
     }
 
     /**
@@ -144,18 +144,6 @@ class DurationTest extends QtiSmTestCase
     public function testShorterThan(QtiDuration $duration1, QtiDuration $duration2, $expected)
     {
         $this::assertSame($expected, $duration1->shorterThan($duration2));
-    }
-
-    /**
-     * @dataProvider longerThanOrEqualsProvider
-     *
-     * @param QtiDuration $duration1
-     * @param QtiDuration $duration2
-     * @param bool $expected
-     */
-    public function testLongerThanOrEquals(QtiDuration $duration1, QtiDuration $duration2, $expected)
-    {
-        $this::assertSame($expected, $duration1->longerThanOrEquals($duration2));
     }
 
     /**
@@ -176,6 +164,18 @@ class DurationTest extends QtiSmTestCase
     }
 
     /**
+     * @dataProvider longerThanOrEqualsProvider
+     *
+     * @param QtiDuration $duration1
+     * @param QtiDuration $duration2
+     * @param bool $expected
+     */
+    public function testLongerThanOrEquals(QtiDuration $duration1, QtiDuration $duration2, $expected)
+    {
+        $this::assertSame($expected, $duration1->longerThanOrEquals($duration2));
+    }
+
+    /**
      * @return array
      */
     public function longerThanOrEqualsProvider()
@@ -191,6 +191,9 @@ class DurationTest extends QtiSmTestCase
         $returnValue[] = [new QtiDuration('PT1H26M'), new QtiDuration('PT1H26M'), true];
         $returnValue[] = [new QtiDuration('PT1M5S'), new QtiDuration('PT1M'), true];
         $returnValue[] = [new QtiDuration('PT1M15S'), new QtiDuration('PT45S'), true];
+        $returnValue[] = [new QtiDuration('PT1M15S'), new QtiDuration('PT75S'), true];
+        $returnValue[] = [new QtiDuration('PT1M15S'), new QtiDuration('PT74S'), true];
+        $returnValue[] = [new QtiDuration('PT1M15S'), new QtiDuration('PT76S'), false];
 
         return $returnValue;
     }
