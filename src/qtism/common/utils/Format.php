@@ -25,7 +25,6 @@ namespace qtism\common\utils;
 
 use DateInterval;
 use Exception;
-use InvalidArgumentException;
 
 /**
  * A utility class focusing on string format checks.
@@ -93,7 +92,7 @@ class Format
      * @param bool $strict
      * @return bool Whether $string is a valid identifier.
      */
-    public static function isIdentifier($string, $strict = true)
+    public static function isIdentifier(string $string, bool $strict = true): bool
     {
         if ($strict !== true) {
             return preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $string) === 1;
@@ -135,12 +134,8 @@ class Format
      * @return string A valid  qti-identifier representation of the $identifier set as paramter
      * @link http://www.w3.org/TR/2000/REC-xml-20001006
      */
-    public static function sanitizeIdentifier($dirtyIdentifier)
+    public static function sanitizeIdentifier(string $dirtyIdentifier): string
     {
-        if (is_array($dirtyIdentifier) || is_object($dirtyIdentifier)) {
-            return self::generateIdentifier();
-        }
-
         if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $dirtyIdentifier)) {
             return $dirtyIdentifier;
         }
@@ -150,18 +145,18 @@ class Format
 
         if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $cleanIdentifier)) {
             return $cleanIdentifier;
-        } else {
-            return self::generateIdentifier();
         }
+
+        return self::generateIdentifier();
     }
 
     /**
-     * Genererates a pseudo-random identifier, containing 8 characters in CAPS
+     * Generates a pseudo-random identifier, containing 8 characters in CAPS
      * randomly between A and Z, in a uniform manner.
      *
      * @return string The pseudo-random identifier generated
      */
-    private static function generateIdentifier()
+    private static function generateIdentifier(): string
     {
         $rID = '';
         for ($i = 0; $i < 8; $i++) {
@@ -172,32 +167,20 @@ class Format
     }
 
     /**
-     * Apply both PHP::strtolower and PHP::trim on a given $string.
-     *
-     * @param string $string A string on which you want to apply PHP::strtolower and PHP::trim.
-     * @return string An altered string.
-     */
-    public static function toLowerTrim($string)
-    {
-        return strtolower(trim($string));
-    }
-
-    /**
      * Whether a given $string is a URI.
      *
-     * @param string $string A string value.
+     * @param mixed $string A string value.
      * @return bool Whether $string is a valid URI.
      * @link http://en.wikipedia.org/wiki/Uniform_Resource_Identifier
      */
-    public static function isUri($string)
+    public static function isUri(string $string): bool
     {
         // @todo find the ultimate URI validation rule.
-        return is_string($string) && $string !== '';
+        return $string !== '';
 
         // Thanks to Wizard04.
         $pattern = "<^([a-z0-9+.-]+):(?://(?:((?:[a-z0-9-._~!$&'\(\)*+,;=:]|%[0-9A-F]{2})*)@)?((?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*)(?::(\d*))?(/(?:[a-z0-9-._~!$&'()*+,;=:@/]|%[0-9A-F]{2})*)?|(/?(?:[a-z0-9-._~!$&'()*+,;=:@]|%[0-9A-F]{2})+(?:[a-z0-9-._~!$&'()*+,;=:@/]|%[0-9A-F]{2})*)?)(?:\?((?:[a-z0-9-._~!$&'()*+,;=:/?@]|%[0-9A-F]{2})*))?(?:#((?:[a-z0-9-._~!$&'()*+,;=:/?@]|%[0-9A-F]{2})*))?$>i";
-
-        return (preg_match($pattern, $string) === 1);
+        return preg_match($pattern, $string) === 1;
     }
 
     /**
@@ -209,11 +192,10 @@ class Format
      * @see https://en.wikipedia.org/wiki/IETF_language_tag
      * @see https://stackoverflow.com/questions/7035825/regular-expression-for-a-language-tag-as-defined-by-bcp47#7036171 for the regex
      */
-    public static function isBCP47Lang($string)
+    public static function isBCP47Lang(string $string): bool
     {
         $pattern = "/^(?<grandfathered>(?:en-GB-oed|i-(?:ami|bnn|default|enochian|hak|klingon|lux|mingo|navajo|pwn|t(?:a[oy]|su))|sgn-(?:BE-(?:FR|NL)|CH-DE))|(?:art-lojban|cel-gaulish|no-(?:bok|nyn)|zh-(?:guoyu|hakka|min(?:-nan)?|xiang)))|(?:(?<language>(?:[A-Za-z]{2,3}(?:-(?<extlang>[A-Za-z]{3}(?:-[A-Za-z]{3}){0,2}))?)|[A-Za-z]{4}|[A-Za-z]{5,8})(?:-(?<script>[A-Za-z]{4}))?(?:-(?<region>[A-Za-z]{2}|[0-9]{3}))?(?:-(?<variant>[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-(?<extension>[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+))*)(?:-(?<privateUse>x(?:-[A-Za-z0-9]{1,8})+))?$/Di";
-
-        return is_string($string) && preg_match($pattern, $string) === 1;
+        return preg_match($pattern, trim($string)) === 1;
     }
 
     /**
@@ -222,9 +204,10 @@ class Format
      * @param string $string A string value.
      * @return bool Whether $string can be cast into an integer value.
      */
-    public static function isInteger($string)
+    public static function isInteger(string $string): bool
     {
-        return (preg_match('/^(?:\\-|\\+){0,1}[0-9]+$/', self::toLowerTrim($string)) === 1);
+        $pattern = '/^(?:\\-|\\+){0,1}[0-9]+$/';
+        return preg_match($pattern, trim($string)) === 1;
     }
 
     /**
@@ -233,9 +216,10 @@ class Format
      * @param string $string A string value e.g. '27.111'.
      * @return bool Whether $string can be converted to a float.
      */
-    public static function isFloat($string)
+    public static function isFloat(string $string): bool
     {
-        return (preg_match('/^(?:(?:\\-|\\+){0,1}[0-9]+)$|^(?:(?:\\-|\\+){0,1}[0-9]+\\.[0-9]+)+/', self::toLowerTrim($string)) === 1);
+        $pattern = '/^(?:(?:\\-|\\+){0,1}[0-9]+)$|^(?:(?:\\-|\\+){0,1}[0-9]+\\.[0-9]+)+/';
+        return preg_match($pattern, trim($string)) === 1;
     }
 
     /**
@@ -244,15 +228,12 @@ class Format
      * @param string $string A string value.
      * @return bool Whether $string can be converted to a pair.
      */
-    public static function isPair($string)
+    public static function isPair(string $string): bool
     {
         $pair = explode("\x20", $string);
-
-        if ((count($pair) == 2) && self::isIdentifier(self::toLowerTrim($pair[0])) && self::isIdentifier(self::toLowerTrim($pair[1]))) {
-            return true;
-        }
-
-        return false;
+        return count($pair) === 2
+            && self::isIdentifier(trim($pair[0]))
+            && self::isIdentifier(trim($pair[1]));
     }
 
     /**
@@ -261,7 +242,7 @@ class Format
      * @param string $string A string value.
      * @return bool Whether $string can be converted to a directed pair.
      */
-    public static function isDirectedPair($string)
+    public static function isDirectedPair(string $string): bool
     {
         return self::isPair($string);
     }
@@ -272,11 +253,10 @@ class Format
      * @param string $string A string value.
      * @return bool Whether $string can be converted to a duration.
      */
-    public static function isDuration($string)
+    public static function isDuration(string $string): bool
     {
         try {
-            $duration = new DateInterval($string);
-
+            new DateInterval($string);
             return true;
         } catch (Exception $e) {
             return false;
@@ -289,33 +269,10 @@ class Format
      * @param string $string A string value.
      * @return bool Whether $string can be converted to a boolean.
      */
-    public static function isBoolean($string)
+    public static function isBoolean(string $string): bool
     {
-        if (!is_string($string)) {
-            return false;
-        }
-
-        $string = self::toLowerTrim($string);
+        $string = strtolower(trim($string));
         return $string === 'true' || $string === 'false';
-    }
-
-    /**
-     * Transforms a string into a boolean.
-     * Only strings that can be read as "true" or "false" are converted.
-     *
-     * @param mixed $string
-     * @return bool
-     */
-    public static function stringToBoolean($string): bool
-    {
-        if (!self::isBoolean($string)) {
-            $given = is_string($string)
-                ? $string
-                : gettype($string);
-            throw new InvalidArgumentException('String value "true" or "false" expected, "' . $given . '" given.');
-        }
-
-        return self::toLowerTrim($string) === 'true';
     }
 
     /**
@@ -324,16 +281,12 @@ class Format
      * @param string $string A string value.
      * @return bool Whether $string can be transformed to a Point datatype.
      */
-    public static function isPoint($string)
+    public static function isPoint(string $string): bool
     {
-        if (is_string($string)) {
-            $parts = explode("\x20", $string);
-            if ((count($parts) == 2) && self::isInteger($parts[0]) && self::isInteger($parts[1])) {
-                return true;
-            }
-        }
-
-        return false;
+        $parts = explode("\x20", $string);
+        return count($parts) === 2
+            && self::isInteger($parts[0])
+            && self::isInteger($parts[1]);
     }
 
     /**
@@ -342,7 +295,7 @@ class Format
      * @param string $string A string value.
      * @return bool
      */
-    public static function isFile($string)
+    public static function isFile(string $string): bool
     {
         // @todo implement File baseType as a complex type. See QTI-PCI spec for redemption.
         return is_string($string);
@@ -350,21 +303,21 @@ class Format
 
     /**
      * Whether or not a given string is a variable ref.
+     * Valid example: '{myIdentifier1}', 'myIdentifier1'.
      *
      * @param string $string A given string.
      * @return bool Whether $string is a valid variable ref.
-     * @example '{myIdentifier1}' is a valid variable ref but 'myIdentifier1' is not.
      */
-    public static function isVariableRef($string)
+    public static function isVariableRef(string $string): bool
     {
-        $firstBrace = substr($string, 0, 1);
-        $secondBrace = substr($string, -1);
-
-        if ($firstBrace == '{' && $secondBrace == '}') {
-            return self::isIdentifier(substr($string, 1, -1));
-        } else {
-            return self::isIdentifier($string);
+        if ($string === '') {
+            return false;
         }
+
+        if ($string[0] === '{' && substr($string, -1) === '}') {
+            $string = substr($string, 1, -1);
+        }
+        return self::isIdentifier($string);
     }
 
     /**
@@ -372,15 +325,16 @@ class Format
      *
      * For compatibility reasons, float formatted numbers will also
      * be accepted as valid numbers to compose coordinates.
+     * 
+     * For example '0, 20, 100, 20' is a valid coordinate collection to
+     * describe a rectangle shape.
      *
      * @param string $string A given string.
      * @return bool Whether $string is a valid coordinate collection.
-     * @example '0, 20, 100, 20' is a valid coordinate collection to describe a rectangle shape.
      */
-    public static function isCoords($string)
+    public static function isCoords(string $string): bool
     {
         $pattern = "/^-{0,1}[0-9]+(?:\.[0-9]+){0,1}(?:\s*,\s*-{0,1}[0-9]+(?:\.[0-9]+){0,1})*$/";
-
         return preg_match($pattern, $string) === 1;
     }
 
@@ -391,9 +345,9 @@ class Format
      * @param string $string A string value.
      * @return bool
      */
-    public static function isString256($string)
+    public static function isString256(string $string): bool
     {
-        return is_string($string) && mb_strlen($string, 'UTF-8') <= 256;
+        return mb_strlen($string, 'UTF-8') <= 256;
     }
 
     /**
@@ -403,14 +357,9 @@ class Format
      * @param string $string A string value.
      * @return bool
      */
-    public static function isClass($string)
+    public static function isClass(string $string): bool
     {
-        if (!is_string($string)) {
-            return false;
-        }
-
         $pattern = "/^(?:[^\s]+?(?:\x20){0,})+$/";
-
         return preg_match($pattern, $string) === 1;
     }
 
@@ -422,10 +371,10 @@ class Format
      *
      * @param float $float
      * @param string $x The character to be used as the 'times' operator.
-     * @param int|false $precision The number of requested significant numbers after the decimal separator.
+     * @param int $precision The number of requested significant numbers after the decimal separator.
      * @return string
      */
-    public static function scale10($float, $x = 'x', $precision = false)
+    public static function scale10(float $float, string $x = 'x', $precision = false): string
     {
         // 1. Transform in 'E' notation.
         $mask = ($precision === false) ? '%e' : "%.${precision}e";
@@ -436,51 +385,22 @@ class Format
         $mantissa = $parts[1];
         $newMantissa = '';
 
-        for ($i = 0; $i < strlen($mantissa); $i++) {
-            switch ($mantissa[$i]) {
-                case '0':
-                    $newMantissa .= json_decode('"\u2070"');
-                    break;
-
-                case '1':
-                    $newMantissa .= json_decode('"\u00b9"');
-                    break;
-
-                case '2':
-                    $newMantissa .= json_decode('"\u00b2"');
-                    break;
-
-                case '3':
-                    $newMantissa .= json_decode('"\u00b3"');
-                    break;
-
-                case '4':
-                    $newMantissa .= json_decode('"\u2074"');
-                    break;
-
-                case '5':
-                    $newMantissa .= json_decode('"\u2075"');
-                    break;
-
-                case '6':
-                    $newMantissa .= json_decode('"\u2076"');
-                    break;
-
-                case '7':
-                    $newMantissa .= json_decode('"\u2077"');
-                    break;
-
-                case '8':
-                    $newMantissa .= json_decode('"\u2078"');
-                    break;
-
-                case '9':
-                    $newMantissa .= json_decode('"\u2079"');
-                    break;
-
-                case '-':
-                    $newMantissa .= json_decode('"\u207b"');
-                    break;
+        $exponents = [
+            '0' => '"\u2070"',
+            '1' => '"\u00b9"',
+            '2' => '"\u00b2"',
+            '3' => '"\u00b3"',
+            '4' => '"\u2074"',
+            '5' => '"\u2075"',
+            '6' => '"\u2076"',
+            '7' => '"\u2077"',
+            '8' => '"\u2078"',
+            '9' => '"\u2079"',
+            '-' => '"\u207b"',
+        ];
+        for ($i = 0, $iMax = strlen($mantissa); $i < $iMax; $i++) {
+            if (isset($exponents[$mantissa[$i]])) {
+                $newMantissa .= json_decode($exponents[$mantissa[$i]], false);
             }
         }
 
@@ -544,7 +464,7 @@ class Format
      * @param string $isoFormat
      * @return bool
      */
-    public static function isPrintfIsoFormat($isoFormat)
+    public static function isPrintfIsoFormat(string $isoFormat): bool
     {
         $subPattern = self::$printfFormatSpecifier;
         $pattern = '/(?:(?:[^%]|^)(?:%%)+(' . $subPattern . '))|(?:(?:[^%])(' . $subPattern . '))|(?:^(' . $subPattern . '))/u';
@@ -552,12 +472,7 @@ class Format
         $matches = [];
         preg_match_all($pattern, $isoFormat, $matches);
 
-        if (count($matches[1]) + count($matches[2]) + count($matches[3]) > 0) {
-            // There is at least one format specifier in the string.
-            return true;
-        } else {
-            return false;
-        }
+        return count($matches[1]) + count($matches[2]) + count($matches[3]) > 0;
     }
 
     /**
@@ -572,7 +487,7 @@ class Format
      * @param string $isoFormat
      * @return string The transformed formatting.
      */
-    public static function printfFormatIsoToPhp($isoFormat)
+    public static function printfFormatIsoToPhp(string $isoFormat): string
     {
         // Valid format, do the modifications to be compliant with
         // PHP's printf.
@@ -582,8 +497,7 @@ class Format
 
         foreach ($matches[0] as $m) {
             // Don't worry, str_replace is multibyte safe!
-            $newM = str_replace('#', '', $m);
-            $newM = str_replace(['h', 'l', 'j', 'z', 't', 'L'], '', $newM);
+            $newM = str_replace(['#', 'h', 'l', 'j', 'z', 't', 'L'], '', $m);
             $newM = str_replace(['i', 'a', 'A', 'c', 'p', 'n', 'O'], ['d', 'x', 'X', 's', 'x', 'd', 'o'], $newM);
             $isoFormat = str_replace($m, $newM, $isoFormat);
         }
@@ -598,44 +512,26 @@ class Format
      * @param mixed $length A length as a string or integer.
      * @return bool
      */
-    public static function isXhtmlLength($length)
+    public static function isXhtmlLength($length): bool
     {
         if (is_int($length)) {
             return $length >= 0;
-        } elseif (is_string($length)) {
+        }
+
+        if (is_string($length)) {
             return preg_match('/[0-9]+%/', $length) === 1;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
-    /**
-     * Is Aria Level.
-     *
-     * Whether or not a given value is compliant with aria-level attributes.
-     *
-     * @param string|int|float $level
-     * @return bool
-     */
-    public static function isAriaLevel($level)
+    public static function isAriaLevel(string $level): bool
     {
-        if (is_string($level) || is_numeric($level)) {
-            return (int)$level >= 1;
-        } else {
-            return false;
-        }
+         return is_numeric($level) && (int)$level >= 1;
     }
 
-    /**
-     * @param $ariaIdRefs
-     * @return bool
-     */
-    public static function isAriaIdRefs($ariaIdRefs)
+    public static function isAriaIdRefs(string $ariaIdRefs): bool
     {
-        if (!is_string($ariaIdRefs)) {
-            return false;
-        }
-
         $ariaValues = explode("\x20", $ariaIdRefs);
         foreach ($ariaValues as $ariaValue) {
             if (!self::isIdentifier($ariaValue, false)) {
@@ -646,16 +542,8 @@ class Format
         return true;
     }
 
-    /**
-     * @param string $string
-     * @return bool
-     */
-    public static function isMimeType($string): bool
+    public static function isMimeType(string $string): bool
     {
-        if (!is_string($string)) {
-            return false;
-        }
-
         return preg_match('/^[-a-z]+\/[-+\.a-z0-9]+$/', $string) === 1;
     }
 
@@ -665,12 +553,8 @@ class Format
      * @param string $string
      * @return bool
      */
-    public static function isNormalizedString($string): bool
+    public static function isNormalizedString(string $string): bool
     {
-        if (!is_string($string)) {
-            return false;
-        }
-
         return strpos($string, "\n") === false
             && strpos($string, "\r") === false
             && strpos($string, "\t") === false;

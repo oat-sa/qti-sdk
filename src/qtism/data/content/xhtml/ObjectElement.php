@@ -94,7 +94,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If any of the arguments above is invalid.
      */
-    public function __construct($data, $type, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct(string $data, $type, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($id, $class, $lang, $label);
         $this->setData($data);
@@ -110,7 +110,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * @param string $data The URI for locating the data of the object.
      * @throws InvalidArgumentException If $data is not a URI.
      */
-    public function setData($data)
+    public function setData(string $data): void
     {
         if ((is_string($data) && $data === '') || Format::isUri($data) === true) {
             $this->data = $data;

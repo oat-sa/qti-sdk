@@ -19,13 +19,17 @@ class PrintedVariableTest extends QtiSmTestCase
         $printedVariable = new PrintedVariable('999');
     }
 
-    public function testSetFormatWrongType()
+    /**
+     * @dataProvider tooLongStrings
+     * @param string $string
+     */
+    public function testSetFormatWrongType(string $string)
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The 'format' argument must be a string with at most 256 characters, '999' given.");
+        $this->expectExceptionMessage("The 'format' argument must be a string with at most 256 characters, '" . $string . "' given.");
 
         $printedVariable = new PrintedVariable('ABC');
-        $printedVariable->setFormat(999);
+        $printedVariable->setFormat($string);
     }
 
     public function testSetPowerFormWrongType()
@@ -55,30 +59,57 @@ class PrintedVariableTest extends QtiSmTestCase
         $printedVariable->setIndex(999.9);
     }
 
-    public function testSetDelimiterWrongType()
+    /**
+     * @dataProvider emptyOrTooLongStrings
+     * @param string $string
+     */
+    public function testSetDelimiterWrongType(string $string): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The 'delimiter' argument must be a non-empty string, 'double' given.");
+        $this->expectExceptionMessage("The 'delimiter' argument must be a non-empty string with at most 256 characters, '" . $string . "' given.");
 
         $printedVariable = new PrintedVariable('ABC');
-        $printedVariable->setDelimiter(999.9);
+        $printedVariable->setDelimiter($string);
     }
 
-    public function testSetFieldWrongType()
+    /**
+     * @dataProvider tooLongStrings
+     * @param string $string
+     */
+    public function testSetFieldWrongType(string $string): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The 'field' argument must be a non-empty string, 'double' given.");
+        $this->expectExceptionMessage("The 'field' argument must be a non-empty string, '" . $string . "' given.");
 
         $printedVariable = new PrintedVariable('ABC');
-        $printedVariable->setField(999.9);
+        $printedVariable->setField($string);
     }
 
-    public function testSetMappingIndicatorWrongType()
+    /**
+     * @dataProvider emptyOrTooLongStrings
+     * @param string $string
+     */
+    public function testSetMappingIndicatorWrongType(string $string): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The 'mappingIndicator' argument must be a non-empty string with at most 256 characters, 'double' given.");
+        $this->expectExceptionMessage("The 'mappingIndicator' argument must be a non-empty string with at most 256 characters, '" . $string . "' given.");
 
         $printedVariable = new PrintedVariable('ABC');
-        $printedVariable->setMappingIndicator(999.9);
+        $printedVariable->setMappingIndicator($string);
+    }
+
+    public function tooLongStrings(): array
+    {
+        return [
+            [str_repeat('too_long', 33)],
+        ];
+    }
+
+    public function emptyOrTooLongStrings(): array
+    {
+        return [
+            [''],
+            [str_repeat('too_long', 33)],
+        ];
     }
 }

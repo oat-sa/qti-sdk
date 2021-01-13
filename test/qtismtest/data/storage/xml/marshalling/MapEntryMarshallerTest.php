@@ -83,7 +83,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $this->expectExceptionMessage("The value '' of the 'mapKey' attribute could not be converted to a 'identifier' value.");
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::IDENTIFIER]);
-        $component = $marshaller->unmarshall($element);
+        $marshaller->unmarshall($element);
     }
 
     public function testMarshall20()

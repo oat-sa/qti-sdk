@@ -95,7 +95,7 @@ class Img extends AtomicInline
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If one of the argument is invalid.
      */
-    public function __construct($src, $alt, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct(string $src, $alt, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($id, $class, $lang, $label);
         $this->setSrc($src);
@@ -111,7 +111,7 @@ class Img extends AtomicInline
      * @param string $src A URI.
      * @throws InvalidArgumentException If $src is not a valid URI.
      */
-    public function setSrc($src)
+    public function setSrc(string $src): void
     {
         if (Format::isUri($src) === true) {
             $this->src = $src;
@@ -163,9 +163,9 @@ class Img extends AtomicInline
      * @param string $longdesc A valid URI.
      * @throws InvalidArgumentException If $longdesc is not a valid URI.
      */
-    public function setLongdesc($longdesc)
+    public function setLongdesc(string $longdesc)
     {
-        if (Format::isUri($longdesc) === true || (is_string($longdesc) && empty($longdesc))) {
+        if ($longdesc === '' || Format::isUri($longdesc)) {
             $this->longdesc = $longdesc;
         } else {
             $msg = "The 'longdesc' argument must be a valid URI, '" . $longdesc . "' given.";

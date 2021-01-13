@@ -11,17 +11,17 @@ use qtismtest\QtiSmTestCase;
  */
 class RubricBlockRefTest extends QtiSmTestCase
 {
-    public function testCreateWrongIdentifierType()
+    public function testCreateWrongIdentifierType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'identifier' argument must be a valid QTI identifier, '999' given.");
-        $rubricBlockRef = new RubricBlockRef('999', 'href.ref');
+        new RubricBlockRef('999', 'href.ref');
     }
 
-    public function testCreateWrongHrefType()
+    public function testCreateWrongHrefType(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The 'href' argument must be a valid URI, '999' given.");
-        $rubricBlockRef = new RubricBlockRef('ref-1', 999);
+        $this->expectExceptionMessage("The 'href' argument must be a valid URI, '' given.");
+        new RubricBlockRef('ref-1', '');
     }
 }

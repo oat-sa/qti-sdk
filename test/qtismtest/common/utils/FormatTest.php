@@ -2,7 +2,6 @@
 
 namespace qtismtest\common\utils;
 
-use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtismtest\QtiSmTestCase;
 use stdClass;
@@ -16,135 +15,137 @@ class FormatTest extends QtiSmTestCase
      * @dataProvider validIdentifierFormatProvider
      * @param string $string
      */
-    public function testValidIdentifierFormat($string)
+    public function testValidIdentifierFormat(string $string): void
     {
-        $this->assertTrue(Format::isIdentifier($string));
+        $this::assertTrue(Format::isIdentifier($string));
     }
 
     /**
      * @dataProvider invalidIdentifierFormatProvider
      * @param string $string
      */
-    public function testInvalidIdentifierFormat($string)
+    public function testInvalidIdentifierFormat(string $string): void
     {
-        $this->assertFalse(Format::isIdentifier($string));
+        $this::assertFalse(Format::isIdentifier($string));
     }
 
     /**
      * @dataProvider validVariableRefFormatProvider
      * @param string $string
      */
-    public function testValidVariableRefFormat($string)
+    public function testValidVariableRefFormat(string $string): void
     {
-        $this->assertTrue(Format::isVariableRef($string));
+        $this::assertTrue(Format::isVariableRef($string));
     }
 
     /**
      * @dataProvider invalidVariableRefFormatProvider
      * @param string $string
      */
-    public function testInvalidVariableRefFormat($string)
+    public function testInvalidVariableRefFormat(string $string): void
     {
-        $this->assertFalse(Format::isVariableRef($string));
+        $this::assertFalse(Format::isVariableRef($string));
     }
 
     /**
      * @dataProvider validCoordinatesFormatProvider
      * @param string $string
      */
-    public function testValidCoordinatesFormat($string)
+    public function testValidCoordinatesFormat(string $string): void
     {
-        $this->assertTrue(Format::isCoords($string));
+        $this::assertTrue(Format::isCoords($string));
     }
 
     /**
      * @dataProvider invalidCoordinatesFormatProvider
      * @param string $string
      */
-    public function testInvalidCoordinatesFormat($string)
+    public function testInvalidCoordinatesFormat(string $string): void
     {
-        $this->assertFalse(Format::isCoords($string));
+        $this::assertFalse(Format::isCoords($string));
     }
 
     /**
      * @dataProvider validUriFormatProvider
      * @param string $string
      */
-    public function testValidUriFormat($string)
+    public function testValidUriFormat(string $string): void
     {
-        $this->assertTrue(Format::isUri($string));
+        $this::assertTrue(Format::isUri($string));
     }
 
     /**
      * @dataProvider invalidUriFormatProvider
      * @param string $string
      */
-    public function testInvalidUriFormat($string)
+    public function testInvalidUriFormat(string $string): void
     {
-        $this->assertFalse(Format::isUri($string));
+        // TODO: fix the isUri method because a relative path can be
+        // accepted as a valid URI but not an empty string.
+        $this::assertFalse(Format::isUri($string));
     }
 
     /**
      * @dataProvider validBCP47LanguagesProvider
      * @param string $string
      */
-    public function testValidBCP47LanguageFormat($string)
+    public function testValidBCP47LanguageFormat(string $string): void
     {
-        $this->assertTrue(Format::isBCP47Lang($string));
+        $this::assertTrue(Format::isBCP47Lang($string));
     }
 
     /**
      * @dataProvider invalidBCP47LanguagesProvider
      * @param string $string
      */
-    public function testInvalidBCP47LanguageFormat($string)
+    public function testInvalidBCP47LanguageFormat(string $string): void
     {
-        $this->assertFalse(Format::isBCP47Lang($string));
+        $this::assertFalse(Format::isBCP47Lang($string));
     }
 
     /**
      * @dataProvider validClassFormatProvider
      * @param string $string
      */
-    public function testValidClassFormatProvider($string)
+    public function testValidClassFormatProvider(string $string): void
     {
-        $this->assertTrue(Format::isClass($string));
+        $this::assertTrue(Format::isClass($string));
     }
 
     /**
      * @dataProvider invalidClassFormatProvider
      * @param string $string
      */
-    public function testInvalidClassFormatProvider($string)
+    public function testInvalidClassFormatProvider(string $string): void
     {
-        $this->assertFalse(Format::isClass($string));
+        $this::assertFalse(Format::isClass($string));
     }
 
     /**
      * @dataProvider validString256FormatProvider
      * @param string $string
      */
-    public function testValidString256Provider($string)
+    public function testValidString256Provider(string $string): void
     {
-        $this->assertTrue(Format::isString256($string));
+        $this::assertTrue(Format::isString256($string));
     }
 
     /**
      * @dataProvider invalidString256FormatProvider
      * @param string $string
      */
-    public function testInvalidString256Provider($string)
+    public function testInvalidString256Provider(string $string): void
     {
-        $this->assertFalse(Format::isString256($string));
+        $this::assertFalse(Format::isString256($string));
     }
 
     /**
      * @dataProvider validFileFormatProvider
      * @param string $string
      */
-    public function testValidFile($string)
+    public function testValidFile(string $string): void
     {
-        $this->assertTrue(Format::isFile($string));
+        $this::assertTrue(Format::isFile($string));
     }
 
     /**
@@ -154,79 +155,71 @@ class FormatTest extends QtiSmTestCase
      * @param string $x
      * @param int|bool $precision
      */
-    public function testScale10($float, $expected, $x = 'x', $precision = false)
+    public function testScale10(float $float, string $expected, string $x = 'x', $precision = false): void
     {
-        $this->assertEquals($expected, Format::scale10($float, $x, $precision));
+        $this::assertEquals($expected, Format::scale10($float, $x, $precision));
     }
 
     /**
      * @dataProvider isPrintfIsoFormatProvider
-     *
      * @param string $input
      * @param bool $expected
      */
-    public function testIsPrintfIsoFormat($input, $expected)
+    public function testIsPrintfIsoFormat(string $input, bool $expected): void
     {
-        $this->assertEquals($expected, Format::isPrintfIsoFormat($input));
+        $this::assertEquals($expected, Format::isPrintfIsoFormat($input));
     }
 
     /**
      * @dataProvider printfFormatIsoToPhpProvider
-     *
      * @param string $input
-     * @param bool $expected
+     * @param string $expected
      */
-    public function testPrintfFormatIsoToPhp($input, $expected)
+    public function testPrintfFormatIsoToPhp(string $input, string $expected): void
     {
-        $this->assertEquals($expected, Format::printfFormatIsoToPhp($input));
+        $this::assertEquals($expected, Format::printfFormatIsoToPhp($input));
     }
 
     /**
      * @dataProvider isXhtmlLengthProvider
-     *
      * @param mixed $input
      * @param bool $expected
      */
-    public function testIsXhtmlLength($input, $expected)
+    public function testIsXhtmlLength($input, bool $expected): void
     {
-        $this->assertSame($expected, Format::isXhtmlLength($input));
+        $this::assertSame($expected, Format::isXhtmlLength($input));
     }
 
     /**
      * @dataProvider sanitizeProvider
      * @param string $dirty
-     * @param mixed $clean
+     * @param string $clean
      */
-    public function testSanitizeIdentifier($dirty, $clean)
+    public function testSanitizeIdentifier(string $dirty, string $clean): void
     {
-        $this->assertEquals($dirty == $clean, Format::isIdentifier($dirty), false);
-        $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
-        $this->assertEquals($clean, Format::sanitizeIdentifier($dirty), false);
+        $this::assertEquals($clean, Format::sanitizeIdentifier($dirty));
     }
 
     /**
      * @dataProvider sanitizeProvider2
-     * @param mixed $dirty
+     * @param string $dirty
      */
-    public function testSanitizeIdentifier2($dirty)
+    public function testSanitizeIdentifier2(string $dirty): void
     {
-        $this->assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
+        $this::assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
     }
 
     /**
-     * @param $input
-     * @param $expected
      * @dataProvider isAriaLevelProvider
+     * @param string $input
+     * @param bool $expected
      */
-    public function testIsAriaLevel($input, $expected)
+    public function testIsAriaLevel(string $input, bool $expected): void
     {
-        $this->assertSame($expected, Format::isAriaLevel($input));
+        $this::assertSame($expected, Format::isAriaLevel($input));
     }
 
-    /**
-     * @return array
-     */
-    public function scale10Provider()
+    public function scale10Provider(): array
     {
         return [
             // No precision, no X
@@ -251,10 +244,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validIdentifierFormatProvider()
+    public function validIdentifierFormatProvider(): array
     {
         return [
             ['_good'],
@@ -266,10 +256,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidIdentifierFormatProvider()
+    public function invalidIdentifierFormatProvider(): array
     {
         return [
             ['3bad'],
@@ -280,10 +267,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validVariableRefFormatProvider()
+    public function validVariableRefFormatProvider(): array
     {
         return [
             ['{_good}'],
@@ -292,13 +276,12 @@ class FormatTest extends QtiSmTestCase
             ['{g.0.o.d...}'],
             ['{_壞壞}'],
             ['{myWeight1}'],
+            ['{myIdentifier1}'],
+            ['myIdentifier1'],
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidVariableRefFormatProvider()
+    public function invalidVariableRefFormatProvider(): array
     {
         return [
             ['3bad'],
@@ -309,10 +292,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validCoordinatesFormatProvider()
+    public function validCoordinatesFormatProvider(): array
     {
         return [
             ['30,20,60,20'],
@@ -321,10 +301,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidCoordinatesFormatProvider()
+    public function invalidCoordinatesFormatProvider(): array
     {
         return [
             ['30,20,x,20'],
@@ -333,37 +310,35 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validUriFormatProvider()
+    public function validUriFormatProvider(): array
     {
         return [
             ['http://www.taotesting.com'],
             ['../../index.html'],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function invalidUriFormatProvider()
-    {
-        return [
-            // TODO: fix the isUri method because a relative path can be
-            // accepted as a valid URI but not an empty string.
-            // ['^'],
-            [''],
+            // TODO: fix the isUri method because now it's only testing whether
+            // parameter is a non-empty string.
             [12],
             [true],
-            [['key' => 'value']],
+            [
+                new class() {
+                    public function __toString(): string
+                    {
+                        return 'any-random-string';
+                    }
+                },
+            ],
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validBCP47LanguagesProvider()
+    public function invalidUriFormatProvider(): array
+    {
+        return [
+            // ['^'],
+            [''],
+        ];
+    }
+
+    public function validBCP47LanguagesProvider(): array
     {
         return [
             ['en'],
@@ -375,14 +350,10 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidBCP47LanguagesProvider()
+    public function invalidBCP47LanguagesProvider(): array
     {
         return [
             [12],
-            [['key' => 'value']],
             [true],
             [''],
             ['^'],
@@ -390,10 +361,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validClassFormatProvider()
+    public function validClassFormatProvider(): array
     {
         return [
             ['a'],
@@ -408,10 +376,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidClassFormatProvider()
+    public function invalidClassFormatProvider(): array
     {
         return [
             ["a\tb"],
@@ -421,10 +386,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validString256FormatProvider()
+    public function validString256FormatProvider(): array
     {
         return [
             [''],
@@ -434,30 +396,21 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidString256FormatProvider()
+    public function invalidString256FormatProvider(): array
     {
         return [
             ['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non pellentesque nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc adipiscing nisl ut risus facilisis faucibus. Morbi fermentum aliquet est et euismod. Praesent vitae adipiscing felis, ut lacinia velit. Aenean id suscipit nisi, eget feugiat tortor. Mauris eget nisi vitae mi commodo iaculis. Quisque sagittis massa in lectus semper ullamcorper. Morbi id sagittis massa. Aliquam massa dolor, pharetra nec sapien at, dignissim ultricies augue.'],
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validFileFormatProvider()
+    public function validFileFormatProvider(): array
     {
         return [
             ['data'],
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function isPrintfIsoFormatProvider()
+    public function isPrintfIsoFormatProvider(): array
     {
         return [
             // input, expected
@@ -511,10 +464,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function printfFormatIsoToPhpProvider()
+    public function printfFormatIsoToPhpProvider(): array
     {
         return [
             // input, expected
@@ -530,10 +480,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function isXhtmlLengthProvider()
+    public function isXhtmlLengthProvider(): array
     {
         return [
             // input, expected
@@ -552,10 +499,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function sanitizeProvider()
+    public function sanitizeProvider(): array
     {
         return [
             ['GoodIdentifier', 'GoodIdentifier'],
@@ -573,10 +517,7 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function sanitizeProvider2()
+    public function sanitizeProvider2(): array
     {
         return [
             [''],
@@ -584,29 +525,21 @@ class FormatTest extends QtiSmTestCase
             ['123@'],
             [123],
             [12.3],
-            [null],
             [false],
             [true],
-            [[]],
-            [new stdClass()],
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function isAriaLevelProvider()
+    public function isAriaLevelProvider(): array
     {
         // input, expected
         return [
             [false, false],
-            [true, false],
+            [true, true],
             ['-1', false],
             ['0', false],
             ['-20.4532', false],
             ['abc', false],
-            [null, false],
-            [new stdClass(), false],
             [-1, false],
             [0, false],
             [-20.5432, false],
@@ -622,55 +555,13 @@ class FormatTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider stringToBooleanProvider
+     * @dataProvider isMimeTypeProvider
      * @param bool $expected
      * @param string $string
      */
-    public function testStringToBooleanWithValidValues(bool $expected, string $string)
+    public function testIsMimeType(bool $expected, string $string): void
     {
-        $this->assertEquals($expected, Format::stringToBoolean($string));
-    }
-
-    public function stringToBooleanProvider(): array
-    {
-        return [
-            [true, "  TrUe"],
-            [false, '  FALSE '],
-            [true, 'true'],
-        ];
-    }
-
-    /**
-     * @dataProvider  stringToBooleanInvalidProvider
-     * @param mixed $string
-     * @param mixed $given
-     */
-    public function testStringToBooleanWithInvalidValues($string, $given = null)
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('String value "true" or "false" expected, "' . ($given ?? $string) . '" given.');
-        Format::stringToBoolean($string);
-    }
-
-    public function stringToBooleanInvalidProvider(): array
-    {
-        return [
-            [false, 'boolean'],
-            [''],
-            [78, 'integer'],
-            ['robert'],
-            [[], 'array'],
-        ];
-    }
-
-    /**
-     * @dataProvider isMimeTypeProvider
-     * @param bool $expected
-     * @param mixed $string
-     */
-    public function testIsMimeType(bool $expected, $string)
-    {
-        $this->assertEquals($expected, Format::isMimeType($string));
+        $this::assertEquals($expected, Format::isMimeType($string));
     }
 
     public function isMimeTypeProvider(): array
@@ -688,18 +579,17 @@ class FormatTest extends QtiSmTestCase
             [false, ''],
             [false, 78],
             [false, 'robert'],
-            [false, []],
         ];
     }
 
     /**
      * @dataProvider isNormalizedStringProvider
      * @param bool $expected
-     * @param mixed $string
+     * @param string $string
      */
-    public function testIsNormalizedString(bool $expected, $string)
+    public function testIsNormalizedString(bool $expected, string $string): void
     {
-        $this->assertEquals($expected, Format::isNormalizedString($string));
+        $this::assertEquals($expected, Format::isNormalizedString($string));
     }
 
     public function isNormalizedStringProvider(): array
@@ -709,11 +599,10 @@ class FormatTest extends QtiSmTestCase
             [true, 'text with weird characters like: éàçùè'],
             [true, '\/:?;324_èé'],
             [true, ''],
+            [true, 1012],
+            [true, false],
             [false, "some \t text with   weird    spaces "],
             [false, "some \t text with \r  line    breaks \n"],
-            [false, false],
-            [false, 1012],
-            [false, []],
         ];
     }
 }
