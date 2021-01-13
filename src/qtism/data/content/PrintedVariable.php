@@ -349,12 +349,12 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @param string $delimiter A non-empty string with at most 256 characters.
      * @throws InvalidArgumentException If $delimiter is not a non-empty string with at most 256 characters.
      */
-    public function setDelimiter($delimiter)
+    public function setDelimiter(string $delimiter): void
     {
         if (empty($delimiter) === false && Format::isString256($delimiter) === true) {
             $this->delimiter = $delimiter;
         } else {
-            $msg = "The 'delimiter' argument must be a non-empty string, '" . gettype($delimiter) . "' given.";
+            $msg = "The 'delimiter' argument must be a non-empty string with at most 256 characters, '" . $delimiter . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -377,12 +377,12 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @param string $field A string with at most 256 characters.
      * @throws InvalidArgumentException If $field is not a string with at most 256 characters.
      */
-    public function setField($field)
+    public function setField(string $field): void
     {
         if (Format::isString256($field) === true) {
             $this->field = $field;
         } else {
-            $msg = "The 'field' argument must be a non-empty string, '" . gettype($field) . "' given.";
+            $msg = "The 'field' argument must be a non-empty string, '" . $field . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -417,12 +417,12 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @param string $mappingIndicator A non-empty string with at most 256 characters.
      * @throws InvalidArgumentException If $mappingIndicator is not a non-empty string with at most 256 characters.
      */
-    public function setMappingIndicator($mappingIndicator)
+    public function setMappingIndicator(string $mappingIndicator): void
     {
         if (empty($mappingIndicator) === false && Format::isString256($mappingIndicator) === true) {
             $this->mappingIndicator = $mappingIndicator;
         } else {
-            $msg = "The 'mappingIndicator' argument must be a non-empty string with at most 256 characters, '" . gettype($mappingIndicator) . "' given.";
+            $msg = "The 'mappingIndicator' argument must be a non-empty string with at most 256 characters, '" . $mappingIndicator . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }

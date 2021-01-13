@@ -44,6 +44,6 @@ class AssociableHotspotTest extends QtiSmTestCase
         $this->expectExceptionMessage("The 'hotspotLabel' argument must be a string value with at most 256 characters.");
 
         $associableHotspot = new AssociableHotspot('identifier', 1, QtiShape::RECT, new QtiCoords(QtiShape::RECT, [0, 0, 1, 1]));
-        $associableHotspot->setHotspotLabel(true);
+        $associableHotspot->setHotspotLabel(str_repeat('true', 65));
     }
 }
