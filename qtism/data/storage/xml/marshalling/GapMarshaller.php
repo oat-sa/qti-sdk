@@ -53,7 +53,7 @@ class GapMarshaller extends Marshaller
         }
 
         if ($component->getShowHide() === ShowHide::HIDE) {
-            $this->setDOMElementAttribute($element, 'showHide', ShowHide::HIDE);
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
         if ($component->isRequired() === true) {

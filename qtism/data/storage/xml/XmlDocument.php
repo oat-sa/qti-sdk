@@ -293,7 +293,7 @@ class XmlDocument extends QtiDocument
                 throw new XmlStorageException($msg, $e);
             }
         } else {
-            $msg = 'The Assessment Document cannot be saved. No AssessmentTest object provided.';
+            $msg = 'The document cannot be saved. No document component object to be saved.';
             throw new XmlStorageException($msg);
         }
     }

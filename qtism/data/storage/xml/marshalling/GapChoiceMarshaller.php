@@ -159,7 +159,7 @@ class GapChoiceMarshaller extends ContentMarshaller
         $this->setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
 
         if ($component->getMatchMin() !== 0) {
-            $this->setDOMElementAttribute($element, 'matchMin', $matchMin);
+            $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
         }
 
         if ($component->isFixed() === true) {
