@@ -102,9 +102,21 @@ class SourceMarshallerTest extends Html5ElementMarshallerTest
             // TODO: fix Format::isUri because a relative path is a valid URI but not an empty string.
             // ['<source src="^"/>', InvalidArgumentException::class, 'The "src" argument must be a valid URI, " " given.'],
 
-            ['<source/>', UnmarshallingException::class, 'Error while unmarshalling element "source": The "src" argument must be a valid URI, "NULL" given.'],
-            ['<source src=""/>', UnmarshallingException::class, 'Error while unmarshalling element "source": The "src" argument must be a valid URI, "NULL" given.'],
-            ['<source src="http://example.com/" type="blah"/>', UnmarshallingException::class, 'The "type" argument must be a valid Mime type, "blah" given.'],
+            [
+                '<source/>',
+                UnmarshallingException::class,
+                'Error while unmarshalling element "source": The "src" argument must be a valid URI, "NULL" given.',
+            ],
+            [
+                '<source src=""/>',
+                UnmarshallingException::class,
+                'Error while unmarshalling element "source": The "src" argument must be a valid URI, "NULL" given.',
+            ],
+            [
+                '<source src="http://example.com/" type="blah"/>',
+                UnmarshallingException::class,
+                'The "type" argument must be a valid Mime type, "blah" given.',
+            ],
         ];
     }
 }

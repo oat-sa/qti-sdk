@@ -40,7 +40,7 @@ class SourceMarshaller extends Html5ElementMarshaller
      * @param QtiComponent $component A Source object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = self::getDOMCradle()->createElement('source');
 
@@ -62,7 +62,7 @@ class SourceMarshaller extends Html5ElementMarshaller
      * @return QtiComponent A Source object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): QtiComponent
     {
         $src = $this->getDOMElementAttributeAs($element, 'src');
         $type = $this->getDOMElementAttributeAs($element, 'type');
@@ -81,7 +81,7 @@ class SourceMarshaller extends Html5ElementMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return Version::compare($this->getVersion(), '2.2', '>=') ? 'source' : 'not_existing';
     }

@@ -4,8 +4,8 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use DOMElement;
-use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\content\enums\Role;
+use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\Html5ElementMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
@@ -93,7 +93,7 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
     /**
      * @throws MarshallerNotFoundException
      */
-    public function testUnmarshall22WithDefaultValues()
+    public function testUnmarshall22WithDefaultValues(): void
     {
         $xml = '<html5/>';
 

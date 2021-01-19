@@ -121,9 +121,21 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
             // TODO: fix Format::isUri because a relative path is a valid URI but not an empty string.
             // ['<track src=" "/>', InvalidArgumentException::class, 'The "src" argument must be a valid URI, " " given.'],
 
-            ['<track/>', UnmarshallingException::class, 'Error while unmarshalling element "track": The "src" argument must be a valid URI, "NULL" given.'],
-            ['<track src=""/>', UnmarshallingException::class, 'Error while unmarshalling element "track": The "src" argument must be a valid URI, "NULL" given.'],
-            ['<track src="http://example.com/" kind="blah"/>', UnmarshallingException::class, 'Error while unmarshalling element "track": The "kind" argument must be a value from the TrackKind enumeration, "blah" given.'],
+            [
+                '<track/>',
+                UnmarshallingException::class,
+                'Error while unmarshalling element "track": The "src" argument must be a valid URI, "NULL" given.',
+            ],
+            [
+                '<track src=""/>',
+                UnmarshallingException::class,
+                'Error while unmarshalling element "track": The "src" argument must be a valid URI, "NULL" given.',
+            ],
+            [
+                '<track src="http://example.com/" kind="blah"/>',
+                UnmarshallingException::class,
+                'Error while unmarshalling element "track": The "kind" argument must be a value from the TrackKind enumeration, "blah" given.',
+            ],
         ];
     }
 }
