@@ -5,11 +5,12 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use DOMElement;
 use qtism\data\ShowHide;
+use qtism\data\storage\xml\marshalling\TestFeedbackMarshaller;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackAccess;
 use qtismtest\QtiSmTestCase;
 use ReflectionClass;
-use qtism\data\storage\xml\marshalling\TestFeedbackMarshaller;
 use ReflectionException;
 
 /**
@@ -90,5 +91,72 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         return [
             ['<testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" access="during" identifier="myId1" outcomeIdentifier="myId2" showHide="show"><div><p>Hello there!</p></div></testFeedback>', '<div><p>Hello there!</p></div>'],
         ];
+    }
+    public function testUnmarshallNoAccessAttribute()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('
+		    <testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" outcomeIdentifier="myOutcomeIdentifier1" showHide="show" title="my title">
+                <p>Have a nice test!</p>
+            </testFeedback>');
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'access' attribute is missing from element 'testFeedback'.");
+
+        $marshaller->unmarshall($element);
+    }
+
+    public function testUnmarshallNoShowHideAttribute()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('
+		    <testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" access="atEnd" outcomeIdentifier="myOutcomeIdentifier1" title="my title">
+                <p>Have a nice test!</p>
+            </testFeedback>');
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'showHide' attribute is missing from element 'testFeedback'.");
+
+        $marshaller->unmarshall($element);
+    }
+
+    public function testUnmarshallNoOutcomeIdentifierAttribute()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('
+		    <testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myIdentifier1" showHide="show" access="atEnd" title="my title">
+                <p>Have a nice test!</p>
+            </testFeedback>');
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'outcomeIdentifier' attribute is missing from element 'testFeedback'.");
+
+        $marshaller->unmarshall($element);
+    }
+
+    public function testUnmarshallNoIdentifierAttribute()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('
+		    <testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" outcomeIdentifier="myOutcomeIdentifier1" showHide="show" access="atEnd" title="my title">
+                <p>Have a nice test!</p>
+            </testFeedback>');
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'identifier' attribute is missing from element 'testFeedback'.");
+
+        $marshaller->unmarshall($element);
     }
 }

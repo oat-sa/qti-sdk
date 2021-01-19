@@ -4,12 +4,16 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use DOMElement;
+use qtism\common\enums\BaseType;
+use qtism\data\expressions\BaseValue;
 use qtism\data\ItemSessionControl;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\ItemSessionControlMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtismtest\QtiSmTestCase;
 use ReflectionClass;
+use RuntimeException;
+use stdClass;
 
 /**
  * Class MarshallerTest
@@ -147,7 +151,38 @@ class MarshallerTest extends QtiSmTestCase
         $this::assertEquals('http://my-new-base.com', Marshaller::getXmlBase($bar));
         $this::assertFalse(Marshaller::getXmlBase($baz));
     }
+
+    public function testNoSuchMarshallerWhileUnmarshalling()
+    {
+        $dom = new DOMDocument('1.0');
+        $dom->loadXML('<foo><bar>2000</bar><baz>fucked up beyond all recognition</baz></foo>');
+
+        $dom2 = new DOMDocument('1.0');
+        $dom2->loadXML('<baseValue baseType="boolean">true</baseValue>');
+        $marshaller = $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($dom2->documentElement);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("No Marshaller implementation found while unmarshalling element ':foo'.");
+
+        $marshaller->unmarshall($dom->documentElement);
+    }
+
+    public function testNoSuchMagicMethod()
+    {
+        $component1 = new BaseValue(BaseType::BOOLEAN, true);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component1);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("Unknown method Marshaller::'hello'.");
+
+        $marshaller->hello();
+    }
 }
+
+
+
+
+
 
 class FakeMarshaller extends Marshaller
 {

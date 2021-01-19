@@ -23,7 +23,7 @@ class PatternMatchMarshallerTest extends QtiSmTestCase
         $pattern = '^Hello World$';
 
         $component = new PatternMatch($subs, $pattern);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $this::assertInstanceOf(DOMElement::class, $element);

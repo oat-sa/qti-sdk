@@ -13,6 +13,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Div;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class HottextInteractionMarshallerTest
@@ -29,9 +30,13 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
             new TextRun('This is a '),
             new Hottext('hot1'),
             new TextRun(' text...'),
+            new Hottext('hot2')
         ]));
         $content = new BlockStaticCollection([$div]);
         $hottextInteraction = new HottextInteraction('RESPONSE', $content);
+        $hottextInteraction->setMinChoices(1);
+        $hottextInteraction->setMaxChoices(2);
+        $hottextInteraction->setXmlBase('/home/jerome');
 
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
@@ -42,7 +47,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this::assertEquals(
-            '<hottextInteraction responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><div>This is a <hottext identifier="hot1"/> text...</div></hottextInteraction>',
+            '<hottextInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><div>This is a <hottext identifier="hot1"/> text...<hottext identifier="hot2"/></div></hottextInteraction>',
             $dom->saveXML($element)
         );
     }
@@ -50,7 +55,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
     public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
-            <hottextInteraction responseIdentifier="RESPONSE">
+            <hottextInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome">
                 <prompt>Prompt...</prompt>
                 <div>This is a <hottext identifier="hot1"/> text...</div>
             </hottextInteraction>
@@ -61,6 +66,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1, $component->getMaxChoices());
         $this::assertEquals(0, $component->getMinChoices());
         $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
 
         $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
@@ -79,5 +85,53 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(TextRun::class, $divContent[2]);
         $this::assertEquals(' text...', $divContent[2]->getContent());
+    }
+
+    public function testUnmarshall21InvalidContent()
+    {
+        $element = $this->createDOMElement('
+            <hottextInteraction responseIdentifier="RESPONSE">
+                <prompt>Prompt...</prompt>
+                <choiceInteraction responseIdentifier="RESPONSE">
+                    <simpleChoice identifier="identifier">Choice A</simpleChoice>
+                </choiceInteraction>
+            </hottextInteraction>
+        ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The content of the 'hottextInteraction' element is invalid.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    public function testUnmarshall21InvalidResponseIdentifier()
+    {
+        $element = $this->createDOMElement('
+            <hottextInteraction responseIdentifier="999-RESPONSE">
+                <prompt>Prompt...</prompt>
+                <div>This is a <hottext identifier="hot1"/> text...</div>
+            </hottextInteraction>
+        ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value '999-RESPONSE' for the attribute 'responseIdentifier' for element 'hottextInteraction' is not a valid QTI identifier.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testNoInfluenceMinStrings20()
+    {
+        $element = $this->createDOMElement('
+            <hottextInteraction responseIdentifier="RESPONSE">
+                <div>This is a <hottext identifier="hot1" minChoices="2"/> text...</div>
+            </hottextInteraction>
+        ');
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+        $this::assertInstanceOf(HottextInteraction::class, $component);
+        $this::assertEquals(0, $component->getMinChoices());
     }
 }

@@ -51,6 +51,7 @@ class BodyElementTest extends QtiSmTestCase
         $this::assertSame('', $span->getClass());
         $this::assertSame('', $span->getLang());
         $this::assertSame('', $span->getLabel());
+        $this::assertFalse($span->getAriaHidden());
         $this::assertFalse($span->hasId());
         $this::assertFalse($span->hasClass());
         $this::assertFalse($span->hasLang());

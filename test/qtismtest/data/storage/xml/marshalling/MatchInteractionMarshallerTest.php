@@ -12,6 +12,7 @@ use qtism\data\content\interactions\SimpleMatchSet;
 use qtism\data\content\interactions\SimpleMatchSetCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class MatchInteractionMarshallerTest
@@ -38,6 +39,9 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
         $matchInteraction->setPrompt($prompt);
         $matchInteraction->setShuffle(true);
+        $matchInteraction->setXmlBase('/home/jerome');
+        $matchInteraction->setMaxAssociations(2);
+        $matchInteraction->setMinAssociations(1);
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($matchInteraction);
         $element = $marshaller->marshall($matchInteraction);
@@ -46,7 +50,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $element = $dom->importNode($element, true);
 
         $this::assertEquals(
-            '<matchInteraction responseIdentifier="RESPONSE" shuffle="true"><prompt>Prompt...</prompt><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice><simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice><simpleAssociableChoice identifier="choice2B" matchMax="1">choice2B</simpleAssociableChoice></simpleMatchSet></matchInteraction>',
+            '<matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="2" minAssociations="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice><simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice><simpleAssociableChoice identifier="choice2B" matchMax="1">choice2B</simpleAssociableChoice></simpleMatchSet></matchInteraction>',
             $dom->saveXML($element)
         );
     }
@@ -54,7 +58,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
     public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
-            <matchInteraction responseIdentifier="RESPONSE" shuffle="true">
+            <matchInteraction responseIdentifier="RESPONSE" shuffle="true" xml:base="/home/jerome">
               <prompt>Prompt...</prompt>
               <simpleMatchSet>
                 <simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice>
@@ -74,6 +78,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this::assertTrue($component->mustShuffle());
         $this::assertTrue($component->hasPrompt());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
 
         $matchSets = $component->getSimpleMatchSets();
         $set1 = $matchSets[0];
@@ -85,5 +90,49 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $associableChoices = $set2->getSimpleAssociableChoices();
         $this::assertEquals('choice2A', $associableChoices[0]->getIdentifier());
         $this::assertEquals('choice2B', $associableChoices[1]->getIdentifier());
+    }
+
+    public function testUnmarshall21NoResponseIdentifier()
+    {
+        $element = $this->createDOMElement('
+            <matchInteraction shuffle="true" xml:base="/home/jerome">
+              <prompt>Prompt...</prompt>
+              <simpleMatchSet>
+                <simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice>
+                <simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice>
+              </simpleMatchSet>
+              <simpleMatchSet>
+                <simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice>
+                <simpleAssociableChoice identifier="choice2B" matchMax="1">choice2B</simpleAssociableChoice>
+              </simpleMatchSet>
+            </matchInteraction>
+        ');
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'matchInteraction' element.");
+
+        $marshaller->unmarshall($element);
+    }
+
+    public function testUnmarshall21SingleMatchSet()
+    {
+        $element = $this->createDOMElement('
+            <matchInteraction responseIdentifier="RESPONSE" shuffle="true" xml:base="/home/jerome">
+              <prompt>Prompt...</prompt>
+              <simpleMatchSet>
+                <simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice>
+                <simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice>
+              </simpleMatchSet>
+            </matchInteraction>
+        ');
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A matchInteraction element must contain exactly 2 simpleMatchSet elements, 1' given.");
+
+        $marshaller->unmarshall($element);
     }
 }

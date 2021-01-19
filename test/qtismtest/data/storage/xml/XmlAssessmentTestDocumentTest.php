@@ -6,6 +6,7 @@ use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\AssessmentItemRef;
+use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionRef;
 use qtism\data\TestPart;
 use qtism\data\AssessmentTest;
@@ -118,10 +119,16 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $this::assertInstanceOf(AssessmentSectionRef::class, $sectionParts['SR01']);
     }
 
-    public function testIncludeAssessmentSectionRefsInTestParts()
+    /**
+     * @dataProvider includeAssessmentSectionRefsInTestPartsProvider
+     * @param string $file
+     * @param bool $filesystem
+     * @throws XmlStorageException
+     */
+    public function testIncludeAssessmentSectionRefsInTestParts($file, $filesystem)
     {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', true);
+        $doc->load($file, true);
         $doc->includeAssessmentSectionRefs();
 
         $root = $doc->getDocumentComponent();
@@ -146,6 +153,73 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $this::assertEquals('../sections/../sections/../items/question2.xml', $assessmentItemRefs['Q02']->getHref());
         $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q03']);
         $this::assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
+    }
+
+    /**
+     * @return array
+     */
+    public function includeAssessmentSectionRefsInTestPartsProvider()
+    {
+        return [
+            [self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', false],
+        ];
+    }
+
+    /**
+     * @dataProvider includeAssessmentSectionRefsMixedProvider
+     * @param string $file
+     * @param bool $filesystem
+     * @throws XmlStorageException
+     */
+    public function testIncludeAssessmentSectionRefsMixed($file, $filesystem)
+    {
+        $doc = new XmlDocument();
+
+        $doc->load($file, true);
+        $doc->includeAssessmentSectionRefs(true);
+
+        $root = $doc->getDocumentComponent();
+
+        $testParts = $root->getTestParts();
+        $this::assertTrue(isset($testParts['T01']));
+
+        $this::assertCount(1, $testParts['T01']->getAssessmentSections());
+        $this::assertTrue(isset($testParts['T01']->getAssessmentSections()['S00']));
+
+        $mainSection = $testParts['T01']->getAssessmentSections()['S00'];
+        $sectionParts = $mainSection->getSectionParts();
+        $this::assertCount(5, $sectionParts);
+        $this::assertSame(
+            ['Q01', 'S01', 'Q03', 'S02', 'Q05'],
+            $sectionParts->getKeys()
+        );
+
+        $this::assertInstanceOf(AssessmentItemRef::class, $sectionParts['Q01']);
+        $this::assertInstanceOf(AssessmentSection::class, $sectionParts['S01']);
+        $this::assertInstanceOf(AssessmentItemRef::class, $sectionParts['Q03']);
+        $this::assertInstanceOf(AssessmentSection::class, $sectionParts['S02']);
+        $this::assertInstanceOf(AssessmentItemRef::class, $sectionParts['Q05']);
+
+        $section = $sectionParts['S01'];
+        $this::assertCount(1, $section->getSectionParts());
+        $this::assertTrue(isset($section->getSectionParts()['Q02']));
+        $this::assertInstanceOf(AssessmentItemRef::class, $section->getSectionParts()['Q02']);
+
+        $section = $sectionParts['S02'];
+        $this::assertCount(1, $section->getSectionParts());
+        $this::assertTrue(isset($section->getSectionParts()['Q04']));
+        $this::assertInstanceOf(AssessmentItemRef::class, $section->getSectionParts()['Q04']);
+    }
+
+    /**
+     * @return array
+     */
+    public function includeAssessmentSectionRefsMixedProvider()
+    {
+        return [
+            [self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_similar_ids.xml', false],
+            [self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_different_ids.xml', false],
+        ];
     }
 
     /**

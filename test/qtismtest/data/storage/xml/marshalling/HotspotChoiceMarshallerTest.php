@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\content\interactions\Choice;
 use qtism\data\content\interactions\Hotspot;
 
@@ -73,5 +74,80 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
         $this::assertFalse($component->isFixed());
         $this::assertEquals(QtiShape::CIRCLE, $component->getShape());
         $this::assertTrue($component->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, [128, 222, 18])));
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallUnknownShape()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice identifier="r_50" fixed="false" shape="unknown" coords="128,222,343"/>
+	    ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of the mandatory attribute 'shape' is not a value from the 'shape' enumeration");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallWrongShowHideValue()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128,222,343" showHide="bla"/>
+	    ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of the 'showHide' attribute of element 'hotspotChoice' is not a value from the 'showHide' enumeration.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallMissingCoords()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice identifier="r_50" fixed="false" shape="circle"/>
+	    ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'coords' is missing from element 'hotspotChoice'.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallMissingShape()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice identifier="r_50" fixed="false"/>
+	    ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'shape' is missing from element 'hotspotChoice'.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallMissingIdentifier()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice/>
+	    ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'identifier' is missing from element 'hotspotChoice'.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 }

@@ -35,11 +35,15 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
 
     /**
      * @depends testLoadAndSaveXIncludeNsInTag
+     * @dataProvider loadAndResolveXIncludeSameBaseProvider
+     * @param string $file
+     * @throws XmlStorageException
+     * @throws ReflectionException
      */
-    public function testLoadAndResolveXIncludeSameBase()
+    public function testLoadAndResolveXIncludeSameBase($file)
     {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml', true);
+        $doc->load($file, true);
 
         // At this moment, includes are not resolved.
         $includes = $doc->getDocumentComponent()->getComponentsByClassName('include');
@@ -62,6 +66,16 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
         // no content for xml:base because 'xinclude_ns_in_tag_content1.xml' is in the
         // same directory as the main xml file.
         $this::assertEquals('', $imgs[0]->getXmlBase());
+    }
+
+    /**
+     * @return array
+     */
+    public function loadAndResolveXIncludeSameBaseProvider()
+    {
+        return [
+            [self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml'],
+        ];
     }
 
     /**

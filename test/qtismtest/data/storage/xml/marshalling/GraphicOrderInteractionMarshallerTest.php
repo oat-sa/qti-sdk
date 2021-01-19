@@ -13,6 +13,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class GraphicOrderInteractionMarshallerTest
@@ -35,13 +36,14 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         $graphicOrderInteraction->setPrompt($prompt);
         $graphicOrderInteraction->setMinChoices(2);
         $graphicOrderInteraction->setMaxChoices(3);
+        $graphicOrderInteraction->setXmlBase('/home/jerome');
 
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($graphicOrderInteraction)->marshall($graphicOrderInteraction);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this::assertEquals(
-            '<graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3"><prompt>Prompt...</prompt><object data="my-img.png" type="image/png"/><hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/><hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/><hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/></graphicOrderInteraction>',
+            '<graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-img.png" type="image/png"/><hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/><hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/><hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/></graphicOrderInteraction>',
             $dom->saveXML($element)
         );
     }
@@ -49,8 +51,14 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
     public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
-	            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3"><prompt>Prompt...</prompt><object data="my-img.png" type="image/png"/><hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/><hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/><hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/></graphicOrderInteraction>
-         ');
+            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3" xml:base="/home/jerome">
+                <prompt>Prompt...</prompt>
+                <object data="my-img.png" type="image/png"/>
+                <hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/>
+                <hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/>
+                <hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/>
+            </graphicOrderInteraction>
+        ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this::assertInstanceOf(GraphicOrderInteraction::class, $component);
@@ -58,6 +66,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
         $this::assertEquals(2, $component->getMinChoices());
         $this::assertEquals(3, $component->getMaxChoices());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
 
         $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
@@ -72,5 +81,72 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('choice1', $choices[0]->getIdentifier());
         $this::assertEquals('choice2', $choices[1]->getIdentifier());
         $this::assertEquals('choice3', $choices[2]->getIdentifier());
+    }
+
+    public function testUnmarshall21SomethingElseThanHotspotChoice()
+    {
+        $element = $this->createDOMElement('
+            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3">
+              <prompt>Prompt...</prompt>
+              <object data="my-img.png" type="image/png"/>
+              <hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/>
+              <simpleChoice identifier="choice2">Choice 2</simpleChoice>
+              <hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/>
+            </graphicOrderInteraction>
+         ');
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+
+        // Correctly filtered...
+        $this::assertTrue(true);
+    }
+
+    public function testUnmarshall21NoHotspotChoice()
+    {
+        $element = $this->createDOMElement('
+            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3">
+              <prompt>Prompt...</prompt>
+              <object data="my-img.png" type="image/png"/>
+            </graphicOrderInteraction>
+         ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'graphicOrderInteraction' must contain at least one 'hotspotChoice' element, none given.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    public function testUnmarshall21NoObject()
+    {
+        $element = $this->createDOMElement('
+            <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3">
+              <prompt>Prompt...</prompt>
+              <hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/>
+              <hotspotChoice identifier="choice2" shape="circle" coords="4,4,15"/>
+            </graphicOrderInteraction>
+         ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'graphicOrderInteraction' element must contain exactly one 'object' element, none given.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    public function testUnmarshall21NoResponseIdentifier()
+    {
+        $element = $this->createDOMElement('
+            <graphicOrderInteraction id="my-graphicOrder" minChoices="2" maxChoices="3" xml:base="/home/jerome">
+              <prompt>Prompt...</prompt>
+              <object data="my-img.png" type="image/png"/>
+              <hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/>
+              <hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/>
+              <hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/>
+            </graphicOrderInteraction>
+         ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'graphicOrderInteraction' element.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 }

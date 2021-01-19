@@ -3,9 +3,9 @@
 namespace qtismtest\data\storage\xml;
 
 use DOMDocument;
-use qtism\data\storage\xml\XmlDocument;
-use qtism\data\storage\xml\XmlStorageException;
-use qtismtest\QtiSmTestCase;
+use InvalidArgumentException;
+use LogicException;
+use qtism\data\AssessmentItemRef;
 use qtism\data\content\interactions\ChoiceInteraction;
 use qtism\data\content\xhtml\A;
 use qtism\data\content\xhtml\text\Div;
@@ -14,6 +14,9 @@ use qtism\data\content\TextRun;
 use qtism\data\content\TemplateBlock;
 use qtism\data\content\RubricBlock;
 use qtism\data\content\interactions\Prompt;
+use qtism\data\storage\xml\XmlDocument;
+use qtism\data\storage\xml\XmlStorageException;
+use qtismtest\QtiSmTestCase;
 
 /**
  * Class XmlDocumentTest
@@ -202,6 +205,130 @@ class XmlDocumentTest extends QtiSmTestCase
         $this::assertEquals('Hello there & there! I am trying to make <you> "crazy"', $divText->getcontent());
     }
 
+    public function testWrongVersion()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $doc = new XMLDocument('2.2.3');
+    }
+
+    public function testLoadFromString()
+    {
+        $doc = new XmlDocument('2.1');
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+
+        $component = $doc->getDocumentComponent();
+        $this::assertInstanceOf(AssessmentItemRef::class, $component);
+        $this::assertEquals('Q01', $component->getIdentifier());
+        $this::assertEquals('./Q01.xml', $component->getHref());
+    }
+
+    public function testLoadFromEmptyString()
+    {
+        $doc = new XmlDocument('2.1');
+
+        $expectedMsg = 'An internal error occurred while parsing QTI-XML:';
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessage($expectedMsg);
+
+        $doc->loadFromString('');
+    }
+
+    public function testLoadFromMalformedString()
+    {
+        $doc = new XmlDocument('2.1');
+
+        $this->expectException(XmlStorageException::class);
+
+        // libxml library on Travis produces another error message.
+        // Don't know how to find the version though.
+        $libMxl2_9_10_Message = 'Premature end of data in tag assessmentItem line 1';
+        $libMxl2_9_other_Message = 'EndTag\: \\\'<\\/\\\' not found';
+
+        $expectedMsg = '/^An internal error occurred while parsing QTI-XML:' . "\n"
+            . 'Fatal Error: (' . $libMxl2_9_10_Message . '|' . $libMxl2_9_other_Message . ') at 1\\:17\\.$/';
+        $assertionMethod = method_exists($this, 'expectExceptionMessageMatches')
+            ? 'expectExceptionMessageMatches'
+            : 'expectExceptionMessageRegExp';
+        $this->$assertionMethod($expectedMsg);
+
+        $doc->loadFromString('<assessmentItem>');
+    }
+
+    public function testLoadNoVersion()
+    {
+        $doc = new XmlDocument('2.1');
+
+        $doc->load(self::samplesDir() . 'invalid/noversion.xml');
+        $this::assertEquals('2.1.0', $doc->getVersion());
+    }
+
+    public function testVersionDoesNotChangeLoadFromString()
+    {
+        $doc = new XmlDocument('2.1.1');
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+        // Version always returned as MAJOR.MINOR.PATCH
+        $this::assertEquals('2.1.1', $doc->getVersion());
+    }
+
+    public function testInvalidAgainstXMLSchema()
+    {
+        $xsdLocation = realpath(__DIR__ . '/../../../../../') . '/qtism/data/storage/xml/versions/../schemes/qtiv2p1/imsqti_v2p1.xsd';
+        $expectedMsg = "The document could not be validated with XML Schema '$xsdLocation':\n";
+        $expectedMsg .= "Error: Element '{http://www.imsglobal.org/xsd/imsqti_v2p1}responseDeclaration', attribute 'foo': The attribute 'foo' is not allowed. at 9:0.";
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessage($expectedMsg);
+
+        $uri = self::samplesDir() . 'invalid/xsdinvalid.xml';
+        $doc = new XmlDocument('2.1.0');
+        $doc->load($uri, true);
+    }
+
+    public function testSchemaValidateUnknownFile()
+    {
+        $doc = new XmlDocument();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Schema 'blub' cannot be read. Does this file exist? Is it readable?");
+
+        $doc->schemaValidate('blub');
+    }
+
+    public function testIncludeAssessmentSectionRefsNoComponent()
+    {
+        $doc = new XmlDocument();
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Cannot resolve assessmentSectionRefs before loading any file.');
+        $doc->includeAssessmentSectionRefs();
+    }
+
+    /**
+     * @dataProvider saveNoComponentProvider
+     * @param string $file
+     * @throws XmlStorageException
+     * @throws MarshallingException
+     */
+    public function testSaveNoComponent($file)
+    {
+        $doc = new XmlDocument();
+
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessage('The document cannot be saved. No document component object to be saved.');
+
+        $doc->save($file);
+    }
+
+    /**
+     * @return array
+     */
+    public function saveNoComponentProvider()
+    {
+        return [
+            ['path.xml'],
+        ];
+    }
+
+
     /**
      * @dataProvider validInferQTIVersionProvider
      * @param string $file
@@ -232,12 +359,72 @@ class XmlDocumentTest extends QtiSmTestCase
         ];
     }
 
-    public function testInferVersionWithMissingNamespaceThrowsException()
+    public function testInferVersionWithMissingNamespaceReturnsDefaultVersion()
+    {
+        $xmlDoc = new XmlDocument();
+
+        $xmlDoc->load(self::samplesDir() . 'ims/tests/empty_tests/empty_test_missing_namespace.xml');
+
+        $this::assertEquals('2.1.0', $xmlDoc->getVersion());
+    }
+
+    public function testInferVersionWithWrongNamespaceThrowsException()
     {
         $xmlDoc = new XmlDocument();
 
         $this->expectException(XmlStorageException::class);
 
-        $xmlDoc->load(self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_missing_namespace.xml');
+        $xmlDoc->load(self::samplesDir() . 'ims/tests/empty_tests/empty_test_wrong_namespace.xml', true);
+    }
+
+    /**
+     * @dataProvider changeVersionProvider
+     * @param string $fromVersion
+     * @param string $fromFile
+     * @param string $toVersion
+     * @param string $toFile
+     * @throws XmlStorageException
+     */
+    public function testChangeVersion($fromVersion, $fromFile, $toVersion, $toFile)
+    {
+        $doc = new XmlDocument($fromVersion);
+        $doc->load($fromFile);
+
+        $doc->changeVersion($toVersion);
+
+        $expected = new XmlDocument($toVersion);
+        $expected->load($toFile);
+
+        $this::assertEquals($expected->getDomDocument()->documentElement, $doc->getDomDocument()->documentElement);
+    }
+
+    /**
+     * @return array
+     */
+    public function changeVersionProvider(): array
+    {
+        $path = self::samplesDir() . 'ims/tests/empty_tests/empty_test_';
+        return [
+            ['2.1', $path . 'v2p1.xml', '2.2', $path . 'v2p2.xml'],
+            ['2.2', $path . 'v2p2.xml', '2.1', $path . 'v2p1.xml'],
+            ['2.1', $path . 'v2p1.xml', '2.1.1', $path . 'v2p1p1.xml'],
+            ['2.2', $path . 'v2p2.xml', '2.2.1', $path . 'v2p2p1.xml'],
+            ['2.2', $path . 'v2p2.xml', '2.2.2', $path . 'v2p2p2.xml'],
+        ];
+    }
+
+    public function testChangeVersionWithUnknownVersionThrowsException()
+    {
+        $wrongVersion = '36.15';
+        $patchedWrongVersion = $wrongVersion . '.0';
+        $file21 = self::samplesDir() . 'custom/tests/empty_compact_test/empty_compact_test_2_1.xml';
+
+        $doc = new XmlDocument('2.1');
+        $doc->load($file21);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('QTI version "' . $patchedWrongVersion . '" is not supported.');
+
+        $doc->changeVersion($wrongVersion);
     }
 }

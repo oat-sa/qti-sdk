@@ -10,6 +10,7 @@ use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
 use qtism\data\TestPart;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\expressions\operators\NotOperator;
 use qtism\data\expressions\operators\Equal;
 
@@ -138,5 +139,87 @@ class TestPartMarshallerTest extends QtiSmTestCase
         $this::assertTrue($component->hasItemSessionControl());
         $this::assertEquals(0, $component->getItemSessionControl()->getMaxAttempts());
         $this::assertTrue($component->hasTimeLimits());
+    }
+
+    public function testUnmarshallNoSections()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '
+			<testPart xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="part1" navigationMode="linear" submissionMode="individual">
+			</testPart>
+			'
+        );
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage('A testPart element must contain at least one assessmentSection.');
+
+        $marshaller->unmarshall($element);
+    }
+
+    public function testUnmarshallNoSubmissionMode()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '
+			<testPart xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="part1" navigationMode="linear">
+				<assessmentSection identifier="section1" title="My Section 1" visible="true"/>
+				<assessmentSection identifier="section2" title="My Section 2" visible="false"/>
+			</testPart>
+			'
+        );
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'submissionMode' is missing from element 'testPart'.");
+
+        $marshaller->unmarshall($element);
+    }
+
+    public function testUnmarshallNoNavigationMode()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '
+			<testPart xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="part1" submissionMode="individual">
+				<assessmentSection identifier="section1" title="My Section 1" visible="true"/>
+				<assessmentSection identifier="section2" title="My Section 2" visible="false"/>
+			</testPart>
+			'
+        );
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'navigationMode' is missing from element 'testPart'.");
+
+        $marshaller->unmarshall($element);
+    }
+
+    public function testUnmarshallNoIdentifier()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '
+			<testPart xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" submissionMode="individual" navigationMode="linear">
+				<assessmentSection identifier="section1" title="My Section 1" visible="true"/>
+				<assessmentSection identifier="section2" title="My Section 2" visible="false"/>
+			</testPart>
+			'
+        );
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'identifier' is missing from element 'testPart'.");
+
+        $marshaller->unmarshall($element);
     }
 }

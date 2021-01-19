@@ -24,6 +24,30 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
 {
+    public function testMarshall21()
+    {
+        // Initialize a minimal outcomeDeclaration.
+        $identifier = 'outcome1';
+        $cardinality = Cardinality::SINGLE;
+        $baseType = BaseType::INTEGER;
+
+        $component = new OutcomeDeclaration($identifier, $baseType, $cardinality);
+        $component->setInterpretation('My interpretation');
+        $component->setLongInterpretation('http://my.long.com/interpretation');
+        $component->setMasteryValue(0.5);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
+        $element = $marshaller->marshall($component);
+
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('outcomeDeclaration', $element->nodeName);
+        $this::assertEquals('single', $element->getAttribute('cardinality'));
+        $this::assertEquals('integer', $element->getAttribute('baseType'));
+        $this::assertEquals('outcome1', $element->getAttribute('identifier'));
+        $this::assertEquals('My interpretation', $element->getAttribute('interpretation'));
+        $this::assertEquals('http://my.long.com/interpretation', $element->getAttribute('longInterpretation'));
+        $this::assertEquals('0.5', $element->getAttribute('masteryValue'));
+    }
+
     public function testUnmarshallExternalScoredWithIllegalValue()
     {
         $this->expectException(UnmarshallingException::class);
@@ -55,6 +79,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
      * @param $qtiVersion
      * @param $externalScored
      * @param $expectedExternalScored
+     * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     public function testMarshallExternalScored($qtiVersion, $externalScored, $expectedExternalScored)
@@ -79,7 +104,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function qtiVersionsToTestForExternalScored(): array
+    public function qtiVersionsToTestForExternalScored()
     {
         return [
             ['2.0', ExternalScored::HUMAN, ''],
@@ -194,10 +219,10 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('2.5', $entry->getAttribute('targetValue'));
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshall21()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML('<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcomeDeclaration1" cardinality="single" baseType="integer"/>');
+        $dom->loadXML('<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcomeDeclaration1" cardinality="single" baseType="integer" longInterpretation="http://my.long.com/interpretation"/>');
         $element = $dom->documentElement;
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
@@ -207,6 +232,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('outcomeDeclaration1', $component->getIdentifier());
         $this::assertEquals(Cardinality::SINGLE, $component->getCardinality());
         $this::assertEquals(BaseType::INTEGER, $component->getBaseType());
+        $this::assertEquals('http://my.long.com/interpretation', $component->getLongInterpretation());
     }
 
     public function testUnmarshallDefaultValue21()

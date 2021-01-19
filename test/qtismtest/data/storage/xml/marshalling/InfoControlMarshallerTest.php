@@ -19,6 +19,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
     public function testMarshallMinimal()
     {
         $component = new InfoControl();
+        $component->setXmlBase('/home/jerome');
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($component)->marshall($component);
 
         $this::assertInstanceOf(DOMElement::class, $element);
@@ -27,6 +28,8 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('', $element->getAttribute('class'));
         $this::assertEquals('', $element->getAttribute('lang'));
         $this::assertEquals('', $element->getAttribute('label'));
+        $this::assertEquals('', $element->getAttribute('title'));
+        $this::assertEquals('/home/jerome', $element->getAttribute('xml:base'));
     }
 
     public function testMarshallMinimalWithAttributes()
@@ -44,7 +47,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimal()
     {
-        $element = $this->createDOMElement('<infoControl/>');
+        $element = $this->createDOMElement('<infoControl title=""/>');
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
         $this::assertInstanceOf(InfoControl::class, $component);
@@ -57,7 +60,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallMinimalWithAttributes()
     {
-        $element = $this->createDOMElement('<infoControl id="myControl" class="myInfo elt" xml:lang="en-US" label="A label..."/>');
+        $element = $this->createDOMElement('<infoControl id="myControl" class="myInfo elt" xml:lang="en-US" label="A label..." title=""/>');
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
         $this::assertInstanceOf(InfoControl::class, $component);
@@ -71,7 +74,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
     public function testUnmarshallComplex()
     {
         $element = $this->createDOMElement('
-	        <infoControl id="controlMePlease">
+	        <infoControl id="controlMePlease" title="" xml:base="/home/jerome">
 	            This is <em>gooood</em> !
 	        </infoControl>
 	    ');
@@ -81,6 +84,7 @@ class InfoControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('controlMePlease', $component->getId());
         $content = $component->getContent();
         $this::assertCount(3, $content);
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
 
         $this::assertInstanceOf(TextRun::class, $content[0]);
         $this::assertEquals('This is ', ltrim($content[0]->getContent()));

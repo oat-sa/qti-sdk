@@ -148,6 +148,30 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals('', $component->getValue());
     }
 
+    public function testUnmarshallNoValue()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"></value>');
+        $element = $dom->documentElement;
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+
+        $this::assertSame(-1, $component->getBaseType());
+        $this::assertSame('', $component->getValue());
+    }
+
+    public function testUnmarshallStringBaseTypeWithNullValue()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" baseType="string"></value>');
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+        $this::assertSame(BaseType::STRING, $component->getBaseType());
+        $this::assertSame('', $component->getValue());
+    }
+
     public function testUnmarshallBaseTypePairWithFieldIdentifier()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -171,7 +195,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" baseType="integer">0</value>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
         $this::assertSame(0, $component->getValue());

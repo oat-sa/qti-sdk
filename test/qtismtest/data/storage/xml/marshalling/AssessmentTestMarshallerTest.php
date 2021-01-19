@@ -8,6 +8,10 @@ use qtism\common\enums\BaseType;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\AssessmentTest;
+use qtism\data\content\FlowCollection;
+use qtism\data\content\FlowStaticCollection;
+use qtism\data\content\TextRun;
+use qtism\data\content\xhtml\text\Div;
 use qtism\data\expressions\BaseValue;
 use qtism\data\processing\OutcomeProcessing;
 use qtism\data\rules\OutcomeRuleCollection;
@@ -38,6 +42,8 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase
         $testParts = new TestPartCollection();
         $testParts[] = new TestPart('myTestPart', $assessmentSections);
 
+        $div = new Div();
+        $div->setContent(new FlowCollection([new TextRun('Feedback!')]));
         $testFeedBacks = new TestFeedbackCollection();
         $testFeedBacks[] = new TestFeedback('myFeedback', 'myOutcome', '<div>Feedback!</div>', 'A Feedback');
 

@@ -48,4 +48,17 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(FlowStaticCollection::class, $content);
         $this::assertCount(3, $content);
     }
+
+    public function testMarshallSimple20()
+    {
+        $simpleChoice = new SimpleChoice('choice_1');
+        $simpleChoice->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
+
+        $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($simpleChoice);
+        $element = $marshaller->marshall($simpleChoice);
+
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->importNode($element, true);
+        $this::assertEquals('<simpleChoice identifier="choice_1">Choice #1</simpleChoice>', $dom->saveXML($element));
+    }
 }

@@ -7,6 +7,7 @@ use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\state\MapEntry;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class MapEntryMarshallerTest
@@ -30,7 +31,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
     public function testUnmarshall21()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML('<mapEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" mapKey="1337" mappedValue="1.377" caseSensitive="true"/>');
+        $dom->loadXML('<mapEntry mapKey="1337" mappedValue="1.377" caseSensitive="true"/>');
         $element = $dom->documentElement;
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
@@ -43,5 +44,45 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1.377, $component->getMappedValue());
         $this::assertIsBool($component->isCaseSensitive());
         $this::assertTrue($component->isCaseSensitive());
+    }
+
+    public function testUnmarshall21EmptyMapKeyForString()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<mapEntry mapKey="" mappedValue="-1.0"/>');
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::STRING]);
+        $component = $marshaller->unmarshall($element);
+
+        $this::assertInstanceOf(MapEntry::class, $component);
+        $this::assertEquals('', $component->getMapKey());
+        $this::assertEquals(-1.0, $component->getMappedValue());
+    }
+
+    public function testUnmarshall21EmptyMapKeyForInteger()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<mapEntry mapKey="" mappedValue="-1.0"/>');
+        $element = $dom->documentElement;
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value '' of the 'mapKey' attribute could not be converted to a 'integer' value.");
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
+        $component = $marshaller->unmarshall($element);
+    }
+
+    public function testUnmarshall21EmptyMapKeyForIdentifier()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<mapEntry mapKey="" mappedValue="-1.0"/>');
+        $element = $dom->documentElement;
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value '' of the 'mapKey' attribute could not be converted to a 'identifier' value.");
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::IDENTIFIER]);
+        $component = $marshaller->unmarshall($element);
     }
 }

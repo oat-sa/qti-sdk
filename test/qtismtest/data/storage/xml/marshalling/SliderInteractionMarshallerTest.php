@@ -9,6 +9,7 @@ use qtism\data\content\interactions\Prompt;
 use qtism\data\content\interactions\SliderInteraction;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class SliderInteractionMarshallerTest
@@ -22,6 +23,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         $sliderInteraction->setStepLabel(true);
         $sliderInteraction->setOrientation(Orientation::VERTICAL);
         $sliderInteraction->setReverse(true);
+        $sliderInteraction->setXmlBase('/home/jerome');
 
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
@@ -32,7 +34,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this::assertEquals(
-            '<sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true"><prompt>Prompt...</prompt></sliderInteraction>',
+            '<sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true" xml:base="/home/jerome"><prompt>Prompt...</prompt></sliderInteraction>',
             $dom->saveXML($element)
         );
     }
@@ -59,5 +61,73 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
         $this::assertEquals('Prompt...', $promptContent[0]->getContent());
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallWrongOrientationValue()
+    {
+        $element = $this->createDOMElement('
+            <sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertital" reverse="true">
+                <prompt>Prompt...</prompt>
+            </sliderInteraction>
+        ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of the 'orientation' attribute of the 'sliderInteraction' is invalid.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallNoUpperBound()
+    {
+        $element = $this->createDOMElement('
+            <sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" step="1" stepLabel="true" orientation="vertical" reverse="true">
+                <prompt>Prompt...</prompt>
+            </sliderInteraction>
+        ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'upperBound' attribute is missing from the 'sliderInteraction' element.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallNoLowerBound()
+    {
+        $element = $this->createDOMElement('
+            <sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true">
+                <prompt>Prompt...</prompt>
+            </sliderInteraction>
+        ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'lowerBound' attribute is missing from the 'sliderInteraction' element.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallNoResponseIdentifier()
+    {
+        $element = $this->createDOMElement('
+            <sliderInteraction id="my-slider" class="slide-it" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true">
+                <prompt>Prompt...</prompt>
+            </sliderInteraction>
+        ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'sliderInteraction' element.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 }

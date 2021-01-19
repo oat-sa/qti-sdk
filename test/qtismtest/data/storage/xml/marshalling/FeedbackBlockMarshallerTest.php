@@ -9,6 +9,7 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class FeedbackBlockMarshallerTest
@@ -31,6 +32,26 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><div>This is text...</div></feedbackBlock>', $dom->saveXML($element));
     }
 
+    /**
+     * @depends testMarshall
+     */
+    public function testMarshallXmlBase()
+    {
+        $div = new Div();
+        $div->setContent(new FlowCollection([new TextRun('This is text...')]));
+        $content = new FlowCollection();
+        $content[] = $div;
+        $feedback = new FeedbackBlock('outcome1', 'please_show_me', ShowHide::SHOW);
+        $feedback->setContent($content);
+        $feedback->setXmlBase('/home/jerome');
+
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($feedback)->marshall($feedback);
+
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->importNode($element, true);
+        $this::assertEquals('<feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show" xml:base="/home/jerome"><div>This is text...</div></feedbackBlock>', $dom->saveXML($element));
+    }
+
     public function testUnmarshall()
     {
         $element = $this->createDOMElement('
@@ -51,5 +72,93 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
         $divContent = $div->getContent();
         $this::assertCount(1, $divContent);
         $this::assertEquals('This is text...', $divContent[0]->getContent());
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallInvalidShowHide()
+    {
+        $element = $this->createDOMElement('
+	        <feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="snow"><div>This is text...</div></feedbackBlock>
+	    ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("'snow' is not a valid value for the 'showHide' attribute of element 'feedbackBlock'.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallInvalidContent1()
+    {
+        $element = $this->createDOMElement('
+	        <feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><simpleChoice identifier="ChoiceA"/></feedbackBlock>
+	    ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'simpleChoice' cannot be contained by a 'feedbackBlock'.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallInvalidContent2()
+    {
+        $element = $this->createDOMElement('
+	        <feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><endAttemptInteraction responseIdentifier="Check" title="My Title"/></feedbackBlock>
+	    ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'endAttemptInteraction' cannot be contained by a 'feedbackBlock'.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallXmlBase()
+    {
+        $element = $this->createDOMElement('
+	        <feedbackBlock xml:base="/home/jerome" outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><div>This is text...</div></feedbackBlock>
+	    ');
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallNoIdentifier()
+    {
+        $element = $this->createDOMElement('
+	        <feedbackBlock outcomeIdentifier="outcome1" showHide="snow"><div>This is text...</div></feedbackBlock>
+	    ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'identifier' attribute is missing from element 'feedbackBlock'.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallNoOutcomeIdentifier()
+    {
+        $element = $this->createDOMElement('
+	        <feedbackBlock identifier="myidentifier" showHide="snow"><div>This is text...</div></feedbackBlock>
+	    ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'outcomeIdentifier' attribute is missing from element 'feedbackBlock'.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 }

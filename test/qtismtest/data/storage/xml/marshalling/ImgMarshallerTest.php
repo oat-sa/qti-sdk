@@ -26,6 +26,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use qtism\data\content\xhtml\Img;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class ImgMarshallerTest
@@ -99,6 +100,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $this::assertEquals('my-img', $img->getId());
         $this::assertEquals('beautiful', $img->getClass());
         $this::assertEquals('en-YO', $img->getLang());
+        $this::assertEquals('/home/jerome', $img->getXmlBase());
 
         // aria-* attributes are ignored in QTI 2.1
         $this::assertFalse($img->hasAriaOwns());
@@ -112,7 +114,7 @@ class ImgMarshallerTest extends QtiSmTestCase
             <img xml:base="/home/jerome" src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowsto="IDREF2" aria-hidden="true"/>
 	    ');
 
-        $marshaller = $this->getMarshallerFactory('2.2.1')->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.2.2')->createMarshaller($element);
 
         /** @var Img $img */
         $img = $marshaller->unmarshall($element);
@@ -130,7 +132,7 @@ class ImgMarshallerTest extends QtiSmTestCase
             <img src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowsto="IDREF2" aria-flowto="IDREF3"/>
 	    ');
 
-        $marshaller = $this->getMarshallerFactory('2.2.1')->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.2.2')->createMarshaller($element);
 
         /** @var Img $img */
         $img = $marshaller->unmarshall($element);
@@ -145,7 +147,7 @@ class ImgMarshallerTest extends QtiSmTestCase
             <img src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowto="IDREF3"/>
 	    ');
 
-        $marshaller = $this->getMarshallerFactory('2.2.1')->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.2.2')->createMarshaller($element);
 
         /** @var Img $img */
         $img = $marshaller->unmarshall($element);
@@ -153,5 +155,38 @@ class ImgMarshallerTest extends QtiSmTestCase
         // For img components, we prefer aria-flowsto. However, we fall back
         // to aria-flowto in cas it exists.
         $this::assertEquals('IDREF3', $img->getAriaFlowTo());
+    }
+
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshallPercentage()
+    {
+        $element = $this->createDOMElement('
+            <img src="my/image.png" alt="An Image..." width="30%" height="40%"/>
+	    ');
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        $img = $marshaller->unmarshall($element);
+
+        $this::assertEquals('40%', $img->getHeight());
+        $this::assertEquals('30%', $img->getWidth());
+    }
+
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshallMissingSrc()
+    {
+        $element = $this->createDOMElement('
+            <img/>
+	    ');
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The 'mandatory' attribute 'src' is missing from element 'img'.");
+
+        $marshaller->unmarshall($element);
     }
 }

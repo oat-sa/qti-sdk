@@ -58,4 +58,21 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals(400, $component->getObject()->getWidth());
         $this::assertEquals(300, $component->getObject()->getHeight());
     }
+
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall20()
+    {
+        // Make sure minChoices is not in output in a QTI 2.0 context.
+        $element = $this->createDOMElement('
+            <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2">
+               <object data="myimg.jpg" type="image/jpeg" width="400" height="300"/>
+            </positionObjectInteraction>
+        ');
+
+        $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
+
+        $this::assertFalse($component->hasMinChoices());
+    }
 }

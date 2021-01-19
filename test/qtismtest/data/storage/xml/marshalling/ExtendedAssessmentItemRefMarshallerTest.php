@@ -4,13 +4,28 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use DOMElement;
+use qtism\common\collections\IdentifierCollection;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\expressions\BaseValue;
 use qtism\data\ExtendedAssessmentItemRef;
+use qtism\data\processing\TemplateProcessing;
+use qtism\data\rules\SetCorrectResponse;
+use qtism\data\rules\TemplateRuleCollection;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\ResponseDeclarationCollection;
+use qtism\data\state\ResponseValidityConstraint;
+use qtism\data\state\ResponseValidityConstraintCollection;
+use qtism\data\state\Shuffling;
+use qtism\data\state\ShufflingCollection;
+use qtism\data\state\ShufflingGroup;
+use qtism\data\state\ShufflingGroupCollection;
+use qtism\data\state\TemplateDeclaration;
+use qtism\data\state\TemplateDeclarationCollection;
+use qtism\data\state\TemplateDefault;
+use qtism\data\state\TemplateDefaultCollection;
 use qtism\data\state\Weight;
 use qtism\data\state\WeightCollection;
 use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
@@ -32,6 +47,9 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals('assessmentItemRef', $element->nodeName);
         $this::assertEquals('Q01', $element->getAttribute('identifier'));
         $this::assertEquals('./q01.xml', $element->getAttribute('href'));
+        $this::assertEquals('', $element->getAttribute('endAttemptIdentifiers'));
+        $this::assertFalse($element->hasAttribute('title'));
+        $this::assertFalse($element->hasAttribute('label'));
     }
 
     public function testUnmarshallMinimal()

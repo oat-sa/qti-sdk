@@ -45,6 +45,32 @@ class PromptMarshallerTest extends QtiSmTestCase
         $this::assertEquals('This is a prompt', $content[0]->getContent());
     }
 
+    public function testUnmarshallExcludedFlowStatic()
+    {
+        $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is a prompt with a <pre>pre which is not allowed.</pre></prompt>');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'prompt' cannot contain 'pre' elements.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    public function testUnmarshallExcludedComponents()
+    {
+        $element = $this->createDOMElement('
+            <prompt id="my-prompt" class="qti-prompt">
+                This is a prompt containing a choice interaction.
+                <choiceInteraction responseIdentifier="RESPONSE">
+                    <simpleChoice identifier="choice">Choice</simpleChoice>
+                </choiceInteraction>
+            </prompt>');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'prompt' cannot contain 'choiceInteraction' elements.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
     public function testUnmarshallPromptWithAnchorInQti21ThrowsException()
     {
         $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is an anchor: <a href="#">anchor text</a></prompt>');

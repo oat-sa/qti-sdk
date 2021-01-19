@@ -15,6 +15,7 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\content\xhtml\text\P;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class GapMatchInteractionMarshallerTest
@@ -36,6 +37,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         $p->setContent(new InlineCollection([new TextRun('A text... '), $gap1, new TextRun(' and an image... '), $gap2]));
 
         $gapMatch = new GapMatchInteraction('RESPONSE', new GapChoiceCollection([$gapText, $gapImg]), new BlockStaticCollection([$p]));
+        $gapMatch->setXmlBase('/home/jerome');
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($gapMatch);
         $element = $marshaller->marshall($gapMatch);
@@ -43,7 +45,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this::assertEquals(
-            '<gapMatchInteraction responseIdentifier="RESPONSE"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>',
+            '<gapMatchInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>',
             $dom->saveXML($element)
         );
     }
@@ -51,7 +53,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
     public function testUnmarshall()
     {
         $element = $this->createDOMElement('
-            <gapMatchInteraction responseIdentifier="RESPONSE"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>
+            <gapMatchInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>
         ');
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
@@ -59,6 +61,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(GapMatchInteraction::class, $gapMatch);
         $this::assertEquals('RESPONSE', $gapMatch->getResponseIdentifier());
+        $this::assertEquals('/home/jerome', $gapMatch->getXmlBase());
         $this::assertFalse($gapMatch->mustShuffle());
 
         $gapChoices = $gapMatch->getGapChoices();
@@ -70,5 +73,33 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         $this::assertCount(2, $gaps);
         $this::assertEquals('G1', $gaps[0]->getIdentifier());
         $this::assertEquals('G2', $gaps[1]->getIdentifier());
+    }
+
+    public function testUnmarshallNoGapChoice()
+    {
+        $element = $this->createDOMElement('
+            <gapMatchInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome"><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>
+        ');
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'gapMatchInteraction' element must contain at least 1 'gapChoice' element, none given.");
+
+        $marshaller->unmarshall($element);
+    }
+
+    public function testUnmarshallNoResponseIdentifier()
+    {
+        $element = $this->createDOMElement('
+            <gapMatchInteraction xml:base="/home/jerome"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>
+        ');
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'gapMatchInteraction' element.");
+
+        $marshaller->unmarshall($element);
     }
 }

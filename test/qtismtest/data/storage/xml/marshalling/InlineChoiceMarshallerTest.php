@@ -6,6 +6,7 @@ use DOMDocument;
 use qtism\data\content\interactions\InlineChoice;
 use qtism\data\content\PrintedVariable;
 use qtism\data\content\TextOrVariableCollection;
+use qtism\data\content\TextRun;
 use qtism\data\ShowHide;
 use qtismtest\QtiSmTestCase;
 
@@ -17,7 +18,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
     public function testMarshall21()
     {
         $choice = new InlineChoice('choice1', 'my-choice1');
-        $choice->setContent(new TextOrVariableCollection([new PrintedVariable('pr1')]));
+        $choice->setContent(new TextOrVariableCollection([new TextRun('var: '), new PrintedVariable('pr1')]));
         $choice->setFixed(true);
         $choice->setTemplateIdentifier('tpl1');
         $choice->setShowHide(ShowHide::HIDE);
@@ -26,7 +27,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this::assertEquals('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide"><printedVariable identifier="pr1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></inlineChoice>', $dom->saveXML($element));
+        $this::assertEquals('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide">var: <printedVariable identifier="pr1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></inlineChoice>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()

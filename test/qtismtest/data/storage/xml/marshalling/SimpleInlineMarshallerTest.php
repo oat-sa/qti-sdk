@@ -14,6 +14,7 @@ use qtism\data\content\xhtml\text\Span;
 use qtism\data\content\xhtml\text\Strong;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class SimpleInlineMarshallerTest
@@ -28,13 +29,14 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
 
         $em = new Em('sentence', 'introduction', 'en-US');
         $em->setContent(new InlineCollection([new TextRun('He is '), $strong, new TextRun('.')]));
+        $em->setXmlBase('/home/jerome');
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($em);
         $element = $marshaller->marshall($em);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this::assertEquals('<em id="sentence" class="introduction" xml:lang="en-US">He is <strong id="john" label="His name">John Dunbar</strong>.</em>', $dom->saveXML($element));
+        $this::assertEquals('<em id="sentence" class="introduction" xml:lang="en-US" xml:base="/home/jerome">He is <strong id="john" label="His name">John Dunbar</strong>.</em>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -67,6 +69,20 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('.', $sentence[2]->getContent());
     }
 
+    public function testUnmarshall21MissingHref()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<a>QTI-SDK</a>');
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'href' attribute of the 'a' element is missing.");
+
+        $a = $marshaller->unmarshall($element);
+    }
+
     public function testMarshallQandA21()
     {
         $q = new Q('albert-einstein');
@@ -86,8 +102,9 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
 
     public function testUnmarshallQandA21()
     {
-        $q = $this->createComponentFromXml('<q id="albert-einstein">Albert Einstein is a <a href="http://en.wikipedia.org/wiki/Physicist" type="text/html">physicist</a>.</q>');
+        $q = $this->createComponentFromXml('<q id="albert-einstein" cite="http://en.wikipedia.org/wiki/Physicist" xml:base="/home/jerome">Albert Einstein is a <a href="http://en.wikipedia.org/wiki/Physicist" type="text/html">physicist</a>.</q>');
         $this::assertInstanceOf(Q::class, $q);
+        $this::assertEquals('http://en.wikipedia.org/wiki/Physicist', $q->getCite());
     }
 
     /**

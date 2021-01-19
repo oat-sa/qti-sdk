@@ -73,7 +73,7 @@ class OperatorMarshallerTest extends QtiSmTestCase
 
         $sum = new Sum(new ExpressionCollection([$sub1, $sub2]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($sum);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($sum);
         $element = $marshaller->marshall($sum);
 
         $this::assertEquals('sum', $element->nodeName);

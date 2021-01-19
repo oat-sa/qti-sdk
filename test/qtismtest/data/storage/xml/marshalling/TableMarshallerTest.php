@@ -16,12 +16,14 @@ use qtism\data\content\xhtml\tables\TableCellScope;
 use qtism\data\content\xhtml\tables\Tbody;
 use qtism\data\content\xhtml\tables\TbodyCollection;
 use qtism\data\content\xhtml\tables\Td;
+use qtism\data\content\xhtml\tables\Tfoot;
 use qtism\data\content\xhtml\tables\Th;
 use qtism\data\content\xhtml\tables\Thead;
 use qtism\data\content\xhtml\tables\Tr;
 use qtism\data\content\xhtml\tables\TrCollection;
 use qtism\data\content\xhtml\text\Strong;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class TableMarshallerTest
@@ -40,6 +42,7 @@ class TableMarshallerTest extends QtiSmTestCase
         $th2->setScope(TableCellScope::COL);
         $tr = new Tr(new TableCellCollection([$th1, $th2]));
         $thead = new Thead(new TrCollection([$tr]));
+        $tfoot = new Tfoot(new TrCollection([$tr]));
 
         $caption = new Caption();
         $strong = new Strong();
@@ -73,8 +76,10 @@ class TableMarshallerTest extends QtiSmTestCase
         $tbodies = new TbodyCollection([$tbody]);
 
         $table = new Table($tbodies, 'my-table', 'qti table');
+        $table->setXmlBase('/home/jerome');
         $table->setSummary('Some people...');
         $table->setThead($thead);
+        $table->setTfoot($tfoot);
         $table->setCaption($caption);
         $table->setCols($cols);
 
@@ -84,7 +89,7 @@ class TableMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $expected = '<table summary="Some people..." id="my-table" class="qti table">';
+        $expected = '<table summary="Some people..." xml:base="/home/jerome" id="my-table" class="qti table">';
         $expected .= '<caption>Some <strong>people</strong> ...</caption>';
         $expected .= '<col/>';
         $expected .= '<col/>';
@@ -94,6 +99,12 @@ class TableMarshallerTest extends QtiSmTestCase
         $expected .= '<th scope="col" axis="identity" id="lastname">Last Name</th>';
         $expected .= '</tr>';
         $expected .= '</thead>';
+        $expected .= '<tfoot>';
+        $expected .= '<tr>';
+        $expected .= '<th scope="col" axis="identity" id="firstname">First Name</th>';
+        $expected .= '<th scope="col" axis="identity" id="lastname">Last Name</th>';
+        $expected .= '</tr>';
+        $expected .= '</tfoot>';
         $expected .= '<tbody>';
         $expected .= '<tr>';
         $expected .= '<td headers="firstname" rowspan="1" colspan="1">John</td>';
@@ -112,7 +123,7 @@ class TableMarshallerTest extends QtiSmTestCase
     public function testUnmarshall()
     {
         $table = $this->createComponentFromXml('
-	        <table id="my-table" class="qti table" summary="Some people...">
+	        <table id="my-table" class="qti table" summary="Some people..." xml:base="/home/jerome">
                 <caption>Some <strong>people</strong> ...</caption>
 	            <col span="1"/>
 	            <col span="1"/>
@@ -139,6 +150,7 @@ class TableMarshallerTest extends QtiSmTestCase
         $this::assertEquals('my-table', $table->getId());
         $this::assertEquals('qti table', $table->getClass());
         $this::assertEquals('Some people...', $table->getSummary());
+        $this::assertEquals('/home/jerome', $table->getXmlBase());
 
         $thead = $table->getThead();
         $this::assertInstanceOf(Thead::class, $thead);
@@ -197,5 +209,28 @@ class TableMarshallerTest extends QtiSmTestCase
         $this::assertCount(2, $cols);
         $this::assertEquals(1, $cols[0]->getSpan());
         $this::assertEquals(1, $cols[1]->getspan());
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
+    public function testUnmarshallNoTbody()
+    {
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("A 'table' element must contain at lease one 'tbody' element.");
+
+        $table = $this->createComponentFromXml('
+	        <table id="my-table" class="qti table" summary="Some people..." xml:base="/home/jerome">
+                <caption>Some <strong>people</strong> ...</caption>
+	            <col span="1"/>
+	            <col span="1"/>
+	            <thead>
+	                <tr>
+                        <th axis="identity" id="firstname" scope="col">First Name</th>
+	                    <th axis="identity" id="lastname" scope="col">Last Name</th>
+	                </tr>
+	            </thead>
+	        </table>
+	    ');
     }
 }

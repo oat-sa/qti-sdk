@@ -16,6 +16,7 @@ use qtism\data\rules\PreCondition;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\SectionPartCollection;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class AssessmentSectionMarshallerTest
@@ -238,6 +239,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
 
         // Does it contain a selection?
         $this::assertTrue($component->hasSelection());
+        $this::assertEquals(1, $component->getSelection()->getSelect());
 
         // Does it contain an itemSessionControl?
         $this::assertTrue($component->hasItemSessionControl());
@@ -247,6 +249,38 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
 
         // Does it contain a branchRule?
         $this::assertCount(1, $component->getBranchRules());
+    }
+
+    /**
+     * @depends testUnmarshallNotRecursive
+     */
+    public function testUnmarshallNotRecursiveZeroSelection()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '
+            <assessmentSection identifier="myAssessmentSection" title="A non Recursive Assessment Section" visible="true" keepTogether="false">
+                <preCondition>
+                    <baseValue baseType="boolean">true</baseValue>
+                </preCondition>
+                <branchRule target="EXIT_TEST">
+                    <baseValue baseType="boolean">false</baseValue>
+                </branchRule>
+                <itemSessionControl allowReview="true"/>
+                <selection select="0"/>
+                <assessmentItemRef identifier="Q01" required="false" fixed="false" href="./questions/Q01.xml"/>
+                <assessmentItemRef identifier="Q02" required="false" fixed="false" href="./questions/Q02.xml"/>
+                <assessmentSectionRef identifier="S01" required="false" fixed="false" href="./sections/S01.xml"/>
+            </assessmentSection>
+            '
+        );
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+
+        // Has the <selection> element has an attribute 'select' with a zero value, it's skipped.
+        $this::assertFalse($component->hasSelection());
     }
 
     public function testUnmarshallRecursive()
@@ -323,5 +357,59 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(AssessmentSection::class, $component);
         $assessmentItemRefs = $component->getSectionParts();
         $this::assertCount(3, $assessmentItemRefs);
+    }
+
+    public function testUnmarshallDecorated()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<assessmentSection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myAssessmentSection" title="A Minimal Assessment Section" visible="true"/>');
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+        $decorated = $marshaller->unmarshall($element);
+
+        $dom->loadXML('<assessmentSection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myAssessmentSection2" title="A Minimal Assessment Section 2" visible="false"/>');
+        $element = $dom->documentElement;
+        $marshaller->unmarshall($element, $decorated);
+
+        $this::assertEquals('myAssessmentSection2', $decorated->getIdentifier());
+        $this::assertEquals('A Minimal Assessment Section 2', $decorated->getTitle());
+        $this::assertFalse($decorated->isVisible());
+    }
+
+    public function testUnmarshallMissingVisibleAttribute()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '
+			<assessmentSection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myAssessmentSection" title="A Minimal Assessment Section"/>
+			'
+        );
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'visible' is missing from element 'assessmentSection'.");
+
+        $marshaller->unmarshall($element);
+    }
+
+    public function testUnmarshallMissingTitleAttribute()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '
+			<assessmentSection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myAssessmentSection" visible="true"/>
+			'
+        );
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory attribute 'title' is missing from element 'assessmentSection'.");
+
+        $marshaller->unmarshall($element);
     }
 }
