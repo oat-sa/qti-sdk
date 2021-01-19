@@ -86,6 +86,21 @@ class FileSystemFileManagerTest extends QtiSmTestCase
     }
 
     /**
+     * @depends testRetrieve
+     */
+    public function testRetrieveError()
+    {
+        $manager = new FileSystemFileManager();
+        $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
+        unlink($mFile->getPath());
+
+        $this->expectException(FileManagerException::class);
+        $this->expectExceptionMessage('An error occurred while retrieving a QTI FileSystemFile object.');
+
+        $manager->retrieve($mFile->getIdentifier());
+    }
+
+    /**
      * @depends testDelete
      */
     public function testDeleteError()
