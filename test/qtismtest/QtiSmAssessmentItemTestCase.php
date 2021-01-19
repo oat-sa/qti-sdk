@@ -5,6 +5,7 @@ namespace qtismtest;
 use qtism\common\datatypes\QtiDuration;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\SessionManager;
@@ -27,6 +28,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
     /**
      * @param $xmlString
      * @return ExtendedAssessmentItemRef
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function createExtendedAssessmentItemRefFromXml($xmlString)
@@ -46,6 +48,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      *
      * @param QtiDuration|null $acceptableLatency
      * @return AssessmentItemSession
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function instantiateBasicAssessmentItemSession(QtiDuration $acceptableLatency = null)
@@ -88,6 +91,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      *
      * @param QtiDuration|null $acceptableLatency
      * @return AssessmentItemSession
+     * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
     protected function instantiateBasicAdaptiveAssessmentItem(QtiDuration $acceptableLatency = null)

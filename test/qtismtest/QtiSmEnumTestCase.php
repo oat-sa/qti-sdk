@@ -29,7 +29,6 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
     {
         $enumerationName = $this->getEnumerationFqcn();
         $array = $enumerationName::asArray();
-
         $keys = $this->getKeys();
         $constants = $this->getConstants();
 
