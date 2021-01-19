@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v2p1.xsd"
+	identifier="modalfeedbackrules" title="ModalFeedbackRules">
+	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+		<assessmentSection identifier="S01" title="Section1" visible="true">
+			<assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceA</value>
+					</correctResponse>
+				</responseDeclaration>
+				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+					<defaultValue>
+						<value>0</value>
+					</defaultValue>
+				</outcomeDeclaration>
+				<outcomeDeclaration identifier="LOOKUP" cardinality="single" baseType="identifier"/>
+				<outcomeDeclaration identifier="LOOKUP2" cardinality="single" baseType="identifier"/>
+				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+				<modalFeedbackRule outcomeIdentifier="LOOKUP" identifier="SHOWME" showHide="show" title="Feedback 1"/>
+                <modalFeedbackRule outcomeIdentifier="LOOKUP2" identifier="HIDEME" showHide="hide"/>
+			</assessmentItemRef>
+			<rubricBlockRef identifier="R01" href="./R01.xml"/>
+		</assessmentSection>
+	</testPart>
+</assessmentTest>

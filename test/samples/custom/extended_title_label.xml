@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+                identifier="extendedTitleLabel" title="Extended Titles and Labels">
+    <testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+        <assessmentSection identifier="S01" title="Section1" visible="true">
+            <assessmentItemRef identifier="Q01" href="items/title_label/title_only.xml"/>
+            <assessmentItemRef identifier="Q02" href="items/title_label/title_and_label.xml"/>
+            <assessmentItemRef identifier="Q03" href="items/title_label/title_and_empty_label.xml"/>
+        </assessmentSection>
+    </testPart>
+</assessmentTest>

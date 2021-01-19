@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v2p1.xsd"
+	identifier="shuffling-groups" title="Shufling Groups">
+	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+		<assessmentSection identifier="S01" title="Section1" visible="true">
+		    <!-- Assessment Item with a single choiceInteraction with shuffled choices. -->
+			<assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+					<correctResponse>
+						<value>ChoiceA</value>
+					</correctResponse>
+				</responseDeclaration>
+				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+					<defaultValue>
+						<value>0</value>
+					</defaultValue>
+				</outcomeDeclaration>
+				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+				<shuffling responseIdentifier="RESPONSE">
+				    <shufflingGroup identifiers="ChoiceA ChoiceB ChoiceC ChoiceD"/>
+				</shuffling>
+			</assessmentItemRef>
+			
+			<!-- Assessment Item with a single matchInteraction with shuffled choices. -->
+            <assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="multiple">
+                    <correctResponse>
+                        <value>ChoiceA ChoiceD</value>
+                        <value>ChoiceB ChoiceE</value>
+                        <value>ChoiceC ChoiceF</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>0</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
+                <shuffling responseIdentifier="RESPONSE">
+                    <shufflingGroup identifiers="ChoiceA ChoiceB ChoiceC"/>
+                    <shufflingGroup identifiers="ChoiceD ChoiceE ChoiceF"/>
+                </shuffling>
+            </assessmentItemRef>
+		</assessmentSection>
+	</testPart>
+</assessmentTest>

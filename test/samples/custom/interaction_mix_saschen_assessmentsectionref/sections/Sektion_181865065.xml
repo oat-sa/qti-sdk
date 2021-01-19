@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentSection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+	identifier="Sektion_181865065" fixed="false" title="Sektion"
+			visible="false">
+			<assessmentItemRef identifier="Hottext_801974120" href="../items/Hottext_801974120.xml" fixed="false"/>
+		</assessmentSection>
