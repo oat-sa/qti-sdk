@@ -3,7 +3,6 @@
 namespace qtismtest\data\content\xhtml\html5;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\html5\Audio;
 use qtism\data\content\enums\CrossOrigin;
 use qtism\data\content\xhtml\html5\Media;
 use qtism\data\content\enums\Preload;
@@ -14,70 +13,70 @@ use qtismtest\QtiSmTestCase;
 
 class MediaTest extends QtiSmTestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $subject = new FakeMedia();
 
-        $this->assertEquals(new QtiComponentCollection(), $subject->getComponents());
+        self::assertEquals(new QtiComponentCollection(), $subject->getComponents());
     }
 
-    public function testCreateWithNoValues()
+    public function testCreateWithNoValues(): void
     {
         $subject = new FakeMedia();
 
-        $this->assertFalse($subject->hasAutoPlay());
-        $this->assertFalse($subject->getAutoPlay());
-        $this->assertFalse($subject->hasControls());
-        $this->assertFalse($subject->getControls());
-        $this->assertFalse($subject->hasCrossOrigin());
-        $this->assertEmpty($subject->getCrossOrigin());
-        $this->assertFalse($subject->hasLoop());
-        $this->assertFalse($subject->getLoop());
-        $this->assertFalse($subject->hasMuted());
-        $this->assertFalse($subject->getMuted());
-        $this->assertFalse($subject->hasSrc());
-        $this->assertEmpty($subject->getSrc());
+        self::assertFalse($subject->hasAutoPlay());
+        self::assertFalse($subject->getAutoPlay());
+        self::assertFalse($subject->hasControls());
+        self::assertFalse($subject->getControls());
+        self::assertFalse($subject->hasCrossOrigin());
+        self::assertEmpty($subject->getCrossOrigin());
+        self::assertFalse($subject->hasLoop());
+        self::assertFalse($subject->getLoop());
+        self::assertFalse($subject->hasMuted());
+        self::assertFalse($subject->getMuted());
+        self::assertFalse($subject->hasSrc());
+        self::assertEmpty($subject->getSrc());
     }
 
-    public function testAddSource()
+    public function testAddSource(): void
     {
         $src = 'http://example.com/';
         $source = new Source($src);
 
-        $subject = new Audio();
+        $subject = new FakeMedia();
 
         $components = $subject->getComponents();
-        $this->assertCount(0, $components);
+        self::assertCount(0, $components);
 
         $subject->addSource($source);
 
         $components = $subject->getComponents();
-        $this->assertCount(1, $components);
+        self::assertCount(1, $components);
         $component = $components[0];
-        $this->assertInstanceOf(Source::class, $component);
-        $this->assertEquals($src, $component->getSrc());
+        self::assertInstanceOf(Source::class, $component);
+        self::assertEquals($src, $component->getSrc());
     }
 
-    public function testAddTrack()
+    public function testAddTrack(): void
     {
         $src = 'http://example.com/';
         $track = new Track($src);
 
-        $subject = new Audio();
+        $subject = new FakeMedia();
 
         $components = $subject->getComponents();
-        $this->assertCount(0, $components);
+        self::assertCount(0, $components);
 
         $subject->addTrack($track);
 
         $components = $subject->getComponents();
-        $this->assertCount(1, $components);
+        self::assertCount(1, $components);
         $component = $components[0];
-        $this->assertInstanceOf(Track::class, $component);
-        $this->assertEquals($src, $component->getSrc());
+        self::assertInstanceOf(Track::class, $component);
+        self::assertEquals($src, $component->getSrc());
     }
 
-    public function testSetters()
+    public function testSetters(): void
     {
         $autoplay = true;
         $controls = true;
@@ -96,34 +95,34 @@ class MediaTest extends QtiSmTestCase
         $subject->setMuted($muted);
         $subject->setSrc($src);
 
-        $this->assertTrue($subject->hasAutoPlay());
-        $this->assertEquals($autoplay, $subject->getAutoPlay());
-        $this->assertTrue($subject->hasControls());
-        $this->assertEquals($controls, $subject->getControls());
-        $this->assertTrue($subject->hasCrossOrigin());
-        $this->assertEquals($crossOrigin, $subject->getCrossOrigin());
-        $this->assertTrue($subject->hasLoop());
-        $this->assertEquals($loop, $subject->getLoop());
-        $this->assertTrue($subject->hasMediaGroup());
-        $this->assertEquals($mediaGroup, $subject->getMediaGroup());
-        $this->assertTrue($subject->hasMuted());
-        $this->assertEquals($muted, $subject->getMuted());
-        $this->assertTrue($subject->hasSrc());
-        $this->assertEquals($src, $subject->getSrc());
+        self::assertTrue($subject->hasAutoPlay());
+        self::assertEquals($autoplay, $subject->getAutoPlay());
+        self::assertTrue($subject->hasControls());
+        self::assertEquals($controls, $subject->getControls());
+        self::assertTrue($subject->hasCrossOrigin());
+        self::assertEquals($crossOrigin, $subject->getCrossOrigin());
+        self::assertTrue($subject->hasLoop());
+        self::assertEquals($loop, $subject->getLoop());
+        self::assertTrue($subject->hasMediaGroup());
+        self::assertEquals($mediaGroup, $subject->getMediaGroup());
+        self::assertTrue($subject->hasMuted());
+        self::assertEquals($muted, $subject->getMuted());
+        self::assertTrue($subject->hasSrc());
+        self::assertEquals($src, $subject->getSrc());
     }
 
-    public function testSetWithNonBooleanAutoPlay()
+    public function testSetWithNonBooleanAutoPlay(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "autoplay" argument must be a boolean, "string" given.');
+        $this->expectExceptionMessage('The "autoplay" argument must be a boolean, "foo" given.');
 
         (new FakeMedia())->setAutoPlay('foo');
     }
 
-    public function testSetWithNonBooleanControls()
+    public function testSetWithNonBooleanControls(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "controls" argument must be a boolean, "string" given.');
+        $this->expectExceptionMessage('The "controls" argument must be a boolean, "foo" given.');
 
         (new FakeMedia())->setControls('foo');
     }
@@ -132,12 +131,12 @@ class MediaTest extends QtiSmTestCase
      * @dataProvider crossOriginsToTest
      * @param int $role
      */
-    public function testSetWithValidCrossOrigin(int $role)
+    public function testSetWithValidCrossOrigin(int $role): void
     {
         $subject = new FakeMedia();
 
         $subject->setCrossOrigin($role);
-        $this->assertEquals($role, $subject->getCrossOrigin());
+        self::assertEquals($role, $subject->getCrossOrigin());
     }
 
     public function crossOriginsToTest(): array
@@ -148,15 +147,15 @@ class MediaTest extends QtiSmTestCase
         ];
     }
 
-    public function testSetWithNonIntegerCrossOrigin()
+    public function testSetWithNonIntegerCrossOrigin(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "crossorigin" argument must be a value from the CrossOrigin enumeration, "string" given.');
+        $this->expectExceptionMessage('The "crossorigin" argument must be a value from the CrossOrigin enumeration, "foo" given.');
 
         (new FakeMedia())->setCrossOrigin('foo');
     }
 
-    public function testSetWithInvalidCrossOrigin()
+    public function testSetWithInvalidCrossOrigin(): void
     {
         $wrongCrossOrigin = 1012;
 
@@ -166,36 +165,28 @@ class MediaTest extends QtiSmTestCase
         (new FakeMedia())->setCrossOrigin(1012);
     }
 
-    public function testSetWithNonBooleanLoop()
+    public function testSetWithNonBooleanLoop(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "loop" argument must be a boolean, "string" given.');
+        $this->expectExceptionMessage('The "loop" argument must be a boolean, "foo" given.');
 
         (new FakeMedia())->setLoop('foo');
     }
 
-    public function testSetWithNonBooleanMuted()
+    public function testSetWithNonBooleanMuted(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "muted" argument must be a boolean, "string" given.');
+        $this->expectExceptionMessage('The "muted" argument must be a boolean, "foo" given.');
 
         (new FakeMedia())->setMuted('foo');
     }
 
-    public function testCreateWithNonStringSrc()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "src" argument must be a valid URI, "integer" given.');
-
-        (new FakeMedia())->setSrc(12);
-    }
-
-    public function testCreateWithNonUriSrc()
+    public function testCreateWithNonUriSrc(): void
     {
         $wrongSrc = '';
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "src" argument must be a valid URI, "' . $wrongSrc . '" given.');
+        $this->expectExceptionMessage('The "src" argument must be null or a valid URI, "' . $wrongSrc . '" given.');
 
         (new FakeMedia())->setSrc($wrongSrc);
     }
@@ -207,7 +198,7 @@ class MediaTest extends QtiSmTestCase
         self::assertEquals(Preload::getDefault(), $subject->getPreload());
     }
 
-    public function testGetDefaultPreload()
+    public function testGetDefaultPreload(): void
     {
         $subject = new FakeMedia();
 
@@ -215,7 +206,7 @@ class MediaTest extends QtiSmTestCase
         self::assertEquals(Preload::getConstantByName('metadata'), $subject->getPreload());
     }
 
-    public function testSetPreload()
+    public function testSetPreload(): void
     {
         $preload = Preload::getConstantByName('auto');
         $subject = new FakeMedia();
@@ -225,7 +216,7 @@ class MediaTest extends QtiSmTestCase
         self::assertEquals($preload, $subject->getPreload());
     }
 
-    public function testSetPreloadWithNonIntegerValue()
+    public function testSetPreloadWithNonIntegerValue(): void
     {
         $wrongPreload = 'foo';
         $this->expectException(InvalidArgumentException::class);
@@ -234,7 +225,7 @@ class MediaTest extends QtiSmTestCase
         (new FakeMedia())->setPreload($wrongPreload);
     }
 
-    public function testSetPreloadWithInvalidPreload()
+    public function testSetPreloadWithInvalidPreload(): void
     {
         $wrongPreload = 1012;
         $this->expectException(InvalidArgumentException::class);
@@ -242,12 +233,12 @@ class MediaTest extends QtiSmTestCase
 
         (new FakeMedia())->setPreload($wrongPreload);
     }
-
 }
 
 class FakeMedia extends Media
 {
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
+        return '';
     }
 }

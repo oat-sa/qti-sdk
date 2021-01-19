@@ -45,6 +45,7 @@ class Video extends Media
 
     /**
      * Height of the video content in CSS pixels.
+     * A non negative integer.
      *
      * @var int
      * @qtism-bean-property
@@ -53,34 +54,63 @@ class Video extends Media
 
     /**
      * Width of the video content in CSS pixels.
+     * A non negative integer.
      *
      * @var int
      * @qtism-bean-property
      */
     private $width = 0;
 
+
     /**
-     * Set the poster attribute.
+     * Create a new Media object (Audio or Video).
      *
-     * @param string $poster A URI.
-     * @throws InvalidArgumentException If $poster is not a valid URI.
+     * @param string $poster
+     * @param int $height
+     * @param int $width
+     * @param bool $autoPlay
+     * @param bool $controls
+     * @param int $crossOrigin
+     * @param bool $loop
+     * @param string $mediaGroup
+     * @param bool $muted
+     * @param int $preload
+     * @param string $src
+     * @param string $id A QTI identifier.
+     * @param string $class One or more class names separated by spaces.
+     * @param string $lang An RFC3066 language.
+     * @param string $label A label that does not exceed 256 characters.
+     * @param string $title A title in the sense of Html title attribute
+     * @param int|null $role A role taken in the Role constants.
      */
-    public function setPoster($poster)
+    public function __construct(
+        $poster = null,
+        $height = null,
+        $width = null,
+        $autoPlay = null,
+        $controls = null,
+        $crossOrigin = null,
+        $loop = null,
+        $mediaGroup = null,
+        $muted = null,
+        $preload = null,
+        $src = null,
+        $title = null,
+        $role = null,
+        $id = null,
+        $class = null,
+        $lang = null,
+        $label = null
+    ) {
+        parent::__construct($autoPlay, $controls, $crossOrigin, $loop, $mediaGroup, $muted, $preload, $src, $title, $role, $id, $class, $lang, $label);
+        $this->setPoster($poster);
+        $this->setHeight($height);
+        $this->setWidth($width);
+    }
+    
+    public function setPoster($poster): void
     {
-        if (!Format::isUri($poster)) {
-            $given = is_string($poster)
-                ? $poster
-                : gettype($poster);
-
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "poster" argument must be a valid URI, "%s" given.',
-                    $given
-                )
-            );
-        }
-
-        $this->poster = $poster;
+        $this->poster = $this->acceptUriOrNull($poster, 'poster');
     }
 
     public function getPoster(): string
@@ -92,29 +122,10 @@ class Video extends Media
     {
         return $this->poster !== '';
     }
-    
-    /**
-     * Set the height attribute.
-     *
-     * @param int $height Height of the video.
-     * @throws InvalidArgumentException If $height is not an integer or strictly negative.
-     */
-    public function setHeight($height)
+
+    public function setHeight($height): void
     {
-        if (!is_int($height) || $height < 0) {
-            $given = is_int($height)
-                ? $height
-                : gettype($height);
-
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "height" argument must be 0 or a positive integer, "%s" given.',
-                    $given
-                )
-            );
-        }
-
-        $this->height = $height;
+        $this->height = $this->acceptNonNegativeIntegerOrNull($height, 'height', 0);
     }
 
     public function getHeight(): int
@@ -126,29 +137,10 @@ class Video extends Media
     {
         return $this->height !== 0;
     }
-    
-    /**
-     * Set the Width attribute.
-     *
-     * @param int $width Width of the video.
-     * @throws InvalidArgumentException If $width is not an integer or strictly negative.
-     */
-    public function setWidth($width)
+
+    public function setWidth($width): void
     {
-        if (!is_int($width) || $width < 0) {
-            $given = is_int($width)
-                ? $width
-                : gettype($width);
-
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "width" argument must be 0 or a positive integer, "%s" given.',
-                    $given
-                )
-            );
-        }
-
-        $this->width = $width;
+        $this->width = $this->acceptNonNegativeIntegerOrNull($width, 'width', 0);
     }
 
     public function getWidth(): int

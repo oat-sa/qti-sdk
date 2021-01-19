@@ -23,9 +23,6 @@
 
 namespace qtism\data\content\xhtml\html5;
 
-use InvalidArgumentException;
-use qtism\common\utils\Format;
-
 /**
  * Html 5 media source class to allows authors to specify multiple alternative
  * media resources for media elements.
@@ -55,86 +52,47 @@ class Source extends Html5EmptyElement
     /**
      * Create a new Source object.
      *
-     * @param string $src A URI.
-     * @param string $type The type of the source file.
-     * @param string $id A QTI identifier.
-     * @param string $class One or more class names separated by spaces.
-     * @param string $lang An RFC3066 language.
-     * @param string $label A label that does not exceed 256 characters.
-     * @param string $title A title in the sense of Html title attribute
-     * @param int|null $role A role taken in the Role constants.
+     * @param mixed $src A URI.
+     * @param mixed $type The type of the source file.
+     * @param mixed $title A title in the sense of Html title attribute
+     * @param mixed $role A role taken in the Role constants.
+     * @param mixed $id A QTI identifier.
+     * @param mixed $class One or more class names separated by spaces.
+     * @param mixed $lang An RFC3066 language.
+     * @param mixed $label A label that does not exceed 256 characters.
      */
     public function __construct(
         $src,
         $type = null,
+        $title = null,
+        $role = null,
         $id = null,
         $class = null,
         $lang = null,
-        $label = null,
-        $title = null,
-        $role = null
+        $label = null
     ) {
-        parent::__construct($id, $class, $lang, $label, $title, $role);
+        parent::__construct($title, $role, $id, $class, $lang, $label);
+        
         $this->setSrc($src);
-        if ($type !== null) {
-            $this->setType($type);
-        }
+        $this->setType($type);
     }
 
     /**
-     * Set the src attribute.
-     *
-     * @param string $src A URI.
-     * @throws InvalidArgumentException If $src is not a valid URI.
+     * @param mixed $src
      */
-    public function setSrc($src)
+    public function setSrc($src): void
     {
-        if (!Format::isUri($src)) {
-            $given = is_string($src)
-                ? $src
-                : gettype($src);
-
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "src" argument must be a valid URI, "%s" given.',
-                    $given
-                )
-            );
-        }
-
-        $this->src = $src;
+        $this->src = $this->acceptUri($src, 'src');
     }
 
-    /**
-     * Get the src attribute.
-     *
-     * @return string A URI.
-     */
     public function getSrc(): string
     {
         return $this->src;
     }
 
-    /**
-     * Sets the mime type of the source file.
-     *
-     * @param string $type
-     */
-    public function setType($type)
+    public function setType(?string $type): void
     {
-        if (!Format::isMimeType($type)) {
-            $given = is_string($type)
-                ? $type
-                : gettype($type);
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "type" argument must be a valid Mime type, "%s" given.',
-                    $given
-                )
-            );
-        }
-
-        $this->type = $type;
+        $this->type = $this->acceptMimeTypeOrNull($type, 'type');
     }
 
     public function getType(): string
@@ -147,9 +105,6 @@ class Source extends Html5EmptyElement
         return $this->type !== '';
     }
 
-    /**
-     * @return string
-     */
     public function getQtiClassName(): string
     {
         return 'source';

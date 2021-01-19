@@ -87,117 +87,67 @@ class Track extends Html5EmptyElement
     /**
      * Create a new Track object.
      *
-     * @param string $src A URI.
-     * @param bool $default Is this track the default track?
-     * @param int $kind Kind of track. One of the TrackKind constants.
-     * @param string $srcLang The srclang attribute specifies the language of the track text data.
-     * @param string $id A QTI identifier.
-     * @param string $class One or more class names separated by spaces.
-     * @param string $lang An RFC3066 language.
-     * @param string $label A label that does not exceed 256 characters.
-     * @param string $title A title in the sense of Html title attribute
-     * @param int|null $role A role taken in the Role constants.
+     * @param mixed $src A URI.
+     * @param bool|int|string|null $default Is this track the default track?
+     * @param int|string|null $kind Kind of track. One of the TrackKind constants.
+     * @param string|null $srcLang The srclang attribute specifies the language of the track text data.
+     * @param string|null $id A QTI identifier.
+     * @param string|null $class One or more class names separated by spaces.
+     * @param string|null $lang An RFC3066 language.
+     * @param string|null $label A label that does not exceed 256 characters.
+     * @param string|null $title A title in the sense of Html title attribute
+     * @param int|string|null $role A role taken in the Role constants.
      */
     public function __construct(
         $src,
         $default = null,
         $kind = null,
         $srcLang = null,
+        $title = null,
+        $role = null,
         $id = null,
         $class = null,
         $lang = null,
-        $label = null,
-        $title = null,
-        $role = null
+        $label = null
     ) {
-        parent::__construct($id, $class, $lang, $label, $title, $role);
+        parent::__construct($title, $role, $id, $class, $lang, $label);
         $this->setSrc($src);
         $this->setDefault($default);
         $this->setKind($kind);
         $this->setSrcLang($srcLang);
     }
 
-    /**
-     * Set the src attribute.
-     *
-     * @param string $src A URI.
-     * @throws InvalidArgumentException If $src is not a valid URI.
-     */
-    public function setSrc($src)
+    public function setSrc($src): void
     {
-        if (!Format::isUri($src)) {
-            $given = is_string($src)
-                ? $src
-                : gettype($src);
-
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "src" argument must be a valid URI, "%s" given.',
-                    $given
-                )
-            );
-        }
-
-        $this->src = $src;
+        $this->src = $this->acceptUri($src, 'src');
     }
 
-    /**
-     * Get the src attribute.
-     *
-     * @return string A URI.
-     */
     public function getSrc(): string
     {
         return $this->src;
     }
 
-    /**
-     * Set the alt attribute.
-     *
-     * @param bool|null $default Is this track the default for the related media?
-     * @throws InvalidArgumentException If $default is not a boolean.
-     */
-    public function setDefault($default = null)
+    public function setDefault($default = null): void
     {
-        if ($default !== null && !is_bool($default)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "default" argument must be a boolean, "%s" given.',
-                    gettype($default)
-                )
-            );
-        }
-
-        $this->default = $default ?? false;
+        $this->default = $this->acceptBooleanOrNull($default, 'default', false);
     }
 
-    /**
-     * Get the value of the default attribute.
-     */
     public function getDefault(): bool
     {
         return $this->default;
     }
 
-    /**
-     * Get the value of the default attribute.
-     */
-    public function hasDefault(): bool
+     public function hasDefault(): bool
     {
         return $this->default !== false;
     }
 
-    /**
-     * Sets the kind of track.
-     *
-     * @param int|string|null $kind One of the TrackKind constants.
-     */
     public function setKind($kind = null): void
     {
         $this->kind = TrackKind::accept($kind, 'kind');
 
         // srcLang attribute is required if kind="subtitles" => revalidate srcLang.
-        if ($kind === TrackKind::getConstantByName('subtitles')) {
+        if ($this->isKindSubtitles()) {
             $this->setSrcLang($this->getSrcLang());
         }
     }
@@ -223,10 +173,7 @@ class Track extends Html5EmptyElement
         return $this->kind === TrackKind::getConstantByName('subtitles');
     }
 
-    /**
-     * @param string|null $srcLang
-     */
-    public function setSrcLang(string $srcLang = null)
+    public function setSrcLang(string $srcLang = null): void
     {
         $srcLang = $srcLang ?? '';
 
@@ -242,8 +189,6 @@ class Track extends Html5EmptyElement
                 )
             );
         }
-
-        $this->srcLang = $srcLang;
     }
 
     public function getSrcLang(): string

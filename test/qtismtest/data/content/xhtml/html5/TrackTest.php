@@ -3,8 +3,8 @@
 namespace qtismtest\data\content\xhtml\html5;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\html5\Track;
 use qtism\data\content\enums\TrackKind;
+use qtism\data\content\xhtml\html5\Track;
 use qtismtest\QtiSmTestCase;
 
 class TrackTest extends QtiSmTestCase
@@ -21,6 +21,24 @@ class TrackTest extends QtiSmTestCase
         self::assertEquals($src, $subject->getSrc());
         self::assertEquals($default, $subject->getDefault());
         self::assertEquals($kind, $subject->getKind());
+        self::assertEquals($srcLang, $subject->getSrcLang());
+    }
+
+    public function testCreateWithStringValues(): void
+    {
+        $src = 'http://example.com/';
+        $default = 'true';
+        $kindAsString = 'chapters';
+        $srcLang = 'en';
+
+        $subject = new Track($src, $default, $kindAsString, $srcLang);
+
+        self::assertSame($src, $subject->getSrc());
+        self::assertTrue($subject->getDefault());
+        self::assertEquals(
+            TrackKind::getConstantByName($kindAsString),
+            $subject->getKind()
+        );
         self::assertEquals($srcLang, $subject->getSrcLang());
     }
 
@@ -74,16 +92,6 @@ class TrackTest extends QtiSmTestCase
         ];
     }
 
-    public function testCreateWithInvalidSrc(): void
-    {
-        $wrongSrc = 12;
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "src" argument must be a valid URI, "' . gettype($wrongSrc) . '" given.');
-
-        new Track($wrongSrc);
-    }
-
     public function testCreateWithNonUriSrc(): void
     {
         $wrongSrc = '';
@@ -96,10 +104,12 @@ class TrackTest extends QtiSmTestCase
 
     public function testCreateWithInvalidDefault(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "default" argument must be a boolean, "string" given.');
+        $wrongDefault = 'blah';
 
-        new Track('http://example.com/', 'blah');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "default" argument must be a boolean, "' . $wrongDefault . '" given.');
+
+        new Track('http://example.com/', $wrongDefault);
     }
 
     public function testCreateWithNonIntegerKind(): void

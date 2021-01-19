@@ -5,53 +5,58 @@ namespace qtismtest\data\content\xhtml\html5;
 use InvalidArgumentException;
 use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\content\enums\Role;
+use qtism\data\QtiComponentCollection;
 use qtismtest\QtiSmTestCase;
-use TypeError;
 
 class Html5ElementTest extends QtiSmTestCase
 {
-    public function testCreateWithoutTitle()
+    public function testCreateWithoutTitle(): void
     {
         $subject = new fakeHtml5Element();
 
-        $this->assertFalse($subject->hasTitle());
+        self::assertFalse($subject->hasTitle());
     }
 
-    public function testCreateWithValidTitle()
+    public function testCreateWithValidTitle(): void
     {
         $title = 'a title';
             
-        $subject = new fakeHtml5Element();
-
-        $subject->setTitle($title);
-        $this->assertEquals($title, $subject->getTitle());
+        $subject = new fakeHtml5Element($title);
+        self::assertEquals($title, $subject->getTitle());
     }
 
-    public function testCreateWithNonStringTitle()
+    public function testCreateWithInvalidTitle(): void
     {
+        $wrongTitle = "a title with\tabulations and li\ne break.";
+
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "title" argument must be a string, "integer" given.');
+        $this->expectExceptionMessage('The "title" argument must be a non-empty, normalized string (no line break nor tabulation), "' . $wrongTitle . '" given.');
 
-        (new FakeHtml5Element())->setTitle(12);
+        (new fakeHtml5Element($wrongTitle));
     }
 
-    public function testCreateWithoutRole()
+    public function testCreateWithNullTitle(): void
     {
         $subject = new fakeHtml5Element();
+        $this::assertSame('', $subject->getTitle());
+    }
 
-        $this->assertFalse($subject->hasRole());
+    public function testCreateWithoutRole(): void
+    {
+        $subject = new fakeHtml5Element();
+        self::assertFalse($subject->hasRole());
     }
 
     /**
      * @dataProvider rolesToTest
      * @param int $role
      */
-    public function testCreateWithValidRole(int $role)
+    public function testCreateWithValidRole(int $role): void
     {
         $subject = new fakeHtml5Element();
 
         $subject->setRole($role);
-        $this->assertEquals($role, $subject->getRole());
+        self::assertEquals($role, $subject->getRole());
     }
 
     public function rolesToTest(): array
@@ -98,32 +103,36 @@ class Html5ElementTest extends QtiSmTestCase
         ];
     }
 
-    public function testCreateWithNonIntegerRole()
+    public function testCreateWithNonIntegerRole(): void
     {
+        $wrongRole = 'foo';
+        
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "role" argument must be a value from the Role enumeration, "foo" given.');
+        $this->expectExceptionMessage('The "role" argument must be a value from the Role enumeration, "' . $wrongRole . '" given.');
 
-        (new FakeHtml5Element())->setRole('foo');
+        (new FakeHtml5Element())->setRole($wrongRole);
     }
 
-    public function testCreateWithInvalidRole()
+    public function testCreateWithInvalidRole(): void
     {
         $wrongRole = 1012;
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "role" argument must be a value from the Role enumeration, "' . $wrongRole . '" given.');
 
-        (new FakeHtml5Element())->setRole(1012);
+        (new FakeHtml5Element())->setRole($wrongRole);
     }
 }
 
 class FakeHtml5Element extends Html5Element
 {
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
+        return '';
     }
 
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
+        return new QtiComponentCollection();
     }
 }

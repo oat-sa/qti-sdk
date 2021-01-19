@@ -5,7 +5,7 @@ namespace qtismtest\data\storage\xml\marshalling;
 use DOMDocument;
 use DOMElement;
 use qtism\data\content\xhtml\html5\Html5Element;
-use qtism\data\content\xhtml\html5\Role;
+use qtism\data\content\enums\Role;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\Html5ElementMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
@@ -23,12 +23,12 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
      */
     public function testMarshall22(): void
     {
+        $title = 'a title';
+        $role = 'note';
         $id = 'identifier';
         $class = 'the class';
         $lang = 'english';
         $label = 'This is a label.';
-        $title = 'a title';
-        $role = 'note';
 
         $expected = sprintf(
             '<html5 id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
@@ -40,7 +40,7 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
             $role
         );
 
-        $html5Element = new FakeHtml5Element($id, $class, $lang, $label, $title, Role::getConstantByName($role));
+        $html5Element = new FakeHtml5Element($title, Role::getConstantByName($role), $id, $class, $lang, $label);
 
         $marshaller = new FakeHtml5ElementMarshaller('2.2.0');
 
@@ -67,12 +67,12 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshall22(): void
     {
+        $title = 'the title';
+        $role = 'note';
         $id = 'Identifier';
         $class = 'a css class';
         $lang = 'es';
         $label = 'A label';
-        $title = 'the title';
-        $role = 'note';
 
         $xml = sprintf(
             '<html5 id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
@@ -86,7 +86,7 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
 
         $marshaller = new FakeHtml5ElementMarshaller('2.2.0');
 
-        $expected = new FakeHtml5Element($id, $class, $lang, $label, $title, Role::getConstantByName($role));
+        $expected = new FakeHtml5Element($title, Role::getConstantByName($role), $id, $class, $lang, $label);
         $this->assertUnmarshalling($expected, $xml, $marshaller);
     }
 

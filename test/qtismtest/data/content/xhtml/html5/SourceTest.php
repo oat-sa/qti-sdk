@@ -8,50 +8,40 @@ use qtismtest\QtiSmTestCase;
 
 class SourceTest extends QtiSmTestCase
 {
-    public function testCreateWithValues()
+    public function testCreateWithValues(): void
     {
         $src = 'http://example.com/';
         $type = 'video/webm';
 
         $subject = new Source($src, $type);
 
-        $this->assertEquals($src, $subject->getSrc());
-        $this->assertEquals($type, $subject->getType());
+        self::assertSame($src, $subject->getSrc());
+        self::assertSame($type, $subject->getType());
     }
 
-    public function testCreateWithDefaultValues()
+    public function testCreateWithDefaultValues(): void
     {
         $src = 'http://example.com/';
         $type = '';
 
         $subject = new Source($src);
 
-        $this->assertEquals($src, $subject->getSrc());
-        $this->assertEquals($type, $subject->getType());
+        self::assertSame($src, $subject->getSrc());
+        self::assertSame($type, $subject->getType());
     }
 
-    public function testHasNonDefaultValues()
+    public function testHasNonDefaultValues(): void
     {
         $src = 'http://example.com/';
         $type = 'video/webm';
 
         $subject = new Source($src, $type);
 
-        $this->assertTrue($subject->hasType());
-        $this->assertEquals($type, $subject->getType());
+        self::assertTrue($subject->hasType());
+        self::assertSame($type, $subject->getType());
     }
 
-    public function testCreateWithInvalidSrc()
-    {
-        $wrongSrc = 12;
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "src" argument must be a valid URI, "' . gettype($wrongSrc) . '" given.');
-
-        new Source($wrongSrc);
-    }
-
-    public function testCreateWithNonUriSrc()
+    public function testCreateWithNonUriSrc(): void
     {
         $wrongSrc = '';
 
@@ -65,10 +55,10 @@ class SourceTest extends QtiSmTestCase
      * @dataProvider sourceTypeValidProvider
      * @param string $type
      */
-    public function testCreateWithValidType(string $type)
+    public function testCreateWithValidType(string $type): void
     {
         $subject = new Source('http://example.com/', $type);
-        $this->assertEquals($type, $subject->getType());
+        self::assertSame($type, $subject->getType());
     }
 
     public function sourceTypeValidProvider(): array
@@ -88,12 +78,11 @@ class SourceTest extends QtiSmTestCase
     /**
      * @dataProvider sourceTypeInvalidProvider
      * @param mixed $type
-     * @param null $given
      */
-    public function testCreateWithInvalidType($type, $given = null)
+    public function testCreateWithInvalidType($type): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "type" argument must be a valid Mime type, "' . ($given ?? $type) . '" given.');
+        $this->expectExceptionMessage('The "type" argument must be a valid Mime type, "' . $type . '" given.');
 
         new Source('http://example.com/', $type);
     }
@@ -104,8 +93,15 @@ class SourceTest extends QtiSmTestCase
             [''],
             ['invalid-mime-type'],
             ['missing+slash'],
-            [12, 'integer'],
-            [false, 'boolean'],
+            [12],
+            [true],
         ];
+    }
+
+    public function testGetQtiClassName(): void
+    {
+        $subject = new Source('http://example.com/');
+
+        self::assertEquals('source', $subject->getQtiClassName());
     }
 }

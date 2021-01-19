@@ -24,6 +24,7 @@
 namespace qtism\data\content\xhtml\html5;
 
 use InvalidArgumentException;
+use qtism\common\utils\Format;
 use qtism\data\content\BodyElement;
 use qtism\data\content\enums\Role;
 
@@ -64,42 +65,35 @@ abstract class Html5Element extends BodyElement
      *
      * @see https://stackoverflow.com/questions/45320353/php-7-1-nullable-default-function-parameter#45320694
      *
-     * @param string|null $id A QTI identifier.
-     * @param string|null $class One or more class names separated by spaces.
-     * @param string|null $lang An RFC3066 language.
-     * @param string|null $label A label that does not exceed 256 characters.
-     * @param string|null $title A title in the sense of Html title attribute
-     * @param int|null $role A role taken in the Role constants.
+     * @param mixed $title A title in the sense of Html title attribute
+     * @param mixed $role A role taken in the Role constants.
+     * @param mixed $id A QTI identifier.
+     * @param mixed $class One or more class names separated by spaces.
+     * @param mixed $lang An RFC3066 language.
+     * @param mixed $label A label that does not exceed 256 characters.
      */
     public function __construct(
-        string $id = null,
-        string $class = null,
-        string $lang = null,
-        string $label = null,
-        string $title = null,
-        int $role = null
+        $title = null,
+        $role = null,
+        $id = null,
+        $class = null,
+        $lang = null,
+        $label = null
     ) {
         parent::__construct($id ?? '', $class ?? '', $lang ?? '', $label ?? '');
 
-        $this->setTitle($title ?? '');
+        $this->setTitle($title);
         $this->setRole($role);
     }
 
     /**
-     * @param string $title
+     * @param mixed $title
+     *
+     * @throws InvalidArgumentException when $title cannot be converted to a string.
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
-        if (!is_string($title)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "title" argument must be a string, "%s" given.',
-                    gettype($title)
-                )
-            );
-        }
-
-        $this->title = $title;
+        $this->title = $this->acceptNormalizedStringOrNull($title, 'title', '');
     }
 
     public function getTitle(): string
@@ -113,7 +107,7 @@ abstract class Html5Element extends BodyElement
     }
 
     /**
-     * @param int|string|null $role One of the Role constants.
+     * @param mixed $role One of the Role constants.
      * @throws InvalidArgumentException when $role parameter is not one of Role constants.
      */
     public function setRole($role = null): void
@@ -129,5 +123,204 @@ abstract class Html5Element extends BodyElement
     public function hasRole(): bool
     {
         return $this->role !== null;
+    }
+
+    /**
+     * @param mixed $value
+     * @param string $argumentName
+     * @param bool|null $default
+     * @return bool|null
+     */
+    public function acceptBooleanOrNull($value, string $argumentName, ?bool $default = null): ?bool
+    {
+        if ($value === null) {
+            return $default;
+        }
+
+        if (!is_bool($value) && (!is_string($value) || !Format::isBoolean($value))) {
+            $given = is_string($value)
+                ? $value
+                : gettype($value);
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "%s" argument must be a boolean, "%s" given.',
+                    $argumentName,
+                    $given
+                )
+            );
+        }
+
+        return $value ?? $default;
+    }
+
+    protected function acceptNormalizedStringOrNull($value, string $argumentName, string $default = null): string
+    {
+        if ($value === null) {
+            return $default;
+        }
+
+        if (!Format::isNormalizedString($value)) {
+            $given = is_string($value)
+                ? $value
+                : gettype($value);
+
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "%s" argument must be a non-empty, normalized string (no line break nor tabulation), "%s" given.',
+                    $argumentName,
+                    $given
+                )
+            );
+        }
+
+        return $value ?? $default;
+    }
+
+    /**
+     * @param mixed $value
+     * @param string $argumentName
+     * @param string $default
+     * @return string
+     */
+    protected function acceptUriOrNull($value, string $argumentName, string $default = ''): string
+    {
+        if ($value === null) {
+            return $default;
+        }
+
+        try {
+            return $this->acceptUri($value, $argumentName);
+        } catch (InvalidArgumentException $e) {
+            $given = is_string($value)
+                ? $value
+                : gettype($value);
+
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "%s" argument must be null or a valid URI, "%s" given.',
+                    $argumentName,
+                    $given
+                )
+            );
+        }
+    }
+
+    /**
+     * @param mixed $value
+     * @param string $argumentName
+     * @return string
+     */
+    protected function acceptUri($value, string $argumentName): string
+    {
+        if (!$this->isString($value) || !Format::isUri((string)$value)) {
+            $given = is_string($value)
+                ? $value
+                : gettype($value);
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "%s" argument must be a valid URI, "%s" given.',
+                    $argumentName,
+                    $given
+                )
+            );
+        }
+        
+        return $value;
+    }
+
+    /**
+     * @param mixed $value
+     * @param string $argumentName
+     * @return string
+     */
+    protected function acceptStringOrNull($value, string $argumentName): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        return $this->acceptString($value, $argumentName);
+    }
+
+    /**
+     * @param mixed $value
+     * @param string $argumentName
+     * @return string
+     */
+    protected function acceptString($value, string $argumentName): string
+    {
+        if (!$this->isString($value)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "%s" argument must be a string or convertible to a string, "%s" given.',
+                    $argumentName,
+                    gettype($value)
+                )
+            );
+        }
+
+        return (string)$value;
+    }
+
+    /**
+     * Whether a given variable can be converted to a string value.
+     *
+     * @param mixed $value
+     * @return bool
+     */
+    public function isString($value): bool
+    {
+        return is_string($value)
+            || is_int($value)
+            || is_float($value)
+            || is_bool($value)
+            || (is_object($value) && method_exists($value, '__toString'));
+    }
+
+    protected function acceptMimeTypeOrNull(?string $value, string $argumentName, string $default = ''): string
+    {
+        if ($value !== null && !Format::isMimeType($value)) {
+            $given = is_string($value)
+                ? $value
+                : gettype($value);
+
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "%s" argument must be a valid Mime type, "%s" given.',
+                    $argumentName,
+                    $given
+                )
+            );
+        }
+
+        return $value ?? $default;
+    }
+    
+    /**
+     * Set the height attribute.
+     *
+     * @param mixed $value
+     * @param string $argumentName
+     * @param int|null $default
+     * @return int
+     * @throws InvalidArgumentException If $value is not null, 0 or a positive integer.
+     */
+    public function acceptNonNegativeIntegerOrNull($value, string $argumentName, int $default = null): int
+    {
+        if ($value !== null && (!is_int($value) || $value < 0)) {
+            $given = is_int($value)
+                ? $value
+                : gettype($value);
+
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "%s" argument must be 0 or a positive integer, "%s" given.',
+                    $argumentName,
+                    $given
+                )
+            );
+        }
+
+        return $value ?? $default;
     }
 }

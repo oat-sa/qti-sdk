@@ -62,9 +62,12 @@ abstract class AbstractEnumeration implements Enumeration
      */
     public static function accept($value, string $argumentName): ?int
     {
+        $enumValues = static::asArray();
+        $nameExistsInEnum = array_key_exists($value, $enumValues);
+        
         if ($value !== null
-            && !array_key_exists($value, static::asArray())
-            && !in_array($value, static::asArray(), true)
+            && !$nameExistsInEnum
+            && !in_array($value, $enumValues, true)
         ) {
             throw new InvalidArgumentException(
                 sprintf(
@@ -74,6 +77,10 @@ abstract class AbstractEnumeration implements Enumeration
                     $value
                 )
             );
+        }
+        
+        if ($nameExistsInEnum) {
+            $value = $enumValues[$value];
         }
         
         return $value ?? static::getDefault();

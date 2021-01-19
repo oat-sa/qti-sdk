@@ -2,8 +2,8 @@
 
 namespace qtismtest\data\storage\xml\marshalling;
 
+use qtism\data\content\enums\TrackKind;
 use qtism\data\content\xhtml\html5\Track;
-use qtism\data\content\xhtml\html5\TrackKind;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;

@@ -27,7 +27,7 @@ use DOMElement;
 use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\content\xhtml\html5\Track;
-use qtism\data\content\xhtml\html5\TrackKind;
+use qtism\data\content\enums\TrackKind;
 use qtism\data\QtiComponent;
 
 /**

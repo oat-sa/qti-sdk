@@ -24,16 +24,10 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
-use InvalidArgumentException;
-use qtism\common\utils\Format;
 use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;
+use qtism\data\content\enums\Role;
 use qtism\data\content\xhtml\html5\Html5Element;
-use qtism\data\content\xhtml\html5\Role;
-use qtism\data\content\xhtml\html5\Track;
-use qtism\data\content\xhtml\html5\TrackKind;
-use qtism\data\content\xhtml\Img;
-use qtism\data\QtiComponent;
 
 /**
  * Marshalling/Unmarshalling implementation for generic Html5.
@@ -50,7 +44,7 @@ abstract class Html5ElementMarshaller extends Marshaller
     {
         /** @var Html5Element $bodyElement */
         parent::fillElement($element, $bodyElement);
-        
+
         if ($bodyElement->hasTitle()) {
             $this->setDOMElementAttribute($element, 'title', $bodyElement->getTitle());
         }
@@ -69,7 +63,7 @@ abstract class Html5ElementMarshaller extends Marshaller
      * @param BodyElement $bodyElement The bodyElement to fill.
      * @param DOMElement $element The DOMElement object from where the attribute values must be retrieved.
      * @throws UnmarshallingException If one of the attributes of $element is not valid.
-     */ 
+     */
     protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element)
     {
         parent::fillBodyElement($bodyElement, $element);

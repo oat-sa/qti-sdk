@@ -23,8 +23,6 @@
 
 namespace qtism\data\content\xhtml\html5;
 
-use InvalidArgumentException;
-use qtism\common\utils\Format;
 use qtism\data\content\enums\CrossOrigin;
 use qtism\data\content\enums\Preload;
 use qtism\data\QtiComponentCollection;
@@ -110,15 +108,25 @@ abstract class Media extends Html5Element
     private $preload;
 
     /**
-     * Source URI.
+     * The 'src' content characteristic on media tags gives the address of the
+     * media resource (video, audio) to show. The attribute, if present, must
+     * contain a valid non-empty URL potentially surrounded by spaces.
      *
      * @var string
      */
     private $src = '';
 
     /**
-     * Create a new BodyElement object.
+     * Create a new Media object (Audio or Video).
      *
+     * @param bool $autoPlay
+     * @param bool $controls
+     * @param int $crossOrigin
+     * @param bool $loop
+     * @param string $mediaGroup
+     * @param bool $muted
+     * @param int $preload
+     * @param string $src
      * @param string $id A QTI identifier.
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
@@ -127,14 +135,30 @@ abstract class Media extends Html5Element
      * @param int|null $role A role taken in the Role constants.
      */
     public function __construct(
-        $id = '',
-        $class = '',
-        $lang = '',
-        $label = '',
-        $title = '',
-        $role = null
+        $autoPlay = null,
+        $controls = null,
+        $crossOrigin = null,
+        $loop = null,
+        $mediaGroup = null,
+        $muted = null,
+        $preload = null,
+        $src = null,
+        $title = null,
+        $role = null,
+        $id = null,
+        $class = null,
+        $lang = null,
+        $label = null
     ) {
-        parent::__construct($id, $class, $lang, $label, $title, $role);
+        parent::__construct($title, $role, $id, $class, $lang, $label);
+        $this->setAutoPlay($autoPlay);
+        $this->setControls($controls);
+        $this->setCrossOrigin($crossOrigin);
+        $this->setLoop($loop);
+        $this->setMediaGroup($mediaGroup);
+        $this->setMuted($muted);
+        $this->setPreload($preload);
+        $this->setSrc($src);
         $this->components = new QtiComponentCollection();
     }
 
@@ -151,7 +175,7 @@ abstract class Media extends Html5Element
      *
      * @param Source $source
      */
-    public function addSource(Source $source)
+    public function addSource(Source $source): void
     {
         $this->components->attach($source);
     }
@@ -161,80 +185,41 @@ abstract class Media extends Html5Element
      *
      * @param Track $track
      */
-    public function addTrack(Track $track)
+    public function addTrack(Track $track): void
     {
         $this->components->attach($track);
     }
 
-    /**
-     * @return bool
-     */
+    public function setAutoPlay($autoPlay): void
+    {
+        $this->autoPlay = $this->acceptBooleanOrNull($autoPlay, 'autoplay', false);
+    }
+
     public function getAutoPlay(): bool
     {
         return $this->autoPlay;
     }
 
-    /**
-     * @param bool $autoPlay
-     */
-    public function setAutoPlay($autoPlay)
-    {
-        if (!is_bool($autoPlay)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "autoplay" argument must be a boolean, "%s" given.',
-                    gettype($autoPlay)
-                )
-            );
-        }
-
-        $this->autoPlay = $autoPlay;
-    }
-
-    /**
-     * @return bool
-     */
     public function hasAutoPlay(): bool
     {
         return $this->autoPlay !== false;
     }
 
-    /**
-     * @return bool
-     */
+    public function setControls($controls): void
+    {
+        $this->controls = $this->acceptBooleanOrNull($controls, 'controls', false);
+    }
+
     public function getControls(): bool
     {
         return $this->controls;
     }
 
-    /**
-     * @param bool $controls
-     */
-    public function setControls($controls)
-    {
-        if (!is_bool($controls)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "controls" argument must be a boolean, "%s" given.',
-                    gettype($controls)
-                )
-            );
-        }
-
-        $this->controls = $controls;
-    }
-
-    /**
-     * @return bool
-     */
     public function hasControls(): bool
     {
         return $this->controls !== false;
     }
 
-    /**
-     * @param int|string|null $crossOrigin
-     */
     public function setCrossOrigin($crossOrigin = null): void
     {
         $this->crossOrigin = CrossOrigin::accept($crossOrigin, 'crossorigin');
@@ -250,113 +235,52 @@ abstract class Media extends Html5Element
         return $this->crossOrigin !== CrossOrigin::getDefault();
     }
 
-    /**
-     * @return bool
-     */
+    public function setLoop($loop): void
+    {
+        $this->loop = $this->acceptBooleanOrNull($loop, 'loop', false);
+    }
+
     public function getLoop(): bool
     {
         return $this->loop;
     }
 
-    /**
-     * @param bool $loop
-     */
-    public function setLoop($loop)
-    {
-        if (!is_bool($loop)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "loop" argument must be a boolean, "%s" given.',
-                    gettype($loop)
-                )
-            );
-        }
-
-        $this->loop = $loop;
-    }
-
-    /**
-     * @return bool
-     */
     public function hasLoop(): bool
     {
         return $this->loop !== false;
     }
 
-    /**
-     * @return string
-     */
+    public function setMediaGroup($mediaGroup): void
+    {
+        $this->mediaGroup = $this->acceptNormalizedStringOrNull($mediaGroup, 'src', '');
+    }
+
     public function getMediaGroup(): string
     {
         return $this->mediaGroup;
     }
 
-    /**
-     * @param string $mediaGroup
-     */
-    public function setMediaGroup($mediaGroup)
-    {
-        if (!Format::isNormalizedString($mediaGroup)) {
-            $given = is_string($mediaGroup)
-                ? $mediaGroup
-                : gettype($mediaGroup);
-
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "src" argument must be a non-empty string, "%s" given.',
-                    $given
-                )
-            );
-        }
-
-        $this->mediaGroup = $mediaGroup;
-    }
-
-    /**
-     * @return bool
-     */
     public function hasMediaGroup(): bool
     {
         return $this->mediaGroup !== '';
     }
 
-    /**
-     * @return bool
-     */
+    public function setMuted($muted): void
+    {
+        $this->muted = $this->acceptBooleanOrNull($muted, 'muted', false);
+    }
+
     public function getMuted(): bool
     {
         return $this->muted;
     }
 
-    /**
-     * @param bool $muted
-     */
-    public function setMuted($muted)
-    {
-        if (!is_bool($muted)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "muted" argument must be a boolean, "%s" given.',
-                    gettype($muted)
-                )
-            );
-        }
-
-        $this->muted = $muted;
-    }
-
-    /**
-     * @return bool
-     */
     public function hasMuted(): bool
     {
         return $this->muted !== false;
     }
 
-    /**
-     * @param int|string|null $preload
-     */
-    public function setPreload($preload = null): void
+   public function setPreload($preload = null): void
     {
         $this->preload = Preload::accept($preload, 'preload');
     }
@@ -371,30 +295,16 @@ abstract class Media extends Html5Element
         return $this->preload !== Preload::getDefault();
     }
 
-    /**
-     * @param string $src
-     */
-    public function setSrc($src)
+    public function setSrc($src): void
     {
-        if (!Format::isUri($src)) {
-            $given = is_string($src)
-                ? $src
-                : gettype($src);
-
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "src" argument must be a valid URI, "%s" given.',
-                    $given
-                )
-            );
-        }
-
-        $this->src = $src;
+        $this->src = $this->acceptUriOrNull($src, 'src');
     }
 
-    /**
-     * @return bool
-     */
+    public function getSrc(): string
+    {
+        return $this->src;
+    }
+
     public function hasSrc(): bool
     {
         return $this->src !== '';
