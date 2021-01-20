@@ -407,7 +407,7 @@ class XmlDocument extends QtiDocument
                 libxml_clear_errors();
                 libxml_use_internal_errors($oldErrorConfig);
 
-                $msg = "The document could not be validated with XML Schema:\n${formattedErrors}";
+                $msg = "The document could not be validated with XML Schema '${filename}':\n${formattedErrors}";
                 throw new XmlStorageException($msg, XmlStorageException::XSD_VALIDATION, null, new LibXmlErrorCollection($libXmlErrors));
             }
         } else {
