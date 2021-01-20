@@ -259,20 +259,20 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
             '
-			<assessmentSection identifier="myAssessmentSection" title="A non Recursive Assessment Section" visible="true" keepTogether="false">
-	  			<preCondition>
-	    			<baseValue baseType="boolean">true</baseValue>
-	  			</preCondition>
-	  			<branchRule target="EXIT_TEST">
-	    			<baseValue baseType="boolean">false</baseValue>
-	  			</branchRule>
-	  			<itemSessionControl allowReview="true"/>
-		        <selection select="0"/>
-	  			<assessmentItemRef identifier="Q01" required="false" fixed="false" href="./questions/Q01.xml"/>
-	  			<assessmentItemRef identifier="Q02" required="false" fixed="false" href="./questions/Q02.xml"/>
-	  			<assessmentSectionRef identifier="S01" required="false" fixed="false" href="./sections/S01.xml"/>
-			</assessmentSection>
-			'
+            <assessmentSection identifier="myAssessmentSection" title="A non Recursive Assessment Section" visible="true" keepTogether="false">
+                <preCondition>
+                    <baseValue baseType="boolean">true</baseValue>
+                </preCondition>
+                <branchRule target="EXIT_TEST">
+                    <baseValue baseType="boolean">false</baseValue>
+                </branchRule>
+                <itemSessionControl allowReview="true"/>
+                <selection select="0"/>
+                <assessmentItemRef identifier="Q01" required="false" fixed="false" href="./questions/Q01.xml"/>
+                <assessmentItemRef identifier="Q02" required="false" fixed="false" href="./questions/Q02.xml"/>
+                <assessmentSectionRef identifier="S01" required="false" fixed="false" href="./sections/S01.xml"/>
+            </assessmentSection>
+            '
         );
         $element = $dom->documentElement;
 

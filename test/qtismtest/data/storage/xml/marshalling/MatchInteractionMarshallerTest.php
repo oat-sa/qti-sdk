@@ -38,7 +38,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
         $matchInteraction->setPrompt($prompt);
-        $matchInteraction->setShuffle(false);
+        $matchInteraction->setShuffle(true);
         $matchInteraction->setXmlBase('/home/jerome');
         $matchInteraction->setMaxAssociations(2);
         $matchInteraction->setMinAssociations(1);
@@ -50,7 +50,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $element = $dom->importNode($element, true);
 
         $this::assertEquals(
-            '<matchInteraction responseIdentifier="RESPONSE" maxAssociations="2" minAssociations="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice><simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice><simpleAssociableChoice identifier="choice2B" matchMax="1">choice2B</simpleAssociableChoice></simpleMatchSet></matchInteraction>',
+            '<matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="2" minAssociations="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><simpleMatchSet><simpleAssociableChoice identifier="choice1A" matchMax="1">choice1A</simpleAssociableChoice><simpleAssociableChoice identifier="choice1B" matchMax="1">choice1B</simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice identifier="choice2A" matchMax="1">choice2A</simpleAssociableChoice><simpleAssociableChoice identifier="choice2B" matchMax="1">choice2B</simpleAssociableChoice></simpleMatchSet></matchInteraction>',
             $dom->saveXML($element)
         );
     }

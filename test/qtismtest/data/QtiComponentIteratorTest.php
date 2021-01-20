@@ -45,7 +45,8 @@ class QtiComponentIteratorTest extends QtiSmTestCase
         $sum = new Sum($baseValues);
         $iterator = new QtiComponentIterator($sum);
 
-        // Iterate twice...
+        // We check that we can iterate twice, so that we are sure that the
+        // whole implementation of Iterator is working well...
         for ($j = 0; $j < 2; $j++) {
             $iterations = 0;
             foreach ($iterator as $i) {
@@ -119,8 +120,8 @@ class QtiComponentIteratorTest extends QtiSmTestCase
 
         $iterator = new QtiComponentIterator($doc->getDocumentComponent(), $classNames);
 
-        // We check that we can iterate twice, so that we are sure that the whole implementation
-        // of Iterator is working well...
+        // We check that we can iterate twice, so that we are sure that the
+        // whole implementation of Iterator is working well...
         $j = 0;
         for ($j = 0; $j < 2; $j++) {
             $i = 0;

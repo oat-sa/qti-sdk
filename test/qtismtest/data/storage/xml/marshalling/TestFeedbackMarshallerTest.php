@@ -11,10 +11,13 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\text\Div;
 use qtism\data\content\xhtml\text\P;
 use qtism\data\ShowHide;
+use qtism\data\storage\xml\marshalling\TestFeedbackMarshaller;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtism\data\TestFeedback;
 use qtism\data\TestFeedbackAccess;
 use qtismtest\QtiSmTestCase;
-use qtism\data\storage\xml\marshalling\UnmarshallingException;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Class TestFeedbackMarshallerTest
@@ -68,13 +71,41 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
 
         $this::assertInstanceOf(TestFeedback::class, $component);
-        $this::assertEquals($component->getIdentifier(), 'myIdentifier1');
-        $this::assertEquals($component->getAccess(), TestFeedbackAccess::AT_END);
-        $this::assertEquals($component->getShowHide(), ShowHide::SHOW);
-        $this::assertEquals($component->getTitle(), 'my title');
+        $this::assertEquals('myIdentifier1', $component->getIdentifier());
+        $this::assertEquals(TestFeedbackAccess::AT_END, $component->getAccess());
+        $this::assertEquals(ShowHide::SHOW, $component->getShowHide());
+        $this::assertEquals('my title', $component->getTitle());
 
         $content = $component->getContent();
         $this::assertInstanceOf(P::class, $content[1]);
+    }
+
+    /**
+     * @dataProvider feedbackContent
+     * @param string $xmlData
+     * @param string $expectedContent
+     * @throws ReflectionException
+     */
+    public function testExtractContent($xmlData, $expectedContent)
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML($xmlData);
+        $element = $dom->documentElement;
+
+        $class = new ReflectionClass(TestFeedbackMarshaller::class);
+        $method = $class->getMethod('extractContent');
+        $method->setAccessible(true);
+        $this::assertEquals($method->invokeArgs(null, [$element]), $expectedContent);
+    }
+
+    /**
+     * @return array
+     */
+    public function feedbackContent()
+    {
+        return [
+            ['<testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" access="during" identifier="myId1" outcomeIdentifier="myId2" showHide="show"><div><p>Hello there!</p></div></testFeedback>', '<div><p>Hello there!</p></div>'],
+        ];
     }
 
     public function testUnmarshallWrongContent()

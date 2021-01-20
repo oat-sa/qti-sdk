@@ -29,7 +29,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         $div->setContent(new FlowCollection([
             new TextRun('This is a '),
             new Hottext('hot1'),
-            new TextRun(' text... '),
+            new TextRun(' text...'),
             new Hottext('hot2')
         ]));
         $content = new BlockStaticCollection([$div]);
@@ -47,7 +47,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
         $this::assertEquals(
-            '<hottextInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><div>This is a <hottext identifier="hot1"/> text... <hottext identifier="hot2"/></div></hottextInteraction>',
+            '<hottextInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><div>This is a <hottext identifier="hot1"/> text...<hottext identifier="hot2"/></div></hottextInteraction>',
             $dom->saveXML($element)
         );
     }

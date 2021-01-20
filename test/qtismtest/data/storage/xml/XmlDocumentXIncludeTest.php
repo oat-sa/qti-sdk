@@ -35,7 +35,7 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
     }
 
     /**
-     * @depends      testLoadAndSaveXIncludeNsInTag
+     * @depends testLoadAndSaveXIncludeNsInTag
      * @dataProvider loadAndResolveXIncludeSameBaseProvider
      * @param string $file
      * @param string $filesystem

@@ -131,7 +131,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
 
         $this->expectException(XmlStorageException::class);
 
-        $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-wrong-namespace.xml');
+        $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-wrong-namespace.xml', true);
     }
 
     /**

@@ -7,6 +7,7 @@ use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\ItemSessionControl;
+use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\ItemSessionControlMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtismtest\QtiSmTestCase;
@@ -76,6 +77,42 @@ class MarshallerTest extends QtiSmTestCase
         $this::assertCount(2, $childElements);
         $this::assertEquals('child', $childElements[0]->nodeName);
         $this::assertEquals('anotherChild', $childElements[1]->nodeName);
+    }
+
+    public function testGetChildElementsByTagName()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+
+        // There are 3 child elements. 2 at the first level, 1 at the second.
+        // We should find only 2 direct child elements.
+        $dom->loadXML('<parent><child/><child/><parent><child/></parent></parent>');
+        $element = $dom->documentElement;
+        $marshaller = new FakeMarshaller('2.1.0');
+
+        $this::assertCount(2, $marshaller->getChildElementsByTagName($element, 'child'));
+    }
+
+    public function testGetChildElementsByTagNameMultiple()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<parent><child/><child/><grandChild/><uncle/></parent>');
+        $element = $dom->documentElement;
+        $marshaller = new FakeMarshaller('2.1.0');
+
+        $this::assertCount(3, $marshaller->getChildElementsByTagName($element, ['child', 'grandChild']));
+    }
+
+    public function testGetChildElementsByTagNameEmpty()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+
+        // There is only 1 child but at the second level. Nothing
+        // should be found.
+        $dom->loadXML('<parent><parent><child/></parent></parent>');
+        $element = $dom->documentElement;
+        $marshaller = new FakeMarshaller('2.1.0');
+
+        $this::assertCount(0, $marshaller->getChildElementsByTagName($element, 'child'));
     }
 
     public function testGetXmlBase()
@@ -151,5 +188,34 @@ class MarshallerTest extends QtiSmTestCase
         $this->expectExceptionMessage("Unknown method Marshaller::'hello'.");
 
         $marshaller->hello();
+    }
+}
+
+
+
+
+
+
+class FakeMarshaller extends Marshaller
+{
+    /**
+     * @inheritDoc
+     */
+    protected function marshall(QtiComponent $component)
+    {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function unmarshall(DOMElement $element)
+    {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getExpectedQtiClassName()
+    {
     }
 }

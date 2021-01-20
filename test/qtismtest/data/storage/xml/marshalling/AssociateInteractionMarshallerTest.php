@@ -49,9 +49,9 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
     {
         $element = $this->createDOMElement('
             <associateInteraction responseIdentifier="RESPONSE" maxAssociations="2" xml:base="/home/jerome">
-              <prompt>Prompt...</prompt>
-              <simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice>
-              <simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice>
+                <prompt>Prompt...</prompt>
+                <simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice>
+                <simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice>
             </associateInteraction>
         ');
 

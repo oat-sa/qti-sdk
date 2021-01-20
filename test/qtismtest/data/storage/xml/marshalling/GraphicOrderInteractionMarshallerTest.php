@@ -80,13 +80,13 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
     {
         $element = $this->createDOMElement('
             <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3" xml:base="/home/jerome">
-              <prompt>Prompt...</prompt>
-              <object data="my-img.png" type="image/png"/>
-              <hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/>
-              <hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/>
-              <hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/>
+                <prompt>Prompt...</prompt>
+                <object data="my-img.png" type="image/png"/>
+                <hotspotChoice identifier="choice1" shape="circle" coords="0,0,15"/>
+                <hotspotChoice identifier="choice2" shape="circle" coords="2,2,15"/>
+                <hotspotChoice identifier="choice3" shape="circle" coords="4,4,15"/>
             </graphicOrderInteraction>
-         ');
+        ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this::assertInstanceOf(GraphicOrderInteraction::class, $component);

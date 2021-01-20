@@ -176,7 +176,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
             </positionObjectInteraction>
         ');
 
-        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
 
         $this::assertFalse($component->hasMinChoices());
     }

@@ -46,9 +46,9 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
     {
         $element = $this->createDOMElement('
             <choiceInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome">
-              <prompt>Prompt...</prompt>
-              <simpleChoice identifier="choice_1">Choice #1</simpleChoice>
-              <simpleChoice identifier="choice_2">Choice #2</simpleChoice>
+                <prompt>Prompt...</prompt>
+                <simpleChoice identifier="choice_1">Choice #1</simpleChoice>
+                <simpleChoice identifier="choice_2">Choice #2</simpleChoice>
             </choiceInteraction>
         ');
 

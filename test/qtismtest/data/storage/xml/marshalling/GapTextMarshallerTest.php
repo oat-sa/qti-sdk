@@ -123,8 +123,8 @@ class GapTextMarshallerTest extends QtiSmTestCase
     {
         // Only textRun and/or printedVariable.
         $this->expectException(UnmarshallingException::class);
-        $element = $element = $this->createDOMElement('
-	        <gapText identifier="gapText1" matchMax="1">My var is <strong>invalid</strong>!</gapText>
+        $element = $this->createDOMElement('
+	        <gapText identifier="gapText1" matchMax="1">My var is <div>invalid</div>!</gapText>
 	    ');
 
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);

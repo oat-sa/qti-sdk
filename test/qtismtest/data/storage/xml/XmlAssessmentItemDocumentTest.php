@@ -36,6 +36,22 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @param string $uri
      * @param string $expectedVersion
      * @throws XmlStorageException
+     */
+    public function testLoadFromString($uri, $expectedVersion)
+    {
+        $doc = new XmlDocument($expectedVersion);
+        $doc->loadFromString(file_get_contents($uri));
+        $this::assertEquals($expectedVersion, $doc->getVersion());
+
+        $assessmentItem = $doc->getDocumentComponent();
+        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
+    }
+
+    /**
+     * @dataProvider validFileProvider
+     * @param string $uri
+     * @param string $expectedVersion
+     * @throws XmlStorageException
      * @throws MarshallingException
      */
     public function testWrite($uri, $expectedVersion)
@@ -58,11 +74,38 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertFileNotExists($file);
     }
 
+    /**
+     * @dataProvider validFileProvider
+     * @param string $uri
+     * @param string $expectedVersion
+     * @throws XmlStorageException
+     * @throws MarshallingException
+     */
+    public function testSaveToString($uri, $expectedVersion)
+    {
+        $doc = new XmlDocument();
+        $doc->load($uri);
+        $this::assertEquals($expectedVersion, $doc->getVersion());
+
+        $assessmentItem = $doc->getDocumentComponent();
+        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
+
+        $file = tempnam('/tmp', 'qsm');
+        file_put_contents($file, $doc->saveToString());
+
+        $this::assertTrue(file_exists($file));
+        //$this->testLoadFromString($file, $expectedVersion);
+
+        unlink($file);
+        // Nobody else touched it?
+        $this::assertFileNotExists($file);
+    }
+
     public function testLoad222()
     {
         $file = self::samplesDir() . 'ims/items/2_2_2/choice.xml';
         $doc = new XmlDocument();
-        $doc->load($file, true);
+        $doc->load($file);
 
         $this::assertEquals('2.2.2', $doc->getVersion());
 
@@ -73,7 +116,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml';
         $doc = new XmlDocument();
-        $doc->load($file, true);
+        $doc->load($file);
 
         $this::assertEquals('2.2.1', $doc->getVersion());
         $this::assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml'));
@@ -83,7 +126,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'ims/items/2_2/associate.xml';
         $doc = new XmlDocument();
-        $doc->load($file, true);
+        $doc->load($file);
 
         $this::assertEquals('2.2.0', $doc->getVersion());
     }
@@ -92,7 +135,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'custom/items/2_2/no_schema_location.xml';
         $doc = new XmlDocument();
-        $doc->load($file, true);
+        $doc->load($file);
 
         $this::assertEquals('2.2.0', $doc->getVersion());
     }
@@ -101,7 +144,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'ims/items/2_1_1/associate.xml';
         $doc = new XmlDocument();
-        $doc->load($file, true);
+        $doc->load($file);
 
         $this::assertEquals('2.1.1', $doc->getVersion());
     }
@@ -110,7 +153,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'ims/items/2_1/associate.xml';
         $doc = new XmlDocument();
-        $doc->load($file, true);
+        $doc->load($file);
 
         $this::assertEquals('2.1.0', $doc->getVersion());
     }
@@ -119,7 +162,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'custom/items/2_1/no_schema_location.xml';
         $doc = new XmlDocument();
-        $doc->load($file, true);
+        $doc->load($file);
 
         $this::assertEquals('2.1.0', $doc->getVersion());
     }
@@ -128,7 +171,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'ims/items/2_0/associate.xml';
         $doc = new XmlDocument();
-        $doc->load($file, true);
+        $doc->load($file);
 
         $this::assertEquals('2.0.0', $doc->getVersion());
     }
@@ -142,7 +185,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $file = (empty($uri)) ? self::samplesDir() . 'ims/items/2_1/template.xml' : $uri;
 
         $doc = new XmlDocument();
-        $doc->load($file, true);
+        $doc->load($file);
 
         $item = $doc->getDocumentComponent();
 
@@ -197,7 +240,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     public function testLoadPCIItem($url = '')
     {
         $doc = new XmlDocument();
-        $doc->load((empty($url)) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url, true);
+        $doc->load((empty($url)) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url);
         $item = $doc->getDocumentComponent();
 
         $this::assertInstanceOf(AssessmentItem::class, $item);
@@ -289,6 +332,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     public function validFileProvider()
     {
         return [
+            // -- 2.2.2
+            [self::decorateUri('essay.xml', '2.2.0'), '2.2.2'],
+
             // -- 2.2.1
             [self::decorateUri('choice_aria.xml', '2.2.1'), '2.2.1'],
             [self::decorateUri('choice.xml', '2.2.1'), '2.2.1'],
@@ -303,10 +349,9 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::decorateUri('choice.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('extended_text_rubric.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('extended_text.xml', '2.2.0'), '2.2.0'],
-            // Removed because the 2.2.0 XSD is now looking correctly at the feedback->id atomicity!
-            //array(self::decorateUri('feedbackblock_adaptive.xml', '2.2.0'), '2.2.0'),
+            [self::decorateUri('feedbackblock_adaptive.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('feedbackblock_solution_random.xml', '2.2.0'), '2.2.0'],
-            //array(self::decorateUri('feedbackblock_templateblock.xml', '2.2.0'), '2.2.0'),
+            [self::decorateUri('feedbackblock_templateblock.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('feedbackInline.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('gap_match.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('graphic_associate.xml', '2.2.0'), '2.2.0'],
@@ -370,69 +415,70 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::decorateUri('orkney2.xml', '2.1.1'), '2.1.1'],
             [self::decorateUri('nested_object.xml', '2.1.1'), '2.1.1'],
             [self::decorateUri('likert.xml', '2.1.1'), '2.1.1'],
-            //array(self::decorateUri('feedbackblock_templateblock.xml', '2.1.1'), '2.1.1'),
+            [self::decorateUri('feedbackblock_templateblock.xml', '2.1.1'), '2.1.1'],
 
             // -- 2.1.0
-            [self::decorateUri('adaptive.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('adaptive_template.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('mc_stat2.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('mc_calc3.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('mc_calc5.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('associate.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('choice_fixed.xml', '2.1'), '2.1.0'],
-            //array(self::decorateUri('choice_multiple_chocolade.xml', '2.1'), '2.1'),
-            [self::decorateUri('modalFeedback.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('feedbackInline.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('choice_multiple.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('choice.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('extended_text_rubric.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('extended_text.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('gap_match.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('graphic_associate.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('graphic_gap_match.xml', '2.1'), '2.1.0'],
+            [self::decorateUri('adaptive.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('adaptive_template.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('mc_stat2.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('mc_calc3.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('mc_calc5.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('associate.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('choice_fixed.xml', '2.1.0'), '2.1.0'],
+            // @todo C10 is invalid identifier? Double check! (Actually it seems the example is fucked up... we'll see).
+            //[self::decorateUri('choice_multiple_chocolade.xml', '2.1'), '2.1'],
+            [self::decorateUri('modalFeedback.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('feedbackInline.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('choice_multiple.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('choice.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('extended_text_rubric.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('extended_text.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('gap_match.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('graphic_associate.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('graphic_gap_match.xml', '2.1.0'), '2.1.0'],
             [self::decorateUri('graphic_order.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('hotspot.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('hottext.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('inline_choice.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('match.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('multi-input.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('order.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('position_object.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('select_point.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('slider.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('text_entry.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('template.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('math.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('feedbackblock_solution_random.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('feedbackblock_adaptive.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('orkney1.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('orkney2.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('nested_object.xml', '2.1'), '2.1.0'],
-            [self::decorateUri('likert.xml', '2.1'), '2.1.0'],
-            //array(self::decorateUri('feedbackblock_templateblock.xml', '2.1'), '2.1.0'),
+            [self::decorateUri('hotspot.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('hottext.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('inline_choice.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('match.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('multi-input.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('order.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('position_object.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('select_point.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('slider.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('text_entry.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('template.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('math.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('feedbackblock_solution_random.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('feedbackblock_adaptive.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('orkney1.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('orkney2.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('nested_object.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('likert.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('feedbackblock_templateblock.xml', '2.1'), '2.1.0'],
 
-            // -- 2.0
-            [self::decorateUri('associate.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('associate_lang.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('adaptive.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('choice_multiple.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('choice.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('drawing.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('extended_text.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('feedback.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('gap_match.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('graphic_associate.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('graphic_gap_match.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('graphic_order.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('hint.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('hotspot.xml', '2.0'), '2.0.0'],
-            //array(self::decorateUri('hottext.xml', '2.0'), '2.0.0'),
-            [self::decorateUri('inline_choice.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('likert.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('match.xml', '2.0'), '2.0.0'],
+            // -- 2.0.0
+            [self::decorateUri('associate.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('associate_lang.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('adaptive.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('choice_multiple.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('choice.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('drawing.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('extended_text.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('feedback.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('gap_match.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('graphic_associate.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('graphic_gap_match.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('graphic_order.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('hint.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('hotspot.xml', '2.0.0'), '2.0.0'],
+            //array(self::decorateUri('hottext.xml', '2.0')),
+            [self::decorateUri('inline_choice.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('likert.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('match.xml', '2.0.0'), '2.0.0'],
             [self::decorateUri('nested_object.xml', '2.0.0'), '2.0.0'],
-            [self::decorateUri('order_partial_scoring.xml', '2.0'), '2.0.0'],
-            [self::decorateUri('order.xml', '2.0'), '2.0.0'],
+            [self::decorateUri('order_partial_scoring.xml', '2.0.0'), '2.0.0'],
+            [self::decorateUri('order.xml', '2.0.0'), '2.0.0'],
             [self::decorateUri('orkney1.xml', '2.0'), '2.0.0'],
             //array(self::decorateUri('position_object.xml', '2.0.0'), '2.0.0'),
             [self::decorateUri('select_point.xml', '2.0'), '2.0.0'],
@@ -445,6 +491,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
             // Other miscellaneous items...
             [self::samplesDir() . 'custom/items/custom_operator_item.xml', '2.1.0'],
+            [self::samplesDir() . 'custom/items/rich_gap_text.xml', '2.2.0'],
             [self::samplesDir() . 'custom/items/infocontrol.xml', '2.1.0'],
             [self::samplesDir() . 'custom/items/2_2/biditorture1.xml', '2.2.0'],
         ];
@@ -474,6 +521,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             return self::samplesDir() . 'ims/items/2_2/' . $uri;
         } elseif ($version === '2.2.1') {
             return self::samplesDir() . 'ims/items/2_2_1/' . $uri;
+        } elseif ($version === '2.2.2') {
+            return self::samplesDir() . 'ims/items/2_2_2/' . $uri;
         } elseif ($version === '3.0.0') {
             return self::samplesDir() . 'ims/items/3_0/' . $uri;
         } else {

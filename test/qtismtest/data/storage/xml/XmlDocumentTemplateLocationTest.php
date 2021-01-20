@@ -108,7 +108,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
 
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage("'responseProcessingZ' components are not supported in QTI version '2.1.0'.");
-        $this->expectExceptionCode( XmlStorageException::VERSION);
+        $this->expectExceptionCode(XmlStorageException::VERSION);
         $doc->resolveTemplateLocation();
     }
 

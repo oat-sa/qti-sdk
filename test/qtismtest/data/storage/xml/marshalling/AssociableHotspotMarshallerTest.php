@@ -7,9 +7,11 @@ use qtism\common\collections\IdentifierCollection;
 use qtism\common\datatypes\QtiCoords;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\AssociableHotspot;
+use qtism\data\content\interactions\Choice;
+use qtism\data\content\interactions\Hotspot;
 use qtism\data\ShowHide;
-use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
+use qtismtest\QtiSmTestCase;
 
 /**
  * Class AssociableHotspotMarshallerTest
@@ -85,6 +87,8 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this::assertInstanceOf(AssociableHotspot::class, $component);
+        $this::assertInstanceOf(Hotspot::class, $component);
+        $this::assertInstanceOf(Choice::class, $component);
 
         $this::assertEquals('hotspot1', $component->getIdentifier());
         $this::assertEquals(QtiShape::RECT, $component->getShape());

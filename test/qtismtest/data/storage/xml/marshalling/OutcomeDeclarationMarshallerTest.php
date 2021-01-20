@@ -63,6 +63,20 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
+    public function testUnmarshallExternalScored()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML(
+            '<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" identifier="outcomeDeclarationRec" cardinality="record" externalScored="human"/>'
+        );
+        $element = $dom->documentElement;
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $component = $marshaller->unmarshall($element);
+
+        $this::assertInstanceOf(OutcomeDeclaration::class, $component);
+        $this::assertEquals(ExternalScored::HUMAN, $component->getExternalScored());
+    }
+
     /**
      * @dataProvider qtiVersionsToTestForExternalScored
      * @param $qtiVersion
@@ -130,6 +144,24 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
 
         $lookupTableElts = $element->getElementsByTagName('matchTable');
         $this::assertSame(0, $lookupTableElts->length);
+    }
+
+    public function testMarshallMinimal()
+    {
+        // Initialize a minimal outcomeDeclaration.
+        $identifier = 'outcome1';
+        $cardinality = Cardinality::SINGLE;
+        $baseType = BaseType::INTEGER;
+
+        $component = new OutcomeDeclaration($identifier, $baseType, $cardinality);
+        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $element = $marshaller->marshall($component);
+
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('outcomeDeclaration', $element->nodeName);
+        $this::assertEquals('single', $element->getAttribute('cardinality'));
+        $this::assertEquals('integer', $element->getAttribute('baseType'));
+        $this::assertEquals('outcome1', $element->getAttribute('identifier'));
     }
 
     public function testMarshallDefaultValue21()

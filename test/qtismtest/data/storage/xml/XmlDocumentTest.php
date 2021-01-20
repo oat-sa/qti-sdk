@@ -6,19 +6,19 @@ use DOMDocument;
 use InvalidArgumentException;
 use LogicException;
 use qtism\data\AssessmentItem;
+use qtism\data\AssessmentItemRef;
+use qtism\data\content\interactions\ChoiceInteraction;
+use qtism\data\content\interactions\Prompt;
+use qtism\data\content\RubricBlock;
+use qtism\data\content\TemplateBlock;
+use qtism\data\content\TextRun;
+use qtism\data\content\xhtml\A;
+use qtism\data\content\xhtml\presentation\Hr;
+use qtism\data\content\xhtml\text\Div;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
-use qtism\data\AssessmentItemRef;
-use qtism\data\content\interactions\ChoiceInteraction;
-use qtism\data\content\xhtml\A;
-use qtism\data\content\xhtml\text\Div;
-use qtism\data\content\xhtml\presentation\Hr;
-use qtism\data\content\TextRun;
-use qtism\data\content\TemplateBlock;
-use qtism\data\content\RubricBlock;
-use qtism\data\content\interactions\Prompt;
 
 /**
  * Class XmlDocumentTest
@@ -231,7 +231,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $expectedMsg = 'Cannot load QTI from an empty string.';
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
-        $this->expectExceptionCode( XmlStorageException::READ);
+        $this->expectExceptionCode(XmlStorageException::READ);
 
         $doc->loadFromString('');
     }
@@ -275,7 +275,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $expectedMsg = "Cannot load QTI file '${path}'. It does not exist or is not readable.";
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
-        $this->expectExceptionCode( XmlStorageException::RESOLUTION);
+        $this->expectExceptionCode(XmlStorageException::RESOLUTION);
 
         $doc->load($path);
     }
@@ -288,7 +288,7 @@ class XmlDocumentTest extends QtiSmTestCase
 
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
-        $this->expectExceptionCode( XmlStorageException::VERSION);
+        $this->expectExceptionCode(XmlStorageException::VERSION);
         $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
     }
 
@@ -321,7 +321,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $expectedMsg = "An error occurred while saving QTI-XML file at '/unknown/location/qti.xml'. Maybe the save location is not reachable?";
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
-        $this->expectExceptionCode( XmlStorageException::WRITE);
+        $this->expectExceptionCode(XmlStorageException::WRITE);
 
         $doc->save('/unknown/location/qti.xml');
     }
@@ -354,7 +354,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $expectedMsg = "'matchTable' components are not supported in QTI version '2.0.0'";
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
-        $this->expectExceptionCode( XmlStorageException::VERSION);
+        $this->expectExceptionCode(XmlStorageException::VERSION);
         $str = $doc->saveToString(true);
     }
 
@@ -363,7 +363,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $expectedMsg = "'matchTable' components are not supported in QTI version '2.0.0'";
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
-        $this->expectExceptionCode( XmlStorageException::VERSION);
+        $this->expectExceptionCode(XmlStorageException::VERSION);
 
         // This will fail because no <matchTable> element is defined in the 2.0.0 QTI Information Model.
         $doc = new XmlDocument('2.0.0');
@@ -392,7 +392,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $expectedMsg = "'mathConstant' components are not supported in QTI version '2.0.0'";
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
-        $this->expectExceptionCode( XmlStorageException::VERSION);
+        $this->expectExceptionCode(XmlStorageException::VERSION);
         $str = $doc->saveToString(true);
     }
 
@@ -401,7 +401,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $expectedMsg = "'mathConstant' components are not supported in QTI version '2.0.0'";
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
-        $this->expectExceptionCode( XmlStorageException::VERSION);
+        $this->expectExceptionCode(XmlStorageException::VERSION);
 
         $doc = new XmlDocument('2.0.0');
         $doc->loadFromString('
@@ -427,7 +427,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $expectedMsg = "'bdo' components are not supported in QTI version '2.1.0'";
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
-        $this->expectExceptionCode( XmlStorageException::VERSION);
+        $this->expectExceptionCode(XmlStorageException::VERSION);
         $str = $doc->saveToString(true);
     }
 
@@ -436,7 +436,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $expectedMsg = "'bdo' components are not supported in QTI version '2.0.0'";
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
-        $this->expectExceptionCode( XmlStorageException::VERSION);
+        $this->expectExceptionCode(XmlStorageException::VERSION);
 
         $doc = new XmlDocument('2.0.0');
         $doc->loadFromString('
@@ -447,11 +447,12 @@ class XmlDocumentTest extends QtiSmTestCase
 
     public function testInvalidAgainstXMLSchema()
     {
-        $expectedMsg = "The document could not be validated with XML Schema:\n";
+        $xsdLocation = realpath(__DIR__ . '/../../../../../') . '/src/qtism/data/storage/xml/versions/../schemes/qtiv2p1/imsqti_v2p1.xsd';
+        $expectedMsg = "The document could not be validated with XML Schema '$xsdLocation':\n";
         $expectedMsg .= "Error: Element '{http://www.imsglobal.org/xsd/imsqti_v2p1}responseDeclaration', attribute 'foo': The attribute 'foo' is not allowed. at 9:0.";
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
-        $this->expectExceptionCode( XmlStorageException::XSD_VALIDATION);
+        $this->expectExceptionCode(XmlStorageException::XSD_VALIDATION);
 
         $uri = self::samplesDir() . 'invalid/xsdinvalid.xml';
         $doc = new XmlDocument('2.1.0');
@@ -629,17 +630,26 @@ class XmlDocumentTest extends QtiSmTestCase
             [self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', '2.1.0'],
             [self::samplesDir() . 'ims/items/2_2_1/choice.xml', '2.2.1'],
             [self::samplesDir() . 'ims/items/2_2_2/choice.xml', '2.2.2'],
-            [self::samplesDir() . 'ims/items/3_0/aqti_tmh_sample_1.xml', '3.0.0'],
+            [self::samplesDir() . 'ims/items/3_0/empty_item.xml', '3.0.0'],
         ];
     }
 
-    public function testInferVersionWithMissingNamespaceThrowsException()
+    public function testInferVersionWithMissingNamespaceReturnsDefaultVersion()
     {
         $xmlDoc = new XmlDocument();
 
         $xmlDoc->load(self::samplesDir() . 'ims/tests/empty_tests/empty_test_missing_namespace.xml');
 
         $this::assertEquals('2.1.0', $xmlDoc->getVersion());
+    }
+
+    public function testInferVersionWithWrongNamespaceThrowsException()
+    {
+        $xmlDoc = new XmlDocument();
+
+        $this->expectException(XmlStorageException::class);
+
+        $xmlDoc->load(self::samplesDir() . 'ims/tests/empty_tests/empty_test_wrong_namespace.xml', true);
     }
 
     /**
