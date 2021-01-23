@@ -83,7 +83,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
 
         $this::assertInstanceOf(OrderedContainer::class, $result);
-        $this::assertSame(5, count($result));
+        $this::assertCount(5, $result);
         $this::assertEquals(['Hello', 'World', 'This', 'Is', 'Me'], $result->getArrayCopy());
     }
 
@@ -96,7 +96,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
 
         $this::assertInstanceOf(OrderedContainer::class, $result);
-        $this::assertSame(1, count($result));
+        $this::assertCount(1, $result);
         $this::assertEquals(['Hello World!'], $result->getArrayCopy());
     }
 
@@ -108,7 +108,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
 
         $this::assertInstanceOf(OrderedContainer::class, $result);
-        $this::assertSame(2, count($result));
+        $this::assertCount(2, $result);
         $this::assertEquals(['Hello', 'World!'], $result->getArrayCopy());
     }
 

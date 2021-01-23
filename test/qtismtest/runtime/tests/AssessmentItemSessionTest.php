@@ -2,7 +2,6 @@
 
 namespace qtismtest\runtime\tests;
 
-use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
@@ -33,7 +32,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_2/essay.xml');
 
-        $itemSession = new AssessmentItemSession($doc->getDocumentComponent(), new SessionManager(new FileSystemFileManager()));
+        $itemSession = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSessionControl = $itemSession->getItemSessionControl();
         $itemSessionControl->setMaxAttempts(0);
         $itemSession->beginItemSession();
@@ -145,7 +144,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals(1, $itemSession['numAttempts']->getValue());
         $this::assertTrue($itemSession->isCorrect());
 
-        // If we now try to begin a new attempt, we get an exception.
+        // If we now try to begin a new attempt, we get a logic exception.
         try {
             $this::assertFalse($itemSession->isAttemptable());
             $itemSession->beginAttempt();
@@ -200,7 +199,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         // reminder, the value of maxAttempts is ignored when dealing with
         // adaptive items.
 
-        // First candidate session, just give an incorrect response.
+        // First attempt, just give an incorrect response.
         // We do not known how much attempts to complete.
         $this::assertTrue($itemSession->isAttemptable());
         $this::assertEquals(-1, $itemSession->getRemainingAttempts());
@@ -268,7 +267,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/skipping/default_value.xml');
 
-        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setAllowSkipping(false);
         $itemSessionControl->setMaxAttempts(0);
@@ -371,7 +370,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/hotspot.xml');
 
-        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
         $responses = new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('A'))]);
@@ -385,7 +384,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/items/multiple_interactions.xml');
 
-        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
         $this::assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
@@ -401,7 +400,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument('2.1.0');
         $doc->load(self::samplesDir() . 'ims/items/2_1/modalFeedback.xml');
 
-        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setShowFeedback(true);
         $itemSessionControl->setMaxAttempts(0);
@@ -435,7 +434,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument('2.1.0');
         $doc->load(self::samplesDir() . 'custom/items/template_declaration_default.xml');
 
-        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setMaxAttempts(0);
 
@@ -474,6 +473,14 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->endAttempt(new State());
 
         $this::assertEquals(0, $itemSession->getRemainingAttempts());
+
+        // Another attempt must lead to an exception.
+        try {
+            $itemSession->beginAttempt();
+            $this::assertTrue(false, 'Nore more attempts should be allowed.');
+        } catch (AssessmentItemSessionException $e) {
+            $this::assertEquals(AssessmentItemSessionException::ATTEMPTS_OVERFLOW, $e->getCode());
+        }
     }
 
     public function testSetOutcomeValuesWithSum()
@@ -481,7 +488,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum.xml');
 
-        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
 
@@ -496,7 +503,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum_juggling.xml');
 
-        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
 
@@ -556,7 +563,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/text_entry.xml');
 
-        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSessionControl = $itemSession->getItemSessionControl();
         $itemSessionControl->setMaxAttempts(0);
         $itemSession->beginItemSession();
@@ -676,7 +683,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/is_responded/is_responded_multiple_interactions_singlechoice_textentry.xml');
 
-        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSessionControl = $itemSession->getItemSessionControl();
         $itemSessionControl->setMaxAttempts(0);
 
@@ -757,7 +764,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/is_responded/is_responded_multiple_interactions_multiplechoice_textentry.xml');
 
-        $itemSession = new AssessmentItemSession($doc->getDocumentComponent());
+        $itemSession = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSessionControl = $itemSession->getItemSessionControl();
         $itemSessionControl->setMaxAttempts(0);
 

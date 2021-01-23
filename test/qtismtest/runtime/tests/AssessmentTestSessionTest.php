@@ -32,7 +32,6 @@ use qtism\runtime\tests\AssessmentTestPlace;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionState;
-use qtism\runtime\tests\OrderingException;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 use qtism\data\state\Weight;
@@ -48,11 +47,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
     {
         parent::setUp();
 
-        $xml = new XmlCompactDocument('2.1');
-        $xml->load(self::samplesDir() . 'custom/runtime/assessmenttest_context.xml');
-
-        $sessionManager = new SessionManager(new FileSystemFileManager());
-        $this->state = $sessionManager->createAssessmentTestSession($xml->getDocumentComponent());
+        $this->state = self::instantiate(self::samplesDir() . 'custom/runtime/assessmenttest_context.xml');
         $this->state['OUTCOME1'] = new QtiString('String!');
     }
 
@@ -115,9 +110,9 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         for ($i = 1; $i <= 3; $i++) {
             $score = $assessmentTestSession["Q01.${i}.SCORE"];
             $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
+            $this::assertNull($response);
             $this::assertInstanceOf(QtiFloat::class, $score);
             $this::assertEquals(0.0, $score->getValue());
-            $this::assertNull($response);
         }
     }
 
@@ -305,6 +300,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $session->endAttempt(new State());
         $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
         $session->moveNext();
+        // When skipping, the pending responses consist of all response variable
+        // with their default value applied.
         $this::assertCount(3, $session->getPendingResponses());
 
         // Q04 - Skip.
@@ -313,6 +310,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
         $this::assertCount(4, $session->getPendingResponses());
         $session->moveNext();
+        $this::assertCount(4, $session->getPendingResponses());
 
         // Q05 - Skip.
         $session->beginAttempt();
@@ -320,6 +318,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
         $this::assertCount(5, $session->getPendingResponses());
         $session->moveNext();
+        $this::assertCount(5, $session->getPendingResponses());
 
         // Q06 - Skip.
         $session->beginAttempt();
@@ -327,6 +326,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getCurrentAssessmentItemSession()->getState());
         $this::assertCount(6, $session->getPendingResponses());
         $session->moveNext();
+        $this::assertCount(6, $session->getPendingResponses());
 
         // Q07.1 - Correct.
         $session->beginAttempt();
@@ -392,8 +392,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
      * @param array $outcomes
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException
-     * @throws XmlStorageException
      * @throws PhpStorageException
+     * @throws XmlStorageException
      */
     public function testLinearOutcomeProcessing(array $responses, array $outcomes)
     {
@@ -544,11 +544,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertFalse($assessmentTestSession->getAssessmentItemSessions('Q04'));
 
         // --- Test with multiple occurence items.
-        $doc = new XmlCompactDocument();
-        $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
-
-        $sessionManager = new SessionManager(new FileSystemFileManager());
-        $assessmentTestSession = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');
         $assessmentTestSession->beginTestSession();
 
         for ($i = 0; $i < 3; $i++) {
@@ -646,13 +642,12 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         // Let's check that Q01 is in SUSPENDED state.
         $q01s = $session->getAssessmentItemSessions('Q01');
         $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $q01s[0]->getState());
-
         $this::assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
+
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::IDENTIFIER, new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('H'), new QtiIdentifier('O')]))]));
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $session->getCurrentAssessmentItemSession()->getState());
         $session->moveNext();
-
         $this::assertEquals(2.0, $session['Q03.SCORE']->getValue());
 
         // Come back at Q01.
@@ -662,7 +657,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $session->moveNext();
         $this::assertEquals(1.0, $session['Q01.scoring']->getValue());
 
-        // Wwe are at Q02.
+        // We are at Q02.
         $this::assertEquals('Q02', $session->getCurrentAssessmentItemRef()->getIdentifier());
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::MULTIPLE, BaseType::PAIR, new MultipleContainer(BaseType::PAIR, [new QtiPair('A', 'P')]))]));
@@ -1496,8 +1491,9 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $qti = new XmlDocument();
         $qti->load(self::samplesDir() . 'custom/tests/linear_nonLinear_multiple_testparts/test.xml');
         $doc = XmlCompactDocument::createFromXmlAssessmentTestDocument($qti);
-        $manager = new SessionManager(new FileSystemFileManager());
-        $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
+
+        $sessionManager = new SessionManager(new FileSystemFileManager());
+        $session = $sessionManager->createAssessmentTestSession($doc->getDocumentComponent());
 
         $this::assertEquals(6, $session->getRouteCount());
         $this::assertEquals(6, $session->getRouteCount(AssessmentTestSession::ROUTECOUNT_ALL));
@@ -2260,6 +2256,24 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 
         $assessmentTestSession->moveNext();
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $assessmentTestSession->getState());
+    }
+
+    public function testOutcomeProcessingEnabled()
+    {
+        $doc = new XmlCompactDocument();
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/outcome_processing/enable_disable_outcome_processing.xml');
+
+        $assessmentTestSession->beginTestSession();
+        $this::assertEquals('Hello world!', $assessmentTestSession['MYOUTCOME']->getValue());
+
+        $assessmentTestSession->beginAttempt();
+        $assessmentTestSession->endAttempt(
+            new State([
+                new ResponseVariable('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE, new QtiIdentifier('ChoiceA')),
+            ])
+        );
+
+        $this::assertEquals('This is me!', $assessmentTestSession['MYOUTCOME']->getValue());
     }
 
     public function testGetWeightWrongType()

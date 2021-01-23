@@ -196,7 +196,7 @@ class TruncateProcessorTest extends QtiSmTestCase
     /**
      * @dataProvider provider
      * @param float $val
-     * @param integer $expected
+     * @param int $expected
      * @throws MarshallerNotFoundException
      */
     public function testForProvider($val, $expected)

@@ -32,7 +32,6 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentTestSessionException;
-use qtism\runtime\tests\OrderingException;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
@@ -55,8 +54,8 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
      * @param int $finalNumberCompleted The expected number of completed items when the session closes.
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException
-     * @throws XmlStorageException
      * @throws PhpStorageException
+     * @throws XmlStorageException
      */
     public function testCompletion($testFile, $identifiers, $finalNumberCompleted)
     {

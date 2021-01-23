@@ -17,7 +17,7 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
 
-        $session = new AssessmentItemSession($doc->getDocumentComponent());
+        $session = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $session->beginItemSession();
 
         $shufflingStates = $session->getShufflingStates();
@@ -40,7 +40,7 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
 
-        $session = new AssessmentItemSession($doc->getDocumentComponent());
+        $session = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $session->beginItemSession();
 
         $identifiers = ['ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD'];
@@ -56,7 +56,7 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
 
-        $session = new AssessmentItemSession($doc->getDocumentComponent());
+        $session = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $session->beginItemSession();
 
         $this->expectException(OutOfBoundsException::class);
@@ -69,7 +69,7 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
 
-        $session = new AssessmentItemSession($doc->getDocumentComponent());
+        $session = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $session->beginItemSession();
 
         $this->expectException(OutOfBoundsException::class);

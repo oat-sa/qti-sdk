@@ -139,7 +139,8 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
             $session->moveNext();
         }
 
-        // We should have automatically because the previous call to moveNext() does
+        // We should have automatically be moved to the next test part
+        // because the previous call to moveNext() does
         // not allow time out items to be reached.
         $this::assertEquals('P02', $session->getCurrentTestPart()->getIdentifier());
         $this::assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
@@ -184,9 +185,9 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
      * @param bool $forceLateSubmission
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException
-     * @throws XmlStorageException
-     * @throws PhpStorageException
      * @throws OrderingException
+     * @throws PhpStorageException
+     * @throws XmlStorageException
      */
     public function testForceLateSubmission($forceLateSubmission = true)
     {
@@ -196,7 +197,8 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->setTime(self::createDate('2014-07-14 13:00:00'));
         $session->beginTestSession();
 
-        // The Candidate begins the attempt on Q01 at 13:00:02. The maximum time limit is 1 second.
+        // The Candidate begins the attempt on Q01 at 13:00:02.
+        // The maximum time limit is 1 second.
         $session->setTime(self::createDate('2014-07-14 13:00:02'));
         $session->beginAttempt();
 
@@ -212,7 +214,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
             $this::assertEquals(1.0, $session['Q01.SCORE']->getValue());
             $this::assertFalse($session->isRunning());
 
-            // What if $forceLateSubmission = false ? :oP
+            // What if $forceLateSubmission = false ? :p
             if ($forceLateSubmission === true) {
                 $this->testForceLateSubmission(false);
             }
@@ -302,7 +304,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertFalse($timeConstraints[0]->maxTimeInForce());
     }
 
-    public function testTimeConstraintsTwo()
+    public function testTimeConstraintsDoNotConsiderMinTime()
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/dont_consider_mintime.xml');
 
@@ -315,6 +317,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 
             $session->setTime(self::createDate('2014-07-14 13:00:00'));
             $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
+
             $this->fail('An exception should be thrown because minTime must be considered now on Q01.');
         } catch (AssessmentTestSessionException $e) {
             $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW, $e->getCode(), 'The thrown exception should have code ASSESSMENT_ITEM_DURATION_UNDERFLOW, exception message is: ' . $e->getMessage());
@@ -352,7 +355,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
 
         // We are now between Q01 and Q02, the duration of items must not increase
-        // but the test related timing increase.
+        // but the test related timing increases.
         $session->setTime(self::createDate('2014-07-14 13:00:10'));
         $this::assertEquals(1, $session['Q01.duration']->getSeconds(true));
         $this::assertEquals(0, $session['Q02.duration']->getSeconds(true));

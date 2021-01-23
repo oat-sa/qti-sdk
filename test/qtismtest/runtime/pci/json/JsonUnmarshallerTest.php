@@ -133,6 +133,15 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $this::assertTrue($expectedContainer->equals($unmarshaller->unmarshall($json)));
     }
 
+    public function testUnmarshallListException()
+    {
+        $this->expectException(UnmarshallingException::class);
+
+        $json = '{ "list" : { "boolean": false } }';
+        $unmarshaller = self::createUnmarshaller();
+        $unmarshaller->unmarshall($json);
+    }
+
     /**
      * @dataProvider unmarshallRecordProvider
      *

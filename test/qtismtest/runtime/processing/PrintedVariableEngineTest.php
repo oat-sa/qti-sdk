@@ -41,7 +41,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
      * @param string $format
      * @param bool $powerForm
      * @param int|string $base
-     * @param integer|string $index
+     * @param int|string $index
      * @param string $delimiter
      * @param string $field
      * @param string $mappingIndicator

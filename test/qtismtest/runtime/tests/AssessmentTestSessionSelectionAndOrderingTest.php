@@ -2,6 +2,8 @@
 
 namespace qtismtest\runtime\tests;
 
+use qtism\data\storage\xml\XmlCompactDocument;
+use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**

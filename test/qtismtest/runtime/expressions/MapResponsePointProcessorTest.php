@@ -249,7 +249,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
 
         $this->expectException(ExpressionProcessingException::class);
         $this->expectExceptionMessage('The MapResponsePoint expression cannot be applied to RECORD variables.');
-        $this->expectExceptionCode( ExpressionProcessingException::WRONG_VARIABLE_CARDINALITY);
+        $this->expectExceptionCode(ExpressionProcessingException::WRONG_VARIABLE_CARDINALITY);
         $result = $processor->process();
     }
 }

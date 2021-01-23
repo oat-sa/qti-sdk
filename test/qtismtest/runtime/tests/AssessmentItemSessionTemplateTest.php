@@ -22,7 +22,7 @@ class AssessmentItemSessionTemplateTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/template_processing.xml');
 
-        $session = new AssessmentItemSession($doc->getDocumentComponent());
+        $session = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $itemSessionControl = new ItemSessionControl();
         $itemSessionControl->setMaxAttempts(0);
 

@@ -15,7 +15,6 @@ use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionState;
-use qtism\runtime\tests\OrderingException;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
@@ -173,13 +172,13 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
 
     /**
      * @dataProvider branchingMultipleOccurencesProvider
-     * @param $response
-     * @param $expectedTarget
-     * @param $occurence
-     * @throws XmlStorageException
+     * @param QtiIdentifier|null $response
+     * @param string $expectedTarget
+     * @param int $occurence
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException
      * @throws PhpStorageException
+     * @throws XmlStorageException
      */
     public function testBranchingMultipleOccurences($response, $expectedTarget, $occurence)
     {
