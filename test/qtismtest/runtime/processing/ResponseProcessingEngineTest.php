@@ -128,14 +128,9 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
 
         $engine = new ResponseProcessingEngine($responseProcessing);
 
-        try {
-            $engine->process();
-            // An exception MUST be thrown.
-            $this::assertTrue(true);
-        } catch (ProcessingException $e) {
-            $this::assertInstanceOf(RuleProcessingException::class, $e);
-            $this::assertEquals(RuleProcessingException::EXIT_RESPONSE, $e->getCode());
-        }
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionCode(RuleProcessingException::EXIT_RESPONSE);
+        $engine->process();
     }
 
     public function testSetOutcomeValueWithSum()

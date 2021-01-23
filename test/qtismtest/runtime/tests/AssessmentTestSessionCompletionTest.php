@@ -52,10 +52,10 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
      * @param string $testFile The Compact test definition to be run as a candidate session.
      * @param array $identifiers An array of response identifier to be given for each item.
      * @param int $finalNumberCompleted The expected number of completed items when the session closes.
-     * @throws PhpStorageException
-     * @throws XmlStorageException
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException
+     * @throws PhpStorageException
+     * @throws XmlStorageException
      */
     public function testCompletion($testFile, $identifiers, $finalNumberCompleted)
     {

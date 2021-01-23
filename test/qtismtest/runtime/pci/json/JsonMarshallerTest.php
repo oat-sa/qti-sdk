@@ -323,6 +323,11 @@ class JsonMarshallerTest extends QtiSmTestCase
         $json = json_encode(['record' => [['name' => 'numeric', 'base' => ['float' => 1337.1337]], ['name' => 'null', 'base' => null], ['name' => 'coordinates', 'base' => ['point' => [10, 20]]]]]);
         $returnValue[] = [$record, $json];
 
+        // nested list record.
+        $record = new RecordContainer(['nested' => new MultipleContainer(BaseType::INTEGER, [new QtiInteger(1)])]);
+        $json = json_encode(['record' => [['name' => 'nested', 'list' => ['integer' => [1]]]]]);
+        $returnValue[] = [$record, $json];
+
         return $returnValue;
     }
 

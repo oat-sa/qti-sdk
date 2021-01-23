@@ -100,9 +100,9 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this::assertFalse($testSession->isRunning());
         $this::assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
         $this::assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
-        $this::assertEquals(0.0, $testSession['Q02.SCORE']->getValue());
-        $this::assertEquals(0.0, $testSession['Q03.SCORE']->getValue());
-        $this::assertEquals(0.0, $testSession['Q04.SCORE']->getValue());
+        $this::assertSame(0.0, $testSession['Q02.SCORE']->getValue());
+        $this::assertSame(0.0, $testSession['Q03.SCORE']->getValue());
+        $this::assertSame(0.0, $testSession['Q04.SCORE']->getValue());
     }
 
     public function testKillerTestEpicFail()

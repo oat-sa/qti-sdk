@@ -14,16 +14,16 @@ use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentTestSessionException;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
-use qtismtest\QtiSmTestCase;
+use qtismtest\QtiSmAssessmentTestSessionTestCase;
 
 /**
  * Class AssessmentTestSessionBranchingsTest
  */
-class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
+class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTestCase
 {
     public function testInstantiationSample1()
     {
-        $doc = new XmlCompactDocument();
+        $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
 
         $manager = new SessionManager();
@@ -56,7 +56,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
 
     public function testBranchingSingleSectionLinear1()
     {
-        $doc = new XmlCompactDocument();
+        $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
 
         $manager = new SessionManager();
@@ -97,7 +97,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
 
     public function testBranchingSingleSectionLinear2()
     {
-        $doc = new XmlCompactDocument();
+        $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
 
         $manager = new SessionManager();
@@ -129,7 +129,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
     {
         // This test only aims at testing if branch rules
         // are correctly ignored when the navigation mode is non linear.
-        $doc = new XmlCompactDocument();
+        $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_nonlinear.xml');
 
         // Q01 - We answer correct. In linear mode we should go to Q03.
@@ -176,14 +176,14 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
      * @param int $occurence
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException
-     * @throws XmlStorageException
      * @throws PhpStorageException
+     * @throws XmlStorageException
      */
     public function testBranchingMultipleOccurences($response, $expectedTarget, $occurence)
     {
         // This test aims at testing the possibility to jump
         // on a particular item ref occurence.
-        $doc = new XmlCompactDocument();
+        $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_multiple_occurences.xml');
 
         $manager = new SessionManager();
@@ -215,5 +215,35 @@ class AssessmentTestSessionBranchingsTest extends QtiSmTestCase
             [new QtiIdentifier('goto23'), 'Q02', 2],
             [null, 'Q02', 3],
         ];
+    }
+
+    public function testBranchingOnPreconditon()
+    {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/branchings_preconditions/branchings_preconditions_branchtopreconditionitem.xml');
+        $session->beginTestSession();
+
+        // Only the first item session should be created.
+        $this::assertSame(0.0, $session['Q01.SCORE']->getValue());
+        $this::assertNull($session['Q02.SCORE']);
+        $this::assertNull($session['Q03.SCORE']);
+        $this::assertNull($session['Q04.SCORE']);
+
+        // Q01 - Incorrect
+        $session->beginAttempt();
+        $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
+        $session->moveNext();
+
+        // Q04 - We should be at Q04.
+        // -> because Q03 has a precondition which returns false.
+        $this::assertEquals('Q04', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->beginAttempt();
+        $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceD'))]));
+        $session->moveNext();
+
+        // Only item sessions related to Q01 and Q04 should be instantiated.
+        $this::assertSame(0.0, $session['Q01.SCORE']->getValue());
+        $this::assertNull($session['Q02.SCORE']);
+        $this::assertNull($session['Q03.SCORE']);
+        $this::assertSame(1.0, $session['Q04.SCORE']->getValue());
     }
 }

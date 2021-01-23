@@ -31,6 +31,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should arrive at section 2.
         $testSession->moveNext();
         $this::assertEquals('S02', $testSession->getCurrentAssessmentSection()->getIdentifier());
+        $this::assertTrue($testSession->isRunning());
     }
 
     public function testExitSectionEndOfTest()
@@ -96,6 +97,9 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should arrive at testPart 2
         $testSession->moveNext();
         $this::assertEquals('P02', $testSession->getCurrentTestPart()->getIdentifier());
+        $this::assertTrue($testSession->isRunning());
+        $testSession->moveNext();
+        $this::assertFalse($testSession->isRunning());
     }
 
     public function testExitTestPartEndOfTest()
@@ -161,5 +165,6 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         // We should arrive at section 2.
         $testSession->moveNext();
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertFalse($testSession->isRunning());
     }
 }

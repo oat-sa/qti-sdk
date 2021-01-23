@@ -61,7 +61,7 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase
 
         // Q03
         $session->beginAttempt();
-        $session->skip();
+        $session->endAttempt(new State());
         $processor->setExpression($overallResponded);
         $this::assertEquals(2, $processor->process()->getValue());
         $session->moveNext();
@@ -77,7 +77,7 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase
 
         // Q05
         $session->beginAttempt();
-        $session->skip();
+        $session->endAttempt(new State());
         $this::assertEquals(3, $processor->process()->getValue());
         $session->moveNext();
 

@@ -5,6 +5,7 @@ namespace qtismtest\runtime\expressions;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\NumberPresented;
 use qtism\data\storage\php\PhpStorageException;
+use qtism\runtime\common\State;
 use qtism\runtime\expressions\NumberPresentedProcessor;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentTestSessionException;
@@ -41,7 +42,7 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
             $result = $processor->process();
 
             $this::assertEquals($expectedResults[$i], $result->getValue());
-            $session->skip();
+            $session->endAttempt(new State());
             $session->moveNext();
         }
     }

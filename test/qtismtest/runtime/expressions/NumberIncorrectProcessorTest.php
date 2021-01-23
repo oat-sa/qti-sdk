@@ -62,7 +62,7 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase
         // Q03
         // Incorrect!
         $session->beginAttempt();
-        $session->skip();
+        $session->endAttempt(new State());
         $processor->setExpression($overallCorrect);
         $this::assertEquals(2, $processor->process()->getValue());
         $session->moveNext();
@@ -79,7 +79,7 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase
         // Q05
         // Incorrect!
         $session->beginAttempt();
-        $session->skip();
+        $session->endAttempt(new State());
         $this::assertEquals(3, $processor->process()->getValue());
         $session->moveNext();
 

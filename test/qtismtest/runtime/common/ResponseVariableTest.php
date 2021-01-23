@@ -20,7 +20,7 @@ class ResponseVariableTest extends QtiSmTestCase
 {
     public function testCreateFromVariableDeclarationExtended()
     {
-        $factory = $this->getMarshallerFactory();
+        $factory = $this->getMarshallerFactory('2.1.0');
         $element = $this->createDOMElement('
 			<responseDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" 
 								identifier="outcome1" 
@@ -102,5 +102,18 @@ class ResponseVariableTest extends QtiSmTestCase
     {
         $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
         $this::assertFalse($responseVariable->isCorrect());
+    }
+
+    public function testClone()
+    {
+        // value, default value and correct response must be independent after cloning.
+        $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $responseVariable->setDefaultValue(new QtiInteger(1));
+        $responseVariable->setCorrectResponse(new QtiInteger(1337));
+
+        $clone = clone $responseVariable;
+        $this::assertNotSame($responseVariable->getValue(), $clone->getValue());
+        $this::assertNotSame($responseVariable->getDefaultValue(), $clone->getDefaultValue());
+        $this::assertNotSame($responseVariable->getCorrectResponse(), $clone->getCorrectResponse());
     }
 }

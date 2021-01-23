@@ -38,8 +38,6 @@ class BodyElementRendererTest extends QtiSmTestCase
         $this::assertEquals('', $element->getAttribute('label'));
     }
 
-    /**
-     */
     public function testRenderChildren()
     {
         $ctx = new XhtmlRenderingEngine();
@@ -77,8 +75,6 @@ class BodyElementRendererTest extends QtiSmTestCase
         $this::assertSame('', $element->getAttribute('aria-hidden'));
     }
 
-    /**
-     */
     public function testRenderFullAria()
     {
         $ctx = new XhtmlRenderingEngine();

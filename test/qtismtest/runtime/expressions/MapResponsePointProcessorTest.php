@@ -230,4 +230,25 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $this::assertInstanceOf(QtiFloat::class, $result);
         $this::assertEquals(5, $result->getValue());
     }
+
+    public function testWithRecord()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
+			<responseDeclaration identifier="response1" cardinality="record">
+	            <areaMapping lowerBound="1" upperBound="5">
+					<areaMapEntry shape="rect" coords="0,0,20,10" mappedValue="4"/>
+					<areaMapEntry shape="circle" coords="5,5,5" mappedValue="2"/>
+				</areaMapping>
+	        </responseDeclaration>
+		');
+
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $processor = new MapResponsePointProcessor($expr);
+        $processor->setState(new State([$variable]));
+
+        $this->expectException(ExpressionProcessingException::class);
+        $this->expectExceptionMessage('The MapResponsePoint expression cannot be applied to RECORD variables.');
+        $result = $processor->process();
+    }
 }

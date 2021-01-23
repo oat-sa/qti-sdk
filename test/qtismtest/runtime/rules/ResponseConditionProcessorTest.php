@@ -4,6 +4,7 @@ namespace qtismtest\runtime\rules;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
@@ -20,6 +21,7 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
      *
      * @param string $response A QTI Identifier
      * @param float $expectedScore The expected score for a given $response
+     * @throws MarshallerNotFoundException
      */
     public function testResponseConditionMatchCorrect($response, $expectedScore)
     {

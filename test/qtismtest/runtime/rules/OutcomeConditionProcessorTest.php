@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\OutcomeConditionProcessor;
@@ -24,6 +25,7 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
      * @param string $expectedX
      * @param string $expectedY
      * @param string $expectedZ
+     * @throws MarshallerNotFoundException
      */
     public function testOutcomeConditionComplex($t, $tt, $expectedX, $expectedY, $expectedZ)
     {
@@ -106,7 +108,7 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
     protected function check($expected, $value)
     {
         if ($expected === null) {
-            $this::assertSame($expected, $value);
+            $this::assertNull($value);
         } else {
             $this::assertSame($expected, $value->getValue());
         }

@@ -6,7 +6,6 @@ use DOMDocument;
 use DOMDocumentFragment;
 use DOMText;
 use qtism\data\storage\xml\XmlDocument;
-use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingContext;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtismtest\QtiSmTestCase;
 

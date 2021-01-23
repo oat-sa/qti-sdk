@@ -3,17 +3,22 @@
 namespace qtismtest\runtime\tests;
 
 use OutOfBoundsException;
+use OutOfRangeException;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentItemRefCollection;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\AssessmentTest;
+use qtism\data\ExtendedAssessmentItemRef;
+use qtism\data\ExtendedAssessmentSection;
+use qtism\data\ExtendedAssessmentTest;
 use qtism\data\SectionPartCollection;
 use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\data\TestPart;
 use qtism\data\TestPartCollection;
 use qtism\runtime\tests\Route;
+use qtism\runtime\tests\RouteItem;
 use qtismtest\QtiSmRouteTestCase;
 
 /**
@@ -339,5 +344,327 @@ class RouteTest extends QtiSmRouteTestCase
         $this::assertEquals('Q1', $routeItems[0]->getAssessmentItemRef()->getIdentifier());
         $this::assertEquals('Q2', $routeItems[1]->getAssessmentItemRef()->getIdentifier());
         $this::assertEquals('Q3', $routeItems[2]->getAssessmentItemRef()->getIdentifier());
+    }
+
+    public function testKey()
+    {
+        $route = self::buildSimpleRoute();
+
+        $this::assertEquals(0, $route->key());
+        $route->next();
+        $this::assertEquals(1, $route->key());
+    }
+
+    public function testGetIdentifierSequence()
+    {
+        $route = self::buildSimpleRoute();
+        $identifiers = $route->getIdentifierSequence(true);
+
+        $this::assertCount(3, $identifiers);
+        $this::assertEquals('Q1.1', $identifiers[0]);
+        $this::assertEquals('Q2.1', $identifiers[1]);
+        $this::assertEquals('Q3.1', $identifiers[2]);
+
+        $identifiers = $route->getIdentifierSequence(false);
+
+        $this::assertCount(3, $identifiers);
+        $this::assertEquals('Q1', $identifiers[0]);
+        $this::assertEquals('Q2', $identifiers[1]);
+        $this::assertEquals('Q3', $identifiers[2]);
+    }
+
+    public function testGetAssessmentItemRefsBySectionWhichDoesNotExist()
+    {
+        $route = self::buildSimpleRoute();
+        $assessmentItemRefs = $route->getAssessmentItemRefsBySection('XXX');
+        $this::assertCount(0, $assessmentItemRefs);
+    }
+
+    public function testGetOccurenceCountNoSuchAssessmentItemRef()
+    {
+        $route = self::buildSimpleRoute();
+        $assessmentItemRef = new AssessmentItemRef('Q0X', 'Q0X.xml');
+        $occurenceCount = $route->getOccurenceCount($assessmentItemRef);
+        $this::assertEquals(0, $occurenceCount);
+    }
+
+    public function testGetRouteItemAtUnknownPosition()
+    {
+        $route = self::buildSimpleRoute();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No RouteItem object found at position '1337'.");
+
+        $routeItem = $route->getRouteItemAt(1337);
+    }
+
+    public function testGetLastRouteItemOnEmptyRoute()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Cannot get the last RouteItem of the Route while it is empty.');
+
+        $lastRouteItem = $route->getLastRouteItem();
+    }
+
+    public function testGetFirstRouteItemOnEmptyRoute()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Cannot get the first RouteItem of the Route while it is empty.');
+
+        $lastRouteItem = $route->getFirstRouteItem();
+    }
+
+    public function testIsLastOfTestPartOnEmptyRoute()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Cannot determine if the current RouteItem is the last of its TestPart when the Route is empty.');
+
+        $lastRouteItem = $route->isLastOfTestPart();
+    }
+
+    public function testIsFirstOfTestPartOnEmptyRoute()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Cannot determine if the current RouteItem is the first of its TestPart when the Route is empty.');
+
+        $firstRouteItem = $route->isFirstOfTestPart();
+    }
+
+    public function testIsInTestPartNoSuchPosition()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("The position '25' is out of the bounds of the route.");
+
+        $isInTestPart = $route->isInTestPart(
+            25,
+            new TestPart(
+                'TP01',
+                new SectionPartCollection(
+                    [
+                        new AssessmentSection('S01', 'Section 1', true),
+                    ]
+                )
+            )
+        );
+    }
+
+    public function testGetRouteItemsByTestPartNoSuchTestPart()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("The testPart 'TP0X' is not referenced in the Route.");
+
+        $routeItems = $route->getRouteItemsByTestPart(
+            new TestPart(
+                'TP0X',
+                new SectionPartCollection(
+                    [
+                        new AssessmentSection('S0X', 'Section X', true),
+                    ]
+                )
+            )
+        );
+    }
+
+    public function testGetRouteItemsByTestPartWrongArgumentType()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The 'testPart' argument must be a string or a TestPart object.");
+
+        $routeItems = $route->getRouteItemsByTestPart(false);
+    }
+
+    public function testGetRouteItemsByAssessmentSectionNoSuchAssessmentSectionOne()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No assessmentSection with identifier 'S0X' found in the Route.");
+
+        $routeItems = $route->getRouteItemsByAssessmentSection('S0X');
+    }
+
+    public function testGetRouteItemsByAssessmentSectionNoSuchAssessmentSectionTwo()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("The assessmentSection 'S0X' is not referenced in the Route.");
+
+        $routeItems = $route->getRouteItemsByAssessmentSection(
+            new AssessmentSection('S0X', 'Section X', true)
+        );
+    }
+
+    public function testGetRouteItemsByAssessmentSectionWrongArgumentType()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The 'assessmentSection' argument must be a string or an AssessmentSection object.");
+
+        $routeItems = $route->getRouteItemsByAssessmentSection(false);
+    }
+
+    public function testGetRouteItemsByAssessmentItemRef()
+    {
+        $route = self::buildSimpleRoute();
+        $routeItems = $route->getRouteItemsByAssessmentItemRef('Q1');
+        $this::assertCount(1, $routeItems);
+    }
+
+    public function testGetRouteItemsByAssessmentItemRefNoSuchAssessmentSectionOne()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No AssessmentItemRef with identifier 'Q0X' found in the Route.");
+
+        $routeItems = $route->getRouteItemsByAssessmentItemRef('Q0X');
+    }
+
+    public function testGetRouteItemsByAssessmentItemRefNoSuchAssessmentSectionTwo()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No AssessmentItemRef with 'identifier' Q0X' found in the Route.");
+
+        $routeItems = $route->getRouteItemsByAssessmentItemRef(
+            new AssessmentItemRef('Q0X', 'Question X')
+        );
+    }
+
+    public function testGetRouteItemsByAssessmentItemRefWrongArgumentType()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The 'assessmentItemRef' argument must be a string or an AssessmentItemRef object.");
+
+        $routeItems = $route->getRouteItemsByAssessmentItemRef(false);
+    }
+
+    public function testBranchInvalidTarget()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfRangeException::class);
+        $this->expectExceptionMessage("The given identifier '|||' is an invalid branching target.");
+
+        $route->branch('|||');
+    }
+
+    public function testBranchUnknownTarget()
+    {
+        $route = new Route();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage("No such identifier 'Q1' found in the route for branching.");
+
+        $route->branch('Q1');
+    }
+
+    public function testBranchToAssessmentItemRefOutsideOfTestPart()
+    {
+        $route = self::buildSimpleRoute(Route::class, 2, 1);
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification.');
+        $route->branch('Q2');
+    }
+
+    public function testBranchToSameTestPart()
+    {
+        $route = self::buildSimpleRoute(Route::class, 2, 1);
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Cannot branch to the same testPart.');
+        $route->branch('T1');
+    }
+
+    public function testBranchToAnotherTestPart()
+    {
+        $route = self::buildSimpleRoute(Route::class, 2, 1);
+        $route->branch('T2');
+        $this::assertTrue(true);
+    }
+
+    public function testBranchToAnotherSection()
+    {
+        $route = new Route();
+
+        $assessmentItemRef1 = new AssessmentItemRef('Q1', 'Q1.xml');
+        $assessmentItemRef2 = new AssessmentItemRef('Q2', 'Q2.xml');
+
+        $assessmentSection = new AssessmentSection('MAIN', 'Main Section', true);
+        $assessmentSection1 = new AssessmentSection('S1', 'Section 1', true);
+        $assessmentSection1->setSectionParts(new SectionPartCollection([$assessmentItemRef1]));
+
+        $assessmentSection2 = new AssessmentSection('S2', 'Section 2', true);
+        $assessmentSection2->setSectionParts(new SectionPartCollection([$assessmentItemRef2]));
+
+        $assessmentSection->setSectionParts(new SectionPartCollection([$assessmentSection1, $assessmentSection2]));
+
+        $testPart = new TestPart('T1', new AssessmentSectionCollection([$assessmentSection]));
+        $assessmentTest = new AssessmentTest('Test1', 'Test 1', new TestPartCollection([$testPart]));
+
+        $route->addRouteItem($assessmentItemRef1, new AssessmentSectionCollection([$assessmentSection, $assessmentSection1]), $testPart, $assessmentTest);
+        $route->addRouteItem($assessmentItemRef2, new AssessmentSectionCollection([$assessmentSection, $assessmentSection2]), $testPart, $assessmentTest);
+
+        $this::assertEquals(0, $route->getPosition());
+        $route->branch('S2');
+        $this::assertEquals(1, $route->getPosition());
+    }
+
+    public function testBranchToSectionOutsideOfTestPart()
+    {
+        $route = new Route();
+
+        $assessmentItemRef1 = new AssessmentItemRef('Q1', 'Q1.xml');
+        $assessmentItemRef2 = new AssessmentItemRef('Q2', 'Q2.xml');
+
+        $assessmentSection1 = new AssessmentSection('S1', 'Section 1', true);
+        $assessmentSection1->setSectionParts(new SectionPartCollection([$assessmentItemRef1]));
+
+        $assessmentSection2 = new AssessmentSection('S2', 'Section 2', true);
+        $assessmentSection2->setSectionParts(new SectionPartCollection([$assessmentItemRef2]));
+
+        $testPart1 = new TestPart('T1', new AssessmentSectionCollection([$assessmentSection1]));
+        $testPart2 = new TestPart('T2', new AssessmentSectionCollection([$assessmentSection2]));
+        $assessmentTest = new AssessmentTest('Test1', 'Test 1', new TestPartCollection([$testPart1, $testPart2]));
+
+        $route->addRouteItem($assessmentItemRef1, $assessmentSection1, $testPart1, $assessmentTest);
+        $route->addRouteItem($assessmentItemRef2, $assessmentSection2, $testPart2, $assessmentTest);
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification.');
+
+        $route->branch('S2');
+    }
+
+    public function testGetRouteItemPositionUnknownRouteItem()
+    {
+        $route = self::buildSimpleRoute();
+        $assessmentItemRef = new AssessmentItemRef('Q08', 'Q08.xml');
+        $assessmentSection = new AssessmentSection('S09', 'Section 09', true);
+        $testPart = new TestPart('T1', new AssessmentSectionCollection([$assessmentSection]));
+        $routeItem = new RouteItem($assessmentItemRef, $assessmentSection, $testPart, new AssessmentTest('Test', 'Test'));
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('No such RouteItem object referenced in the Route.');
+
+        $route->getRouteItemPosition($routeItem);
     }
 }
