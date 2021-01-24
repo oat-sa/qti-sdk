@@ -92,7 +92,7 @@ class MultipleProcessor extends OperatorProcessor
      * Append a value (A MultipleContainer or a primitive datatype) to a given $container.
      *
      * @param MultipleContainer $container A MultipleContainer object you want to append something to.
-     * @param scalar|MultipleContainer $value A value to append to the $container.
+     * @param mixed $value A value to append to the $container.
      */
     protected static function appendValue(MultipleContainer $container, $value)
     {

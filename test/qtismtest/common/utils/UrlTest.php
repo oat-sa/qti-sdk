@@ -21,7 +21,7 @@ class UrlTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidRelativeUrlProvider
-     * @param unknown_type $url
+     * @param string $url
      */
     public function testInvalidRelativeUrl($url)
     {

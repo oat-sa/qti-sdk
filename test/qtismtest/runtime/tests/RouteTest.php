@@ -15,7 +15,6 @@ use qtism\data\ExtendedAssessmentSection;
 use qtism\data\ExtendedAssessmentTest;
 use qtism\data\ExtendedTestPart;
 use qtism\data\SectionPartCollection;
-use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtism\data\TestPart;
 use qtism\data\TestPartCollection;
 use qtism\runtime\tests\Route;

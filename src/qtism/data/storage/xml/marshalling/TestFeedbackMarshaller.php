@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use DOMText;
+use InvalidArgumentException;
 use qtism\data\content\FlowStatic;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\QtiComponent;

@@ -71,7 +71,7 @@ interface StringInteraction
      * Set the stringIdentifier attribute of the StringInteraction. If the returned value
      * is an empty string, it means no value is defined for the stringIdentifier attribute.
      *
-     * @return A QTI identifier or an empty string.
+     * @return string A QTI identifier or an empty string.
      */
     public function getStringIdentifier();
 
