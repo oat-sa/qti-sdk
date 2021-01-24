@@ -5,7 +5,6 @@ namespace qtismtest\common\beans;
 use InvalidArgumentException;
 use qtism\common\beans\Bean;
 use qtism\common\beans\BeanException;
-use qtism\data\storage\xml\XmlCompactAssessmentTestDocument;
 use qtismtest\common\beans\mocks\NotStrictConstructorBean;
 use qtismtest\common\beans\mocks\NotStrictMissingSetterBean;
 use qtismtest\common\beans\mocks\SimpleBean;

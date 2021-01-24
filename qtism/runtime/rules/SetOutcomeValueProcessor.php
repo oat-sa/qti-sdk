@@ -32,6 +32,7 @@ use qtism\data\rules\Rule;
 use qtism\data\rules\SetOutcomeValue;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\expressions\ExpressionEngine;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * From IMS QTI:

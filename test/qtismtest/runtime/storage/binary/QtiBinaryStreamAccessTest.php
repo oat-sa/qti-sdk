@@ -3,7 +3,6 @@
 namespace qtismtest\runtime\storage\binary;
 
 use qtism\common\Comparable;
-use qtism\common\datatypes\files\DefaultFileManager;
 use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\files\FileSystemFileManager;

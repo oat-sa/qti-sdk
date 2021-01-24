@@ -177,7 +177,6 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @dataProvider createFromWithUnresolvableAssessmentSectionRefProvider
      * @param $file
      * @throws XmlStorageException
-     * @throws ReflectionException
      */
     public function testCreateFromWithUnresolvableAssessmentSectionRef($file)
     {
@@ -207,7 +206,6 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @param int $sectionCount
      * @throws XmlStorageException
      * @throws MarshallingException
-     * @throws ReflectionException
      */
     public function testCreateFromExploded($version, $sectionCount)
     {

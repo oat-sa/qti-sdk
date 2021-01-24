@@ -226,7 +226,7 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument('2.1');
 
-        $expectedMsg = 'An internal error occurred while parsing QTI-XML:';
+        $expectedMsg = 'Cannot load QTI from an empty string.';
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
 

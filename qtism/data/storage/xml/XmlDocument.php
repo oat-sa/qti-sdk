@@ -148,6 +148,18 @@ class XmlDocument extends QtiDocument
 
             $doc = $this->getDomDocument();
 
+            if ($loadMethod === 'loadXML' && empty($data)) {
+                // Pre-check to throw an appropriate exception when load from an empty string.
+                $msg = 'Cannot load QTI from an empty string.';
+                throw new XmlStorageException($msg);
+            } elseif ($loadMethod === 'load') {
+                // Pre-check to throw an appropriate exception when loading from a non-resolvable file.
+                if (is_readable($data) === false) {
+                    $msg = "Cannot load QTI file '${data}'. It does not exist or is not readable.";
+                    throw new XmlStorageException($msg);
+                }
+            }
+
             if (@$doc->$loadMethod($data, self::LIB_XML_FLAGS)) {
                 // Infer the QTI version.
                 try {

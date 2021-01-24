@@ -15,6 +15,7 @@ use qtism\data\state\MatchTableEntryCollection;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtismtest\QtiSmTestCase;

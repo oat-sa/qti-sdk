@@ -94,6 +94,21 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
+    public function testUnmarshallCoordsDoNotSatisfyShape()
+    {
+        $element = $this->createDOMElement('
+	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128,222,343,20,50"/>
+	    ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The coordinates 'coords' of element 'hotspotChoice' could not be converted.");
+
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall
+     */
     public function testUnmarshallWrongShowHideValue()
     {
         $element = $this->createDOMElement('

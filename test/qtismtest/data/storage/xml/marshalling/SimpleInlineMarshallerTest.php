@@ -12,6 +12,7 @@ use qtism\data\content\xhtml\text\Em;
 use qtism\data\content\xhtml\text\Q;
 use qtism\data\content\xhtml\text\Span;
 use qtism\data\content\xhtml\text\Strong;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;

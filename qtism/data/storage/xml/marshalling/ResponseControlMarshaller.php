@@ -29,6 +29,7 @@ use qtism\common\utils\Reflection;
 use qtism\data\expressions\Expression;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
+use qtism\data\rules\ExitTest;
 use qtism\data\rules\LookupOutcomeValue;
 use qtism\data\rules\ResponseElseIf;
 use qtism\data\rules\ResponseIf;

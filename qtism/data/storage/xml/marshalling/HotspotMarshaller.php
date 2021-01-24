@@ -24,12 +24,14 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
+use InvalidArgumentException;
 use qtism\common\datatypes\QtiShape;
 use qtism\data\content\interactions\AssociableHotspot;
 use qtism\data\content\interactions\HotspotChoice;
 use qtism\data\QtiComponent;
 use qtism\data\ShowHide;
 use qtism\data\storage\Utils;
+use UnexpectedValueException;
 
 /**
  * Marshalling/Unmarshalling implementation for HotspotChoice/AssociableHotspot.

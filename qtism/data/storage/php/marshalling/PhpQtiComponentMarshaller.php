@@ -24,6 +24,7 @@
 namespace qtism\data\storage\php\marshalling;
 
 use qtism\common\beans\Bean;
+use qtism\common\beans\BeanException;
 use qtism\data\QtiComponent;
 use qtism\data\storage\php\PhpArgument;
 use qtism\data\storage\php\PhpArgumentCollection;
