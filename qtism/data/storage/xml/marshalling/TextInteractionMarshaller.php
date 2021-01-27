@@ -43,7 +43,7 @@ class TextInteractionMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 

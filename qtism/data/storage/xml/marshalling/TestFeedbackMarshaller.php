@@ -45,7 +45,7 @@ class TestFeedbackMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $access = ($component->getAccess() == TestFeedbackAccess::AT_END) ? 'atEnd' : 'during';
         $showHide = ($component->getShowHide() == ShowHide::SHOW) ? 'show' : 'hide';
 

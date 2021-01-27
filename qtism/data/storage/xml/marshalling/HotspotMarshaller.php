@@ -46,7 +46,7 @@ class HotspotMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         $this->setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
         $this->setDOMElementAttribute($element, 'coords', $component->getCoords()->__toString());

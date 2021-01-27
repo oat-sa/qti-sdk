@@ -42,7 +42,7 @@ class SelectPointInteractionMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         $this->setDOMElementAttribute($element, 'maxChoices', $component->getMaxChoices());

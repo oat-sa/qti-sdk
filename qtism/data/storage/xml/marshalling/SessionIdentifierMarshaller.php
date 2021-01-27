@@ -44,7 +44,7 @@ class SessionIdentifierMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
+        $element = $this->createElement($component);
         $element->setAttribute('sourceID', $component->getSourceID());
         $element->setAttribute('identifier', $component->getIdentifier());
 

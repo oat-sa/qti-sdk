@@ -547,6 +547,17 @@ abstract class Marshaller
     }
 
     /**
+     * @param QtiComponent $component
+     * @return DOMElement
+     */
+    protected function createElement(QtiComponent $component)
+    {
+        $localName = $component->getQtiClassName();
+
+        return self::getDOMCradle()->createElement($localName);
+    }
+
+    /**
      * Marshall a QtiComponent object into its QTI-XML equivalent.
      *
      * @param QtiComponent $component A QtiComponent object to marshall.

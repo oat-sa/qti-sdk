@@ -79,7 +79,7 @@ class HottextMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
 
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());

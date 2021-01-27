@@ -40,7 +40,7 @@ class ColMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('col');
+        $element = $this->createElement($component);
 
         if ($component->getSpan() !== 1) {
             $this->setDOMElementAttribute($element, 'span', $component->getSpan());

@@ -42,7 +42,7 @@ class TimeLimitsMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         if ($component->hasMinTime() === true) {
             $this->setDOMElementAttribute($element, 'minTime', $component->getMinTime()->getSeconds(true));

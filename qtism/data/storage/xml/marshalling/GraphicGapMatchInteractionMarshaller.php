@@ -111,7 +111,7 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('graphicGapMatchInteraction');
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 

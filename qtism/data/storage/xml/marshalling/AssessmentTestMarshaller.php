@@ -45,7 +45,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         $this->setDOMElementAttribute($element, 'title', $component->getTitle());

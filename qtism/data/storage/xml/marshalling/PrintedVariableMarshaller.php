@@ -41,7 +41,7 @@ class PrintedVariableMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('printedVariable');
+        $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         $this->setDOMElementAttribute($element, 'base', $component->getBase());
         $this->setDOMElementAttribute($element, 'powerForm', $component->mustPowerForm());

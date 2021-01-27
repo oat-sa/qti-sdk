@@ -44,7 +44,7 @@ class SliderInteractionMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('sliderInteraction');
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         $this->setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());

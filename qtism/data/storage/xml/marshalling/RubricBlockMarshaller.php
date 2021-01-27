@@ -49,7 +49,7 @@ class RubricBlockMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         $arrayViews = [];
         foreach ($component->getViews() as $view) {
