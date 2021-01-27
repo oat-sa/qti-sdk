@@ -44,7 +44,7 @@ class IndexMarshaller extends OperatorMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'n', $component->getN());
 
         foreach ($elements as $elt) {

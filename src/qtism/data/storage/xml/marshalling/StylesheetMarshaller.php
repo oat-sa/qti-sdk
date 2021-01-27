@@ -40,7 +40,7 @@ class StylesheetMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         $this->setDOMElementAttribute($element, 'href', $component->getHref());
         $this->setDOMElementAttribute($element, 'media', $component->getMedia());

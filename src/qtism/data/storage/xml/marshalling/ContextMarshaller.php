@@ -46,7 +46,7 @@ class ContextMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
+        $element = $this->createElement($component);
 
         if ($component->hasSourcedId()) {
             $element->setAttribute('sourcedId', $component->getSourcedId());

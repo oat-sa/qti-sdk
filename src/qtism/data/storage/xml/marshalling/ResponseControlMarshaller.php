@@ -85,7 +85,7 @@ class ResponseControlMarshaller extends RecursiveMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         if ($component instanceof ResponseIf || $component instanceof ResponseElseIf) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getExpression());

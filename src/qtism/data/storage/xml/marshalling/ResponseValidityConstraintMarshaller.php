@@ -43,7 +43,7 @@ class ResponseValidityConstraintMarshaller extends Marshaller
      */
     public function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('responseValidityConstraint');
+        $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
         $this->setDOMElementAttribute($element, 'minConstraint', $component->getMinConstraint());
         $this->setDOMElementAttribute($element, 'maxConstraint', $component->getMaxConstraint());
