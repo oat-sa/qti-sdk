@@ -86,6 +86,7 @@ abstract class MarshallerFactory
         $this->addMappingEntry('assessmentTest', AssessmentTestMarshaller::class);
         $this->addMappingEntry('associableHotspot', HotspotMarshaller::class);
         $this->addMappingEntry('associateInteraction', AssociateInteractionMarshaller::class);
+        $this->addMappingEntry('audio', AudioMarshaller::class);
         $this->addMappingEntry('b', SimpleInlineMarshaller::class);
         $this->addMappingEntry('baseValue', BaseValueMarshaller::class);
         $this->addMappingEntry('big', SimpleInlineMarshaller::class);
@@ -301,6 +302,7 @@ abstract class MarshallerFactory
         $this->addMappingEntry('variable', VariableMarshaller::class);
         $this->addMappingEntry('variableDeclaration', VariableDeclarationMarshaller::class);
         $this->addMappingEntry('variableMapping', VariableMappingMarshaller::class);
+        $this->addMappingEntry('video', VideoMarshaller::class);
         $this->addMappingEntry('weight', WeightMarshaller::class);
     }
 
