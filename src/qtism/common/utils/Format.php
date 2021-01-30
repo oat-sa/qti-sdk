@@ -96,15 +96,11 @@ class Format
      */
     public static function isIdentifier($string, $strict = true)
     {
-        if ($string === '') {
-            return false;
-        }
-
         if (!$strict) {
             return preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $string) === 1;
         }
 
-        if (!isset(CharacterMap::$identifier_first[$string[0]])) {
+        if (!isset($string[0]) || !isset(CharacterMap::$identifier_first[$string[0]])) {
             return false;
         }
 
