@@ -5,6 +5,7 @@ namespace qtismtest\runtime\expressions;
 use qtism\common\collections\IdentifierCollection;
 use qtism\data\expressions\NumberPresented;
 use qtism\data\storage\php\PhpStorageException;
+use qtism\runtime\common\State;
 use qtism\runtime\expressions\NumberPresentedProcessor;
 use qtism\runtime\tests\AssessmentItemSessionException;
 use qtism\runtime\tests\AssessmentTestSessionException;
@@ -20,9 +21,9 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
      *
      * @param NumberPresented $expression
      * @param array $expectedResults
-     * @throws PhpStorageException
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException
+     * @throws PhpStorageException
      */
     public function testNumberPresented(NumberPresented $expression, array $expectedResults)
     {
@@ -32,7 +33,7 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
 
         // At the moment, nothing presented.
         $result = $processor->process();
-        $this->assertEquals(0, $result->getValue());
+        $this::assertEquals(0, $result->getValue());
 
         for ($i = 0; $i < $session->getRouteCount(); $i++) {
             $session->beginAttempt();
@@ -40,8 +41,8 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
             $processor->setState($session);
             $result = $processor->process();
 
-            $this->assertEquals($expectedResults[$i], $result->getValue());
-            $session->skip();
+            $this::assertEquals($expectedResults[$i], $result->getValue());
+            $session->endAttempt(new State());
             $session->moveNext();
         }
     }

@@ -25,14 +25,14 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $outcomeIf = new OutcomeIf(new BaseValue(BaseType::BOOLEAN, true), new OutcomeRuleCollection([$setOutcomeValue]));
 
         $component = new OutcomeCondition($outcomeIf);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertEquals('outcomeCondition', $element->nodeName);
-        $this->assertTrue($element === $element->getElementsByTagName('outcomeIf')->item(0)->parentNode);
-        $this->assertTrue($element->getElementsByTagName('outcomeIf')->item(0) === $element->getElementsByTagName('baseValue')->item(0)->parentNode);
-        $this->assertEquals('string', $element->getElementsByTagName('baseValue')->item(1)->getAttribute('baseType'));
-        $this->assertTrue($element->getElementsByTagName('outcomeIf')->item(0) === $element->getElementsByTagName('setOutcomeValue')->item(0)->parentNode);
+        $this::assertEquals('outcomeCondition', $element->nodeName);
+        $this::assertSame($element, $element->getElementsByTagName('outcomeIf')->item(0)->parentNode);
+        $this::assertSame($element->getElementsByTagName('outcomeIf')->item(0), $element->getElementsByTagName('baseValue')->item(0)->parentNode);
+        $this::assertEquals('string', $element->getElementsByTagName('baseValue')->item(1)->getAttribute('baseType'));
+        $this::assertSame($element->getElementsByTagName('outcomeIf')->item(0), $element->getElementsByTagName('setOutcomeValue')->item(0)->parentNode);
     }
 
     public function testUnmarshallConditionMinimal()
@@ -52,18 +52,18 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OutcomeCondition::class, $component);
-        $this->assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
-        $this->assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
-        $this->assertTrue($component->getOutcomeIf()->getExpression()->getValue());
-        $this->assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
+        $this::assertInstanceOf(OutcomeCondition::class, $component);
+        $this::assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
+        $this::assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
+        $this::assertTrue($component->getOutcomeIf()->getExpression()->getValue());
+        $this::assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
 
         $outcomeRules = $component->getOutcomeIf()->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
     }
 
     public function testUnmarshallConditionElseIf()
@@ -89,28 +89,28 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OutcomeCondition::class, $component);
-        $this->assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
-        $this->assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
+        $this::assertInstanceOf(OutcomeCondition::class, $component);
+        $this::assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
+        $this::assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
 
-        $this->assertTrue($component->getOutcomeIf()->getExpression()->getValue());
-        $this->assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
+        $this::assertTrue($component->getOutcomeIf()->getExpression()->getValue());
+        $this::assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
 
         $outcomeRules = $component->getOutcomeIf()->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
-        $this->assertEquals('If!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
+        $this::assertEquals('If!', $outcomeRules[0]->getExpression()->getValue());
 
         $outcomeElseIfs = $component->getOutcomeElseIfs();
-        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
-        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
+        $this::assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
+        $this::assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[0]->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('ElseIf!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('ElseIf!', $outcomeRules[0]->getExpression()->getValue());
     }
 
     public function testUnmarshallConditionElseIfElse()
@@ -141,34 +141,34 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OutcomeCondition::class, $component);
-        $this->assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
-        $this->assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
+        $this::assertInstanceOf(OutcomeCondition::class, $component);
+        $this::assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
+        $this::assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
 
-        $this->assertTrue($component->getOutcomeIf()->getExpression()->getValue());
-        $this->assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
+        $this::assertTrue($component->getOutcomeIf()->getExpression()->getValue());
+        $this::assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
 
         $outcomeRules = $component->getOutcomeIf()->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
-        $this->assertEquals('If!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
+        $this::assertEquals('If!', $outcomeRules[0]->getExpression()->getValue());
 
         $outcomeElseIfs = $component->getOutcomeElseIfs();
-        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
-        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
+        $this::assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
+        $this::assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[0]->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('ElseIf!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('ElseIf!', $outcomeRules[0]->getExpression()->getValue());
 
-        $this->assertInstanceOf(OutcomeElse::class, $component->getOutcomeElse());
+        $this::assertInstanceOf(OutcomeElse::class, $component->getOutcomeElse());
 
         $outcomeRules = $component->getOutcomeElse()->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('Else!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('Else!', $outcomeRules[0]->getExpression()->getValue());
     }
 
     public function testUnmarshallConditionMultipleElseIf()
@@ -205,41 +205,41 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OutcomeCondition::class, $component);
-        $this->assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
-        $this->assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
+        $this::assertInstanceOf(OutcomeCondition::class, $component);
+        $this::assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
+        $this::assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
 
-        $this->assertTrue($component->getOutcomeIf()->getExpression()->getValue());
-        $this->assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
+        $this::assertTrue($component->getOutcomeIf()->getExpression()->getValue());
+        $this::assertEquals(BaseType::BOOLEAN, $component->getOutcomeIf()->getExpression()->getBaseType());
 
         $outcomeRules = $component->getOutcomeIf()->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
-        $this->assertEquals('If!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
+        $this::assertEquals('If!', $outcomeRules[0]->getExpression()->getValue());
 
         $outcomeElseIfs = $component->getOutcomeElseIfs();
-        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
-        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
+        $this::assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
+        $this::assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[0]->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('ElseIf1!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('ElseIf1!', $outcomeRules[0]->getExpression()->getValue());
 
-        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[1]);
-        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[1]->getExpression());
+        $this::assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[1]);
+        $this::assertInstanceOf(BaseValue::class, $outcomeElseIfs[1]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[1]->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('ElseIf2!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('ElseIf2!', $outcomeRules[0]->getExpression()->getValue());
 
-        $this->assertInstanceOf(OutcomeElse::class, $component->getOutcomeElse());
+        $this::assertInstanceOf(OutcomeElse::class, $component->getOutcomeElse());
 
         $outcomeRules = $component->getOutcomeElse()->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('Else!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('Else!', $outcomeRules[0]->getExpression()->getValue());
     }
 
     public function testUnmarshallConditionUltimate()
@@ -305,42 +305,42 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OutcomeCondition::class, $component);
-        $this->assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
-        $this->assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
-        $this->assertTrue($component->getOutcomeIf()->getExpression()->getValue());
+        $this::assertInstanceOf(OutcomeCondition::class, $component);
+        $this::assertInstanceOf(OutcomeIf::class, $component->getOutcomeIf());
+        $this::assertInstanceOf(BaseValue::class, $component->getOutcomeIf()->getExpression());
+        $this::assertTrue($component->getOutcomeIf()->getExpression()->getValue());
 
         $outcomeRules = $component->getOutcomeIf()->getOutcomeRules();
-        $this->assertInstanceOf(OutcomeCondition::class, $outcomeRules[0]);
-        $this->assertInstanceOf(Equal::class, $outcomeRules[0]->getOutcomeIf()->getExpression());
-        $this->assertEquals(1, count($outcomeRules[0]->getOutcomeElseIfs()));
+        $this::assertInstanceOf(OutcomeCondition::class, $outcomeRules[0]);
+        $this::assertInstanceOf(Equal::class, $outcomeRules[0]->getOutcomeIf()->getExpression());
+        $this::assertCount(1, $outcomeRules[0]->getOutcomeElseIfs());
 
         $outcomeElseIfs = $outcomeRules[0]->getOutcomeElseIfs();
         $subOutcomeRules = $outcomeElseIfs[0]->getOutcomeRules();
-        $this->assertEquals('3 + 3 = 6', $subOutcomeRules[0]->getExpression()->getValue());
+        $this::assertEquals('3 + 3 = 6', $subOutcomeRules[0]->getExpression()->getValue());
 
         $outcomeElseIfs = $component->getOutcomeElseIfs();
-        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
-        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
+        $this::assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[0]);
+        $this::assertInstanceOf(BaseValue::class, $outcomeElseIfs[0]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[0]->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('ElseIf1!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('ElseIf1!', $outcomeRules[0]->getExpression()->getValue());
 
         $outcomeElseIfs = $component->getOutcomeElseIfs();
-        $this->assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[1]);
-        $this->assertInstanceOf(BaseValue::class, $outcomeElseIfs[1]->getExpression());
+        $this::assertInstanceOf(OutcomeElseIf::class, $outcomeElseIfs[1]);
+        $this::assertInstanceOf(BaseValue::class, $outcomeElseIfs[1]->getExpression());
 
         $outcomeRules = $outcomeElseIfs[1]->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('ElseIf2!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('ElseIf2!', $outcomeRules[0]->getExpression()->getValue());
 
         $outcomeRules = $component->getOutcomeElse()->getOutcomeRules();
-        $this->assertInstanceOf(OutcomeElse::class, $component->getOutcomeElse());
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('Else!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(OutcomeElse::class, $component->getOutcomeElse());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('Else!', $outcomeRules[0]->getExpression()->getValue());
     }
 }

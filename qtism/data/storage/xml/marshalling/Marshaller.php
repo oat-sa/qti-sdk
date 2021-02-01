@@ -259,15 +259,7 @@ abstract class Marshaller
      */
     public static function setDOMElementValue(DOMElement $element, $value)
     {
-        switch (gettype($value)) {
-            case 'boolean':
-                $element->nodeValue = ($value === true) ? 'true' : 'false';
-                break;
-
-            default:
-                $element->nodeValue = $value;
-                break;
-        }
+        XmlUtils::setDOMElementValue($element, $value);
     }
 
     /**
@@ -552,6 +544,17 @@ abstract class Marshaller
                 }
             }
         }
+    }
+
+    /**
+     * @param QtiComponent $component
+     * @return DOMElement
+     */
+    protected function createElement(QtiComponent $component)
+    {
+        $localName = $component->getQtiClassName();
+
+        return self::getDOMCradle()->createElement($localName);
     }
 
     /**

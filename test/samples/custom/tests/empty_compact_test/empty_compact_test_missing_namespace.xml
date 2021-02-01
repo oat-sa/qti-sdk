@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<assessmentTest>
+<assessmentTest identifier="test1" title="title">
     <testPart navigationMode="linear" submissionMode="individual" identifier="TP01">
         <itemSessionControl maxAttempts="0" allowSkipping="true"/>
         <assessmentSection identifier="S01" title="Section 1" visible="true" required="true">

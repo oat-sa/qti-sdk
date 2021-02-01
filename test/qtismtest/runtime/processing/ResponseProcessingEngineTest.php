@@ -52,14 +52,14 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         // --> answer as a correct response.
         $context['RESPONSE'] = new QtiIdentifier('ChoiceA');
         $engine->process();
-        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
-        $this->assertEquals(1.0, $context['SCORE']->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $context['SCORE']);
+        $this::assertEquals(1.0, $context['SCORE']->getValue());
 
         // --> answer as an incorrect response.
         $context['RESPONSE'] = new QtiIdentifier('ChoiceB');
         $engine->process();
-        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
-        $this->assertEquals(0.0, $context['SCORE']->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $context['SCORE']);
+        $this::assertEquals(0.0, $context['SCORE']->getValue());
     }
 
     public function testResponseProcessingNoResponseRule()
@@ -106,16 +106,16 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
 
         $context['RESPONSE'] = new QtiIdentifier('ChoiceA');
         $engine->process();
-        $this->assertNull($context['SCORE']);
+        $this::assertNull($context['SCORE']);
 
         $context['RESPONSE'] = new QtiIdentifier('ChoiceB');
         $engine->process();
-        $this->assertNull($context['SCORE']);
+        $this::assertNull($context['SCORE']);
 
         $context['RESPONSE'] = new QtiIdentifier('ChoiceC');
         $engine->process();
-        $this->assertInstanceOf(QtiFloat::class, $context['SCORE']);
-        $this->assertEquals(1.0, $context['SCORE']->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $context['SCORE']);
+        $this::assertEquals(1.0, $context['SCORE']->getValue());
     }
 
     public function testResponseProcessingExitResponse()
@@ -128,14 +128,9 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
 
         $engine = new ResponseProcessingEngine($responseProcessing);
 
-        try {
-            $engine->process();
-            // An exception MUST be thrown.
-            $this->assertTrue(true);
-        } catch (ProcessingException $e) {
-            $this->assertInstanceOf(RuleProcessingException::class, $e);
-            $this->assertEquals(RuleProcessingException::EXIT_RESPONSE, $e->getCode());
-        }
+        $this->expectException(RuleProcessingException::class);
+        $this->expectExceptionCode(RuleProcessingException::EXIT_RESPONSE);
+        $engine->process();
     }
 
     public function testSetOutcomeValueWithSum()
@@ -204,9 +199,9 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine = new ResponseProcessingEngine($responseProcessing, $state);
         $engine->process();
 
-        $this->assertEquals(1., $state['score-X']->getValue());
-        $this->assertEquals(1., $state['SCORE']->getValue());
-        $this->assertEquals(1., $state['MAXSCORE']->getValue());
+        $this::assertEquals(1., $state['score-X']->getValue());
+        $this::assertEquals(1., $state['SCORE']->getValue());
+        $this::assertEquals(1., $state['MAXSCORE']->getValue());
     }
 
     public function testWrongComponentType()
@@ -279,7 +274,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine = new ResponseProcessingEngine($responseProcessing);
         $engine->removeTemplateMapping('http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct');
 
-        $this->assertTrue(true, 'The template mapping removal should not produce any error.');
+        $this::assertTrue(true);
     }
 
     public function testNotOperator()
@@ -312,6 +307,6 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine = new ResponseProcessingEngine($responseProcessing, $state);
         $engine->process();
 
-        $this->assertSame(false, $state['NOTRESULT']->getValue());
+        $this::assertFalse($state['NOTRESULT']->getValue());
     }
 }

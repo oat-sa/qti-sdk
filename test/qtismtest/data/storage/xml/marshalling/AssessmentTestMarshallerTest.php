@@ -8,6 +8,10 @@ use qtism\common\enums\BaseType;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\AssessmentTest;
+use qtism\data\content\FlowCollection;
+use qtism\data\content\FlowStaticCollection;
+use qtism\data\content\TextRun;
+use qtism\data\content\xhtml\text\Div;
 use qtism\data\expressions\BaseValue;
 use qtism\data\processing\OutcomeProcessing;
 use qtism\data\rules\OutcomeRuleCollection;
@@ -38,6 +42,8 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase
         $testParts = new TestPartCollection();
         $testParts[] = new TestPart('myTestPart', $assessmentSections);
 
+        $div = new Div();
+        $div->setContent(new FlowCollection([new TextRun('Feedback!')]));
         $testFeedBacks = new TestFeedbackCollection();
         $testFeedBacks[] = new TestFeedback('myFeedback', 'myOutcome', '<div>Feedback!</div>', 'A Feedback');
 
@@ -55,36 +61,36 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase
         $component->setOutcomeProcessing($outcomeProcessing);
         $component->setOutcomeDeclarations($outcomeDeclarations);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('assessmentTest', $element->nodeName);
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
-        $this->assertEquals($title, $element->getAttribute('title'));
-        $this->assertEquals($toolName, $element->getAttribute('toolName'));
-        $this->assertEquals($toolVersion, $element->getAttribute('toolVersion'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('assessmentTest', $element->nodeName);
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertEquals($title, $element->getAttribute('title'));
+        $this::assertEquals($toolName, $element->getAttribute('toolName'));
+        $this::assertEquals($toolVersion, $element->getAttribute('toolVersion'));
 
         // testParts
-        $this->assertEquals(1, $element->getElementsByTagName('testPart')->length);
-        $this->assertTrue($element === $element->getElementsByTagName('testPart')->item(0)->parentNode);
+        $this::assertEquals(1, $element->getElementsByTagName('testPart')->length);
+        $this::assertSame($element, $element->getElementsByTagName('testPart')->item(0)->parentNode);
 
         // assessmentSections
         $testPart = $element->getElementsByTagName('testPart')->item(0);
-        $this->assertEquals(1, $element->getElementsByTagName('assessmentSection')->length);
-        $this->assertTrue($testPart === $element->getElementsByTagName('assessmentSection')->item(0)->parentNode);
+        $this::assertEquals(1, $element->getElementsByTagName('assessmentSection')->length);
+        $this::assertSame($testPart, $element->getElementsByTagName('assessmentSection')->item(0)->parentNode);
 
         // outcomeDeclarations
-        $this->assertEquals(1, $element->getElementsByTagName('outcomeDeclaration')->length);
-        $this->assertTrue($element === $element->getElementsByTagName('outcomeDeclaration')->item(0)->parentNode);
+        $this::assertEquals(1, $element->getElementsByTagName('outcomeDeclaration')->length);
+        $this::assertSame($element, $element->getElementsByTagName('outcomeDeclaration')->item(0)->parentNode);
 
         // testFeedbacks
-        $this->assertEquals(1, $element->getElementsByTagName('testFeedback')->length);
-        $this->assertTrue($element === $element->getElementsByTagName('testFeedback')->item(0)->parentNode);
+        $this::assertEquals(1, $element->getElementsByTagName('testFeedback')->length);
+        $this::assertSame($element, $element->getElementsByTagName('testFeedback')->item(0)->parentNode);
 
         // outcomeProcessing
-        $this->assertEquals(1, $element->getElementsByTagName('outcomeProcessing')->length);
-        $this->assertTrue($element === $element->getElementsByTagName('outcomeProcessing')->item(0)->parentNode);
+        $this::assertEquals(1, $element->getElementsByTagName('outcomeProcessing')->length);
+        $this::assertSame($element, $element->getElementsByTagName('outcomeProcessing')->item(0)->parentNode);
     }
 
     public function testUnmarshall()
@@ -110,19 +116,19 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(AssessmentTest::class, $component);
-        $this->assertEquals('myAssessmentTest', $component->getIdentifier());
-        $this->assertEquals('My Assessment Test', $component->getTitle());
-        $this->assertEquals('QTIStateMachine', $component->getToolName());
-        $this->assertEquals('1.0b', $component->getToolVersion());
-        $this->assertTrue($component->isExclusivelyLinear());
+        $this::assertInstanceOf(AssessmentTest::class, $component);
+        $this::assertEquals('myAssessmentTest', $component->getIdentifier());
+        $this::assertEquals('My Assessment Test', $component->getTitle());
+        $this::assertEquals('QTIStateMachine', $component->getToolName());
+        $this::assertEquals('1.0b', $component->getToolVersion());
+        $this::assertTrue($component->isExclusivelyLinear());
 
-        $this->assertEquals(1, count($component->getTestFeedbacks()));
-        $this->assertEquals(1, count($component->getTestParts()));
-        $this->assertEquals(1, count($component->getOutcomeDeclarations()));
-        $this->assertInstanceOf(OutcomeProcessing::class, $component->getOutcomeProcessing());
+        $this::assertCount(1, $component->getTestFeedbacks());
+        $this::assertCount(1, $component->getTestParts());
+        $this::assertCount(1, $component->getOutcomeDeclarations());
+        $this::assertInstanceOf(OutcomeProcessing::class, $component->getOutcomeProcessing());
     }
 }

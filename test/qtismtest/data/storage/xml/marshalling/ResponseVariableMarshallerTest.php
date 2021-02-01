@@ -56,25 +56,25 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
             </responseVariable>
         ');
 
-        $this->assertInstanceOf(ResultResponseVariable::class, $resultResponseVariable);
+        $this::assertInstanceOf(ResultResponseVariable::class, $resultResponseVariable);
 
-        $this->assertEquals('fixture-identifier', $resultResponseVariable->getIdentifier()->getValue());
-        $this->assertEquals('fixture-identifier', $resultResponseVariable->getIdentifier());
+        $this::assertEquals('fixture-identifier', $resultResponseVariable->getIdentifier()->getValue());
+        $this::assertEquals('fixture-identifier', $resultResponseVariable->getIdentifier());
 
-        $this->assertEquals(Cardinality::getConstantByName('single'), $resultResponseVariable->getCardinality());
+        $this::assertEquals(Cardinality::getConstantByName('single'), $resultResponseVariable->getCardinality());
 
-        $this->assertInstanceOf(CandidateResponse::class, $resultResponseVariable->getCandidateResponse());
-        $this->assertEquals(3, $resultResponseVariable->getCandidateResponse()->getValues()->count());
+        $this::assertInstanceOf(CandidateResponse::class, $resultResponseVariable->getCandidateResponse());
+        $this::assertEquals(3, $resultResponseVariable->getCandidateResponse()->getValues()->count());
 
-        $this->assertTrue($resultResponseVariable->hasBaseType());
-        $this->assertEquals(BaseType::getConstantByName('string'), $resultResponseVariable->getBaseType());
+        $this::assertTrue($resultResponseVariable->hasBaseType());
+        $this::assertEquals(BaseType::getConstantByName('string'), $resultResponseVariable->getBaseType());
 
-        $this->assertTrue($resultResponseVariable->hasCorrectResponse());
-        $this->assertInstanceOf(CorrectResponse::class, $resultResponseVariable->getCorrectResponse());
-        $this->assertEquals(2, $resultResponseVariable->getCorrectResponse()->getValues()->count());
+        $this::assertTrue($resultResponseVariable->hasCorrectResponse());
+        $this::assertInstanceOf(CorrectResponse::class, $resultResponseVariable->getCorrectResponse());
+        $this::assertEquals(2, $resultResponseVariable->getCorrectResponse()->getValues()->count());
 
-        $this->assertTrue($resultResponseVariable->hasChoiceSequence());
-        $this->assertEquals('value-id-1', $resultResponseVariable->getChoiceSequence()->getValue());
+        $this::assertTrue($resultResponseVariable->hasChoiceSequence());
+        $this::assertEquals('value-id-1', $resultResponseVariable->getChoiceSequence()->getValue());
     }
 
     public function testUnmarshallMinimal()
@@ -90,24 +90,24 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
             </responseVariable>
         ');
 
-        $this->assertInstanceOf(ResultResponseVariable::class, $resultResponseVariable);
+        $this::assertInstanceOf(ResultResponseVariable::class, $resultResponseVariable);
 
-        $this->assertEquals('fixture-identifier', $resultResponseVariable->getIdentifier()->getValue());
-        $this->assertEquals('fixture-identifier', $resultResponseVariable->getIdentifier());
+        $this::assertEquals('fixture-identifier', $resultResponseVariable->getIdentifier()->getValue());
+        $this::assertEquals('fixture-identifier', $resultResponseVariable->getIdentifier());
 
-        $this->assertEquals(Cardinality::getConstantByName('single'), $resultResponseVariable->getCardinality());
+        $this::assertEquals(Cardinality::getConstantByName('single'), $resultResponseVariable->getCardinality());
 
-        $this->assertInstanceOf(CandidateResponse::class, $resultResponseVariable->getCandidateResponse());
-        $this->assertEquals(3, $resultResponseVariable->getCandidateResponse()->getValues()->count());
+        $this::assertInstanceOf(CandidateResponse::class, $resultResponseVariable->getCandidateResponse());
+        $this::assertEquals(3, $resultResponseVariable->getCandidateResponse()->getValues()->count());
 
-        $this->assertFalse($resultResponseVariable->hasBaseType());
-        $this->assertNull($resultResponseVariable->getBaseType());
+        $this::assertFalse($resultResponseVariable->hasBaseType());
+        $this::assertNull($resultResponseVariable->getBaseType());
 
-        $this->assertFalse($resultResponseVariable->hasCorrectResponse());
-        $this->assertNull($resultResponseVariable->getCorrectResponse());
+        $this::assertFalse($resultResponseVariable->hasCorrectResponse());
+        $this::assertNull($resultResponseVariable->getCorrectResponse());
 
-        $this->assertFalse($resultResponseVariable->hasChoiceSequence());
-        $this->assertNull($resultResponseVariable->getChoiceSequence());
+        $this::assertFalse($resultResponseVariable->hasChoiceSequence());
+        $this::assertNull($resultResponseVariable->getChoiceSequence());
     }
 
     public function testMarshall()
@@ -131,20 +131,20 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
+        $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
+        $this::assertEquals($component->getQtiClassName(), $element->nodeName);
 
-        $this->assertEquals('fixture-identifier', $element->getAttribute('identifier'));
-        $this->assertEquals('single', $element->getAttribute('cardinality'));
-        $this->assertEquals('string', $element->getAttribute('baseType'));
-        $this->assertEquals('value-id-1', $element->getAttribute('choiceSequence'));
+        $this::assertEquals('fixture-identifier', $element->getAttribute('identifier'));
+        $this::assertEquals('single', $element->getAttribute('cardinality'));
+        $this::assertEquals('string', $element->getAttribute('baseType'));
+        $this::assertEquals('value-id-1', $element->getAttribute('choiceSequence'));
 
-        $this->assertEquals(1, $element->getElementsByTagName('candidateResponse')->length);
-        $this->assertEquals(2, $element->getElementsByTagName('candidateResponse')->item(0)->getElementsByTagName('value')->length);
+        $this::assertEquals(1, $element->getElementsByTagName('candidateResponse')->length);
+        $this::assertEquals(2, $element->getElementsByTagName('candidateResponse')->item(0)->getElementsByTagName('value')->length);
 
-        $this->assertEquals(1, $element->getElementsByTagName('correctResponse')->length);
-        $this->assertEquals(3, $element->getElementsByTagName('correctResponse')->item(0)->getElementsByTagName('value')->length);
+        $this::assertEquals(1, $element->getElementsByTagName('correctResponse')->length);
+        $this::assertEquals(3, $element->getElementsByTagName('correctResponse')->item(0)->getElementsByTagName('value')->length);
     }
 
     public function testMarshallMinimal()
@@ -161,20 +161,20 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
+        $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
+        $this::assertEquals($component->getQtiClassName(), $element->nodeName);
 
         $attributes = [];
         for ($i = 0; $i < 2; $i++) {
             $attributes[] = $element->attributes->item($i)->name;
         }
-        $this->assertEmpty(array_diff($attributes, ['identifier', 'cardinality']));
+        $this::assertEmpty(array_diff($attributes, ['identifier', 'cardinality']));
 
-        $this->assertEquals(1, $element->getElementsByTagName('candidateResponse')->length);
-        $this->assertEquals(2, $element->getElementsByTagName('candidateResponse')->item(0)->getElementsByTagName('value')->length);
+        $this::assertEquals(1, $element->getElementsByTagName('candidateResponse')->length);
+        $this::assertEquals(2, $element->getElementsByTagName('candidateResponse')->item(0)->getElementsByTagName('value')->length);
 
-        $this->assertEquals(0, $element->getElementsByTagName('correctResponse')->length);
+        $this::assertEquals(0, $element->getElementsByTagName('correctResponse')->length);
     }
 
     public function testGetExpectedQtiClassName()
@@ -185,6 +185,6 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
             new CandidateResponse()
         );
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
-        $this->assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
+        $this::assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
     }
 }

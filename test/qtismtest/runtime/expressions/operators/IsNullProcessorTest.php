@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -29,7 +30,7 @@ class IsNullProcessorTest extends QtiSmTestCase
 
         $expression = $this->getFakeExpression();
         $processor = new IsNullProcessor($expression, $operands);
-        $this->assertTrue($processor->process()->getValue());
+        $this::assertTrue($processor->process()->getValue());
     }
 
     public function testWithNull()
@@ -39,7 +40,7 @@ class IsNullProcessorTest extends QtiSmTestCase
 
         $expression = $this->getFakeExpression();
         $processor = new IsNullProcessor($expression, $operands);
-        $this->assertTrue($processor->process()->getValue());
+        $this::assertTrue($processor->process()->getValue());
     }
 
     public function testEmptyContainers()
@@ -49,15 +50,15 @@ class IsNullProcessorTest extends QtiSmTestCase
 
         $expression = $this->getFakeExpression();
         $processor = new IsNullProcessor($expression, $operands);
-        $this->assertTrue($processor->process()->getValue());
+        $this::assertTrue($processor->process()->getValue());
 
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::BOOLEAN);
-        $this->assertTrue($processor->process()->getValue());
+        $this::assertTrue($processor->process()->getValue());
 
         $operands->reset();
         $operands[] = new RecordContainer();
-        $this->assertTrue($processor->process()->getValue());
+        $this::assertTrue($processor->process()->getValue());
     }
 
     public function testNotEmpty()
@@ -66,31 +67,31 @@ class IsNullProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(0)]);
 
         $processor = new IsNullProcessor($expression, $operands);
-        $this->assertFalse($processor->process()->getValue());
+        $this::assertFalse($processor->process()->getValue());
 
         $operands->reset();
         $operands[] = new QtiBoolean(false);
-        $this->assertFalse($processor->process()->getValue());
+        $this::assertFalse($processor->process()->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(-1);
-        $this->assertFalse($processor->process()->getValue());
+        $this::assertFalse($processor->process()->getValue());
 
         $operands->reset();
         $operands[] = new QtiPoint(1, 2);
-        $this->assertFalse($processor->process()->getValue());
+        $this::assertFalse($processor->process()->getValue());
 
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(25)]);
-        $this->assertFalse($processor->process()->getValue());
+        $this::assertFalse($processor->process()->getValue());
 
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::POINT, [new QtiPoint(3, 4), new QtiPoint(5, 6)]);
-        $this->assertFalse($processor->process()->getValue());
+        $this::assertFalse($processor->process()->getValue());
 
         $operands->reset();
         $operands[] = new RecordContainer(['a' => new QtiBoolean(true), 'b' => null, 'c' => new QtiPoint(1, 2), 'd' => new QtiInteger(24), 'e' => new QtiFloat(23.3)]);
-        $this->assertFalse($processor->process()->getValue());
+        $this::assertFalse($processor->process()->getValue());
     }
 
     public function testLessThanNeededOperands()
@@ -115,6 +116,7 @@ class IsNullProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     private function getFakeExpression()
     {

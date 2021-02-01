@@ -15,11 +15,11 @@ class ExitResponseMarshallerTest extends QtiSmTestCase
     public function testMarshall()
     {
         $component = new ExitResponse();
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('exitResponse', $element->nodeName);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('exitResponse', $element->nodeName);
     }
 
     public function testUnmarshall()
@@ -28,10 +28,10 @@ class ExitResponseMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<exitResponse xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ExitResponse::class, $component);
-        $this->assertEquals('exitResponse', $component->getQtiClassName());
+        $this::assertInstanceOf(ExitResponse::class, $component);
+        $this::assertEquals('exitResponse', $component->getQtiClassName());
     }
 }

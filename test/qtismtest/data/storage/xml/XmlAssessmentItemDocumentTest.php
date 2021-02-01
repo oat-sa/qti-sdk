@@ -25,10 +25,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
         $doc->load($uri);
-        $this->assertEquals($expectedVersion, $doc->getVersion());
+        $this::assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
+        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
     }
 
     /**
@@ -41,10 +41,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument($expectedVersion);
         $doc->loadFromString(file_get_contents($uri));
-        $this->assertEquals($expectedVersion, $doc->getVersion());
+        $this::assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
+        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
     }
 
     /**
@@ -58,20 +58,20 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
         $doc->load($uri);
-        $this->assertEquals($expectedVersion, $doc->getVersion());
+        $this::assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
+        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
 
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
 
-        $this->assertTrue(file_exists($file));
+        $this::assertFileExists($file);
         $this->testLoad($file, $expectedVersion);
 
         unlink($file);
         // Nobody else touched it?
-        $this->assertFalse(file_exists($file));
+        $this::assertFileNotExists($file);
     }
 
     /**
@@ -85,20 +85,66 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
         $doc->load($uri);
-        $this->assertEquals($expectedVersion, $doc->getVersion());
+        $this::assertEquals($expectedVersion, $doc->getVersion());
 
         $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
+        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
 
         $file = tempnam('/tmp', 'qsm');
         file_put_contents($file, $doc->saveToString());
 
-        $this->assertTrue(file_exists($file));
+        $this::assertTrue(file_exists($file));
         //$this->testLoadFromString($file, $expectedVersion);
 
         unlink($file);
         // Nobody else touched it?
-        $this->assertFalse(file_exists($file));
+        $this::assertFileNotExists($file);
+    }
+
+    public function testLoad222()
+    {
+        $file = self::samplesDir() . 'ims/items/2_2_2/choice.xml';
+        $doc = new XmlDocument();
+        $doc->load($file);
+
+        $this::assertEquals('2.2.2', $doc->getVersion());
+    }
+
+    public function testLoad221()
+    {
+        $file = self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml';
+        $doc = new XmlDocument();
+        $doc->load($file);
+
+        $this::assertEquals('2.2.1', $doc->getVersion());
+        $this::assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml'));
+    }
+
+    public function testLoad22()
+    {
+        $file = self::samplesDir() . 'ims/items/2_2/associate.xml';
+        $doc = new XmlDocument();
+        $doc->load($file);
+
+        $this::assertEquals('2.2.0', $doc->getVersion());
+    }
+
+    public function testLoad22NoSchemaLocation()
+    {
+        $file = self::samplesDir() . 'custom/items/2_2/no_schema_location.xml';
+        $doc = new XmlDocument();
+        $doc->load($file);
+
+        $this::assertEquals('2.2.0', $doc->getVersion());
+    }
+
+    public function testLoad211()
+    {
+        $file = self::samplesDir() . 'ims/items/2_1_1/associate.xml';
+        $doc = new XmlDocument();
+        $doc->load($file);
+
+        $this::assertEquals('2.1.1', $doc->getVersion());
     }
 
     public function testLoad21()
@@ -107,17 +153,16 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load($file);
 
-        $this->assertEquals('2.1.0', $doc->getVersion());
+        $this::assertEquals('2.1.0', $doc->getVersion());
     }
 
-    public function testLoad221()
+    public function testLoad21NoSchemaLocation()
     {
-        $file = self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml';
+        $file = self::samplesDir() . 'custom/items/2_1/no_schema_location.xml';
         $doc = new XmlDocument();
-        $doc->load($file, true);
+        $doc->load($file);
 
-        $this->assertEquals('2.2.1', $doc->getVersion());
-        $this->assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml'));
+        $this::assertEquals('2.1.0', $doc->getVersion());
     }
 
     public function testLoad20()
@@ -126,7 +171,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument();
         $doc->load($file);
 
-        $this->assertEquals('2.0.0', $doc->getVersion());
+        $this::assertEquals('2.0.0', $doc->getVersion());
     }
 
     /**
@@ -138,37 +183,37 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $file = (empty($uri)) ? self::samplesDir() . 'ims/items/2_1/template.xml' : $uri;
 
         $doc = new XmlDocument();
-        $doc->load($file, true);
+        $doc->load($file);
 
         $item = $doc->getDocumentComponent();
 
         // Look for all template declarations.
         $templateDeclarations = $item->getTemplateDeclarations();
-        $this->assertEquals(4, count($templateDeclarations));
+        $this::assertCount(4, $templateDeclarations);
 
-        $this->assertEquals('PEOPLE', $templateDeclarations['PEOPLE']->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['PEOPLE']->getCardinality());
-        $this->assertEquals(BaseType::STRING, $templateDeclarations['PEOPLE']->getBaseType());
-        $this->assertFalse($templateDeclarations['PEOPLE']->isMathVariable());
-        $this->assertFalse($templateDeclarations['PEOPLE']->isParamVariable());
+        $this::assertEquals('PEOPLE', $templateDeclarations['PEOPLE']->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations['PEOPLE']->getCardinality());
+        $this::assertEquals(BaseType::STRING, $templateDeclarations['PEOPLE']->getBaseType());
+        $this::assertFalse($templateDeclarations['PEOPLE']->isMathVariable());
+        $this::assertFalse($templateDeclarations['PEOPLE']->isParamVariable());
 
-        $this->assertEquals('A', $templateDeclarations['A']->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['A']->getCardinality());
-        $this->assertEquals(BaseType::INTEGER, $templateDeclarations['A']->getBaseType());
-        $this->assertFalse($templateDeclarations['A']->isMathVariable());
-        $this->assertFalse($templateDeclarations['A']->isParamVariable());
+        $this::assertEquals('A', $templateDeclarations['A']->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations['A']->getCardinality());
+        $this::assertEquals(BaseType::INTEGER, $templateDeclarations['A']->getBaseType());
+        $this::assertFalse($templateDeclarations['A']->isMathVariable());
+        $this::assertFalse($templateDeclarations['A']->isParamVariable());
 
-        $this->assertEquals('B', $templateDeclarations['B']->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['B']->getCardinality());
-        $this->assertEquals(BaseType::INTEGER, $templateDeclarations['B']->getBaseType());
-        $this->assertFalse($templateDeclarations['B']->isMathVariable());
-        $this->assertFalse($templateDeclarations['B']->isParamVariable());
+        $this::assertEquals('B', $templateDeclarations['B']->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations['B']->getCardinality());
+        $this::assertEquals(BaseType::INTEGER, $templateDeclarations['B']->getBaseType());
+        $this::assertFalse($templateDeclarations['B']->isMathVariable());
+        $this::assertFalse($templateDeclarations['B']->isParamVariable());
 
-        $this->assertEquals('MIN', $templateDeclarations['MIN']->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations['MIN']->getCardinality());
-        $this->assertEquals(BaseType::INTEGER, $templateDeclarations['MIN']->getBaseType());
-        $this->assertFalse($templateDeclarations['MIN']->isMathVariable());
-        $this->assertFalse($templateDeclarations['MIN']->isParamVariable());
+        $this::assertEquals('MIN', $templateDeclarations['MIN']->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations['MIN']->getCardinality());
+        $this::assertEquals(BaseType::INTEGER, $templateDeclarations['MIN']->getBaseType());
+        $this::assertFalse($templateDeclarations['MIN']->isMathVariable());
+        $this::assertFalse($templateDeclarations['MIN']->isParamVariable());
     }
 
     public function testWriteTemplate()
@@ -183,7 +228,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->testLoadTemplate($file);
 
         unlink($file);
-        $this->assertFalse(file_exists($file));
+        $this::assertFileNotExists($file);
     }
 
     /**
@@ -193,78 +238,78 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     public function testLoadPCIItem($url = '')
     {
         $doc = new XmlDocument();
-        $doc->load((empty($url)) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url, true);
+        $doc->load((empty($url)) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url);
         $item = $doc->getDocumentComponent();
 
-        $this->assertInstanceOf(AssessmentItem::class, $item);
-        $this->assertEquals('SimpleExample', $item->getIdentifier());
-        $this->assertEquals('Example', $item->getTitle());
-        $this->assertFalse($item->isAdaptive());
-        $this->assertFalse($item->isTimeDependent());
+        $this::assertInstanceOf(AssessmentItem::class, $item);
+        $this::assertEquals('SimpleExample', $item->getIdentifier());
+        $this::assertEquals('Example', $item->getTitle());
+        $this::assertFalse($item->isAdaptive());
+        $this::assertFalse($item->isTimeDependent());
 
         // responseDeclaration
         $responseDeclarations = $item->getComponentsByClassName('responseDeclaration');
-        $this->assertEquals(1, count($responseDeclarations));
-        $this->assertEquals(BaseType::POINT, $responseDeclarations[0]->getBaseType());
-        $this->assertEquals(Cardinality::SINGLE, $responseDeclarations[0]->getCardinality());
-        $this->assertEquals('RESPONSE', $responseDeclarations[0]->getIdentifier());
+        $this::assertCount(1, $responseDeclarations);
+        $this::assertEquals(BaseType::POINT, $responseDeclarations[0]->getBaseType());
+        $this::assertEquals(Cardinality::SINGLE, $responseDeclarations[0]->getCardinality());
+        $this::assertEquals('RESPONSE', $responseDeclarations[0]->getIdentifier());
 
         // templateDeclarations
         $templateDeclarations = $item->getComponentsByClassName('templateDeclaration');
-        $this->assertEquals(2, count($templateDeclarations));
-        $this->assertEquals(BaseType::INTEGER, $templateDeclarations[0]->getBaseType());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations[0]->getCardinality());
-        $this->assertEquals('X', $templateDeclarations[0]->getIdentifier());
-        $this->assertEquals(BaseType::INTEGER, $templateDeclarations[1]->getBaseType());
-        $this->assertEquals(Cardinality::SINGLE, $templateDeclarations[1]->getCardinality());
-        $this->assertEquals('Y', $templateDeclarations[1]->getIdentifier());
+        $this::assertCount(2, $templateDeclarations);
+        $this::assertEquals(BaseType::INTEGER, $templateDeclarations[0]->getBaseType());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations[0]->getCardinality());
+        $this::assertEquals('X', $templateDeclarations[0]->getIdentifier());
+        $this::assertEquals(BaseType::INTEGER, $templateDeclarations[1]->getBaseType());
+        $this::assertEquals(Cardinality::SINGLE, $templateDeclarations[1]->getCardinality());
+        $this::assertEquals('Y', $templateDeclarations[1]->getIdentifier());
 
         // customInteraction
         $customInteractions = $item->getComponentsByClassName('customInteraction');
-        $this->assertEquals(1, count($customInteractions));
+        $this::assertCount(1, $customInteractions);
 
         $customInteraction = $customInteractions[0];
-        $this->assertEquals('RESPONSE', $customInteraction->getResponseIdentifier());
-        $this->assertEquals('graph1', $customInteraction->getId());
+        $this::assertEquals('RESPONSE', $customInteraction->getResponseIdentifier());
+        $this::assertEquals('graph1', $customInteraction->getId());
 
         // xml content
         $customInteractionElt = $customInteraction->getXml()->documentElement;
-        $this->assertEquals('RESPONSE', $customInteractionElt->getAttribute('responseIdentifier'));
-        $this->assertEquals('graph1', $customInteractionElt->getAttribute('id'));
+        $this::assertEquals('RESPONSE', $customInteractionElt->getAttribute('responseIdentifier'));
+        $this::assertEquals('graph1', $customInteractionElt->getAttribute('id'));
 
         $pci = 'http://www.imsglobal.org/xsd/portableCustomInteraction';
         // -- pci:portableCustomInteraction
         $portableCustomInteractionElts = $customInteractionElt->getElementsByTagNameNS($pci, 'portableCustomInteraction');
-        $this->assertEquals(1, $portableCustomInteractionElts->length);
-        $this->assertEquals('IW30MX6U48JF9120GJS', $portableCustomInteractionElts->item(0)->getAttribute('customInteractionTypeIdentifier'));
+        $this::assertEquals(1, $portableCustomInteractionElts->length);
+        $this::assertEquals('IW30MX6U48JF9120GJS', $portableCustomInteractionElts->item(0)->getAttribute('customInteractionTypeIdentifier'));
 
         // --pci:templateVariableMapping
         $templateVariableMappingElts = $customInteractionElt->getElementsByTagNameNS($pci, 'templateVariableMapping');
-        $this->assertEquals(2, $templateVariableMappingElts->length);
-        $this->assertEquals('X', $templateVariableMappingElts->item(0)->getAttribute('templateIdentifier'));
-        $this->assertEquals('areaX', $templateVariableMappingElts->item(0)->getAttribute('configurationProperty'));
-        $this->assertEquals('Y', $templateVariableMappingElts->item(1)->getAttribute('templateIdentifier'));
-        $this->assertEquals('areaY', $templateVariableMappingElts->item(1)->getAttribute('configurationProperty'));
+        $this::assertEquals(2, $templateVariableMappingElts->length);
+        $this::assertEquals('X', $templateVariableMappingElts->item(0)->getAttribute('templateIdentifier'));
+        $this::assertEquals('areaX', $templateVariableMappingElts->item(0)->getAttribute('configurationProperty'));
+        $this::assertEquals('Y', $templateVariableMappingElts->item(1)->getAttribute('templateIdentifier'));
+        $this::assertEquals('areaY', $templateVariableMappingElts->item(1)->getAttribute('configurationProperty'));
 
         // --pci:instance
         $instanceElts = $customInteractionElt->getElementsByTagNameNS($pci, 'instance');
-        $this->assertEquals(1, $instanceElts->length);
+        $this::assertEquals(1, $instanceElts->length);
 
         // --xhtml:script
         $xhtml = 'http://www.w3.org/1999/xhtml';
         $scriptElts = $instanceElts->item(0)->getElementsByTagNameNS($xhtml, 'script');
-        $this->assertEquals(2, $scriptElts->length);
-        $this->assertEquals('text/javascript', $scriptElts->item(0)->getAttribute('type'));
-        $this->assertEquals('js/graph.js', $scriptElts->item(0)->getAttribute('src'));
-        $this->assertEquals('text/javascript', $scriptElts->item(1)->getAttribute('type'));
-        $this->assertEquals(7, mb_strpos($scriptElts->item(1)->nodeValue, 'qtiCustomInteractionContext.setConfiguration(', 0, 'UTF-8'));
+        $this::assertEquals(2, $scriptElts->length);
+        $this::assertEquals('text/javascript', $scriptElts->item(0)->getAttribute('type'));
+        $this::assertEquals('js/graph.js', $scriptElts->item(0)->getAttribute('src'));
+        $this::assertEquals('text/javascript', $scriptElts->item(1)->getAttribute('type'));
+        $this::assertEquals(7, mb_strpos($scriptElts->item(1)->nodeValue, 'qtiCustomInteractionContext.setConfiguration(', 0, 'UTF-8'));
 
         // --xhtml:div
         $divElts = $instanceElts->item(0)->getElementsByTagNameNS($xhtml, 'div');
-        $this->assertEquals(1, $divElts->length);
-        $this->assertEquals('graph1_box', $divElts->item(0)->getAttribute('id'));
-        $this->assertEquals('graph', $divElts->item(0)->getAttribute('class'));
-        $this->assertEquals('width:500px; height:500px;', $divElts->item(0)->getAttribute('style'));
+        $this::assertEquals(1, $divElts->length);
+        $this::assertEquals('graph1_box', $divElts->item(0)->getAttribute('id'));
+        $this::assertEquals('graph', $divElts->item(0)->getAttribute('class'));
+        $this::assertEquals('width:500px; height:500px;', $divElts->item(0)->getAttribute('style'));
     }
 
     public function testWritePCIItem()
@@ -283,7 +328,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/pic.xml');
-        $this->assertTrue(true);
+        $this::assertTrue(true);
     }
 
     /**
@@ -297,6 +342,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
             // -- 2.2.1
             [self::decorateUri('choice_aria.xml', '2.2.1'), '2.2.1'],
+            [self::decorateUri('choice.xml', '2.2.1'), '2.2.1'],
+            [self::decorateUri('graphic_order.xml', '2.2.1'), '2.2.1'],
 
             // -- 2.2.0
             [self::decorateUri('adaptive_template.xml', '2.2.0'), '2.2.0'],
@@ -307,14 +354,13 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::decorateUri('choice.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('extended_text_rubric.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('extended_text.xml', '2.2.0'), '2.2.0'],
-            // Removed because the 2.2.0 XSD is now looking correctly at the feedback->id atomicity!
-            //array(self::decorateUri('feedbackblock_adaptive.xml', '2.2')),
+            [self::decorateUri('feedbackblock_adaptive.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('feedbackblock_solution_random.xml', '2.2.0'), '2.2.0'],
-            //array(self::decorateUri('feedbackblock_templateblock.xml', '2.2')),
             [self::decorateUri('feedbackInline.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('gap_match.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('graphic_associate.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('graphic_gap_match.xml', '2.2.0'), '2.2.0'],
+            [self::decorateUri('graphic_order.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('hotspot.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('hottext.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('inline_choice.xml', '2.2.0'), '2.2.0'],
@@ -335,6 +381,45 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::decorateUri('template.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('text_entry.xml', '2.2.0'), '2.2.0'],
 
+            // -- 2.1.1
+            [self::decorateUri('adaptive.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('adaptive_template.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('mc_stat2.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('mc_calc3.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('mc_calc5.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('associate.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('choice_fixed.xml', '2.1.1'), '2.1.1'],
+            // @todo C10 is invalid identifier? Double check! (Actually it seems the example is broken... we'll see).
+            //array(self::decorateUri('choice_multiple_chocolade.xml', '2.1.1'), '2.1.1'),
+            [self::decorateUri('modalFeedback.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('feedbackInline.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('choice_multiple.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('choice.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('extended_text_rubric.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('extended_text.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('gap_match.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('graphic_associate.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('graphic_gap_match.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('graphic_order.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('hotspot.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('hottext.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('inline_choice.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('match.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('multi-input.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('order.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('position_object.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('select_point.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('slider.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('text_entry.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('template.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('math.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('feedbackblock_solution_random.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('feedbackblock_adaptive.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('orkney1.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('orkney2.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('nested_object.xml', '2.1.1'), '2.1.1'],
+            [self::decorateUri('likert.xml', '2.1.1'), '2.1.1'],
+
             // -- 2.1.0
             [self::decorateUri('adaptive.xml', '2.1.0'), '2.1.0'],
             [self::decorateUri('adaptive_template.xml', '2.1.0'), '2.1.0'],
@@ -344,7 +429,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::decorateUri('associate.xml', '2.1.0'), '2.1.0'],
             [self::decorateUri('choice_fixed.xml', '2.1.0'), '2.1.0'],
             // @todo C10 is invalid identifier? Double check! (Actually it seems the example is fucked up... we'll see).
-            //array(self::decorateUri('choice_multiple_chocolade.xml')),
+            //[self::decorateUri('choice_multiple_chocolade.xml', '2.1'), '2.1'],
             [self::decorateUri('modalFeedback.xml', '2.1.0'), '2.1.0'],
             [self::decorateUri('feedbackInline.xml', '2.1.0'), '2.1.0'],
             [self::decorateUri('choice_multiple.xml', '2.1.0'), '2.1.0'],
@@ -354,6 +439,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::decorateUri('gap_match.xml', '2.1.0'), '2.1.0'],
             [self::decorateUri('graphic_associate.xml', '2.1.0'), '2.1.0'],
             [self::decorateUri('graphic_gap_match.xml', '2.1.0'), '2.1.0'],
+            [self::decorateUri('graphic_order.xml', '2.1'), '2.1.0'],
             [self::decorateUri('hotspot.xml', '2.1.0'), '2.1.0'],
             [self::decorateUri('hottext.xml', '2.1.0'), '2.1.0'],
             [self::decorateUri('inline_choice.xml', '2.1.0'), '2.1.0'],
@@ -372,7 +458,6 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::decorateUri('orkney2.xml', '2.1.0'), '2.1.0'],
             [self::decorateUri('nested_object.xml', '2.1.0'), '2.1.0'],
             [self::decorateUri('likert.xml', '2.1.0'), '2.1.0'],
-            //array(self::decorateUri('feedbackblock_templateblock.xml')),
 
             // -- 2.0.0
             [self::decorateUri('associate.xml', '2.0.0'), '2.0.0'],
@@ -397,18 +482,19 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::decorateUri('order_partial_scoring.xml', '2.0.0'), '2.0.0'],
             [self::decorateUri('order.xml', '2.0.0'), '2.0.0'],
             [self::decorateUri('orkney1.xml', '2.0'), '2.0.0'],
-            //array(self::decorateUri('position_object.xml', '2.0')),
-            [self::decorateUri('select_point.xml', '2.0.0'), '2.0.0'],
-            [self::decorateUri('slider.xml', '2.0.0'), '2.0.0'],
-            [self::decorateUri('template_image.xml', '2.0.0'), '2.0.0'],
-            [self::decorateUri('template.xml', '2.0.0'), '2.0.0'],
-            [self::decorateUri('text_entry.xml', '2.0.0'), '2.0.0'],
-            [self::decorateUri('upload_composite.xml', '2.0.0'), '2.0.0'],
-            [self::decorateUri('upload.xml', '2.0.0'), '2.0.0'],
+            //array(self::decorateUri('position_object.xml', '2.0.0'), '2.0.0'),
+            [self::decorateUri('select_point.xml', '2.0'), '2.0.0'],
+            [self::decorateUri('slider.xml', '2.0'), '2.0.0'],
+            [self::decorateUri('template_image.xml', '2.0'), '2.0.0'],
+            [self::decorateUri('template.xml', '2.0'), '2.0.0'],
+            [self::decorateUri('text_entry.xml', '2.0'), '2.0.0'],
+            [self::decorateUri('upload_composite.xml', '2.0'), '2.0.0'],
+            [self::decorateUri('upload.xml', '2.0'), '2.0.0'],
 
             // Other miscellaneous items...
             [self::samplesDir() . 'custom/items/custom_operator_item.xml', '2.1.0'],
             [self::samplesDir() . 'custom/items/rich_gap_text.xml', '2.2.0'],
+            [self::samplesDir() . 'custom/items/infocontrol.xml', '2.1.0'],
         ];
     }
 
@@ -429,6 +515,8 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             return self::samplesDir() . 'ims/items/2_2_1/' . $uri;
         } elseif ($version === '2.2.2') {
             return self::samplesDir() . 'ims/items/2_2_2/' . $uri;
+        } elseif ($version === '3.0.0') {
+            return self::samplesDir() . 'ims/items/3_0/' . $uri;
         } else {
             return self::samplesDir() . 'ims/items/2_0/' . $uri;
         }

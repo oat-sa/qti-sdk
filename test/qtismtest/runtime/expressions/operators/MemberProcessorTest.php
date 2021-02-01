@@ -11,6 +11,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -33,13 +34,13 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = $mult;
         $processor = new MemberProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertEquals(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         $mult[] = new QtiFloat(10.1);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertEquals(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
     }
 
     public function testOrdered()
@@ -51,13 +52,13 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = $ordered;
         $processor = new MemberProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertEquals(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         $ordered[] = new QtiPair('A', 'B');
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertEquals(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
     }
 
     public function testNull()
@@ -70,14 +71,14 @@ class MemberProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::INTEGER);
         $processor = new MemberProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
 
         // fist operand is null.
         $operands->reset();
         $operands[] = null;
         $operands[] = new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testDifferentBaseTypeOne()
@@ -154,12 +155,13 @@ class MemberProcessorTest extends QtiSmTestCase
         $processor = new MemberProcessor($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
     }
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

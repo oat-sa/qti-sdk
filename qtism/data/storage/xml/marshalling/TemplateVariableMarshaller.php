@@ -49,7 +49,7 @@ class TemplateVariableMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
+        $element = $this->createElement($component);
         $element->setAttribute('identifier', $component->getIdentifier());
         $element->setAttribute('cardinality', Cardinality::getNameByConstant($component->getCardinality()));
 

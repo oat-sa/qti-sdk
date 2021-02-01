@@ -45,8 +45,9 @@ class MathRenderer extends ExternalQtiComponentRenderer
         try {
             $dom = $component->getXml();
             $node = $fragment->ownerDocument->importNode($dom->documentElement, true);
+            $nodeNamespaceUri = 'http://www.w3.org/1998/Math/MathML';
             $node = Utils::anonimizeElement($node);
-            $node->setAttribute('xmlns', 'http://www.w3.org/1998/Math/MathML');
+            $node->setAttribute('xmlns', $nodeNamespaceUri);
             $fragment->appendChild($node);
         } catch (RuntimeException $e) {
             $msg = "An error occurred while rendering the XML content of the 'MathML' external component.";

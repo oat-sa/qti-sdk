@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\StringMatchProcessor;
@@ -24,33 +25,33 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiString('one'), new QtiString('one')]);
         $processor = new StringMatchProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $operands = new OperandsCollection([new QtiString('one'), new QtiString('oNe')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         $processor->setExpression($this->createFakeExpression(false));
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         // Binary-safe?
         $processor->setExpression($this->createFakeExpression(true));
         $operands = new OperandsCollection([new QtiString('它的工作原理'), new QtiString('它的工作原理')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(true, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $operands = new OperandsCollection([new QtiString('它的工作原理'), new QtiString('它的原理')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testNull()
@@ -59,7 +60,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiString(''), null]);
         $processor = new StringMatchProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()
@@ -99,6 +100,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
     /**
      * @param bool $caseSensitive
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($caseSensitive = true)
     {

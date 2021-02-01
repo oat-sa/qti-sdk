@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\DivideProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -25,32 +26,32 @@ class DivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(1), new QtiInteger(1)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(0), new QtiInteger(2)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(0, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(-30), new QtiInteger(5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-6, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(-6, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(30), new QtiInteger(5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(6, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(6, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(1), new QtiFloat(0.5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(2, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(2, $result->getValue());
     }
 
     public function testDivisionByZero()
@@ -59,7 +60,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(1), new QtiInteger(0)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testDivisionByInfinite()
@@ -68,14 +69,14 @@ class DivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(INF)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(0, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(-1), new QtiFloat(INF)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(-0, $result->getValue());
     }
 
     public function testInfiniteDividedByInfinite()
@@ -84,7 +85,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiFloat(INF), new QtiFloat(INF)]);
         $processor = new DivideProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseTypeOne()
@@ -132,6 +133,7 @@ class DivideProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

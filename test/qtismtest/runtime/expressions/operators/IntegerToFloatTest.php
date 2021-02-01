@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\IntegerToFloatProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -27,26 +28,26 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $processor = new IntegerToFloatProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(10.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(10.0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(-10);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-10.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(-10.0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(0);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(0.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(0.0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(-0);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-0.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(-0.0, $result->getValue());
     }
 
     public function testNullOne()
@@ -57,7 +58,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $processor = new IntegerToFloatProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testNullTwo()
@@ -68,7 +69,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $processor = new IntegerToFloatProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()
@@ -124,6 +125,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

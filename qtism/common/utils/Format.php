@@ -96,7 +96,7 @@ class Format
      */
     public static function isIdentifier($string, $strict = true)
     {
-        if ($strict !== true) {
+        if (!$strict) {
             return preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $string) === 1;
         }
 

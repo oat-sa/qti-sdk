@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ChoiceInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $choice1 = new SimpleChoice('choice_1');
         $choice1->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
@@ -29,35 +29,42 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
         $component->setPrompt($prompt);
+        $component->setXmlBase('/home/jerome');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<choiceInteraction responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></choiceInteraction>', $dom->saveXML($element));
+        $this::assertEquals('<choiceInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></choiceInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
-            <choiceInteraction responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></choiceInteraction>
+            <choiceInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome">
+                <prompt>Prompt...</prompt>
+                <simpleChoice identifier="choice_1">Choice #1</simpleChoice>
+                <simpleChoice identifier="choice_2">Choice #2</simpleChoice>
+            </choiceInteraction>
         ');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ChoiceInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertFalse($component->mustShuffle());
-        $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());
-        $this->assertTrue($component->hasPrompt());
+        $this::assertInstanceOf(ChoiceInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertFalse($component->mustShuffle());
+        $this::assertEquals(Orientation::VERTICAL, $component->getOrientation());
+        $this::assertTrue($component->hasPrompt());
+        $this::assertSame(0, $component->getMinChoices());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
 
         $prompt = $component->getPrompt();
         $content = $prompt->getContent();
-        $this->assertEquals('Prompt...', $content[0]->getContent());
+        $this::assertEquals('Prompt...', $content[0]->getContent());
 
         $simpleChoices = $component->getSimpleChoices();
-        $this->assertEquals(2, count($simpleChoices));
+        $this::assertCount(2, $simpleChoices);
     }
 }

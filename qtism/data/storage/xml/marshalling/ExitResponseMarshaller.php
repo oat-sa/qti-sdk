@@ -40,7 +40,7 @@ class ExitResponseMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        return static::getDOMCradle()->createElement($component->getQtiClassName());
+        return $this->createElement($component);
     }
 
     /**

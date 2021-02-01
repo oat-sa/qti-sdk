@@ -94,7 +94,7 @@ class MappingMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         if ($component->hasLowerBound() === true) {
             $this->setDOMElementAttribute($element, 'lowerBound', $component->getLowerBound());

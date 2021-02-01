@@ -26,22 +26,22 @@ class ItemBodyMarshallerTest extends QtiSmTestCase
             </itemBody>
         ');
 
-        $this->assertInstanceOf(ItemBody::class, $itemBody);
-        $this->assertEquals('my-body', $itemBody->getId());
+        $this::assertInstanceOf(ItemBody::class, $itemBody);
+        $this::assertEquals('my-body', $itemBody->getId());
         $itemBodyContent = $itemBody->getContent();
-        $this->assertEquals(2, count($itemBodyContent));
-        $this->assertInstanceOf(H1::class, $itemBodyContent[0]);
-        $this->assertInstanceOf(Div::class, $itemBodyContent[1]);
+        $this::assertCount(2, $itemBodyContent);
+        $this::assertInstanceOf(H1::class, $itemBodyContent[0]);
+        $this::assertInstanceOf(Div::class, $itemBodyContent[1]);
 
         $h1 = $itemBodyContent[0];
         $h1Content = $h1->getContent();
-        $this->assertEquals(1, count($h1Content));
-        $this->assertEquals('Super Item', $h1Content[0]->getContent());
+        $this::assertCount(1, $h1Content);
+        $this::assertEquals('Super Item', $h1Content[0]->getContent());
 
         $div = $itemBodyContent[1];
         $divContent = $div->getContent();
-        $this->assertEquals(1, count($divContent));
-        $this->assertEquals('This is some stimulus.', $divContent[0]->getContent());
+        $this::assertCount(1, $divContent);
+        $this::assertEquals('This is some stimulus.', $divContent[0]->getContent());
     }
 
     public function testMarshall()
@@ -55,10 +55,10 @@ class ItemBodyMarshallerTest extends QtiSmTestCase
         $itemBody = new ItemBody('my-body');
         $itemBody->setContent(new BlockCollection([$h1, $div]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($itemBody)->marshall($itemBody);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($itemBody)->marshall($itemBody);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<itemBody id="my-body"><h1>Super Item</h1><div>This is some stimulus.</div></itemBody>', $dom->saveXML($element));
+        $this::assertEquals('<itemBody id="my-body"><h1>Super Item</h1><div>This is some stimulus.</div></itemBody>', $dom->saveXML($element));
     }
 }

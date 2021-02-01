@@ -187,7 +187,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         foreach ($elements as $elt) {
             $element->appendChild($elt);
         }

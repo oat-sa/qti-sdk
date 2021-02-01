@@ -9,13 +9,14 @@ use qtism\data\content\interactions\InlineChoiceInteraction;
 use qtism\data\content\TextOrVariableCollection;
 use qtism\data\content\TextRun;
 use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\UnmarshallingException;
 
 /**
  * Class InlineChoiceInteractionMarshallerTest
  */
 class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $inlineChoices = new InlineChoiceCollection();
 
@@ -35,32 +36,88 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
         $inlineChoiceInteraction = new InlineChoiceInteraction('RESPONSE', $inlineChoices);
         $inlineChoiceInteraction->setShuffle(true);
         $inlineChoiceInteraction->setRequired(true);
+        $inlineChoiceInteraction->setXmlBase('/home/jerome');
 
-        $element = $this->getMarshallerFactory()->createMarshaller($inlineChoiceInteraction)->marshall($inlineChoiceInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($inlineChoiceInteraction)->marshall($inlineChoiceInteraction);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
-            '<inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true"><inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice><inlineChoice identifier="inlineChoice2">Option2</inlineChoice><inlineChoice identifier="inlineChoice3">Option3</inlineChoice></inlineChoiceInteraction>',
+        $this::assertEquals(
+            '<inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true" xml:base="/home/jerome"><inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice><inlineChoice identifier="inlineChoice2">Option2</inlineChoice><inlineChoice identifier="inlineChoice3">Option3</inlineChoice></inlineChoiceInteraction>',
             $dom->saveXML($element)
         );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
-            <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true">
+            <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true" xml:base="/home/jerome">
                 <inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice>
                 <inlineChoice identifier="inlineChoice2">Option2</inlineChoice>
                 <inlineChoice identifier="inlineChoice1">Option1</inlineChoice>
             </inlineChoiceInteraction>
         ');
 
-        $inlineChoiceInteraction = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(InlineChoiceInteraction::class, $inlineChoiceInteraction);
-        $this->assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
-        $this->assertTrue($inlineChoiceInteraction->mustShuffle());
-        $this->assertTrue($inlineChoiceInteraction->isRequired());
-        $this->assertEquals(3, count($inlineChoiceInteraction->getComponentsByClassName('inlineChoice')));
+        $inlineChoiceInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+        $this::assertInstanceOf(InlineChoiceInteraction::class, $inlineChoiceInteraction);
+        $this::assertEquals('RESPONSE', $inlineChoiceInteraction->getResponseIdentifier());
+        $this::assertTrue($inlineChoiceInteraction->mustShuffle());
+        $this::assertTrue($inlineChoiceInteraction->isRequired());
+        $this::assertCount(3, $inlineChoiceInteraction->getComponentsByClassName('inlineChoice'));
+        $this::assertEquals('/home/jerome', $inlineChoiceInteraction->getXmlBase());
+    }
+
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall21NoInlineChoices()
+    {
+        $element = $this->createDOMElement('
+            <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true">
+            </inlineChoiceInteraction>
+        ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("An 'inlineChoiceInteraction' element must contain at least 1 'inlineChoice' elements, none given.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall21InvalidResponseIdentifier()
+    {
+        $element = $this->createDOMElement('
+            <inlineChoiceInteraction responseIdentifier="9_RESPONSE" shuffle="true" required="true">
+                <inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice>
+                <inlineChoice identifier="inlineChoice2">Option2</inlineChoice>
+                <inlineChoice identifier="inlineChoice1">Option1</inlineChoice>
+            </inlineChoiceInteraction>
+        ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The value of the attribute 'responseIdentifier' for element 'inlineChoiceInteraction' is not a valid identifier.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    /**
+     * @depends testUnmarshall21
+     */
+    public function testUnmarshall21NoResponseIdentifier()
+    {
+        $element = $this->createDOMElement('
+            <inlineChoiceInteraction shuffle="true" required="true">
+                <inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice>
+                <inlineChoice identifier="inlineChoice2">Option2</inlineChoice>
+                <inlineChoice identifier="inlineChoice1">Option1</inlineChoice>
+            </inlineChoiceInteraction>
+        ');
+
+        $this->expectException(UnmarshallingException::class);
+        $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'inlineChoiceInteraction' element.");
+
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 }

@@ -44,7 +44,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallScalar($scalar, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($scalar));
+        $this::assertEquals($expectedJson, $marshaller->marshall($scalar));
     }
 
     /**
@@ -57,7 +57,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallComplex(QtiDatatype $complex, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($complex));
+        $this::assertEquals($expectedJson, $marshaller->marshall($complex));
     }
 
     /**
@@ -70,7 +70,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallMultiple(MultipleContainer $multiple, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($multiple));
+        $this::assertEquals($expectedJson, $marshaller->marshall($multiple));
     }
 
     /**
@@ -83,7 +83,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallOrdered(OrderedContainer $ordered, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($ordered));
+        $this::assertEquals($expectedJson, $marshaller->marshall($ordered));
     }
 
     /**
@@ -96,7 +96,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallRecord(RecordContainer $record, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($record));
+        $this::assertEquals($expectedJson, $marshaller->marshall($record));
     }
 
     /**
@@ -109,7 +109,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallState(State $state, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($state));
+        $this::assertEquals($expectedJson, $marshaller->marshall($state));
     }
 
     /**
@@ -131,7 +131,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     {
         $marshaller = new Marshaller();
         $data = $marshaller->marshall(new QtiInteger(12), Marshaller::MARSHALL_ARRAY);
-        $this->assertEquals(12, $data['base']['integer']);
+        $this::assertEquals(12, $data['base']['integer']);
     }
 
     /**
@@ -182,7 +182,7 @@ class JsonMarshallerTest extends QtiSmTestCase
         $returnValue[] = [$fileHash, json_encode(
             ['base' => [FileHash::FILE_HASH_KEY => ['id' => $id, 'mime' => $mimeType, 'name' => $filename, 'data' => $sha256]]]
         )];
-        
+
         return $returnValue;
     }
 
@@ -321,6 +321,11 @@ class JsonMarshallerTest extends QtiSmTestCase
         // miscellaneous record.
         $record = new RecordContainer(['numeric' => new QtiFloat(1337.1337), 'null' => null, 'coordinates' => new QtiPoint(10, 20)]);
         $json = json_encode(['record' => [['name' => 'numeric', 'base' => ['float' => 1337.1337]], ['name' => 'null', 'base' => null], ['name' => 'coordinates', 'base' => ['point' => [10, 20]]]]]);
+        $returnValue[] = [$record, $json];
+
+        // nested list record.
+        $record = new RecordContainer(['nested' => new MultipleContainer(BaseType::INTEGER, [new QtiInteger(1)])]);
+        $json = json_encode(['record' => [['name' => 'nested', 'list' => ['integer' => [1]]]]]);
         $returnValue[] = [$record, $json];
 
         return $returnValue;

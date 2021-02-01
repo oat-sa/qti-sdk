@@ -351,21 +351,15 @@ class QtiDuration implements QtiDatatype
      */
     public function longerThanOrEquals(QtiDuration $duration)
     {
-        if ($this->getYears() < $duration->getYears()) {
-            return false;
-        } elseif ($this->getMonths() < $duration->getMonths()) {
-            return false;
-        } elseif ($this->getDays() < $duration->getDays()) {
-            return false;
-        } elseif ($this->getHours() < $duration->getHours()) {
-            return false;
-        } elseif ($this->getMinutes() < $duration->getMinutes()) {
-            return false;
-        } elseif ($this->getSeconds() < $duration->getSeconds()) {
-            return false;
-        } else {
-            return !($this->getMicroseconds() < $duration->getMicroseconds());
+        if ($this->getSeconds(true) > $duration->getSeconds(true)) {
+            return true;
         }
+
+        if ($this->getSeconds(true) < $duration->getSeconds(true)) {
+            return false;
+        }
+
+        return $this->getMicroseconds() >= $duration->getMicroseconds();
     }
 
     /**

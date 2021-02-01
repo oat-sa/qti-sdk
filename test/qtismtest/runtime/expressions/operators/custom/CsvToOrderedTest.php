@@ -56,8 +56,8 @@ class CsvToOrderedTest extends QtiSmTestCase {
             )
         );
 
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertTrue($expected->equals($result));
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertTrue($expected->equals($result));
     }
     
     /**
@@ -79,8 +79,8 @@ class CsvToOrderedTest extends QtiSmTestCase {
             )
         );
         
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertTrue($expected->equals($result));
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertTrue($expected->equals($result));
     }
     
     /**
@@ -96,7 +96,7 @@ class CsvToOrderedTest extends QtiSmTestCase {
         $operator = new CsvToOrdered($customOperator, $operands);
         $result = $operator->process();
         
-        $this->assertNull($result);
+        $this::assertNull($result);
     }
     
     /**
@@ -118,7 +118,7 @@ class CsvToOrderedTest extends QtiSmTestCase {
             )
         );
         
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertTrue($expected->equals($result));
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertTrue($expected->equals($result));
     }
 }

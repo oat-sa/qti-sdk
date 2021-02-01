@@ -48,9 +48,9 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $factory = new OperatorProcessorFactory();
         $operands = new OperandsCollection([new QtiInteger(2), new QtiInteger(2)]);
         $processor = $factory->createProcessor($expression, $operands);
-        $this->assertInstanceOf(SumProcessor::class, $processor);
-        $this->assertEquals('sum', $processor->getExpression()->getQtiClassName());
-        $this->assertEquals(4, $processor->process()->getValue()); // x)
+        $this::assertInstanceOf(SumProcessor::class, $processor);
+        $this::assertEquals('sum', $processor->getExpression()->getQtiClassName());
+        $this::assertEquals(4, $processor->process()->getValue()); // x)
     }
 
     public function testInvalidOperatorClass()
@@ -74,9 +74,9 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $factory = new OperatorProcessorFactory();
         $operands = new OperandsCollection([new QtiString('this-is-a-test')]);
         $processor = $factory->createProcessor($expression, $operands);
-        $this->assertInstanceOf(Explode::class, $processor);
-        $this->assertEquals('customOperator', $processor->getExpression()->getQtiClassName());
-        $this->assertTrue($processor->process()->equals(new OrderedContainer(BaseType::STRING, [new QtiString('this'), new QtiString('is'), new QtiString('a'), new QtiString('test')])));
+        $this::assertInstanceOf(Explode::class, $processor);
+        $this::assertEquals('customOperator', $processor->getExpression()->getQtiClassName());
+        $this::assertTrue($processor->process()->equals(new OrderedContainer(BaseType::STRING, [new QtiString('this'), new QtiString('is'), new QtiString('a'), new QtiString('test')])));
     }
 
     public function testCustomOperatorWithoutClassAttribute()

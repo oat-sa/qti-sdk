@@ -27,7 +27,7 @@ class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
         $processor = new NumberSelectedProcessor($expression);
         $processor->setState($session);
         $result = $processor->process();
-        $this->assertEquals($expectedResult, $result->getValue());
+        $this::assertEquals($expectedResult, $result->getValue());
     }
 
     /**

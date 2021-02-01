@@ -54,9 +54,9 @@ class SessionManagerTest extends QtiSmTestCase
         $manager = new SessionManager();
         $session = $manager->createAssessmentTestSession($this->getTest());
 
-        $this->assertInstanceOf(AssessmentTestSession::class, $session);
-        $this->assertTrue($session->mustConsiderMinTime());
-        $this->assertTrue($session->getAcceptableLatency()->equals(new QtiDuration('PT0S')), 'The default acceptable latency must be PT0S');
+        $this::assertInstanceOf(AssessmentTestSession::class, $session);
+        $this::assertTrue($session->mustConsiderMinTime());
+        $this::assertTrue($session->getAcceptableLatency()->equals(new QtiDuration('PT0S')), 'The default acceptable latency must be PT0S');
     }
 
     public function testParametricAssessmentTestSessionCreation()
@@ -70,8 +70,8 @@ class SessionManagerTest extends QtiSmTestCase
 
         $session = $manager->createAssessmentTestSession($this->getTest());
 
-        $this->assertInstanceOf(AssessmentTestSession::class, $session);
-        $this->assertFalse($session->mustConsiderMinTime());
-        $this->assertTrue($session->getAcceptableLatency()->equals(new QtiDuration('PT5S')), 'The custom acceptable latency must be PT5S');
+        $this::assertInstanceOf(AssessmentTestSession::class, $session);
+        $this::assertFalse($session->mustConsiderMinTime());
+        $this::assertTrue($session->getAcceptableLatency()->equals(new QtiDuration('PT5S')), 'The custom acceptable latency must be PT5S');
     }
 }

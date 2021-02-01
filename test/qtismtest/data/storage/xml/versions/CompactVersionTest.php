@@ -15,7 +15,7 @@ class CompactVersionTest extends QtiSmTestCase
 {
     public function testVersionCompareSupported()
     {
-        $this->assertTrue(CompactVersion::compare('2.1', '2.1.0', '='));
+        $this::assertTrue(CompactVersion::compare('2.1', '2.1.0', '='));
     }
 
     /**
@@ -27,8 +27,8 @@ class CompactVersionTest extends QtiSmTestCase
     public function testCreateWithSupportedVersion(string $version, string $expectedVersion, string $expectedClass)
     {
         $versionObject = CompactVersion::create($version);
-        $this->assertInstanceOf($expectedClass, $versionObject);
-        $this->assertEquals($expectedVersion, (string)$versionObject);
+        $this::assertInstanceOf($expectedClass, $versionObject);
+        $this::assertEquals($expectedVersion, (string)$versionObject);
     }
 
     /**

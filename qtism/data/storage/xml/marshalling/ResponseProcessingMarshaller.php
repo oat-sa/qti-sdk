@@ -43,7 +43,7 @@ class ResponseProcessingMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         if ($component->hasTemplate() === true) {
             $this->setDOMElementAttribute($element, 'template', $component->getTemplate());

@@ -20,28 +20,28 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
     {
         $xml = new XmlDocument('2.1');
         $xml->load(self::getTemplatesPath() . '2_1/match_correct.xml');
-        $this->assertInstanceOf(ResponseProcessing::class, $xml->getDocumentComponent());
-        $this->assertFalse($xml->getDocumentComponent()->hasTemplateLocation());
-        $this->assertFalse($xml->getDocumentComponent()->hasTemplate());
+        $this::assertInstanceOf(ResponseProcessing::class, $xml->getDocumentComponent());
+        $this::assertFalse($xml->getDocumentComponent()->hasTemplateLocation());
+        $this::assertFalse($xml->getDocumentComponent()->hasTemplate());
 
         $responseRules = $xml->getDocumentComponent()->getResponseRules();
-        $this->assertEquals(1, count($responseRules));
+        $this::assertCount(1, $responseRules);
 
         $responseCondition = $responseRules[0];
-        $this->assertInstanceOf(ResponseCondition::class, $responseCondition);
+        $this::assertInstanceOf(ResponseCondition::class, $responseCondition);
 
         $responseIf = $responseCondition->getResponseIf();
         $match = $responseIf->getExpression();
-        $this->assertInstanceOf(MatchOperator::class, $match);
+        $this::assertInstanceOf(MatchOperator::class, $match);
 
         $matchExpressions = $match->getExpressions();
-        $this->assertEquals(2, count($matchExpressions));
+        $this::assertCount(2, $matchExpressions);
         $variable = $matchExpressions[0];
-        $this->assertInstanceOf(Variable::class, $variable);
-        $this->assertEquals('RESPONSE', $variable->getIdentifier());
+        $this::assertInstanceOf(Variable::class, $variable);
+        $this::assertEquals('RESPONSE', $variable->getIdentifier());
         $correct = $matchExpressions[1];
-        $this->assertInstanceOf(Correct::class, $correct);
-        $this->assertEquals('RESPONSE', $correct->getIdentifier());
+        $this::assertInstanceOf(Correct::class, $correct);
+        $this::assertEquals('RESPONSE', $correct->getIdentifier());
         // To be continued...
     }
 
@@ -55,7 +55,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
     {
         $xml = new XmlDocument();
         $xml->load($url, true);
-        $this->assertTrue(true);
+        $this::assertTrue(true);
     }
 
     /**

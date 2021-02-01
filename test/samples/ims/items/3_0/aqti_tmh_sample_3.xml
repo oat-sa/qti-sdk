@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsaqti_item_v1p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsaqti_item_v1p0 http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd"
+    identifier="aqti_tmh_sample_3"
+    title="Estimate distances using multiplication with Bob"
+    adaptive="false"
+    timeDependent="false">
+<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+  <correctResponse>
+    <value>optionA</value>
+  </correctResponse>
+</responseDeclaration>
+<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+<itemBody id="theItemBody">
+  <p data-catalog-idref="cat3"><span data-catalog-idref="cat1">Bob</span> walks to and from his <span data-catalog-idref="cat2">harmonica</span> lessons once a week. His house on Crabapple
+    Dr. is a 2 kilometre walk to his teacher's house on Willow St.</p>
+  <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" class="qti-choices-stacking-2 qti-labels-decimal qti-labels-suffix-period">
+    <qti-prompt>How many kilometres will he walk in a year for his harmonica lessons?</qti-prompt>
+    <qti-simple-choice identifier="optionA" fixed="true">
+      <p>About 200</p>
+    </qti-simple-choice>
+    <qti-simple-choice identifier="optionB" fixed="true">
+      <p>About 100</p>
+    </qti-simple-choice>
+    <qti-simple-choice identifier="optionC" fixed="true">
+      <p>About 50</p>
+    </qti-simple-choice>
+  </qti-choice-interaction>
+</itemBody>
+<catalogInfo>
+  <catalog id="cat1">
+    <card support="linguistic-guidance">
+      <htmlContent>
+        <div class="lg">
+          <p>Bob is the name of a person.</p>
+        </div>
+      </htmlContent>
+    </card>
+  </catalog>
+  <catalog id="cat2">
+    <card support="linguistic-guidance">
+      <htmlContent>
+        <div class="lg">
+          <p>A small, rectangular instrument having a row of reeds set back in air holes. 
+            A harmonica is played by blowing through the air holes. Sometimes it is called a 
+            mouth organ, or mouth harp.</p>
+        </div>
+      </htmlContent>
+    </card>
+    <card support="keyword-translation">
+      <cardEntry lang="es">
+        <htmlContent>
+          <div class="kwt">
+            <p>harmónica</p>
+          </div>
+        </htmlContent>
+      </cardEntry>
+      <cardEntry lang="de">
+        <htmlContent>
+          <div class="kwt">
+            <p>Mundharmonika</p>
+          </div>
+        </htmlContent>
+      </cardEntry>
+    </card>
+  </catalog>
+  <catalog id="cat3">
+    <card support="simplified-language-portions">
+      <htmlContent>
+        <div class="stp">
+          <ul>
+            <li>Bob has harmonica lessons every week of the year.</li>
+            <li>Bob walks 2 kilometres to his lessons each week.</li>
+            <li>Bob walks 2 kilometres back from his lessons each week.</li>
+          </ul>
+        </div>
+      </htmlContent>
+    </card>
+  </catalog>
+</catalogInfo>
+
+</assessmentItem>

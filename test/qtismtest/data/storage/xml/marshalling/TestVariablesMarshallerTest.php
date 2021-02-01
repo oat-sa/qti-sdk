@@ -27,17 +27,17 @@ class TestVariablesMarshallerTest extends QtiSmTestCase
         $component->setSectionIdentifier($sectionIdentifier);
         $component->setIncludeCategories(new IdentifierCollection(explode("\x20", $includeCategory)));
         $component->setExcludeCategories(new IdentifierCollection(explode("\x20", $excludeCategory)));
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('testVariables', $element->nodeName);
-        $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
-        $this->assertEquals($variableIdentifier, $element->getAttribute('variableIdentifier'));
-        $this->assertEquals($weightIdentifier, $element->getAttribute('weightIdentifier'));
-        $this->assertEquals($includeCategory, $element->getAttribute('includeCategory'));
-        $this->assertEquals($excludeCategory, $element->getAttribute('excludeCategory'));
-        $this->assertEquals('integer', $element->getAttribute('baseType'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('testVariables', $element->nodeName);
+        $this::assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
+        $this::assertEquals($variableIdentifier, $element->getAttribute('variableIdentifier'));
+        $this::assertEquals($weightIdentifier, $element->getAttribute('weightIdentifier'));
+        $this::assertEquals($includeCategory, $element->getAttribute('includeCategory'));
+        $this::assertEquals($excludeCategory, $element->getAttribute('excludeCategory'));
+        $this::assertEquals('integer', $element->getAttribute('baseType'));
     }
 
     public function testUnmarshall()
@@ -46,15 +46,15 @@ class TestVariablesMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<testVariables xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1" variableIdentifier="myVariable1" includeCategory="cat1" excludeCategory="cat2 cat3" weightIdentifier="myWeight1" baseType="integer"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(TestVariables::class, $component);
-        $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
-        $this->assertEquals($component->getVariableIdentifier(), 'myVariable1');
-        $this->assertEquals($component->getWeightIdentifier(), 'myWeight1');
-        $this->assertEquals('cat1', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
-        $this->assertEquals('cat2 cat3', implode("\x20", $component->getExcludeCategories()->getArrayCopy()));
-        $this->assertEquals(BaseType::INTEGER, $component->getBaseType());
+        $this::assertInstanceOf(TestVariables::class, $component);
+        $this::assertEquals('mySection1', $component->getSectionIdentifier());
+        $this::assertEquals('myVariable1', $component->getVariableIdentifier());
+        $this::assertEquals('myWeight1', $component->getWeightIdentifier());
+        $this::assertEquals('cat1', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
+        $this::assertEquals('cat2 cat3', implode("\x20", $component->getExcludeCategories()->getArrayCopy()));
+        $this::assertEquals(BaseType::INTEGER, $component->getBaseType());
     }
 }

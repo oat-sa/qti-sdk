@@ -27,11 +27,11 @@ class TemplateProcessingMarshallerTest extends QtiSmTestCase
         $exitTemplate = new ExitTemplate();
         $templateProcessing = new TemplateProcessing(new TemplateRuleCollection([$templateConstraint, $templateCondition, $exitTemplate]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($templateProcessing)->marshall($templateProcessing);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($templateProcessing)->marshall($templateProcessing);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<templateProcessing><templateConstraint><baseValue baseType="boolean">true</baseValue></templateConstraint><templateCondition><templateIf><baseValue baseType="boolean">true</baseValue><setCorrectResponse identifier="RESPONSE"><baseValue baseType="identifier">jerome</baseValue></setCorrectResponse></templateIf></templateCondition><exitTemplate/></templateProcessing>',
             $dom->saveXML($element)
         );
@@ -56,18 +56,18 @@ class TemplateProcessingMarshallerTest extends QtiSmTestCase
 	        </templateProcessing>
 	    ');
 
-        $templateProcessing = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(TemplateProcessing::class, $templateProcessing);
+        $templateProcessing = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+        $this::assertInstanceOf(TemplateProcessing::class, $templateProcessing);
         $templateRules = $templateProcessing->getTemplateRules();
-        $this->assertEquals(3, count($templateRules));
+        $this::assertCount(3, $templateRules);
 
         $templateConstraint = $templateRules[0];
-        $this->assertInstanceOf(TemplateConstraint::class, $templateConstraint);
+        $this::assertInstanceOf(TemplateConstraint::class, $templateConstraint);
 
         $templateCondition = $templateRules[1];
-        $this->assertInstanceOf(TemplateCondition::class, $templateCondition);
+        $this::assertInstanceOf(TemplateCondition::class, $templateCondition);
 
         $exitTemplate = $templateRules[2];
-        $this->assertInstanceOf(ExitTemplate::class, $exitTemplate);
+        $this::assertInstanceOf(ExitTemplate::class, $exitTemplate);
     }
 }

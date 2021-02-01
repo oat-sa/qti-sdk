@@ -31,15 +31,15 @@ class EqualMarshallerTest extends QtiSmTestCase
         $component->setIncludeLowerBound($includeLowerBound);
         $component->setIncludeUpperBound($includeUpperBound);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('equal', $element->nodeName);
-        $this->assertEquals('exact', $element->getAttribute('toleranceMode'));
-        $this->assertEquals('false', $element->getAttribute('includeLowerBound'));
-        $this->assertEquals('', $element->getAttribute('includeUpperBound'));
-        $this->assertEquals(2, $element->getElementsByTagName('baseValue')->length);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('equal', $element->nodeName);
+        $this::assertEquals('exact', $element->getAttribute('toleranceMode'));
+        $this::assertEquals('false', $element->getAttribute('includeLowerBound'));
+        $this::assertEquals('', $element->getAttribute('includeUpperBound'));
+        $this::assertEquals(2, $element->getElementsByTagName('baseValue')->length);
     }
 
     public function testUnmarshall()
@@ -55,14 +55,14 @@ class EqualMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Equal::class, $component);
-        $this->assertIsBool($component->doesIncludeLowerBound());
-        $this->assertIsBool($component->doesIncludeUpperBound());
-        $this->assertFalse($component->doesIncludeLowerBound());
-        $this->assertTrue($component->doesIncludeUpperBound());
-        $this->assertEquals(2, count($component->getExpressions()));
+        $this::assertInstanceOf(Equal::class, $component);
+        $this::assertIsBool($component->doesIncludeLowerBound());
+        $this::assertIsBool($component->doesIncludeUpperBound());
+        $this::assertFalse($component->doesIncludeLowerBound());
+        $this::assertTrue($component->doesIncludeUpperBound());
+        $this::assertCount(2, $component->getExpressions());
     }
 }

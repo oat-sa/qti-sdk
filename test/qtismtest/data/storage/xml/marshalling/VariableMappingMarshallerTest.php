@@ -18,13 +18,13 @@ class VariableMappingMarshallerTest extends QtiSmTestCase
         $target = 'myIdentifier2';
 
         $component = new VariableMapping($source, $target);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('variableMapping', $element->nodeName);
-        $this->assertEquals($source, $element->getAttribute('sourceIdentifier'));
-        $this->assertEquals($target, $element->getAttribute('targetIdentifier'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('variableMapping', $element->nodeName);
+        $this::assertEquals($source, $element->getAttribute('sourceIdentifier'));
+        $this::assertEquals($target, $element->getAttribute('targetIdentifier'));
     }
 
     public function testUnmarshall()
@@ -33,11 +33,11 @@ class VariableMappingMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<variableMapping xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sourceIdentifier="myIdentifier1" targetIdentifier="myIdentifier2"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(VariableMapping::class, $component);
-        $this->assertEquals($component->getSource(), 'myIdentifier1');
-        $this->assertEquals($component->getTarget(), 'myIdentifier2');
+        $this::assertInstanceOf(VariableMapping::class, $component);
+        $this::assertEquals('myIdentifier1', $component->getSource());
+        $this::assertEquals('myIdentifier2', $component->getTarget());
     }
 }

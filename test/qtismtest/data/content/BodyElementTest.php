@@ -38,32 +38,33 @@ class BodyElementTest extends QtiSmTestCase
     public function testRawInstantiation()
     {
         $span = new Span();
-        $this->assertSame('', $span->getAriaControls());
-        $this->assertSame('', $span->getAriaDescribedBy());
-        $this->assertSame('', $span->getAriaFlowTo());
-        $this->assertSame('', $span->getAriaLabel());
-        $this->assertSame('', $span->getAriaLabelledBy());
-        $this->assertSame('', $span->getAriaLevel());
-        $this->assertFalse($span->getAriaLive());
-        $this->assertFalse($span->getAriaOrientation());
-        $this->assertSame('', $span->getAriaOwns());
-        $this->assertSame('', $span->getId());
-        $this->assertSame('', $span->getClass());
-        $this->assertSame('', $span->getLang());
-        $this->assertSame('', $span->getLabel());
-        $this->assertFalse($span->hasId());
-        $this->assertFalse($span->hasClass());
-        $this->assertFalse($span->hasLang());
-        $this->assertFalse($span->hasLabel());
-        $this->assertFalse($span->hasAriaControls());
-        $this->assertFalse($span->hasAriaDescribedBy());
-        $this->assertFalse($span->hasAriaFlowTo());
-        $this->assertFalse($span->hasAriaLabel());
-        $this->assertFalse($span->hasAriaLabelledBy());
-        $this->assertFalse($span->hasAriaLive());
-        $this->assertFalse($span->hasAriaOrientation());
-        $this->assertFalse($span->hasAriaOwns());
-        $this->assertFalse($span->hasAriaHidden());
+        $this::assertSame('', $span->getAriaControls());
+        $this::assertSame('', $span->getAriaDescribedBy());
+        $this::assertSame('', $span->getAriaFlowTo());
+        $this::assertSame('', $span->getAriaLabel());
+        $this::assertSame('', $span->getAriaLabelledBy());
+        $this::assertSame('', $span->getAriaLevel());
+        $this::assertFalse($span->getAriaLive());
+        $this::assertFalse($span->getAriaOrientation());
+        $this::assertSame('', $span->getAriaOwns());
+        $this::assertSame('', $span->getId());
+        $this::assertSame('', $span->getClass());
+        $this::assertSame('', $span->getLang());
+        $this::assertSame('', $span->getLabel());
+        $this::assertFalse($span->getAriaHidden());
+        $this::assertFalse($span->hasId());
+        $this::assertFalse($span->hasClass());
+        $this::assertFalse($span->hasLang());
+        $this::assertFalse($span->hasLabel());
+        $this::assertFalse($span->hasAriaControls());
+        $this::assertFalse($span->hasAriaDescribedBy());
+        $this::assertFalse($span->hasAriaFlowTo());
+        $this::assertFalse($span->hasAriaLabel());
+        $this::assertFalse($span->hasAriaLabelledBy());
+        $this::assertFalse($span->hasAriaLive());
+        $this::assertFalse($span->hasAriaOrientation());
+        $this::assertFalse($span->hasAriaOwns());
+        $this::assertFalse($span->hasAriaHidden());
     }
 
     public function testSetId()
@@ -95,7 +96,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaControls($value);
 
-        $this->assertEquals($value, $span->getAriaControls());
+        $this::assertEquals($value, $span->getAriaControls());
     }
 
     /**
@@ -119,7 +120,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaDescribedBy($value);
 
-        $this->assertEquals($value, $span->getAriaDescribedBy());
+        $this::assertEquals($value, $span->getAriaDescribedBy());
     }
 
     /**
@@ -143,7 +144,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaFlowTo($value);
 
-        $this->assertEquals($value, $span->getAriaFlowTo());
+        $this::assertEquals($value, $span->getAriaFlowTo());
     }
 
     /**
@@ -167,7 +168,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaLabelledBy($value);
 
-        $this->assertEquals($value, $span->getAriaLabelledBy());
+        $this::assertEquals($value, $span->getAriaLabelledBy());
     }
 
     /**
@@ -191,7 +192,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaOwns($value);
 
-        $this->assertEquals($value, $span->getAriaOwns());
+        $this::assertEquals($value, $span->getAriaOwns());
     }
 
     /**
@@ -215,7 +216,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaLevel($value);
 
-        $this->assertEquals((string)$value, $span->getAriaLevel());
+        $this::assertEquals((string)$value, $span->getAriaLevel());
     }
 
     /**
@@ -241,7 +242,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaLive($value);
 
-        $this->assertEquals($value, $span->getAriaLive());
+        $this::assertEquals($value, $span->getAriaLive());
     }
 
     /**
@@ -265,7 +266,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaOrientation($value);
 
-        $this->assertEquals($value, $span->getAriaOrientation());
+        $this::assertEquals($value, $span->getAriaOrientation());
     }
 
     /**
@@ -288,7 +289,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaLabel($value);
 
-        $this->assertEquals($value, $span->getAriaLabel());
+        $this::assertEquals($value, $span->getAriaLabel());
     }
 
     /**
@@ -311,7 +312,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaHidden($value);
 
-        $this->assertSame($value, $span->getAriaHidden());
+        $this::assertSame($value, $span->getAriaHidden());
     }
 
     /**

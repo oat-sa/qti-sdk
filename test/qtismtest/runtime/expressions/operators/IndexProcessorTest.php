@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -29,22 +30,22 @@ class IndexProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4), new QtiInteger(5)]);
         $processor = new IndexProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(1, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(1, $result->getValue());
 
         // in the middle...
         $expression = $this->createFakeExpression(3);
         $processor->setExpression($expression);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(3, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(3, $result->getValue());
 
         // in the end...
         $expression = $this->createFakeExpression(5);
         $processor->setExpression($expression);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(5, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(5, $result->getValue());
     }
 
     public function testIndexVariableReference()
@@ -59,8 +60,8 @@ class IndexProcessorTest extends QtiSmTestCase
         $processor->setState($state);
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(3, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(3, $result->getValue());
     }
 
     public function testIndexVariableReferenceNotFound()
@@ -110,7 +111,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3), new QtiInteger(4), new QtiInteger(5)]);
         $processor = new IndexProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()
@@ -130,7 +131,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $operands[] = new OrderedContainer(BaseType::FLOAT);
         $processor = new IndexProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testNotEnoughOperands()
@@ -154,6 +155,7 @@ class IndexProcessorTest extends QtiSmTestCase
     /**
      * @param int $n
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($n = -1)
     {

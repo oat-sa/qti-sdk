@@ -41,7 +41,7 @@ class GapMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('gap');
+        $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         if ($component->isFixed() === true) {
@@ -53,7 +53,7 @@ class GapMarshaller extends Marshaller
         }
 
         if ($component->getShowHide() === ShowHide::HIDE) {
-            $this->setDOMElementAttribute($element, 'showHide', ShowHide::HIDE);
+            $this->setDOMElementAttribute($element, 'showHide', ShowHide::getNameByConstant(ShowHide::HIDE));
         }
 
         if ($component->isRequired() === true) {

@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\MultipleProcessor;
@@ -29,43 +30,43 @@ class MultipleProcessorTest extends QtiSmTestCase
 
         $operands[] = null;
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands = new OperandsCollection([new MultipleContainer(BaseType::FLOAT)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands = new OperandsCollection([null, new QtiInteger(25), new MultipleContainer(BaseType::INTEGER)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(MultipleContainer::class, $result);
-        $this->assertEquals(1, count($result));
-        $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
-        $this->assertEquals(25, $result[0]->getValue());
+        $this::assertInstanceOf(MultipleContainer::class, $result);
+        $this::assertCount(1, $result);
+        $this::assertEquals(BaseType::INTEGER, $result->getBaseType());
+        $this::assertEquals(25, $result[0]->getValue());
 
         $operands = new OperandsCollection([null, new QtiInteger(25), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(26)])]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(MultipleContainer::class, $result);
-        $this->assertEquals(2, count($result));
-        $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
-        $this->assertEquals(25, $result[0]->getValue());
-        $this->assertEquals(26, $result[1]->getValue());
+        $this::assertInstanceOf(MultipleContainer::class, $result);
+        $this::assertCount(2, $result);
+        $this::assertEquals(BaseType::INTEGER, $result->getBaseType());
+        $this::assertEquals(25, $result[0]->getValue());
+        $this::assertEquals(26, $result[1]->getValue());
 
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER), new QtiInteger(25), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(26)])]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(MultipleContainer::class, $result);
-        $this->assertEquals(2, count($result));
-        $this->assertEquals(BaseType::INTEGER, $result->getBaseType());
-        $this->assertEquals(25, $result[0]->getValue());
-        $this->assertEquals(26, $result[1]->getValue());
+        $this::assertInstanceOf(MultipleContainer::class, $result);
+        $this::assertCount(2, $result);
+        $this::assertEquals(BaseType::INTEGER, $result->getBaseType());
+        $this::assertEquals(25, $result[0]->getValue());
+        $this::assertEquals(26, $result[1]->getValue());
 
         $operands = new OperandsCollection();
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testScalar()
@@ -78,17 +79,17 @@ class MultipleProcessorTest extends QtiSmTestCase
         $processor = new MultipleProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf(MultipleContainer::class, $result);
-        $this->assertEquals(3, count($result));
-        $this->assertEquals('String1', $result[0]->getValue());
-        $this->assertEquals('String2', $result[1]->getValue());
-        $this->assertEquals('String3', $result[2]->getValue());
+        $this::assertInstanceOf(MultipleContainer::class, $result);
+        $this::assertCount(3, $result);
+        $this::assertEquals('String1', $result[0]->getValue());
+        $this::assertEquals('String2', $result[1]->getValue());
+        $this::assertEquals('String3', $result[2]->getValue());
 
         $operands = new OperandsCollection([new QtiString('String!')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(MultipleContainer::class, $result);
-        $this->assertEquals(1, count($result));
+        $this::assertInstanceOf(MultipleContainer::class, $result);
+        $this::assertCount(1, $result);
     }
 
     public function testContainer()
@@ -100,11 +101,11 @@ class MultipleProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
         $processor = new MultipleProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(MultipleContainer::class, $result);
-        $this->assertEquals(3, count($result));
-        $this->assertTrue($result[0]->equals(new QtiPoint(1, 2)));
-        $this->assertTrue($result[1]->equals(new QtiPoint(2, 3)));
-        $this->assertTrue($result[2]->equals(new QtiPoint(3, 4)));
+        $this::assertInstanceOf(MultipleContainer::class, $result);
+        $this::assertCount(3, $result);
+        $this::assertTrue($result[0]->equals(new QtiPoint(1, 2)));
+        $this::assertTrue($result[1]->equals(new QtiPoint(2, 3)));
+        $this::assertTrue($result[2]->equals(new QtiPoint(3, 4)));
     }
 
     public function testMixed()
@@ -116,10 +117,10 @@ class MultipleProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::POINT, [new QtiPoint(3, 4)]);
         $processor = new MultipleProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(MultipleContainer::class, $result);
-        $this->assertEquals(2, count($result));
-        $this->assertTrue($result[0]->equals(new QtiPoint(1, 2)));
-        $this->assertTrue($result[1]->equals(new QtiPoint(3, 4)));
+        $this::assertInstanceOf(MultipleContainer::class, $result);
+        $this::assertCount(2, $result);
+        $this::assertTrue($result[0]->equals(new QtiPoint(1, 2)));
+        $this::assertTrue($result[1]->equals(new QtiPoint(3, 4)));
     }
 
     public function testWrongBaseTypeOne()
@@ -165,6 +166,7 @@ class MultipleProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

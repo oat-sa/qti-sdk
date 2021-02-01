@@ -31,10 +31,10 @@ class VariableIdentifierTest extends QtiSmTestCase
     {
         $v = new VariableIdentifier($identifier);
 
-        $this->assertEquals($identifier, $v->getIdentifier());
-        $this->assertEquals($identifier, $v->getVariableName());
-        $this->assertFalse($v->hasPrefix());
-        $this->assertFalse($v->hasSequenceNumber());
+        $this::assertEquals($identifier, $v->getIdentifier());
+        $this::assertEquals($identifier, $v->getVariableName());
+        $this::assertFalse($v->hasPrefix());
+        $this::assertFalse($v->hasSequenceNumber());
     }
 
     /**
@@ -48,11 +48,11 @@ class VariableIdentifierTest extends QtiSmTestCase
     {
         $v = new VariableIdentifier($identifier);
 
-        $this->assertEquals($identifier, $v->getIdentifier());
-        $this->assertTrue($v->hasPrefix());
-        $this->assertFalse($v->hasSequenceNumber());
-        $this->assertEquals($expectedPrefix, $v->getPrefix());
-        $this->assertEquals($expectedVariableName, $v->getVariableName());
+        $this::assertEquals($identifier, $v->getIdentifier());
+        $this::assertTrue($v->hasPrefix());
+        $this::assertFalse($v->hasSequenceNumber());
+        $this::assertEquals($expectedPrefix, $v->getPrefix());
+        $this::assertEquals($expectedVariableName, $v->getVariableName());
     }
 
     /**
@@ -67,12 +67,12 @@ class VariableIdentifierTest extends QtiSmTestCase
     {
         $v = new VariableIdentifier($identifier);
 
-        $this->assertEquals($identifier, $v->getIdentifier());
-        $this->assertTrue($v->hasPrefix());
-        $this->assertTrue($v->hasSequenceNumber());
-        $this->assertEquals($expectedPrefix, $v->getPrefix());
-        $this->assertEquals($expectedVariableName, $v->getVariableName());
-        $this->assertEquals($expectedSequence, $v->getSequenceNumber());
+        $this::assertEquals($identifier, $v->getIdentifier());
+        $this::assertTrue($v->hasPrefix());
+        $this::assertTrue($v->hasSequenceNumber());
+        $this::assertEquals($expectedPrefix, $v->getPrefix());
+        $this::assertEquals($expectedVariableName, $v->getVariableName());
+        $this::assertEquals($expectedSequence, $v->getSequenceNumber());
     }
 
     public function testInvalidSequenceNumberOne()

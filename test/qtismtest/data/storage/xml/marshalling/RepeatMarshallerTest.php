@@ -24,23 +24,23 @@ class RepeatMarshallerTest extends QtiSmTestCase
         $sub2 = new MathOperator(new ExpressionCollection([$sub21]), MathFunctions::SIN);
 
         $component = new Repeat(new ExpressionCollection([$sub1, $sub2]), 2);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('repeat', $element->nodeName);
-        $this->assertEquals('2', $element->getAttribute('numberRepeats'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('repeat', $element->nodeName);
+        $this::assertEquals('2', $element->getAttribute('numberRepeats'));
 
         $sub1 = $element->getElementsByTagName('baseValue')->item(0);
-        $this->assertEquals('23.545', $sub1->nodeValue);
-        $this->assertEquals('float', $sub1->getAttribute('baseType'));
+        $this::assertEquals('23.545', $sub1->nodeValue);
+        $this::assertEquals('float', $sub1->getAttribute('baseType'));
 
         $sub2 = $element->getElementsByTagName('mathOperator')->item(0);
-        $this->assertEquals('sin', $sub2->getAttribute('name'));
+        $this::assertEquals('sin', $sub2->getAttribute('name'));
 
         $sub22 = $sub2->getElementsByTagName('baseValue')->item(0);
-        $this->assertEquals('float', $sub22->getAttribute('baseType'));
-        $this->assertEquals('1.68', $sub22->nodeValue);
+        $this::assertEquals('float', $sub22->getAttribute('baseType'));
+        $this::assertEquals('1.68', $sub22->nodeValue);
     }
 
     public function testUnmarshall()
@@ -60,34 +60,34 @@ class RepeatMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Repeat::class, $component);
-        $this->assertEquals(2, $component->getNumberRepeats());
+        $this::assertInstanceOf(Repeat::class, $component);
+        $this::assertEquals(2, $component->getNumberRepeats());
 
         $sub1 = $component->getExpressions();
         $sub1 = $sub1[0];
-        $this->assertInstanceOf(MathOperator::class, $sub1);
-        $this->assertEquals(MathFunctions::SIN, $sub1->getName());
+        $this::assertInstanceOf(MathOperator::class, $sub1);
+        $this::assertEquals(MathFunctions::SIN, $sub1->getName());
 
         $sub11 = $sub1->getExpressions();
         $sub11 = $sub11[0];
-        $this->assertInstanceOf(BaseValue::class, $sub11);
-        $this->assertIsFloat($sub11->getValue());
-        $this->assertEquals(23.545, $sub11->getValue());
-        $this->assertEquals(BaseType::FLOAT, $sub11->getBaseType());
+        $this::assertInstanceOf(BaseValue::class, $sub11);
+        $this::assertIsFloat($sub11->getValue());
+        $this::assertEquals(23.545, $sub11->getValue());
+        $this::assertEquals(BaseType::FLOAT, $sub11->getBaseType());
 
         $sub2 = $component->getExpressions();
         $sub2 = $sub2[1];
-        $this->assertInstanceOf(Repeat::class, $sub2);
-        $this->assertEquals(10, $sub2->getNumberRepeats());
+        $this::assertInstanceOf(Repeat::class, $sub2);
+        $this::assertEquals(10, $sub2->getNumberRepeats());
 
         $sub21 = $sub2->getExpressions();
         $sub21 = $sub21[0];
-        $this->assertInstanceOf(BaseValue::class, $sub21);
-        $this->assertIsFloat($sub21->getValue());
-        $this->assertEquals(1.68, $sub21->getValue());
-        $this->assertEquals(BaseType::FLOAT, $sub21->getBaseType());
+        $this::assertInstanceOf(BaseValue::class, $sub21);
+        $this::assertIsFloat($sub21->getValue());
+        $this::assertEquals(1.68, $sub21->getValue());
+        $this::assertEquals(BaseType::FLOAT, $sub21->getBaseType());
     }
 }

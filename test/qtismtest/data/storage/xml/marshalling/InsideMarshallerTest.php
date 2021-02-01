@@ -25,14 +25,14 @@ class InsideMarshallerTest extends QtiSmTestCase
         $coords = new QtiCoords($shape, [0, 0, 100, 20]);
 
         $component = new Inside($subs, $shape, $coords);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('inside', $element->nodeName);
-        $this->assertEquals(implode(',', [0, 0, 100, 20]), $element->getAttribute('coords'));
-        $this->assertEquals('rect', $element->getAttribute('shape'));
-        $this->assertEquals(1, $element->getElementsByTagName('variable')->length);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('inside', $element->nodeName);
+        $this::assertEquals(implode(',', [0, 0, 100, 20]), $element->getAttribute('coords'));
+        $this::assertEquals('rect', $element->getAttribute('shape'));
+        $this::assertEquals(1, $element->getElementsByTagName('variable')->length);
     }
 
     public function testUnmarshall()
@@ -47,13 +47,13 @@ class InsideMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Inside::class, $component);
-        $this->assertInstanceOf(QtiCoords::class, $component->getCoords());
-        $this->assertIsInt($component->getShape());
-        $this->assertEquals(QtiShape::RECT, $component->getShape());
-        $this->assertEquals(1, count($component->getExpressions()));
+        $this::assertInstanceOf(Inside::class, $component);
+        $this::assertInstanceOf(QtiCoords::class, $component->getCoords());
+        $this::assertIsInt($component->getShape());
+        $this::assertEquals(QtiShape::RECT, $component->getShape());
+        $this::assertCount(1, $component->getExpressions());
     }
 }

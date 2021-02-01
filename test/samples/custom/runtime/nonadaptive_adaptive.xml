@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v2p1.xsd"
+                identifier="nonadaptive_adaptive" title="Non Adaptive - Adaptive">
+    <testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+        <assessmentSection identifier="S01" title="Section1" visible="true">
+            <assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false"/>
+            <assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false"/>
+            <assessmentItemRef identifier="Q03" href="./Q03.xml" timeDependent="false"/>
+        </assessmentSection>
+    </testPart>
+    <testPart identifier="P02" navigationMode="linear" submissionMode="individual">
+        <assessmentSection identifier="S02" title="Section1" visible="true">
+            <assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false">
+                <branchRule target="Q06">
+                    <match>
+                        <baseValue baseType="boolean">true</baseValue>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="Q05" href="./Q05.xml" timeDependent="false"/>
+            <assessmentItemRef identifier="Q06" href="./Q06.xml" timeDependent="false"/>
+        </assessmentSection>
+    </testPart>
+</assessmentTest>

@@ -19,12 +19,12 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
 
         $component = new ItemSubset();
         $component->setSectionIdentifier($sectionIdentifier);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('itemSubset', $element->nodeName);
-        $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('itemSubset', $element->nodeName);
+        $this::assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
     }
 
     public function testMarshallIncludeCategories()
@@ -35,13 +35,13 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $component = new ItemSubset();
         $component->setSectionIdentifier($sectionIdentifier);
         $component->setIncludeCategories($includeCategories);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('itemSubset', $element->nodeName);
-        $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
-        $this->assertEquals(implode("\x20", $includeCategories->getArrayCopy()), $element->getAttribute('includeCategory'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('itemSubset', $element->nodeName);
+        $this::assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
+        $this::assertEquals(implode("\x20", $includeCategories->getArrayCopy()), $element->getAttribute('includeCategory'));
     }
 
     public function testMarshallIncludeExcludeCategories()
@@ -54,14 +54,14 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $component->setSectionIdentifier($sectionIdentifier);
         $component->setIncludeCategories($includeCategories);
         $component->setExcludeCategories($excludeCategories);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('itemSubset', $element->nodeName);
-        $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
-        $this->assertEquals(implode("\x20", $includeCategories->getArrayCopy()), $element->getAttribute('includeCategory'));
-        $this->assertEquals(implode("\x20", $excludeCategories->getArrayCopy()), $element->getAttribute('excludeCategory'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('itemSubset', $element->nodeName);
+        $this::assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
+        $this::assertEquals(implode("\x20", $includeCategories->getArrayCopy()), $element->getAttribute('includeCategory'));
+        $this::assertEquals(implode("\x20", $excludeCategories->getArrayCopy()), $element->getAttribute('excludeCategory'));
     }
 
     public function testUnmarshallNoCategories()
@@ -70,11 +70,11 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<itemSubset xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ItemSubset::class, $component);
-        $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
+        $this::assertInstanceOf(ItemSubset::class, $component);
+        $this::assertEquals('mySection1', $component->getSectionIdentifier());
     }
 
     public function testUnmarshallIncludeCategories()
@@ -83,12 +83,12 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<itemSubset xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1" includeCategory="cat1 cat2"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ItemSubset::class, $component);
-        $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
-        $this->assertEquals(implode("\x20", $component->getIncludeCategories()->getArrayCopy()), 'cat1 cat2');
+        $this::assertInstanceOf(ItemSubset::class, $component);
+        $this::assertEquals('mySection1', $component->getSectionIdentifier());
+        $this::assertEquals('cat1 cat2', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
     }
 
     public function testUnmarshallIncludeExcludeCategories()
@@ -97,12 +97,12 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<itemSubset xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1" includeCategory="cat1 cat2" excludeCategory="cat3"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ItemSubset::class, $component);
-        $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
-        $this->assertEquals(implode("\x20", $component->getIncludeCategories()->getArrayCopy()), 'cat1 cat2');
-        $this->assertEquals(implode("\x20", $component->getExcludeCategories()->getArrayCopy()), 'cat3');
+        $this::assertInstanceOf(ItemSubset::class, $component);
+        $this::assertEquals('mySection1', $component->getSectionIdentifier());
+        $this::assertEquals('cat1 cat2', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
+        $this::assertEquals('cat3', implode("\x20", $component->getExcludeCategories()->getArrayCopy()));
     }
 }

@@ -44,7 +44,7 @@ class TemplateProcessingMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('templateProcessing');
+        $element = $this->createElement($component);
 
         foreach ($component->getTemplateRules() as $templateRule) {
             $element->appendChild($this->getMarshallerFactory()->createMarshaller($templateRule)->marshall($templateRule));

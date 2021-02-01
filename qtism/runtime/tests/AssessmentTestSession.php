@@ -39,6 +39,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
+use qtism\data\state\Weight;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
 use qtism\data\TestPart;
@@ -1216,7 +1217,7 @@ class AssessmentTestSession extends State
      *  * if the current item of the selection is Q23, the return value is 0.
      *  * if the current item of the selection is Q01.3, the return value is 2.
      *
-     * @return int| the occurence number of the current AssessmentItemRef in the route or false if the test session is not running.
+     * @return int the occurence number of the current AssessmentItemRef in the route or false if the test session is not running.
      */
     public function getCurrentAssessmentItemRefOccurence()
     {

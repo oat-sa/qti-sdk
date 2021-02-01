@@ -29,33 +29,50 @@ abstract class QtiSmRouteTestCase extends QtiSmTestCase
     /**
      * Build a simple route:
      *
+     * $testPartCount = 1; $itemCount = 3
+     *
      * * Q1 - S1 - T1
      * * Q2 - S1 - T1
      * * Q3 - S1 - T1
      *
+     * $testPartCount = 2; $itemCount = 1
+     *
+     * * Q1 - S1 - T1
+     * * Q2 - S2 - T2
+     *
      * @param string $routeClass
+     * @param int $testPartCount
+     * @param int $itemCount
      * @return Route
      */
-    public static function buildSimpleRoute($routeClass = Route::class)
+    public static function buildSimpleRoute($routeClass = Route::class, $testPartCount = 1, $itemCount = 3)
     {
-        $assessmentItemRefs = new AssessmentItemRefCollection();
-        $assessmentItemRefs[] = new AssessmentItemRef('Q1', 'Q1.xml');
-        $assessmentItemRefs[] = new AssessmentItemRef('Q2', 'Q2.xml');
-        $assessmentItemRefs[] = new AssessmentItemRef('Q3', 'Q3.xml');
-
-        $assessmentSections = new AssessmentSectionCollection();
-        $assessmentSections[] = new AssessmentSection('S1', 'Section 1', true);
-        $assessmentSections['S1']->setSectionParts($assessmentItemRefs);
-
-        $testParts = new TestPartCollection();
-        $testParts[] = new TestPart('T1', $assessmentSections);
-        $assessmentTest = new AssessmentTest('test', 'A Test', $testParts);
-
         $route = new $routeClass();
+        $assessmentTest = new AssessmentTest('test', 'A Test');
 
-        $route->addRouteItem($assessmentItemRefs['Q1'], $assessmentSections['S1'], $testParts['T1'], $assessmentTest);
-        $route->addRouteItem($assessmentItemRefs['Q2'], $assessmentSections['S1'], $testParts['T1'], $assessmentTest);
-        $route->addRouteItem($assessmentItemRefs['Q3'], $assessmentSections['S1'], $testParts['T1'], $assessmentTest);
+        for ($i = 0; $i < $testPartCount; $i++) {
+            $partNum = $i + 1;
+            $assessmentItemRefs = new AssessmentItemRefCollection();
+
+            for ($j = 0; $j < $itemCount; $j++) {
+                $itemNum = $j + 1 + ($itemCount * $i);
+                $assessmentItemRefs[] = new AssessmentItemRef("Q${itemNum}", "Q${itemNum}.xml");
+            }
+
+            $assessmentSections = new AssessmentSectionCollection();
+            $assessmentSections[] = new AssessmentSection("S${partNum}", "Section ${partNum}", true);
+            $assessmentSections["S${partNum}"]->setSectionParts($assessmentItemRefs);
+
+            $testParts = new TestPartCollection();
+            $testParts[] = new TestPart("T${partNum}", $assessmentSections);
+
+            for ($j = 0; $j < count($assessmentItemRefs); $j++) {
+                $itemNum = $j + 1 + ($itemCount * $i);
+                $route->addRouteItem($assessmentItemRefs["Q${itemNum}"], $assessmentSections["S${partNum}"], $testParts["T${partNum}"], $assessmentTest);
+            }
+        }
+
+        $assessmentTest->setTestParts($testParts);
 
         return $route;
     }

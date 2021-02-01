@@ -39,23 +39,23 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor->setState($state);
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(3.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(3.0, $result->getValue());
 
         $state['response1'] = new QtiPoint(3, 3); // in rect, circle, poly
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(6, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(6, $result->getValue());
 
         $state['response1'] = new QtiPoint(19, 9); // in rect
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1, $result->getValue());
 
         $state['response1'] = new QtiPoint(25, 25); // outside everything.
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(666.666, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(666.666, $result->getValue());
     }
 
     public function testMultipleCardinality()
@@ -84,8 +84,8 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor->setState($state);
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(6, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(6, $result->getValue());
 
         // Nothing matches... defaultValue returned.
         $points = new MultipleContainer(BaseType::POINT);
@@ -94,8 +94,8 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $state['response1'] = $points;
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(666.666, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(666.666, $result->getValue());
     }
 
     public function testNoVariable()
@@ -120,8 +120,8 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor = new MapResponsePointProcessor($expr);
         $processor->setState(new State([$variable]));
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(0.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(0.0, $result->getValue());
     }
 
     public function testDefaultValue()
@@ -138,8 +138,8 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor = new MapResponsePointProcessor($expr);
         $processor->setState(new State([$variable]));
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(2.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(2.0, $result->getValue());
     }
 
     public function testWrongBaseType()
@@ -172,7 +172,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor->setState(new State([$variable]));
 
         $result = $processor->process();
-        $this->assertEquals(0.0, $result->getValue());
+        $this::assertEquals(0.0, $result->getValue());
     }
 
     public function testWrongVariableType()
@@ -206,8 +206,8 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor->setState(new State([$variable]));
         $result = $processor->process();
 
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1, $result->getValue());
     }
 
     public function testUpperBoundOverflow()
@@ -227,7 +227,28 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $processor->setState(new State([$variable]));
         $result = $processor->process();
 
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(5, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(5, $result->getValue());
+    }
+
+    public function testWithRecord()
+    {
+        $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
+        $variableDeclaration = $this->createComponentFromXml('
+			<responseDeclaration identifier="response1" cardinality="record">
+	            <areaMapping lowerBound="1" upperBound="5">
+					<areaMapEntry shape="rect" coords="0,0,20,10" mappedValue="4"/>
+					<areaMapEntry shape="circle" coords="5,5,5" mappedValue="2"/>
+				</areaMapping>
+	        </responseDeclaration>
+		');
+
+        $variable = ResponseVariable::createFromDataModel($variableDeclaration);
+        $processor = new MapResponsePointProcessor($expr);
+        $processor->setState(new State([$variable]));
+
+        $this->expectException(ExpressionProcessingException::class);
+        $this->expectExceptionMessage('The MapResponsePoint expression cannot be applied to RECORD variables.');
+        $result = $processor->process();
     }
 }

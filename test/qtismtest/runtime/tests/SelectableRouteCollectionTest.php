@@ -19,34 +19,34 @@ class SelectableRouteCollectionTest extends QtiSmTestCase
 
         $routes = new SelectableRouteCollection([$routeA, $routeB, $routeC]);
 
-        $this->assertTrue($routes[0] === $routeA);
-        $this->assertTrue($routes[1] === $routeB);
-        $this->assertTrue($routes[2] === $routeC);
+        $this::assertSame($routeA, $routes[0]);
+        $this::assertSame($routeB, $routes[1]);
+        $this::assertSame($routeC, $routes[2]);
 
         $routeAlpha = new SelectableRoute();
         $routes->insertAt($routeAlpha, 0);
 
-        $this->assertTrue($routes[0] === $routeAlpha);
-        $this->assertTrue($routes[1] === $routeA);
-        $this->assertTrue($routes[2] === $routeB);
-        $this->assertTrue($routes[3] === $routeC);
+        $this::assertSame($routeAlpha, $routes[0]);
+        $this::assertSame($routeA, $routes[1]);
+        $this::assertSame($routeB, $routes[2]);
+        $this::assertSame($routeC, $routes[3]);
 
         $routeOmega = new SelectableRoute();
         $routes->insertAt($routeOmega, 4);
 
-        $this->assertTrue($routes[0] === $routeAlpha);
-        $this->assertTrue($routes[1] === $routeA);
-        $this->assertTrue($routes[2] === $routeB);
-        $this->assertTrue($routes[3] === $routeC);
-        $this->asserTtrue($routes[4] === $routeOmega);
+        $this::assertSame($routeAlpha, $routes[0]);
+        $this::assertSame($routeA, $routes[1]);
+        $this::assertSame($routeB, $routes[2]);
+        $this::assertSame($routeC, $routes[3]);
+        $this::assertSame($routeOmega, $routes[4]);
 
         $routeGamma = new SelectableRoute();
         $routes->insertAt($routeGamma, 2);
-        $this->assertTrue($routes[0] === $routeAlpha);
-        $this->assertTrue($routes[1] === $routeA);
-        $this->assertTrue($routes[2] === $routeGamma);
-        $this->assertTrue($routes[3] === $routeB);
-        $this->asserTtrue($routes[4] === $routeC);
-        $this->asserTtrue($routes[5] === $routeOmega);
+        $this::assertSame($routeAlpha, $routes[0]);
+        $this::assertSame($routeA, $routes[1]);
+        $this::assertSame($routeGamma, $routes[2]);
+        $this::assertSame($routeB, $routes[3]);
+        $this::assertSame($routeC, $routes[4]);
+        $this::assertSame($routeOmega, $routes[5]);
     }
 }

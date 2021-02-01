@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+    xmlns:pic="http://www.taotesting/xsd/oatpicv1p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd http://www.taotesting/xsd/oatpicv1p0 http://www.taotesting/xsd/oatpicv1p0.xsd" 
+    identifier="custom_operator_item" title="Custom Operator Item" adaptive="false" timeDependent="false">
+	<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+	<outcomeDeclaration identifier="SCORE" cardinality="ordered" baseType="string"/>
+    <outcomeDeclaration identifier="SHOW-FEEDBACK" cardinality="single" baseType="identifier"/>
+	<itemBody>
+        <infoControl id="calculator" title="Sample Info Control - Calculator">
+            <div>
+                Calculator!
+            </div>
+        </infoControl>
+        <infoControl id="ruler" title="Sample Info Control - Ruler">
+            <div>
+                Ruler!
+            </div>
+        </infoControl>
+        <div>
+            <blockquote>
+                <infoControl id="quoter" title="Sample Info Control - Quoter">
+                    Quoter !
+                </infoControl>
+            </blockquote>
+            <feedbackBlock outcomeIdentifier="SHOW-FEEDBACK" showHide="show" identifier="fail">
+                <infoControl id="helper" title="Sample Info Control - Helper">
+                    Helper !
+                </infoControl>
+            </feedbackBlock>
+        </div>
+	</itemBody>
+</assessmentItem>

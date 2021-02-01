@@ -4,6 +4,7 @@ namespace qtismtest\runtime\rules;
 
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OutcomeVariable;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
@@ -20,6 +21,7 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
      *
      * @param string $response A QTI Identifier
      * @param float $expectedScore The expected score for a given $response
+     * @throws MarshallerNotFoundException
      */
     public function testResponseConditionMatchCorrect($response, $expectedScore)
     {
@@ -50,7 +52,7 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
 			</responseDeclaration>
 		');
         $responseVar = ResponseVariable::createFromDataModel($responseVarDeclaration);
-        $this->assertTrue($responseVar->getCorrectResponse()->equals(new QtiIdentifier('ChoiceA')));
+        $this::assertTrue($responseVar->getCorrectResponse()->equals(new QtiIdentifier('ChoiceA')));
 
         // Set 'ChoiceA' to 'RESPONSE' in order to get a score of 1.0.
         $responseVar->setValue($response);
@@ -63,15 +65,15 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
 			</outcomeDeclaration>		
 		');
         $outcomeVar = OutcomeVariable::createFromDataModel($outcomeVarDeclaration);
-        $this->assertEquals(0, $outcomeVar->getDefaultValue()->getValue());
+        $this::assertEquals(0, $outcomeVar->getDefaultValue()->getValue());
 
         $state = new State([$responseVar, $outcomeVar]);
         $processor = new ResponseConditionProcessor($rule);
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf(QtiFloat::class, $state['SCORE']);
-        $this->assertTrue($expectedScore->equals($state['SCORE']));
+        $this::assertInstanceOf(QtiFloat::class, $state['SCORE']);
+        $this::assertTrue($expectedScore->equals($state['SCORE']));
     }
 
     /**

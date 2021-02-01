@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\SubtractProcessor;
@@ -24,14 +25,14 @@ class SubtractProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(256)]);
         $processor = new SubtractProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(-246, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(-246, $result->getValue());
 
         $operands = new OperandsCollection([new QtiFloat(-5.0), new QtiInteger(-10)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(5, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(5, $result->getValue());
     }
 
     public function testNull()
@@ -40,12 +41,12 @@ class SubtractProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), null]);
         $processor = new SubtractProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::FLOAT);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseType()
@@ -84,6 +85,7 @@ class SubtractProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

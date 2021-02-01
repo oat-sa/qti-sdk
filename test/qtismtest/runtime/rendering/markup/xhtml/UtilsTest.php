@@ -63,10 +63,10 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         Utils::shuffle($node, $shufflables);
 
         // Let's check if 'choice2' is still in place...
-        $this->assertEquals('choice2', $node->getElementsByTagName('div')->item(1)->getAttribute('id'));
+        $this::assertEquals('choice2', $node->getElementsByTagName('div')->item(1)->getAttribute('id'));
         $node0Id = $node->getElementsByTagName('div')->item(0)->getAttribute('id');
         $node1Id = $node->getElementsByTagName('div')->item(2)->getAttribute('id');
-        $this->assertTrue($node0Id === 'choice1' && $node1Id === 'choice3' || $node0Id === 'choice3' && $node1Id === 'choice1');
+        $this::assertTrue($node0Id === 'choice1' && $node1Id === 'choice3' || $node0Id === 'choice3' && $node1Id === 'choice1');
     }
 
     public function testShuffleWithStatements()
@@ -86,7 +86,7 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $shufflables[] = new SimpleChoice('blu');
 
         Utils::shuffle($dom->documentElement, $shufflables);
-        $this->assertTrue(true);
+        $this::assertTrue(true);
     }
 
     public function testHasClass()
@@ -96,10 +96,10 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
 
         $node->setAttribute('class', 'hello there');
 
-        $this->assertTrue(Utils::hasClass($node, 'hello'));
-        $this->assertTrue(Utils::hasClass($node, 'there'));
-        $this->assertTrue(Utils::hasClass($node, ['hello', 'there']));
-        $this->assertFalse(Utils::hasClass($node, 'unknown'));
-        $this->assertFalse(Utils::hasClass($node, ['unknown', 'class']));
+        $this::assertTrue(Utils::hasClass($node, 'hello'));
+        $this::assertTrue(Utils::hasClass($node, 'there'));
+        $this::assertTrue(Utils::hasClass($node, ['hello', 'there']));
+        $this::assertFalse(Utils::hasClass($node, 'unknown'));
+        $this::assertFalse(Utils::hasClass($node, ['unknown', 'class']));
     }
 }

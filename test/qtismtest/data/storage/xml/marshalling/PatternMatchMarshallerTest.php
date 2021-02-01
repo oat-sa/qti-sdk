@@ -23,13 +23,13 @@ class PatternMatchMarshallerTest extends QtiSmTestCase
         $pattern = '^Hello World$';
 
         $component = new PatternMatch($subs, $pattern);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('patternMatch', $element->nodeName);
-        $this->assertEquals($pattern, $element->getAttribute('pattern'));
-        $this->assertEquals(1, $element->getElementsByTagName('baseValue')->length);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('patternMatch', $element->nodeName);
+        $this::assertEquals($pattern, $element->getAttribute('pattern'));
+        $this::assertEquals(1, $element->getElementsByTagName('baseValue')->length);
     }
 
     public function testUnmarshall()
@@ -44,11 +44,11 @@ class PatternMatchMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(PatternMatch::class, $component);
-        $this->assertEquals('^Hello World$', $component->getPattern());
-        $this->assertEquals(1, count($component->getExpressions()));
+        $this::assertInstanceOf(PatternMatch::class, $component);
+        $this::assertEquals('^Hello World$', $component->getPattern());
+        $this::assertCount(1, $component->getExpressions());
     }
 }

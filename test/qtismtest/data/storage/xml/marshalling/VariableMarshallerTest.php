@@ -18,13 +18,13 @@ class VariableMarshallerTest extends QtiSmTestCase
         $weightIdentifier = 'myWeight1';
 
         $component = new Variable($identifier, $weightIdentifier);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('variable', $element->nodeName);
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
-        $this->assertEquals($weightIdentifier, $element->getAttribute('weightIdentifier'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('variable', $element->nodeName);
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertEquals($weightIdentifier, $element->getAttribute('weightIdentifier'));
     }
 
     public function testMarshallNoWeight()
@@ -32,13 +32,13 @@ class VariableMarshallerTest extends QtiSmTestCase
         $identifier = 'myVariable1';
 
         $component = new Variable($identifier);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('variable', $element->nodeName);
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
-        $this->assertEquals('', $element->getAttribute('weightIdentifier')); // should have no weightIdentifier attr.
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('variable', $element->nodeName);
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertEquals('', $element->getAttribute('weightIdentifier')); // should have no weightIdentifier attr.
     }
 
     public function testUnmarshallWeight()
@@ -47,12 +47,12 @@ class VariableMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<variable xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myVariable1" weightIdentifier="myWeight1"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Variable::class, $component);
-        $this->assertEquals('myVariable1', $component->getIdentifier());
-        $this->assertEquals('myWeight1', $component->getWeightIdentifier());
+        $this::assertInstanceOf(Variable::class, $component);
+        $this::assertEquals('myVariable1', $component->getIdentifier());
+        $this::assertEquals('myWeight1', $component->getWeightIdentifier());
     }
 
     public function testUnmarshallNoWeight()
@@ -61,11 +61,11 @@ class VariableMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<variable xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myVariable1"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Variable::class, $component);
-        $this->assertEquals('myVariable1', $component->getIdentifier());
-        $this->assertEquals('', $component->getWeightIdentifier());
+        $this::assertInstanceOf(Variable::class, $component);
+        $this::assertEquals('myVariable1', $component->getIdentifier());
+        $this::assertEquals('', $component->getWeightIdentifier());
     }
 }

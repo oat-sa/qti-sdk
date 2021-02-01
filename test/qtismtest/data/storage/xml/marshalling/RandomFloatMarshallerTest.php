@@ -16,9 +16,9 @@ class RandomFloatMarshallerTest extends QtiSmTestCase
         $min = 1;
         $max = '{tplVariable1}';
         $component = new RandomFloat($min, $max);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
-        $this->assertTrue(true);
+        $this::assertTrue(true);
     }
 
     public function testUnmarshall()
@@ -27,11 +27,11 @@ class RandomFloatMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<randomFloat xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" min="1.3" max="{tplVariable1}"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(RandomFloat::class, $component);
-        $this->assertEquals($component->getMin(), 1.3);
-        $this->assertEquals($component->getMax(), '{tplVariable1}');
+        $this::assertInstanceOf(RandomFloat::class, $component);
+        $this::assertEquals(1.3, $component->getMin());
+        $this::assertEquals('{tplVariable1}', $component->getMax());
     }
 }

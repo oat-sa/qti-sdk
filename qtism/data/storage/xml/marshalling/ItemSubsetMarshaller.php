@@ -40,7 +40,7 @@ class ItemSubsetMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
+        $element = $this->createElement($component);
 
         $sectionIdentifier = $component->getSectionIdentifier();
         if (!empty($sectionIdentifier)) {

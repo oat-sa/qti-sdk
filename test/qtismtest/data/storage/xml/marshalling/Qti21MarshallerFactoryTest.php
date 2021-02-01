@@ -13,9 +13,9 @@ use stdClass;
 use qtism\data\storage\xml\marshalling\AreaMapEntryMarshaller;
 
 /**
- * Class MarshallerFactyoryTest
+ * Class Qti21MarshallerFactyoryTest
  */
-class MarshallerFactyoryTest extends QtiSmTestCase
+class Qti21MarshallerFactyoryTest extends QtiSmTestCase
 {
     public function testFromDomElement()
     {
@@ -25,7 +25,7 @@ class MarshallerFactyoryTest extends QtiSmTestCase
 
         $factory = new Qti21MarshallerFactory();
         $marshaller = $factory->createMarshaller($element);
-        $this->assertInstanceOf(AreaMapEntryMarshaller::class, $marshaller);
+        $this::assertInstanceOf(AreaMapEntryMarshaller::class, $marshaller);
     }
 
     public function testFromQtiComponent()
@@ -36,7 +36,7 @@ class MarshallerFactyoryTest extends QtiSmTestCase
 
         $factory = new Qti21MarshallerFactory();
         $marshaller = $factory->createMarshaller($component);
-        $this->assertInstanceOf(AreaMapEntryMarshaller::class, $marshaller);
+        $this::assertInstanceOf(AreaMapEntryMarshaller::class, $marshaller);
     }
 
     public function testFromInvalidObject()

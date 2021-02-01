@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OrderInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $choice1 = new SimpleChoice('choice_1');
         $choice1->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
@@ -32,36 +32,61 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $component->setMinChoices(1);
         $component->setMaxChoices(2);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<orderInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>', $dom->saveXML($element));
+        $this::assertEquals('<orderInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    /**
+     * @depends testMarshall21
+     */
+    public function testMarshallNoMinMaxChoicesIfNotSpecified21()
+    {
+        $choice1 = new SimpleChoice('choice_1');
+        $choice1->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
+        $choices = new SimpleChoiceCollection([$choice1]);
+
+        $component = new OrderInteraction('RESPONSE', $choices);
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
+        $element = $marshaller->marshall($component);
+
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->importNode($element, true);
+        $this::assertEquals('<orderInteraction responseIdentifier="RESPONSE"><simpleChoice identifier="choice_1">Choice #1</simpleChoice></orderInteraction>', $dom->saveXML($element));
+    }
+
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
-            <orderInteraction responseIdentifier="RESPONSE" maxChoices="2"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>
+            <orderInteraction responseIdentifier="RESPONSE" maxChoices="2">
+              <prompt>Prompt...</prompt>
+              <simpleChoice identifier="choice_1">Choice #1</simpleChoice>
+              <simpleChoice identifier="choice_2">Choice #2</simpleChoice>
+            </orderInteraction>
         ');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OrderInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertFalse($component->mustShuffle());
-        $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());
-        $this->assertTrue($component->hasPrompt());
-        $this->assertEquals(-1, $component->getMinChoices());
-        $this->assertEquals(2, $component->getMaxChoices());
+        $this::assertInstanceOf(OrderInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertFalse($component->mustShuffle());
+        $this::assertEquals(Orientation::VERTICAL, $component->getOrientation());
+        $this::assertTrue($component->hasPrompt());
+        $this::assertEquals(-1, $component->getMinChoices());
+        $this::assertFalse($component->hasMinChoices());
+        $this::assertEquals(2, $component->getMaxChoices());
+        $this::assertTrue($component->hasMaxChoices());
 
         $prompt = $component->getPrompt();
         $content = $prompt->getContent();
-        $this->assertEquals('Prompt...', $content[0]->getContent());
+        $this::assertEquals('Prompt...', $content[0]->getContent());
 
         $simpleChoices = $component->getSimpleChoices();
-        $this->assertEquals(2, count($simpleChoices));
+        $this::assertCount(2, $simpleChoices);
     }
 }

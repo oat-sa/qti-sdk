@@ -18,9 +18,10 @@ use qtismtest\QtiSmTestCase;
  */
 class QtiVersionTest extends QtiSmTestCase
 {
-    public function testVersionCompareSupported()
+    public function testVersionCompareValid()
     {
-        $this->assertTrue(QtiVersion::compare('2', '2.0.0', '='));
+        $this::assertTrue(QtiVersion::compare('2', '2.0.0', '='));
+        $this::assertFalse(QtiVersion::compare('2', '2.1', '='));
     }
 
     public function testVersionCompareInvalidVersion1()
@@ -48,8 +49,8 @@ class QtiVersionTest extends QtiSmTestCase
     public function testCreateWithSupportedVersion(string $version, string $expectedVersion, string $expectedClass)
     {
         $versionObject = QtiVersion::create($version);
-        $this->assertInstanceOf($expectedClass, $versionObject);
-        $this->assertEquals($expectedVersion, (string)$versionObject);
+        $this::assertInstanceOf($expectedClass, $versionObject);
+        $this::assertEquals($expectedVersion, (string)$versionObject);
     }
 
     /**

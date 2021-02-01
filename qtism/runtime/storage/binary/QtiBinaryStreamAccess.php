@@ -68,6 +68,12 @@ use qtism\runtime\tests\RouteItem;
  */
 class QtiBinaryStreamAccess extends BinaryStreamAccess
 {
+    const RW_VALUE = 0;
+
+    const RW_DEFAULTVALUE = 1;
+
+    const RW_CORRECTRESPONSE = 2;
+
     /**
      * @var FileManager
      */
@@ -111,11 +117,24 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * in the current stream.
      *
      * @param Variable $variable A QTI Runtime Variable object.
+     * @param int The kind of value to be read (self::RW_VALUE | self::RW_DEFAULTVALUE | self::RW_CORRECTRESPONSE)
      * @throws BinaryStreamAccessException If an error occurs at the binary level.
      */
-    public function readVariableValue(Variable $variable)
+    public function readVariableValue(Variable $variable, $valueType = self::RW_VALUE)
     {
+        switch ($valueType) {
+            case self::RW_DEFAULTVALUE:
+                $setterToCall = 'setDefaultValue';
+                break;
+
+            case self::RW_CORRECTRESPONSE:
+                $setterToCall = 'setCorrectResponse';
+                break;
+
+            default:
                 $setterToCall = 'setValue';
+                break;
+        }
 
         try {
             $isNull = $this->readBoolean();
@@ -171,11 +190,23 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Write the value of $variable in the current binary stream.
      *
      * @param Variable $variable A QTI Runtime Variable object.
+     * @param int $valueType
      * @throws QtiBinaryStreamAccessException
      */
-    public function writeVariableValue(Variable $variable)
+    public function writeVariableValue(Variable $variable, $valueType = self::RW_VALUE)
     {
+        switch ($valueType) {
+            case self::RW_DEFAULTVALUE:
+                $getterToCall = 'getDefaultValue';
+                break;
+
+            case self::RW_CORRECTRESPONSE:
+                $getterToCall = 'getCorrectResponse';
+                break;
+
+            default:
                 $getterToCall = 'getValue';
+        }
 
         try {
             $value = $variable->$getterToCall();
@@ -871,7 +902,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         $toPersist = $file instanceof FileHash
             ? json_encode($file)
             : $file->getIdentifier();
-        
+
         try {
             $this->writeString($toPersist);
         } catch (QtiBinaryStreamAccessException $e) {
@@ -900,7 +931,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         if (is_array($decoded)) {
             return FileHash::createFromArray($decoded);
         }
-        
+
         return $this->getFileManager()->retrieve($id);
     }
 

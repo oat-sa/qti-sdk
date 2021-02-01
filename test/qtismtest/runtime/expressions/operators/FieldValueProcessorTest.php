@@ -6,6 +6,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\FieldValueProcessor;
@@ -45,7 +46,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands[] = new RecordContainer();
         $processor = new FieldValueProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testNullTwo()
@@ -102,17 +103,18 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $processor = new FieldValueProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertEquals(2, $result->getValue());
+        $this::assertEquals(2, $result->getValue());
 
         $expression = $this->createFakeExpression('D');
         $processor->setExpression($expression);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     /**
      * @param string $identifier
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($identifier = '')
     {

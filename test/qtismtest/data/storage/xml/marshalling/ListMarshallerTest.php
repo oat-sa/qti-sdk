@@ -36,48 +36,48 @@ class ListMarshallerTest extends QtiSmTestCase
 		    </ul>
 		');
 
-        $this->assertInstanceOf(Ul::class, $ul);
-        $this->assertEquals('my-qti-list', $ul->getClass());
+        $this::assertInstanceOf(Ul::class, $ul);
+        $this::assertEquals('my-qti-list', $ul->getClass());
 
         $listItems = $ul->getContent();
-        $this->assertEquals(2, count($listItems));
+        $this::assertCount(2, $listItems);
 
         // Check the first li node.
         $li = $listItems[0];
-        $this->assertInstanceOf(Li::class, $li);
+        $this::assertInstanceOf(Li::class, $li);
         $liContent = $li->getContent();
-        $this->assertEquals(3, count($liContent));
+        $this::assertCount(3, $liContent);
 
-        $this->assertInstanceOf(TextRun::class, $liContent[0]);
-        $this->assertEquals('Simple ', $liContent[0]->getContent());
+        $this::assertInstanceOf(TextRun::class, $liContent[0]);
+        $this::assertEquals('Simple ', $liContent[0]->getContent());
 
-        $this->assertInstanceOf(Strong::class, $liContent[1]);
+        $this::assertInstanceOf(Strong::class, $liContent[1]);
         $strongContent = $liContent[1]->getContent();
-        $this->assertEquals(1, count($strongContent));
-        $this->assertEquals('text', $strongContent[0]->getContent());
+        $this::assertCount(1, $strongContent);
+        $this::assertEquals('text', $strongContent[0]->getContent());
 
-        $this->assertInstanceOf(TextRun::class, $liContent[2]);
-        $this->assertEquals('.', $liContent[2]->getContent());
+        $this::assertInstanceOf(TextRun::class, $liContent[2]);
+        $this::assertEquals('.', $liContent[2]->getContent());
 
         // Check the second li node.
         $li = $listItems[1];
-        $this->assertInstanceOf(Li::class, $li);
+        $this::assertInstanceOf(Li::class, $li);
         $liContent = $li->getContent();
-        $this->assertEquals(3, count($liContent));
-        $this->assertEquals(" olé\n                   ", $liContent[0]->getContent());
+        $this::assertCount(3, $liContent);
+        $this::assertEquals(" olé\n                   ", $liContent[0]->getContent());
 
         $ol = $liContent[1];
-        $this->assertInstanceOf(Ol::class, $ol);
-        $this->assertEquals('ordered-list', $ol->getId());
+        $this::assertInstanceOf(Ol::class, $ol);
+        $this::assertEquals('ordered-list', $ol->getId());
 
         $listItems = $ol->getContent();
-        $this->assertEquals(1, count($listItems));
+        $this::assertCount(1, $listItems);
         $li = $listItems[0];
-        $this->assertInstanceOf(Li::class, $li);
+        $this::assertInstanceOf(Li::class, $li);
         $liContent = $li->getContent();
-        $this->assertEquals(5, count($liContent));
-        $this->assertInstanceOf(Em::class, $liContent[1]);
-        $this->assertInstanceOf(P::class, $liContent[3]);
+        $this::assertCount(5, $liContent);
+        $this::assertInstanceOf(Em::class, $liContent[1]);
+        $this::assertInstanceOf(P::class, $liContent[3]);
     }
 
     public function testMarshallUl()
@@ -107,10 +107,10 @@ class ListMarshallerTest extends QtiSmTestCase
         $ul->setClass('my-qti-list');
         $ul->setContent(new LiCollection([$li1, $li2]));
 
-        $element = $this->getMarshallerFactory()->createMarshaller($ul)->marshall($ul);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($ul)->marshall($ul);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<ul class="my-qti-list"><li>Simple <strong>text</strong>.</li><li>olé <ol id="ordered-list"><li>Some super <em>text</em>:<p>Some complex text.</p></li></ol></li></ul>', $dom->saveXML($element));
+        $this::assertEquals('<ul class="my-qti-list"><li>Simple <strong>text</strong>.</li><li>olé <ol id="ordered-list"><li>Some super <em>text</em>:<p>Some complex text.</p></li></ol></li></ul>', $dom->saveXML($element));
     }
 }

@@ -17,8 +17,8 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml', true);
 
         $includes = $doc->getDocumentComponent()->getComponentsByClassName('include');
-        $this->assertEquals(1, count($includes));
-        $this->assertEquals('xinclude_ns_in_tag_content1.xml', $includes[0]->getHref());
+        $this::assertCount(1, $includes);
+        $this::assertEquals('xinclude_ns_in_tag_content1.xml', $includes[0]->getHref());
 
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
@@ -27,41 +27,55 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
         $doc = new XmlDocument();
         try {
             $doc->load($file, true);
-            $this->assertTrue(true);
+            $this::assertTrue(true);
         } catch (XmlStorageException $e) {
-            $this->assertFalse(true, 'The document using xinclude should validate after being saved.');
+            $this::assertFalse(true, 'The document using xinclude should validate after being saved.');
         }
     }
 
     /**
      * @depends testLoadAndSaveXIncludeNsInTag
+     * @dataProvider loadAndResolveXIncludeSameBaseProvider
+     * @param string $file
+     * @throws XmlStorageException
+     * @throws ReflectionException
      */
-    public function testLoadAndResolveXIncludeSameBase()
+    public function testLoadAndResolveXIncludeSameBase($file)
     {
         $doc = new XmlDocument();
-        $doc->load(self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml', true);
+        $doc->load($file, true);
 
         // At this moment, includes are not resolved.
         $includes = $doc->getDocumentComponent()->getComponentsByClassName('include');
-        $this->assertEquals(1, count($includes));
+        $this::assertCount(1, $includes);
         // So no img components can be found...
         $imgs = $doc->getDocumentComponent()->getComponentsByClassName('img');
-        $this->assertEquals(0, count($imgs));
+        $this::assertCount(0, $imgs);
 
         $doc->xInclude();
 
         // Now they are!
         $includes = $doc->getDocumentComponent()->getComponentsByClassName('include');
-        $this->assertEquals(0, count($includes));
+        $this::assertCount(0, $includes);
 
         // And we should find an img component then!
         $imgs = $doc->getDocumentComponent()->getComponentsByClassName('img');
-        $this->assertEquals(1, count($imgs));
+        $this::assertCount(1, $imgs);
 
         // Check that xml:base was appropriately resolved. In this case,
         // no content for xml:base because 'xinclude_ns_in_tag_content1.xml' is in the
         // same directory as the main xml file.
-        $this->assertEquals('', $imgs[0]->getXmlBase());
+        $this::assertEquals('', $imgs[0]->getXmlBase());
+    }
+
+    /**
+     * @return array
+     */
+    public function loadAndResolveXIncludeSameBaseProvider()
+    {
+        return [
+            [self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml'],
+        ];
     }
 
     /**
@@ -74,15 +88,15 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
         $doc->xInclude();
 
         $includes = $doc->getDocumentComponent()->getComponentsByClassName('include');
-        $this->assertEquals(0, count($includes));
+        $this::assertCount(0, $includes);
 
         // And we should find an img component then!
         $imgs = $doc->getDocumentComponent()->getComponentsByClassName('img');
-        $this->assertEquals(1, count($imgs));
+        $this::assertCount(1, $imgs);
 
         // Check that xml:base was appropriately resolved. In this case,
         // no content for xml:base because 'xinclude_ns_in_tag_content1.xml' is in the
         // same directory as the main xml file.
-        $this->assertEquals('subfolder/', $imgs[0]->getXmlBase());
+        $this::assertEquals('subfolder/', $imgs[0]->getXmlBase());
     }
 }

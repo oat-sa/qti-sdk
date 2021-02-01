@@ -42,15 +42,15 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
             '<sessionIdentifier sourceID="fixture-sourceID" identifier="fixture-id"/>'
         );
 
-        $this->assertInstanceOf(SessionIdentifier::class, $sessionIdentifier);
+        $this::assertInstanceOf(SessionIdentifier::class, $sessionIdentifier);
 
-        $this->assertInstanceOf(QtiUri::class, $sessionIdentifier->getSourceID());
-        $this->assertEquals('fixture-sourceID', $sessionIdentifier->getSourceID()->getValue());
-        $this->assertEquals('fixture-sourceID', $sessionIdentifier->getSourceID());
+        $this::assertInstanceOf(QtiUri::class, $sessionIdentifier->getSourceID());
+        $this::assertEquals('fixture-sourceID', $sessionIdentifier->getSourceID()->getValue());
+        $this::assertEquals('fixture-sourceID', $sessionIdentifier->getSourceID());
 
-        $this->assertInstanceOf(QtiIdentifier::class, $sessionIdentifier->getIdentifier());
-        $this->assertEquals('fixture-id', $sessionIdentifier->getIdentifier()->getValue());
-        $this->assertEquals('fixture-id', $sessionIdentifier->getIdentifier());
+        $this::assertInstanceOf(QtiIdentifier::class, $sessionIdentifier->getIdentifier());
+        $this::assertEquals('fixture-id', $sessionIdentifier->getIdentifier()->getValue());
+        $this::assertEquals('fixture-id', $sessionIdentifier->getIdentifier());
     }
 
     public function testMarshall()
@@ -62,10 +62,10 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
-        $this->assertEquals($sourceID, $element->getAttribute('sourceID'));
-        $this->assertEquals($id, $element->getAttribute('identifier'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals($component->getQtiClassName(), $element->nodeName);
+        $this::assertEquals($sourceID, $element->getAttribute('sourceID'));
+        $this::assertEquals($id, $element->getAttribute('identifier'));
     }
 
     public function testGetExpectedQtiClassName()
@@ -75,7 +75,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $component = new SessionIdentifier(new QtiUri($sourceID), new QtiIdentifier($id));
 
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
-        $this->assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
+        $this::assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
     }
 
     public function testWrongSessionIdentifierIdentifier()

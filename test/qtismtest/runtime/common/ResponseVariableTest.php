@@ -20,7 +20,7 @@ class ResponseVariableTest extends QtiSmTestCase
 {
     public function testCreateFromVariableDeclarationExtended()
     {
-        $factory = $this->getMarshallerFactory();
+        $factory = $this->getMarshallerFactory('2.1.0');
         $element = $this->createDOMElement('
 			<responseDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" 
 								identifier="outcome1" 
@@ -49,58 +49,71 @@ class ResponseVariableTest extends QtiSmTestCase
 		');
         $responseDeclaration = $factory->createMarshaller($element)->unmarshall($element);
         $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
-        $this->assertInstanceOf(ResponseVariable::class, $responseVariable);
+        $this::assertInstanceOf(ResponseVariable::class, $responseVariable);
 
-        $this->assertEquals('outcome1', $responseVariable->getIdentifier());
-        $this->assertEquals(BaseType::PAIR, $responseVariable->getBaseType());
-        $this->assertEquals(Cardinality::ORDERED, $responseVariable->getCardinality());
+        $this::assertEquals('outcome1', $responseVariable->getIdentifier());
+        $this::assertEquals(BaseType::PAIR, $responseVariable->getBaseType());
+        $this::assertEquals(Cardinality::ORDERED, $responseVariable->getCardinality());
 
         // Value should be NULL to begin.
-        $this->assertTrue($responseVariable->isNull());
+        $this::assertTrue($responseVariable->isNull());
 
         $defaultValue = $responseVariable->getDefaultValue();
-        $this->assertInstanceOf(OrderedContainer::class, $defaultValue);
-        $this->assertEquals(3, count($defaultValue));
+        $this::assertInstanceOf(OrderedContainer::class, $defaultValue);
+        $this::assertCount(3, $defaultValue);
 
         $mapping = $responseVariable->getMapping();
-        $this->assertInstanceOf(Mapping::class, $mapping);
+        $this::assertInstanceOf(Mapping::class, $mapping);
         $mapEntries = $mapping->getMapEntries();
-        $this->assertEquals(3, count($mapEntries));
-        $this->assertInstanceOf(QtiPair::class, $mapEntries[0]->getMapKey());
+        $this::assertCount(3, $mapEntries);
+        $this::assertInstanceOf(QtiPair::class, $mapEntries[0]->getMapKey());
 
         $areaMapping = $responseVariable->getAreaMapping();
-        $this->assertInstanceOf(AreaMapping::class, $areaMapping);
+        $this::assertInstanceOf(AreaMapping::class, $areaMapping);
         $areaMapEntries = $areaMapping->getAreaMapEntries();
-        $this->assertEquals(3, count($areaMapEntries));
-        $this->assertInstanceOf(QtiCoords::class, $areaMapEntries[0]->getCoords());
+        $this::assertCount(3, $areaMapEntries);
+        $this::assertInstanceOf(QtiCoords::class, $areaMapEntries[0]->getCoords());
 
-        $this->assertTrue($responseVariable->hasCorrectResponse());
+        $this::assertTrue($responseVariable->hasCorrectResponse());
         $correctResponse = $responseVariable->getCorrectResponse();
-        $this->assertInstanceOf(OrderedContainer::class, $correctResponse);
-        $this->assertEquals(2, count($correctResponse));
-        $this->assertTrue($correctResponse[0]->equals(new QtiPair('A', 'B')));
-        $this->assertTrue($correctResponse[1]->equals(new QtiPair('E', 'F')));
+        $this::assertInstanceOf(OrderedContainer::class, $correctResponse);
+        $this::assertCount(2, $correctResponse);
+        $this::assertTrue($correctResponse[0]->equals(new QtiPair('A', 'B')));
+        $this::assertTrue($correctResponse[1]->equals(new QtiPair('E', 'F')));
 
         $responseVariable->setValue(new OrderedContainer(BaseType::PAIR, [new QtiPair('A', 'B'), new QtiPair('E', 'F')]));
-        $this->assertTrue($responseVariable->isCorrect());
+        $this::assertTrue($responseVariable->isCorrect());
         $responseVariable->setValue(new OrderedContainer(BaseType::PAIR, [new QtiPair('E', 'F'), new QtiPair('A', 'B')]));
-        $this->assertFalse($responseVariable->isCorrect());
+        $this::assertFalse($responseVariable->isCorrect());
 
         // If I reinitialize the value, we must find a NULL container into this variable.
         $responseVariable->initialize();
-        $this->assertInstanceOf(OrderedContainer::class, $responseVariable->getValue());
-        $this->assertTrue($responseVariable->isNull());
+        $this::assertInstanceOf(OrderedContainer::class, $responseVariable->getValue());
+        $this::assertTrue($responseVariable->isNull());
 
         // If I apply the default value...
         $responseVariable->applyDefaultValue();
-        $this->assertInstanceOf(OrderedContainer::class, $responseVariable->getValue());
-        $this->assertEquals(3, count($responseVariable->getValue()));
-        $this->assertTrue($responseVariable->getValue()->equals(new OrderedContainer(BaseType::PAIR, [new QtiPair('A', 'B'), new QtiPair('C', 'D'), new QtiPair('E', 'F')])));
+        $this::assertInstanceOf(OrderedContainer::class, $responseVariable->getValue());
+        $this::assertCount(3, $responseVariable->getValue());
+        $this::assertTrue($responseVariable->getValue()->equals(new OrderedContainer(BaseType::PAIR, [new QtiPair('A', 'B'), new QtiPair('C', 'D'), new QtiPair('E', 'F')])));
     }
 
     public function testIsCorrectWithNullCorrectResponse()
     {
         $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
-        $this->assertFalse($responseVariable->isCorrect());
+        $this::assertFalse($responseVariable->isCorrect());
+    }
+
+    public function testClone()
+    {
+        // value, default value and correct response must be independent after cloning.
+        $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
+        $responseVariable->setDefaultValue(new QtiInteger(1));
+        $responseVariable->setCorrectResponse(new QtiInteger(1337));
+
+        $clone = clone $responseVariable;
+        $this::assertNotSame($responseVariable->getValue(), $clone->getValue());
+        $this::assertNotSame($responseVariable->getDefaultValue(), $clone->getDefaultValue());
+        $this::assertNotSame($responseVariable->getCorrectResponse(), $clone->getCorrectResponse());
     }
 }

@@ -15,39 +15,48 @@ use qtismtest\QtiSmTestCase;
  */
 class SelectPointInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $object = new ObjectElement('./myimg.png', 'image/png');
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
         $selectPointInteraction = new SelectPointInteraction('RESPONSE', $object, 1);
         $selectPointInteraction->setPrompt($prompt);
+        $selectPointInteraction->setMinChoices(1);
+        $selectPointInteraction->setXmlBase('/home/jerome');
 
-        $element = $this->getMarshallerFactory()->createMarshaller($selectPointInteraction)->marshall($selectPointInteraction);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($selectPointInteraction)->marshall($selectPointInteraction);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<selectPointInteraction responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./myimg.png" type="image/png"/></selectPointInteraction>', $dom->saveXML($element));
+        $this::assertEquals(
+            '<selectPointInteraction responseIdentifier="RESPONSE" maxChoices="1" minChoices="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="./myimg.png" type="image/png"/></selectPointInteraction>',
+            $dom->saveXML($element)
+        );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
-        $element = $this->createDOMElement('
-            <selectPointInteraction responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./myimg.png" type="image/png"/></selectPointInteraction>
-        ');
+        $element = $this->createDOMElement(
+            '<selectPointInteraction responseIdentifier="RESPONSE" minChoices="1" maxChoices="1" xml:base="/home/jerome">
+              <prompt>Prompt...</prompt>
+              <object data="./myimg.png" type="image/png"/>
+            </selectPointInteraction>'
+        );
 
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(SelectPointInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertEquals(1, $component->getMaxChoices());
-        $this->assertEquals(0, $component->getMinChoices());
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+        $this::assertInstanceOf(SelectPointInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertEquals(1, $component->getMaxChoices());
+        $this::assertEquals(1, $component->getMinChoices());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
 
-        $this->assertTrue($component->hasPrompt());
+        $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
 
         $object = $component->getObject();
-        $this->assertEquals('./myimg.png', $object->getData());
-        $this->assertEquals('image/png', $object->getType());
+        $this::assertEquals('./myimg.png', $object->getData());
+        $this::assertEquals('image/png', $object->getType());
     }
 }

@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -28,9 +29,9 @@ class SumProcessorTest extends QtiSmTestCase
         $sumProcessor = new SumProcessor($sum, $operands);
         $result = $sumProcessor->process();
 
-        $this->assertInstanceOf(Processable::class, $sumProcessor);
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(2, $result->getValue());
+        $this::assertInstanceOf(Processable::class, $sumProcessor);
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(2, $result->getValue());
     }
 
     public function testNary()
@@ -41,8 +42,8 @@ class SumProcessorTest extends QtiSmTestCase
         $sumProcessor = new SumProcessor($sum, $operands);
         $result = $sumProcessor->process();
 
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(20, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(20, $result->getValue());
     }
 
     public function testComplex()
@@ -55,8 +56,8 @@ class SumProcessorTest extends QtiSmTestCase
         $sumProcessor = new SumProcessor($sum, $operands);
         $result = $sumProcessor->process();
 
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(31.4, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(31.4, $result->getValue());
     }
 
     public function testZero()
@@ -67,8 +68,8 @@ class SumProcessorTest extends QtiSmTestCase
         $sumProcessor = new SumProcessor($sum, $operands);
         $result = $sumProcessor->process();
 
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(6.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(6.0, $result->getValue());
     }
 
     public function testInvalidOperandsOne()
@@ -99,11 +100,12 @@ class SumProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10), null]);
         $sumProcessor = new SumProcessor($sum, $operands);
         $result = $sumProcessor->process();
-        $this->assertTrue($result === null);
+        $this::assertNull($result);
     }
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     private function createFakeSumComponent()
     {

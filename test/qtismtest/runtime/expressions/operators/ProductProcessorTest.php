@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -29,9 +30,9 @@ class ProductProcessorTest extends QtiSmTestCase
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
 
-        $this->assertInstanceOf(Processable::class, $productProcessor);
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(1, $result->getValue());
+        $this::assertInstanceOf(Processable::class, $productProcessor);
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(1, $result->getValue());
     }
 
     public function testNary()
@@ -42,8 +43,8 @@ class ProductProcessorTest extends QtiSmTestCase
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
 
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(-96, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(-96, $result->getValue());
     }
 
     public function testComplex()
@@ -56,8 +57,8 @@ class ProductProcessorTest extends QtiSmTestCase
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
 
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-1354.5, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(-1354.5, $result->getValue());
     }
 
     public function testInvalidOperandsOne()
@@ -88,7 +89,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10), null]);
         $productProcessor = new ProductProcessor($product, $operands);
         $result = $productProcessor->process();
-        $this->assertTrue($result === null);
+        $this::assertNull($result);
     }
 
     public function testNotEnoughOperands()
@@ -101,6 +102,7 @@ class ProductProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     private function createFakeProductComponent()
     {

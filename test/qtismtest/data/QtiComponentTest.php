@@ -29,20 +29,20 @@ class QtiComponentTest extends QtiSmTestCase
 
         // -- search by identifier.
         $search = $assessmentSection->getComponentByIdentifier('Q02');
-        $this->assertSame($sectionParts['Q02'], $search);
+        $this::assertSame($sectionParts['Q02'], $search);
 
         $search = $assessmentSection->getComponentByIdentifier('Q03', false);
-        $this->assertSame($sectionParts['Q03'], $search);
+        $this::assertSame($sectionParts['Q03'], $search);
 
         // -- search by QTI class name.
         $search = $assessmentSection->getComponentsByClassName('correct');
-        $this->assertEquals(count($search), 0);
+        $this::assertCount(0, $search);
 
         $search = $assessmentSection->getComponentsByClassName('assessmentItemRef');
-        $this->assertEquals(count($search), 4);
+        $this::assertCount(4, $search);
 
         $search = $assessmentSection->getComponentsByClassName(['assessmentItemRef', 'correct', 'sum'], false);
-        $this->assertEquals(count($search), 4);
+        $this::assertCount(4, $search);
     }
 
     public function testGetComponentByIdOrClassNameComplex()
@@ -82,55 +82,55 @@ class QtiComponentTest extends QtiSmTestCase
 
         // -- recursive search testing.
         $search = $assessmentSectionRoot->getComponentByIdentifier('Q02');
-        $this->assertEquals('Q02', $search->getIdentifier());
+        $this::assertEquals('Q02', $search->getIdentifier());
 
         $search = $assessmentSectionRoot->getComponentByIdentifier('Q04');
-        $this->assertEquals('Q04', $search->getIdentifier());
+        $this::assertEquals('Q04', $search->getIdentifier());
 
         $search = $assessmentSectionRoot->getComponentByIdentifier('Q05');
-        $this->assertEquals('Q05', $search->getIdentifier());
+        $this::assertEquals('Q05', $search->getIdentifier());
 
         $search = $assessmentSectionRoot->getComponentByIdentifier('Q07');
-        $this->assertEquals('Q07', $search->getIdentifier());
+        $this::assertEquals('Q07', $search->getIdentifier());
 
         $search = $assessmentSectionRoot->getComponentByIdentifier('subAssessmentSection1');
-        $this->assertEquals('subAssessmentSection1', $search->getIdentifier());
+        $this::assertEquals('subAssessmentSection1', $search->getIdentifier());
 
         $search = $assessmentSectionRoot->getComponentByIdentifier('subAssessmentSection2');
-        $this->assertEquals('subAssessmentSection2', $search->getIdentifier());
+        $this::assertEquals('subAssessmentSection2', $search->getIdentifier());
 
         // -- non recursive search testing.
         $search = $assessmentSectionRoot->getComponentByIdentifier('Q02', false);
-        $this->assertSame($search, null);
+        $this::assertSame($search, null);
 
         $search = $assessmentSectionRoot->getComponentByIdentifier('subAssessmentSection1', false);
-        $this->assertEquals('subAssessmentSection1', $search->getIdentifier());
+        $this::assertEquals('subAssessmentSection1', $search->getIdentifier());
 
         $search = $assessmentSectionRoot->getComponentByIdentifier('assessmentSectionRoot', false);
-        $this->assertSame($search, null);
+        $this::assertSame($search, null);
 
         // -- recursive class name search.
         $search = $assessmentSectionRoot->getComponentsByClassName('assessmentSection');
-        $this->assertEquals(2, count($search));
+        $this::assertCount(2, $search);
 
         $search = $assessmentSectionRoot->getComponentsByClassName('assessmentItemRef');
-        $this->assertEquals(7, count($search));
+        $this::assertCount(7, $search);
 
         $search = $assessmentSectionRoot->getComponentsByClassName(['assessmentSection', 'assessmentItemRef']);
-        $this->assertEquals(9, count($search));
+        $this::assertCount(9, $search);
 
         $search = $assessmentSectionRoot->getComponentsByClassName('microMachine');
-        $this->assertEquals(0, count($search));
+        $this::assertCount(0, $search);
 
         // -- non recursive class name search.
         $search = $assessmentSectionRoot->getComponentsByClassName('assessmentSection', false);
-        $this->assertEquals(2, count($search));
+        $this::assertCount(2, $search);
 
         $search = $assessmentSectionRoot->getComponentsByClassName('assessmentItemRef', false);
-        $this->assertEquals(0, count($search));
+        $this::assertCount(0, $search);
 
         $search = $assessmentSectionRoot->getComponentsByClassName(['assessmentSection', 'assessmentItemRef'], false);
-        $this->assertEquals(2, count($search));
+        $this::assertCount(2, $search);
     }
 
     public function testGetIdentifiableComponentsNoCollision()
@@ -141,9 +141,9 @@ class QtiComponentTest extends QtiSmTestCase
         $assessmentSection->setSectionParts(new SectionPartCollection([$assessmentItemRef1a, $assessmentItemRef1b]));
 
         $search = $assessmentSection->getIdentifiableComponents();
-        $this->assertInstanceOf(QtiIdentifiableCollection::class, $search);
+        $this::assertInstanceOf(QtiIdentifiableCollection::class, $search);
 
-        $this->assertEquals(['Q01', 'Q02'], $search->getKeys());
+        $this::assertEquals(['Q01', 'Q02'], $search->getKeys());
     }
 
     public function testGetIdentifiableComponentsCollision()
@@ -160,11 +160,11 @@ class QtiComponentTest extends QtiSmTestCase
         $assessmentSection->setSectionParts(new SectionPartCollection([$assessmentSection1a, $assessmentSection1b]));
 
         $search = $assessmentSection->getIdentifiableComponents();
-        $this->assertInstanceOf(QtiComponentCollection::class, $search);
-        $this->assertEquals(4, count($search));
-        $this->assertTrue($assessmentSection1a === $search[0]);
-        $this->assertTrue($assessmentItemRef1a === $search[1]);
-        $this->assertTrue($assessmentSection1b === $search[2]);
-        $this->assertTrue($assessmentItemRef1b === $search[3]);
+        $this::assertInstanceOf(QtiComponentCollection::class, $search);
+        $this::assertCount(4, $search);
+        $this::assertSame($assessmentSection1a, $search[0]);
+        $this::assertSame($assessmentItemRef1a, $search[1]);
+        $this::assertSame($assessmentSection1b, $search[2]);
+        $this::assertSame($assessmentItemRef1b, $search[3]);
     }
 }

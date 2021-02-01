@@ -24,11 +24,11 @@ class SetDefaultValueMarshallerTest extends QtiSmTestCase
 
         $setDefaultValue = new SetDefaultValue('tpl1', $matchExpr);
 
-        $element = $this->getMarshallerFactory()->createMarshaller($setDefaultValue)->marshall($setDefaultValue);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($setDefaultValue)->marshall($setDefaultValue);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<setDefaultValue identifier="tpl1"><match><variable identifier="var1"/><baseValue baseType="boolean">true</baseValue></match></setDefaultValue>', $dom->saveXML($element));
+        $this::assertEquals('<setDefaultValue identifier="tpl1"><match><variable identifier="var1"/><baseValue baseType="boolean">true</baseValue></match></setDefaultValue>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -42,9 +42,9 @@ class SetDefaultValueMarshallerTest extends QtiSmTestCase
 	        </setDefaultValue>
 	    ');
 
-        $setDefaultValue = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(SetDefaultValue::class, $setDefaultValue);
-        $this->assertEquals('tpl1', $setDefaultValue->getIdentifier());
-        $this->assertInstanceOf(MatchOperator::class, $setDefaultValue->getExpression());
+        $setDefaultValue = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+        $this::assertInstanceOf(SetDefaultValue::class, $setDefaultValue);
+        $this::assertEquals('tpl1', $setDefaultValue->getIdentifier());
+        $this::assertInstanceOf(MatchOperator::class, $setDefaultValue->getExpression());
     }
 }

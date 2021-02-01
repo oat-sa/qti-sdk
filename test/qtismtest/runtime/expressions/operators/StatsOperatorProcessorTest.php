@@ -9,6 +9,7 @@ use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\Statistics;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\Container;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
@@ -28,6 +29,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      *
      * @param Container $container
      * @param float|null $expected
+     * @throws MarshallerNotFoundException
      */
     public function testMean(Container $container = null, $expected)
     {
@@ -42,6 +44,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      *
      * @param Container $container
      * @param float|null $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSampleVariance(Container $container = null, $expected)
     {
@@ -56,6 +59,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      *
      * @param Container $container
      * @param float|null $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSampleSD(Container $container = null, $expected)
     {
@@ -70,6 +74,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      *
      * @param Container $container
      * @param float|null $expected
+     * @throws MarshallerNotFoundException
      */
     public function testPopVariance(Container $container = null, $expected)
     {
@@ -84,6 +89,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      *
      * @param Container $container
      * @param float|null $expected
+     * @throws MarshallerNotFoundException
      */
     public function testPopSD(Container $container = null, $expected)
     {
@@ -96,6 +102,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @dataProvider wrongCardinalityProvider
      * @param array $operands
+     * @throws MarshallerNotFoundException
      */
     public function testWrongCardinality(array $operands)
     {
@@ -105,10 +112,10 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
 
         try {
             $result = $processor->process();
-            $this->assertTrue(false); // cannot happen.
+            $this::assertTrue(false); // cannot happen.
         } catch (OperatorProcessingException $e) {
-            $this->assertTrue(true); // exception thrown, good!
-            $this->assertEquals(OperatorProcessingException::WRONG_CARDINALITY, $e->getCode());
+            $this::assertTrue(true); // exception thrown, good!
+            $this::assertEquals(OperatorProcessingException::WRONG_CARDINALITY, $e->getCode());
         }
     }
 
@@ -116,6 +123,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @dataProvider wrongBaseTypeProvider
      *
      * @param array $operands
+     * @throws MarshallerNotFoundException
      */
     public function testWrongBaseType(array $operands)
     {
@@ -125,10 +133,10 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
 
         try {
             $result = $processor->process();
-            $this->assertTrue(false); // cannot happen.
+            $this::assertTrue(false); // cannot happen.
         } catch (OperatorProcessingException $e) {
-            $this->assertTrue(true); // exception thrown, good!
-            $this->assertEquals(OperatorProcessingException::WRONG_BASETYPE, $e->getCode());
+            $this::assertTrue(true); // exception thrown, good!
+            $this::assertEquals(OperatorProcessingException::WRONG_BASETYPE, $e->getCode());
         }
     }
 
@@ -155,10 +163,10 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     protected function check($expected, $value)
     {
         if ($expected === null) {
-            $this->assertTrue($value === null);
+            $this::assertNull($value);
         } else {
-            $this->assertInstanceOf(QtiFloat::class, $value);
-            $this->assertSame(round($expected, 3), round($value->getValue(), 3));
+            $this::assertInstanceOf(QtiFloat::class, $value);
+            $this::assertSame(round($expected, 3), round($value->getValue(), 3));
         }
     }
 
@@ -251,6 +259,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @param $name
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($name)
     {

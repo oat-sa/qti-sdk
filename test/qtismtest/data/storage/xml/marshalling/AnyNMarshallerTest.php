@@ -26,14 +26,14 @@ class AnyNMarshallerTest extends QtiSmTestCase
         $max = 2;
 
         $component = new AnyN($subs, 1, 2);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('anyN', $element->nodeName);
-        $this->assertEquals('' . $min, $element->getAttribute('min'));
-        $this->assertEquals('' . $max, $element->getAttribute('max'));
-        $this->assertEquals(3, $element->getElementsByTagName('baseValue')->length);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('anyN', $element->nodeName);
+        $this::assertEquals('' . $min, $element->getAttribute('min'));
+        $this::assertEquals('' . $max, $element->getAttribute('max'));
+        $this::assertEquals(3, $element->getElementsByTagName('baseValue')->length);
     }
 
     public function testUnmarshall()
@@ -50,12 +50,12 @@ class AnyNMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(AnyN::class, $component);
-        $this->assertEquals(1, $component->getMin());
-        $this->assertEquals(2, $component->getMax());
-        $this->assertEquals(3, count($component->getExpressions()));
+        $this::assertInstanceOf(AnyN::class, $component);
+        $this::assertEquals(1, $component->getMin());
+        $this::assertEquals(2, $component->getMax());
+        $this::assertCount(3, $component->getExpressions());
     }
 }

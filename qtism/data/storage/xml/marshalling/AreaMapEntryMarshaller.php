@@ -43,7 +43,7 @@ class AreaMapEntryMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         $this->setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
         $this->setDOMElementAttribute($element, 'coords', $component->getCoords());

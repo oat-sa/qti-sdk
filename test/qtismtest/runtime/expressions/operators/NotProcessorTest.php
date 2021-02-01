@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\NotProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -58,7 +59,7 @@ class NotProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null]);
         $processor = new NotProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testTrue()
@@ -67,7 +68,7 @@ class NotProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiBoolean(false)]);
         $processor = new NotProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(true, $result->getValue());
+        $this::assertTrue($result->getValue());
     }
 
     public function testFalse()
@@ -76,12 +77,13 @@ class NotProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiBoolean(true)]);
         $processor = new NotProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertSame(false, $result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

@@ -19,15 +19,15 @@ class FieldValueMarshallerTest extends QtiSmTestCase
         $fieldIdentifier = 'myField';
 
         $component = new FieldValue(new ExpressionCollection([new Variable('recordVar')]), $fieldIdentifier);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('fieldValue', $element->nodeName);
-        $this->assertEquals($fieldIdentifier, $element->getAttribute('fieldIdentifier'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('fieldValue', $element->nodeName);
+        $this::assertEquals($fieldIdentifier, $element->getAttribute('fieldIdentifier'));
 
         $sub1 = $element->getElementsByTagName('variable')->item(0);
-        $this->assertEquals('recordVar', $sub1->getAttribute('identifier'));
+        $this::assertEquals('recordVar', $sub1->getAttribute('identifier'));
     }
 
     public function testUnmarshall()
@@ -42,15 +42,15 @@ class FieldValueMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(FieldValue::class, $component);
-        $this->assertEquals('myField', $component->getFieldIdentifier());
+        $this::assertInstanceOf(FieldValue::class, $component);
+        $this::assertEquals('myField', $component->getFieldIdentifier());
 
         $sub1 = $component->getExpressions();
         $sub1 = $sub1[0];
-        $this->assertInstanceOf(Variable::class, $sub1);
-        $this->assertEquals('recordVar', $sub1->getIdentifier());
+        $this::assertInstanceOf(Variable::class, $sub1);
+        $this::assertEquals('recordVar', $sub1->getIdentifier());
     }
 }

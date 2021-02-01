@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\DurationLTProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -26,14 +27,14 @@ class DurationLTProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiDuration('P1D'), new QtiDuration('P2D')]);
         $processor = new DurationLTProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $operands = new OperandsCollection([new QtiDuration('P2D'), new QtiDuration('P1D')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testNull()
@@ -42,7 +43,7 @@ class DurationLTProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiDuration('P1D'), null]);
         $processor = new DurationLTProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseType()
@@ -81,6 +82,7 @@ class DurationLTProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

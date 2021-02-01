@@ -33,7 +33,7 @@ use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
  *
  * An <input type="submit"> element is appended to the rendered element to depict
  * the input to be pressed by the candidate to end the attempt. The attribute 'value' of
- * the <input type="submit"> element will be set with the value of qti:endAttemptInteraction->title.
+ * the <input type="submit"> element will be the value of qti:endAttemptInteraction->title.
  *
  * The following data-X attributes will be rendered:
  *

@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\TruncateProcessor;
@@ -27,85 +28,85 @@ class TruncateProcessorTest extends QtiSmTestCase
         $processor = new TruncateProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(6, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(6, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(6.5);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(6, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(6, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(6.49);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(6, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(6, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-6.5);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(-6, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(-6, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-6.8);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(-6, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(-6, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-6.49);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(-6, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(-6, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(0);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(0, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-0.0);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(0, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-0.5);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(0, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-0.4);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(0, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(-0.6);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(0, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(NAN);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands->reset();
         $operands[] = new QtiFloat(-INF);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-INF, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(-INF, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiFloat(INF);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(INF, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(INF, $result->getValue());
     }
 
     public function testNull()
@@ -115,7 +116,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $operands[] = null;
         $processor = new TruncateProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()
@@ -168,6 +169,7 @@ class TruncateProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {
@@ -195,8 +197,8 @@ class TruncateProcessorTest extends QtiSmTestCase
      * @dataProvider provider
      * @param float $val
      * @param int $expected
+     * @throws MarshallerNotFoundException
      */
-
     public function testForProvider($val, $expected)
     {
         $expression = $this->createFakeExpression();
@@ -205,7 +207,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $processor = new TruncateProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals($expected, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals($expected, $result->getValue());
     }
 }

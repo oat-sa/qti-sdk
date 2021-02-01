@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+                identifier="branching-example" title="Branching example"><!-- Provide support for branching. -->
+    <testPart navigationMode="nonlinear" submissionMode="individual" identifier="TP01">
+        <itemSessionControl maxAttempts="0" allowSkipping="true"/>
+        <assessmentSection identifier="S01" title="Section 01" visible="true" required="true">
+            <assessmentSection identifier="S02" title="Section 02" visible="true" required="true">
+                <assessmentItemRef identifier="Q01" href="./Q01/qti.xml"/>
+                <assessmentItemRef identifier="Q02" href="./Q02/qti.xml"/>
+            </assessmentSection>
+            <assessmentSection identifier="S03" title="Section 03" visible="true" required="true">
+                <preCondition>
+                    <match>
+                        <variable identifier="Q01.RESPONSE"/>
+                        <baseValue baseType="identifier">A</baseValue>
+                    </match>
+                </preCondition>
+                <assessmentItemRef identifier="Q03" href="./Q03/qti.xml"/>
+                <assessmentItemRef identifier="Q04" href="./Q04/qti.xml"/>
+            </assessmentSection>
+        </assessmentSection>
+        <assessmentSection identifier="S04" title="Section 04" visible="true" required="true">
+            <preCondition>
+                <match>
+                    <variable identifier="Q01.RESPONSE"/>
+                    <baseValue baseType="identifier">A</baseValue>
+                </match>
+            </preCondition>
+            <assessmentSection identifier="S05" title="Section 05" visible="true" required="true">
+                <assessmentItemRef identifier="Q05" href="./Q05/qti.xml"/>
+                <assessmentItemRef identifier="Q06" href="./Q06/qti.xml"/>
+            </assessmentSection>
+            <assessmentSection identifier="S06" title="Section 06" visible="true" required="true">
+                <assessmentItemRef identifier="Q07" href="./Q07/qti.xml"/>
+                <assessmentItemRef identifier="Q08" href="./Q08/qti.xml">
+                    <preCondition>
+                        <match>
+                            <variable identifier="Q01.RESPONSE"/>
+                            <baseValue baseType="identifier">A</baseValue>
+                        </match>
+                    </preCondition>
+                </assessmentItemRef>
+            </assessmentSection>
+            <assessmentSection identifier="S07" title="Section 07" visible="true" required="true">
+                <preCondition>
+                    <match>
+                        <variable identifier="Q01.RESPONSE"/>
+                        <baseValue baseType="identifier">A</baseValue>
+                    </match>
+                </preCondition>
+                <assessmentSection identifier="S08" title="Section 08" visible="true" required="true">
+                </assessmentSection>
+            </assessmentSection>
+        </assessmentSection>
+    </testPart>
+</assessmentTest>

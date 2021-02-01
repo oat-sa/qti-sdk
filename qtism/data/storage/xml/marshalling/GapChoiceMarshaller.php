@@ -152,14 +152,14 @@ class GapChoiceMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $this->fillElement($element, $component);
 
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         $this->setDOMElementAttribute($element, 'matchMax', $component->getMatchMax());
 
         if ($component->getMatchMin() !== 0) {
-            $this->setDOMElementAttribute($element, 'matchMin', $matchMin);
+            $this->setDOMElementAttribute($element, 'matchMin', $component->getMatchMin());
         }
 
         if ($component->isFixed() === true) {

@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\expressions\operators\LteProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -26,22 +27,22 @@ class LteProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(1);
         $processor = new LteProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(1);
         $operands[] = new QtiFloat(0.5);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(1);
         $operands[] = new QtiInteger(1);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
     }
 
     public function testNull()
@@ -52,7 +53,7 @@ class LteProcessorTest extends QtiSmTestCase
         $operands[] = null;
         $processor = new LteProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseTypeOne()
@@ -106,6 +107,7 @@ class LteProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

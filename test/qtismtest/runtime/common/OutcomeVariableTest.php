@@ -31,57 +31,57 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testInstantiate()
     {
         $outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER);
-        $this->assertTrue($outcome->getValue() === null);
+        $this::assertNull($outcome->getValue());
 
         $outcome = new OutcomeVariable('var1', Cardinality::MULTIPLE, BaseType::INTEGER);
-        $this->assertInstanceOf(MultipleContainer::class, $outcome->getValue());
+        $this::assertInstanceOf(MultipleContainer::class, $outcome->getValue());
 
         $outcome = new OutcomeVariable('var1', Cardinality::ORDERED, BaseType::INTEGER);
-        $this->assertInstanceOf(OrderedContainer::class, $outcome->getValue());
+        $this::assertInstanceOf(OrderedContainer::class, $outcome->getValue());
 
         $outcome = new OutcomeVariable('var1', Cardinality::RECORD);
-        $this->assertInstanceOf(RecordContainer::class, $outcome->getValue());
+        $this::assertInstanceOf(RecordContainer::class, $outcome->getValue());
     }
 
     public function testCardinalitySingle()
     {
         $variable = new OutcomeVariable('outcome1', Cardinality::SINGLE, BaseType::INTEGER);
-        $this->assertInstanceOf(OutcomeVariable::class, $variable);
-        $this->assertEquals('outcome1', $variable->getIdentifier());
-        $this->assertEquals(BaseType::INTEGER, $variable->getBaseType());
-        $this->assertEquals(Cardinality::SINGLE, $variable->getCardinality());
-        $this->assertTrue($variable->getValue() === null);
-        $this->assertNull($variable->getViews());
-        $this->assertFalse($variable->getNormalMaximum());
-        $this->assertFalse($variable->getNormalMinimum());
-        $this->assertFalse($variable->getMasteryValue());
-        $this->assertTrue($variable->getLookupTable() === null);
+        $this::assertInstanceOf(OutcomeVariable::class, $variable);
+        $this::assertEquals('outcome1', $variable->getIdentifier());
+        $this::assertEquals(BaseType::INTEGER, $variable->getBaseType());
+        $this::assertEquals(Cardinality::SINGLE, $variable->getCardinality());
+        $this::assertNull($variable->getValue());
+        $this::assertNull($variable->getViews());
+        $this::assertFalse($variable->getNormalMaximum());
+        $this::assertFalse($variable->getNormalMinimum());
+        $this::assertFalse($variable->getMasteryValue());
+        $this::assertNull($variable->getLookupTable());
 
         $variable->setValue(new QtiInteger(16));
         $variable->setDefaultValue(new QtiInteger(-1));
-        $this->assertInstanceOf(QtiInteger::class, $variable->getValue());
-        $this->assertEquals(16, $variable->getValue()->getValue());
-        $this->assertInstanceOf(QtiInteger::class, $variable->getDefaultValue());
-        $this->assertEquals(-1, $variable->getDefaultValue()->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $variable->getValue());
+        $this::assertEquals(16, $variable->getValue()->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $variable->getDefaultValue());
+        $this::assertEquals(-1, $variable->getDefaultValue()->getValue());
 
         // If I reinit the variable, I should see the NULL value inside.
         $variable->initialize();
-        $this->assertSame(null, $variable->getValue());
+        $this::assertNull($variable->getValue());
 
         // If I apply the default value, 0 should be inside because
         // baseType is integer, cardinality single, and no default value
         // was given.
         $variable->setDefaultValue(null);
         $variable->applyDefaultValue();
-        $this->assertInstanceOf(QtiInteger::class, $variable->getValue());
-        $this->assertEquals(0, $variable->getValue()->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $variable->getValue());
+        $this::assertEquals(0, $variable->getValue()->getValue());
     }
 
     public function testCardinalityMultiple()
     {
         $variable = new OutcomeVariable('outcome1', Cardinality::MULTIPLE, BaseType::INTEGER);
-        $this->assertInstanceOf(OutcomeVariable::class, $variable);
-        $this->assertEquals(Cardinality::MULTIPLE, $variable->getCardinality());
+        $this::assertInstanceOf(OutcomeVariable::class, $variable);
+        $this::assertEquals(Cardinality::MULTIPLE, $variable->getCardinality());
 
         $variable->setValue(new MultipleContainer(BaseType::INTEGER));
 
@@ -89,46 +89,46 @@ class OutcomeVariableTest extends QtiSmTestCase
         try {
             $variable->setValue(new MultipleContainer(BaseType::DURATION));
             // This code portion should not be reached.
-            $this->assertTrue(false, 'Developer: Exception not thrown but not compliant baseType?!');
+            $this::assertTrue(false, 'Developer: Exception not thrown but not compliant baseType?!');
         } catch (InvalidArgumentException $e) {
-            $this->assertTrue(true);
+            $this::assertTrue(true);
         }
 
         // Try to set up a value with an incorrect cardinality (1).
         try {
             $variable->setValue(new OrderedContainer(BaseType::INTEGER));
-            $this->assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
+            $this::assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
         } catch (InvalidArgumentException $e) {
-            $this->assertTrue(true);
+            $this::assertTrue(true);
         }
 
         // Try to set up a value with an incorrect cardinality (2).
         try {
             $variable->setValue(new QtiInteger(25));
-            $this->assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
+            $this::assertTrue(false, 'Developer: Exception not thrown but not compliant cardinality?!');
         } catch (InvalidArgumentException $e) {
-            $this->assertTrue(true);
+            $this::assertTrue(true);
         }
     }
 
     public function testCreateFromVariableDeclarationMinimal()
     {
-        $factory = $this->getMarshallerFactory();
-        $element = $this->createDOMElement('<outcomeDeclaration	xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="integer" cardinality="single"/>');
+        $factory = $this->getMarshallerFactory('2.1.0');
+        $element = $this->createDOMElement('<outcomeDeclaration	xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcome1" baseType="integer" cardinality="single"/>');
         $outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
-        $this->assertInstanceOf(OutcomeVariable::class, $outcomeVariable);
-        $this->assertEquals('outcome1', $outcomeVariable->getIdentifier());
-        $this->assertEquals(BaseType::INTEGER, $outcomeVariable->getBaseType());
-        $this->assertEquals(Cardinality::SINGLE, $outcomeVariable->getCardinality());
+        $this::assertInstanceOf(OutcomeVariable::class, $outcomeVariable);
+        $this::assertEquals('outcome1', $outcomeVariable->getIdentifier());
+        $this::assertEquals(BaseType::INTEGER, $outcomeVariable->getBaseType());
+        $this::assertEquals(Cardinality::SINGLE, $outcomeVariable->getCardinality());
     }
 
     public function testCreateFromVariableDeclarationDefaultValueSingleCardinality()
     {
-        $factory = $this->getMarshallerFactory();
+        $factory = $this->getMarshallerFactory('2.1.0');
         $element = $this->createDOMElement('
-            <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="single">
+            <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcome1" baseType="pair" cardinality="single">
                 <defaultValue>
                     <value>A B</value>
                 </defaultValue>
@@ -138,14 +138,14 @@ class OutcomeVariableTest extends QtiSmTestCase
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
         $pair = new QtiPair('A', 'B');
-        $this->assertTrue($pair->equals($outcomeVariable->getDefaultValue()));
+        $this::assertTrue($pair->equals($outcomeVariable->getDefaultValue()));
     }
 
     public function testCreateFromVariableDeclarationDefaultValueMultipleCardinality()
     {
-        $factory = $this->getMarshallerFactory();
+        $factory = $this->getMarshallerFactory('2.1.0');
         $element = $this->createDOMElement('
-            <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" identifier="outcome1" baseType="pair" cardinality="multiple">
+            <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcome1" baseType="pair" cardinality="multiple">
                 <defaultValue>
                     <value>A B</value>
                     <value>B C</value>
@@ -156,16 +156,16 @@ class OutcomeVariableTest extends QtiSmTestCase
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
         $defaultValue = $outcomeVariable->getDefaultValue();
-        $this->assertInstanceOf(MultipleContainer::class, $defaultValue);
-        $this->assertEquals(2, count($defaultValue));
-        $this->assertEquals(Cardinality::MULTIPLE, $defaultValue->getCardinality());
-        $this->assertTrue($defaultValue[0]->equals(new QtiPair('A', 'B')));
-        $this->assertTrue($defaultValue[1]->equals(new QtiPair('B', 'C')));
+        $this::assertInstanceOf(MultipleContainer::class, $defaultValue);
+        $this::assertCount(2, $defaultValue);
+        $this::assertEquals(Cardinality::MULTIPLE, $defaultValue->getCardinality());
+        $this::assertTrue($defaultValue[0]->equals(new QtiPair('A', 'B')));
+        $this::assertTrue($defaultValue[1]->equals(new QtiPair('B', 'C')));
     }
 
     public function testCreateFromVariableDeclarationDefaultValueRecordCardinality()
     {
-        $factory = $this->getMarshallerFactory();
+        $factory = $this->getMarshallerFactory('2.1.0');
         $element = $this->createDOMElement('
             <outcomeDeclaration identifier="outcome1" cardinality="record">
                 <defaultValue>
@@ -178,18 +178,18 @@ class OutcomeVariableTest extends QtiSmTestCase
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
         $defaultValue = $outcomeVariable->getDefaultValue();
-        $this->assertInstanceOf(RecordContainer::class, $defaultValue);
-        $this->assertEquals(2, count($defaultValue));
+        $this::assertInstanceOf(RecordContainer::class, $defaultValue);
+        $this::assertCount(2, $defaultValue);
 
-        $this->assertInstanceOf(QtiPair::class, $defaultValue['A']);
-        $this->assertInstanceOf(QtiFloat::class, $defaultValue['B']);
+        $this::assertInstanceOf(QtiPair::class, $defaultValue['A']);
+        $this::assertInstanceOf(QtiFloat::class, $defaultValue['B']);
     }
 
     public function testCreateFromVariableDeclarationExtended()
     {
-        $factory = $this->getMarshallerFactory();
+        $factory = $this->getMarshallerFactory('2.1.0');
         $element = $this->createDOMElement('
-            <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0" 
+            <outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 
                 identifier="outcome1" 
                 baseType="pair" 
                 cardinality="ordered"
@@ -211,23 +211,23 @@ class OutcomeVariableTest extends QtiSmTestCase
         $outcomeDeclaration = $factory->createMarshaller($element)->unmarshall($element);
         $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
 
-        $this->assertEquals(Cardinality::ORDERED, $outcomeVariable->getCardinality());
+        $this::assertEquals(Cardinality::ORDERED, $outcomeVariable->getCardinality());
 
         $defaultValue = $outcomeVariable->getDefaultValue();
-        $this->assertEquals($outcomeVariable->getCardinality(), $defaultValue->getCardinality());
-        $this->assertEquals($outcomeVariable->getBaseType(), $defaultValue->getBaseType());
+        $this::assertEquals($outcomeVariable->getCardinality(), $defaultValue->getCardinality());
+        $this::assertEquals($outcomeVariable->getBaseType(), $defaultValue->getBaseType());
 
-        $this->assertEquals(1.0, $outcomeVariable->getNormalMinimum());
-        $this->assertEquals(2.1, $outcomeVariable->getNormalMaximum());
-        $this->assertEquals(1.5, $outcomeVariable->getMasteryValue());
+        $this::assertEquals(1.0, $outcomeVariable->getNormalMinimum());
+        $this::assertEquals(2.1, $outcomeVariable->getNormalMaximum());
+        $this::assertEquals(1.5, $outcomeVariable->getMasteryValue());
 
         $matchTable = $outcomeVariable->getLookupTable();
-        $this->assertInstanceOf(MatchTable::class, $matchTable);
+        $this::assertInstanceOf(MatchTable::class, $matchTable);
         $matchTableEntries = $matchTable->getMatchTableEntries();
-        $this->assertEquals(2, count($matchTableEntries));
-        $this->assertEquals(0, $matchTableEntries[0]->getSourceValue());
+        $this::assertCount(2, $matchTableEntries);
+        $this::assertEquals(0, $matchTableEntries[0]->getSourceValue());
         $targetValue = $matchTableEntries[0]->getTargetValue();
-        $this->assertTrue($targetValue->equals(new QtiPair('E', 'F')));
+        $this::assertTrue($targetValue->equals(new QtiPair('E', 'F')));
     }
 
     public function testCreateFromVariableDeclarationInconsistentOne()
@@ -287,54 +287,54 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testIsNull()
     {
         $outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::STRING);
-        $this->assertTrue($outcome->isNull());
+        $this::assertTrue($outcome->isNull());
         $outcome->setValue(new QtiString(''));
-        $this->assertTrue($outcome->isNull());
+        $this::assertTrue($outcome->isNull());
         $outcome->setValue(new QtiString('String!'));
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
 
         $outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER);
-        $this->assertTrue($outcome->isNull());
+        $this::assertTrue($outcome->isNull());
         $outcome->setValue(new QtiInteger(0));
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
         $outcome->setValue(new QtiInteger(-1));
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
         $outcome->setValue(new QtiInteger(100));
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
 
         $outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::FLOAT);
-        $this->assertTrue($outcome->isNull());
+        $this::assertTrue($outcome->isNull());
         $outcome->setValue(new QtiFloat(0.25));
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
         $outcome->setValue(new QtiFloat(-1.2));
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
         $outcome->setValue(new QtiFloat(100.12));
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
 
         $outcome = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::BOOLEAN);
-        $this->assertTrue($outcome->isNull());
+        $this::assertTrue($outcome->isNull());
         $outcome->setValue(new QtiBoolean(true));
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
         $outcome->setValue(new QtiBoolean(false));
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
 
         $outcome = new OutcomeVariable('var1', Cardinality::MULTIPLE, BaseType::BOOLEAN);
-        $this->assertTrue($outcome->isNull());
+        $this::assertTrue($outcome->isNull());
         $value = $outcome->getValue();
         $value[] = new QtiBoolean(true);
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
 
         $outcome = new OutcomeVariable('var1', Cardinality::ORDERED, BaseType::STRING);
-        $this->assertTrue($outcome->isNull());
+        $this::assertTrue($outcome->isNull());
         $value = $outcome->getValue();
         $value[] = new QtiString('string!');
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
 
         $outcome = new OutcomeVariable('var1', Cardinality::RECORD);
-        $this->assertTrue($outcome->isNull());
+        $this::assertTrue($outcome->isNull());
         $value = $outcome->getValue();
         $value['point1'] = new QtiPoint(100, 200);
-        $this->assertFalse($outcome->isNull());
+        $this::assertFalse($outcome->isNull());
     }
 
     public function testClone()
@@ -344,8 +344,8 @@ class OutcomeVariableTest extends QtiSmTestCase
 
         // value and default value must be independant.
         $clone = clone $var;
-        $this->assertNotSame($var->getValue(), $clone->getValue());
-        $this->assertNotSame($var->getDefaultValue(), $clone->getDefaultValue());
+        $this::assertNotSame($var->getValue(), $clone->getValue());
+        $this::assertNotSame($var->getDefaultValue(), $clone->getDefaultValue());
     }
 
     public function testSetNoBaseTypeNotRecord()
@@ -358,61 +358,61 @@ class OutcomeVariableTest extends QtiSmTestCase
     public function testIsOrdered()
     {
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
-        $this->assertFalse($var->isOrdered());
+        $this::assertFalse($var->isOrdered());
     }
 
     public function testIsNumeric()
     {
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
-        $this->assertTrue($var->isNumeric());
+        $this::assertTrue($var->isNumeric());
     }
 
     public function testIsBool()
     {
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
-        $this->assertFalse($var->isBool());
+        $this::assertFalse($var->isBool());
     }
 
     public function testIsInteger()
     {
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
-        $this->assertTrue($var->isInteger());
+        $this::assertTrue($var->isInteger());
     }
 
     public function testIsFloat()
     {
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
-        $this->assertFalse($var->isFloat());
+        $this::assertFalse($var->isFloat());
     }
 
     public function testIsPoint()
     {
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
-        $this->assertFalse($var->isPoint());
+        $this::assertFalse($var->isPoint());
     }
 
     public function testIsPair()
     {
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
-        $this->assertFalse($var->isPair());
+        $this::assertFalse($var->isPair());
     }
 
     public function testIsDirectedPair()
     {
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
-        $this->assertFalse($var->isDirectedPair());
+        $this::assertFalse($var->isDirectedPair());
     }
 
     public function testIsDuration()
     {
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
-        $this->assertFalse($var->isDuration());
+        $this::assertFalse($var->isDuration());
     }
 
     public function testIsString()
     {
         $var = new OutcomeVariable('var', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
-        $this->assertFalse($var->isString());
+        $this::assertFalse($var->isString());
     }
 
     public function testSetNormalMaximumWrongType()
@@ -458,7 +458,7 @@ class OutcomeVariableTest extends QtiSmTestCase
         $responseDeclaration = $factory->createMarshaller($element)->unmarshall($element);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("OutcomeVariable::createFromDataModel only accept 'qtism\data\state\OutcomeDeclaration' objects, 'qtism\data\state\ResponseDeclaration' given.");
+        $this->expectExceptionMessage("OutcomeVariable::createFromDataModel only accept 'qtism\data\state\OutcomeDeclaration' objects");
 
         OutcomeVariable::createFromDataModel($responseDeclaration);
     }

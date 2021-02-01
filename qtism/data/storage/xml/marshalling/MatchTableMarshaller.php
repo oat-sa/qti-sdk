@@ -95,7 +95,7 @@ class MatchTableMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         foreach ($component->getMatchTableEntries() as $matchTableEntry) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($matchTableEntry, [$this->getBaseType()]);

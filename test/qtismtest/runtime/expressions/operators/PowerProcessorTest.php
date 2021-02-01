@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\OperandsCollection;
 use qtism\runtime\expressions\operators\PowerProcessor;
@@ -24,43 +25,43 @@ class PowerProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(0), new QtiInteger(0)]);
         $processor = new PowerProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(256);
         $operands[] = new QtiInteger(0);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(0);
         $operands[] = new QtiInteger(0);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(0);
         $operands[] = new QtiInteger(2);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(0, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(2);
         $operands[] = new QtiInteger(8);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(256, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(256, $result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(20);
         $operands[] = new QtiFloat(3.4);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(26515, (int)$result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(26515, (int)$result->getValue());
     }
 
     public function testOverflow()
@@ -69,7 +70,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(2), new QtiInteger(100000000)]);
         $processor = new PowerProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testUnderflow()
@@ -78,7 +79,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(-2), new QtiInteger(333333333)]);
         $processor = new PowerProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testInfinite()
@@ -87,7 +88,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiFloat(INF), new QtiFloat(INF)]);
         $processor = new PowerProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertTrue(is_infinite($result->getValue()));
+        $this::assertTrue(is_infinite($result->getValue()));
     }
 
     public function testNull()
@@ -97,19 +98,19 @@ class PowerProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(-20), new QtiFloat(3.4)]);
         $processor = new PowerProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands->reset();
         $operands[] = new QtiInteger(1);
         $operands[] = null;
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands->reset();
         $operands[] = new MultipleContainer(BaseType::FLOAT);
         $operands[] = new QtiInteger(2);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseType()
@@ -148,6 +149,7 @@ class PowerProcessorTest extends QtiSmTestCase
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

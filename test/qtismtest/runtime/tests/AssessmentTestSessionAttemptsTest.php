@@ -24,18 +24,18 @@ class AssessmentTestSessionAttemptsTest extends QtiSmAssessmentTestSessionTestCa
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
 
-        $this->assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $session['Q01.completionStatus']);
+        $this::assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $session['Q01.completionStatus']);
 
         // Q02 - second attempt.
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceC'))]));
 
-        $this->assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $session['Q01.completionStatus']);
+        $this::assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $session['Q01.completionStatus']);
 
         // Q03 - third attempt. The completion status is now completed.
         $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
 
-        $this->assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $session['Q01.completionStatus']);
+        $this::assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $session['Q01.completionStatus']);
     }
 }

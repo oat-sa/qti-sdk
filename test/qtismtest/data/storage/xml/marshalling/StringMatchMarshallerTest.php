@@ -22,14 +22,14 @@ class StringMatchMarshallerTest extends QtiSmTestCase
         $subs[] = new BaseValue(BaseType::STRING, 'hello');
 
         $component = new StringMatch($subs, false);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('stringMatch', $element->nodeName);
-        $this->assertEquals('false', $element->getAttribute('caseSensitive'));
-        $this->assertEquals('false', $element->getAttribute('substring'));
-        $this->assertEquals(2, $element->getElementsByTagName('baseValue')->length);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('stringMatch', $element->nodeName);
+        $this::assertEquals('false', $element->getAttribute('caseSensitive'));
+        $this::assertEquals('false', $element->getAttribute('substring'));
+        $this::assertEquals(2, $element->getElementsByTagName('baseValue')->length);
     }
 
     public function testUnmarshall()
@@ -45,13 +45,13 @@ class StringMatchMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(StringMatch::class, $component);
-        $this->assertIsBool($component->isCaseSensitive());
-        $this->assertTrue($component->isCaseSensitive());
-        $this->assertIsBool($component->mustSubstring());
-        $this->assertFalse($component->mustSubstring());
+        $this::assertInstanceOf(StringMatch::class, $component);
+        $this::assertIsBool($component->isCaseSensitive());
+        $this::assertTrue($component->isCaseSensitive());
+        $this::assertIsBool($component->mustSubstring());
+        $this::assertFalse($component->mustSubstring());
     }
 }

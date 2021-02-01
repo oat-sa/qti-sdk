@@ -8,6 +8,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\operators\MathFunctions;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\expressions\operators\MathOperatorProcessor;
 use qtism\runtime\expressions\operators\OperandsCollection;
@@ -24,6 +25,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand operand in radians
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSin($operand, $expected)
     {
@@ -31,8 +33,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -40,6 +42,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCos($operand, $expected)
     {
@@ -47,8 +50,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -56,6 +59,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testTan($operand, $expected)
     {
@@ -63,8 +67,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -72,6 +76,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSec($operand, $expected)
     {
@@ -79,8 +84,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -88,6 +93,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCsc($operand, $expected)
     {
@@ -95,8 +101,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -104,6 +110,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCot($operand, $expected)
     {
@@ -111,8 +118,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -120,6 +127,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAsin($operand, $expected)
     {
@@ -127,8 +135,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -137,6 +145,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $operand1
      * @param number $operand2
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAtan2($operand1, $operand2, $expected)
     {
@@ -144,8 +153,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand1, $operand2]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -153,6 +162,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAsec($operand, $expected)
     {
@@ -160,8 +170,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -169,6 +179,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAcsc($operand, $expected)
     {
@@ -176,8 +187,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -185,6 +196,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAcot($operand, $expected)
     {
@@ -192,8 +204,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -201,6 +213,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testLog($operand, $expected)
     {
@@ -208,8 +221,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -217,6 +230,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testLn($operand, $expected)
     {
@@ -224,8 +238,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -233,6 +247,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSinh($operand, $expected)
     {
@@ -240,8 +255,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -249,6 +264,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCosh($operand, $expected)
     {
@@ -256,8 +272,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -265,6 +281,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testTanh($operand, $expected)
     {
@@ -272,8 +289,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -281,6 +298,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSech($operand, $expected)
     {
@@ -288,8 +306,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -297,6 +315,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCsch($operand, $expected)
     {
@@ -304,8 +323,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -313,6 +332,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCoth($operand, $expected)
     {
@@ -320,8 +340,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -329,6 +349,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAbs($operand, $expected)
     {
@@ -336,8 +357,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -345,6 +366,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testExp($operand, $expected)
     {
@@ -352,8 +374,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -361,6 +383,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testSignum($operand, $expected)
     {
@@ -368,8 +391,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiFloat);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiFloat);
     }
 
     /**
@@ -377,6 +400,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testFloor($operand, $expected)
     {
@@ -384,7 +408,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
+        $this::assertEqualsRounded($expected, $result);
     }
 
     /**
@@ -392,6 +416,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testCeil($operand, $expected)
     {
@@ -399,7 +424,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
+        $this::assertEqualsRounded($expected, $result);
     }
 
     /**
@@ -407,6 +432,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testToDegrees($operand, $expected)
     {
@@ -414,8 +440,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -423,6 +449,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param number $operand
      * @param number $expected
+     * @throws MarshallerNotFoundException
      */
     public function testToRadians($operand, $expected)
     {
@@ -430,8 +457,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -439,6 +466,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param $operand
      * @param $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAcos($operand, $expected)
     {
@@ -446,8 +474,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -455,6 +483,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      *
      * @param $operand
      * @param $expected
+     * @throws MarshallerNotFoundException
      */
     public function testAtan($operand, $expected)
     {
@@ -462,8 +491,8 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$operand]);
         $processor = new MathOperatorProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertEqualsRounded($expected, $result);
-        $this->assertTrue(!$result instanceof QtiInteger);
+        $this::assertEqualsRounded($expected, $result);
+        $this::assertTrue(!$result instanceof QtiInteger);
     }
 
     /**
@@ -473,15 +502,15 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     protected function assertEqualsRounded($expected, $value)
     {
         if ($expected === null) {
-            $this->assertSame(null, $value);
+            $this::assertNull($value);
         } elseif (is_infinite($expected)) {
             if ($expected > 0) {
-                $this->assertTrue(is_infinite($value->getValue()) && $value->getValue() > 0);
+                $this::assertTrue(is_infinite($value->getValue()) && $value->getValue() > 0);
             } else {
-                $this->assertTrue(is_infinite($value->getValue()) && $value->getValue() < 0);
+                $this::assertTrue(is_infinite($value->getValue()) && $value->getValue() < 0);
             }
         } else {
-            $this->assertEquals(round($expected, 3), round($value->getValue(), 3));
+            $this::assertEquals(round($expected, 3), round($value->getValue(), 3));
         }
     }
 
@@ -953,6 +982,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @param $constant
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression($constant)
     {

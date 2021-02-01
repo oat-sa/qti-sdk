@@ -34,13 +34,13 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $href = '../../question1.xml';
 
         $component = new AssessmentItemRef($identifier, $href);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('assessmentItemRef', $element->nodeName);
-        $this->assertEquals($href, $element->getAttribute('href'));
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('assessmentItemRef', $element->nodeName);
+        $this::assertEquals($href, $element->getAttribute('href'));
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
     }
 
     public function testMarshallMaximal()
@@ -86,37 +86,37 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $component->setVariableMappings($variableMappings);
         $component->setTemplateDefaults($templateDefaults);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('assessmentItemRef', $element->nodeName);
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
-        $this->assertEquals($href, $element->getAttribute('href'));
-        $this->assertEquals(implode("\x20", $categories->getArrayCopy()), $element->getAttribute('category'));
-        $this->assertEquals('true', $element->getAttribute('required'));
-        $this->assertEquals('true', $element->getAttribute('fixed'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('assessmentItemRef', $element->nodeName);
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertEquals($href, $element->getAttribute('href'));
+        $this::assertEquals(implode("\x20", $categories->getArrayCopy()), $element->getAttribute('category'));
+        $this::assertEquals('true', $element->getAttribute('required'));
+        $this::assertEquals('true', $element->getAttribute('fixed'));
 
         $weightElts = $element->getElementsByTagName('weight');
-        $this->assertEquals(1, $weightElts->length);
+        $this::assertEquals(1, $weightElts->length);
 
         $templateDefaultElts = $element->getElementsByTagName('templateDefault');
-        $this->assertEquals(1, $templateDefaultElts->length);
+        $this::assertEquals(1, $templateDefaultElts->length);
 
         $variableMappingsElts = $element->getElementsByTagName('variableMapping');
-        $this->assertEquals(2, $variableMappingsElts->length);
+        $this::assertEquals(2, $variableMappingsElts->length);
 
         $preConditionElts = $element->getElementsByTagName('preCondition');
-        $this->assertEquals(2, $preConditionElts->length);
+        $this::assertEquals(2, $preConditionElts->length);
 
         $branchRuleElts = $element->getElementsByTagName('branchRule');
-        $this->assertEquals(2, $branchRuleElts->length);
+        $this::assertEquals(2, $branchRuleElts->length);
 
         $itemSessionControlElts = $element->getElementsByTagName('itemSessionControl');
-        $this->assertEquals(1, $itemSessionControlElts->length);
+        $this::assertEquals(1, $itemSessionControlElts->length);
 
         $timeLimitsElts = $element->getElementsByTagName('timeLimits');
-        $this->assertEquals(1, $timeLimitsElts->length);
+        $this::assertEquals(1, $timeLimitsElts->length);
     }
 
     public function testUnmarshallMinimal()
@@ -125,14 +125,14 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="question1" href="../../question1.xml"/>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(AssessmentItemRef::class, $component);
-        $this->assertEquals('../../question1.xml', $component->getHref());
-        $this->assertEquals('question1', $component->getIdentifier());
-        $this->assertFalse($component->isFixed());
-        $this->assertFalse($component->isRequired());
+        $this::assertInstanceOf(AssessmentItemRef::class, $component);
+        $this::assertEquals('../../question1.xml', $component->getHref());
+        $this::assertEquals('question1', $component->getIdentifier());
+        $this::assertFalse($component->isFixed());
+        $this::assertFalse($component->isRequired());
     }
 
     public function testUnmarshallMaximal()
@@ -166,21 +166,21 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(AssessmentItemRef::class, $component);
-        $this->assertEquals($component->getHref(), '../../question1.xml');
-        $this->assertEquals(implode("\x20", $component->getCategories()->getArrayCopy()), 'cat1 cat2');
-        $this->assertTrue($component->isFixed());
-        $this->assertTrue($component->isRequired());
+        $this::assertInstanceOf(AssessmentItemRef::class, $component);
+        $this::assertEquals('../../question1.xml', $component->getHref());
+        $this::assertEquals('cat1 cat2', implode("\x20", $component->getCategories()->getArrayCopy()));
+        $this::assertTrue($component->isFixed());
+        $this::assertTrue($component->isRequired());
 
-        $this->assertEquals(2, count($component->getVariableMappings()));
-        $this->assertEquals(1, count($component->getWeights()));
-        $this->assertEquals(1, count($component->getTemplateDefaults()));
-        $this->assertEquals(2, count($component->getPreConditions()));
-        $this->assertEquals(2, count($component->getBranchRules()));
-        $this->assertInstanceOf(TimeLimits::class, $component->getTimeLimits());
-        $this->assertInstanceOf(ItemSessionControl::class, $component->getItemSessionControl());
+        $this::assertCount(2, $component->getVariableMappings());
+        $this::assertCount(1, $component->getWeights());
+        $this::assertCount(1, $component->getTemplateDefaults());
+        $this::assertCount(2, $component->getPreConditions());
+        $this::assertCount(2, $component->getBranchRules());
+        $this::assertInstanceOf(TimeLimits::class, $component->getTimeLimits());
+        $this::assertInstanceOf(ItemSessionControl::class, $component->getItemSessionControl());
     }
 }

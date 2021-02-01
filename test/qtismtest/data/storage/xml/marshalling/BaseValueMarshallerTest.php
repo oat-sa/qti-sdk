@@ -19,13 +19,13 @@ class BaseValueMarshallerTest extends QtiSmTestCase
         $value = 27.11;
 
         $component = new BaseValue($baseType, $value);
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('baseValue', $element->nodeName);
-        $this->assertEquals('float', $element->getAttribute('baseType'));
-        $this->assertEquals($value . '', $element->nodeValue);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('baseValue', $element->nodeName);
+        $this::assertEquals('float', $element->getAttribute('baseType'));
+        $this::assertEquals($value . '', $element->nodeValue);
     }
 
     public function testUnmarshall()
@@ -34,22 +34,22 @@ class BaseValueMarshallerTest extends QtiSmTestCase
         $dom->loadXML('<baseValue xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" baseType="float">27.11</baseValue>');
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(BaseValue::class, $component);
-        $this->assertEquals($component->getBaseType(), BaseType::FLOAT);
-        $this->assertIsFloat($component->getValue());
-        $this->assertEquals($component->getValue(), 27.11);
+        $this::assertInstanceOf(BaseValue::class, $component);
+        $this::assertEquals(BaseType::FLOAT, $component->getBaseType());
+        $this::assertIsFloat($component->getValue());
+        $this::assertEquals(27.11, $component->getValue());
     }
 
     public function testUnmarshallCDATA()
     {
         $element = $this->createDOMElement('<baseValue baseType="string"><![CDATA[A string...]]></baseValue>');
-        $component = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
+        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf(BaseValue::class, $component);
-        $this->assertEquals($component->getBaseType(), BaseType::STRING);
-        $this->assertEquals('A string...', $component->getValue());
+        $this::assertInstanceOf(BaseValue::class, $component);
+        $this::assertEquals(BaseType::STRING, $component->getBaseType());
+        $this::assertEquals('A string...', $component->getValue());
     }
 }

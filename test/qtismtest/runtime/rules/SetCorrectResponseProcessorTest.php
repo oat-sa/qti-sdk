@@ -30,8 +30,8 @@ class SetCorrectResponseProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf(QtiIdentifier::class, $state->getVariable('RESPONSE')->getCorrectResponse());
-        $this->assertEquals('ChoiceA', $state->getVariable('RESPONSE')->getCorrectResponse()->getValue());
+        $this::assertInstanceOf(QtiIdentifier::class, $state->getVariable('RESPONSE')->getCorrectResponse());
+        $this::assertEquals('ChoiceA', $state->getVariable('RESPONSE')->getCorrectResponse()->getValue());
     }
 
     public function testSetCorrectResponseNoVariable()

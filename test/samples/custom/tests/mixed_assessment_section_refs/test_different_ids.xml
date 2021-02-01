@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assessmentTest title="Mixed Assessment Section References Different Ids" identifier="mixed_assessment_section_refs_different_ids" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+  <testPart navigationMode="nonlinear" identifier="T01" submissionMode="individual">
+    <!-- In this sample, assessmentSectionRefs DO NOT have the same identifier as the assessmentSection they refer to. -->
+    <assessmentSection identifier="S00" title="Section 0" visible="true">
+        <assessmentItemRef identifier="Q01" href="Q01.xml"/>
+        <assessmentSectionRef identifier="SR01" href="S01.xml"/>
+        <assessmentItemRef identifier="Q03" href="Q03.xml"/>
+        <assessmentSectionRef identifier="SR02" href="S02.xml"/>
+        <assessmentItemRef identifier="Q05" href="Q05.xml"/>
+    </assessmentSection>
+  </testPart>
+</assessmentTest>

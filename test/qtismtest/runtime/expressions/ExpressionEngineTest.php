@@ -19,8 +19,8 @@ class ExpressionEngineTest extends QtiSmTestCase
         $expression = $this->createComponentFromXml('<baseValue baseType="duration">P2D</baseValue>');
         $engine = new ExpressionEngine($expression);
         $result = $engine->process();
-        $this->assertInstanceOf(QtiDuration::class, $result);
-        $this->assertEquals(2, $result->getDays());
+        $this::assertInstanceOf(QtiDuration::class, $result);
+        $this::assertEquals(2, $result->getDays());
     }
 
     public function testExpressionEngineSum()
@@ -40,8 +40,8 @@ class ExpressionEngineTest extends QtiSmTestCase
 
         $engine = new ExpressionEngine($expression);
         $result = $engine->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(60.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(60.0, $result->getValue());
     }
 
     public function testCreateWrongExpressionType()

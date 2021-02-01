@@ -16,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssociateInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall21()
     {
         $choice1 = new SimpleAssociableChoice('choice_1', 1);
         $choice1->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
@@ -27,42 +27,49 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
 
         $component = new AssociateInteraction('RESPONSE', $choices);
         $component->setMaxAssociations(2);
+        $component->setMinAssociations(1);
+        $component->setXmlBase('/home/jerome');
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
         $component->setPrompt($prompt);
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
-            '<associateInteraction responseIdentifier="RESPONSE" maxAssociations="2"><prompt>Prompt...</prompt><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice><simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice></associateInteraction>',
+        $this::assertEquals(
+            '<associateInteraction responseIdentifier="RESPONSE" maxAssociations="2" minAssociations="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice><simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice></associateInteraction>',
             $dom->saveXML($element)
         );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
-            <associateInteraction responseIdentifier="RESPONSE" maxAssociations="2"><prompt>Prompt...</prompt><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice><simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice></associateInteraction>
+            <associateInteraction responseIdentifier="RESPONSE" maxAssociations="2" xml:base="/home/jerome">
+                <prompt>Prompt...</prompt>
+                <simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice>
+                <simpleAssociableChoice identifier="choice_2" matchMax="2" matchMin="1">Choice #2</simpleAssociableChoice>
+            </associateInteraction>
         ');
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(AssociateInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertFalse($component->mustShuffle());
-        $this->assertTrue($component->hasPrompt());
-        $this->assertEquals(2, $component->getMaxAssociations());
-        $this->assertEquals(0, $component->getMinAssociations());
+        $this::assertInstanceOf(AssociateInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertFalse($component->mustShuffle());
+        $this::assertTrue($component->hasPrompt());
+        $this::assertEquals(2, $component->getMaxAssociations());
+        $this::assertEquals(0, $component->getMinAssociations());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
 
         $prompt = $component->getPrompt();
         $content = $prompt->getContent();
-        $this->assertEquals('Prompt...', $content[0]->getContent());
+        $this::assertEquals('Prompt...', $content[0]->getContent());
 
         $simpleChoices = $component->getSimpleAssociableChoices();
-        $this->assertEquals(2, count($simpleChoices));
+        $this::assertCount(2, $simpleChoices);
     }
 }

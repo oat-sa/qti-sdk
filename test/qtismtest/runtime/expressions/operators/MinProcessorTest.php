@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -31,7 +32,7 @@ class MinProcessorTest extends QtiSmTestCase
         $operands[] = new MultipleContainer(BaseType::FLOAT, [new QtiFloat(10.0)]);
         $processor = new MinProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()
@@ -43,7 +44,7 @@ class MinProcessorTest extends QtiSmTestCase
         $operands[] = $rec;
         $processor = new MinProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
 
         $rec['A'] = new QtiInteger(1);
         $this->expectException(ExpressionProcessingException::class);
@@ -59,12 +60,12 @@ class MinProcessorTest extends QtiSmTestCase
         $operands[] = new QtiFloat(-0.5);
         $processor = new MinProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
 
         $operands = new OperandsCollection([null]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testAllIntegers()
@@ -75,8 +76,8 @@ class MinProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(-20), new QtiInteger(-10), new QtiInteger(0), new QtiInteger(10), new QtiInteger(20)]);
         $processor = new MinProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(-20, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(-20, $result->getValue());
 
         $operands = new OperandsCollection();
         $operands[] = new QtiInteger(10002);
@@ -84,8 +85,8 @@ class MinProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(100002);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(2094, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(2094, $result->getValue());
     }
 
     public function testMixed()
@@ -94,20 +95,21 @@ class MinProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(26.4), new QtiInteger(-4), new QtiFloat(25.3)]);
         $processor = new MinProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(-4.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(-4.0, $result->getValue());
 
         $operands->reset();
         $operands[] = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(2), new QtiInteger(3), new QtiInteger(1), new QtiInteger(4), new QtiInteger(5)]);
         $operands[] = new QtiFloat(2.4);
         $operands[] = new MultipleContainer(BaseType::FLOAT, [new QtiFloat(245.4), new QtiFloat(1337.1337)]);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1.0, $result->getValue());
     }
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {

@@ -25,25 +25,25 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
 
         $component = new OutcomeIf($baseValue, new OutcomeRuleCollection([$setOutcomeValue]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('outcomeIf', $element->nodeName);
-        $this->assertEquals(2, $element->getElementsByTagName('baseValue')->length);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('outcomeIf', $element->nodeName);
+        $this::assertEquals(2, $element->getElementsByTagName('baseValue')->length);
 
         $expression = $element->getElementsByTagName('baseValue')->item(0);
-        $this->assertTrue($element === $expression->parentNode);
-        $this->assertEquals('boolean', $expression->getAttribute('baseType'));
-        $this->assertEquals('true', $expression->nodeValue);
+        $this::assertSame($element, $expression->parentNode);
+        $this::assertEquals('boolean', $expression->getAttribute('baseType'));
+        $this::assertEquals('true', $expression->nodeValue);
 
         $setOutcomeValue = $element->getElementsByTagName('setOutcomeValue')->item(0);
-        $this->assertEquals('myStringVar', $setOutcomeValue->getAttribute('identifier'));
+        $this::assertEquals('myStringVar', $setOutcomeValue->getAttribute('identifier'));
 
         $tested = $element->getElementsByTagName('baseValue')->item(1);
-        $this->assertTrue($setOutcomeValue === $tested->parentNode);
-        $this->assertEquals('Tested!', $tested->nodeValue);
-        $this->assertEquals('string', $tested->getAttribute('baseType'));
+        $this::assertSame($setOutcomeValue, $tested->parentNode);
+        $this::assertEquals('Tested!', $tested->nodeValue);
+        $this::assertEquals('string', $tested->getAttribute('baseType'));
     }
 
     public function testMarshallElseIfMinimal()
@@ -53,25 +53,25 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
 
         $component = new OutcomeElseIf($baseValue, new OutcomeRuleCollection([$setOutcomeValue]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('outcomeElseIf', $element->nodeName);
-        $this->assertEquals(2, $element->getElementsByTagName('baseValue')->length);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('outcomeElseIf', $element->nodeName);
+        $this::assertEquals(2, $element->getElementsByTagName('baseValue')->length);
 
         $expression = $element->getElementsByTagName('baseValue')->item(0);
-        $this->assertTrue($element === $expression->parentNode);
-        $this->assertEquals('boolean', $expression->getAttribute('baseType'));
-        $this->assertEquals('true', $expression->nodeValue);
+        $this::assertSame($element, $expression->parentNode);
+        $this::assertEquals('boolean', $expression->getAttribute('baseType'));
+        $this::assertEquals('true', $expression->nodeValue);
 
         $setOutcomeValue = $element->getElementsByTagName('setOutcomeValue')->item(0);
-        $this->assertEquals('myStringVar', $setOutcomeValue->getAttribute('identifier'));
+        $this::assertEquals('myStringVar', $setOutcomeValue->getAttribute('identifier'));
 
         $tested = $element->getElementsByTagName('baseValue')->item(1);
-        $this->assertTrue($setOutcomeValue === $tested->parentNode);
-        $this->assertEquals('Tested!', $tested->nodeValue);
-        $this->assertEquals('string', $tested->getAttribute('baseType'));
+        $this::assertSame($setOutcomeValue, $tested->parentNode);
+        $this::assertEquals('Tested!', $tested->nodeValue);
+        $this::assertEquals('string', $tested->getAttribute('baseType'));
     }
 
     public function testMarshallElseMinimal()
@@ -79,20 +79,20 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $setOutcomeValue = new SetOutcomeValue('myStringVar', new BaseValue(BaseType::STRING, 'Tested!'));
         $component = new OutcomeElse(new OutcomeRuleCollection([$setOutcomeValue]));
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('outcomeElse', $element->nodeName);
-        $this->assertEquals(1, $element->getElementsByTagName('baseValue')->length);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('outcomeElse', $element->nodeName);
+        $this::assertEquals(1, $element->getElementsByTagName('baseValue')->length);
 
         $setOutcomeValue = $element->getElementsByTagName('setOutcomeValue')->item(0);
-        $this->assertEquals('myStringVar', $setOutcomeValue->getAttribute('identifier'));
+        $this::assertEquals('myStringVar', $setOutcomeValue->getAttribute('identifier'));
 
         $tested = $element->getElementsByTagName('baseValue')->item(0);
-        $this->assertTrue($setOutcomeValue === $tested->parentNode);
-        $this->assertEquals('string', $tested->getAttribute('baseType'));
-        $this->assertEquals('Tested!', $tested->nodeValue);
+        $this::assertSame($setOutcomeValue, $tested->parentNode);
+        $this::assertEquals('string', $tested->getAttribute('baseType'));
+        $this::assertEquals('Tested!', $tested->nodeValue);
     }
 
     public function testUnmarshallIfMinimal()
@@ -110,19 +110,19 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OutcomeIf::class, $component);
-        $this->assertEquals(1, count($component->getOutcomeRules()));
-        $this->assertInstanceOf(BaseValue::class, $component->getExpression());
+        $this::assertInstanceOf(OutcomeIf::class, $component);
+        $this::assertCount(1, $component->getOutcomeRules());
+        $this::assertInstanceOf(BaseValue::class, $component->getExpression());
 
         $outcomeRules = $component->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
-        $this->assertIsString($outcomeRules[0]->getExpression()->getValue());
-        $this->assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
-        $this->assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
+        $this::assertIsString($outcomeRules[0]->getExpression()->getValue());
+        $this::assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
     }
 
     public function testUnmarshallElseIfMinimal()
@@ -140,19 +140,19 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OutcomeElseIf::class, $component);
-        $this->assertEquals(1, count($component->getOutcomeRules()));
-        $this->assertInstanceOf(BaseValue::class, $component->getExpression());
+        $this::assertInstanceOf(OutcomeElseIf::class, $component);
+        $this::assertCount(1, $component->getOutcomeRules());
+        $this::assertInstanceOf(BaseValue::class, $component->getExpression());
 
         $outcomeRules = $component->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
-        $this->assertIsString($outcomeRules[0]->getExpression()->getValue());
-        $this->assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
-        $this->assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
+        $this::assertIsString($outcomeRules[0]->getExpression()->getValue());
+        $this::assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
     }
 
     public function testUnmarshallElseMinimal()
@@ -169,17 +169,17 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         );
         $element = $dom->documentElement;
 
-        $marshaller = $this->getMarshallerFactory()->createMarshaller($element);
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OutcomeElse::class, $component);
-        $this->assertEquals(1, count($component->getOutcomeRules()));
+        $this::assertInstanceOf(OutcomeElse::class, $component);
+        $this::assertCount(1, $component->getOutcomeRules());
 
         $outcomeRules = $component->getOutcomeRules();
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
-        $this->assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
-        $this->assertIsString($outcomeRules[0]->getExpression()->getValue());
-        $this->assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
-        $this->assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[0]);
+        $this::assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
+        $this::assertIsString($outcomeRules[0]->getExpression()->getValue());
+        $this::assertEquals('Tested!', $outcomeRules[0]->getExpression()->getValue());
+        $this::assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
     }
 }

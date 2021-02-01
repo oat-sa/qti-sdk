@@ -16,7 +16,7 @@
 	</outcomeDeclaration>
 	<testPart identifier="testpartID" navigationMode="nonlinear" submissionMode="individual">
 		<assessmentSection identifier="Sektion_181865064" fixed="false" title="Sektion"
-			visible="false">
+            visible="false">
 			<assessmentItemRef identifier="Choicetruefalse_176040516"
 				href="Choicetruefalse_176040516.xml" fixed="false"/>
 			<assessmentItemRef identifier="Choicesingle_853928446" href="Choicesingle_853928446.xml"

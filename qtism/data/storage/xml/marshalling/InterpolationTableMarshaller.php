@@ -97,7 +97,7 @@ class InterpolationTableMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         foreach ($component->getInterpolationTableEntries() as $interpolationTableEntry) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($interpolationTableEntry, [$this->getBaseType()]);
             $element->appendChild($marshaller->marshall($interpolationTableEntry));

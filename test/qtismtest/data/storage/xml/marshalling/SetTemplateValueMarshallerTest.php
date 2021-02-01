@@ -24,11 +24,11 @@ class SetTemplateValueMarshallerTest extends QtiSmTestCase
 
         $setTemplateValue = new SetTemplateValue('tpl1', $matchExpr);
 
-        $element = $this->getMarshallerFactory()->createMarshaller($setTemplateValue)->marshall($setTemplateValue);
+        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($setTemplateValue)->marshall($setTemplateValue);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<setTemplateValue identifier="tpl1"><match><variable identifier="var1"/><baseValue baseType="boolean">true</baseValue></match></setTemplateValue>', $dom->saveXML($element));
+        $this::assertEquals('<setTemplateValue identifier="tpl1"><match><variable identifier="var1"/><baseValue baseType="boolean">true</baseValue></match></setTemplateValue>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -42,9 +42,9 @@ class SetTemplateValueMarshallerTest extends QtiSmTestCase
 	        </setTemplateValue>
 	    ');
 
-        $setTemplateValue = $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(SetTemplateValue::class, $setTemplateValue);
-        $this->assertEquals('tpl1', $setTemplateValue->getIdentifier());
-        $this->assertInstanceOf(MatchOperator::class, $setTemplateValue->getExpression());
+        $setTemplateValue = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+        $this::assertInstanceOf(SetTemplateValue::class, $setTemplateValue);
+        $this::assertEquals('tpl1', $setTemplateValue->getIdentifier());
+        $this::assertInstanceOf(MatchOperator::class, $setTemplateValue->getExpression());
     }
 }

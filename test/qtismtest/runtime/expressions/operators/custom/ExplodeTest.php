@@ -7,6 +7,7 @@ use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -73,7 +74,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new MultipleContainer(BaseType::FLOAT), new MultipleContainer(BaseType::FLOAT)]);
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testExplodeOne()
@@ -83,9 +84,9 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertSame(5, count($result));
-        $this->assertEquals(['Hello', 'World', 'This', 'Is', 'Me'], $result->getArrayCopy());
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertCount(5, $result);
+        $this::assertEquals(['Hello', 'World', 'This', 'Is', 'Me'], $result->getArrayCopy());
     }
 
     public function testExplodeTwo()
@@ -96,9 +97,9 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertSame(1, count($result));
-        $this->assertEquals(['Hello World!'], $result->getArrayCopy());
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertCount(1, $result);
+        $this::assertEquals(['Hello World!'], $result->getArrayCopy());
     }
 
     public function testExplodeThree()
@@ -108,13 +109,14 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $processor = new Explode($expression, $operands);
         $result = $processor->process();
 
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertSame(2, count($result));
-        $this->assertEquals(['Hello', 'World!'], $result->getArrayCopy());
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertCount(2, $result);
+        $this::assertEquals(['Hello', 'World!'], $result->getArrayCopy());
     }
 
     /**
      * @return QtiComponent
+     * @throws MarshallerNotFoundException
      */
     public function createFakeExpression()
     {
