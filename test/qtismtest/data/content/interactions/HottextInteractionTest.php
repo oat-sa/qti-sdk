@@ -18,7 +18,7 @@ class HottextInteractionTest extends QtiSmTestCase
     public function testCreateNoContent()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("A HottextInteraction object must be composed of at least one BlockStatic object, none given.");
+        $this->expectExceptionMessage('A HottextInteraction object must be composed of at least one BlockStatic object, none given.');
 
         new HottextInteraction('RESPONSE', new BlockStaticCollection());
     }

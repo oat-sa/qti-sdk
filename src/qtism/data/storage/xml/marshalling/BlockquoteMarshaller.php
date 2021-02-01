@@ -76,7 +76,7 @@ class BlockquoteMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         if ($component->hasCite() === true) {
             $element->setAttribute('cite', $component->getCite());

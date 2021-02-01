@@ -49,7 +49,7 @@ class NumeratorTest extends QtiSmTestCase
         $operator = new Numerator($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertEquals($result->getValue(), 1);
+        $this::assertEquals(1, $result->getValue());
     }
 
     public function testReturnsNullOne()
@@ -63,7 +63,7 @@ class NumeratorTest extends QtiSmTestCase
         $operator = new Numerator($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testReturnsNullTwo()
@@ -77,6 +77,6 @@ class NumeratorTest extends QtiSmTestCase
         $operator = new Numerator($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertNull($result);
+        $this::assertNull($result);
     }
 }

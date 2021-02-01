@@ -42,7 +42,7 @@ class TablePartMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         foreach ($component->getContent() as $tr) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($tr);

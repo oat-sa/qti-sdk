@@ -106,7 +106,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertEquals(8, $result->getValue());
+        $this::assertEquals(8, $result->getValue());
     }
 
     public function testSimpleOneWithStrings()
@@ -172,7 +172,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertEquals(8, $result->getValue());
+        $this::assertEquals(8, $result->getValue());
     }
 
     public function testSimpleTwo()
@@ -238,7 +238,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertEquals(6, $result->getValue());
+        $this::assertEquals(6, $result->getValue());
     }
 
     public function testInvalidEquation()
@@ -304,7 +304,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertNull($result);
+        $this::assertNull($result);
     }
 
     public function testWrongEquationType()
@@ -349,7 +349,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertNull($result);
+        $this::assertNull($result);
     }
 
     public function testNullEquation()
@@ -394,7 +394,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertNull($result);
+        $this::assertNull($result);
     }
 
     public function testWrongPointsType()
@@ -439,6 +439,6 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $operator = new CountPointsThatSatisfyEquation($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertNull($result);
+        $this::assertNull($result);
     }
 }

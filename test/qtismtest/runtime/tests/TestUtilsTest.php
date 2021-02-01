@@ -30,7 +30,7 @@ class TestUtilsTest extends QtiSmTestCase
      */
     public function testIsResponseValid($expected, $response, ResponseValidityConstraint $constraint)
     {
-        $this->assertEquals($expected, TestUtils::isResponseValid($response, $constraint));
+        $this::assertEquals($expected, TestUtils::isResponseValid($response, $constraint));
     }
 
     /**

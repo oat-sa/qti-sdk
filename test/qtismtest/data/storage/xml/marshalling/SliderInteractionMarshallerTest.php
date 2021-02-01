@@ -33,7 +33,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true" xml:base="/home/jerome"><prompt>Prompt...</prompt></sliderInteraction>',
             $dom->saveXML($element)
         );
@@ -48,19 +48,19 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(SliderInteraction::class, $component);
-        $this->assertEquals('my-slider', $component->getId());
-        $this->assertEquals('slide-it', $component->getClass());
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertEquals(0.0, $component->getLowerBound());
-        $this->assertEquals(100.0, $component->getUpperBound());
-        $this->assertEquals(1, $component->getStep());
-        $this->assertTrue($component->mustStepLabel());
-        $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());
-        $this->assertTrue($component->mustReverse());
-        $this->assertTrue($component->hasPrompt());
+        $this::assertInstanceOf(SliderInteraction::class, $component);
+        $this::assertEquals('my-slider', $component->getId());
+        $this::assertEquals('slide-it', $component->getClass());
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertEquals(0.0, $component->getLowerBound());
+        $this::assertEquals(100.0, $component->getUpperBound());
+        $this::assertEquals(1, $component->getStep());
+        $this::assertTrue($component->mustStepLabel());
+        $this::assertEquals(Orientation::VERTICAL, $component->getOrientation());
+        $this::assertTrue($component->mustReverse());
+        $this::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        $this::assertEquals('Prompt...', $promptContent[0]->getContent());
     }
 
     /**

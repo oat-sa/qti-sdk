@@ -40,20 +40,20 @@ class ContextTest extends TestCase
         $normalizedIdentifier = 'string with  tabulations and  new lines to be replaced by spaces';
 
         $subject = new Context();
-        $this->assertFalse($subject->hasSessionIdentifiers());
+        $this::assertFalse($subject->hasSessionIdentifiers());
 
         $subject->addSessionIdentifier($sourceId, $identifier);
-        $this->assertTrue($subject->hasSessionIdentifiers());
+        $this::assertTrue($subject->hasSessionIdentifiers());
 
         $sessionIdentifierCollection = $subject->getSessionIdentifiers();
-        $this->assertCount(1, $sessionIdentifierCollection);
+        $this::assertCount(1, $sessionIdentifierCollection);
 
         $sessionIdentifier = $sessionIdentifierCollection->current();
-        $this->assertInstanceOf(SessionIdentifier::class, $sessionIdentifier);
+        $this::assertInstanceOf(SessionIdentifier::class, $sessionIdentifier);
         /** @var SessionIdentifier $sessionIdentifier */
 
-        $this->assertEquals($sourceId, $sessionIdentifier->getSourceID()->getValue());
-        $this->assertEquals($normalizedIdentifier, $sessionIdentifier->getIdentifier()->getValue());
+        $this::assertEquals($sourceId, $sessionIdentifier->getSourceID()->getValue());
+        $this::assertEquals($normalizedIdentifier, $sessionIdentifier->getIdentifier()->getValue());
     }
 
     public function testAddSessionIdentifierWithDuplicateSourceIdThrowsException()
@@ -63,10 +63,10 @@ class ContextTest extends TestCase
         $identifier2 = 'id2';
 
         $subject = new Context();
-        $this->assertFalse($subject->hasSessionIdentifiers());
+        $this::assertFalse($subject->hasSessionIdentifiers());
 
         $subject->addSessionIdentifier($sourceId, $identifier1);
-        $this->assertTrue($subject->hasSessionIdentifiers());
+        $this::assertTrue($subject->hasSessionIdentifiers());
 
         $this->expectException(DuplicateSourceIdException::class);
         $this->expectExceptionMessage(sprintf('SourceId "%s" already exist in this AssessmentResult context.', $sourceId));
@@ -80,12 +80,12 @@ class ContextTest extends TestCase
         $identifier = 'identifier';
 
         $subject = new Context();
-        $this->assertFalse($subject->hasSessionIdentifiers());
+        $this::assertFalse($subject->hasSessionIdentifiers());
 
         $subject->addSessionIdentifier($sourceId1, $identifier);
-        $this->assertTrue($subject->hasSessionIdentifiers());
+        $this::assertTrue($subject->hasSessionIdentifiers());
 
         $subject->addSessionIdentifier($sourceId2, $identifier);
-        $this->assertCount(2, $subject->getSessionIdentifiers());
+        $this::assertCount(2, $subject->getSessionIdentifiers());
     }
 }

@@ -23,7 +23,6 @@
 
 namespace qtism\runtime\tests;
 
-use qtism\common\datatypes\Duration;
 use qtism\common\datatypes\QtiDuration;
 use qtism\data\NavigationMode;
 use qtism\data\QtiComponent;
@@ -140,7 +139,7 @@ class TimeConstraint
      * Get the time remaining to be spent by the candidate on the source of the time
      * constraint. Please note that this method will never return negative durations.
      *
-     * @return Duration|bool A Duration object or false if there is no maxTime constraint running for the source of the time constraint.
+     * @return QtiDuration|bool A Duration object or false if there is no maxTime constraint running for the source of the time constraint.
      */
     public function getMaximumRemainingTime()
     {
@@ -159,7 +158,7 @@ class TimeConstraint
      * from/for the source of the minimum time constraint. Please note that this method
      * will never return negative durations.
      *
-     * @return Duration|bool A duration object or false if there is no minTime constraint running for the source of the time constraint.
+     * @return QtiDuration|bool A duration object or false if there is no minTime constraint running for the source of the time constraint.
      */
     public function getMinimumRemainingTime()
     {

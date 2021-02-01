@@ -262,7 +262,7 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * Set the normal minimum.
      *
-     * @param bool|numeric $normalMinimum A numeric value.
+     * @param mixed $normalMinimum A numeric value.
      * @throws InvalidArgumentException If $normalMinimum is not numeric nor false.
      */
     public function setNormalMinimum($normalMinimum)

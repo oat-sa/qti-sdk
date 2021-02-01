@@ -41,7 +41,7 @@ class VariableMappingMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         $this->setDOMElementAttribute($element, 'sourceIdentifier', $component->getSource());
         $this->setDOMElementAttribute($element, 'targetIdentifier', $component->getTarget());

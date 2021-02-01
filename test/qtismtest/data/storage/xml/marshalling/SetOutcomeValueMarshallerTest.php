@@ -22,10 +22,10 @@ class SetOutcomeValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('setOutcomeValue', $element->nodeName);
-        $this->assertEquals('baseValue', $element->getElementsByTagName('baseValue')->item(0)->nodeName);
-        $this->assertEquals($identifier, $element->getAttribute('identifier'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('setOutcomeValue', $element->nodeName);
+        $this::assertEquals('baseValue', $element->getElementsByTagName('baseValue')->item(0)->nodeName);
+        $this::assertEquals($identifier, $element->getAttribute('identifier'));
     }
 
     public function testUnmarshall()
@@ -43,8 +43,8 @@ class SetOutcomeValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(SetOutcomeValue::class, $component);
-        $this->assertEquals('variable1', $component->getIdentifier());
-        $this->assertInstanceOf(BaseValue::class, $component->getExpression());
+        $this::assertInstanceOf(SetOutcomeValue::class, $component);
+        $this::assertEquals('variable1', $component->getIdentifier());
+        $this::assertInstanceOf(BaseValue::class, $component->getExpression());
     }
 }

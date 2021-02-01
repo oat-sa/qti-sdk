@@ -20,8 +20,8 @@ class OrderingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('true', $element->getAttribute('shuffle'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('true', $element->getAttribute('shuffle'));
     }
 
     public function testUnmarshall()
@@ -33,7 +33,7 @@ class OrderingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Ordering::class, $component);
-        $this->assertEquals($component->getShuffle(), false);
+        $this::assertInstanceOf(Ordering::class, $component);
+        $this::assertFalse($component->getShuffle());
     }
 }

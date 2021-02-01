@@ -58,13 +58,13 @@ class AssessmentResultBuilderTest extends QtiSmAssessmentTestSessionTestCase
         $assessmentResultBuilder = new AssessmentResultBuilder($session);
         $assessmentResult = $assessmentResultBuilder->buildResult();
 
-        $this->assertInstanceOf(AssessmentResult::class, $assessmentResult);
+        $this::assertInstanceOf(AssessmentResult::class, $assessmentResult);
 
         $testResult = $assessmentResult->getTestResult();
-        $this->assertInstanceOf(TestResult::class, $testResult);
-        $this->assertCount(0, $testResult->getItemVariables());
+        $this::assertInstanceOf(TestResult::class, $testResult);
+        $this::assertCount(0, $testResult->getItemVariables());
 
         $itemResults = $assessmentResult->getItemResults();
-        $this->assertCount(5, $itemResults);
+        $this::assertCount(5, $itemResults);
     }
 }

@@ -94,7 +94,7 @@ class MapEntryMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         $this->setDOMElementAttribute($element, 'mapKey', $component->getMapKey());
         $this->setDOMElementAttribute($element, 'mappedValue', $component->getMappedValue());

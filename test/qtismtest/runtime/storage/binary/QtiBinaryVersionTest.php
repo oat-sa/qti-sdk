@@ -26,7 +26,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         $subject->persist($access);
 
         // Persist must alwas persist the current version and the current branch.
-        $this->assertEquals(chr(QtiBinaryVersion::CURRENT_VERSION) . pack('S', 1) . 'M', $stream->getBinary());
+        $this::assertEquals(chr(QtiBinaryVersion::CURRENT_VERSION) . pack('S', 1) . 'M', $stream->getBinary());
     }
 
     public function testRetrieveCurrentLegacy()
@@ -36,9 +36,9 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         $subject = new QtiBinaryVersion();
         $subject->retrieve($access);
 
-        $this->assertEquals(QtiBinaryVersion::CURRENT_VERSION, $subject->isCurrentVersion());
-        $this->assertTrue($subject->isLegacy());
-        $this->assertFalse($subject->isMaster());
+        $this::assertEquals(QtiBinaryVersion::CURRENT_VERSION, $subject->isCurrentVersion());
+        $this::assertTrue($subject->isLegacy());
+        $this::assertFalse($subject->isMaster());
     }
 
     public function testRetrieveCurrentMaster()
@@ -48,9 +48,9 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         $subject = new QtiBinaryVersion();
         $subject->retrieve($access);
 
-        $this->assertEquals(QtiBinaryVersion::CURRENT_VERSION, $subject->isCurrentVersion());
-        $this->assertFalse($subject->isLegacy());
-        $this->assertTrue($subject->isMaster());
+        $this::assertEquals(QtiBinaryVersion::CURRENT_VERSION, $subject->isCurrentVersion());
+        $this::assertFalse($subject->isLegacy());
+        $this::assertTrue($subject->isMaster());
     }
 
     /**
@@ -68,11 +68,11 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         $subject = new QtiBinaryVersion();
         $subject->retrieve($access);
 
-        $this->assertTrue($subject->isLegacy());
-        $this->assertFalse($subject->isMaster());
+        $this::assertTrue($subject->isLegacy());
+        $this::assertFalse($subject->isMaster());
 
         foreach ($expectedFeatures as $featureMethod => $expectedSupported) {
-            $this->assertEquals($expectedSupported, $subject->$featureMethod());
+            $this::assertEquals($expectedSupported, $subject->$featureMethod());
         }
     }
 
@@ -111,11 +111,11 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         $subject = new QtiBinaryVersion();
         $subject->retrieve($access);
 
-        $this->assertFalse($subject->isLegacy());
-        $this->assertTrue($subject->isMaster());
+        $this::assertFalse($subject->isLegacy());
+        $this::assertTrue($subject->isMaster());
 
         foreach ($expectedFeatures as $featureMethod => $expectedSupported) {
-            $this->assertEquals($expectedSupported, $subject->$featureMethod());
+            $this::assertEquals($expectedSupported, $subject->$featureMethod());
         }
     }
 

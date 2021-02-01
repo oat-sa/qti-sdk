@@ -20,7 +20,7 @@ class PhpMarshallingUtilsTest extends QtiSmTestCase
      */
     public function testVariableName($value, $occurence, $expected)
     {
-        $this->assertEquals($expected, PhpMarshallingUtils::variableName($value, $occurence));
+        $this::assertEquals($expected, PhpMarshallingUtils::variableName($value, $occurence));
     }
 
     /**

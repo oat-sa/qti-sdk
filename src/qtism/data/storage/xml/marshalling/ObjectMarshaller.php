@@ -80,7 +80,7 @@ class ObjectMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'data', $component->getData());
         $this->setDOMElementAttribute($element, 'type', $component->getType());
 

@@ -53,7 +53,7 @@ class MediaInteractionTest extends QtiSmTestCase
         $mediaInteraction->setMinPlays(1);
         $mediaInteraction->setMaxPlays(1);
 
-        $this->assertTrue($mediaInteraction->hasMinPlays());
-        $this->assertTrue($mediaInteraction->hasMaxPlays());
+        $this::assertTrue($mediaInteraction->hasMinPlays());
+        $this::assertTrue($mediaInteraction->hasMaxPlays());
     }
 }

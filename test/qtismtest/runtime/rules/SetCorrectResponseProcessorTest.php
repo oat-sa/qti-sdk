@@ -30,8 +30,8 @@ class SetCorrectResponseProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf(QtiIdentifier::class, $state->getVariable('RESPONSE')->getCorrectResponse());
-        $this->assertEquals('ChoiceA', $state->getVariable('RESPONSE')->getCorrectResponse()->getValue());
+        $this::assertInstanceOf(QtiIdentifier::class, $state->getVariable('RESPONSE')->getCorrectResponse());
+        $this::assertEquals('ChoiceA', $state->getVariable('RESPONSE')->getCorrectResponse()->getValue());
     }
 
     public function testSetCorrectResponseNoVariable()
@@ -56,7 +56,7 @@ class SetCorrectResponseProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testSetCorrectResponseWrongBaseType()
+    public function testSetCorrectResponseWrongBaseTypeThrowsException()
     {
         $rule = $this->createComponentFromXml('
 			<setCorrectResponse identifier="RESPONSE">
@@ -74,7 +74,7 @@ class SetCorrectResponseProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testSetCorrectResponseWrongCardinality()
+    public function testSetCorrectResponseWrongCardinalityThrowsException()
     {
         $rule = $this->createComponentFromXml('
 			<setCorrectResponse identifier="RESPONSE">

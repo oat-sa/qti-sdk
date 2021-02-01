@@ -111,7 +111,6 @@ class MatchInteractionMarshaller extends ContentMarshaller
     {
         $version = $this->getVersion();
         $element = $this->createElement($component);
-
         $this->fillElement($element, $component);
 
         // responseIdentifier.

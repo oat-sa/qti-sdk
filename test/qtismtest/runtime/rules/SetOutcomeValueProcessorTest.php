@@ -34,8 +34,8 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
 
         // The state must be modified.
         // OutcomeVariable with identifier 'SCORE' must contain 4.3.
-        $this->assertInstanceOf(QtiFloat::class, $state['SCORE']);
-        $this->assertEquals(4.3, $state['SCORE']->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $state['SCORE']);
+        $this::assertEquals(4.3, $state['SCORE']->getValue());
     }
 
     public function testSetOutcomeValueJugglingFromIntToFloat()
@@ -52,8 +52,8 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf(QtiFloat::class, $state['SCORE']);
-        $this->assertEquals(4.0, $state['SCORE']->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $state['SCORE']);
+        $this::assertEquals(4.0, $state['SCORE']->getValue());
     }
 
     public function testSetOtucomeValueJugglingFromFloatToInt()
@@ -70,8 +70,8 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf(QtiInteger::class, $state['SCORE']);
-        $this->assertEquals(4, $state['SCORE']->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $state['SCORE']);
+        $this::assertEquals(4, $state['SCORE']->getValue());
     }
 
     public function testSetOutcomeValueWrongJugglingScalar()
@@ -127,7 +127,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         // In this case, juggling will put the first entry of the multiple container
         // in the target single cardinality variable. The float value is then changed into an integer value.
         $processor->process();
-        $this->assertEquals(1337, $state['SCORE']->getValue());
+        $this::assertEquals(1337, $state['SCORE']->getValue());
     }
 
     public function testSetOutcomeValueJugglingOrdered()
@@ -149,7 +149,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         // In this case, juggling will put the first entry of the multiple container
         // in the target single cardinality variable. The float value is then changed into an integer value.
         $processor->process();
-        $this->assertEquals(1337, $state['SCORE']->getValue());
+        $this::assertEquals(1337, $state['SCORE']->getValue());
     }
 
     public function testSetOutcomeValueWrongJugglingMultipleBecauseWrongBaseType()
@@ -191,12 +191,12 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $processor = new SetOutcomeValueProcessor($rule);
         $myBool = new OutcomeVariable('myBool', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false));
         $state = new State([$myBool]);
-        $this->assertFalse($state['myBool']->getValue());
+        $this::assertFalse($state['myBool']->getValue());
 
         $processor->setState($state);
         $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $state['myBool']);
-        $this->assertTrue($state['myBool']->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $state['myBool']);
+        $this::assertTrue($state['myBool']->getValue());
     }
 
     public function testSetOutcomeValueNoVariable()

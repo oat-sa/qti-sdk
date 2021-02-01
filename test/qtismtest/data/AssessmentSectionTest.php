@@ -40,6 +40,6 @@ class AssessmentSectionTest extends QtiSmTestCase
     {
         $section = new AssessmentSection('S01', 'Section 01', true);
         $section->setOrdering(new Ordering(true));
-        $this->assertTrue($section->hasOrdering());
+        $this::assertTrue($section->hasOrdering());
     }
 }

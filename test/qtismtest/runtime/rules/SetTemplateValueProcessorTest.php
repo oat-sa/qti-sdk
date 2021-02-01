@@ -34,8 +34,8 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
 
         // The state must be modified.
         // TemplateVariable with identifier 'TPL1' must contain 4.3.
-        $this->assertInstanceOf(QtiFloat::class, $state['TPL1']);
-        $this->assertEquals(4.3, $state['TPL1']->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $state['TPL1']);
+        $this::assertEquals(4.3, $state['TPL1']->getValue());
     }
 
     public function testSetTemplateValueJugglingFromIntToFloat()
@@ -52,8 +52,8 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf(QtiFloat::class, $state['TPL1']);
-        $this->assertEquals(4.0, $state['TPL1']->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $state['TPL1']);
+        $this::assertEquals(4.0, $state['TPL1']->getValue());
     }
 
     public function testSetTemplateValueJugglingFromFloatToInt()
@@ -70,8 +70,8 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf(QtiInteger::class, $state['TPL1']);
-        $this->assertEquals(4, $state['TPL1']->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $state['TPL1']);
+        $this::assertEquals(4, $state['TPL1']->getValue());
     }
 
     public function testSetTemplateValueWrongJugglingScalar()
@@ -128,7 +128,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         // In this case, juggling will put the first entry of the multiple container
         // in the target single cardinality variable. The float value is then changed into an integer value.
         $processor->process();
-        $this->assertEquals(1337, $state['TPL1']->getValue());
+        $this::assertEquals(1337, $state['TPL1']->getValue());
     }
 
     public function testSetTemplateValueJugglingOrdered()
@@ -151,7 +151,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         // In this case, juggling will put the first entry of the multiple container
         // in the target single cardinality variable. The float value is then changed into an integer value.
         $processor->process();
-        $this->assertEquals(1337, $state['TPL1']->getValue());
+        $this::assertEquals(1337, $state['TPL1']->getValue());
     }
 
     public function testSetOutcomeValueModerate()
@@ -172,12 +172,12 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $processor = new SetTemplateValueProcessor($rule);
         $myBool = new TemplateVariable('myBool', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(false));
         $state = new State([$myBool]);
-        $this->assertFalse($state['myBool']->getValue());
+        $this::assertFalse($state['myBool']->getValue());
 
         $processor->setState($state);
         $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $state['myBool']);
-        $this->assertTrue($state['myBool']->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $state['myBool']);
+        $this::assertTrue($state['myBool']->getValue());
     }
 
     public function testSetOutcomeValueNoVariable()

@@ -25,6 +25,7 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use DOMDocumentFragment;
 use qtism\data\QtiComponent;
+use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
 /**
  * SimpleChoice renderer. This renderer will transform the prompt into a 'li' element with an
@@ -47,7 +48,7 @@ class SimpleChoiceRenderer extends ChoiceRenderer
     /**
      * Create a new SimpleChoiceRenderer object.
      *
-     * @param AbstractMarkupRenderingEngine $renderingEngine
+     * @param AbstractMarkupRenderingEngine|null $renderingEngine
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
     {

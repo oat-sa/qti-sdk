@@ -28,7 +28,7 @@ class SetCorrectResponseMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<setCorrectResponse identifier="tpl1"><match><variable identifier="var1"/><baseValue baseType="boolean">true</baseValue></match></setCorrectResponse>', $dom->saveXML($element));
+        $this::assertEquals('<setCorrectResponse identifier="tpl1"><match><variable identifier="var1"/><baseValue baseType="boolean">true</baseValue></match></setCorrectResponse>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -43,8 +43,8 @@ class SetCorrectResponseMarshallerTest extends QtiSmTestCase
 	    ');
 
         $setCorrectResponse = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(SetCorrectResponse::class, $setCorrectResponse);
-        $this->assertEquals('tpl1', $setCorrectResponse->getIdentifier());
-        $this->assertInstanceOf(MatchOperator::class, $setCorrectResponse->getExpression());
+        $this::assertInstanceOf(SetCorrectResponse::class, $setCorrectResponse);
+        $this::assertEquals('tpl1', $setCorrectResponse->getIdentifier());
+        $this::assertInstanceOf(MatchOperator::class, $setCorrectResponse->getExpression());
     }
 }

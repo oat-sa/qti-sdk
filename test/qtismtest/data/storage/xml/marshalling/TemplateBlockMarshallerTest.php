@@ -28,7 +28,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<templateBlock templateIdentifier="tpl1" identifier="block1" showHide="show"><div>Templatable...</div></templateBlock>', $dom->saveXML($element));
+        $this::assertEquals('<templateBlock templateIdentifier="tpl1" identifier="block1" showHide="show"><div>Templatable...</div></templateBlock>', $dom->saveXML($element));
     }
 
     /**
@@ -46,7 +46,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<templateBlock templateIdentifier="tpl1" identifier="block1" showHide="show" xml:base="/home/jerome"><div>Templatable...</div></templateBlock>', $dom->saveXML($element));
+        $this::assertEquals('<templateBlock templateIdentifier="tpl1" identifier="block1" showHide="show" xml:base="/home/jerome"><div>Templatable...</div></templateBlock>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -56,10 +56,10 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(TemplateBlock::class, $component);
-        $this->assertEquals('tpl1', $component->getTemplateIdentifier());
-        $this->assertEquals('block1', $component->getIdentifier());
-        $this->assertEquals(ShowHide::SHOW, $component->getShowHide());
+        $this::assertInstanceOf(TemplateBlock::class, $component);
+        $this::assertEquals('tpl1', $component->getTemplateIdentifier());
+        $this::assertEquals('block1', $component->getIdentifier());
+        $this::assertEquals(ShowHide::SHOW, $component->getShowHide());
     }
 
     /**
@@ -117,6 +117,6 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertEquals('/home/jerome', $component->getXmlBase());
+        $this::assertEquals('/home/jerome', $component->getXmlBase());
     }
 }

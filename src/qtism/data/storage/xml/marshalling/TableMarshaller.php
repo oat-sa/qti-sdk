@@ -45,7 +45,7 @@ class TableMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('table');
+        $element = $this->createElement($component);
 
         if ($component->hasSummary() === true) {
             $this->setDOMElementAttribute($element, 'summary', $component->getSummary());

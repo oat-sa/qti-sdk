@@ -22,10 +22,10 @@ class MatchTableEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::URI]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('matchTableEntry', $element->nodeName);
-        $this->assertEquals('' . $sourceValue, $element->getAttribute('sourceValue'));
-        $this->assertEquals($targetValue, $element->getAttribute('targetValue'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('matchTableEntry', $element->nodeName);
+        $this::assertEquals('' . $sourceValue, $element->getAttribute('sourceValue'));
+        $this::assertEquals($targetValue, $element->getAttribute('targetValue'));
     }
 
     public function testUnmarshall()
@@ -37,8 +37,8 @@ class MatchTableEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::URI]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(MatchTableEntry::class, $component);
-        $this->assertEquals($component->getSourceValue(), 2);
-        $this->assertEquals($component->getTargetValue(), 'http://www.mysite.com');
+        $this::assertInstanceOf(MatchTableEntry::class, $component);
+        $this::assertEquals(2, $component->getSourceValue());
+        $this::assertEquals('http://www.mysite.com', $component->getTargetValue());
     }
 }

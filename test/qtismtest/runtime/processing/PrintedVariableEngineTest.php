@@ -41,7 +41,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
      * @param string $format
      * @param bool $powerForm
      * @param int|string $base
-     * @param integer|string $index
+     * @param int|string $index
      * @param string $delimiter
      * @param string $field
      * @param string $mappingIndicator
@@ -59,7 +59,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
 
         $engine = new PrintedVariableEngine($printedVariable);
         $engine->setContext($state);
-        $this->assertEquals($expected, $engine->process());
+        $this::assertEquals($expected, $engine->process());
     }
 
     /**
@@ -273,7 +273,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
             ['', 'recordEmpty', $state],
             ['a=-3;b=null;c=true', 'recordContainsNull', $state],
 
-            // -- Wrong formats.
+            // -- Invalid formats squished due to sprintf behavior in PHP 7.
             ['bla', 'positiveInteger', $state, 'bla'],
             [' yeah', 'positiveInteger', $state, '%-P yeah'],
             [' yeah', 'positiveInteger', $state, '%1$-.3w yeah'],
@@ -313,9 +313,9 @@ class PrintedVariableEngineTest extends QtiSmTestCase
 
         try {
             $engine->process();
-            $this->assertFalse(true, 'Should not be able to process a printed variable rendering from a QTI File.');
+            $this::assertFalse(true, 'Should not be able to process a printed variable rendering from a QTI File.');
         } catch (PrintedVariableProcessingException $e) {
-            $this->assertEquals("The 'file' BaseType is not supported yet by PrintedVariableEngine implementation.", $e->getMessage());
+            $this::assertEquals("The 'file' BaseType is not supported yet by PrintedVariableEngine implementation.", $e->getMessage());
         }
 
         unlink($tmp);
@@ -336,7 +336,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
 
         $engine = new PrintedVariableEngine($printedVariable);
         $engine->setContext($state);
-        $this->assertEquals($expected, $engine->process());
+        $this::assertEquals($expected, $engine->process());
     }
 
     /**

@@ -29,7 +29,7 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<p id="my-p">This text is a <em>simple</em> test.</p>', $dom->saveXML($element));
+        $this::assertEquals('<p id="my-p">This text is a <em>simple</em> test.</p>', $dom->saveXML($element));
     }
 
     public function testUnmarshallP()
@@ -41,17 +41,17 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase
             </p>
 	    ');
 
-        $this->assertInstanceOf(P::class, $p);
-        $this->assertEquals('my-p', $p->getId());
-        $this->assertEquals(3, count($p->getContent()));
+        $this::assertInstanceOf(P::class, $p);
+        $this::assertEquals('my-p', $p->getId());
+        $this::assertCount(3, $p->getContent());
 
         $content = $p->getContent();
-        $this->assertEquals("\n                This text is\n                a ", $content[0]->getContent());
+        $this::assertEquals("\n                This text is\n                a ", $content[0]->getContent());
         $em = $content[1];
-        $this->assertInstanceOf(Em::class, $em);
+        $this::assertInstanceOf(Em::class, $em);
         $emContent = $em->getContent();
-        $this->assertEquals('simple', $emContent[0]->getContent());
-        $this->assertEquals(" test.\n            ", $content[2]->getContent());
+        $this::assertEquals('simple', $emContent[0]->getContent());
+        $this::assertEquals(" test.\n            ", $content[2]->getContent());
     }
 
     public function testUnmarshallP30()
@@ -67,23 +67,23 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('3.0.0')->createMarshaller($element);
 
         $component = $marshaller->unmarshall($element);
-        $this->assertInstanceOf(P::class, $component);
-        $this->assertCount(5, $component->getContent());
+        $this::assertInstanceOf(P::class, $component);
+        $this::assertCount(5, $component->getContent());
 
-        $this->assertInstanceOf(TextRun::class, $component->getContent()[0]);
-        $this->assertEquals('', trim($component->getContent()[0]->getContent()));
+        $this::assertInstanceOf(TextRun::class, $component->getContent()[0]);
+        $this::assertEquals('', trim($component->getContent()[0]->getContent()));
 
-        $this->assertInstanceOf(Span::class, $component->getContent()[1]);
-        $this->assertEquals('Grace', $component->getContent()[1]->getContent()[0]->getContent());
+        $this::assertInstanceOf(Span::class, $component->getContent()[1]);
+        $this::assertEquals('Grace', $component->getContent()[1]->getContent()[0]->getContent());
 
-        $this->assertInstanceOf(TextRun::class, $component->getContent()[2]);
-        $this->assertEquals(' walks to and from her ', $component->getContent()[2]->getContent());
+        $this::assertInstanceOf(TextRun::class, $component->getContent()[2]);
+        $this::assertEquals(' walks to and from her ', $component->getContent()[2]->getContent());
 
-        $this->assertInstanceOf(Span::class, $component->getContent()[3]);
-        $this->assertEquals('harmonica', $component->getContent()[3]->getContent()[0]->getContent());
+        $this::assertInstanceOf(Span::class, $component->getContent()[3]);
+        $this::assertEquals('harmonica', $component->getContent()[3]->getContent()[0]->getContent());
 
-        $this->assertInstanceOf(TextRun::class, $component->getContent()[4]);
-        $this->assertEquals('lessons once a week. Her house on Maple Dr. is a 2 kilometre walk to her teacher\'s house on Chestnut St.', trim($component->getContent()[4]->getContent()));
+        $this::assertInstanceOf(TextRun::class, $component->getContent()[4]);
+        $this::assertEquals('lessons once a week. Her house on Maple Dr. is a 2 kilometre walk to her teacher\'s house on Chestnut St.', trim($component->getContent()[4]->getContent()));
     }
 
     public function testUnmarshallP30SsmlSub()
@@ -99,38 +99,38 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('3.0.0')->createMarshaller($element);
 
         $component = $marshaller->unmarshall($element);
-        $this->assertInstanceOf(P::class, $component);
-        $this->assertCount(10, $component->getContent());
+        $this::assertInstanceOf(P::class, $component);
+        $this::assertCount(10, $component->getContent());
 
-        $this->assertInstanceOf(TextRun::class, $component->getContent()[0]);
-        $this->assertEquals('', trim($component->getContent()[0]->getContent()));
+        $this::assertInstanceOf(TextRun::class, $component->getContent()[0]);
+        $this::assertEquals('', trim($component->getContent()[0]->getContent()));
 
-        $this->assertInstanceOf(Span::class, $component->getContent()[1]);
-        $this->assertEquals('Grace', $component->getContent()[1]->getContent()[0]->getContent());
+        $this::assertInstanceOf(Span::class, $component->getContent()[1]);
+        $this::assertEquals('Grace', $component->getContent()[1]->getContent()[0]->getContent());
 
-        $this->assertInstanceOf(TextRun::class, $component->getContent()[2]);
-        $this->assertEquals(' walks to and from her ', $component->getContent()[2]->getContent());
+        $this::assertInstanceOf(TextRun::class, $component->getContent()[2]);
+        $this::assertEquals(' walks to and from her ', $component->getContent()[2]->getContent());
 
-        $this->assertInstanceOf(Span::class, $component->getContent()[3]);
-        $this->assertEquals('harmonica', $component->getContent()[3]->getContent()[0]->getContent());
+        $this::assertInstanceOf(Span::class, $component->getContent()[3]);
+        $this::assertEquals('harmonica', $component->getContent()[3]->getContent()[0]->getContent());
 
-        $this->assertInstanceOf(TextRun::class, $component->getContent()[4]);
-        $this->assertEquals(' lessons once a week. Her house on Maple ', $component->getContent()[4]->getContent());
+        $this::assertInstanceOf(TextRun::class, $component->getContent()[4]);
+        $this::assertEquals(' lessons once a week. Her house on Maple ', $component->getContent()[4]->getContent());
 
-        $this->assertInstanceOf(SsmlSub::class, $component->getContent()[5]);
-        $this->assertEquals('<sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Drive">Dr.</sub>', $component->getContent()[5]->getXmlString());
+        $this::assertInstanceOf(SsmlSub::class, $component->getContent()[5]);
+        $this::assertEquals('<sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Drive">Dr.</sub>', $component->getContent()[5]->getXmlString());
 
-        $this->assertInstanceOf(TextRun::class, $component->getContent()[6]);
-        $this->assertEquals(' is a 2 kilometre walk to her teacher\'s house on Chestnut ', $component->getContent()[6]->getContent());
+        $this::assertInstanceOf(TextRun::class, $component->getContent()[6]);
+        $this::assertEquals(' is a 2 kilometre walk to her teacher\'s house on Chestnut ', $component->getContent()[6]->getContent());
 
-        $this->assertInstanceOf(SsmlSub::class, $component->getContent()[7]);
-        $this->assertEquals('<sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Street">St.</sub>', $component->getContent()[7]->getXmlString());
+        $this::assertInstanceOf(SsmlSub::class, $component->getContent()[7]);
+        $this::assertEquals('<sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Street">St.</sub>', $component->getContent()[7]->getXmlString());
 
-        $this->assertInstanceOf(Sub::class, $component->getContent()[8]);
-        $this->assertEquals('this is sub-script', $component->getContent()[8]->getContent()[0]->getContent());
+        $this::assertInstanceOf(Sub::class, $component->getContent()[8]);
+        $this::assertEquals('this is sub-script', $component->getContent()[8]->getContent()[0]->getContent());
 
-        $this->assertInstanceOf(TextRun::class, $component->getContent()[9]);
-        $this->assertEquals('', trim($component->getContent()[9]->getContent()));
+        $this::assertInstanceOf(TextRun::class, $component->getContent()[9]);
+        $this::assertEquals('', trim($component->getContent()[9]->getContent()));
     }
 
     public function testMarshallP30SsmlSub()
@@ -164,7 +164,7 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase
 
         $doc = new DOMDocument('1.0', 'UTF-8');
         $element = $doc->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<p><span>Grace</span> walks to and from her <span>harmonica</span> lessons once a week. Her house on Maple <sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Drive">Dr.</sub> is a 2 kilometre walk to her teacher\'s house on Chestnut <sub xmlns="http://www.w3.org/2010/10/synthesis" alias="Street">St.</sub><sub>this is sub-script</sub></p>',
             $doc->saveXML($element)
         );

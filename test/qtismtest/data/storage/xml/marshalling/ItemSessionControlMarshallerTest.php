@@ -22,14 +22,14 @@ class ItemSessionControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('itemSessionControl', $element->nodeName);
-        $this->assertEquals('true', $element->getAttribute('allowComment'));
-        $this->assertEquals('2', $element->getAttribute('maxAttempts'));
-        $this->assertEquals('false', $element->getAttribute('validateResponses'));
-        $this->assertEquals('true', $element->getAttribute('allowReview'));
-        $this->assertEquals('false', $element->getAttribute('showSolution'));
-        $this->assertEquals('true', $element->getAttribute('allowSkipping'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('itemSessionControl', $element->nodeName);
+        $this::assertEquals('true', $element->getAttribute('allowComment'));
+        $this::assertEquals('2', $element->getAttribute('maxAttempts'));
+        $this::assertEquals('false', $element->getAttribute('validateResponses'));
+        $this::assertEquals('true', $element->getAttribute('allowReview'));
+        $this::assertEquals('false', $element->getAttribute('showSolution'));
+        $this::assertEquals('true', $element->getAttribute('allowSkipping'));
     }
 
     public function testUnmarshall()
@@ -41,12 +41,12 @@ class ItemSessionControlMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ItemSessionControl::class, $component);
-        $this->assertTrue($component->mustValidateResponses());
-        $this->assertFalse($component->mustShowFeedback());
-        $this->assertTrue($component->doesAllowReview());
-        $this->assertTrue($component->mustShowSolution());
-        $this->assertTrue($component->doesAllowComment());
-        $this->assertFalse($component->doesAllowSkipping());
+        $this::assertInstanceOf(ItemSessionControl::class, $component);
+        $this::assertTrue($component->mustValidateResponses());
+        $this::assertFalse($component->mustShowFeedback());
+        $this::assertTrue($component->doesAllowReview());
+        $this::assertTrue($component->mustShowSolution());
+        $this::assertTrue($component->doesAllowComment());
+        $this::assertFalse($component->doesAllowSkipping());
     }
 }

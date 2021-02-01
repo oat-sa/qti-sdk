@@ -21,21 +21,21 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
     {
         $refCount = count($this->getNames());
 
-        $this->assertEquals($refCount, count($this->getConstants()));
-        $this->assertEquals($refCount, count($this->getKeys()));
+        $this::assertCount($refCount, $this->getConstants());
+        $this::assertCount($refCount, $this->getKeys());
     }
 
     public function testAsArray()
     {
+        $enumerationName = $this->getEnumerationFqcn();
+        $array = $enumerationName::asArray();
         $keys = $this->getKeys();
         $constants = $this->getConstants();
-        $className = $this->getEnumerationFqcn();
-        $array = $className::asArray();
 
         for ($i = 0; $i < count($keys); $i++) {
             $key = $keys[$i];
-            $this->assertTrue(isset($array[$key]));
-            $this->assertEquals($constants[$i], $array[$key]);
+            $this::assertTrue(isset($array[$key]));
+            $this::assertEquals($constants[$i], $array[$key]);
         }
     }
 
@@ -43,34 +43,34 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
     {
         $names = $this->getNames();
         $constants = $this->getConstants();
-        $className = $this->getEnumerationFqcn();
+        $enumerationName = $this->getEnumerationFqcn();
 
         for ($i = 0; $i < count($names); $i++) {
             $name = $names[$i];
-            $this->assertEquals(
+            $this::assertEquals(
                 $constants[$i],
-                $className::getConstantByName($name)
+                $enumerationName::getConstantByName($name)
             );
         }
 
-        $this->assertFalse($className::getConstantByName($this->getUnknownConstantName()));
+        $this::assertFalse($enumerationName::getConstantByName($this->getUnknownConstantName()));
     }
 
     public function testGetNameByConstant()
     {
         $names = $this->getNames();
         $constants = $this->getConstants();
-        $className = $this->getEnumerationFqcn();
+        $enumerationName = $this->getEnumerationFqcn();
 
         for ($i = 0; $i < count($constants); $i++) {
             $constant = $constants[$i];
-            $this->assertEquals(
+            $this::assertEquals(
                 $names[$i],
-                $className::getNameByConstant($constant)
+                $enumerationName::getNameByConstant($constant)
             );
         }
 
-        $this->assertFalse($className::getNameByConstant($this->getUnknownConstantValue()));
+        $this::assertFalse($enumerationName::getNameByConstant($this->getUnknownConstantValue()));
     }
 
     /**

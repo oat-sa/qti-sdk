@@ -25,6 +25,7 @@ namespace qtism\common\utils;
 
 use DateInterval;
 use Exception;
+use qtism\common\utils\data\CharacterMap;
 use ValueError;
 
 /**
@@ -95,24 +96,16 @@ class Format
      */
     public static function isIdentifier($string, $strict = true)
     {
-        if ($strict !== true) {
+        if (!$strict) {
             return preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $string) === 1;
         }
 
-        $letter = '(?:' . self::$perlXmlBaseChar . '|' . self::$perlXmlIdeographic . ')';
-        $digit = self::$perlXmlDigit;
-        $combiningChar = self::$perlXmlCombiningChar;
-        $extender = self::$perlXmlExtender;
-
-        $string = str_split($string);
-        $first = array_shift($string);
-
-        if (preg_match("/(?:_|${letter})/u", $first) !== 1) {
+        if (!isset($string[0]) || !isset(CharacterMap::$identifier_first[$string[0]])) {
             return false;
         }
 
-        foreach ($string as $s) {
-            if (preg_match("/${letter}|${digit}/u", $s) === 0 && preg_match("/${combiningChar}|${extender}/u", $s) === 0 && preg_match("/_|\\-|\\./u", $s) === 0) {
+        for ($i = strlen($string) - 1; $i > 0; $i--) {
+            if (!isset(CharacterMap::$identifier_other[$string[$i]])) {
                 return false;
             }
         }

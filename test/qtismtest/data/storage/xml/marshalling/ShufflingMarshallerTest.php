@@ -27,7 +27,7 @@ class ShufflingMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<shuffling responseIdentifier="RESPONSE"><shufflingGroup identifiers="id1 id2 id3"/><shufflingGroup identifiers="id4 id5 id6"/></shuffling>', $dom->saveXML($element));
+        $this::assertEquals('<shuffling responseIdentifier="RESPONSE"><shufflingGroup identifiers="id1 id2 id3"/><shufflingGroup identifiers="id4 id5 id6"/></shuffling>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -39,13 +39,13 @@ class ShufflingMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
         $component = $factory->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf(Shuffling::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertInstanceOf(Shuffling::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
 
         $groups = $component->getShufflingGroups();
-        $this->assertEquals(2, count($groups));
+        $this::assertCount(2, $groups);
 
-        $this->assertEquals(['id1', 'id2', 'id3'], $groups[0]->getIdentifiers()->getArrayCopy());
-        $this->assertEquals(['id4', 'id5', 'id6'], $groups[1]->getIdentifiers()->getArrayCopy());
+        $this::assertEquals(['id1', 'id2', 'id3'], $groups[0]->getIdentifiers()->getArrayCopy());
+        $this::assertEquals(['id4', 'id5', 'id6'], $groups[1]->getIdentifiers()->getArrayCopy());
     }
 }

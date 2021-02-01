@@ -26,7 +26,7 @@ class PromptMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<prompt id="my-prompt" class="qti-prompt">This is a prompt</prompt>', $dom->saveXML($element));
+        $this::assertEquals('<prompt id="my-prompt" class="qti-prompt">This is a prompt</prompt>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -36,13 +36,13 @@ class PromptMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Prompt::class, $component);
-        $this->assertEquals('my-prompt', $component->getId());
-        $this->assertEquals('qti-prompt', $component->getClass());
+        $this::assertInstanceOf(Prompt::class, $component);
+        $this::assertEquals('my-prompt', $component->getId());
+        $this::assertEquals('qti-prompt', $component->getClass());
 
         $content = $component->getContent();
-        $this->assertEquals(1, count($content));
-        $this->assertEquals('This is a prompt', $content[0]->getContent());
+        $this::assertCount(1, $content);
+        $this::assertEquals('This is a prompt', $content[0]->getContent());
     }
 
     public function testUnmarshallExcludedFlowStatic()
@@ -88,20 +88,20 @@ class PromptMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.2')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Prompt::class, $component);
-        $this->assertEquals('my-prompt', $component->getId());
-        $this->assertEquals('qti-prompt', $component->getClass());
+        $this::assertInstanceOf(Prompt::class, $component);
+        $this::assertEquals('my-prompt', $component->getId());
+        $this::assertEquals('qti-prompt', $component->getClass());
 
         $content = $component->getContent();
-        $this->assertCount(2, $content);
-        $this->assertEquals('This is an anchor: ', $content[0]->getContent());
+        $this::assertCount(2, $content);
+        $this::assertEquals('This is an anchor: ', $content[0]->getContent());
 
-        $this->assertInstanceOf(A::class, $content[1]);
-        $this->assertEquals('#', $content[1]->getHref());
+        $this::assertInstanceOf(A::class, $content[1]);
+        $this::assertEquals('#', $content[1]->getHref());
 
-        $this->assertInstanceOf(InlineCollection::class, $content[1]->getContent());
+        $this::assertInstanceOf(InlineCollection::class, $content[1]->getContent());
         $linkContent = $content[1]->getContent()[0];
-        $this->assertInstanceOf(TextRun::class, $linkContent);
-        $this->assertEquals('anchor text', $linkContent->getContent());
+        $this::assertInstanceOf(TextRun::class, $linkContent);
+        $this::assertEquals('anchor text', $linkContent->getContent());
     }
 }

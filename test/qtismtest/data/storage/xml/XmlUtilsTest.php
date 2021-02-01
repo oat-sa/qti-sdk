@@ -22,7 +22,7 @@ class XmlUtilsTest extends QtiSmTestCase
         $elt = $this->createDOMElement($originalXmlString);
         $newElt = Utils::anonimizeElement($elt);
 
-        $this->assertEquals($expectedXmlString, $newElt->ownerDocument->saveXML($newElt));
+        $this::assertEquals($expectedXmlString, $newElt->ownerDocument->saveXML($newElt));
     }
 
     /**
@@ -61,7 +61,7 @@ class XmlUtilsTest extends QtiSmTestCase
         $document->load($file);
         $location = Utils::getXsdLocation($document, $namespaceUri);
 
-        $this->assertSame($expectedLocation, $location);
+        $this::assertSame($expectedLocation, $location);
     }
 
     /**
@@ -135,8 +135,8 @@ class XmlUtilsTest extends QtiSmTestCase
     {
         $foo = $this->createDOMElement('<foo xmlns:bar="http://baz" bar:attr="foo"/>');
         $foo = Utils::changeElementName($foo, 'bar');
-        $this->assertEquals('bar', $foo->tagName);
-        $this->assertEquals('foo', $foo->getAttributeNS('http://baz', 'attr'));
+        $this::assertEquals('bar', $foo->tagName);
+        $this::assertEquals('foo', $foo->getAttributeNS('http://baz', 'attr'));
     }
 
     /**
@@ -147,7 +147,7 @@ class XmlUtilsTest extends QtiSmTestCase
      */
     public function testEscapeXmlSpecialChars($str, $isAttribute, $expected)
     {
-        $this->assertEquals($expected, Utils::escapeXmlSpecialChars($str, $isAttribute));
+        $this::assertEquals($expected, Utils::escapeXmlSpecialChars($str, $isAttribute));
     }
 
     /**
@@ -171,7 +171,7 @@ class XmlUtilsTest extends QtiSmTestCase
      */
     public function testWebComponentFriendlyAttributeName($qtiName, $expected)
     {
-        $this->assertEquals($expected, Utils::webComponentFriendlyAttributeName($qtiName));
+        $this::assertEquals($expected, Utils::webComponentFriendlyAttributeName($qtiName));
     }
 
     /**
@@ -192,7 +192,7 @@ class XmlUtilsTest extends QtiSmTestCase
      */
     public function testWebComponentFriendlyClassName($qtiName, $expected)
     {
-        $this->assertEquals($expected, Utils::webComponentFriendlyClassName($qtiName));
+        $this::assertEquals($expected, Utils::webComponentFriendlyClassName($qtiName));
     }
 
     /**
@@ -214,7 +214,7 @@ class XmlUtilsTest extends QtiSmTestCase
      */
     public function testQtiFriendlyName($wcName, $expected)
     {
-        $this->assertEquals($expected, Utils::qtiFriendlyName($wcName));
+        $this::assertEquals($expected, Utils::qtiFriendlyName($wcName));
     }
 
     /**
@@ -239,7 +239,7 @@ class XmlUtilsTest extends QtiSmTestCase
     public function testGetDOMElementAttributeAs(DOMElement $element, $attribute, $datatype, $expected)
     {
         $result = Utils::getDOMElementAttributeAs($element, $attribute, $datatype);
-        $this->assertSame($expected, $result);
+        $this::assertSame($expected, $result);
     }
 
     /**
@@ -269,7 +269,7 @@ class XmlUtilsTest extends QtiSmTestCase
         $dom->loadXML('<parent><child/><child/><parent><child/></parent></parent>');
         $element = $dom->documentElement;
 
-        $this->assertEquals(2, count(Utils::getChildElementsByTagName($element, 'child')));
+        $this::assertCount(2, Utils::getChildElementsByTagName($element, 'child'));
     }
 
     public function testGetChildElementsByTagNameMultiple()
@@ -278,7 +278,7 @@ class XmlUtilsTest extends QtiSmTestCase
         $dom->loadXML('<parent><child/><child/><grandChild/><uncle/></parent>');
         $element = $dom->documentElement;
 
-        $this->assertEquals(3, count(Utils::getChildElementsByTagName($element, ['child', 'grandChild'])));
+        $this::assertCount(3, Utils::getChildElementsByTagName($element, ['child', 'grandChild']));
     }
 
     public function testGetChildElementsByTagNameEmpty()
@@ -290,6 +290,6 @@ class XmlUtilsTest extends QtiSmTestCase
         $dom->loadXML('<parent><parent><child/></parent></parent>');
         $element = $dom->documentElement;
 
-        $this->assertEquals(0, count(Utils::getChildElementsByTagName($element, 'child')));
+        $this::assertCount(0, Utils::getChildElementsByTagName($element, 'child'));
     }
 }

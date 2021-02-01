@@ -51,7 +51,7 @@ class ItemResultMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
+        $element = $this->createElement($component);
         $element->setAttribute('identifier', $component->getIdentifier());
         $element->setAttribute('datestamp', $component->getDatestamp()->format('c')); // ISO 8601
         $element->setAttribute('sessionStatus', SessionStatus::getNameByConstant($component->getSessionStatus()));

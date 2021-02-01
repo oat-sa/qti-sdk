@@ -52,6 +52,6 @@ class SessionManagerTest extends QtiSmTestCase
         $manager = new SessionManager(new FileSystemFileManager());
         $session = $manager->createAssessmentTestSession($this->getTest());
 
-        $this->assertInstanceOf(AssessmentTestSession::class, $session);
+        $this::assertInstanceOf(AssessmentTestSession::class, $session);
     }
 }

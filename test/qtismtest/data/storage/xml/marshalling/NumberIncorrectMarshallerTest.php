@@ -26,11 +26,11 @@ class NumberIncorrectMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('numberIncorrect', $element->nodeName);
-        $this->assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
-        $this->assertEquals($includeCategory, $element->getAttribute('includeCategory'));
-        $this->assertEquals($excludeCategory, $element->getAttribute('excludeCategory'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('numberIncorrect', $element->nodeName);
+        $this::assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
+        $this::assertEquals($includeCategory, $element->getAttribute('includeCategory'));
+        $this::assertEquals($excludeCategory, $element->getAttribute('excludeCategory'));
     }
 
     public function testUnmarshall()
@@ -42,9 +42,9 @@ class NumberIncorrectMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(NumberIncorrect::class, $component);
-        $this->assertEquals($component->getSectionIdentifier(), 'mySection1');
-        $this->assertEquals('cat1', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
-        $this->assertEquals('cat2 cat3', implode("\x20", $component->getExcludeCategories()->getArrayCopy()));
+        $this::assertInstanceOf(NumberIncorrect::class, $component);
+        $this::assertEquals('mySection1', $component->getSectionIdentifier());
+        $this::assertEquals('cat1', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
+        $this::assertEquals('cat2 cat3', implode("\x20", $component->getExcludeCategories()->getArrayCopy()));
     }
 }

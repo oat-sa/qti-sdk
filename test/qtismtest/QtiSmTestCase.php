@@ -11,6 +11,7 @@ use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
