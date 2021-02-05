@@ -27,7 +27,6 @@ use DOMElement;
 use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;
 use qtism\data\content\enums\Role;
-use qtism\data\content\xhtml\html5\Html5Element;
 
 /**
  * Marshalling/Unmarshalling implementation for generic Html5.
@@ -42,9 +41,6 @@ abstract class Html5ElementMarshaller extends Marshaller
      */
     protected function fillElement(DOMElement $element, BodyElement $bodyElement)
     {
-        /** @var Html5Element $bodyElement */
-        parent::fillElement($element, $bodyElement);
-
         if ($bodyElement->hasTitle()) {
             $this->setDOMElementAttribute($element, 'title', $bodyElement->getTitle());
         }
@@ -52,6 +48,8 @@ abstract class Html5ElementMarshaller extends Marshaller
         if ($bodyElement->hasRole()) {
             $this->setDOMElementAttribute($element, 'role', Role::getNameByConstant($bodyElement->getRole()));
         }
+
+        parent::fillElement($element, $bodyElement);
     }
 
     /**
@@ -66,19 +64,14 @@ abstract class Html5ElementMarshaller extends Marshaller
      */
     protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element)
     {
-        parent::fillBodyElement($bodyElement, $element);
-
-        $version = $this->getVersion();
-        if (Version::compare($version, '2.2.0', '>=') === true) {
+        if (Version::compare($this->getVersion(), '2.2.0', '>=') === true) {
             $title = $this->getDOMElementAttributeAs($element, 'title');
-            if ($title !== null) {
-                $bodyElement->setTitle($title);
-            }
+            $bodyElement->setTitle($title);
 
-            $role = $this->getDOMElementAttributeAs($element, 'role');
-            if ($role !== null) {
-                $bodyElement->setRole(Role::getConstantByName($role));
-            }
+            $role = $this->getDOMElementAttributeAs($element, 'role', Role::class);
+            $bodyElement->setRole($role);
         }
+
+        parent::fillBodyElement($bodyElement, $element);
     }
 }

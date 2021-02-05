@@ -31,13 +31,13 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
         $label = 'This is a label.';
 
         $expected = sprintf(
-            '<html5 id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
+            '<html5 title="%s" role="%s" id="%s" class="%s" xml:lang="%s" label="%s"/>',
+            $title,
+            $role,
             $id,
             $class,
             $lang,
-            $label,
-            $title,
-            $role
+            $label
         );
 
         $html5Element = new FakeHtml5Element($title, Role::getConstantByName($role), $id, $class, $lang, $label);
@@ -86,7 +86,14 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
 
         $marshaller = new FakeHtml5ElementMarshaller('2.2.0');
 
-        $expected = new FakeHtml5Element($title, Role::getConstantByName($role), $id, $class, $lang, $label);
+        $expected = new FakeHtml5Element(
+            $title,
+            Role::getConstantByName($role),
+            $id,
+            $class,
+            $lang,
+            $label
+        );
         $this->assertUnmarshalling($expected, $xml, $marshaller);
     }
 

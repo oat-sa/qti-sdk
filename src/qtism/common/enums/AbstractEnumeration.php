@@ -64,7 +64,7 @@ abstract class AbstractEnumeration implements Enumeration
     {
         $enumValues = static::asArray();
         $nameExistsInEnum = array_key_exists($value, $enumValues);
-        
+
         if ($value !== null
             && !$nameExistsInEnum
             && !in_array($value, $enumValues, true)
@@ -78,11 +78,11 @@ abstract class AbstractEnumeration implements Enumeration
                 )
             );
         }
-        
+
         if ($nameExistsInEnum) {
             $value = $enumValues[$value];
         }
-        
+
         return $value ?? static::getDefault();
     }
 }
