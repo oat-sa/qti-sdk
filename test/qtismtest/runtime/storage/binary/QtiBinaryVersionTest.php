@@ -92,6 +92,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
                 QtiBinaryVersion::VERSION_TRACK_PATH => 'storesTrackPath',
                 QtiBinaryVersion::VERSION_POSITION_INTEGER => 'storesPositionAndRouteCountAsInteger',
                 QtiBinaryVersion::VERSION_FIRST_MASTER => 'isInBothBranches',
+                QtiBinaryVersion::VERSION_VARIABLE_COUNT_INTEGER => 'storesVariableCountAsInteger',
             ]
         );
     }
@@ -127,6 +128,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         return $this->createFeatureArray(
             [
                 QtiBinaryVersion::VERSION_FIRST_MASTER => 'isInBothBranches',
+                QtiBinaryVersion::VERSION_VARIABLE_COUNT_INTEGER => 'storesVariableCountAsInteger',
             ]
         );
     }

@@ -35,7 +35,7 @@ class QtiBinaryVersion
      *
      * @var int
      */
-    const CURRENT_VERSION = 10;
+    const CURRENT_VERSION = 11;
 
     /**
      * The QTI Sdk branch to select behaviour of the binary storage.
@@ -48,6 +48,8 @@ class QtiBinaryVersion
     /**
      * These constants make the different versions a bit more self explanatory.
      */
+    const VERSION_VARIABLE_COUNT_INTEGER = 11;
+
     const VERSION_FIRST_MASTER = 10;
 
     const VERSION_POSITION_INTEGER = 9;
@@ -125,6 +127,14 @@ class QtiBinaryVersion
     public function isCurrentVersion(): bool
     {
         return $this->version = self::CURRENT_VERSION;
+    }
+
+    /**
+     * @return bool
+     */
+    public function storesVariableCountAsInteger(): bool
+    {
+        return $this->version >= self::VERSION_VARIABLE_COUNT_INTEGER;
     }
 
     /**
