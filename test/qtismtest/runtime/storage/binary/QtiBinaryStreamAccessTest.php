@@ -946,7 +946,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        $version = $this->createVersionMock(2);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
         $session = $access->readAssessmentItemSession(new SessionManager(), $seeker, $version);
         $this::assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this::assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
@@ -975,7 +975,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        $version = $this->createVersionMock(2);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
         $session = $access->readAssessmentItemSession(new SessionManager(), $seeker, $version);
         $this::assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this::assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
@@ -1004,7 +1004,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        $version = $this->createVersionMock(2);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
         $session = $access->readAssessmentItemSession(new SessionManager(), $seeker, $version);
         $this::assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this::assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
@@ -1078,7 +1078,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        $version = $this->createVersionMock(2);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
         $session = $access->readAssessmentItemSession(new SessionManager(), $seeker, $version);
 
         $this::assertTrue($session->getVariable('RESPONSE')->getCorrectResponse()->equals(new MultipleContainer(BaseType::PAIR, [new QtiPair('A', 'P')])));

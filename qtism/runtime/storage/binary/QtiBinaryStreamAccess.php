@@ -607,7 +607,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             }
 
             // Read the number of item-specific variables involved in the session.
-            $varCount = $this->readTinyInt();
+            $varCount = $version->storesVariableCountAsInteger()
+                ? $this->readInteger()
+                : $this->readTinyInt();
 
             for ($i = 0; $i < $varCount; $i++) {
                 $isOutcome = $this->readBoolean();
@@ -675,7 +677,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             // minus the 3 built-in variables
             $varCount = count($session) - 3;
-            $this->writeTinyInt($varCount);
+            $this->writeInteger($varCount);
 
             $itemOutcomes = $session->getAssessmentItem()->getOutcomeDeclarations();
             $itemResponses = $session->getAssessmentItem()->getResponseDeclarations();
