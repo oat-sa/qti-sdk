@@ -3,7 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMElement;
-use qtism\data\content\xhtml\html5\Media;
+use qtism\data\content\xhtml\html5\Html5Media;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\storage\xml\marshalling\Html5MediaMarshaller;
@@ -114,7 +114,7 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
     }
 }
 
-class FakeHtml5Media extends Media
+class FakeHtml5Media extends Html5Media
 {
     public function getQtiClassName(): string
     {

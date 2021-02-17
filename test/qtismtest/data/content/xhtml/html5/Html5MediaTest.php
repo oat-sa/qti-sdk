@@ -4,25 +4,25 @@ namespace qtismtest\data\content\xhtml\html5;
 
 use InvalidArgumentException;
 use qtism\data\content\enums\CrossOrigin;
-use qtism\data\content\xhtml\html5\Media;
+use qtism\data\content\xhtml\html5\Html5Media;
 use qtism\data\content\enums\Preload;
 use qtism\data\content\xhtml\html5\Source;
 use qtism\data\content\xhtml\html5\Track;
 use qtism\data\QtiComponentCollection;
 use qtismtest\QtiSmTestCase;
 
-class MediaTest extends QtiSmTestCase
+class Html5MediaTest extends QtiSmTestCase
 {
     public function testConstructor(): void
     {
-        $subject = new FakeMedia();
+        $subject = new FakeHtml5Media();
 
         self::assertEquals(new QtiComponentCollection(), $subject->getComponents());
     }
 
     public function testCreateWithNoValues(): void
     {
-        $subject = new FakeMedia();
+        $subject = new FakeHtml5Media();
 
         self::assertFalse($subject->hasAutoPlay());
         self::assertFalse($subject->getAutoPlay());
@@ -43,7 +43,7 @@ class MediaTest extends QtiSmTestCase
         $src = 'http://example.com/';
         $source = new Source($src);
 
-        $subject = new FakeMedia();
+        $subject = new FakeHtml5Media();
 
         $components = $subject->getComponents();
         self::assertCount(0, $components);
@@ -62,7 +62,7 @@ class MediaTest extends QtiSmTestCase
         $src = 'http://example.com/';
         $track = new Track($src);
 
-        $subject = new FakeMedia();
+        $subject = new FakeHtml5Media();
 
         $components = $subject->getComponents();
         self::assertCount(0, $components);
@@ -86,7 +86,7 @@ class MediaTest extends QtiSmTestCase
         $muted = true;
         $src = 'http://example.com/';
         
-        $subject = new FakeMedia();
+        $subject = new FakeHtml5Media();
         $subject->setAutoPlay($autoplay);
         $subject->setControls($controls);
         $subject->setCrossOrigin($crossOrigin);
@@ -116,7 +116,7 @@ class MediaTest extends QtiSmTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "autoplay" argument must be a boolean, "foo" given.');
 
-        (new FakeMedia())->setAutoPlay('foo');
+        (new FakeHtml5Media())->setAutoPlay('foo');
     }
 
     public function testSetWithNonBooleanControls(): void
@@ -124,7 +124,7 @@ class MediaTest extends QtiSmTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "controls" argument must be a boolean, "foo" given.');
 
-        (new FakeMedia())->setControls('foo');
+        (new FakeHtml5Media())->setControls('foo');
     }
 
     /**
@@ -133,7 +133,7 @@ class MediaTest extends QtiSmTestCase
      */
     public function testSetWithValidCrossOrigin(int $role): void
     {
-        $subject = new FakeMedia();
+        $subject = new FakeHtml5Media();
 
         $subject->setCrossOrigin($role);
         self::assertEquals($role, $subject->getCrossOrigin());
@@ -152,7 +152,7 @@ class MediaTest extends QtiSmTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "crossorigin" argument must be a value from the CrossOrigin enumeration, "foo" given.');
 
-        (new FakeMedia())->setCrossOrigin('foo');
+        (new FakeHtml5Media())->setCrossOrigin('foo');
     }
 
     public function testSetWithInvalidCrossOrigin(): void
@@ -162,7 +162,7 @@ class MediaTest extends QtiSmTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "crossorigin" argument must be a value from the CrossOrigin enumeration, "' . $wrongCrossOrigin . '" given.');
 
-        (new FakeMedia())->setCrossOrigin(1012);
+        (new FakeHtml5Media())->setCrossOrigin(1012);
     }
 
     public function testSetWithNonBooleanLoop(): void
@@ -170,7 +170,7 @@ class MediaTest extends QtiSmTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "loop" argument must be a boolean, "foo" given.');
 
-        (new FakeMedia())->setLoop('foo');
+        (new FakeHtml5Media())->setLoop('foo');
     }
 
     public function testSetWithNonBooleanMuted(): void
@@ -178,7 +178,7 @@ class MediaTest extends QtiSmTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "muted" argument must be a boolean, "foo" given.');
 
-        (new FakeMedia())->setMuted('foo');
+        (new FakeHtml5Media())->setMuted('foo');
     }
 
     public function testCreateWithNonUriSrc(): void
@@ -188,19 +188,19 @@ class MediaTest extends QtiSmTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "src" argument must be null or a valid URI, "' . $wrongSrc . '" given.');
 
-        (new FakeMedia())->setSrc($wrongSrc);
+        (new FakeHtml5Media())->setSrc($wrongSrc);
     }
 
     public function testGetPreload(): void
     {
-        $subject = new FakeMedia();
+        $subject = new FakeHtml5Media();
 
         self::assertEquals(Preload::getDefault(), $subject->getPreload());
     }
 
     public function testGetDefaultPreload(): void
     {
-        $subject = new FakeMedia();
+        $subject = new FakeHtml5Media();
 
         self::assertFalse($subject->hasPreload());
         self::assertEquals(Preload::getConstantByName('metadata'), $subject->getPreload());
@@ -209,7 +209,7 @@ class MediaTest extends QtiSmTestCase
     public function testSetPreload(): void
     {
         $preload = Preload::getConstantByName('auto');
-        $subject = new FakeMedia();
+        $subject = new FakeHtml5Media();
         $subject->setPreload($preload);
 
         self::assertTrue($subject->hasPreload());
@@ -222,7 +222,7 @@ class MediaTest extends QtiSmTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "preload" argument must be a value from the Preload enumeration, "' . $wrongPreload . '" given.');
 
-        (new FakeMedia())->setPreload($wrongPreload);
+        (new FakeHtml5Media())->setPreload($wrongPreload);
     }
 
     public function testSetPreloadWithInvalidPreload(): void
@@ -231,11 +231,11 @@ class MediaTest extends QtiSmTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "preload" argument must be a value from the Preload enumeration, "' . $wrongPreload . '" given.');
 
-        (new FakeMedia())->setPreload($wrongPreload);
+        (new FakeHtml5Media())->setPreload($wrongPreload);
     }
 }
 
-class FakeMedia extends Media
+class FakeHtml5Media extends Html5Media
 {
     public function getQtiClassName(): string
     {

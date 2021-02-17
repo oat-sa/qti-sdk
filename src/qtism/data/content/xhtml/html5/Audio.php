@@ -31,7 +31,7 @@ namespace qtism\data\content\xhtml\html5;
  * text to the users of these older browsers informing them of how to access
  * the audio contents.
  */
-class Audio extends Media
+class Audio extends Html5Media
 {
     public function getQtiClassName(): string
     {

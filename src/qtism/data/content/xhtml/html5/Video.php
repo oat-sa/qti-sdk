@@ -30,7 +30,7 @@ use qtism\common\utils\Format;
  * Html 5 Video element used for playing videos or movies, and audio files with
  * captions.
  */
-class Video extends Media
+class Video extends Html5Media
 {
     /**
      * The 'poster' characteristic gives the address of an image file that the

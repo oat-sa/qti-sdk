@@ -30,7 +30,7 @@ use qtism\data\QtiComponentCollection;
 /**
  * All the common features of Html 5 media (audio and video).
  */
-abstract class Media extends Html5Element
+abstract class Html5Media extends Html5Element
 {
     /**
      * Contains the collection of sources and tracks.
@@ -46,6 +46,7 @@ abstract class Media extends Html5Element
      * stopping.
      *
      * @var bool
+     * @qtism-bean-property
      */
     private $autoPlay = false;
 
@@ -55,6 +56,7 @@ abstract class Media extends Html5Element
      * the user agent to provide its own set of controls.
      *
      * @var bool
+     * @qtism-bean-property
      */
     private $controls = false;
 
@@ -63,6 +65,7 @@ abstract class Media extends Html5Element
      * attribute.
      *
      * @var int|null
+     * @qtism-bean-property
      */
     private $crossOrigin;
 
@@ -72,6 +75,7 @@ abstract class Media extends Html5Element
      * upon reaching the end.
      *
      * @var bool
+     * @qtism-bean-property
      */
     private $loop = false;
 
@@ -82,6 +86,7 @@ abstract class Media extends Html5Element
      * automatically linked by the user agent.
      *
      * @var string
+     * @qtism-bean-property
      */
     private $mediaGroup = '';
 
@@ -93,6 +98,7 @@ abstract class Media extends Html5Element
      * audio output, overriding any user preference.
      *
      * @var bool
+     * @qtism-bean-property
      */
     private $muted = false;
 
@@ -113,6 +119,7 @@ abstract class Media extends Html5Element
      * contain a valid non-empty URL potentially surrounded by spaces.
      *
      * @var string
+     * @qtism-bean-property
      */
     private $src = '';
 

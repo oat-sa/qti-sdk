@@ -28,8 +28,7 @@ use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;
 use qtism\data\content\enums\CrossOrigin;
 use qtism\data\content\enums\Preload;
-use qtism\data\content\xhtml\html5\Media;
-use qtism\data\storage\Utils;
+use qtism\data\content\xhtml\html5\Html5Media;
 
 /**
  * Marshalling/Unmarshalling implementation for generic Html5.
@@ -44,7 +43,7 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
      */
     protected function fillElement(DOMElement $element, BodyElement $bodyElement)
     {
-        /** @var Media $bodyElement */
+        /** @var Html5Media $bodyElement */
 
         if ($bodyElement->hasAutoPlay()) {
             $this->setDOMElementAttribute($element, 'autoplay', $bodyElement->getAutoPlay() ? 'true' : 'false');
