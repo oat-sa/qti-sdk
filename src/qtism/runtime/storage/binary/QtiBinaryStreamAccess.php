@@ -678,12 +678,14 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      *
      * @param AbstractSessionManager $manager
      * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
+     * @param QtiBinaryVersion $version Version of the binary session storage
      * @return AssessmentItemSession
      * @throws QtiBinaryStreamAccessException
      */
     public function readAssessmentItemSession(
         AbstractSessionManager $manager,
-        AssessmentTestSeeker $seeker
+        AssessmentTestSeeker $seeker,
+        QtiBinaryVersion $version
     ) {
         try {
             $itemRefPosition = $this->readShort();
@@ -711,7 +713,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             }
 
             // Read the number of item-specific variables involved in the session.
-            $varCount = $this->readTinyInt();
+            $varCount = $version->storesVariableCountAsInteger()
+                ? $this->readInteger()
+                : $this->readTinyInt();
 
             for ($i = 0; $i < $varCount; $i++) {
                 // For each of these variables...
@@ -826,7 +830,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             // Write the session variables.
             // (minus the 3 built-in variables)
             $varCount = count($session) - 3;
-            $this->writeTinyInt($varCount);
+            $this->writeInteger($varCount);
 
             $itemOutcomes = $session->getAssessmentItem()->getOutcomeDeclarations();
             $itemResponses = $session->getAssessmentItem()->getResponseDeclarations();

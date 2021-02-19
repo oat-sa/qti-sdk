@@ -45,11 +45,12 @@ use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\common\Variable;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccessException;
+use qtism\runtime\storage\binary\QtiBinaryVersion;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
-use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionState;
 use qtism\runtime\tests\SessionManager;
 use qtismtest\QtiSmAssessmentItemTestCase;
+use ReflectionProperty;
 
 /**
  * Class QtiBinaryStreamAccessTest
@@ -915,7 +916,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $completionStatus = pack('S', 10) . 'incomplete';
         $hasTimeReference = "\x01"; // true
         $timeReference = pack('l', 1378302030); //  Wednesday, September 4th 2013, 13:40:30 (GMT)
-        $varCount = "\x02"; // 2 variables (SCORE & RESPONSE).
+        $varCount = pack('l', 2); // 2 variables (SCORE & RESPONSE).
 
         $score = pack('S', 0) . pack('S', 8) . "\x00" . "\x00" . "\x00" . "\x01" . pack('d', 1.0); // 9th (8 + 1) outcomeDeclaration.
         $response = pack('S', 1) . pack('S', 0) . "\x00" . "\x00" . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // 1st (0 + 1) responseDeclaration.
@@ -927,7 +928,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), ['assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl']);
 
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, $version);
 
         $this::assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
         $this::assertEquals(AssessmentItemSessionState::INTERACTING, $session->getState());
@@ -965,7 +967,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $completionStatus = pack('S', 8) . 'complete';
         $hasTimeReference = "\x01"; // true
         $timeReference = pack('l', 1378302030); //  Wednesday, September 4th 2013, 13:40:30 (GMT)
-        $varCount = "\x03"; // 3 variables (SCORE & RESPONSE & TPL)
+        $varCount = pack('l', 3); // 3 variables (SCORE & RESPONSE & TPL)
 
         $score = pack('S', 0) . pack('S', 0) . "\x00" . "\x00" . "\x00" . "\x01" . pack('d', 1.0); // 1st (0 + 1) outcomeDeclaration.
         $response = pack('S', 1) . pack('S', 0) . "\x00" . "\x00" . "\x00" . "\x01" . pack('S', 7) . 'ChoiceA'; // 1st (0 + 1) responseDeclaration.
@@ -998,7 +1000,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), ['assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'templateDeclaration', 'itemSessionControl']);
 
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, $version);
 
         $this::assertEquals('Q01', $session->getAssessmentItem()->getIdentifier());
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $session->getState());
@@ -1036,7 +1039,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, $version);
         $this::assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this::assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this::assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
@@ -1066,7 +1070,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, $version);
         $this::assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this::assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this::assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
@@ -1097,7 +1102,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, $version);
         $this::assertEquals(AssessmentItemSessionState::INITIAL, $session->getState());
         $this::assertEquals(NavigationMode::LINEAR, $session->getNavigationMode());
         $this::assertEquals(SubmissionMode::INDIVIDUAL, $session->getSubmissionMode());
@@ -1136,7 +1142,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, $version);
 
         $this::assertEquals(2, $session->getItemSessionControl()->getMaxAttempts());
         $this::assertFalse($session->getItemSessionControl()->isDefault());
@@ -1171,7 +1178,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, $version);
 
         $this::assertTrue($session->getVariable('RESPONSE')->getCorrectResponse()->equals(new MultipleContainer(BaseType::PAIR, [new QtiPair('A', 'P')])));
     }
@@ -1203,7 +1211,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($seeker, $session);
 
         $stream->rewind();
-        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker);
+        $version = $this->createVersionMock(QtiBinaryVersion::CURRENT_VERSION);
+        $session = $access->readAssessmentItemSession(new SessionManager(new FileSystemFileManager()), $seeker, $version);
         $this::assertCount(1, $session->getShufflingStates());
     }
 
@@ -1716,5 +1725,20 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
 
         $stream->close();
         $access->writeIntOrIdentifier(new QtiIntOrIdentifier('identifier'));
+    }
+
+    /**
+     * @param int $versionNumber
+     * @return QtiBinaryVersion
+     */
+    public function createVersionMock(int $versionNumber): QtiBinaryVersion
+    {
+        $version = new QtiBinaryVersion();
+        $property = new ReflectionProperty(QtiBinaryVersion::class, 'version');
+        $property->setAccessible(true);
+        $property->setValue($version, $versionNumber);
+        $property->setAccessible(false);
+
+        return $version;
     }
 }
