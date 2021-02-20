@@ -294,7 +294,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
                 // An already instantiated session for this route item?
                 if ($access->readBoolean() === true) {
-                    $itemSession = $access->readAssessmentItemSession($this->getManager(), $seeker);
+                    $itemSession = $access->readAssessmentItemSession($this->getManager(), $seeker, $this->version);
 
                     // last-update
                     if ($access->readBoolean() === true) {
