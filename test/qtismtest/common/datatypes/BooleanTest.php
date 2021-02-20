@@ -22,10 +22,10 @@ class BooleanTest extends QtiSmTestCase
         $boolean = new QtiBoolean(true);
         $otherBoolean = clone $boolean;
 
-        $this->assertEquals($boolean->getValue(), $otherBoolean->getValue());
-        $this->assertNotSame($boolean, $otherBoolean);
+        $this::assertEquals($boolean->getValue(), $otherBoolean->getValue());
+        $this::assertNotSame($boolean, $otherBoolean);
 
         $otherBoolean->setValue(false);
-        $this->assertNotEquals($boolean->getValue(), $otherBoolean->getValue());
+        $this::assertNotEquals($boolean->getValue(), $otherBoolean->getValue());
     }
 }

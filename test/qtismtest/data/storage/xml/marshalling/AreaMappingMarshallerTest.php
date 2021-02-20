@@ -31,8 +31,8 @@ class AreaMappingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('areaMapping', $element->nodeName);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('areaMapping', $element->nodeName);
     }
 
     public function testUnmarshallMinimal()
@@ -50,6 +50,6 @@ class AreaMappingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(AreaMapping::class, $component);
+        $this::assertInstanceOf(AreaMapping::class, $component);
     }
 }

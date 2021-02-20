@@ -27,7 +27,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<templateIf><baseValue baseType="boolean">true</baseValue><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue></templateIf>', $dom->saveXML($element));
+        $this::assertEquals('<templateIf><baseValue baseType="boolean">true</baseValue><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue></templateIf>', $dom->saveXML($element));
     }
 
     public function testUnmarshallTemplateIfSimple()
@@ -42,12 +42,12 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateIf = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(TemplateIf::class, $templateIf);
-        $this->assertInstanceOf(BaseValue::class, $templateIf->getExpression());
+        $this::assertInstanceOf(TemplateIf::class, $templateIf);
+        $this::assertInstanceOf(BaseValue::class, $templateIf->getExpression());
         $templateRules = $templateIf->getTemplateRules();
-        $this->assertEquals(1, count($templateRules));
-        $this->assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
-        $this->assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
+        $this::assertCount(1, $templateRules);
+        $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
+        $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }
 
     public function testMarshallTemplateIfMultipleRules()
@@ -61,7 +61,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<templateIf><baseValue baseType="boolean">true</baseValue><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue><setTemplateValue identifier="tpl2"><baseValue baseType="integer">1338</baseValue></setTemplateValue></templateIf>',
             $dom->saveXML($element)
         );
@@ -82,21 +82,21 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateIf = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(TemplateIf::class, $templateIf);
-        $this->assertInstanceOf(BaseValue::class, $templateIf->getExpression());
+        $this::assertInstanceOf(TemplateIf::class, $templateIf);
+        $this::assertInstanceOf(BaseValue::class, $templateIf->getExpression());
 
         $templateRules = $templateIf->getTemplateRules();
-        $this->assertEquals(2, count($templateRules));
+        $this::assertCount(2, $templateRules);
 
-        $this->assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
-        $this->assertEquals('tpl1', $templateRules[0]->getIdentifier());
-        $this->assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
-        $this->assertEquals(1337, $templateRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
+        $this::assertEquals('tpl1', $templateRules[0]->getIdentifier());
+        $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
+        $this::assertEquals(1337, $templateRules[0]->getExpression()->getValue());
 
-        $this->assertInstanceOf(SetTemplateValue::class, $templateRules[1]);
-        $this->assertEquals('tpl2', $templateRules[1]->getIdentifier());
-        $this->assertInstanceOf(BaseValue::class, $templateRules[1]->getExpression());
-        $this->assertEquals(1338, $templateRules[1]->getExpression()->getValue());
+        $this::assertInstanceOf(SetTemplateValue::class, $templateRules[1]);
+        $this::assertEquals('tpl2', $templateRules[1]->getIdentifier());
+        $this::assertInstanceOf(BaseValue::class, $templateRules[1]->getExpression());
+        $this::assertEquals(1338, $templateRules[1]->getExpression()->getValue());
     }
 
     public function testMarshallTemplateElseIfSimple()
@@ -109,7 +109,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<templateElseIf><baseValue baseType="boolean">true</baseValue><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue></templateElseIf>', $dom->saveXML($element));
+        $this::assertEquals('<templateElseIf><baseValue baseType="boolean">true</baseValue><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue></templateElseIf>', $dom->saveXML($element));
     }
 
     public function testUnmarshallTemplateElseIfSimple()
@@ -124,12 +124,12 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateElseIf = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(TemplateElseIf::class, $templateElseIf);
-        $this->assertInstanceOf(BaseValue::class, $templateElseIf->getExpression());
+        $this::assertInstanceOf(TemplateElseIf::class, $templateElseIf);
+        $this::assertInstanceOf(BaseValue::class, $templateElseIf->getExpression());
         $templateRules = $templateElseIf->getTemplateRules();
-        $this->assertEquals(1, count($templateRules));
-        $this->assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
-        $this->assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
+        $this::assertCount(1, $templateRules);
+        $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
+        $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }
 
     public function testMarshallTemplateElseSimple()
@@ -141,7 +141,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<templateElse><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue></templateElse>', $dom->saveXML($element));
+        $this::assertEquals('<templateElse><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue></templateElse>', $dom->saveXML($element));
     }
 
     public function testUnmarshallTemplateElseSimple()
@@ -155,11 +155,11 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 	    ');
 
         $templateElse = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(TemplateElse::class, $templateElse);
+        $this::assertInstanceOf(TemplateElse::class, $templateElse);
         $templateRules = $templateElse->getTemplateRules();
-        $this->assertEquals(1, count($templateRules));
-        $this->assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
-        $this->assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
+        $this::assertCount(1, $templateRules);
+        $this::assertInstanceOf(SetTemplateValue::class, $templateRules[0]);
+        $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }
 
     public function testMarshallTemplateElseMultipleRules()
@@ -172,6 +172,6 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<templateElse><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue><setTemplateValue identifier="tpl2"><baseValue baseType="integer">1338</baseValue></setTemplateValue></templateElse>', $dom->saveXML($element));
+        $this::assertEquals('<templateElse><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue><setTemplateValue identifier="tpl2"><baseValue baseType="integer">1338</baseValue></setTemplateValue></templateElse>', $dom->saveXML($element));
     }
 }

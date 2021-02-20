@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsaqti_item_v1p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsaqti_item_v1p0 http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd"
+    identifier="aqti_tmh_sample_1"
+    title="Estimate distances using multiplication with Tom"
+    adaptive="false"
+    timeDependent="false">
+<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+  <correctResponse>
+    <value>optionA</value>
+  </correctResponse>
+</responseDeclaration>
+<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+<itemBody id="theItemBody">
+  <p>Empty item body</p>
+</itemBody>
+
+</assessmentItem>

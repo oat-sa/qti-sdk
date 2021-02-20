@@ -30,7 +30,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gapText identifier="gapText1" matchMax="1">My var is <printedVariable identifier="var1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></gapText>', $dom->saveXML($element));
+        $this::assertEquals('<gapText identifier="gapText1" matchMax="1">My var is <printedVariable identifier="var1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></gapText>', $dom->saveXML($element));
     }
 
     public function testMarshall20()
@@ -53,7 +53,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<gapText identifier="gapText1" matchMax="3" matchGroup="identifier1 id2">Some text...</gapText>', $dom->saveXML($element));
+        $this::assertEquals('<gapText identifier="gapText1" matchMax="3" matchGroup="identifier1 id2">Some text...</gapText>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -65,20 +65,20 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapText = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(GapText::class, $gapText);
-        $this->assertEquals('gapText1', $gapText->getIdentifier());
-        $this->assertEquals(1, $gapText->getMatchMax());
-        $this->assertEquals(0, $gapText->getMatchMin());
-        $this->assertFalse($gapText->isFixed());
-        $this->assertFalse($gapText->hasTemplateIdentifier());
-        $this->assertEquals(ShowHide::SHOW, $gapText->getShowHide());
+        $this::assertInstanceOf(GapText::class, $gapText);
+        $this::assertEquals('gapText1', $gapText->getIdentifier());
+        $this::assertEquals(1, $gapText->getMatchMax());
+        $this::assertEquals(0, $gapText->getMatchMin());
+        $this::assertFalse($gapText->isFixed());
+        $this::assertFalse($gapText->hasTemplateIdentifier());
+        $this::assertEquals(ShowHide::SHOW, $gapText->getShowHide());
 
         $content = $gapText->getContent();
-        $this->assertInstanceOf(TextOrVariableCollection::class, $content);
-        $this->assertInstanceOf(TextRun::class, $content[0]);
-        $this->assertInstanceOf(PrintedVariable::class, $content[1]);
-        $this->assertEquals('My var is ', $content[0]->getContent());
-        $this->assertEquals('var1', $content[1]->getIdentifier());
+        $this::assertInstanceOf(TextOrVariableCollection::class, $content);
+        $this::assertInstanceOf(TextRun::class, $content[0]);
+        $this::assertInstanceOf(PrintedVariable::class, $content[1]);
+        $this::assertEquals('My var is ', $content[0]->getContent());
+        $this::assertEquals('var1', $content[1]->getIdentifier());
     }
 
     public function testUnmarshall20()
@@ -90,14 +90,14 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $gapText = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(GapText::class, $gapText);
-        $this->assertEquals('gapText1', $gapText->getIdentifier());
-        $this->assertEquals(3, $gapText->getMatchMax());
-        $this->assertEquals(0, $gapText->getMatchMin());
-        $this->assertFalse($gapText->isFixed());
-        $this->assertFalse($gapText->hasTemplateIdentifier());
-        $this->assertEquals(ShowHide::SHOW, $gapText->getShowHide());
-        $this->assertEquals(['id1', 'id2'], $gapText->getMatchGroup()->getArrayCopy());
+        $this::assertInstanceOf(GapText::class, $gapText);
+        $this::assertEquals('gapText1', $gapText->getIdentifier());
+        $this::assertEquals(3, $gapText->getMatchMax());
+        $this::assertEquals(0, $gapText->getMatchMin());
+        $this::assertFalse($gapText->isFixed());
+        $this::assertFalse($gapText->hasTemplateIdentifier());
+        $this::assertEquals(ShowHide::SHOW, $gapText->getShowHide());
+        $this::assertEquals(['id1', 'id2'], $gapText->getMatchGroup()->getArrayCopy());
     }
 
     /**
@@ -123,8 +123,8 @@ class GapTextMarshallerTest extends QtiSmTestCase
     {
         // Only textRun and/or printedVariable.
         $this->expectException(UnmarshallingException::class);
-        $element = $element = $this->createDOMElement('
-	        <gapText identifier="gapText1" matchMax="1">My var is <strong>invalid</strong>!</gapText>
+        $element = $this->createDOMElement('
+	        <gapText identifier="gapText1" matchMax="1">My var is <div>invalid</div>!</gapText>
 	    ');
 
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);

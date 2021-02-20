@@ -23,13 +23,13 @@ class TemplateVariableTest extends QtiSmTestCase
         ');
 
         $var = TemplateVariable::createFromDataModel($decl);
-        $this->assertInstanceOf(TemplateVariable::class, $var);
-        $this->assertEquals('mytpl1', $var->getIdentifier());
-        $this->assertEquals(Cardinality::SINGLE, $var->getCardinality());
-        $this->assertEquals(BaseType::IDENTIFIER, $var->getCardinality());
-        $this->assertEquals('default', $var->getDefaultValue()->getValue());
-        $this->assertSame(null, $var->getValue());
-        $this->assertTrue($var->isParamVariable());
-        $this->assertFalse($var->isMathVariable());
+        $this::assertInstanceOf(TemplateVariable::class, $var);
+        $this::assertEquals('mytpl1', $var->getIdentifier());
+        $this::assertEquals(Cardinality::SINGLE, $var->getCardinality());
+        $this::assertEquals(BaseType::IDENTIFIER, $var->getCardinality());
+        $this::assertEquals('default', $var->getDefaultValue()->getValue());
+        $this::assertNull($var->getValue());
+        $this::assertTrue($var->isParamVariable());
+        $this::assertFalse($var->isMathVariable());
     }
 }

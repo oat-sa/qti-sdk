@@ -46,16 +46,16 @@ class ContextMarshallerTest extends QtiSmTestCase
             </context>
         ');
 
-        $this->assertInstanceOf(Context::class, $context);
+        $this::assertInstanceOf(Context::class, $context);
 
-        $this->assertInstanceOf(QtiIdentifier::class, $context->getSourcedId());
-        $this->assertTrue($context->hasSourcedId());
-        $this->assertEquals('fixture-sourcedId', $context->getSourcedId()->getValue());
-        $this->assertEquals('fixture-sourcedId', $context->getSourcedId());
+        $this::assertInstanceOf(QtiIdentifier::class, $context->getSourcedId());
+        $this::assertTrue($context->hasSourcedId());
+        $this::assertEquals('fixture-sourcedId', $context->getSourcedId()->getValue());
+        $this::assertEquals('fixture-sourcedId', $context->getSourcedId());
 
-        $this->assertTrue($context->hasSessionIdentifiers());
-        $this->assertInstanceOf(SessionIdentifierCollection::class, $context->getSessionIdentifiers());
-        $this->assertEquals(2, $context->getSessionIdentifiers()->count());
+        $this::assertTrue($context->hasSessionIdentifiers());
+        $this::assertInstanceOf(SessionIdentifierCollection::class, $context->getSessionIdentifiers());
+        $this::assertEquals(2, $context->getSessionIdentifiers()->count());
     }
 
     public function testUnmarshallMinimal()
@@ -65,11 +65,11 @@ class ContextMarshallerTest extends QtiSmTestCase
             <context />
         ');
 
-        $this->assertInstanceOf(Context::class, $context);
+        $this::assertInstanceOf(Context::class, $context);
 
-        $this->assertFalse($context->hasSourcedId());
+        $this::assertFalse($context->hasSourcedId());
 
-        $this->assertFalse($context->hasSessionIdentifiers());
+        $this::assertFalse($context->hasSessionIdentifiers());
     }
 
     public function testMarshall()
@@ -87,15 +87,15 @@ class ContextMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
+        $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
-        $this->assertEquals($sourcedId, $element->getAttribute('sourcedId'));
+        $this::assertEquals($component->getQtiClassName(), $element->nodeName);
+        $this::assertEquals($sourcedId, $element->getAttribute('sourcedId'));
 
-        $this->assertEquals(2, $element->getElementsByTagName('sessionIdentifier')->length);
+        $this::assertEquals(2, $element->getElementsByTagName('sessionIdentifier')->length);
         /** @var DOMElement $node */
         foreach ($element->childNodes as $node) {
-            $this->assertEquals('sessionIdentifier', $node->nodeName);
+            $this::assertEquals('sessionIdentifier', $node->nodeName);
         }
     }
 
@@ -106,17 +106,17 @@ class ContextMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
+        $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
-        $this->assertFalse($element->hasAttributes());
-        $this->assertFalse($element->hasChildNodes());
+        $this::assertEquals($component->getQtiClassName(), $element->nodeName);
+        $this::assertFalse($element->hasAttributes());
+        $this::assertFalse($element->hasChildNodes());
     }
 
     public function testGetExpectedQtiClassName()
     {
         $component = new Context();
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
-        $this->assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
+        $this::assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
     }
 }

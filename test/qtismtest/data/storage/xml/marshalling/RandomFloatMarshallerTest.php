@@ -30,8 +30,8 @@ class RandomFloatMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(RandomFloat::class, $component);
-        $this->assertEquals($component->getMin(), 1.3);
-        $this->assertEquals($component->getMax(), '{tplVariable1}');
+        $this::assertInstanceOf(RandomFloat::class, $component);
+        $this::assertEquals(1.3, $component->getMin());
+        $this::assertEquals('{tplVariable1}', $component->getMax());
     }
 }

@@ -38,7 +38,7 @@ class DefaultProcessorTest extends QtiSmTestCase
         $comparable[] = new QtiDuration('P2D');
         $comparable[] = new QtiDuration('P3D');
         $comparable[] = new QtiDuration('P4D');
-        $this->assertTrue($comparable->equals($processor->process()));
+        $this::assertTrue($comparable->equals($processor->process()));
     }
 
     public function testSingleCardinality()
@@ -56,8 +56,8 @@ class DefaultProcessorTest extends QtiSmTestCase
         $processor->setState(new State([$variable]));
         $result = $processor->process();
 
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testNoVariable()
@@ -66,7 +66,7 @@ class DefaultProcessorTest extends QtiSmTestCase
         $processor = new DefaultProcessor($expr);
         $result = $processor->process();
 
-        $this->assertTrue($result === null);
+        $this::assertNull($result);
     }
 
     public function testNoDefaultValue()
@@ -79,6 +79,6 @@ class DefaultProcessorTest extends QtiSmTestCase
         $variable = ResponseVariable::createFromDataModel($variableDeclaration);
         $processor->setState(new State([$variable]));
         $result = $processor->process();
-        $this->assertTrue($result === null);
+        $this::assertNull($result);
     }
 }

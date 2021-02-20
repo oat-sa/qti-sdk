@@ -15,10 +15,10 @@ class BaseValueProcessorTest extends QtiSmTestCase
     {
         $baseValue = $this->createComponentFromXml('<baseValue baseType="boolean">true</baseValue>');
         $baseValueProcessor = new BaseValueProcessor($baseValue);
-        $this->assertTrue($baseValueProcessor->process()->getValue());
+        $this::assertTrue($baseValueProcessor->process()->getValue());
 
         $baseValue = $this->createComponentFromXml('<baseValue baseType="point">150 130</baseValue>');
         $baseValueProcessor->setExpression($baseValue);
-        $this->assertTrue($baseValueProcessor->process()->equals(new QtiPoint(150, 130)));
+        $this::assertTrue($baseValueProcessor->process()->equals(new QtiPoint(150, 130)));
     }
 }

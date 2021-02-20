@@ -117,7 +117,7 @@ class TableMarshallerTest extends QtiSmTestCase
         $expected .= '</tbody>';
         $expected .= '</table>';
 
-        $this->assertEquals($expected, $dom->saveXML($element));
+        $this::assertEquals($expected, $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -146,69 +146,69 @@ class TableMarshallerTest extends QtiSmTestCase
 	        </table>
 	    ');
 
-        $this->assertInstanceOf(Table::class, $table);
-        $this->assertEquals('my-table', $table->getId());
-        $this->assertEquals('qti table', $table->getClass());
-        $this->assertEquals('Some people...', $table->getSummary());
-        $this->assertEquals('/home/jerome', $table->getXmlBase());
+        $this::assertInstanceOf(Table::class, $table);
+        $this::assertEquals('my-table', $table->getId());
+        $this::assertEquals('qti table', $table->getClass());
+        $this::assertEquals('Some people...', $table->getSummary());
+        $this::assertEquals('/home/jerome', $table->getXmlBase());
 
         $thead = $table->getThead();
-        $this->assertInstanceOf(Thead::class, $thead);
+        $this::assertInstanceOf(Thead::class, $thead);
         $trs = $thead->getContent();
-        $this->assertEquals(1, count($trs));
+        $this::assertCount(1, $trs);
         $ths = $trs[0]->getContent();
-        $this->assertEquals('firstname', $ths[0]->getId());
-        $this->assertEquals(TableCellScope::COL, $ths[0]->getScope());
-        $this->assertEquals('identity', $ths[0]->getAxis());
+        $this::assertEquals('firstname', $ths[0]->getId());
+        $this::assertEquals(TableCellScope::COL, $ths[0]->getScope());
+        $this::assertEquals('identity', $ths[0]->getAxis());
         $thContent = $ths[0]->getContent();
-        $this->assertEquals('First Name', $thContent[0]->getContent());
-        $this->assertEquals('lastname', $ths[1]->getId());
-        $this->assertEquals(TableCellScope::COL, $ths[1]->getScope());
-        $this->assertEquals('identity', $ths[1]->getAxis());
+        $this::assertEquals('First Name', $thContent[0]->getContent());
+        $this::assertEquals('lastname', $ths[1]->getId());
+        $this::assertEquals(TableCellScope::COL, $ths[1]->getScope());
+        $this::assertEquals('identity', $ths[1]->getAxis());
         $thContent = $ths[1]->getContent();
-        $this->assertEquals('Last Name', $thContent[0]->getContent());
+        $this::assertEquals('Last Name', $thContent[0]->getContent());
 
         $tbodies = $table->getTbodies();
-        $this->assertEquals(1, count($tbodies));
+        $this::assertCount(1, $tbodies);
 
         $trs = $tbodies[0]->getContent();
-        $this->assertEquals(2, count($trs));
+        $this::assertCount(2, $trs);
 
         $tr1 = $trs[0];
-        $this->assertEquals(2, count($tr1->getContent()));
+        $this::assertCount(2, $tr1->getContent());
 
         $tds = $tr1->getContent();
         $tdHeaders = $tds[0]->getHeaders();
-        $this->assertEquals(1, count($tdHeaders));
-        $this->assertEquals('firstname', $tdHeaders[0]);
+        $this::assertCount(1, $tdHeaders);
+        $this::assertEquals('firstname', $tdHeaders[0]);
         $tdHeaders = $tds[1]->getHeaders();
-        $this->assertEquals(1, count($tdHeaders));
-        $this->assertEquals('lastname', $tdHeaders[0]);
-        $this->assertEquals('Dunbar S.W.', $tds[1]->getAbbr());
+        $this::assertCount(1, $tdHeaders);
+        $this::assertEquals('lastname', $tdHeaders[0]);
+        $this::assertEquals('Dunbar S.W.', $tds[1]->getAbbr());
         $tdContent = $tds[0]->getContent();
-        $this->assertEquals('John', $tdContent[0]->getContent());
-        $this->assertEquals(1, $tds[0]->getRowspan());
-        $this->assertEquals(1, $tds[0]->getColspan());
+        $this::assertEquals('John', $tdContent[0]->getContent());
+        $this::assertEquals(1, $tds[0]->getRowspan());
+        $this::assertEquals(1, $tds[0]->getColspan());
 
         $tdContent = $tds[1]->getContent();
-        $this->assertEquals('Dunbar Smith Wayson', $tdContent[0]->getContent());
+        $this::assertEquals('Dunbar Smith Wayson', $tdContent[0]->getContent());
 
         $tr2 = $trs[1];
-        $this->assertEquals(2, count($tr2->getContent()));
+        $this::assertCount(2, $tr2->getContent());
 
         $caption = $table->getCaption();
-        $this->assertInstanceOf(Caption::class, $caption);
+        $this::assertInstanceOf(Caption::class, $caption);
         $captionContent = $caption->getContent();
-        $this->assertEquals($captionContent[0]->getContent(), 'Some ');
-        $this->assertInstanceOf(Strong::class, $captionContent[1]);
+        $this::assertEquals('Some ', $captionContent[0]->getContent());
+        $this::assertInstanceOf(Strong::class, $captionContent[1]);
         $strongContent = $captionContent[1]->getContent();
-        $this->assertEquals('people', $strongContent[0]->getContent());
-        $this->assertEquals(' ...', $captionContent[2]->getContent());
+        $this::assertEquals('people', $strongContent[0]->getContent());
+        $this::assertEquals(' ...', $captionContent[2]->getContent());
 
         $cols = $table->getCols();
-        $this->assertEquals(2, count($cols));
-        $this->assertEquals(1, $cols[0]->getSpan());
-        $this->assertEquals(1, $cols[1]->getspan());
+        $this::assertCount(2, $cols);
+        $this::assertEquals(1, $cols[0]->getSpan());
+        $this::assertEquals(1, $cols[1]->getspan());
     }
 
     /**

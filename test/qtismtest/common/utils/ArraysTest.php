@@ -16,7 +16,7 @@ class ArraysTest extends QtiSmTestCase
      */
     public function testIsAssocValid(array $array)
     {
-        $this->assertTrue(Arrays::isAssoc($array));
+        $this::assertTrue(Arrays::isAssoc($array));
     }
 
     /**
@@ -25,7 +25,7 @@ class ArraysTest extends QtiSmTestCase
      */
     public function testIsAssocInvalid(array $array)
     {
-        $this->assertFalse(Arrays::isAssoc($array));
+        $this::assertFalse(Arrays::isAssoc($array));
     }
 
     /**

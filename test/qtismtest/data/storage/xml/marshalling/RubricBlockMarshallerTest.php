@@ -30,24 +30,24 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
             </rubricBlock>
         ');
 
-        $this->assertInstanceOf(RubricBlock::class, $rubricBlock);
-        $this->assertEquals('warning', $rubricBlock->getClass());
-        $this->assertEquals(2, count($rubricBlock->getViews()));
-        $this->assertEquals('/home/jerome', $rubricBlock->getXmlBase());
+        $this::assertInstanceOf(RubricBlock::class, $rubricBlock);
+        $this::assertEquals('warning', $rubricBlock->getClass());
+        $this::assertCount(2, $rubricBlock->getViews());
+        $this::assertEquals('/home/jerome', $rubricBlock->getXmlBase());
 
         $rubricBlockContent = $rubricBlock->getContent();
-        $this->assertEquals(6, count($rubricBlockContent));
-        $this->assertInstanceOf(H3::class, $rubricBlockContent[1]);
-        $this->assertEquals('Be carefull kiddo !', $rubricBlockContent[1]->getContent()[0]->getContent());
-        $this->assertInstanceOf(P::class, $rubricBlockContent[3]);
-        $this->assertEquals('Read the instructions twice.', $rubricBlockContent[3]->getContent()[0]->getContent());
-        $this->assertEquals('inner text', $rubricBlockContent[2]->getContent());
+        $this::assertCount(6, $rubricBlockContent);
+        $this::assertInstanceOf(H3::class, $rubricBlockContent[1]);
+        $this::assertEquals('Be carefull kiddo !', $rubricBlockContent[1]->getContent()[0]->getContent());
+        $this::assertInstanceOf(P::class, $rubricBlockContent[3]);
+        $this::assertEquals('Read the instructions twice.', $rubricBlockContent[3]->getContent()[0]->getContent());
+        $this::assertEquals('inner text', $rubricBlockContent[2]->getContent());
 
         $stylesheets = $rubricBlock->getStylesheets();
-        $this->assertEquals(1, count($stylesheets));
-        $this->assertEquals('./stylesheet.css', $stylesheets[0]->getHref());
-        $this->assertEquals('text/css', $stylesheets[0]->getType());
-        $this->assertEquals('screen', $stylesheets[0]->getMedia());
+        $this::assertCount(1, $stylesheets);
+        $this::assertEquals('./stylesheet.css', $stylesheets[0]->getHref());
+        $this::assertEquals('text/css', $stylesheets[0]->getType());
+        $this::assertEquals('screen', $stylesheets[0]->getMedia());
     }
 
     /**
@@ -97,7 +97,7 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
             </rubricBlock>
         ');
 
-        $this->assertInstanceOf(RubricBlock::class, $rubricBlock);
+        $this::assertInstanceOf(RubricBlock::class, $rubricBlock);
     }
 
     public function testMarshall()
@@ -121,6 +121,6 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<rubricBlock view="candidate tutor" use="Some use!" xml:base="/home/jerome" class="warning"><h3>Be carefull kiddo!</h3><p>Read the instructions twice.</p><stylesheet href="./stylesheet.css" media="screen" type="text/css"/></rubricBlock>', $dom->saveXML($element));
+        $this::assertEquals('<rubricBlock view="candidate tutor" use="Some use!" xml:base="/home/jerome" class="warning"><h3>Be carefull kiddo!</h3><p>Read the instructions twice.</p><stylesheet href="./stylesheet.css" media="screen" type="text/css"/></rubricBlock>', $dom->saveXML($element));
     }
 }

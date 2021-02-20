@@ -41,7 +41,7 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase
         $rendered = $engine->render($doc->getDocumentComponent());
         $strRendered = $rendered->saveXML($rendered->documentElement);
         $strExpected = rtrim(file_get_contents($expectedFile));
-        $this->assertEquals($strExpected, $strRendered);
+        $this::assertEquals($strExpected, $strRendered);
     }
 
     /**

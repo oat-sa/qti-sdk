@@ -27,7 +27,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         $gapText = new GapText('gapText1', 1);
         $gapText->setContent(new TextOrVariableCollection([new TextRun('This is gapText1')]));
 
-        $object = new ObjectElement("./myimg.png", "image/png");
+        $object = new ObjectElement('./myimg.png', 'image/png');
         $gapImg = new GapImg('gapImg1', 1, $object);
 
         $gap1 = new Gap('G1');
@@ -44,7 +44,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
+        $this::assertEquals(
             '<gapMatchInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>',
             $dom->saveXML($element)
         );
@@ -59,20 +59,20 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $gapMatch = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(GapMatchInteraction::class, $gapMatch);
-        $this->assertEquals('RESPONSE', $gapMatch->getResponseIdentifier());
-        $this->assertEquals('/home/jerome', $gapMatch->getXmlBase());
-        $this->assertFalse($gapMatch->mustShuffle());
+        $this::assertInstanceOf(GapMatchInteraction::class, $gapMatch);
+        $this::assertEquals('RESPONSE', $gapMatch->getResponseIdentifier());
+        $this::assertEquals('/home/jerome', $gapMatch->getXmlBase());
+        $this::assertFalse($gapMatch->mustShuffle());
 
         $gapChoices = $gapMatch->getGapChoices();
-        $this->assertEquals(2, count($gapChoices));
-        $this->assertInstanceOf(GapText::class, $gapChoices[0]);
-        $this->assertInstanceOf(GapImg::class, $gapChoices[1]);
+        $this::assertCount(2, $gapChoices);
+        $this::assertInstanceOf(GapText::class, $gapChoices[0]);
+        $this::assertInstanceOf(GapImg::class, $gapChoices[1]);
 
         $gaps = $gapMatch->getComponentsByClassName('gap');
-        $this->assertEquals(2, count($gaps));
-        $this->assertEquals('G1', $gaps[0]->getIdentifier());
-        $this->assertEquals('G2', $gaps[1]->getIdentifier());
+        $this::assertCount(2, $gaps);
+        $this::assertEquals('G1', $gaps[0]->getIdentifier());
+        $this::assertEquals('G2', $gaps[1]->getIdentifier());
     }
 
     public function testUnmarshallNoGapChoice()

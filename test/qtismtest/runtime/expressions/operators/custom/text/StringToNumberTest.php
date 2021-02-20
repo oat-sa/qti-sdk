@@ -50,7 +50,7 @@ class StringToNumberTest extends QtiSmTestCase {
         $operator = new StringToNumber($customOperator, $operands);
         $result = $operator->process();
         
-        $this->assertEquals($result->getValue(), (float)1337);
+        $this::assertEquals($result->getValue(), (float)1337);
     }
     
     public function testSimpleTwo() {
@@ -65,7 +65,7 @@ class StringToNumberTest extends QtiSmTestCase {
         $operator = new StringToNumber($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertEquals(round($result->getValue(), 2), round(13.37, 2));
+        $this::assertEquals(round($result->getValue(), 2), round(13.37, 2));
     }
     
     public function testReturnsNull() {
@@ -80,6 +80,6 @@ class StringToNumberTest extends QtiSmTestCase {
         $operator = new StringToNumber($customOperator, $operands);
         $result = $operator->process();
 
-        $this->assertNull($result);
+        $this::assertNull($result);
     }
 }

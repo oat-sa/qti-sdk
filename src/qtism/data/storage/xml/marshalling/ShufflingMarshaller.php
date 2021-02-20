@@ -43,7 +43,7 @@ class ShufflingMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
 
         foreach ($component->getShufflingGroups() as $shufflingGroup) {

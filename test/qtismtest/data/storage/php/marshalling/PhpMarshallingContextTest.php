@@ -60,18 +60,18 @@ class PhpMarshallingContextTest extends QtiSmTestCase
     public function testPhpMarshallingContext()
     {
         $ctx = new PhpMarshallingContext($this->getStreamAccess());
-        $this->assertFalse($ctx->mustFormatOutput());
+        $this::assertFalse($ctx->mustFormatOutput());
 
         $ctx->setFormatOutput(true);
-        $this->assertTrue($ctx->mustFormatOutput());
+        $this::assertTrue($ctx->mustFormatOutput());
 
         $ctx->pushOnVariableStack('foo');
-        $this->assertEquals(['foo'], $ctx->popFromVariableStack());
+        $this::assertEquals(['foo'], $ctx->popFromVariableStack());
 
         $ctx->pushOnVariableStack(['foo', 'bar']);
-        $this->assertEquals(['foo', 'bar'], $ctx->popFromVariableStack(2));
+        $this::assertEquals(['foo', 'bar'], $ctx->popFromVariableStack(2));
 
-        $this->assertInstanceOf(PhpStreamAccess::class, $ctx->getStreamAccess());
+        $this::assertInstanceOf(PhpStreamAccess::class, $ctx->getStreamAccess());
     }
 
     public function testPhpMarshallingTooLargeQuantity()
@@ -81,9 +81,9 @@ class PhpMarshallingContextTest extends QtiSmTestCase
 
         try {
             $values = $ctx->popFromVariableStack(4);
-            $this->assertFalse(true, 'An exception must be thrown because the requested quantity is too large.');
+            $this::assertFalse(true, 'An exception must be thrown because the requested quantity is too large.');
         } catch (RuntimeException $e) {
-            $this->assertTrue(true);
+            $this::assertTrue(true);
         }
     }
 
@@ -93,9 +93,9 @@ class PhpMarshallingContextTest extends QtiSmTestCase
 
         try {
             $value = $ctx->popFromVariableStack();
-            $this->assertFalse(true, 'An exception must be thrown because the variable names stack is empty.');
+            $this::assertFalse(true, 'An exception must be thrown because the variable names stack is empty.');
         } catch (RuntimeException $e) {
-            $this->assertTrue(true);
+            $this::assertTrue(true);
         }
     }
 
@@ -106,9 +106,9 @@ class PhpMarshallingContextTest extends QtiSmTestCase
 
         try {
             $value = $ctx->popFromVariableStack(0);
-            $this->assertTrue(false, "An exception must be thrown because the 'quantity' argument must be >= 1");
+            $this::assertTrue(false, "An exception must be thrown because the 'quantity' argument must be >= 1");
         } catch (InvalidArgumentException $e) {
-            $this->assertTrue(true);
+            $this::assertTrue(true);
         }
     }
 
@@ -116,23 +116,23 @@ class PhpMarshallingContextTest extends QtiSmTestCase
     {
         $ctx = new PhpMarshallingContext($this->getStreamAccess());
 
-        $this->assertEquals('integer_0', $ctx->generateVariableName(0));
-        $this->assertEquals('integer_1', $ctx->generateVariableName(-10));
-        $this->assertEquals('scalarnullvalue_0', $ctx->generateVariableName(null));
-        $this->assertEquals('scalarnullvalue_1', $ctx->generateVariableName(null));
-        $this->assertEquals('scalarnullvalue_2', $ctx->generateVariableName(null));
-        $this->assertEquals('boolean_0', $ctx->generateVariableName(true));
-        $this->assertEquals('boolean_1', $ctx->generateVariableName(false));
-        $this->assertEquals('double_0', $ctx->generateVariableName(20.3));
-        $this->assertEquals('double_1', $ctx->generateVariableName(0.0));
-        $this->assertEquals('string_0', $ctx->generateVariableName('String!'));
-        $this->assertEquals('string_1', $ctx->generateVariableName('String!'));
-        $this->assertEquals('integer_2', $ctx->generateVariableName(1337));
+        $this::assertEquals('integer_0', $ctx->generateVariableName(0));
+        $this::assertEquals('integer_1', $ctx->generateVariableName(-10));
+        $this::assertEquals('scalarnullvalue_0', $ctx->generateVariableName(null));
+        $this::assertEquals('scalarnullvalue_1', $ctx->generateVariableName(null));
+        $this::assertEquals('scalarnullvalue_2', $ctx->generateVariableName(null));
+        $this::assertEquals('boolean_0', $ctx->generateVariableName(true));
+        $this::assertEquals('boolean_1', $ctx->generateVariableName(false));
+        $this::assertEquals('double_0', $ctx->generateVariableName(20.3));
+        $this::assertEquals('double_1', $ctx->generateVariableName(0.0));
+        $this::assertEquals('string_0', $ctx->generateVariableName('String!'));
+        $this::assertEquals('string_1', $ctx->generateVariableName('String!'));
+        $this::assertEquals('integer_2', $ctx->generateVariableName(1337));
 
-        $this->assertEquals('qticoords_0', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, [10, 10, 5])));
-        $this->assertEquals('qticoords_1', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, [10, 10, 3])));
-        $this->assertEquals('qtipoint_0', $ctx->generateVariableName(new QtiPoint(0, 0)));
-        $this->assertEquals('qtipoint_1', $ctx->generateVariableName(new QtiPoint(0, 1)));
-        $this->assertEquals('qticoords_2', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, [5, 5, 3])));
+        $this::assertEquals('qticoords_0', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, [10, 10, 5])));
+        $this::assertEquals('qticoords_1', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, [10, 10, 3])));
+        $this::assertEquals('qtipoint_0', $ctx->generateVariableName(new QtiPoint(0, 0)));
+        $this::assertEquals('qtipoint_1', $ctx->generateVariableName(new QtiPoint(0, 1)));
+        $this::assertEquals('qticoords_2', $ctx->generateVariableName(new QtiCoords(QtiShape::CIRCLE, [5, 5, 3])));
     }
 }

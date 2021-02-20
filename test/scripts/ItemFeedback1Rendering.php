@@ -9,10 +9,10 @@ use qtism\runtime\common\State;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 $doc = new XmlDocument();
-$doc->load(dirname(__FILE__) . '/../samples/rendering/itemfeedback_1.xml');
+$doc->load(__DIR__ . '/../samples/rendering/itemfeedback_1.xml');
 
 $outcome1 = new OutcomeVariable('FEEDBACK', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier(''));
 $renderer = new XhtmlRenderingEngine();

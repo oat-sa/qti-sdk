@@ -5,12 +5,12 @@ use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 $iterations = (int)$argv[1];
 
 $doc = new XmlCompactDocument();
-$doc->load(dirname(__FILE__) . '/../samples/custom/runtime/selection_single_section.xml');
+$doc->load(__DIR__ . '/../samples/custom/runtime/selection_single_section.xml');
 
 $sectionsDistribution = [];
 

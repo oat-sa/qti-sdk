@@ -22,10 +22,10 @@ class BranchRuleMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('branchRule', $element->nodeName);
-        $this->assertEquals('baseValue', $element->getElementsByTagName('baseValue')->item(0)->nodeName);
-        $this->assertEquals($target, $element->getAttribute('target'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('branchRule', $element->nodeName);
+        $this::assertEquals('baseValue', $element->getElementsByTagName('baseValue')->item(0)->nodeName);
+        $this::assertEquals($target, $element->getAttribute('target'));
     }
 
     public function testUnmarshall()
@@ -43,8 +43,8 @@ class BranchRuleMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(BranchRule::class, $component);
-        $this->assertEquals('target1', $component->getTarget());
-        $this->assertInstanceOf(BaseValue::class, $component->getExpression());
+        $this::assertInstanceOf(BranchRule::class, $component);
+        $this::assertEquals('target1', $component->getTarget());
+        $this::assertInstanceOf(BaseValue::class, $component->getExpression());
     }
 }

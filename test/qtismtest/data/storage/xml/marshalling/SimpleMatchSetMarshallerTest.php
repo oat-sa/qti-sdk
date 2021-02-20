@@ -30,7 +30,7 @@ class SimpleMatchSetMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<simpleMatchSet><simpleAssociableChoice identifier="choice1" matchMax="1">This is choice1</simpleAssociableChoice><simpleAssociableChoice identifier="choice2" matchMax="2" matchMin="1">This is choice2</simpleAssociableChoice></simpleMatchSet>', $dom->saveXML($element));
+        $this::assertEquals('<simpleMatchSet><simpleAssociableChoice identifier="choice1" matchMax="1">This is choice1</simpleAssociableChoice><simpleAssociableChoice identifier="choice2" matchMax="2" matchMin="1">This is choice2</simpleAssociableChoice></simpleMatchSet>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -42,9 +42,9 @@ class SimpleMatchSetMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(SimpleMatchSet::class, $component);
+        $this::assertInstanceOf(SimpleMatchSet::class, $component);
 
         $choices = $component->getSimpleAssociableChoices();
-        $this->assertEquals(2, count($choices));
+        $this::assertCount(2, $choices);
     }
 }

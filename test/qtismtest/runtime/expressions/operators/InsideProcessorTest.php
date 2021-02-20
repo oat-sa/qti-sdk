@@ -31,8 +31,8 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor = new InsideProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $point = new QtiPoint(-1, -1); // -1, -1 is outside.
         $operands = new OperandsCollection([$point]);
@@ -40,8 +40,8 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor->setExpression($expression);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testPoly()
@@ -53,8 +53,8 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor = new InsideProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $point = new QtiPoint(10, 9); // 10, 9 is outside.
         $operands = new OperandsCollection([$point]);
@@ -62,8 +62,8 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor->setExpression($expression);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testCircle()
@@ -75,8 +75,8 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor = new InsideProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $point = new QtiPoint(1, 1); // 1,1 is outside
         $operands = new OperandsCollection([$point]);
@@ -84,8 +84,8 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor->setExpression($expression);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testNull()
@@ -96,7 +96,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([$point]);
         $processor = new InsideProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseTypeOne()
@@ -160,8 +160,8 @@ class InsideProcessorTest extends QtiSmTestCase
      */
     public function createFakeExpression($point = null, QtiCoords $coords = null)
     {
-        $point = (is_null($point) || !$point instanceof QtiPoint) ? new QtiPoint(2, 2) : $point;
-        $coords = (is_null($coords)) ? new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]) : $coords;
+        $point = ($point === null || !$point instanceof QtiPoint) ? new QtiPoint(2, 2) : $point;
+        $coords = ($coords === null) ? new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]) : $coords;
 
         return $this->createComponentFromXml('
 			<inside shape="' . QtiShape::getNameByConstant($coords->getShape()) . '" coords="' . $coords . '">

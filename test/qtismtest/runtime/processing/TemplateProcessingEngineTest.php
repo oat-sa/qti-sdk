@@ -45,7 +45,7 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
         $engine = new TemplateProcessingEngine($component, $state);
         $engine->process();
 
-        $this->assertEquals(1337, $state['TEMPLATE']->getValue());
+        $this::assertEquals(1337, $state['TEMPLATE']->getValue());
     }
 
     /**
@@ -72,7 +72,7 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
         $engine = new TemplateProcessingEngine($component, $state);
         $engine->process();
 
-        $this->assertEquals(1336, $state['TEMPLATE']->getValue());
+        $this::assertEquals(1336, $state['TEMPLATE']->getValue());
     }
 
     /**
@@ -105,6 +105,6 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
         $engine = new TemplateProcessingEngine($component, $state);
         $engine->process();
 
-        $this->assertEquals(-1, $state['TEMPLATE']->getValue());
+        $this::assertEquals(-1, $state['TEMPLATE']->getValue());
     }
 }

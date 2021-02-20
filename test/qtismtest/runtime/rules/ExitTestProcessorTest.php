@@ -20,9 +20,9 @@ class ExitTestProcessorTest extends QtiSmTestCase
             $processor->process();
 
             // An exception must always be raised!
-            $this->assertTrue(false);
+            $this::assertTrue(false);
         } catch (RuleProcessingException $e) {
-            $this->assertEquals(RuleProcessingException::EXIT_TEST, $e->getCode());
+            $this::assertEquals(RuleProcessingException::EXIT_TEST, $e->getCode());
         }
     }
 }

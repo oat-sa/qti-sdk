@@ -25,11 +25,11 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('areaMapEntry', $element->nodeName);
-        $this->assertEquals('rect', $element->getAttribute('shape'));
-        $this->assertEquals('0,20,100,0', $element->getAttribute('coords'));
-        $this->assertEquals('1.337', $element->getAttribute('mappedValue'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('areaMapEntry', $element->nodeName);
+        $this::assertEquals('rect', $element->getAttribute('shape'));
+        $this::assertEquals('0,20,100,0', $element->getAttribute('coords'));
+        $this::assertEquals('1.337', $element->getAttribute('mappedValue'));
     }
 
     public function testUnmarshall()
@@ -41,12 +41,12 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(AreaMapEntry::class, $component);
-        $this->assertInstanceOf(QtiCoords::class, $component->getCoords());
-        $this->assertEquals([0, 20, 100, 0], $component->getCoords()->getArrayCopy());
-        $this->assertEquals(QtiShape::RECT, $component->getShape());
-        $this->assertIsFloat($component->getMappedValue());
-        $this->assertEquals(1.337, $component->getMappedValue());
+        $this::assertInstanceOf(AreaMapEntry::class, $component);
+        $this::assertInstanceOf(QtiCoords::class, $component->getCoords());
+        $this::assertEquals([0, 20, 100, 0], $component->getCoords()->getArrayCopy());
+        $this::assertEquals(QtiShape::RECT, $component->getShape());
+        $this::assertIsFloat($component->getMappedValue());
+        $this::assertEquals(1.337, $component->getMappedValue());
     }
 
     /**

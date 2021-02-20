@@ -18,7 +18,7 @@ class ExitTemplateMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<exitTemplate/>', $dom->saveXML($element));
+        $this::assertEquals('<exitTemplate/>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -26,6 +26,6 @@ class ExitTemplateMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<exitTemplate/>');
 
         $exitTemplate = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(ExitTemplate::class, $exitTemplate);
+        $this::assertInstanceOf(ExitTemplate::class, $exitTemplate);
     }
 }
