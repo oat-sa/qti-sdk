@@ -15,14 +15,14 @@ class TrackCollectionTest extends QtiSmTestCase
 
         $track = new Track($src);
         $subject = new TrackCollection([$track]);
-            
+
         self::assertSame([$track], $subject->getArrayCopy());
     }
 
     public function testCheckWithInvalidObject(): void
     {
         $nonSource = 12;
-        
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("TrackCollection only accepts to store Track objects, '" . gettype($nonSource) . "' given.");
 

@@ -16,14 +16,14 @@ class SourceCollectionTest extends QtiSmTestCase
 
         $source = new Source($src, $type);
         $subject = new SourceCollection([$source]);
-            
+
         self::assertSame([$source], $subject->getArrayCopy());
     }
 
     public function testCheckWithInvalidObject(): void
     {
         $nonSource = 12;
-        
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("SourceCollection only accepts to store Source objects, '" . gettype($nonSource) . "' given.");
 

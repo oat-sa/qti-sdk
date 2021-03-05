@@ -33,11 +33,20 @@ use qtism\data\QtiComponentCollection;
 abstract class Html5Media extends Html5Element
 {
     /**
-     * Contains the collection of sources and tracks.
+     * Contains the collection of sources.
      *
      * @var QtiComponentCollection
+     * @qtism-bean-property
      */
-    private $components;
+    private $sources;
+
+    /**
+     * Contains the collection of tracks.
+     *
+     * @var QtiComponentCollection
+     * @qtism-bean-property
+     */
+    private $tracks;
 
     /**
      * The 'autoplay' characteristic is a boolean. When present, the user agent
@@ -166,7 +175,8 @@ abstract class Html5Media extends Html5Element
         $this->setMuted($muted);
         $this->setPreload($preload);
         $this->setSrc($src);
-        $this->components = new QtiComponentCollection();
+        $this->sources = new QtiComponentCollection();
+        $this->tracks = new QtiComponentCollection();
     }
 
     /**
@@ -174,7 +184,12 @@ abstract class Html5Media extends Html5Element
      */
     public function getComponents(): QtiComponentCollection
     {
-        return $this->components;
+        $comp = array_merge(
+            $this->sources->getArrayCopy(),
+            $this->tracks->getArrayCopy()
+        );
+
+        return new QtiComponentCollection($comp);
     }
 
     /**
@@ -184,7 +199,7 @@ abstract class Html5Media extends Html5Element
      */
     public function addSource(Source $source): void
     {
-        $this->components->attach($source);
+        $this->sources->attach($source);
     }
 
     /**
@@ -194,7 +209,7 @@ abstract class Html5Media extends Html5Element
      */
     public function addTrack(Track $track): void
     {
-        $this->components->attach($track);
+        $this->tracks->attach($track);
     }
 
     public function setAutoPlay($autoPlay): void

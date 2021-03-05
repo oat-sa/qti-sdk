@@ -30,20 +30,20 @@ class VideoTest extends QtiSmTestCase
         self::assertEquals(0, $subject->getWidth());
     }
 
-    public function testSetPoster():void
+    public function testSetPoster(): void
     {
         $poster = 'http://example.com/poster.jpg';
         $subject = new Video();
 
         self::assertFalse($subject->hasPoster());
         self::assertEquals('', $subject->getPoster());
-        
+
         $subject->setPoster($poster);
         self::assertTrue($subject->hasPoster());
         self::assertEquals($poster, $subject->getPoster());
     }
-    
-    public function testSetPosterWithNonString():void
+
+    public function testSetPosterWithNonString(): void
     {
         $wrongPoster = [];
 
@@ -53,7 +53,7 @@ class VideoTest extends QtiSmTestCase
         (new Video())->setPoster($wrongPoster);
     }
 
-    public function testSetPosterWithNonUri():void
+    public function testSetPosterWithNonUri(): void
     {
         $wrongPoster = '';
 
@@ -63,20 +63,20 @@ class VideoTest extends QtiSmTestCase
         (new Video())->setPoster($wrongPoster);
     }
 
-    public function testSetHeight():void
+    public function testSetHeight(): void
     {
         $height = 1012;
         $subject = new Video();
 
         self::assertFalse($subject->hasHeight());
         self::assertEquals(0, $subject->getHeight());
-        
+
         $subject->setHeight($height);
         self::assertTrue($subject->hasHeight());
         self::assertEquals($height, $subject->getHeight());
     }
-    
-    public function testSetHeightWithNonInteger():void
+
+    public function testSetHeightWithNonInteger(): void
     {
         $wrongHeight = 'foo';
 
@@ -86,7 +86,7 @@ class VideoTest extends QtiSmTestCase
         (new Video())->setHeight($wrongHeight);
     }
 
-    public function testSetHeightWithNegativeInteger():void
+    public function testSetHeightWithNegativeInteger(): void
     {
         $wrongHeight = -12;
 
@@ -95,21 +95,21 @@ class VideoTest extends QtiSmTestCase
 
         (new Video())->setHeight($wrongHeight);
     }
- 
-    public function testSetWidth():void
+
+    public function testSetWidth(): void
     {
         $width = 1012;
         $subject = new Video();
 
         self::assertFalse($subject->hasWidth());
         self::assertEquals(0, $subject->getWidth());
-        
+
         $subject->setWidth($width);
         self::assertTrue($subject->hasWidth());
         self::assertEquals($width, $subject->getWidth());
     }
-    
-    public function testSetWidthWithNonInteger():void
+
+    public function testSetWidthWithNonInteger(): void
     {
         $wrongWidth = 'foo';
 
@@ -119,7 +119,7 @@ class VideoTest extends QtiSmTestCase
         (new Video())->setWidth($wrongWidth);
     }
 
-    public function testSetWidthWithNegativeInteger():void
+    public function testSetWidthWithNegativeInteger(): void
     {
         $wrongWidth = -12;
 
@@ -128,8 +128,8 @@ class VideoTest extends QtiSmTestCase
 
         (new Video())->setWidth($wrongWidth);
     }
-    
-    public function testGetQtiClassName():void
+
+    public function testGetQtiClassName(): void
     {
         $subject = new Video();
 

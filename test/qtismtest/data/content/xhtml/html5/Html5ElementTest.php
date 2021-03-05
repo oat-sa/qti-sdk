@@ -3,8 +3,8 @@
 namespace qtismtest\data\content\xhtml\html5;
 
 use InvalidArgumentException;
-use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\content\enums\Role;
+use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponentCollection;
 use qtismtest\QtiSmTestCase;
 
@@ -20,7 +20,7 @@ class Html5ElementTest extends QtiSmTestCase
     public function testCreateWithValidTitle(): void
     {
         $title = 'a title';
-            
+
         $subject = new fakeHtml5Element($title);
         self::assertEquals($title, $subject->getTitle());
     }
@@ -106,7 +106,7 @@ class Html5ElementTest extends QtiSmTestCase
     public function testCreateWithNonIntegerRole(): void
     {
         $wrongRole = 'foo';
-        
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The "role" argument must be a value from the Role enumeration, "' . $wrongRole . '" given.');
 

@@ -4,8 +4,8 @@ namespace qtismtest\data\content\xhtml\html5;
 
 use InvalidArgumentException;
 use qtism\data\content\enums\CrossOrigin;
-use qtism\data\content\xhtml\html5\Html5Media;
 use qtism\data\content\enums\Preload;
+use qtism\data\content\xhtml\html5\Html5Media;
 use qtism\data\content\xhtml\html5\Source;
 use qtism\data\content\xhtml\html5\Track;
 use qtism\data\QtiComponentCollection;
@@ -29,13 +29,17 @@ class Html5MediaTest extends QtiSmTestCase
         self::assertFalse($subject->hasControls());
         self::assertFalse($subject->getControls());
         self::assertFalse($subject->hasCrossOrigin());
-        self::assertEmpty($subject->getCrossOrigin());
+        self::assertSame(CrossOrigin::getDefault(), $subject->getCrossOrigin());
         self::assertFalse($subject->hasLoop());
         self::assertFalse($subject->getLoop());
+        self::assertFalse($subject->hasMediaGroup());
+        self::assertSame('', $subject->getMediaGroup());
         self::assertFalse($subject->hasMuted());
         self::assertFalse($subject->getMuted());
+        self::assertFalse($subject->hasPreload());
+        self::assertSame(Preload::getDefault(), $subject->getPreload());
         self::assertFalse($subject->hasSrc());
-        self::assertEmpty($subject->getSrc());
+        self::assertSame('', $subject->getSrc());
     }
 
     public function testAddSource(): void
@@ -44,17 +48,11 @@ class Html5MediaTest extends QtiSmTestCase
         $source = new Source($src);
 
         $subject = new FakeHtml5Media();
-
-        $components = $subject->getComponents();
-        self::assertCount(0, $components);
-
         $subject->addSource($source);
 
         $components = $subject->getComponents();
         self::assertCount(1, $components);
-        $component = $components[0];
-        self::assertInstanceOf(Source::class, $component);
-        self::assertEquals($src, $component->getSrc());
+        self::assertSame($source, $components[0]);
     }
 
     public function testAddTrack(): void
@@ -63,17 +61,27 @@ class Html5MediaTest extends QtiSmTestCase
         $track = new Track($src);
 
         $subject = new FakeHtml5Media();
-
-        $components = $subject->getComponents();
-        self::assertCount(0, $components);
-
         $subject->addTrack($track);
 
         $components = $subject->getComponents();
         self::assertCount(1, $components);
-        $component = $components[0];
-        self::assertInstanceOf(Track::class, $component);
-        self::assertEquals($src, $component->getSrc());
+        self::assertSame($track, $components[0]);
+    }
+
+    public function testAddSourceAndTrack(): void
+    {
+        $src = 'http://example.com/';
+        $source = new Source($src);
+        $track = new Track($src);
+
+        $subject = new FakeHtml5Media();
+        $subject->addTrack($track);
+        $subject->addSource($source);
+
+        $components = $subject->getComponents();
+        self::assertCount(2, $components);
+        self::assertSame($source, $components[0]);
+        self::assertSame($track, $components[1]);
     }
 
     public function testSetters(): void
@@ -85,7 +93,7 @@ class Html5MediaTest extends QtiSmTestCase
         $mediaGroup = 'any normalized string';
         $muted = true;
         $src = 'http://example.com/';
-        
+
         $subject = new FakeHtml5Media();
         $subject->setAutoPlay($autoplay);
         $subject->setControls($controls);
