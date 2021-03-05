@@ -40,8 +40,10 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
      *
      * @param DOMElement $element The element from where the attribute values will be
      * @param BodyElement $bodyElement The bodyElement to be fill.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
-    protected function fillElement(DOMElement $element, BodyElement $bodyElement)
+    protected function fillElement(DOMElement $element, BodyElement $bodyElement): void
     {
         /** @var Html5Media $bodyElement */
 
@@ -77,6 +79,16 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
             $this->setDOMElementAttribute($element, 'src', $bodyElement->getSrc());
         }
 
+        foreach ($bodyElement->getSources() as $source) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($source);
+            $element->appendChild($marshaller->marshall($source));
+        }
+
+        foreach ($bodyElement->getTracks() as $track) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($track);
+            $element->appendChild($marshaller->marshall($track));
+        }
+
         parent::fillElement($element, $bodyElement);
     }
 
@@ -95,9 +107,10 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
      * @param DOMElement $element The DOMElement object from where the attribute values must be retrieved.
      * @throws UnmarshallingException If one of the attributes of $element is not valid.
      */
-    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element)
+    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element): void
     {
         if (Version::compare($this->getVersion(), '2.2.0', '>=') === true) {
+            /** @var Html5Media $bodyElement */
             $autoplay = $this->getDOMElementAttributeAs($element, 'autoplay', 'boolean');
             $bodyElement->setAutoplay($autoplay);
 
@@ -121,6 +134,18 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
 
             $src = $this->getDOMElementAttributeAs($element, 'src');
             $bodyElement->setSrc($src);
+
+            $sourceElements = $this->getChildElementsByTagName($element, 'source');
+            foreach ($sourceElements as $sourceElement) {
+                $marshaller = $this->getMarshallerFactory()->createMarshaller($sourceElement);
+                $bodyElement->addSource($marshaller->unmarshall($sourceElement));
+            }
+
+            $trackElements = $this->getChildElementsByTagName($element, 'track');
+            foreach ($trackElements as $trackElement) {
+                $marshaller = $this->getMarshallerFactory()->createMarshaller($trackElement);
+                $bodyElement->addTrack($marshaller->unmarshall($trackElement));
+            }
         }
 
         parent::fillBodyElement($bodyElement, $element);

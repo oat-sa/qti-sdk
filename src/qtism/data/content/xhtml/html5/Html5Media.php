@@ -35,7 +35,7 @@ abstract class Html5Media extends Html5Element
     /**
      * Contains the collection of sources.
      *
-     * @var QtiComponentCollection
+     * @var SourceCollection
      * @qtism-bean-property
      */
     private $sources;
@@ -43,7 +43,7 @@ abstract class Html5Media extends Html5Element
     /**
      * Contains the collection of tracks.
      *
-     * @var QtiComponentCollection
+     * @var TrackCollection
      * @qtism-bean-property
      */
     private $tracks;
@@ -175,13 +175,10 @@ abstract class Html5Media extends Html5Element
         $this->setMuted($muted);
         $this->setPreload($preload);
         $this->setSrc($src);
-        $this->sources = new QtiComponentCollection();
-        $this->tracks = new QtiComponentCollection();
+        $this->sources = new SourceCollection();
+        $this->tracks = new TrackCollection();
     }
 
-    /**
-     * @return QtiComponentCollection
-     */
     public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
@@ -192,24 +189,24 @@ abstract class Html5Media extends Html5Element
         return new QtiComponentCollection($comp);
     }
 
-    /**
-     * Adds a source element.
-     *
-     * @param Source $source
-     */
     public function addSource(Source $source): void
     {
         $this->sources->attach($source);
     }
 
-    /**
-     * Adds a track element.
-     *
-     * @param Track $track
-     */
+    public function getSources(): SourceCollection
+    {
+        return $this->sources;
+    }
+
     public function addTrack(Track $track): void
     {
         $this->tracks->attach($track);
+    }
+
+    public function getTracks(): TrackCollection
+    {
+        return $this->tracks;
     }
 
     public function setAutoPlay($autoPlay): void
@@ -302,7 +299,7 @@ abstract class Html5Media extends Html5Element
         return $this->muted !== false;
     }
 
-   public function setPreload($preload = null): void
+    public function setPreload($preload = null): void
     {
         $this->preload = Preload::accept($preload, 'preload');
     }
