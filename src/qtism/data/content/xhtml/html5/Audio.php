@@ -23,6 +23,8 @@
 
 namespace qtism\data\content\xhtml\html5;
 
+use qtism\data\content\BlockStatic;
+
 /**
  * Html 5 Audio element.
  * An audio element represents a sound or audio stream. User agents should not
@@ -31,7 +33,7 @@ namespace qtism\data\content\xhtml\html5;
  * text to the users of these older browsers informing them of how to access
  * the audio contents.
  */
-class Audio extends Html5Media
+class Audio extends Html5Media implements BlockStatic
 {
     public function getQtiClassName(): string
     {
