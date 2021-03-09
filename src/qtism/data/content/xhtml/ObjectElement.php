@@ -29,6 +29,7 @@ use qtism\data\content\BodyElement;
 use qtism\data\content\FlowStatic;
 use qtism\data\content\FlowTrait;
 use qtism\data\content\InlineStatic;
+use qtism\data\content\interactions\Media;
 use qtism\data\content\ObjectFlowCollection;
 use qtism\data\QtiComponentCollection;
 
@@ -37,7 +38,7 @@ use qtism\data\QtiComponentCollection;
  *
  * The object QTI class.
  */
-class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
+class ObjectElement extends BodyElement implements FlowStatic, InlineStatic, Media
 {
     use FlowTrait;
 

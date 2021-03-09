@@ -24,12 +24,13 @@
 namespace qtism\data\content\xhtml\html5;
 
 use qtism\data\content\BlockStatic;
+use qtism\data\content\interactions\Media;
 
 /**
  * Html 5 Video element used for playing videos or movies, and audio files with
  * captions.
  */
-class Video extends Html5Media implements BlockStatic
+class Video extends Html5Media implements BlockStatic, Media
 {
     /**
      * The 'poster' characteristic gives the address of an image file that the
