@@ -80,6 +80,32 @@ class ImgMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<img src="my/image.png" alt="An Image..." id="my-img" aria-flowsto="IDREF2" aria-owns="IDREF"/>', $dom->saveXML($element));
     }
 
+    public function testMarshall223()
+    {
+        $img = new Img('my/image.png', 'An Image...', 'my-img');
+
+        // aria-* attributes are NOT ignored in QTI 2.2.1
+        $img->setAriaOwns('IDREF');
+        $img->setAriaHidden(true);
+
+        // In QTI >= 2.2.3 aria-flowsto is corrected, back to normal aria-flowto.
+        $img->setAriaFlowTo('IDREF2');
+
+        $marshaller = $this->getMarshallerFactory('2.2.3')->createMarshaller($img);
+        $element = $marshaller->marshall($img);
+
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->importNode($element, true);
+        $this::assertEquals('<img src="my/image.png" alt="An Image..." id="my-img" aria-flowto="IDREF2" aria-owns="IDREF" aria-hidden="true"/>', $dom->saveXML($element));
+
+        // In case of aria-hidden is false, it is not rendered.
+        $img->setAriaHidden(false);
+        $element = $marshaller->marshall($img);
+        $element = $dom->importNode($element, true);
+
+        $this::assertEquals('<img src="my/image.png" alt="An Image..." id="my-img" aria-flowto="IDREF2" aria-owns="IDREF"/>', $dom->saveXML($element));
+    }
+
     public function testUnmarshall21()
     {
         $element = $this->createDOMElement('
