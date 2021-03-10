@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" identifier="choice" title="Unattended Luggage" timeDependent="false" adaptive="false" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 https://purl.imsglobal.org/spec/qti/v2p2/schema/xsd/imsqti_v2p2p4.xsd">
+  <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+    <correctResponse>
+      <value>ChoiceA</value>
+    </correctResponse>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <p>Look at the text in the picture.</p>
+    <p>
+      <img src="images/sign.png" alt="NEVER LEAVE LUGGAGE UNATTENDED"/>
+    </p>
+    <choiceInteraction responseIdentifier="RESPONSE" maxChoices="1">
+      <prompt>What does it say?</prompt>
+      <simpleChoice identifier="ChoiceA">You must stay with your luggage at all times.</simpleChoice>
+      <simpleChoice identifier="ChoiceB">Do not let someone else look after your luggage.</simpleChoice>
+      <simpleChoice identifier="ChoiceC">Remember your luggage when you leave.</simpleChoice>
+    </choiceInteraction>
+  </itemBody>
+  <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+</assessmentItem>
