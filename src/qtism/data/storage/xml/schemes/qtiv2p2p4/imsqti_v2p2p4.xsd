@@ -1,4 +1,4 @@
-<?xml version = "1.1" encoding = "UTF-8"?>
+<?xml version = "1.0" encoding = "UTF-8"?>
 <xs:schema xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
      targetNamespace="http://www.imsglobal.org/xsd/imsqti_v2p2"
      xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -12,13 +12,13 @@
      version="IMS QTI ASI 2.2.4"
      elementFormDefault="qualified"
      attributeFormDefault="unqualified">
-    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="../w3/xml.xsd" />
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="https://purl.imsglobal.org/spec/w3/2001/schema/xsd/xml.xsd" />
     <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="https://www.imsglobal.org/xsd/w3/2001/XInclude.xsd" />
     <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd" />
-    <xs:import namespace="http://www.imsglobal.org/xsd/apip/apipv1p0/imsapip_qtiv1p0" schemaLocation="../apipv1p0/apipv1p0_qtiextv2p2_v1p0p1.xsd" />
-    <xs:import namespace="http://www.w3.org/2010/Math/MathML" schemaLocation="../w3/mathml3/mathml3.xsd" />
-    <xs:import namespace="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" schemaLocation="../qtiv2p2p4/imsqtiv2p2p4_html5_v1p0.xsd" />
-    <xs:import namespace="http://www.w3.org/2010/10/synthesis" schemaLocation="../w3/ssml11/ssmlv1p1-core.xsd" />
+    <xs:import namespace="http://www.imsglobal.org/xsd/apip/apipv1p0/imsapip_qtiv1p0" schemaLocation="https://www.imsglobal.org/profile/apip/apipv1p0/apipv1p0_qtiextv2p2_v1p0p1.xsd" />
+    <xs:import namespace="http://www.w3.org/2010/Math/MathML" schemaLocation="https://www.imsglobal.org/xsd/w3/Math/XMLSchema/mathml3/mathml3.xsd" />
+    <xs:import namespace="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" schemaLocation="https://purl.imsglobal.org/spec/qti/v2p2/schema/xsd/imsqtiv2p2p4_html5_v1p0.xsd" />
+    <xs:import namespace="http://www.w3.org/2010/10/synthesis" schemaLocation="https://www.imsglobal.org/xsd/w3/2010/ssmlv1p1-core.xsd" />
 
     <xs:annotation>
         <xs:documentation>
