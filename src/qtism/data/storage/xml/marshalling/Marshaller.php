@@ -33,6 +33,7 @@ use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\Utils as XmlUtils;
+use qtism\data\storage\xml\versions\QtiVersion;
 use RuntimeException;
 
 /**
@@ -266,7 +267,7 @@ abstract class Marshaller
      *
      * @param MarshallerFactory $marshallerFactory A MarshallerFactory object.
      */
-    public function setMarshallerFactory(MarshallerFactory $marshallerFactory = null)
+    public function setMarshallerFactory(MarshallerFactory $marshallerFactory): void
     {
         $this->marshallerFactory = $marshallerFactory;
     }
@@ -278,10 +279,11 @@ abstract class Marshaller
      *
      * @return MarshallerFactory A MarshallerFactory object.
      */
-    public function getMarshallerFactory()
+    public function getMarshallerFactory(): MarshallerFactory
     {
         if ($this->marshallerFactory === null) {
-            $this->setMarshallerFactory(new Qti21MarshallerFactory());
+            $version = QtiVersion::create($this->version);
+            $this->marshallerFactory = $version->getMarshallerFactory();
         }
 
         return $this->marshallerFactory;

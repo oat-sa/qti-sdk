@@ -27,6 +27,7 @@ namespace qtism\data\storage\xml\versions;
 use DOMDocument;
 use InvalidArgumentException;
 use qtism\common\utils\Version;
+use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\Utils;
 use qtism\data\storage\xml\XmlStorageException;
 
@@ -177,11 +178,9 @@ class QtiVersion extends Version
         return static::XSD;
     }
 
-    /**
-     * @return string
-     */
-    public function getMarshallerFactoryClass(): string
+    public function getMarshallerFactory(): MarshallerFactory
     {
-        return static::MARSHALLER_FACTORY;
+        $factoryClass = static::MARSHALLER_FACTORY;
+        return new $factoryClass();
     }
 }
