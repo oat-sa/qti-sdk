@@ -637,15 +637,9 @@ class XmlDocument extends QtiDocument
         return $formattedErrors;
     }
 
-    /**
-     * MarshallerFactory factory method (see gang of four).
-     *
-     * @return MarshallerFactory An appropriate MarshallerFactory object.
-     */
-    protected function createMarshallerFactory()
+    protected function createMarshallerFactory(): MarshallerFactory
     {
-        $class = $this->version->getMarshallerFactoryClass();
-        return new $class();
+        return $this->version->getMarshallerFactory();
     }
 
     /**

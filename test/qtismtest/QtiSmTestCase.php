@@ -9,16 +9,10 @@ use DOMElement;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
-use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
-use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
-use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
+use qtism\data\storage\xml\versions\QtiVersion;
 
 /**
  * Class QtiSmTestCase
@@ -101,27 +95,10 @@ abstract class QtiSmTestCase extends TestCase
         $this->outputFileSystem = $filesystem;
     }
 
-    /**
-     * @param string $version
-     * @return MarshallerFactory
-     */
-    public function getMarshallerFactory($version = '2.1')
+    public function getMarshallerFactory(string $versionNumber = '2.1'): MarshallerFactory
     {
-        if (Version::compare($version, '2.0.0', '==') === true) {
-            return new Qti20MarshallerFactory();
-        } elseif (Version::compare($version, '2.1.1', '==') === true) {
-            return new Qti211MarshallerFactory();
-        } elseif (Version::compare($version, '2.2.0', '==') === true) {
-            return new Qti22MarshallerFactory();
-        } elseif (Version::compare($version, '2.2.1', '==') === true) {
-            return new Qti221MarshallerFactory();
-        } elseif (Version::compare($version, '2.2.2', '==') === true) {
-            return new Qti222MarshallerFactory();
-        } elseif (Version::compare($version, '3.0.0', '==') === true) {
-            return new Qti30MarshallerFactory();
-        } else {
-            return new Qti21MarshallerFactory();
-        }
+        $version = QtiVersion::create($versionNumber);
+        return $version->getMarshallerFactory();
     }
 
     /**
