@@ -86,7 +86,6 @@ abstract class MarshallerFactory
         $this->addMappingEntry('assessmentTest', AssessmentTestMarshaller::class);
         $this->addMappingEntry('associableHotspot', HotspotMarshaller::class);
         $this->addMappingEntry('associateInteraction', AssociateInteractionMarshaller::class);
-        $this->addMappingEntry('audio', AudioMarshaller::class);
         $this->addMappingEntry('b', SimpleInlineMarshaller::class);
         $this->addMappingEntry('baseValue', BaseValueMarshaller::class);
         $this->addMappingEntry('big', SimpleInlineMarshaller::class);
@@ -256,7 +255,6 @@ abstract class MarshallerFactory
         $this->addMappingEntry('simpleMatchSet', SimpleMatchSetMarshaller::class);
         $this->addMappingEntry('sliderInteraction', SliderInteractionMarshaller::class);
         $this->addMappingEntry('small', SimpleInlineMarshaller::class);
-        $this->addMappingEntry('source', SourceMarshaller::class);
         $this->addMappingEntry('span', SimpleInlineMarshaller::class);
         $this->addMappingEntry('statsOperator', StatsOperatorMarshaller::class);
         $this->addMappingEntry('stringMatch', StringMatchMarshaller::class);
@@ -292,7 +290,6 @@ abstract class MarshallerFactory
         $this->addMappingEntry('thead', TablePartMarshaller::class);
         $this->addMappingEntry('timeLimits', TimeLimitsMarshaller::class);
         $this->addMappingEntry('tr', TrMarshaller::class);
-        $this->addMappingEntry('track', TrackMarshaller::class);
         $this->addMappingEntry('truncate', OperatorMarshaller::class);
         $this->addMappingEntry('tt', SimpleInlineMarshaller::class);
         $this->addMappingEntry('ul', ListMarshaller::class);
@@ -302,7 +299,6 @@ abstract class MarshallerFactory
         $this->addMappingEntry('variable', VariableMarshaller::class);
         $this->addMappingEntry('variableDeclaration', VariableDeclarationMarshaller::class);
         $this->addMappingEntry('variableMapping', VariableMappingMarshaller::class);
-        $this->addMappingEntry('video', VideoMarshaller::class);
         $this->addMappingEntry('weight', WeightMarshaller::class);
     }
 

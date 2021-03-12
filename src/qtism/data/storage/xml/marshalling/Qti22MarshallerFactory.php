@@ -40,6 +40,10 @@ class Qti22MarshallerFactory extends MarshallerFactory
     {
         parent::__construct();
         $this->addMappingEntry('bdo', SimpleInlineMarshaller::class);
+        $this->addMappingEntry('audio', AudioMarshaller::class);
+        $this->addMappingEntry('source', SourceMarshaller::class);
+        $this->addMappingEntry('track', TrackMarshaller::class);
+        $this->addMappingEntry('video', VideoMarshaller::class);
     }
 
     /**
