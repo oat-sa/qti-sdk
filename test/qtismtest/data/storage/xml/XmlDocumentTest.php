@@ -272,7 +272,7 @@ class XmlDocumentTest extends QtiSmTestCase
 
     public function testInvalidAgainstXMLSchema()
     {
-        $xsdLocation = realpath(__DIR__ . '/../../../../../') . '/qtism/data/storage/xml/versions/../schemes/qtiv2p1/imsqti_v2p1.xsd';
+        $xsdLocation = realpath(__DIR__ . '/../../../../../qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
         $expectedMsg = "The document could not be validated with XML Schema '$xsdLocation':\n";
         $expectedMsg .= "Error: Element '{http://www.imsglobal.org/xsd/imsqti_v2p1}responseDeclaration', attribute 'foo': The attribute 'foo' is not allowed. at 9:0.";
         $this->expectException(XmlStorageException::class);

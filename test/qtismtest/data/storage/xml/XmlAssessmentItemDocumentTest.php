@@ -548,22 +548,29 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     /**
      * @dataProvider invalidVersionForMultipleMimeTypesInUploadInteraction
      * @param string $version
+     * @param string $path
      * @throws XmlStorageException
      */
-    public function testInvalidMultipleMimeTypesInUploadInteraction(string $version): void
+    public function testInvalidMultipleMimeTypesInUploadInteraction(string $version, string $path): void
     {
         $uri = self::decorateUri('uploadinteraction-with-multiple-mime-types.xml', $version);
         $doc = new XmlDocument();
 
         $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessage(
+            sprintf("The document could not be validated with XML Schema '%s':\nError: Element '{http://www.imsglobal.org/xsd/imsqti_v2p2}uploadInteraction', attribute 'type': [facet 'pattern'] The value 'application/pdf image/jpeg image/png' is not accepted by the pattern '%s'. at 10:0.",
+                realpath(__DIR__ . '/../../../../../qtism/data/storage/xml/schemes/' . $path . '.xsd'),
+                '[\p{IsBasicLatin}-[()<>@,;:\\\\"/\[\]?=]]+/[\p{IsBasicLatin}-[()<>@,;:\\\\"/\[\]?=]]+'
+            )
+        );
         $doc->load($uri, true);
     }
 
     public function invalidVersionForMultipleMimeTypesInUploadInteraction()
     {
         return [
-            ['2.2.3'],
-            ['2.2.2'],
+            ['2.2.3', 'qtiv2p2p3/imsqti_v2p2p3'],
+            ['2.2.2', 'qtiv2p2p2/imsqti_v2p2p2'],
         ];
     }
 
