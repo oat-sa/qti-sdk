@@ -15,7 +15,7 @@
     <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="../w3/mathml2/mathml2.xsd" />
     <xs:import namespace="http://www.w3.org/2010/Math/MathML" schemaLocation="../w3/mathml3/mathml3.xsd" />
     <xs:import namespace="http://www.imsglobal.org/xsd/imsqti_v2p2" schemaLocation="../qtiv2p2p4/imsqti_v2p2p4.xsd" />
-    <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="https://www.imsglobal.org/xsd/w3/2001/XInclude.xsd" />
+    <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="../w3/XInclude.xsd" />
     <xs:import namespace="http://www.w3.org/2010/10/synthesis" schemaLocation="../w3/ssml11/ssmlv1p1-core.xsd" />
 
     <xs:annotation>
