@@ -172,17 +172,11 @@ class FakeHtml5MediaMarshaller extends Html5MediaMarshaller
         }
     }
 
-    protected function marshall(QtiComponent $component)
-    {
-        $element = self::getDOMCradle()->createElement('media');
-        $this->fillElement($element, $component);
-        return $element;
-    }
-
     /**
      * @param DOMElement $element
      * @return QtiComponent
      * @throws UnmarshallingException
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {

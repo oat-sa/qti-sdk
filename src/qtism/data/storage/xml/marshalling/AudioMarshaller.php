@@ -35,26 +35,12 @@ use qtism\data\QtiComponent;
 class AudioMarshaller extends Html5MediaMarshaller
 {
     /**
-     * Marshall an Audio object into a DOMElement object.
-     *
-     * @param QtiComponent $component A Video object.
-     * @return DOMElement The according DOMElement object.
-     */
-    protected function marshall(QtiComponent $component)
-    {
-        $element = self::getDOMCradle()->createElement('audio');
-
-        $this->fillElement($element, $component);
-
-        return $element;
-    }
-
-    /**
      * Unmarshall a DOMElement object corresponding to an HTML 5 audio element.
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An Audio object.
      * @throws UnmarshallingException
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {

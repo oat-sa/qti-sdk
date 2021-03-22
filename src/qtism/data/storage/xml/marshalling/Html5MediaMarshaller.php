@@ -29,6 +29,7 @@ use qtism\data\content\BodyElement;
 use qtism\data\content\enums\CrossOrigin;
 use qtism\data\content\enums\Preload;
 use qtism\data\content\xhtml\html5\Html5Media;
+use qtism\data\QtiComponent;
 
 /**
  * Marshalling/Unmarshalling implementation for generic Html5.
@@ -38,62 +39,64 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
     /**
      * Fill $element with the attributes of $bodyElement.
      *
-     * @param DOMElement $element The element from where the attribute values will be
-     * @param BodyElement $bodyElement The bodyElement to be fill.
+     * @param QtiComponent $component
+     * @return DOMElement The according DOMElement object.
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function fillElement(DOMElement $element, BodyElement $bodyElement): void
+    protected function marshall(QtiComponent $component): DOMElement
     {
-        /** @var Html5Media $bodyElement */
+        $element = parent::marshall($component);
 
-        if ($bodyElement->hasAutoPlay()) {
-            $this->setDOMElementAttribute($element, 'autoplay', $bodyElement->getAutoPlay() ? 'true' : 'false');
+        /** @var Html5Media $component */
+
+        if ($component->hasAutoPlay()) {
+            $this->setDOMElementAttribute($element, 'autoplay', $component->getAutoPlay() ? 'true' : 'false');
         }
 
-        if ($bodyElement->hasControls()) {
-            $this->setDOMElementAttribute($element, 'controls', $bodyElement->getControls() ? 'true' : 'false');
+        if ($component->hasControls()) {
+            $this->setDOMElementAttribute($element, 'controls', $component->getControls() ? 'true' : 'false');
         }
 
-        if ($bodyElement->hasCrossOrigin()) {
-            $this->setDOMElementAttribute($element, 'crossorigin', CrossOrigin::getNameByConstant($bodyElement->getCrossOrigin()));
+        if ($component->hasCrossOrigin()) {
+            $this->setDOMElementAttribute($element, 'crossorigin', CrossOrigin::getNameByConstant($component->getCrossOrigin()));
         }
 
-        if ($bodyElement->hasLoop()) {
-            $this->setDOMElementAttribute($element, 'loop', $bodyElement->getLoop() ? 'true' : 'false');
+        if ($component->hasLoop()) {
+            $this->setDOMElementAttribute($element, 'loop', $component->getLoop() ? 'true' : 'false');
         }
 
-        if ($bodyElement->hasMediaGroup()) {
-            $this->setDOMElementAttribute($element, 'mediagroup', $bodyElement->getMediaGroup());
+        if ($component->hasMediaGroup()) {
+            $this->setDOMElementAttribute($element, 'mediagroup', $component->getMediaGroup());
         }
 
-        if ($bodyElement->hasMuted()) {
-            $this->setDOMElementAttribute($element, 'muted', $bodyElement->getMuted() ? 'true' : 'false');
+        if ($component->hasMuted()) {
+            $this->setDOMElementAttribute($element, 'muted', $component->getMuted() ? 'true' : 'false');
         }
 
-        if ($bodyElement->hasPreload()) {
-            $this->setDOMElementAttribute($element, 'preload', Preload::getNameByConstant($bodyElement->getPreload()));
+        if ($component->hasPreload()) {
+            $this->setDOMElementAttribute($element, 'preload', Preload::getNameByConstant($component->getPreload()));
         }
 
-        if ($bodyElement->hasSrc()) {
-            $this->setDOMElementAttribute($element, 'src', $bodyElement->getSrc());
+        if ($component->hasSrc()) {
+            $this->setDOMElementAttribute($element, 'src', $component->getSrc());
         }
 
-        foreach ($bodyElement->getSources() as $source) {
+        foreach ($component->getSources() as $source) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($source);
             $element->appendChild($marshaller->marshall($source));
         }
 
-        foreach ($bodyElement->getTracks() as $track) {
+        foreach ($component->getTracks() as $track) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($track);
             $element->appendChild($marshaller->marshall($track));
         }
-
-        parent::fillElement($element, $bodyElement);
+        
+        return $element;
     }
 
     /**
-     * Fill $bodyElement with the following Html 5 element attributes:
+     * Fill $bodyElement with the following Html 5 element attributes and children:
      *
      * * autoplay
      * * controls
@@ -101,11 +104,15 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
      * * loop
      * * mediagroup
      * * muted
+     * * preload
      * * src
+     * * source
+     * * track
      *
      * @param BodyElement $bodyElement The bodyElement to fill.
      * @param DOMElement $element The DOMElement object from where the attribute values must be retrieved.
      * @throws UnmarshallingException If one of the attributes of $element is not valid.
+     * @throws MarshallerNotFoundException when source or track can't be unmarshalled.
      */
     protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element): void
     {

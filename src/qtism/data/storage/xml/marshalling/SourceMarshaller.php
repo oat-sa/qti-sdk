@@ -42,15 +42,15 @@ class SourceMarshaller extends Html5ElementMarshaller
      */
     protected function marshall(QtiComponent $component): DOMElement
     {
-        $element = self::getDOMCradle()->createElement('source');
+        /** @var Source $component */
+
+        $element = parent::marshall($component);
 
         $this->setDOMElementAttribute($element, 'src', $component->getSrc());
 
         if ($component->hasType()) {
             $this->setDOMElementAttribute($element, 'type', $component->getType());
         }
-
-        $this->fillElement($element, $component);
 
         return $element;
     }

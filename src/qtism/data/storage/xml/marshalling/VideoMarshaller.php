@@ -39,10 +39,14 @@ class VideoMarshaller extends Html5MediaMarshaller
      *
      * @param QtiComponent $component A Video object.
      * @return DOMElement The according DOMElement object.
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
-        $element = self::getDOMCradle()->createElement('video');
+        /** @var Video $component */
+        
+        $element = parent::marshall($component);
 
         if ($component->hasPoster()) {
             $this->setDOMElementAttribute($element, 'poster', $component->getPoster());
@@ -56,8 +60,6 @@ class VideoMarshaller extends Html5MediaMarshaller
             $this->setDOMElementAttribute($element, 'width', $component->getWidth());
         }
 
-        $this->fillElement($element, $component);
-
         return $element;
     }
 
@@ -67,6 +69,7 @@ class VideoMarshaller extends Html5MediaMarshaller
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A Video object.
      * @throws UnmarshallingException
+     * @throws MarshallerNotFoundException
      */
     protected function unmarshall(DOMElement $element)
     {

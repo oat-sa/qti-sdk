@@ -7,6 +7,7 @@ use DOMElement;
 use qtism\data\content\enums\Role;
 use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 use qtism\data\storage\xml\marshalling\Html5ElementMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
@@ -31,13 +32,13 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
         $label = 'This is a label.';
 
         $expected = sprintf(
-            '<html5 title="%s" role="%s" id="%s" class="%s" xml:lang="%s" label="%s"/>',
-            $title,
-            $role,
+            '<html5 id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
             $id,
             $class,
             $lang,
-            $label
+            $label,
+            $title,
+            $role
         );
 
         $html5Element = new FakeHtml5Element($title, Role::getConstantByName($role), $id, $class, $lang, $label);
@@ -118,8 +119,8 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
      */
     protected function assertHtml5MarshallingOnlyInQti22AndAbove(Html5Element $object, string $elementName): void
     {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('No marshaller implementation found while marshalling component \'' . $elementName . '\'.');
+        $this->expectException(MarshallerNotFoundException::class);
+        $this->expectExceptionMessage('No mapping entry found for QTI class name \'' . $elementName . '\'.');
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($object);
         $marshaller->marshall($object);
     }
@@ -132,8 +133,8 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
     public function assertHtml5UnmarshallingOnlyInQti22AndAbove(string $xml, string $elementName): void
     {
         $element = $this->createDOMElement($xml);
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('No Marshaller implementation found while unmarshalling element \'' . $elementName . '\'.');
+        $this->expectException(MarshallerNotFoundException::class);
+        $this->expectExceptionMessage('No mapping entry found for QTI class name \'' . $elementName . '\'.');
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $marshaller->unmarshall($element);
     }
@@ -195,12 +196,14 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
 
 class FakeHtml5Element extends Html5Element
 {
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
+        return 'html5';
     }
 
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
+        return new QtiComponentCollection();
     }
 }
 
@@ -218,13 +221,6 @@ class FakeHtml5ElementMarshaller extends Html5ElementMarshaller
         if ($method === 'unmarshall') {
             return $this->unmarshall($args[0]);
         }
-    }
-
-    protected function marshall(QtiComponent $component)
-    {
-        $element = self::getDOMCradle()->createElement('html5');
-        $this->fillElement($element, $component);
-        return $element;
     }
 
     /**

@@ -41,9 +41,11 @@ class TrackMarshaller extends Html5ElementMarshaller
      * @param QtiComponent $component A Track object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
-        $element = self::getDOMCradle()->createElement('track');
+        /** @var Track $component */
+        
+        $element = parent::marshall($component);
 
         $this->setDOMElementAttribute($element, 'src', $component->getSrc());
 
@@ -58,8 +60,6 @@ class TrackMarshaller extends Html5ElementMarshaller
         if ($component->hasSrcLang()) {
             $this->setDOMElementAttribute($element, 'srclang', $component->getSrcLang());
         }
-
-        $this->fillElement($element, $component);
 
         return $element;
     }

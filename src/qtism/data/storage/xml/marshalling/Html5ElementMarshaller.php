@@ -27,6 +27,8 @@ use DOMElement;
 use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;
 use qtism\data\content\enums\Role;
+use qtism\data\content\xhtml\html5\Html5Element;
+use qtism\data\QtiComponent;
 
 /**
  * Marshalling/Unmarshalling implementation for generic Html5.
@@ -34,22 +36,27 @@ use qtism\data\content\enums\Role;
 abstract class Html5ElementMarshaller extends Marshaller
 {
     /**
-     * Fill $element with the attributes of $bodyElement.
+     * Marshall a Html5 element object into a DOMElement object.
      *
-     * @param DOMElement $element The element from where the attribute values will be
-     * @param BodyElement $bodyElement The bodyElement to be fill.
+     * @param QtiComponent $component
+     * @return DOMElement The according DOMElement object.
      */
-    protected function fillElement(DOMElement $element, BodyElement $bodyElement)
+    protected function marshall(QtiComponent $component): DOMElement
     {
-        if ($bodyElement->hasTitle()) {
-            $this->setDOMElementAttribute($element, 'title', $bodyElement->getTitle());
+        /** @var Html5Element $component */
+        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+
+        $this->fillElement($element, $component);
+
+        if ($component->hasTitle()) {
+            $this->setDOMElementAttribute($element, 'title', $component->getTitle());
         }
 
-        if ($bodyElement->hasRole()) {
-            $this->setDOMElementAttribute($element, 'role', Role::getNameByConstant($bodyElement->getRole()));
+        if ($component->hasRole()) {
+            $this->setDOMElementAttribute($element, 'role', Role::getNameByConstant($component->getRole()));
         }
 
-        parent::fillElement($element, $bodyElement);
+        return $element;
     }
 
     /**
