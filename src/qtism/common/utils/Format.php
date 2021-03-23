@@ -373,7 +373,7 @@ class Format
             return false;
         }
 
-        $pattern = "/^(?:[^\s]+?(?:\x20){0,})+$/";
+        $pattern = "/^\S+(?: +\S+)*$/";
 
         return preg_match($pattern, $string) === 1;
     }
