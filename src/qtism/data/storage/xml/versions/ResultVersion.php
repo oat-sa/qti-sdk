@@ -36,6 +36,8 @@ class ResultVersion extends QtiVersion
         '2.2.0' => ResultVersion22::class,
         '2.2.1' => ResultVersion22::class,
         '2.2.2' => ResultVersion22::class,
+        '2.2.3' => ResultVersion22::class,
+        '2.2.4' => ResultVersion22::class,
     ];
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI Result Report is not supported for version "%s".';
