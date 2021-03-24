@@ -210,7 +210,7 @@ class XmlDocumentTest extends QtiSmTestCase
     public function testWrongVersion()
     {
         $this->expectException(InvalidArgumentException::class);
-        $doc = new XMLDocument('2.2.3');
+        $doc = new XMLDocument('2.2.1012');
     }
 
     public function testLoadFromString()
@@ -447,7 +447,7 @@ class XmlDocumentTest extends QtiSmTestCase
 
     public function testInvalidAgainstXMLSchema()
     {
-        $xsdLocation = realpath(__DIR__ . '/../../../../../') . '/src/qtism/data/storage/xml/versions/../schemes/qtiv2p1/imsqti_v2p1.xsd';
+        $xsdLocation = realpath(__DIR__ . '/../../../../../src/qtism/data/storage/xml/versions/../schemes/qtiv2p1/imsqti_v2p1.xsd');
         $expectedMsg = "The document could not be validated with XML Schema '$xsdLocation':\n";
         $expectedMsg .= "Error: Element '{http://www.imsglobal.org/xsd/imsqti_v2p1}responseDeclaration', attribute 'foo': The attribute 'foo' is not allowed. at 9:0.";
         $this->expectException(XmlStorageException::class);
@@ -630,6 +630,8 @@ class XmlDocumentTest extends QtiSmTestCase
             [self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', '2.1.0'],
             [self::samplesDir() . 'ims/items/2_2_1/choice.xml', '2.2.1'],
             [self::samplesDir() . 'ims/items/2_2_2/choice.xml', '2.2.2'],
+            [self::samplesDir() . 'ims/items/2_2_3/choice.xml', '2.2.3'],
+            [self::samplesDir() . 'ims/items/2_2_4/choice.xml', '2.2.4'],
             [self::samplesDir() . 'ims/items/3_0/empty_item.xml', '3.0.0'],
         ];
     }
@@ -685,6 +687,8 @@ class XmlDocumentTest extends QtiSmTestCase
             ['2.1', $path . 'v2p1.xml', '2.1.1', $path . 'v2p1p1.xml'],
             ['2.2', $path . 'v2p2.xml', '2.2.1', $path . 'v2p2p1.xml'],
             ['2.2', $path . 'v2p2.xml', '2.2.2', $path . 'v2p2p2.xml'],
+            ['2.2', $path . 'v2p2.xml', '2.2.3', $path . 'v2p2p3.xml'],
+            ['2.2', $path . 'v2p2.xml', '2.2.4', $path . 'v2p2p4.xml'],
         ];
     }
 

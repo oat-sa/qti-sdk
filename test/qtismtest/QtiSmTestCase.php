@@ -18,6 +18,8 @@ use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti223MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti224MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 
@@ -118,6 +120,10 @@ abstract class QtiSmTestCase extends TestCase
             return new Qti221MarshallerFactory();
         } elseif (Version::compare($version, '2.2.2', '==') === true) {
             return new Qti222MarshallerFactory();
+        } elseif (Version::compare($version, '2.2.3', '==') === true) {
+            return new Qti223MarshallerFactory();
+        } elseif (Version::compare($version, '2.2.4', '==') === true) {
+            return new Qti224MarshallerFactory();
         } elseif (Version::compare($version, '3.0.0', '==') === true) {
             return new Qti30MarshallerFactory();
         } else {

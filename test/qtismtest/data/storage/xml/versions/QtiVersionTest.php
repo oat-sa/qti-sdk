@@ -9,6 +9,8 @@ use qtism\data\storage\xml\versions\QtiVersion211;
 use qtism\data\storage\xml\versions\QtiVersion220;
 use qtism\data\storage\xml\versions\QtiVersion221;
 use qtism\data\storage\xml\versions\QtiVersion222;
+use qtism\data\storage\xml\versions\QtiVersion223;
+use qtism\data\storage\xml\versions\QtiVersion224;
 use qtism\data\storage\xml\versions\QtiVersion300;
 use qtism\data\storage\xml\versions\QtiVersionException;
 use qtismtest\QtiSmTestCase;
@@ -26,7 +28,7 @@ class QtiVersionTest extends QtiSmTestCase
 
     public function testVersionCompareInvalidVersion1()
     {
-        $msg = 'QTI version "2.1.4" is not supported. Supported versions are "2.0.0", "2.1.0", "2.1.1", "2.2.0", "2.2.1", "2.2.2", "3.0.0".';
+        $msg = 'QTI version "2.1.4" is not supported. Supported versions are "2.0.0", "2.1.0", "2.1.1", "2.2.0", "2.2.1", "2.2.2", "2.2.3", "2.2.4", "3.0.0".';
         $this->expectException(QtiVersionException::class);
         $this->expectExceptionMessage($msg);
         QtiVersion::compare('2.1.4', '2.1.1', '>');
@@ -34,7 +36,7 @@ class QtiVersionTest extends QtiSmTestCase
 
     public function testVersionCompareInvalidVersion2()
     {
-        $msg = 'QTI version "2.1.4" is not supported. Supported versions are "2.0.0", "2.1.0", "2.1.1", "2.2.0", "2.2.1", "2.2.2", "3.0.0".';
+        $msg = 'QTI version "2.1.4" is not supported. Supported versions are "2.0.0", "2.1.0", "2.1.1", "2.2.0", "2.2.1", "2.2.2", "2.2.3", "2.2.4", "3.0.0".';
         $this->expectException(QtiVersionException::class);
         $this->expectExceptionMessage($msg);
         QtiVersion::compare('2.1.0', '2.1.4', '<');
@@ -65,6 +67,8 @@ class QtiVersionTest extends QtiSmTestCase
             ['2.2', '2.2.0', QtiVersion220::class],
             ['2.2.1', '2.2.1', QtiVersion221::class],
             ['2.2.2', '2.2.2', QtiVersion222::class],
+            ['2.2.3', '2.2.3', QtiVersion223::class],
+            ['2.2.4', '2.2.4', QtiVersion224::class],
             ['3', '3.0.0', QtiVersion300::class],
         ];
     }
