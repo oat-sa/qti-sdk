@@ -4,11 +4,11 @@ namespace qtismtest\data\storage\xml;
 
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
+use qtism\data\AssessmentItem;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
-use qtism\data\AssessmentItem;
 
 /**
  * Class XmlAssessmentItemDocumentTest
@@ -99,6 +99,24 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         unlink($file);
         // Nobody else touched it?
         $this::assertFileNotExists($file);
+    }
+
+    public function testLoad224()
+    {
+        $file = self::samplesDir() . 'ims/items/2_2_4/choice.xml';
+        $doc = new XmlDocument();
+        $doc->load($file);
+
+        $this::assertEquals('2.2.4', $doc->getVersion());
+    }
+
+    public function testLoad223()
+    {
+        $file = self::samplesDir() . 'ims/items/2_2_3/choice.xml';
+        $doc = new XmlDocument();
+        $doc->load($file);
+
+        $this::assertEquals('2.2.3', $doc->getVersion());
     }
 
     public function testLoad222()
@@ -337,8 +355,23 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     public function validFileProvider()
     {
         return [
+            // -- 2.2.4
+            [self::decorateUri('essay.xml', '2.2.4'), '2.2.4'],
+            [self::decorateUri('choice.xml', '2.2.4'), '2.2.4'],
+            [self::decorateUri('uploadinteraction-with-single-mime-type.xml', '2.2.4'), '2.2.4'],
+
+            // -- 2.2.3
+            [self::decorateUri('essay.xml', '2.2.3'), '2.2.3'],
+            [self::decorateUri('choice.xml', '2.2.3'), '2.2.3'],
+            [self::decorateUri('uploadinteraction-with-single-mime-type.xml', '2.2.3'), '2.2.3'],
+
             // -- 2.2.2
-            [self::decorateUri('essay.xml', '2.2.0'), '2.2.2'],
+            [self::decorateUri('essay.xml', '2.2.2'), '2.2.2'],
+            [self::decorateUri('choice.xml', '2.2.2'), '2.2.2'],
+            [self::decorateUri('uploadinteraction-with-single-mime-type.xml', '2.2.2'), '2.2.2'],
+
+            // -- 2.2.2
+            [self::decorateUri('essay.xml', '2.2.2'), '2.2.2'],
 
             // -- 2.2.1
             [self::decorateUri('choice_aria.xml', '2.2.1'), '2.2.1'],
@@ -499,6 +532,49 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     }
 
     /**
+     * @throws XmlStorageException
+     */
+    public function testValidMultipleMimeTypesInUploadInteraction(): void
+    {
+        $version = '2.2.4';
+        $uri = self::decorateUri('uploadinteraction-with-multiple-mime-types.xml', $version);
+
+        $doc = new XmlDocument();
+        $doc->load($uri, true);
+
+        $this::assertEquals($version, $doc->getVersion());
+    }
+
+    /**
+     * @dataProvider invalidVersionForMultipleMimeTypesInUploadInteraction
+     * @param string $version
+     * @param string $path
+     * @throws XmlStorageException
+     */
+    public function testInvalidMultipleMimeTypesInUploadInteraction(string $version, string $path): void
+    {
+        $uri = self::decorateUri('uploadinteraction-with-multiple-mime-types.xml', $version);
+        $doc = new XmlDocument();
+
+        $this->expectException(XmlStorageException::class);
+        $this->expectExceptionMessage(
+            sprintf("The document could not be validated with XML Schema '%s':\nError: Element '{http://www.imsglobal.org/xsd/imsqti_v2p2}uploadInteraction', attribute 'type': [facet 'pattern'] The value 'application/pdf image/jpeg image/png' is not accepted by the pattern '%s'. at 10:0.",
+                realpath(__DIR__ . '/../../../../../qtism/data/storage/xml/schemes/' . $path . '.xsd'),
+                '[\p{IsBasicLatin}-[()<>@,;:\\\\"/\[\]?=]]+/[\p{IsBasicLatin}-[()<>@,;:\\\\"/\[\]?=]]+'
+            )
+        );
+        $doc->load($uri, true);
+    }
+
+    public function invalidVersionForMultipleMimeTypesInUploadInteraction()
+    {
+        return [
+            ['2.2.3', 'qtiv2p2p3/imsqti_v2p2p3'],
+            ['2.2.2', 'qtiv2p2p2/imsqti_v2p2p2'],
+        ];
+    }
+
+    /**
      * @param $uri
      * @param string $version
      * @return string
@@ -515,6 +591,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             return self::samplesDir() . 'ims/items/2_2_1/' . $uri;
         } elseif ($version === '2.2.2') {
             return self::samplesDir() . 'ims/items/2_2_2/' . $uri;
+        } elseif ($version === '2.2.3') {
+            return self::samplesDir() . 'ims/items/2_2_3/' . $uri;
+        } elseif ($version === '2.2.4') {
+            return self::samplesDir() . 'ims/items/2_2_4/' . $uri;
         } elseif ($version === '3.0.0') {
             return self::samplesDir() . 'ims/items/3_0/' . $uri;
         } else {

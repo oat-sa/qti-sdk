@@ -36,6 +36,8 @@ class CompactVersion extends QtiVersion
         '2.2.0' => CompactVersion22::class,
         '2.2.1' => CompactVersion22::class,
         '2.2.2' => CompactVersion22::class,
+        '2.2.3' => CompactVersion22::class,
+        '2.2.4' => CompactVersion22::class,
     ];
 
     const UNSUPPORTED_VERSION_MESSAGE = 'QTI Compact is not supported for version "%s".';

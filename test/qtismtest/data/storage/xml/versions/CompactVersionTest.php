@@ -42,6 +42,8 @@ class CompactVersionTest extends QtiSmTestCase
             ['2.2', '2.2.0', CompactVersion22::class],
             ['2.2.1', '2.2.1', CompactVersion22::class],
             ['2.2.2', '2.2.2', CompactVersion22::class],
+            ['2.2.3', '2.2.3', CompactVersion22::class],
+            ['2.2.4', '2.2.4', CompactVersion22::class],
         ];
     }
 

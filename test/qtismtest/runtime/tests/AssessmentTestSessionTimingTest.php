@@ -354,6 +354,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $session->beginAttempt();
         sleep(1);
 
+        // @todo: base all these tests on mocked timers so that we don't randomly run into test failures.
         $this::assertEquals(1, $session['Q01.duration']->getSeconds(true));
         $this::assertEquals(1, $session['S01.duration']->getSeconds(true));
         $this::assertEquals(1, $session['TP01.duration']->getSeconds(true));

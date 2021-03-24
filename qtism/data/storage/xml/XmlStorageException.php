@@ -57,6 +57,20 @@ class XmlStorageException extends StorageException
     }
 
     /**
+     * @param string $msg
+     * @param array $libXmlErrors
+     * @return static
+     */
+    public static function createValidationException(string $msg, array $libXmlErrors): self
+    {
+        return new self(
+            $msg,
+            null,
+            new LibXmlErrorCollection($libXmlErrors)
+        );
+    }
+    
+    /**
      * Set the errors returned by libxml_get_errors.
      *
      * @param LibXmlErrorCollection $errors A collection of LibXMLError objects.

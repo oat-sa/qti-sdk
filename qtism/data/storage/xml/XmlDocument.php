@@ -323,23 +323,30 @@ class XmlDocument extends QtiDocument
             $filename = $this->version->getLocalXsd();
         }
 
-        if (is_readable($filename)) {
-            $oldErrorConfig = libxml_use_internal_errors(true);
-
-            $doc = $this->getDomDocument();
-            if (@$doc->schemaValidate($filename) === false) {
-                $libXmlErrors = libxml_get_errors();
-                $formattedErrors = self::formatLibXmlErrors($libXmlErrors);
-
-                libxml_clear_errors();
-                libxml_use_internal_errors($oldErrorConfig);
-
-                $msg = "The document could not be validated with XML Schema '${filename}':\n${formattedErrors}";
-                throw new XmlStorageException($msg, null, new LibXmlErrorCollection($libXmlErrors));
-            }
-        } else {
+        if (!is_readable($filename)) {
             $msg = "Schema '${filename}' cannot be read. Does this file exist? Is it readable?";
             throw new InvalidArgumentException($msg);
+        }
+
+        $doc = $this->getDomDocument();
+        
+        $oldErrorConfig = libxml_use_internal_errors(true);
+        $valid = $doc->schemaValidate($filename);
+
+        $libXmlErrors = libxml_get_errors();
+        libxml_clear_errors();
+        libxml_use_internal_errors($oldErrorConfig);
+        
+        if (!$valid) {
+            $formattedErrors = self::formatLibXmlErrors($libXmlErrors);
+
+            $msg = sprintf(
+                "The document could not be validated with XML Schema '%s':\n%s",
+                realpath($filename),
+                $formattedErrors
+            );
+            
+            throw XmlStorageException::createValidationException($msg, $libXmlErrors);
         }
     }
 

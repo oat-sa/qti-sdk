@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p3.xsd"
+                identifier="i604623f7534a2278071a22d5e78a72596f" title="upload" label="upload"
+                xml:lang="en-US" adaptive="false" timeDependent="false" toolName="TAO" toolVersion="3.4.0-sprint148">
+  <itemBody>
+    <div class="grid-row">
+      <div class="col-12">
+        <uploadInteraction responseIdentifier="RESPONSE" type="application/pdf image/jpeg image/png">
+          <prompt>my prompt text for pdf, jpg and png file types</prompt>
+        </uploadInteraction>
+      </div>
+    </div>
+  </itemBody>
+</assessmentItem>
