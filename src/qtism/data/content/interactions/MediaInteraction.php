@@ -89,30 +89,30 @@ class MediaInteraction extends BlockInteraction
     /**
      * From IMS QTI:
      *
-     * The media object itself.
+     * The media object itself (an object, video or audio element).
      *
-     * @var ObjectElement
+     * @var Media
      * @qtism-bean-property
      */
-    private $object;
+    private $media;
 
     /**
      * Create a new MediaInteraction object.
      *
      * @param string $responseIdentifier The identifier of the response variable associated with the interaction.
      * @param bool $autostart Whether the media has to be played immediately after the begining of the attempt.
-     * @param ObjectElement $object The media object itself.
+     * @param Media $media The media object itself.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException
      */
-    public function __construct($responseIdentifier, $autostart, ObjectElement $object, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, $autostart, Media $media, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $id, $class, $lang, $label);
         $this->setAutostart($autostart);
-        $this->setObject($object);
+        $this->setMedia($media);
     }
 
     /**
@@ -243,20 +243,33 @@ class MediaInteraction extends BlockInteraction
      * Set the media object itself.
      *
      * @param ObjectElement $object
+     * @deprecated Use self::setMedia instead
+     *
      */
     public function setObject(ObjectElement $object)
     {
-        $this->object = $object;
+        $this->setMedia($object);
     }
 
     /**
      * Get the media object itself.
      *
-     * @return ObjectElement
+     * @return Media
+     * @deprecated Use self::getMedia instead
      */
     public function getObject()
     {
-        return $this->object;
+        return $this->getMedia();
+    }
+
+    public function setMedia(Media $media): void
+    {
+        $this->media = $media;
+    }
+
+    public function getMedia(): Media
+    {
+        return $this->media;
     }
 
     /**

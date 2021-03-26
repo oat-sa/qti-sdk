@@ -84,12 +84,12 @@ class MediaInteractionMarshaller extends Marshaller
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             if (($autostart = $this->getDOMElementAttributeAs($element, 'autostart', 'boolean')) !== null) {
-                $objectElts = $this->getChildElementsByTagName($element, 'object');
-                if (count($objectElts) > 0) {
-                    $objectElt = $objectElts[0];
-                    $object = $this->getMarshallerFactory()->createMarshaller($objectElt)->unmarshall($objectElt);
+                $mediaElts = $this->getChildElementsByTagName($element, ['object', 'video', 'audio']);
+                if (count($mediaElts) === 1) {
+                    $mediaElt = $mediaElts[0];
+                    $media = $this->getMarshallerFactory()->createMarshaller($mediaElt)->unmarshall($mediaElt);
 
-                    $component = new MediaInteraction($responseIdentifier, $autostart, $object);
+                    $component = new MediaInteraction($responseIdentifier, $autostart, $media);
 
                     $promptElts = $this->getChildElementsByTagName($element, 'prompt');
                     if (count($promptElts) > 0) {
@@ -118,7 +118,10 @@ class MediaInteractionMarshaller extends Marshaller
 
                     return $component;
                 } else {
-                    $msg = "A 'mediaInteraction' element must contain exactly one 'object' element, none given.";
+                    $msg = sprintf(
+                        "A 'mediaInteraction' element must contain exactly one media element ('object', 'video' or 'audio'), %s given.",
+                        count($mediaElts)
+                    );
                     throw new UnmarshallingException($msg, $element);
                 }
             } else {

@@ -21,14 +21,13 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @param string $expectedVersion
      * @throws XmlStorageException
      */
-    public function testLoad($uri, $expectedVersion)
+    public function testLoad(string $uri, string $expectedVersion): void
     {
         $doc = new XmlDocument();
         $doc->load($uri);
-        $this->assertEquals($expectedVersion, $doc->getVersion());
+        self::assertEquals($expectedVersion, $doc->getVersion());
 
-        $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
+        self::assertInstanceOf(AssessmentItem::class, $doc->getDocumentComponent());
     }
 
     /**
@@ -38,24 +37,20 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws MarshallingException
      */
-    public function testWrite($uri, $expectedVersion)
+    public function testWrite(string $uri, string $expectedVersion): void
     {
         $doc = new XmlDocument();
         $doc->load($uri);
-        $this->assertEquals($expectedVersion, $doc->getVersion());
-
-        $assessmentItem = $doc->getDocumentComponent();
-        $this->assertInstanceOf(AssessmentItem::class, $assessmentItem);
 
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
+        self::assertFileExists($file);
 
-        $this->assertTrue(file_exists($file));
         $this->testLoad($file, $expectedVersion);
 
         unlink($file);
         // Nobody else touched it?
-        $this->assertFalse(file_exists($file));
+        self::assertFileNotExists($file);
     }
 
     public function testLoad222()

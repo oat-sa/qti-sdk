@@ -4,25 +4,37 @@ namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
 use qtism\data\content\FlowStaticCollection;
+use qtism\data\content\interactions\Media;
 use qtism\data\content\interactions\MediaInteraction;
 use qtism\data\content\interactions\Prompt;
 use qtism\data\content\TextRun;
+use qtism\data\content\xhtml\html5\Audio;
+use qtism\data\content\xhtml\html5\Video;
 use qtism\data\content\xhtml\ObjectElement;
-use qtismtest\QtiSmTestCase;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
+use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
+use qtismtest\QtiSmTestCase;
 
 /**
  * Class MediaInteractionMarshallerTest
  */
 class MediaInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
-    {
-        $object = new ObjectElement('my-video.mp4', 'video/mp4');
-        $object->setWidth(400);
-        $object->setHeight(300);
-
-        $mediaInteraction = new MediaInteraction('RESPONSE', false, $object, 'my-media');
+    /**
+     * @dataProvider validMediaProvider
+     * @param string $version
+     * @param Media $media
+     * @param string $mediaAsXml
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
+    public function testMarshall(
+        string $version,
+        Media $media,
+        string $mediaAsXml
+    ): void {
+        $mediaInteraction = new MediaInteraction('RESPONSE', false, $media, 'my-media');
         $mediaInteraction->setMinPlays(1);
         $mediaInteraction->setMaxPlays(2);
         $mediaInteraction->setLoop(true);
@@ -32,52 +44,164 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
         $mediaInteraction->setPrompt($prompt);
 
-        $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($mediaInteraction)->marshall($mediaInteraction);
+        $element = $this->getMarshallerFactory($version)->createMarshaller($mediaInteraction)->marshall($mediaInteraction);
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals(
-            '<mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>',
+        self::assertEquals(
+            sprintf(
+                '<mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt>%s</mediaInteraction>',
+                $mediaAsXml
+            ),
             $dom->saveXML($element)
         );
     }
 
-    public function testUnmarshall()
-    {
-        $element = $this->createDOMElement('
-            <mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>        
-        ');
+    /**
+     * @dataProvider validMediaProvider
+     * @param string $version
+     * @param Media $media
+     * @param string $mediaAsXml
+     * @throws MarshallerNotFoundException
+     */
+    public function testUnmarshall(
+        string $version,
+        Media $media,
+        string $mediaAsXml
+    ): void {
+        $element = $this->createDOMElement(
+            sprintf(
+                '<mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt>%s</mediaInteraction>',
+                $mediaAsXml
+            )
+        );
 
-        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(MediaInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertEquals('my-media', $component->getId());
-        $this->assertFalse($component->mustAutostart());
-        $this->assertEquals(1, $component->getMinPlays());
-        $this->assertTrue($component->mustLoop());
-        $this->assertEquals('/home/jerome', $component->getXmlBase());
+        $component = $this->getMarshallerFactory($version)->createMarshaller($element)->unmarshall($element);
+        self::assertInstanceOf(MediaInteraction::class, $component);
+        self::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        self::assertEquals('my-media', $component->getId());
+        self::assertFalse($component->mustAutostart());
+        self::assertEquals(1, $component->getMinPlays());
+        self::assertTrue($component->mustLoop());
+        self::assertEquals('/home/jerome', $component->getXmlBase());
 
-        $object = $component->getObject();
-        $this->assertEquals('my-video.mp4', $object->getData());
-        $this->assertEquals('video/mp4', $object->getType());
-        $this->assertEquals(400, $object->getWidth());
-        $this->assertEquals(300, $object->getHeight());
+        self::assertEquals($media, $component->getMedia());
 
-        $this->assertTrue($component->hasPrompt());
+        self::assertTrue($component->hasPrompt());
         $promptContent = $component->getPrompt()->getContent();
-        $this->assertEquals('Prompt...', $promptContent[0]->getContent());
+        self::assertEquals('Prompt...', $promptContent[0]->getContent());
     }
 
-    public function testUnmarshallNoObject()
+    public function validMediaProvider(): array
+    {
+        $src = 'my-video.mp4';
+        $type = 'video/mp4';
+        $width = 400;
+        $height = 300;
+
+        $object = new ObjectElement($src, $type);
+        $object->setWidth($width);
+        $object->setHeight($height);
+        $objectAsXml = sprintf(
+            '<object data="%s" type="%s" width="%s" height="%s"/>',
+            $src,
+            $type,
+            $width,
+            $height
+        );
+
+        $video = new Video();
+        $video->setSrc($src);
+        $video->setWidth($width);
+        $video->setHeight($height);
+        $videoAsXml = sprintf(
+            '<video src="%s" height="%s" width="%s"/>',
+            $src,
+            $height,
+            $width
+        );
+
+        $audio = new Audio();
+        $audio->setSrc($src);
+        $audioAsXml = sprintf(
+            '<audio src="%s"/>',
+            $src
+        );
+
+        return [
+            ['2.1.0', $object, $objectAsXml],
+            ['2.2.0', $object, $objectAsXml],
+            ['2.2.0', $video, $videoAsXml],
+            ['2.2.0', $audio, $audioAsXml],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidMarshallProvider
+     * @param Media $media
+     * @param string $exceptionMessage
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
+    public function testMarshallWithHtml5MediaInQti21Fails(
+        Media $media,
+        string $exceptionMessage
+    ): void {
+        $mediaInteraction = new MediaInteraction('RESPONSE', false, $media, 'my-media');
+
+        $this->expectException(MarshallerNotFoundException::class);
+        $this->expectExceptionMessage($exceptionMessage);
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($mediaInteraction)->marshall($mediaInteraction);
+    }
+
+    /**
+     * @dataProvider invalidUnmarshallProvider
+     * @param string $mediaAsXml
+     * @param string $exceptionMessage
+     * @throws MarshallerNotFoundException
+     */
+    public function testUnmarshallWithHtml5MediaInQti21Fails(
+        string $mediaAsXml,
+        string $exceptionMessage
+    ): void {
+        $element = $this->createDOMElement(
+            sprintf(
+                '<mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt>%s</mediaInteraction>',
+                $mediaAsXml
+            )
+        );
+
+        $this->expectException(MarshallerNotFoundException::class);
+        $this->expectExceptionMessage($exceptionMessage);
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    public function invalidMarshallProvider(): array
+    {
+        return [
+            [new Video(), "No mapping entry found for QTI class name 'video'."],
+            [new Audio(), "No mapping entry found for QTI class name 'audio'."],
+        ];
+    }
+
+    public function invalidUnmarshallProvider(): array
+    {
+        return [
+            ['<video/>', "No mapping entry found for QTI class name 'video'."],
+            ['<audio/>', "No mapping entry found for QTI class name 'audio'."],
+        ];
+    }
+
+    public function testUnmarshallNoMedia()
     {
         $element = $this->createDOMElement('
             <mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt></mediaInteraction>        
         ');
 
         $this->expectException(UnmarshallingException::class);
-        $this->expectExceptionMessage("A 'mediaInteraction' element must contain exactly one 'object' element, none given.");
+        $this->expectExceptionMessage("A 'mediaInteraction' element must contain exactly one media element ('object', 'video' or 'audio'), 0 given.");
 
-        $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+        $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
     public function testUnmarshallMissingAutoStart()
