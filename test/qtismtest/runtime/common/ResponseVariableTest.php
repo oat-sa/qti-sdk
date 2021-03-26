@@ -232,7 +232,8 @@ class ResponseVariableTest extends QtiSmTestCase
                 [
                     'twelve' => new QtiInteger(12),
                     'foo' => new QtiString('bar'),
-                    'pair' => new QtiPair('A', 'B')
+                    'null' => null,
+                    'pair' => new QtiPair('A', 'B'),
                 ]
             )
         );
