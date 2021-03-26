@@ -545,6 +545,7 @@ abstract class Variable
 
             case Cardinality::MULTIPLE:
             case Cardinality::ORDERED:
+            case Cardinality::RECORD:
                 foreach ($this->getValue() as $v) {
                     $values[] = $this->createValue($v);
                 }
@@ -563,7 +564,9 @@ abstract class Variable
         if (!$value instanceof QtiFile || !$this->isFile()) {
             $value = StorageUtils::stringToDatatype(
                 (string)$value,
-                $this->getBaseType()
+                $this->getCardinality() === Cardinality::RECORD
+                    ? $value->getBaseType()
+                    : $this->getBaseType()
             );
         }
 

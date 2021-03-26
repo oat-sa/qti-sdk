@@ -9,14 +9,16 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
-use qtism\runtime\common\MultipleContainer;
-use qtism\runtime\common\OrderedContainer;
-use qtism\runtime\common\ResponseVariable;
-use qtismtest\QtiSmTestCase;
 use qtism\data\state\AreaMapping;
 use qtism\data\state\Mapping;
+use qtism\runtime\common\MultipleContainer;
+use qtism\runtime\common\OrderedContainer;
+use qtism\runtime\common\RecordContainer;
+use qtism\runtime\common\ResponseVariable;
+use qtismtest\QtiSmTestCase;
 
 /**
  * Class ResponseVariableTest
@@ -218,6 +220,28 @@ class ResponseVariableTest extends QtiSmTestCase
         $this::assertCount(2, $values);
         $this::assertTrue($qtiPoint1->equals($values[0]->getValue()));
         $this::assertTrue($qtiPoint2->equals($values[1]->getValue()));
+    }
+
+    public function testGetDataModelValuesRecordCardinality(): void
+    {
+        $responseVariable = new ResponseVariable(
+            'MYVAR',
+            Cardinality::RECORD,
+            -1,
+            new RecordContainer(
+                [
+                    'twelve' => new QtiInteger(12),
+                    'foo' => new QtiString('bar'),
+                    'pair' => new QtiPair('A', 'B')
+                ]
+            )
+        );
+        $values = $responseVariable->getDataModelValues();
+
+        $this::assertCount(3, $values);
+        $this::assertEquals(12, $values[0]->getValue());
+        $this::assertEquals('bar', $values[1]->getValue());
+        $this::assertEquals('A B', $values[2]->getValue());
     }
 
     public function testClone()
