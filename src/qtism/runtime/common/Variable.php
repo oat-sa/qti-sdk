@@ -545,9 +545,16 @@ abstract class Variable
 
             case Cardinality::MULTIPLE:
             case Cardinality::ORDERED:
-            case Cardinality::RECORD:
                 foreach ($this->getValue() as $v) {
                     $values[] = $this->createValue($v);
+                }
+                break;
+
+            case Cardinality::RECORD:
+                foreach ($this->getValue() as $v) {
+                    if ($v !== null) {
+                        $values[] = $this->createRecordValue($v);
+                    }
                 }
                 break;
         }
@@ -557,20 +564,30 @@ abstract class Variable
 
     /**
      * @param QtiDatatype $value
+     * @param int|null $baseType
      * @return Value
      */
-    private function createValue(QtiDatatype $value): Value
+    private function createValue(QtiDatatype $value, int $baseType = null): Value
     {
         if (!$value instanceof QtiFile || !$this->isFile()) {
             $value = StorageUtils::stringToDatatype(
                 (string)$value,
-                $this->getCardinality() === Cardinality::RECORD
-                    ? $value->getBaseType()
-                    : $this->getBaseType()
+                $baseType ?? $this->getBaseType()
             );
         }
 
         return new Value($value);
+    }
+
+    /**
+     * @param QtiDatatype $value
+     * @return Value
+     */
+    private function createRecordValue(QtiDatatype $value): Value
+    {
+        $value = $this->createValue($value, $value->getBaseType());
+        $value->setPartOfRecord(true);
+        return $value;
     }
 
     /**
