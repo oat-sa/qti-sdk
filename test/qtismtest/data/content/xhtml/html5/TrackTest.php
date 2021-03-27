@@ -14,7 +14,7 @@ class TrackTest extends QtiSmTestCase
         $src = 'http://example.com/';
         $default = true;
         $kind = TrackKind::getConstantByName('chapters');
-        $srcLang = 'en';
+        $srcLang = 'ja';
 
         $subject = new Track($src, $default, $kind, $srcLang);
 

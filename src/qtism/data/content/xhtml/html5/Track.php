@@ -137,7 +137,7 @@ class Track extends Html5EmptyElement
         return $this->default;
     }
 
-     public function hasDefault(): bool
+    public function hasDefault(): bool
     {
         return $this->default !== false;
     }
@@ -189,6 +189,8 @@ class Track extends Html5EmptyElement
                 )
             );
         }
+
+        $this->srcLang = $srcLang;
     }
 
     public function getSrcLang(): string

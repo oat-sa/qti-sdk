@@ -29,7 +29,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
         $src = 'http://example.com/';
         $default = true;
         $kind = 'chapters';
-        $srcLang = 'en';
+        $srcLang = 'ja';
 
         $expected = sprintf(
             '<track src="%s" default="%s" kind="%s" srclang="%s"/>',
@@ -74,7 +74,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
         $src = 'http://example.com/';
         $default = true;
         $kind = 'chapters';
-        $srcLang = 'en';
+        $srcLang = 'ja';
 
         $xml = sprintf(
             '<track src="%s" default="%s" kind="%s" srclang="%s"/>',
