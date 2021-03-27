@@ -40,7 +40,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
     /** @var OutcomeDeclaration */
     private $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->subject = new OutcomeDeclaration('SCORE', BaseType::FLOAT, Cardinality::SINGLE);
     }
@@ -97,31 +97,31 @@ class OutcomeDeclarationTest extends QtiSmTestCase
 
         $components = $this->getComponents();
         $last = $components[count($components) - 1];
-        $this->assertInstanceOf(MatchTable::class, $last);
+        $this::assertInstanceOf(MatchTable::class, $last);
     }
 
     public function testExternalScoredAccessors()
     {
-        $this->assertFalse($this->subject->isExternallyScored());
-        $this->assertFalse($this->subject->isScoredByHuman());
-        $this->assertFalse($this->subject->isScoredByExternalMachine());
+        $this::assertFalse($this->subject->isExternallyScored());
+        $this::assertFalse($this->subject->isScoredByHuman());
+        $this::assertFalse($this->subject->isScoredByExternalMachine());
 
         $this->subject->setExternalScored(ExternalScored::getConstantByName('human'));
 
-        $this->assertTrue($this->subject->isExternallyScored());
-        $this->assertTrue($this->subject->isScoredByHuman());
-        $this->assertFalse($this->subject->isScoredByExternalMachine());
+        $this::assertTrue($this->subject->isExternallyScored());
+        $this::assertTrue($this->subject->isScoredByHuman());
+        $this::assertFalse($this->subject->isScoredByExternalMachine());
 
         $this->subject->setExternalScored(ExternalScored::getConstantByName('externalMachine'));
 
-        $this->assertTrue($this->subject->isExternallyScored());
-        $this->assertFalse($this->subject->isScoredByHuman());
-        $this->assertTrue($this->subject->isScoredByExternalMachine());
+        $this::assertTrue($this->subject->isExternallyScored());
+        $this::assertFalse($this->subject->isScoredByHuman());
+        $this::assertTrue($this->subject->isScoredByExternalMachine());
 
         $this->subject->setExternalScored();
 
-        $this->assertFalse($this->subject->isExternallyScored());
-        $this->assertFalse($this->subject->isScoredByHuman());
-        $this->assertFalse($this->subject->isScoredByExternalMachine());
+        $this::assertFalse($this->subject->isExternallyScored());
+        $this::assertFalse($this->subject->isScoredByHuman());
+        $this::assertFalse($this->subject->isScoredByExternalMachine());
     }
 }

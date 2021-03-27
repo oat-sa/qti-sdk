@@ -23,9 +23,9 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('id1 id2 id3', $element->getAttribute('identifiers'));
-        $this->assertEquals('id2', $element->getAttribute('fixedIdentifiers'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('id1 id2 id3', $element->getAttribute('identifiers'));
+        $this::assertEquals('id2', $element->getAttribute('fixedIdentifiers'));
     }
 
     public function testUnmarshall()
@@ -38,9 +38,9 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(ShufflingGroup::class, $component);
-        $this->assertEquals(['id1', 'id2', 'id3'], $component->getIdentifiers()->getArrayCopy());
-        $this->assertEquals(['id2'], $component->getFixedIdentifiers()->getArrayCopy());
+        $this::assertInstanceOf(ShufflingGroup::class, $component);
+        $this::assertEquals(['id1', 'id2', 'id3'], $component->getIdentifiers()->getArrayCopy());
+        $this::assertEquals(['id2'], $component->getFixedIdentifiers()->getArrayCopy());
     }
 
     public function testUnmarshallMissingIdentifiersAttribute()

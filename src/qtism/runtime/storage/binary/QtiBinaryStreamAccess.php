@@ -27,7 +27,9 @@ use Exception;
 use InvalidArgumentException;
 use OutOfBoundsException;
 use qtism\common\collections\IdentifierCollection;
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\files\FileManager;
+use qtism\common\datatypes\files\FileManagerException;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiFile;
@@ -676,12 +678,14 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      *
      * @param AbstractSessionManager $manager
      * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
+     * @param QtiBinaryVersion $version Version of the binary session storage
      * @return AssessmentItemSession
      * @throws QtiBinaryStreamAccessException
      */
     public function readAssessmentItemSession(
         AbstractSessionManager $manager,
-        AssessmentTestSeeker $seeker
+        AssessmentTestSeeker $seeker,
+        QtiBinaryVersion $version
     ) {
         try {
             $itemRefPosition = $this->readShort();
@@ -709,7 +713,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             }
 
             // Read the number of item-specific variables involved in the session.
-            $varCount = $this->readTinyInt();
+            $varCount = $version->storesVariableCountAsInteger()
+                ? $this->readInteger()
+                : $this->readTinyInt();
 
             for ($i = 0; $i < $varCount; $i++) {
                 // For each of these variables...
@@ -824,7 +830,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             // Write the session variables.
             // (minus the 3 built-in variables)
             $varCount = count($session) - 3;
-            $this->writeTinyInt($varCount);
+            $this->writeInteger($varCount);
 
             $itemOutcomes = $session->getAssessmentItem()->getOutcomeDeclarations();
             $itemResponses = $session->getAssessmentItem()->getResponseDeclarations();
@@ -1072,8 +1078,12 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      */
     public function writeFile(QtiFile $file)
     {
+        $toPersist = $file instanceof FileHash
+            ? json_encode($file)
+            : $file->getIdentifier();
+
         try {
-            $this->writeString($file->getIdentifier());
+            $this->writeString($toPersist);
         } catch (QtiBinaryStreamAccessException $e) {
             $msg = 'An error occurred while reading a QTI File.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
@@ -1085,16 +1095,23 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      *
      * @return QtiFile
      * @throws QtiBinaryStreamAccessException
+     * @throws FileManagerException
      */
     public function readFile()
     {
         try {
             $id = $this->readString();
-            return $this->getFileManager()->retrieve($id);
         } catch (Exception $e) {
             $msg = 'An error occurred while writing a QTI File.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::FILE, $e);
         }
+
+        $decoded = json_decode($id, true);
+        if (is_array($decoded)) {
+            return FileHash::createFromArray($decoded);
+        }
+
+        return $this->getFileManager()->retrieve($id);
     }
 
     /**

@@ -39,7 +39,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<em id="sentence" class="introduction" xml:lang="en-US" xml:base="/home/jerome">He is <strong id="john" label="His name">John Dunbar</strong>.</em>', $dom->saveXML($element));
+        $this::assertEquals('<em id="sentence" class="introduction" xml:lang="en-US" xml:base="/home/jerome">He is <strong id="john" label="His name">John Dunbar</strong>.</em>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -50,26 +50,26 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $em = $marshaller->unmarshall($element);
-        $this->assertInstanceOf(Em::class, $em);
-        $this->assertEquals('sentence', $em->getId());
-        $this->assertEquals('introduction', $em->getClass());
-        $this->assertEquals('en-US', $em->getLang());
+        $this::assertInstanceOf(Em::class, $em);
+        $this::assertEquals('sentence', $em->getId());
+        $this::assertEquals('introduction', $em->getClass());
+        $this::assertEquals('en-US', $em->getLang());
 
         $sentence = $em->getContent();
-        $this->assertInstanceOf(InlineCollection::class, $sentence);
-        $this->assertEquals(3, count($sentence));
+        $this::assertInstanceOf(InlineCollection::class, $sentence);
+        $this::assertCount(3, $sentence);
 
-        $this->assertInstanceOf(TextRun::class, $sentence[0]);
-        $this->assertEquals('He is ', $sentence[0]->getContent());
+        $this::assertInstanceOf(TextRun::class, $sentence[0]);
+        $this::assertEquals('He is ', $sentence[0]->getContent());
 
-        $this->assertInstanceOf(Strong::class, $sentence[1]);
+        $this::assertInstanceOf(Strong::class, $sentence[1]);
         $strongContent = $sentence[1]->getContent();
-        $this->assertEquals('John Dunbar', $strongContent[0]->getContent());
-        $this->assertEquals('john', $sentence[1]->getId());
-        $this->assertEquals('His name', $sentence[1]->getLabel());
+        $this::assertEquals('John Dunbar', $strongContent[0]->getContent());
+        $this::assertEquals('john', $sentence[1]->getId());
+        $this::assertEquals('His name', $sentence[1]->getLabel());
 
-        $this->assertInstanceOf(TextRun::class, $sentence[2]);
-        $this->assertEquals('.', $sentence[2]->getContent());
+        $this::assertInstanceOf(TextRun::class, $sentence[2]);
+        $this::assertEquals('.', $sentence[2]->getContent());
     }
 
     public function testUnmarshall21MissingHref()
@@ -100,15 +100,15 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<q id="albert-einstein">Albert Einstein is a <a href="http://en.wikipedia.org/wiki/Physicist" type="text/html">physicist</a>.</q>', $dom->saveXML($element));
+        $this::assertEquals('<q id="albert-einstein">Albert Einstein is a <a href="http://en.wikipedia.org/wiki/Physicist" type="text/html">physicist</a>.</q>', $dom->saveXML($element));
     }
 
     public function testUnmarshallQandA21()
     {
         $q = $this->createComponentFromXml('<q id="albert-einstein" cite="http://en.wikipedia.org/wiki/Physicist" xml:base="/home/jerome">Albert Einstein is a <a href="http://en.wikipedia.org/wiki/Physicist" type="text/html">physicist</a>.</q>');
-        $this->assertInstanceOf(Q::class, $q);
-        $this->assertEquals('http://en.wikipedia.org/wiki/Physicist', $q->getCite());
-        $this->assertEquals('/home/jerome', $q->getXmlBase());
+        $this::assertInstanceOf(Q::class, $q);
+        $this::assertEquals('http://en.wikipedia.org/wiki/Physicist', $q->getCite());
+        $this::assertEquals('/home/jerome', $q->getXmlBase());
     }
 
     public function testUnmarshall22Ltr()
@@ -119,9 +119,9 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
 	        </q>
 	    ', '2.2.0');
 
-        $this->assertEquals('albie yeah', $q->getClass());
-        $this->assertEquals('albert-einstein', $q->getId());
-        $this->assertEquals(Direction::LTR, $q->getDir());
+        $this::assertEquals('albie yeah', $q->getClass());
+        $this::assertEquals('albert-einstein', $q->getId());
+        $this::assertEquals(Direction::LTR, $q->getDir());
     }
 
     public function testUnmarshall22Rtl()
@@ -132,7 +132,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
 	        </q>
 	    ', '2.2.0');
 
-        $this->assertEquals(Direction::RTL, $q->getDir());
+        $this::assertEquals(Direction::RTL, $q->getDir());
     }
 
     public function testUnmarshall22DirAuto()
@@ -143,7 +143,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
 	        </q>
 	    ', '2.2.0');
 
-        $this->assertEquals(Direction::AUTO, $q->getDir());
+        $this::assertEquals(Direction::AUTO, $q->getDir());
     }
 
     public function testUnmarshall21DirAuto()
@@ -154,7 +154,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
 	        </q>
 	    ', '2.1.0');
 
-        $this->assertEquals(Direction::AUTO, $q->getDir());
+        $this::assertEquals(Direction::AUTO, $q->getDir());
     }
 
     public function testMarshall22Rtl()
@@ -167,7 +167,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<q id="albert" dir="rtl"/>', $dom->saveXML($element));
+        $this::assertEquals('<q id="albert" dir="rtl"/>', $dom->saveXML($element));
     }
 
     public function testMarshall21Rtl()
@@ -180,7 +180,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<q id="albert"/>', $dom->saveXML($element));
+        $this::assertEquals('<q id="albert"/>', $dom->saveXML($element));
     }
 
     public function testMarshall20Rtl()
@@ -193,7 +193,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<q id="albert"/>', $dom->saveXML($element));
+        $this::assertEquals('<q id="albert"/>', $dom->saveXML($element));
     }
 
     public function testMarshall22Ltr()
@@ -206,7 +206,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<q id="albert" dir="ltr"/>', $dom->saveXML($element));
+        $this::assertEquals('<q id="albert" dir="ltr"/>', $dom->saveXML($element));
     }
 
     public function testMarshall22DirAuto()
@@ -219,7 +219,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<q id="albert"/>', $dom->saveXML($element));
+        $this::assertEquals('<q id="albert"/>', $dom->saveXML($element));
     }
 
     public function testMarshallBdo22()
@@ -231,18 +231,18 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<bdo id="bido" dir="rtl"/>', $dom->saveXML($element));
+        $this::assertEquals('<bdo id="bido" dir="rtl"/>', $dom->saveXML($element));
     }
 
     public function testUnmarshallBdo22()
     {
         $bdo = $this->createComponentFromXml('<bdo dir="rtl">I am reversed!</bdo>', '2.2.0');
-        $this->assertEquals(Direction::RTL, $bdo->getDir());
-        $this->assertInstanceOf(Bdo::class, $bdo);
+        $this::assertEquals(Direction::RTL, $bdo->getDir());
+        $this::assertInstanceOf(Bdo::class, $bdo);
 
         $content = $bdo->getContent();
-        $this->assertSame(1, count($content));
-        $this->assertEquals('I am reversed!', $content[0]->getContent());
+        $this::assertCount(1, $content);
+        $this::assertEquals('I am reversed!', $content[0]->getContent());
     }
 
     /**
@@ -268,7 +268,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<span id="myspan" class="myclass"/>', $dom->saveXML($element));
+        $this::assertEquals('<span id="myspan" class="myclass"/>', $dom->saveXML($element));
     }
 
     public function testUnmarshallSpan21()
@@ -280,32 +280,32 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
             '<span id="myspan" class="myclass" dir="rtl" aria-controls="IDREF1 IDREF2" aria-describedby="IDREF3" aria-flowto="IDREF4" aria-labelledby="IDREF5" aria-owns="IDREF6" aria-level="5" aria-live="off" aria-orientation="horizontal" aria-label="my aria label">I am a span</span>',
             '2.1.0'
         );
-        $this->assertInstanceOf(Span::class, $span);
-        $this->assertEquals(Direction::AUTO, $span->getDir());
-        $this->assertEquals('', $span->getAriaControls());
-        $this->assertFalse($span->hasAriaControls());
-        $this->assertEquals('', $span->getAriaDescribedBy());
-        $this->assertFalse($span->hasAriaDescribedBy());
-        $this->assertEquals('', $span->getAriaFlowTo());
-        $this->assertFalse($span->hasAriaFlowTo());
-        $this->assertEquals('', $span->getAriaLabelledBy());
-        $this->assertFalse($span->hasAriaLabelledBy());
-        $this->assertEquals('', $span->getAriaOwns());
-        $this->assertFalse($span->hasAriaOwns());
-        $this->assertEquals('', $span->getAriaLive());
-        $this->assertFalse($span->hasAriaLive());
-        $this->assertEquals('', $span->getAriaOrientation());
-        $this->assertFalse($span->hasAriaOrientation());
-        $this->assertEquals('', $span->getAriaLabel());
-        $this->assertFalse($span->hasAriaLabel());
-        $this->assertEquals('', $span->getAriaLevel());
-        $this->assertFalse($span->hasAriaLevel());
-        $this->assertFalse($span->hasAriaHidden());
-        $this->assertFalse($span->getAriaHidden());
+        $this::assertInstanceOf(Span::class, $span);
+        $this::assertEquals(Direction::AUTO, $span->getDir());
+        $this::assertEquals('', $span->getAriaControls());
+        $this::assertFalse($span->hasAriaControls());
+        $this::assertEquals('', $span->getAriaDescribedBy());
+        $this::assertFalse($span->hasAriaDescribedBy());
+        $this::assertEquals('', $span->getAriaFlowTo());
+        $this::assertFalse($span->hasAriaFlowTo());
+        $this::assertEquals('', $span->getAriaLabelledBy());
+        $this::assertFalse($span->hasAriaLabelledBy());
+        $this::assertEquals('', $span->getAriaOwns());
+        $this::assertFalse($span->hasAriaOwns());
+        $this::assertEquals('', $span->getAriaLive());
+        $this::assertFalse($span->hasAriaLive());
+        $this::assertEquals('', $span->getAriaOrientation());
+        $this::assertFalse($span->hasAriaOrientation());
+        $this::assertEquals('', $span->getAriaLabel());
+        $this::assertFalse($span->hasAriaLabel());
+        $this::assertEquals('', $span->getAriaLevel());
+        $this::assertFalse($span->hasAriaLevel());
+        $this::assertFalse($span->hasAriaHidden());
+        $this::assertFalse($span->getAriaHidden());
 
         $content = $span->getContent();
-        $this->assertSame(1, count($content));
-        $this->assertEquals('I am a span', $content[0]->getContent());
+        $this::assertCount(1, $content);
+        $this::assertEquals('I am a span', $content[0]->getContent());
     }
 
     /**
@@ -332,7 +332,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals(
+        $this::assertEquals(
             '<span id="myspan" class="myclass" dir="ltr" aria-flowto="IDREF1" aria-controls="IDREF2" aria-describedby="IDREF3" aria-labelledby="IDREF4" aria-owns="IDREF5" aria-level="1" aria-live="off" aria-orientation="horizontal" aria-label="my aria label" aria-hidden="true"/>',
             $dom->saveXML($element)
         );
@@ -345,31 +345,31 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
             '<span id="myspan" class="myclass" aria-controls="IDREF1 IDREF2" aria-describedby="IDREF3" aria-flowto="IDREF4" aria-labelledby="IDREF5" aria-owns="IDREF6" aria-level="5" aria-live="off" aria-orientation="horizontal" aria-label="my aria label" aria-flowsto="not-considered-here" aria-hidden="true">I am a span</span>',
             '2.2.0'
         );
-        $this->assertInstanceOf(Span::class, $span);
-        $this->assertEquals(Direction::AUTO, $span->getDir());
-        $this->assertEquals('IDREF1 IDREF2', $span->getAriaControls());
-        $this->assertTrue($span->hasAriaControls());
-        $this->assertEquals('IDREF3', $span->getAriaDescribedBy());
-        $this->assertTrue($span->hasAriaDescribedBy());
-        $this->assertEquals('IDREF4', $span->getAriaFlowTo());
-        $this->assertTrue($span->hasAriaFlowTo());
-        $this->assertEquals('IDREF5', $span->getAriaLabelledBy());
-        $this->assertTrue($span->hasAriaLabelledBy());
-        $this->assertEquals('IDREF6', $span->getAriaOwns());
-        $this->assertTrue($span->hasAriaOwns());
-        $this->assertEquals(AriaLive::OFF, $span->getAriaLive());
-        $this->assertTrue($span->hasAriaLive());
-        $this->assertEquals(AriaOrientation::HORIZONTAL, $span->getAriaOrientation());
-        $this->assertTrue($span->hasAriaOrientation());
-        $this->assertEquals('my aria label', $span->getAriaLabel());
-        $this->assertTrue($span->hasAriaLabel());
-        $this->assertEquals('5', $span->getAriaLevel());
-        $this->assertTrue($span->hasAriaLevel());
-        $this->assertTrue($span->hasAriaHidden());
-        $this->assertTrue($span->getAriaHidden());
+        $this::assertInstanceOf(Span::class, $span);
+        $this::assertEquals(Direction::AUTO, $span->getDir());
+        $this::assertEquals('IDREF1 IDREF2', $span->getAriaControls());
+        $this::assertTrue($span->hasAriaControls());
+        $this::assertEquals('IDREF3', $span->getAriaDescribedBy());
+        $this::assertTrue($span->hasAriaDescribedBy());
+        $this::assertEquals('IDREF4', $span->getAriaFlowTo());
+        $this::assertTrue($span->hasAriaFlowTo());
+        $this::assertEquals('IDREF5', $span->getAriaLabelledBy());
+        $this::assertTrue($span->hasAriaLabelledBy());
+        $this::assertEquals('IDREF6', $span->getAriaOwns());
+        $this::assertTrue($span->hasAriaOwns());
+        $this::assertEquals(AriaLive::OFF, $span->getAriaLive());
+        $this::assertTrue($span->hasAriaLive());
+        $this::assertEquals(AriaOrientation::HORIZONTAL, $span->getAriaOrientation());
+        $this::assertTrue($span->hasAriaOrientation());
+        $this::assertEquals('my aria label', $span->getAriaLabel());
+        $this::assertTrue($span->hasAriaLabel());
+        $this::assertEquals('5', $span->getAriaLevel());
+        $this::assertTrue($span->hasAriaLevel());
+        $this::assertTrue($span->hasAriaHidden());
+        $this::assertTrue($span->getAriaHidden());
 
         $content = $span->getContent();
-        $this->assertSame(1, count($content));
-        $this->assertEquals('I am a span', $content[0]->getContent());
+        $this::assertCount(1, $content);
+        $this::assertEquals('I am a span', $content[0]->getContent());
     }
 }

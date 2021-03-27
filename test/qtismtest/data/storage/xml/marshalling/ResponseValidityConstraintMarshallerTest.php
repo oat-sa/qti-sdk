@@ -23,11 +23,11 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
         $component = $factory->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf(ResponseValidityConstraint::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertEquals(0, $component->getMinConstraint());
-        $this->assertEquals(1, $component->getMaxConstraint());
-        $this->assertEquals('', $component->getPatternMask());
+        $this::assertInstanceOf(ResponseValidityConstraint::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertEquals(0, $component->getMinConstraint());
+        $this::assertEquals(1, $component->getMaxConstraint());
+        $this::assertEquals('', $component->getPatternMask());
     }
 
     /**
@@ -47,15 +47,15 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
         $component = $factory->createMarshaller($element)->unmarshall($element);
 
         $associationValidityConstraints = $component->getAssociationValidityConstraints();
-        $this->assertEquals(2, count($associationValidityConstraints));
+        $this::assertCount(2, $associationValidityConstraints);
 
-        $this->assertEquals('ID1', $associationValidityConstraints[0]->getIdentifier());
-        $this->assertEquals(0, $associationValidityConstraints[0]->getMinConstraint());
-        $this->assertEquals(1, $associationValidityConstraints[0]->getMaxConstraint());
+        $this::assertEquals('ID1', $associationValidityConstraints[0]->getIdentifier());
+        $this::assertEquals(0, $associationValidityConstraints[0]->getMinConstraint());
+        $this::assertEquals(1, $associationValidityConstraints[0]->getMaxConstraint());
 
-        $this->assertEquals('ID2', $associationValidityConstraints[1]->getIdentifier());
-        $this->assertEquals(1, $associationValidityConstraints[1]->getMinConstraint());
-        $this->assertEquals(2, $associationValidityConstraints[1]->getMaxConstraint());
+        $this::assertEquals('ID2', $associationValidityConstraints[1]->getIdentifier());
+        $this::assertEquals(1, $associationValidityConstraints[1]->getMinConstraint());
+        $this::assertEquals(2, $associationValidityConstraints[1]->getMaxConstraint());
     }
 
     /**
@@ -69,7 +69,7 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
         $component = $factory->createMarshaller($element)->unmarshall($element);
 
-        $this->assertEquals('/.+/ui', $component->getPatternMask());
+        $this::assertEquals('/.+/ui', $component->getPatternMask());
     }
 
     /**
@@ -153,10 +153,10 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
 
         $element = $factory->createMarshaller($component)->marshall($component);
-        $this->assertEquals('RESPONSE', $element->getAttribute('responseIdentifier'));
-        $this->assertEquals('0', $element->getAttribute('minConstraint'));
-        $this->assertEquals('1', $element->getAttribute('maxConstraint'));
-        $this->assertEquals('/.+/ui', $element->getAttribute('patternMask'));
+        $this::assertEquals('RESPONSE', $element->getAttribute('responseIdentifier'));
+        $this::assertEquals('0', $element->getAttribute('minConstraint'));
+        $this::assertEquals('1', $element->getAttribute('maxConstraint'));
+        $this::assertEquals('/.+/ui', $element->getAttribute('patternMask'));
     }
 
     /**
@@ -178,12 +178,12 @@ class ResponseValidityConstraintMarshallerTest extends QtiSmTestCase
         $element = $factory->createMarshaller($component)->marshall($component);
         $associationValidityConstraintElts = $element->getElementsByTagName('associationValidityConstraint');
 
-        $this->assertEquals(2, $associationValidityConstraintElts->length);
-        $this->assertEquals('ID1', $associationValidityConstraintElts->item(0)->getAttribute('identifier'));
-        $this->assertEquals('0', $associationValidityConstraintElts->item(0)->getAttribute('minConstraint'));
-        $this->assertEquals('1', $associationValidityConstraintElts->item(0)->getAttribute('maxConstraint'));
-        $this->assertEquals('ID2', $associationValidityConstraintElts->item(1)->getAttribute('identifier'));
-        $this->assertEquals('0', $associationValidityConstraintElts->item(1)->getAttribute('minConstraint'));
-        $this->assertEquals('2', $associationValidityConstraintElts->item(1)->getAttribute('maxConstraint'));
+        $this::assertEquals(2, $associationValidityConstraintElts->length);
+        $this::assertEquals('ID1', $associationValidityConstraintElts->item(0)->getAttribute('identifier'));
+        $this::assertEquals('0', $associationValidityConstraintElts->item(0)->getAttribute('minConstraint'));
+        $this::assertEquals('1', $associationValidityConstraintElts->item(0)->getAttribute('maxConstraint'));
+        $this::assertEquals('ID2', $associationValidityConstraintElts->item(1)->getAttribute('identifier'));
+        $this::assertEquals('0', $associationValidityConstraintElts->item(1)->getAttribute('minConstraint'));
+        $this::assertEquals('2', $associationValidityConstraintElts->item(1)->getAttribute('maxConstraint'));
     }
 }

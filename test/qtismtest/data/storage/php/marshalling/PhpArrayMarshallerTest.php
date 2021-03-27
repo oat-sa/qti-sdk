@@ -16,7 +16,7 @@ class PhpArrayMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpArrayMarshaller($ctx, []);
         $marshaller->marshall();
 
-        $this->assertEquals("\$array_0 = array();\n", $this->getStream()->getBinary());
+        $this::assertEquals("\$array_0 = array();\n", $this->getStream()->getBinary());
     }
 
     public function testIntegerArray()
@@ -26,6 +26,6 @@ class PhpArrayMarshallerTest extends QtiSmPhpMarshallerTestCase
         $arrayMarshaller->marshall();
 
         $expected = "\$array_0 = array(0, 1, 2);\n";
-        $this->assertEquals($expected, $this->getStream()->getBinary());
+        $this::assertEquals($expected, $this->getStream()->getBinary());
     }
 }

@@ -19,7 +19,7 @@ class XIncludeMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="path/to/file"/>', $dom->saveXML($element));
+        $this::assertEquals('<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="path/to/file"/>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -27,14 +27,14 @@ class XIncludeMarshallerTest extends QtiSmTestCase
         $element = $this->createDOMElement('<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="path/to/file"/>');
 
         $xinclude = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(XInclude::class, $xinclude);
-        $this->assertEquals('path/to/file', $xinclude->getHref());
+        $this::assertInstanceOf(XInclude::class, $xinclude);
+        $this::assertEquals('path/to/file', $xinclude->getHref());
         $xml = $xinclude->getXml();
-        $this->assertInstanceOf(DOMDocument::class, $xml);
+        $this::assertInstanceOf(DOMDocument::class, $xml);
 
         $includeElement = $xml->documentElement;
-        $this->assertEquals('xi', $includeElement->prefix);
-        $this->assertEquals('http://www.w3.org/2001/XInclude', $includeElement->namespaceURI);
+        $this::assertEquals('xi', $includeElement->prefix);
+        $this::assertEquals('http://www.w3.org/2001/XInclude', $includeElement->namespaceURI);
     }
 
     public function testGetXmlWrongNamespace()

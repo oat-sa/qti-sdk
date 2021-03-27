@@ -18,13 +18,13 @@ class IdentifierCollectionTest extends QtiSmTestCase
      */
     private $collection;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->collection = new IdentifierCollection();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->collection);
@@ -34,8 +34,8 @@ class IdentifierCollectionTest extends QtiSmTestCase
     {
         $string = 'foobar';
         $this->collection[] = $string;
-        $this->assertEquals(count($this->collection), 1);
-        $this->assertEquals($this->collection[0], 'foobar');
+        $this::assertCount(1, $this->collection);
+        $this::assertEquals('foobar', $this->collection[0]);
     }
 
     /**
@@ -46,7 +46,7 @@ class IdentifierCollectionTest extends QtiSmTestCase
         $string = 'foobar';
         $this->collection[] = $string;
         unset($this->collection[0]);
-        $this->assertEquals(count($this->collection), 0);
+        $this::assertCount(0, $this->collection);
     }
 
     /**
@@ -56,9 +56,9 @@ class IdentifierCollectionTest extends QtiSmTestCase
     {
         $string = 'foobar';
         $this->collection[] = $string;
-        $this->assertTrue(isset($this->collection[0]));
+        $this::assertTrue(isset($this->collection[0]));
         $this->collection[0] = 'foo';
-        $this->assertNotEquals($this->collection[0], $string);
+        $this::assertNotEquals($this->collection[0], $string);
     }
 
     public function testAddIdentifierWrongFormat()
@@ -78,10 +78,10 @@ class IdentifierCollectionTest extends QtiSmTestCase
     public function testToString()
     {
         $this->collection[] = 'one';
-        $this->assertEquals('one', $this->collection->__toString());
+        $this::assertEquals('one', $this->collection->__toString());
 
         $this->collection[] = 'two';
         $this->collection[] = 'three';
-        $this->assertEquals('one,two,three', $this->collection->__toString());
+        $this::assertEquals('one,two,three', $this->collection->__toString());
     }
 }

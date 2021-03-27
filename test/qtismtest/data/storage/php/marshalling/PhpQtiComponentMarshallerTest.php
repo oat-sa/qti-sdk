@@ -21,7 +21,7 @@ class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller = new PhpQtiComponentMarshaller($ctx, $component);
         $marshaller->marshall();
 
-        $this->assertEquals('$exittest_0 = new ' . ExitTest::class . '();' . "\n", $this->getStream()->getBinary());
+        $this::assertEquals('$exittest_0 = new ' . ExitTest::class . '();' . "\n", $this->getStream()->getBinary());
     }
 
     public function testOnlyScalarPropertiesComponentAllInConstructor()
@@ -41,7 +41,7 @@ class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase
         $expected .= '$double_0 = 1.1;' . "\n";
         $expected .= '$weight_0 = new ' . Weight::class . '($string_0, $double_0);' . "\n";
 
-        $this->assertEquals($expected, $this->getStream()->getBinary());
+        $this::assertEquals($expected, $this->getStream()->getBinary());
     }
 
     public function testOnlyScalarPropertiesConstructorAndProperties()
@@ -83,6 +83,6 @@ class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase
         $expected .= '$itemsessioncontrol_0->setValidateResponses($boolean_4);' . "\n";
         $expected .= '$itemsessioncontrol_0->setAllowSkipping($boolean_5);' . "\n";
 
-        $this->assertEquals($expected, $this->getStream()->getBinary());
+        $this::assertEquals($expected, $this->getStream()->getBinary());
     }
 }

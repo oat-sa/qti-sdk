@@ -21,10 +21,10 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
         $component = $factory->createMarshaller($element)->unmarshall($element);
 
-        $this->assertInstanceOf(AssociationValidityConstraint::class, $component);
-        $this->assertEquals('IDENTIFIER', $component->getIdentifier());
-        $this->assertEquals(0, $component->getMinConstraint());
-        $this->assertEquals(1, $component->getMaxConstraint());
+        $this::assertInstanceOf(AssociationValidityConstraint::class, $component);
+        $this::assertEquals('IDENTIFIER', $component->getIdentifier());
+        $this::assertEquals(0, $component->getMinConstraint());
+        $this::assertEquals(1, $component->getMaxConstraint());
     }
 
     public function testUnmarshallNoIdentifier()
@@ -93,8 +93,8 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
 
         $element = $factory->createMarshaller($component)->marshall($component);
-        $this->assertEquals('IDENTIFIER', $element->getAttribute('identifier'));
-        $this->assertEquals('0', $element->getAttribute('minConstraint'));
-        $this->assertEquals('1', $element->getAttribute('maxConstraint'));
+        $this::assertEquals('IDENTIFIER', $element->getAttribute('identifier'));
+        $this::assertEquals('0', $element->getAttribute('minConstraint'));
+        $this::assertEquals('1', $element->getAttribute('maxConstraint'));
     }
 }

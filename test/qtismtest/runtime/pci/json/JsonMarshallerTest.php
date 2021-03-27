@@ -2,6 +2,7 @@
 
 namespace qtismtest\runtime\pci\json;
 
+use qtism\common\datatypes\files\FileHash;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDatatype;
@@ -43,7 +44,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallScalar($scalar, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($scalar));
+        $this::assertEquals($expectedJson, $marshaller->marshall($scalar));
     }
 
     /**
@@ -56,7 +57,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallComplex(QtiDatatype $complex, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($complex));
+        $this::assertEquals($expectedJson, $marshaller->marshall($complex));
     }
 
     /**
@@ -69,7 +70,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallMultiple(MultipleContainer $multiple, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($multiple));
+        $this::assertEquals($expectedJson, $marshaller->marshall($multiple));
     }
 
     /**
@@ -82,7 +83,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallOrdered(OrderedContainer $ordered, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($ordered));
+        $this::assertEquals($expectedJson, $marshaller->marshall($ordered));
     }
 
     /**
@@ -95,7 +96,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallRecord(RecordContainer $record, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($record));
+        $this::assertEquals($expectedJson, $marshaller->marshall($record));
     }
 
     /**
@@ -108,7 +109,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     public function testMarshallState(State $state, $expectedJson)
     {
         $marshaller = new Marshaller();
-        $this->assertEquals($expectedJson, $marshaller->marshall($state));
+        $this::assertEquals($expectedJson, $marshaller->marshall($state));
     }
 
     /**
@@ -130,7 +131,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     {
         $marshaller = new Marshaller();
         $data = $marshaller->marshall(new QtiInteger(12), Marshaller::MARSHALL_ARRAY);
-        $this->assertEquals(12, $data['base']['integer']);
+        $this::assertEquals(12, $data['base']['integer']);
     }
 
     /**
@@ -171,6 +172,16 @@ class JsonMarshallerTest extends QtiSmTestCase
 
         $file = new FileSystemFile($samples . 'datatypes/file/image-png_noname_data.png');
         $returnValue[] = [$file, json_encode(['base' => ['file' => ['mime' => $file->getMimeType(), 'data' => base64_encode($file->getData())]]])];
+
+        $id = 'http://some.cloud.storage/path/to/stored-file.txt';
+        $mimeType = 'text/plain';
+        $filename = 'file.txt';
+        $sha256 = '165940940A02A187E4463FF467090930038C5AF8FC26107BF301E714F599A1DA';
+
+        $fileHash = new FileHash($id, $mimeType, $filename, $sha256);
+        $returnValue[] = [$fileHash, json_encode(
+            ['base' => [FileHash::FILE_HASH_KEY => ['id' => $id, 'mime' => $mimeType, 'name' => $filename, 'data' => $sha256]]]
+        )];
 
         return $returnValue;
     }
@@ -232,9 +243,9 @@ class JsonMarshallerTest extends QtiSmTestCase
         $json = json_encode(['list' => ['directedPair' => [['A', 'B'], ['D', 'C']]]]);
         $returnValue[] = [$container, $json];
 
-        // duration multiple("P3Y67M", "P4Y").
-        $container = new MultipleContainer(BaseType::DURATION, [new QtiDuration('P3Y'), new QtiDuration('P4Y')]);
-        $json = json_encode(['list' => ['duration' => ['P3Y', 'P4Y']]]);
+        // duration multiple("P3Y6M4DT12H30M5S", "P4Y").
+        $container = new MultipleContainer(BaseType::DURATION, [new QtiDuration('PT4M10S'), new QtiDuration('P4Y')]);
+        $json = json_encode(['list' => ['duration' => ['PT4M10S', 'P4Y']]]);
         $returnValue[] = [$container, $json];
 
         // uri multiple("file:///aFile.txt", "file:///abc.txt").

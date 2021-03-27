@@ -23,28 +23,28 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
 
         // Q01 - No precondtions.
         $routeItem = $route->getRouteItemAt(0);
-        $this->assertEquals(0, count($routeItem->getPreConditions()));
+        $this::assertCount(0, $routeItem->getPreConditions());
 
         // Q02 - A precondition based on Q01.SCORE.
         $routeItem = $route->getRouteItemAt(1);
         $preConditions = $routeItem->getPreConditions();
-        $this->assertEquals(1, count($preConditions));
+        $this::assertCount(1, $preConditions);
         $var = $preConditions[0]->getComponentsByClassName('variable');
-        $this->assertEquals('Q01.SCORE', $var[0]->getIdentifier());
+        $this::assertEquals('Q01.SCORE', $var[0]->getIdentifier());
 
         // Q03 - A precondition based on Q02.SCORE.
         $routeItem = $route->getRouteItemAt(2);
         $preConditions = $routeItem->getPreConditions();
-        $this->assertEquals(1, count($preConditions));
+        $this::assertCount(1, $preConditions);
         $var = $preConditions[0]->getComponentsByClassName('variable');
-        $this->assertEquals('Q02.SCORE', $var[0]->getIdentifier());
+        $this::assertEquals('Q02.SCORE', $var[0]->getIdentifier());
 
         // Q04 - A precondition based on Q03.SCORE.
         $routeItem = $route->getRouteItemAt(3);
         $preConditions = $routeItem->getPreConditions();
-        $this->assertEquals(1, count($preConditions));
+        $this::assertCount(1, $preConditions);
         $var = $preConditions[0]->getComponentsByClassName('variable');
-        $this->assertEquals('Q03.SCORE', $var[0]->getIdentifier());
+        $this::assertEquals('Q03.SCORE', $var[0]->getIdentifier());
     }
 
     public function testSingleSectionLinear1()
@@ -58,12 +58,12 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $testSession->moveNext();
 
         // Because of the autoforward, the test is finished.
-        $this->assertFalse($testSession->isRunning());
-        $this->assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
-        $this->assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
-        $this->assertSame(null, $testSession['Q02.SCORE']);
-        $this->assertSame(null, $testSession['Q03.SCORE']);
-        $this->assertSame(null, $testSession['Q04.SCORE']);
+        $this::assertFalse($testSession->isRunning());
+        $this::assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
+        $this::assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
+        $this::assertNull($testSession['Q02.SCORE']);
+        $this::assertNull($testSession['Q03.SCORE']);
+        $this::assertNull($testSession['Q04.SCORE']);
     }
 
     public function testSingleSectionNonLinear1()
@@ -74,14 +74,14 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $testSession->beginTestSession();
 
         // Q01 - Answer incorrect, you will get the next item.
-        $this->assertEquals('Q01', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q01', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
         $testSession->moveNext();
 
         // Q02
-        $this->assertTrue($testSession->isRunning(), 'The test session must be running.');
-        $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertTrue($testSession->isRunning(), 'The test session must be running.');
+        $this::assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
     }
 
     public function testSingleSectionNonLinearForcePreconditions()
@@ -97,12 +97,12 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $testSession->moveNext();
 
         // Because of the autoforward, the test is finished.
-        $this->assertFalse($testSession->isRunning());
-        $this->assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
-        $this->assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
-        $this->assertSame(null, $testSession['Q02.SCORE']);
-        $this->assertSame(null, $testSession['Q03.SCORE']);
-        $this->assertSame(null, $testSession['Q04.SCORE']);
+        $this::assertFalse($testSession->isRunning());
+        $this::assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
+        $this::assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
+        $this::assertNull($testSession['Q02.SCORE']);
+        $this::assertNull($testSession['Q03.SCORE']);
+        $this::assertNull($testSession['Q04.SCORE']);
     }
 
     public function testKillerTestEpicFail()
@@ -115,15 +115,15 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $testSession->moveNext();
 
         // Incorrect answer = end of test.
-        $this->assertFalse($testSession->isRunning());
-        $this->assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
-        $this->assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
+        $this::assertFalse($testSession->isRunning());
+        $this::assertInstanceOf(QtiFloat::class, $testSession['Q01.SCORE']);
+        $this::assertEquals(0.0, $testSession['Q01.SCORE']->getValue());
 
         // Other items could not be instantiated.
-        $this->assertSame(null, $testSession['Q02.SCORE']);
-        $this->assertSame(null, $testSession['Q03.SCORE']);
-        $this->assertSame(null, $testSession['Q04.SCORE']);
-        $this->assertSame(null, $testSession['Q05.SCORE']);
+        $this::assertNull($testSession['Q02.SCORE']);
+        $this::assertNull($testSession['Q03.SCORE']);
+        $this::assertNull($testSession['Q04.SCORE']);
+        $this::assertNull($testSession['Q05.SCORE']);
     }
 
     public function testKillerTestEpicWin()
@@ -131,36 +131,36 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_killertest.xml');
         $testSession->beginTestSession();
 
-        $this->assertEquals('Q01', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q01', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GoodChoice'))]));
         $testSession->moveNext();
-        $this->assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
+        $this::assertEquals(1.0, $testSession['Q01.SCORE']->getValue());
 
-        $this->assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GoodChoice'))]));
         $testSession->moveNext();
-        $this->assertEquals(1.0, $testSession['Q02.SCORE']->getValue());
+        $this::assertEquals(1.0, $testSession['Q02.SCORE']->getValue());
 
-        $this->assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GoodChoice'))]));
         $testSession->moveNext();
-        $this->assertEquals(1.0, $testSession['Q03.SCORE']->getValue());
+        $this::assertEquals(1.0, $testSession['Q03.SCORE']->getValue());
 
-        $this->assertEquals('Q04', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q04', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GoodChoice'))]));
         $testSession->moveNext();
-        $this->assertEquals(1.0, $testSession['Q04.SCORE']->getValue());
+        $this::assertEquals(1.0, $testSession['Q04.SCORE']->getValue());
 
-        $this->assertEquals('Q05', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $this::assertEquals('Q05', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
         $testSession->beginAttempt();
         $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GoodChoice'))]));
         $testSession->moveNext();
-        $this->assertEquals(1.0, $testSession['Q05.SCORE']->getValue());
+        $this::assertEquals(1.0, $testSession['Q05.SCORE']->getValue());
 
-        $this->assertFalse($testSession->isRunning());
+        $this::assertFalse($testSession->isRunning());
     }
 }

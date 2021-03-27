@@ -22,17 +22,17 @@ class SubstringMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('substring', $element->nodeName);
-        $this->assertEquals('false', $element->getAttribute('caseSensitive'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('substring', $element->nodeName);
+        $this::assertEquals('false', $element->getAttribute('caseSensitive'));
 
         $sub = $element->getElementsByTagName('baseValue')->item(0);
-        $this->assertEquals('Hell', $sub->nodeValue);
-        $this->assertEquals('string', $sub->getAttribute('baseType'));
+        $this::assertEquals('Hell', $sub->nodeValue);
+        $this::assertEquals('string', $sub->getAttribute('baseType'));
 
         $sub = $element->getElementsByTagName('baseValue')->item(1);
-        $this->assertEquals('Shell', $sub->nodeValue);
-        $this->assertEquals('string', $sub->getAttribute('baseType'));
+        $this::assertEquals('Shell', $sub->nodeValue);
+        $this::assertEquals('string', $sub->getAttribute('baseType'));
     }
 
     public function testUnmarshall()
@@ -51,19 +51,19 @@ class SubstringMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Substring::class, $component);
-        $this->assertTrue($component->isCaseSensitive());
+        $this::assertInstanceOf(Substring::class, $component);
+        $this::assertTrue($component->isCaseSensitive());
 
         $sub = $component->getExpressions();
         $sub = $sub[0];
-        $this->assertInstanceOf(BaseValue::class, $sub);
-        $this->assertEquals(BaseType::STRING, $sub->getBaseType());
-        $this->assertEquals('Hell', $sub->getValue());
+        $this::assertInstanceOf(BaseValue::class, $sub);
+        $this::assertEquals(BaseType::STRING, $sub->getBaseType());
+        $this::assertEquals('Hell', $sub->getValue());
 
         $sub = $component->getExpressions();
         $sub = $sub[1];
-        $this->assertInstanceOf(BaseValue::class, $sub);
-        $this->assertEquals(BaseType::STRING, $sub->getBaseType());
-        $this->assertEquals('Shell', $sub->getValue());
+        $this::assertInstanceOf(BaseValue::class, $sub);
+        $this::assertEquals(BaseType::STRING, $sub->getBaseType());
+        $this::assertEquals('Shell', $sub->getValue());
     }
 }

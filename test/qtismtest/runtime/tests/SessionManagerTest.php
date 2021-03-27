@@ -16,7 +16,7 @@ class SessionManagerTest extends QtiSmTestCase
 {
     private $test;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -25,7 +25,7 @@ class SessionManagerTest extends QtiSmTestCase
         $this->setTest($test->getDocumentComponent());
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->test);
@@ -52,6 +52,6 @@ class SessionManagerTest extends QtiSmTestCase
         $manager = new SessionManager(new FileSystemFileManager());
         $session = $manager->createAssessmentTestSession($this->getTest());
 
-        $this->assertInstanceOf(AssessmentTestSession::class, $session);
+        $this::assertInstanceOf(AssessmentTestSession::class, $session);
     }
 }

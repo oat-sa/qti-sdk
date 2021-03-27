@@ -80,7 +80,7 @@ class DefaultValueMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         $interpretation = $component->getInterpretation();
         if (!empty($interpretation)) {

@@ -19,7 +19,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
     public function testCreateNotEnoughHotspotChoices()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("A GraphicOrderInteraction must contain at least 1 hotspotChoice object. None given.");
+        $this->expectExceptionMessage('A GraphicOrderInteraction must contain at least 1 hotspotChoice object. None given.');
 
         $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), new HotSpotChoiceCollection());
     }

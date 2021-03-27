@@ -19,9 +19,9 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
     public function testSuccessfulInstantiation($minConstraint, $maxConstraint)
     {
         $associationValidityConstraint = new AssociationValidityConstraint('IDENTIFIER', $minConstraint, $maxConstraint);
-        $this->assertEquals('IDENTIFIER', $associationValidityConstraint->getIdentifier());
-        $this->assertEquals($minConstraint, $associationValidityConstraint->getMinConstraint());
-        $this->assertEquals($maxConstraint, $associationValidityConstraint->getMaxConstraint());
+        $this::assertEquals('IDENTIFIER', $associationValidityConstraint->getIdentifier());
+        $this::assertEquals($minConstraint, $associationValidityConstraint->getMinConstraint());
+        $this::assertEquals($maxConstraint, $associationValidityConstraint->getMaxConstraint());
     }
 
     /**

@@ -37,7 +37,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<orderInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>', $dom->saveXML($element));
+        $this::assertEquals('<orderInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>', $dom->saveXML($element));
     }
 
     /**
@@ -56,7 +56,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<orderInteraction responseIdentifier="RESPONSE"><simpleChoice identifier="choice_1">Choice #1</simpleChoice></orderInteraction>', $dom->saveXML($element));
+        $this::assertEquals('<orderInteraction responseIdentifier="RESPONSE"><simpleChoice identifier="choice_1">Choice #1</simpleChoice></orderInteraction>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
@@ -72,22 +72,22 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OrderInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertFalse($component->mustShuffle());
-        $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());
-        $this->assertTrue($component->hasPrompt());
-        $this->assertEquals(-1, $component->getMinChoices());
-        $this->assertFalse($component->hasMinChoices());
-        $this->assertEquals(2, $component->getMaxChoices());
-        $this->assertTrue($component->hasMaxChoices());
+        $this::assertInstanceOf(OrderInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertFalse($component->mustShuffle());
+        $this::assertEquals(Orientation::VERTICAL, $component->getOrientation());
+        $this::assertTrue($component->hasPrompt());
+        $this::assertEquals(-1, $component->getMinChoices());
+        $this::assertFalse($component->hasMinChoices());
+        $this::assertEquals(2, $component->getMaxChoices());
+        $this::assertTrue($component->hasMaxChoices());
 
         $prompt = $component->getPrompt();
         $content = $prompt->getContent();
-        $this->assertEquals('Prompt...', $content[0]->getContent());
+        $this::assertEquals('Prompt...', $content[0]->getContent());
 
         $simpleChoices = $component->getSimpleChoices();
-        $this->assertEquals(2, count($simpleChoices));
+        $this::assertCount(2, $simpleChoices);
     }
 
     public function testUnmarshall20()
@@ -103,22 +103,22 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OrderInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertTrue($component->mustShuffle());
-        $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());
-        $this->assertTrue($component->hasPrompt());
-        $this->assertEquals(-1, $component->getMinChoices());
-        $this->assertFalse($component->hasMinChoices());
-        $this->assertEquals(-1, $component->getMaxChoices());
-        $this->assertFalse($component->hasMaxChoices());
+        $this::assertInstanceOf(OrderInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertTrue($component->mustShuffle());
+        $this::assertEquals(Orientation::VERTICAL, $component->getOrientation());
+        $this::assertTrue($component->hasPrompt());
+        $this::assertEquals(-1, $component->getMinChoices());
+        $this::assertFalse($component->hasMinChoices());
+        $this::assertEquals(-1, $component->getMaxChoices());
+        $this::assertFalse($component->hasMaxChoices());
 
         $prompt = $component->getPrompt();
         $content = $prompt->getContent();
-        $this->assertEquals('Prompt...', $content[0]->getContent());
+        $this::assertEquals('Prompt...', $content[0]->getContent());
 
         $simpleChoices = $component->getSimpleChoices();
-        $this->assertEquals(2, count($simpleChoices));
+        $this::assertCount(2, $simpleChoices);
     }
 
     /**
@@ -138,14 +138,14 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OrderInteraction::class, $component);
-        $this->assertEquals('RESPONSE', $component->getResponseIdentifier());
-        $this->assertTrue($component->mustShuffle());
-        $this->assertEquals(Orientation::VERTICAL, $component->getOrientation());
-        $this->assertEquals(-1, $component->getMinChoices());
-        $this->assertFalse($component->hasMinChoices());
-        $this->assertEquals(-1, $component->getMaxChoices());
-        $this->assertFalse($component->hasMaxChoices());
+        $this::assertInstanceOf(OrderInteraction::class, $component);
+        $this::assertEquals('RESPONSE', $component->getResponseIdentifier());
+        $this::assertTrue($component->mustShuffle());
+        $this::assertEquals(Orientation::VERTICAL, $component->getOrientation());
+        $this::assertEquals(-1, $component->getMinChoices());
+        $this::assertFalse($component->hasMinChoices());
+        $this::assertEquals(-1, $component->getMaxChoices());
+        $this::assertFalse($component->hasMaxChoices());
     }
 
     public function testMarshal20()
@@ -168,6 +168,6 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<orderInteraction responseIdentifier="RESPONSE" shuffle="false"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>', $dom->saveXML($element));
+        $this::assertEquals('<orderInteraction responseIdentifier="RESPONSE" shuffle="false"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></orderInteraction>', $dom->saveXML($element));
     }
 }

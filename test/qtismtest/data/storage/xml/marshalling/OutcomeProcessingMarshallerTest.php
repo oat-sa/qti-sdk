@@ -27,15 +27,15 @@ class OutcomeProcessingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
+        $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this->assertTrue($element->getElementsByTagName('lookupOutcomeValue')->item(0)->parentNode === $element);
-        $this->assertTrue($element->getElementsByTagName('baseValue')->item(0)->parentNode === $element->getElementsByTagName('lookupOutcomeValue')->item(0));
-        $this->assertEquals('24.3', $element->getElementsByTagName('baseValue')->item(0)->nodeValue);
+        $this::assertSame($element, $element->getElementsByTagName('lookupOutcomeValue')->item(0)->parentNode);
+        $this::assertSame($element->getElementsByTagName('baseValue')->item(0)->parentNode, $element->getElementsByTagName('lookupOutcomeValue')->item(0));
+        $this::assertEquals('24.3', $element->getElementsByTagName('baseValue')->item(0)->nodeValue);
 
-        $this->assertTrue($element->getElementsByTagName('setOutcomeValue')->item(0)->parentNode === $element);
-        $this->assertTrue($element->getElementsByTagName('baseValue')->item(1)->parentNode === $element->getElementsByTagName('setOutcomeValue')->item(0));
-        $this->assertEquals('true', $element->getElementsByTagName('baseValue')->item(1)->nodeValue);
+        $this::assertSame($element, $element->getElementsByTagName('setOutcomeValue')->item(0)->parentNode);
+        $this::assertSame($element->getElementsByTagName('baseValue')->item(1)->parentNode, $element->getElementsByTagName('setOutcomeValue')->item(0));
+        $this::assertEquals('true', $element->getElementsByTagName('baseValue')->item(1)->nodeValue);
     }
 
     public function testUnmarshall()
@@ -58,20 +58,20 @@ class OutcomeProcessingMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(OutcomeProcessing::class, $component);
+        $this::assertInstanceOf(OutcomeProcessing::class, $component);
 
         $outcomeRules = $component->getOutcomeRules();
-        $this->assertInstanceOf(LookupOutcomeValue::class, $outcomeRules[0]);
-        $this->assertEquals('output1', $outcomeRules[0]->getIdentifier());
-        $this->assertInstanceOf(SetOutcomeValue::class, $outcomeRules[1]);
-        $this->assertEquals('output2', $outcomeRules[1]->getIdentifier());
+        $this::assertInstanceOf(LookupOutcomeValue::class, $outcomeRules[0]);
+        $this::assertEquals('output1', $outcomeRules[0]->getIdentifier());
+        $this::assertInstanceOf(SetOutcomeValue::class, $outcomeRules[1]);
+        $this::assertEquals('output2', $outcomeRules[1]->getIdentifier());
 
-        $this->assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
-        $this->assertInternalType('float', $outcomeRules[0]->getExpression()->getValue());
-        $this->assertEquals(24.3, $outcomeRules[0]->getExpression()->getValue());
+        $this::assertInstanceOf(BaseValue::class, $outcomeRules[0]->getExpression());
+        $this::assertIsFloat($outcomeRules[0]->getExpression()->getValue());
+        $this::assertEquals(24.3, $outcomeRules[0]->getExpression()->getValue());
 
-        $this->assertInstanceOf(BaseValue::class, $outcomeRules[1]->getExpression());
-        $this->assertInternalType('boolean', $outcomeRules[1]->getExpression()->getValue());
-        $this->assertTrue($outcomeRules[1]->getExpression()->getValue());
+        $this::assertInstanceOf(BaseValue::class, $outcomeRules[1]->getExpression());
+        $this::assertIsBool($outcomeRules[1]->getExpression()->getValue());
+        $this::assertTrue($outcomeRules[1]->getExpression()->getValue());
     }
 }

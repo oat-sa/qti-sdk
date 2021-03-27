@@ -32,7 +32,7 @@ class InterpolationTableTest extends QtiSmTestCase
         );
 
         $components = $interpolationTable->getComponents();
-        $this->assertCount(1, $components);
-        $this->assertInstanceOf(InterpolationTableEntry::class, $components[0]);
+        $this::assertCount(1, $components);
+        $this::assertInstanceOf(InterpolationTableEntry::class, $components[0]);
     }
 }

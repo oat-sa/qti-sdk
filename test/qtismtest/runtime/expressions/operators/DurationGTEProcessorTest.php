@@ -27,20 +27,20 @@ class DurationGTEProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiDuration('P2D'), new QtiDuration('P1D')]);
         $processor = new DurationGTEProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $operands = new OperandsCollection([new QtiDuration('P1D'), new QtiDuration('P2D')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         $operands = new OperandsCollection([new QtiDuration('P1DT23M2S'), new QtiDuration('P1DT23M2S')]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
     }
 
     public function testNull()
@@ -49,7 +49,7 @@ class DurationGTEProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiDuration('P1D'), null]);
         $processor = new DurationGTEProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseType()

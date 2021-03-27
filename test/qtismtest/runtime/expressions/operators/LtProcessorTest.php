@@ -27,22 +27,22 @@ class LtProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(1);
         $processor = new LtProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertTrue($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertTrue($result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(1);
         $operands[] = new QtiFloat(0.5);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
 
         $operands->reset();
         $operands[] = new QtiInteger(1);
         $operands[] = new QtiInteger(1);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiBoolean::class, $result);
-        $this->assertFalse($result->getValue());
+        $this::assertInstanceOf(QtiBoolean::class, $result);
+        $this::assertFalse($result->getValue());
     }
 
     public function testNull()
@@ -53,7 +53,7 @@ class LtProcessorTest extends QtiSmTestCase
         $operands[] = null;
         $processor = new LtProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongBaseTypeOne()

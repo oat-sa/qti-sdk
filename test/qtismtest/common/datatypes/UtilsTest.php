@@ -38,7 +38,7 @@ class UtilsTest extends TestCase
      */
     public function testIsQtiInteger($integer, $expected)
     {
-        $this->assertEquals($expected, Utils::isQtiInteger($integer));
+        $this::assertEquals($expected, Utils::isQtiInteger($integer));
     }
 
     /**
@@ -64,7 +64,7 @@ class UtilsTest extends TestCase
      */
     public function testNormalizeString($string, $normalizedString)
     {
-        $this->assertEquals($normalizedString, Utils::normalizeString($string));
+        $this::assertEquals($normalizedString, Utils::normalizeString($string));
     }
 
     /**

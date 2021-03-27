@@ -25,7 +25,7 @@ class Qti21MarshallerFactyoryTest extends QtiSmTestCase
 
         $factory = new Qti21MarshallerFactory();
         $marshaller = $factory->createMarshaller($element);
-        $this->assertInstanceOf(AreaMapEntryMarshaller::class, $marshaller);
+        $this::assertInstanceOf(AreaMapEntryMarshaller::class, $marshaller);
     }
 
     public function testFromQtiComponent()
@@ -36,7 +36,7 @@ class Qti21MarshallerFactyoryTest extends QtiSmTestCase
 
         $factory = new Qti21MarshallerFactory();
         $marshaller = $factory->createMarshaller($component);
-        $this->assertInstanceOf(AreaMapEntryMarshaller::class, $marshaller);
+        $this::assertInstanceOf(AreaMapEntryMarshaller::class, $marshaller);
     }
 
     public function testFromInvalidObject()

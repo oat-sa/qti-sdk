@@ -49,12 +49,12 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q01).");
+            $this::assertFalse(true, 'An exception should be thrown (Q01).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q01.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q01.RESPONSE']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q01.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q01.RESPONSE']);
         }
 
         // Q01 - Provide a null response to Q01 in order to end the attempt (skipping allowed).
@@ -76,8 +76,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q01.RESPONSE']->equals(new MultipleContainer(BaseType::IDENTIFIER, [])));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q01.RESPONSE']->equals(new MultipleContainer(BaseType::IDENTIFIER, [])));
 
         $testSession->moveNext();
 
@@ -99,12 +99,12 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this::assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q02.RESPONSE']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q02.RESPONSE']);
         }
 
         // Q02 - By providing a NULL response, I will get an exception.
@@ -122,12 +122,12 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this::assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q02.RESPONSE']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q02.RESPONSE']);
         }
 
         // Q02 - By providing no RESPONSE variable, I will get an exception.
@@ -138,12 +138,12 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this::assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q02.RESPONSE']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q02.RESPONSE']);
         }
 
         // Q02 - Provide a valid response to Q02 in order to end the attempt.
@@ -160,8 +160,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q02.RESPONSE']->equals(new QtiString('aaaaa')));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q02.RESPONSE']->equals(new QtiString('aaaaa')));
 
         $testSession->moveNext();
 
@@ -195,13 +195,13 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this::assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q03.RESPONSE1']);
-            $this->assertNull($testSession['Q03.RESPONSE2']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q03.RESPONSE1']);
+            $this::assertNull($testSession['Q03.RESPONSE2']);
         }
 
         // Q03 - By providing an invalid response for RESPONSE1 only, I will get an exception.
@@ -232,13 +232,13 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this::assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q03.RESPONSE1']);
-            $this->assertNull($testSession['Q03.RESPONSE2']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q03.RESPONSE1']);
+            $this::assertNull($testSession['Q03.RESPONSE2']);
         }
 
         // Q03 - By providing an invalid response for RESPONSE1, but no RESPONSE2 variable, I will get an exception.
@@ -262,13 +262,13 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this::assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q03.RESPONSE1']);
-            $this->assertNull($testSession['Q03.RESPONSE2']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q03.RESPONSE1']);
+            $this::assertNull($testSession['Q03.RESPONSE2']);
         }
 
         // Q03 - Provide a valid responses to Q03 in order to end the attempt.
@@ -296,9 +296,9 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA')])));
-        $this->assertTrue($testSession['Q03.RESPONSE2']->equals(new QtiString('aaaaa')));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA')])));
+        $this::assertTrue($testSession['Q03.RESPONSE2']->equals(new QtiString('aaaaa')));
 
         $testSession->moveNext();
 
@@ -327,12 +327,12 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q04).");
+            $this::assertFalse(true, 'An exception should be thrown (Q04).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q04.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q04.RESPONSE']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q04.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q04.RESPONSE']);
         }
 
         // Q04 - Provide a valid responses to Q04 in order to end the attempt.
@@ -356,12 +356,12 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q04.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, [new QtiPair('ChoiceA', 'ChoiceB'), new QtiPair('ChoiceA', 'ChoiceC')])));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q04.RESPONSE']->equals(new MultipleContainer(BaseType::PAIR, [new QtiPair('ChoiceA', 'ChoiceB'), new QtiPair('ChoiceA', 'ChoiceC')])));
 
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
 
     public function testValidateResponseValidateSkippingNotAllowedLinearIndividual()
@@ -393,12 +393,12 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q01).");
+            $this::assertFalse(true, 'An exception should be thrown (Q01).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q01.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q01.RESPONSE']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q01.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q01.RESPONSE']);
         }
 
         // Q01 - By providing a null response to Q01, I will get an exception because skipping is not allowed, even
@@ -420,12 +420,12 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q01).");
+            $this::assertFalse(true, 'An exception should be thrown (Q01).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
-            $this->assertEquals("The Item Session 'Q01.0' is not allowed to be skipped.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q01.RESPONSE']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
+            $this::assertEquals("The Item Session 'Q01.0' is not allowed to be skipped.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q01.RESPONSE']);
         }
 
         // Q01 - Provide a non-null response to Q01 in order to end the attempt, because skipping is not allowed.
@@ -447,8 +447,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q01.RESPONSE']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA')])));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q01.RESPONSE']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA')])));
 
         $testSession->moveNext();
 
@@ -470,12 +470,12 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this::assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q02.RESPONSE']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q02.RESPONSE']);
         }
 
         // Q02 - By providing a NULL response, I will get an exception.
@@ -493,12 +493,12 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this::assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q02.RESPONSE']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q02.RESPONSE']);
         }
 
         // Q02 - By providing no RESPONSE variable, I will get an exception.
@@ -509,12 +509,12 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q02).");
+            $this::assertFalse(true, 'An exception should be thrown (Q02).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q02.RESPONSE']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q02.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q02.RESPONSE']);
         }
 
         // Q02 - Provide a valid response to Q02 in order to end the attempt.
@@ -531,8 +531,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q02.RESPONSE']->equals(new QtiString('aaaaa')));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q02.RESPONSE']->equals(new QtiString('aaaaa')));
 
         $testSession->moveNext();
 
@@ -566,13 +566,13 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this::assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q03.RESPONSE1']);
-            $this->assertNull($testSession['Q03.RESPONSE2']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q03.RESPONSE1']);
+            $this::assertNull($testSession['Q03.RESPONSE2']);
         }
 
         // Q03 - By providing an invalid response for RESPONSE1 only, I will get an exception.
@@ -603,13 +603,13 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this::assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q03.RESPONSE1']);
-            $this->assertNull($testSession['Q03.RESPONSE2']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q03.RESPONSE1']);
+            $this::assertNull($testSession['Q03.RESPONSE2']);
         }
 
         // Q03 - By providing a valid response for RESPONSE1, but no RESPONSE2 variable, I will get an exception.
@@ -633,13 +633,13 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this::assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
-            $this->assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q03.RESPONSE1']);
-            $this->assertNull($testSession['Q03.RESPONSE2']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE, $e->getCode());
+            $this::assertEquals("An invalid response was given for Item Session 'Q03.0' while 'itemSessionControl->validateResponses' is in force.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q03.RESPONSE1']);
+            $this::assertNull($testSession['Q03.RESPONSE2']);
         }
 
         // Q03 - Provide a valid responses to Q03 in order to end the attempt.
@@ -667,13 +667,13 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA')])));
-        $this->assertTrue($testSession['Q03.RESPONSE2']->equals(new QtiString('aaaaa')));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA')])));
+        $this::assertTrue($testSession['Q03.RESPONSE2']->equals(new QtiString('aaaaa')));
 
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
 
     public function testValidateResponseDoNotValidateSkippingAllowedLinearIndividual()
@@ -706,8 +706,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q01.RESPONSE']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')])));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q01.RESPONSE']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')])));
 
         $testSession->moveNext();
 
@@ -728,8 +728,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q02.RESPONSE']->equals(new QtiString('AAAAA')));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q02.RESPONSE']->equals(new QtiString('AAAAA')));
 
         $testSession->moveNext();
 
@@ -759,13 +759,13 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER, [])));
-        $this->assertNull($testSession['Q03.RESPONSE2']);
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER, [])));
+        $this::assertNull($testSession['Q03.RESPONSE2']);
 
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
 
     public function testValidateResponseDoNotValidateSkippingNotAllowedLinearIndividual()
@@ -796,8 +796,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q01.RESPONSE']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')])));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q01.RESPONSE']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')])));
 
         $testSession->moveNext();
 
@@ -818,8 +818,8 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q02.RESPONSE']->equals(new QtiString('AAAAA')));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q02.RESPONSE']->equals(new QtiString('AAAAA')));
 
         $testSession->moveNext();
 
@@ -851,13 +851,13 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 )
             );
 
-            $this->assertFalse(true, "An exception should be thrown (Q03).");
+            $this::assertFalse(true, 'An exception should be thrown (Q03).');
         } catch (AssessmentTestSessionException $e) {
-            $this->assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
-            $this->assertEquals("The Item Session 'Q03.0' is not allowed to be skipped.", $e->getMessage());
-            $this->assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
-            $this->assertNull($testSession['Q03.RESPONSE1']);
-            $this->assertNull($testSession['Q03.RESPONSE2']);
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
+            $this::assertEquals("The Item Session 'Q03.0' is not allowed to be skipped.", $e->getMessage());
+            $this::assertEquals(AssessmentItemSessionState::INTERACTING, $testSession->getCurrentAssessmentItemSession()->getState());
+            $this::assertNull($testSession['Q03.RESPONSE1']);
+            $this::assertNull($testSession['Q03.RESPONSE2']);
         }
 
         // Q03 - By providing a null response to RESPONSE1 but a valid, It's ok because I don't skip and responses are valid.
@@ -880,13 +880,13 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             )
         );
 
-        $this->assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this->assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER)));
-        $this->assertTrue($testSession['Q03.RESPONSE2']->equals(new QtiString('a')));
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER)));
+        $this::assertTrue($testSession['Q03.RESPONSE2']->equals(new QtiString('a')));
 
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
 
     public function testNonLinearSimultaneous()
@@ -921,9 +921,9 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
         );
 
         // I'm in simultaneous submission mode, so don't forget that item sessions goes from interactive to supspended state only.
-        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $testSession->getCurrentAssessmentItemSession()->getState());
         // I'm in simultaneous submission mode, so responses are submitted only at the end of the test part.
-        $this->assertNull($testSession['Q01.RESPONSE']);
+        $this::assertNull($testSession['Q01.RESPONSE']);
 
         $testSession->moveNext();
 
@@ -945,9 +945,9 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
         );
 
         // I'm in simultaneous submission mode, so don't forget that item sessions goes from interactive to supspended state only.
-        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $testSession->getCurrentAssessmentItemSession()->getState());
         // I'm in simultaneous submission mode, so responses are submitted only at the end of the test part.
-        $this->assertNull($testSession['Q02.RESPONSE']);
+        $this::assertNull($testSession['Q02.RESPONSE']);
 
         $testSession->moveNext();
 
@@ -981,22 +981,22 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
         );
 
         // I'm in simultaneous submission mode, so don't forget that item sessions goes from interactive to supspended state only.
-        $this->assertEquals(AssessmentItemSessionState::SUSPENDED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $testSession->getCurrentAssessmentItemSession()->getState());
         // I'm in simultaneous submission mode, so responses are submitted only at the end of the test part.
-        $this->assertNull($testSession['Q03.RESPONSE1']);
-        $this->assertNull($testSession['Q03.RESPONSE2']);
+        $this::assertNull($testSession['Q03.RESPONSE1']);
+        $this::assertNull($testSession['Q03.RESPONSE2']);
 
         $testSession->moveNext();
 
-        $this->assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
-        $this->assertTrue($testSession['Q01.RESPONSE']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')])));
-        $this->assertTrue($testSession['Q02.RESPONSE']->equals(new QtiString('')));
-        $this->assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')])));
-        $this->assertNull($testSession['Q03.RESPONSE2']);
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
+        $this::assertTrue($testSession['Q01.RESPONSE']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')])));
+        $this::assertTrue($testSession['Q02.RESPONSE']->equals(new QtiString('')));
+        $this::assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER, [new QtiIdentifier('ChoiceA'), new QtiIdentifier('ChoiceB')])));
+        $this::assertNull($testSession['Q03.RESPONSE2']);
 
         foreach ($testSession->getAssessmentItemSessionStore()->getAllAssessmentItemSessions() as $itemSession) {
-            $this->assertEquals(1, $itemSession['numAttempts']->getValue());
-            $this->assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
+            $this::assertEquals(1, $itemSession['numAttempts']->getValue());
+            $this::assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
         }
     }
 }

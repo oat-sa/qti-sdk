@@ -26,15 +26,15 @@ class AssessmentItemTest extends QtiSmTestCase
         $assessmentItem->setModalFeedbacks(new ModalFeedbackCollection([$modalFeedback1, $modalFeedback2]));
 
         $modalFeedbackRules = $assessmentItem->getModalFeedbackRules();
-        $this->assertEquals(2, count($modalFeedbackRules));
+        $this::assertCount(2, $modalFeedbackRules);
 
-        $this->assertEquals('LOOKUP', $modalFeedbackRules[0]->getOutcomeIdentifier());
-        $this->assertEquals('SHOWME', $modalFeedbackRules[0]->getIdentifier());
-        $this->assertEquals(ShowHide::SHOW, $modalFeedbackRules[0]->getShowHide());
+        $this::assertEquals('LOOKUP', $modalFeedbackRules[0]->getOutcomeIdentifier());
+        $this::assertEquals('SHOWME', $modalFeedbackRules[0]->getIdentifier());
+        $this::assertEquals(ShowHide::SHOW, $modalFeedbackRules[0]->getShowHide());
 
-        $this->assertEquals('LOOKUP2', $modalFeedbackRules[1]->getOutcomeIdentifier());
-        $this->assertEquals('HIDEME', $modalFeedbackRules[1]->getIdentifier());
-        $this->assertEquals(ShowHide::HIDE, $modalFeedbackRules[1]->getShowHide());
+        $this::assertEquals('LOOKUP2', $modalFeedbackRules[1]->getOutcomeIdentifier());
+        $this::assertEquals('HIDEME', $modalFeedbackRules[1]->getIdentifier());
+        $this::assertEquals(ShowHide::HIDE, $modalFeedbackRules[1]->getShowHide());
     }
 
     /**
@@ -51,25 +51,25 @@ class AssessmentItemTest extends QtiSmTestCase
         $assessmentItem = $doc->getDocumentComponent();
         $responseValidityConstraints = $assessmentItem->getResponseValidityConstraints();
 
-        $this->assertEquals(count($expected), count($responseValidityConstraints));
+        $this::assertEquals(count($expected), count($responseValidityConstraints));
 
         for ($i = 0; $i < count($responseValidityConstraints); $i++) {
-            $this->assertEquals($expected[$i][0], $responseValidityConstraints[$i]->getResponseIdentifier());
-            $this->assertEquals($expected[$i][1], $responseValidityConstraints[$i]->getMinConstraint(), 'minConstraint failed for ' . $expected[$i][0]);
-            $this->assertEquals($expected[$i][2], $responseValidityConstraints[$i]->getMaxConstraint(), 'maxConstraint failed for ' . $expected[$i][0]);
-            $this->assertEquals($expected[$i][3], $responseValidityConstraints[$i]->getPatternMask());
+            $this::assertEquals($expected[$i][0], $responseValidityConstraints[$i]->getResponseIdentifier());
+            $this::assertEquals($expected[$i][1], $responseValidityConstraints[$i]->getMinConstraint(), 'minConstraint failed for ' . $expected[$i][0]);
+            $this::assertEquals($expected[$i][2], $responseValidityConstraints[$i]->getMaxConstraint(), 'maxConstraint failed for ' . $expected[$i][0]);
+            $this::assertEquals($expected[$i][3], $responseValidityConstraints[$i]->getPatternMask());
 
             if (isset($expected[$i][4])) {
                 // Let's check association constraints.
                 $expectedAssociationValidityConstraints = $expected[$i][4];
                 $associationValidityConstraints = $responseValidityConstraints[$i]->getAssociationValidityConstraints();
 
-                $this->assertEquals(count($expectedAssociationValidityConstraints), count($associationValidityConstraints));
+                $this::assertEquals(count($expectedAssociationValidityConstraints), count($associationValidityConstraints));
 
                 for ($j = 0; $j < count($associationValidityConstraints); $j++) {
-                    $this->assertEquals($expectedAssociationValidityConstraints[$j][0], $associationValidityConstraints[$j]->getIdentifier());
-                    $this->assertEquals($expectedAssociationValidityConstraints[$j][1], $associationValidityConstraints[$j]->getMinConstraint());
-                    $this->assertEquals($expectedAssociationValidityConstraints[$j][2], $associationValidityConstraints[$j]->getMaxConstraint());
+                    $this::assertEquals($expectedAssociationValidityConstraints[$j][0], $associationValidityConstraints[$j]->getIdentifier());
+                    $this::assertEquals($expectedAssociationValidityConstraints[$j][1], $associationValidityConstraints[$j]->getMinConstraint());
+                    $this::assertEquals($expectedAssociationValidityConstraints[$j][2], $associationValidityConstraints[$j]->getMaxConstraint());
                 }
             }
         }
@@ -792,7 +792,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testSetLabelWrongType()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The label argument must be a string with at most 256 characters.");
+        $this->expectExceptionMessage('The label argument must be a string with at most 256 characters.');
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
         $assessmentItem->setLabel(1337);
@@ -819,7 +819,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testSetToolNameWrongType()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The toolName argument must be a string with at most 256 characters.");
+        $this->expectExceptionMessage('The toolName argument must be a string with at most 256 characters.');
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
         $assessmentItem->setToolName(9999);
@@ -828,7 +828,7 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testSetToolVersionWrongType()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The toolVersion argument must be a string with at most 256 characters.");
+        $this->expectExceptionMessage('The toolVersion argument must be a string with at most 256 characters.');
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
         $assessmentItem->setToolVersion(9999);

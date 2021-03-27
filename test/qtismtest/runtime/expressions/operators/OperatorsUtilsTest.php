@@ -21,8 +21,8 @@ class OperatorsUtilsTest extends QtiSmTestCase
     public function testGcd($a, $b, $expected)
     {
         $result = OperatorsUtils::gcd($a, $b);
-        $this->assertInternalType('integer', $result);
-        $this->assertSame($expected, $result);
+        $this::assertIsInt($result);
+        $this::assertSame($expected, $result);
     }
 
     /**
@@ -35,8 +35,8 @@ class OperatorsUtilsTest extends QtiSmTestCase
     public function testLcm($a, $b, $expected)
     {
         $result = OperatorsUtils::lcm($a, $b);
-        $this->assertInternalType('integer', $result);
-        $this->assertSame($expected, $expected);
+        $this::assertIsInt($result);
+        $this::assertSame($expected, $expected);
     }
 
     /**
@@ -48,7 +48,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     public function testMean(array $sample, $expected)
     {
         $result = OperatorsUtils::mean($sample);
-        $this->assertSame($expected, $result);
+        $this::assertSame($expected, $result);
     }
 
     /**
@@ -61,7 +61,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     public function testVariance(array $sample, $correction, $expected)
     {
         $result = OperatorsUtils::variance($sample, $correction);
-        $this->assertSame($expected, $result);
+        $this::assertSame($expected, $result);
     }
 
     /**
@@ -76,9 +76,9 @@ class OperatorsUtilsTest extends QtiSmTestCase
         $result = OperatorsUtils::standardDeviation($sample, $correction);
 
         if (is_bool($expected)) {
-            $this->assertSame($expected, $result);
+            $this::assertSame($expected, $result);
         } else {
-            $this->assertSame($expected, round($result, 2));
+            $this::assertSame($expected, round($result, 2));
         }
     }
 
@@ -91,7 +91,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      */
     public function testGetPrecedingBackslashesCount($string, $offset, $expected)
     {
-        $this->assertSame($expected, OperatorsUtils::getPrecedingBackslashesCount($string, $offset));
+        $this::assertSame($expected, OperatorsUtils::getPrecedingBackslashesCount($string, $offset));
     }
 
     /**
@@ -102,7 +102,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      */
     public function testPregAddDelimiter($string, $expected)
     {
-        $this->assertSame($expected, OperatorsUtils::pregAddDelimiter($string));
+        $this::assertSame($expected, OperatorsUtils::pregAddDelimiter($string));
     }
 
     /**
@@ -114,7 +114,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      */
     public function testEscapeSymbols($string, $symbols, $expected)
     {
-        $this->assertSame($expected, OperatorsUtils::escapeSymbols($string, $symbols));
+        $this::assertSame($expected, OperatorsUtils::escapeSymbols($string, $symbols));
     }
 
     /**
@@ -125,7 +125,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      */
     public function testValidCustomOperatorClassToPhpClass($customClass, $expected)
     {
-        $this->assertEquals($expected, OperatorsUtils::customOperatorClassToPhpClass($customClass));
+        $this::assertEquals($expected, OperatorsUtils::customOperatorClassToPhpClass($customClass));
     }
 
     /**
@@ -135,7 +135,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      */
     public function testInvalidCustomOperatorClassToPhpClass($customClass)
     {
-        $this->assertFalse(OperatorsUtils::customOperatorClassToPhpClass($customClass));
+        $this::assertFalse(OperatorsUtils::customOperatorClassToPhpClass($customClass));
     }
 
     /**
@@ -159,7 +159,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
             ini_set('pcre.recursion_limit', $prevRecursionLimit);
         }
 
-        $this->assertEquals($message, OperatorsUtils::lastPregErrorMessage());
+        $this::assertEquals($message, OperatorsUtils::lastPregErrorMessage());
     }
 
     /**

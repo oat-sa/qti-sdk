@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use DOMText;
+use InvalidArgumentException;
 use qtism\data\content\FlowStatic;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\QtiComponent;
@@ -47,7 +48,7 @@ class TestFeedbackMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $access = ($component->getAccess() == TestFeedbackAccess::AT_END) ? 'atEnd' : 'during';
         $showHide = ($component->getShowHide() == ShowHide::SHOW) ? 'show' : 'hide';
 
@@ -134,5 +135,21 @@ class TestFeedbackMarshaller extends Marshaller
     public function getExpectedQtiClassName()
     {
         return 'testFeedback';
+    }
+
+    /**
+     * Extract the content (direct children) of a testFeedback element.
+     *
+     * @param DOMElement $element The testFeedback element you want to extract the content.
+     * @return string The content of the feedback element as a string. If there is no extractable content, an empty string is returned.
+     * @throws InvalidArgumentException If $element is not a testFeedback element.
+     */
+    protected static function extractContent(DOMElement $element)
+    {
+        if ($element->localName == 'testFeedback') {
+            return preg_replace('#</{0,1}testFeedback.*?>#iu', '', $element->ownerDocument->saveXML($element));
+        } else {
+            throw new InvalidArgumentException("The element must be a QTI testFeedbackElement, '" . $element->localName . "' element given.");
+        }
     }
 }

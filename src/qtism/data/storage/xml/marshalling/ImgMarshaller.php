@@ -40,7 +40,7 @@ class ImgMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('img');
+        $element = $this->createElement($component);
 
         $this->setDOMElementAttribute($element, 'src', $component->getSrc());
         $this->setDOMElementAttribute($element, 'alt', $component->getAlt());

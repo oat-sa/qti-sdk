@@ -19,7 +19,7 @@ class GraphicAssociateInteractionTest extends QtiSmTestCase
     public function testCreateNotEnoughAssociableHotspots()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("A GraphicAssociateInteraction must be composed of at least 1 AssociableHotspot object, none given.");
+        $this->expectExceptionMessage('A GraphicAssociateInteraction must be composed of at least 1 AssociableHotspot object, none given.');
 
         new GraphicAssociateInteraction(
             'RESPONSE',

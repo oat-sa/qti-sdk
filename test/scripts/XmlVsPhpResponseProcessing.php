@@ -3,7 +3,7 @@
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlDocument;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 /**
  * @param $start
@@ -30,7 +30,7 @@ foreach ($templates as $t) {
         $start = microtime();
 
         $xmlDoc = new XmlDocument('2.1');
-        $xmlDoc->load(dirname(__FILE__) . $basePath . $t . '.xml');
+        $xmlDoc->load(__DIR__ . $basePath . $t . '.xml');
 
         $end = microtime();
         $xmlTimings[$t][] = spentTime($start, $end);
@@ -39,7 +39,7 @@ foreach ($templates as $t) {
         $start = microtime();
 
         $phpDoc = new PhpDocument();
-        $phpDoc->load(dirname(__FILE__) . $basePath . $t . '.php');
+        $phpDoc->load(__DIR__ . $basePath . $t . '.php');
 
         $end = microtime();
         $phpTimings[$t][] = spentTime($start, $end);

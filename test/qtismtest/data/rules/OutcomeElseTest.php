@@ -28,7 +28,7 @@ class OutcomeElseTest extends QtiSmTestCase
         );
 
         $components = $outcomeElse->getComponents();
-        $this->assertCount(1, $components);
-        $this->assertInstanceOf(SetOutcomeValue::class, $components[0]);
+        $this::assertCount(1, $components);
+        $this::assertInstanceOf(SetOutcomeValue::class, $components[0]);
     }
 }

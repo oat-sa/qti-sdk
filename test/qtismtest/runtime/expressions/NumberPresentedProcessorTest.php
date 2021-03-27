@@ -33,7 +33,7 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
 
         // At the moment, nothing presented.
         $result = $processor->process();
-        $this->assertEquals(0, $result->getValue());
+        $this::assertEquals(0, $result->getValue());
 
         for ($i = 0; $i < $session->getRouteCount(); $i++) {
             $session->beginAttempt();
@@ -41,7 +41,7 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
             $processor->setState($session);
             $result = $processor->process();
 
-            $this->assertEquals($expectedResults[$i], $result->getValue());
+            $this::assertEquals($expectedResults[$i], $result->getValue());
             $session->endAttempt(new State());
             $session->moveNext();
         }

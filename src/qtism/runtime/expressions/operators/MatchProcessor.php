@@ -25,7 +25,7 @@ namespace qtism\runtime\expressions\operators;
 
 use qtism\common\Comparable;
 use qtism\common\datatypes\QtiBoolean;
-use qtism\data\expressions\operators\Match;
+use qtism\data\expressions\operators\MatchOperator;
 
 /**
  * The MatchProcessor class aims at processing Match QTI Data Model Expression objects.
@@ -84,6 +84,6 @@ class MatchProcessor extends OperatorProcessor
      */
     protected function getExpressionType()
     {
-        return Match::class;
+        return MatchOperator::class;
     }
 }

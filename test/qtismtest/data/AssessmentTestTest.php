@@ -27,12 +27,12 @@ class AssessmentTestTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/runtime/timelimits.xml');
 
         $testPart = $doc->getDocumentComponent()->getComponentByIdentifier('testPartId');
-        $this->assertTrue($testPart->hasTimeLimits());
+        $this::assertTrue($testPart->hasTimeLimits());
         $timeLimits = $testPart->getTimeLimits();
 
-        $this->assertTrue($timeLimits->getMinTime()->equals(new QtiDuration('PT60S')));
-        $this->assertTrue($timeLimits->getMaxTime()->equals(new QtiDuration('PT120S')));
-        $this->assertTrue($timeLimits->doesAllowLateSubmission());
+        $this::assertTrue($timeLimits->getMinTime()->equals(new QtiDuration('PT60S')));
+        $this::assertTrue($timeLimits->getMaxTime()->equals(new QtiDuration('PT120S')));
+        $this::assertTrue($timeLimits->doesAllowLateSubmission());
     }
 
     public function testCreateAssessmentTestWrongIdentifier()
@@ -77,13 +77,13 @@ class AssessmentTestTest extends QtiSmTestCase
         );
 
         $components = $test->getComponents();
-        $this->assertInstanceOf(TimeLimits::class, $components[count($components) - 1]);
+        $this::assertInstanceOf(TimeLimits::class, $components[count($components) - 1]);
     }
 
     public function testIsExclusivelyLinearNoTestParts()
     {
         $test = new AssessmentTest('ABC', 'ABC');
-        $this->assertFalse($test->isExclusivelyLinear());
+        $this::assertFalse($test->isExclusivelyLinear());
     }
 
     public function testIsExclusivelyLinear()
@@ -108,10 +108,10 @@ class AssessmentTestTest extends QtiSmTestCase
             )
         );
 
-        $this->assertFalse($test->isExclusivelyLinear());
+        $this::assertFalse($test->isExclusivelyLinear());
 
         $testPart->setNavigationMode(NavigationMode::LINEAR);
-        $this->assertTrue($test->isExclusivelyLinear());
+        $this::assertTrue($test->isExclusivelyLinear());
     }
 
     public function testGetPossiblePaths()
@@ -140,8 +140,8 @@ class AssessmentTestTest extends QtiSmTestCase
             $possible_paths2[] = $path->getArrayCopy();
         }
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
-        $this->assertEquals($possible_paths2, $test->getPossiblePaths(true));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths2, $test->getPossiblePaths(true));
 
         // Test with no item
 
@@ -151,7 +151,7 @@ class AssessmentTestTest extends QtiSmTestCase
 
         $possible_paths = [];
         $possible_paths[] = new AssessmentItemRefCollection();
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
 
         // Test with item's branching targeting on section
 
@@ -170,7 +170,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq3, $itemq4, $itemq5, $itemq6]);
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq4, $itemq5, $itemq6]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
     public function testPossiblePathswithPreCondition()
@@ -197,7 +197,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq3]);
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq3]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
 
         // Case with duplicates
 
@@ -213,7 +213,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq2, $itemq3]);
         $possible_paths[] = new AssessmentItemRefCollection([$itemq1, $itemq3]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
     public function testPossiblePathsWitPreOnSectionsAndTPs()
@@ -238,7 +238,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7]]);
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[5], $it[6], $it[7]]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
     public function testPossiblePathsWitPreOnSubSections()
@@ -263,7 +263,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7]]);
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[5], $it[6], $it[7]]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
     public function testPossiblePathWithSectsAndTPs()
@@ -285,7 +285,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[6], $it[7]]);
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[5], $it[6], $it[7]]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
 
         // Testing branching on testparts and sections
 
@@ -307,7 +307,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[6], $it[8]]);
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[5], $it[6], $it[8]]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
     public function testPossiblePathWithBranchingStartAndEnd()
@@ -328,7 +328,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3]]);
         $possible_paths[] = new AssessmentItemRefCollection([$it[2], $it[3]]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend2.xml');
@@ -346,7 +346,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3]]);
         $possible_paths[] = new AssessmentItemRefCollection([$it[2], $it[3]]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend7.xml');
@@ -363,7 +363,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection();
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3]]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
     // Testing special cases
@@ -450,7 +450,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4], $it[5], $it[6], $it[7], $it[8]]);
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4], $it[6], $it[7], $it[8]]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingexitsession.xml');
@@ -465,7 +465,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths = [];
         $possible_paths[] = new AssessmentItemRefCollection($it);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend8.xml');
@@ -473,21 +473,21 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths = [];
         $possible_paths[] = new AssessmentItemRefCollection();
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend9.xml');
         $test = $doc->getDocumentComponent();
         $possible_paths = [];
         $possible_paths[] = new AssessmentItemRefCollection();
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend10.xml');
         $test = $doc->getDocumentComponent();
         $possible_paths = [];
         $possible_paths[] = new AssessmentItemRefCollection();
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
 
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingwithexitmentions2.xml');
@@ -502,7 +502,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $possible_paths[] = new AssessmentItemRefCollection($it);
         $possible_paths[] = new AssessmentItemRefCollection([$it[1], $it[2], $it[3], $it[4], $it[6], $it[7]]);
 
-        $this->assertEquals($possible_paths, $test->getPossiblePaths(false));
+        $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
     public function testGetShortestPaths()
@@ -520,7 +520,7 @@ class AssessmentTestTest extends QtiSmTestCase
 
         $shortest_paths[] = $path;
 
-        $this->assertEquals($shortest_paths, $test->getShortestPaths());
+        $this::assertEquals($shortest_paths, $test->getShortestPaths());
 
         // With multiple shortest paths
 
@@ -543,7 +543,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $shortest_paths[] = $path2;
         $shortest_paths[] = $path1;
 
-        $this->assertEquals($shortest_paths, $test->getShortestPaths());
+        $this::assertEquals($shortest_paths, $test->getShortestPaths());
     }
 
     public function testGetLongestPaths()
@@ -564,6 +564,6 @@ class AssessmentTestTest extends QtiSmTestCase
 
         $longest_paths[] = $path;
 
-        $this->assertEquals($longest_paths, $test->getLongestPaths());
+        $this::assertEquals($longest_paths, $test->getLongestPaths());
     }
 }

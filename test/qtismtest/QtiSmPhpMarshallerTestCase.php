@@ -25,7 +25,7 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
      */
     private $stream;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -35,7 +35,7 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
         $this->setStreamAccess(new PhpStreamAccess($this->getStream()));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

@@ -51,8 +51,8 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
 
         $textEntryInteraction->setExpectedLength($expectedLength);
 
-        $this->assertTrue($textEntryInteraction->hasExpectedLength());
-        $this->assertEquals($expectedLength, $textEntryInteraction->getExpectedLength());
+        $this::assertTrue($textEntryInteraction->hasExpectedLength());
+        $this::assertEquals($expectedLength, $textEntryInteraction->getExpectedLength());
     }
 
     public function testSetExpectedLengthToNegativeIntegerThrowsException()
@@ -71,8 +71,8 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
 
         $textEntryInteraction->setExpectedLength(null);
 
-        $this->assertFalse($textEntryInteraction->hasExpectedLength());
-        $this->assertNull($textEntryInteraction->getExpectedLength());
+        $this::assertFalse($textEntryInteraction->hasExpectedLength());
+        $this::assertNull($textEntryInteraction->getExpectedLength());
     }
 
     public function testSetPatternMaskWrongType()
@@ -135,8 +135,8 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
 
         $textEntryInteraction->setExpectedLines($expectedLines);
 
-        $this->assertTrue($textEntryInteraction->hasExpectedLines());
-        $this->assertEquals($expectedLines, $textEntryInteraction->getExpectedLines());
+        $this::assertTrue($textEntryInteraction->hasExpectedLines());
+        $this::assertEquals($expectedLines, $textEntryInteraction->getExpectedLines());
     }
 
     public function testSetExpectedLinesToNegativeIntegerThrowsException()
@@ -155,8 +155,8 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
 
         $textEntryInteraction->setExpectedLines(null);
 
-        $this->assertFalse($textEntryInteraction->hasExpectedLines());
-        $this->assertNull($textEntryInteraction->getExpectedLines());
+        $this::assertFalse($textEntryInteraction->hasExpectedLines());
+        $this::assertNull($textEntryInteraction->getExpectedLines());
     }
 
     public function nonNegativeIntegersForExpectedLengthAndLines(): array

@@ -24,6 +24,7 @@
 namespace qtism\data\content\xhtml\lists;
 
 use InvalidArgumentException;
+use qtism\common\utils\Format;
 use qtism\data\content\BlockStatic;
 use qtism\data\content\BodyElement;
 use qtism\data\content\FlowStatic;

@@ -61,7 +61,7 @@ class TrMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         foreach ($elements as $e) {
             $element->appendChild($e);

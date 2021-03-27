@@ -30,11 +30,11 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
         $result = $processor->process();
 
         if ($expectedResult === null) {
-            $this->assertSame($expectedResult, $result);
+            $this::assertSame($expectedResult, $result);
         } else {
-            $this->assertInstanceOf(MultipleContainer::class, $result);
-            $this->assertEquals(BaseType::FLOAT, $result->getBaseType());
-            $this->assertTrue($result->equals($expectedResult));
+            $this::assertInstanceOf(MultipleContainer::class, $result);
+            $this::assertEquals(BaseType::FLOAT, $result->getBaseType());
+            $this::assertTrue($result->equals($expectedResult));
         }
     }
 

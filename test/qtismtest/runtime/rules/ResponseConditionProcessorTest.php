@@ -52,7 +52,7 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
 			</responseDeclaration>
 		');
         $responseVar = ResponseVariable::createFromDataModel($responseVarDeclaration);
-        $this->assertTrue($responseVar->getCorrectResponse()->equals(new QtiIdentifier('ChoiceA')));
+        $this::assertTrue($responseVar->getCorrectResponse()->equals(new QtiIdentifier('ChoiceA')));
 
         // Set 'ChoiceA' to 'RESPONSE' in order to get a score of 1.0.
         $responseVar->setValue($response);
@@ -65,15 +65,15 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
 			</outcomeDeclaration>		
 		');
         $outcomeVar = OutcomeVariable::createFromDataModel($outcomeVarDeclaration);
-        $this->assertEquals(0, $outcomeVar->getDefaultValue()->getValue());
+        $this::assertEquals(0, $outcomeVar->getDefaultValue()->getValue());
 
         $state = new State([$responseVar, $outcomeVar]);
         $processor = new ResponseConditionProcessor($rule);
         $processor->setState($state);
         $processor->process();
 
-        $this->assertInstanceOf(QtiFloat::class, $state['SCORE']);
-        $this->assertTrue($expectedScore->equals($state['SCORE']));
+        $this::assertInstanceOf(QtiFloat::class, $state['SCORE']);
+        $this::assertTrue($expectedScore->equals($state['SCORE']));
     }
 
     /**

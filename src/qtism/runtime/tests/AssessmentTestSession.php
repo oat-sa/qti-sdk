@@ -363,7 +363,7 @@ class AssessmentTestSession extends State
      */
     public function setSessionId($sessionId)
     {
-        if (gettype($sessionId) === 'string') {
+        if (is_string($sessionId)) {
             if (empty($sessionId) === false) {
                 $this->sessionId = $sessionId;
             } else {
@@ -1304,7 +1304,7 @@ class AssessmentTestSession extends State
      */
     public function whichLastOccurenceUpdate($assessmentItemRef)
     {
-        if (gettype($assessmentItemRef) === 'string') {
+        if (is_string($assessmentItemRef)) {
             $assessmentItemRefs = $this->getAssessmentItemRefs();
             if (isset($assessmentItemRefs[$assessmentItemRef])) {
                 $assessmentItemRef = $assessmentItemRefs[$assessmentItemRef];
@@ -1700,7 +1700,7 @@ class AssessmentTestSession extends State
      */
     public function getWeight($identifier)
     {
-        if (gettype($identifier) === 'string') {
+        if (is_string($identifier)) {
             try {
                 $identifier = new VariableIdentifier($identifier);
                 if ($identifier->hasSequenceNumber() === true) {
@@ -2076,7 +2076,7 @@ class AssessmentTestSession extends State
 
                 $expressionEngine = new ExpressionEngine($expression, $this);
 
-                if (is_null($variable) === false) {
+                if ($variable !== null) {
                     $val = $expressionEngine->process();
                     $variable->setDefaultValue($val);
                     $variable->applyDefaultValue();
@@ -2848,7 +2848,7 @@ class AssessmentTestSession extends State
                 $showHide = $feedbackRef->getShowHide();
 
                 $match = false;
-                if (is_null($outcomeValue) === false) {
+                if ($outcomeValue !== null) {
                     $match = ($outcomeValue instanceof QtiScalar) ? $outcomeValue->equals($identifierValue) : $outcomeValue->contains($identifierValue);
                 }
 

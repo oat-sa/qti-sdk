@@ -40,15 +40,15 @@ class VariableProcessorTest extends QtiSmTestCase
         // single cardinality test.
         $var1 = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(1337));
         $state = new State([$var1]);
-        $this->assertInstanceOf(OutcomeVariable::class, $state->getVariable('var1'));
+        $this::assertInstanceOf(OutcomeVariable::class, $state->getVariable('var1'));
 
         $variableProcessor = new VariableProcessor($variableExpr);
-        $this->assertTrue($variableProcessor->process() === null); // State is raw.
+        $this::assertNull($variableProcessor->process()); // State is raw.
 
         $variableProcessor->setState($state); // State is populated with var1.
         $result = $variableProcessor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(1337, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(1337, $result->getValue());
 
         // multiple cardinality test.
         $val = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10), new QtiInteger(12)]);
@@ -57,9 +57,9 @@ class VariableProcessorTest extends QtiSmTestCase
         $variableExpr = $this->createComponentFromXml('<variable identifier="var2"/>');
         $variableProcessor->setExpression($variableExpr);
         $result = $variableProcessor->process();
-        $this->assertInstanceOf(OrderedContainer::class, $result);
-        $this->assertEquals(10, $result[0]->getValue());
-        $this->assertEquals(12, $result[1]->getValue());
+        $this::assertInstanceOf(OrderedContainer::class, $result);
+        $this::assertEquals(10, $result[0]->getValue());
+        $this::assertEquals(12, $result[1]->getValue());
     }
 
     public function testWeighted()
@@ -90,28 +90,28 @@ class VariableProcessorTest extends QtiSmTestCase
 
         // -- single cardinality test.
         $result = $variableProcessor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1470.7, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1470.7, $result->getValue());
         // The value in the state must be intact.
-        $this->assertEquals(1337, $assessmentTestSession['Q01.var1']->getValue());
+        $this::assertEquals(1337, $assessmentTestSession['Q01.var1']->getValue());
 
         // What if the indicated weight is not found?
         $variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var1" weightIdentifier="weight2" />');
         $variableProcessor->setExpression($variableExpr);
         $result = $variableProcessor->process();
-        $this->assertEquals(1337, $result->getValue());
+        $this::assertEquals(1337, $result->getValue());
 
         // -- multiple cardinality test.
         $assessmentTestSession['Q01.var2'] = new MultipleContainer(BaseType::FLOAT, [new QtiFloat(10.1), new QtiFloat(12.1)]);
         $variableExpr = $this->createComponentFromXml('<variable identifier="Q01.var2" weightIdentifier="weight1"/>');
         $variableProcessor->setExpression($variableExpr);
         $result = $variableProcessor->process();
-        $this->assertEquals(11.11, $result[0]->getValue());
-        $this->assertEquals(13.31, $result[1]->getValue());
+        $this::assertEquals(11.11, $result[0]->getValue());
+        $this::assertEquals(13.31, $result[1]->getValue());
         // The value in the state must be unchanged.
         $stateVal = $assessmentTestSession['Q01.var2'];
-        $this->assertEquals(10.1, $stateVal[0]->getValue());
-        $this->assertEquals(12.1, $stateVal[1]->getValue());
+        $this::assertEquals(10.1, $stateVal[0]->getValue());
+        $this::assertEquals(12.1, $stateVal[1]->getValue());
     }
 
     public function testMultipleOccurences()
@@ -127,9 +127,9 @@ class VariableProcessorTest extends QtiSmTestCase
         $variableProcessor->setState($session);
 
         // non begun test session.
-        $this->assertSame(null, $variableProcessor->process());
+        $this::assertNull($variableProcessor->process());
         $variableProcessor->setExpression($occurenceVariableExpression);
-        $this->assertSame(null, $variableProcessor->process());
+        $this::assertNull($variableProcessor->process());
 
         // begun test session.
         $variableProcessor->setExpression($variableExpr);
@@ -141,7 +141,7 @@ class VariableProcessorTest extends QtiSmTestCase
         // Why not NULL? Because we are in a linear test and Q01 is eligible for selection.
         // The item session is then instantiated. Outcome variables are set to their default
         // when the item session instantiation occurs.
-        $this->assertSame(0.0, $variableProcessor->process()->getValue());
+        $this::assertSame(0.0, $variableProcessor->process()->getValue());
 
         // Q01.1
         $session->beginAttempt();
@@ -154,12 +154,12 @@ class VariableProcessorTest extends QtiSmTestCase
         // The value of an item variable taken from an item instantiated multiple times from the same
         // assessmentItemRef (through the use of selection withReplacement) is taken from the last instance
         // submitted if submission is simultaneous, otherwise it is undefined.
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
 
         $variableProcessor->setExpression($occurenceVariableExpression);
         $result = $variableProcessor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1.0, $result->getValue());
         $session->moveNext();
 
         // Q01.2
@@ -168,18 +168,18 @@ class VariableProcessorTest extends QtiSmTestCase
 
         $variableProcessor->setExpression($variableExpr);
         $result = $variableProcessor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
 
         // $occurenceVariableExpression still targets Q01.1
         $variableProcessor->setExpression($occurenceVariableExpression);
         $result = $variableProcessor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1.0, $result->getValue());
 
         // $occurenceVariableExpression now targets Q01.2
         $occurenceVariableExpression->setIdentifier('Q01.2.SCORE');
         $result = $variableProcessor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(0.0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(0.0, $result->getValue());
     }
 }

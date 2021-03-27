@@ -42,7 +42,7 @@ class BranchRuleMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getExpression());
         $element->appendChild($marshaller->marshall($component->getExpression()));
         $this->setDOMElementAttribute($element, 'target', $component->getTarget());

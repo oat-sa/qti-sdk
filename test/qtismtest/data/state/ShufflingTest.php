@@ -26,14 +26,14 @@ class ShufflingTest extends QtiSmTestCase
         $shuffled = $shuffling->shuffle();
 
         // Shuffling::shuffle makes a deep cloning...
-        $this->assertNotSame($shuffling, $shuffled);
+        $this::assertNotSame($shuffling, $shuffled);
         $originalGroups = $shuffling->getShufflingGroups();
         $shuffledGroups = $shuffled->getShufflingGroups();
-        $this->assertNotSame($originalGroups, $shuffledGroups);
-        $this->assertNotSame($originalGroups[0], $shuffledGroups[0]);
-        $this->assertNotSame($originalGroups[1], $shuffledGroups[1]);
-        $this->assertNotSame($originalGroups[0]->getIdentifiers(), $shuffledGroups[0]->getIdentifiers());
-        $this->assertNotSame($originalGroups[1]->getIdentifiers(), $shuffledGroups[1]->getIdentifiers());
+        $this::assertNotSame($originalGroups, $shuffledGroups);
+        $this::assertNotSame($originalGroups[0], $shuffledGroups[0]);
+        $this::assertNotSame($originalGroups[1], $shuffledGroups[1]);
+        $this::assertNotSame($originalGroups[0]->getIdentifiers(), $shuffledGroups[0]->getIdentifiers());
+        $this::assertNotSame($originalGroups[1]->getIdentifiers(), $shuffledGroups[1]->getIdentifiers());
 
         // We can check 1 thing:
         // Each identifier of original group is contained in shuffled group.
@@ -41,7 +41,7 @@ class ShufflingTest extends QtiSmTestCase
             $originalIdentifiers = $originalGroups[$i]->getIdentifiers();
 
             for ($j = 0; $j < count($originalIdentifiers); $j++) {
-                $this->assertTrue($shuffledGroups[$i]->getIdentifiers()->contains($originalIdentifiers[$j]));
+                $this::assertTrue($shuffledGroups[$i]->getIdentifiers()->contains($originalIdentifiers[$j]));
             }
         }
     }
@@ -55,12 +55,12 @@ class ShufflingTest extends QtiSmTestCase
 
         $shuffling = new Shuffling('RESPONSE', new ShufflingGroupCollection([$group1, $group2]));
 
-        $this->assertEquals('id1', $shuffling->getIdentifierAt(0));
-        $this->assertEquals('id2', $shuffling->getIdentifierAt(1));
-        $this->assertEquals('id3', $shuffling->getIdentifierAt(2));
-        $this->assertEquals('id4', $shuffling->getIdentifierAt(3));
-        $this->assertEquals('id5', $shuffling->getIdentifierAt(4));
-        $this->assertEquals('id6', $shuffling->getIdentifierAt(5));
+        $this::assertEquals('id1', $shuffling->getIdentifierAt(0));
+        $this::assertEquals('id2', $shuffling->getIdentifierAt(1));
+        $this::assertEquals('id3', $shuffling->getIdentifierAt(2));
+        $this::assertEquals('id4', $shuffling->getIdentifierAt(3));
+        $this::assertEquals('id5', $shuffling->getIdentifierAt(4));
+        $this::assertEquals('id6', $shuffling->getIdentifierAt(5));
     }
 
     /**

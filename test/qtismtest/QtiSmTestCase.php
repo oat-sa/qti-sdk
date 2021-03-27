@@ -11,12 +11,15 @@ use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 use qtism\common\utils\Version;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti211MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti221MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti222MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti223MarshallerFactory;
+use qtism\data\storage\xml\marshalling\Qti224MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
 use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
 
@@ -35,7 +38,7 @@ abstract class QtiSmTestCase extends TestCase
      */
     private $outputFileSystem = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -48,7 +51,7 @@ abstract class QtiSmTestCase extends TestCase
         $this->setOutputFileSystem(new Filesystem($adapter));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
     }
@@ -117,6 +120,10 @@ abstract class QtiSmTestCase extends TestCase
             return new Qti221MarshallerFactory();
         } elseif (Version::compare($version, '2.2.2', '==') === true) {
             return new Qti222MarshallerFactory();
+        } elseif (Version::compare($version, '2.2.3', '==') === true) {
+            return new Qti223MarshallerFactory();
+        } elseif (Version::compare($version, '2.2.4', '==') === true) {
+            return new Qti224MarshallerFactory();
         } elseif (Version::compare($version, '3.0.0', '==') === true) {
             return new Qti30MarshallerFactory();
         } else {

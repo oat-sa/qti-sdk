@@ -21,11 +21,11 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::INTEGER]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('mapEntry', $element->nodeName);
-        $this->assertEquals('1337', $element->getAttribute('mapKey'));
-        $this->assertEquals('1.377', $element->getAttribute('mappedValue'));
-        $this->assertEquals('true', $element->getAttribute('caseSensitive'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('mapEntry', $element->nodeName);
+        $this::assertEquals('1337', $element->getAttribute('mapKey'));
+        $this::assertEquals('1.377', $element->getAttribute('mappedValue'));
+        $this::assertEquals('true', $element->getAttribute('caseSensitive'));
     }
 
     public function testUnmarshall21()
@@ -37,13 +37,13 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(MapEntry::class, $component);
-        $this->assertInternalType('integer', $component->getMapKey());
-        $this->assertEquals(1337, $component->getMapKey());
-        $this->assertInternalType('float', $component->getMappedValue());
-        $this->assertEquals(1.377, $component->getMappedValue());
-        $this->assertInternalType('boolean', $component->isCaseSensitive());
-        $this->assertEquals(true, $component->isCaseSensitive());
+        $this::assertInstanceOf(MapEntry::class, $component);
+        $this::assertIsInt($component->getMapKey());
+        $this::assertEquals(1337, $component->getMapKey());
+        $this::assertIsFloat($component->getMappedValue());
+        $this::assertEquals(1.377, $component->getMappedValue());
+        $this::assertIsBool($component->isCaseSensitive());
+        $this::assertTrue($component->isCaseSensitive());
     }
 
     public function testUnmarshall21EmptyMapKeyForString()
@@ -55,9 +55,9 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::STRING]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(MapEntry::class, $component);
-        $this->assertEquals('', $component->getMapKey());
-        $this->assertEquals(-1.0, $component->getMappedValue());
+        $this::assertInstanceOf(MapEntry::class, $component);
+        $this::assertEquals('', $component->getMapKey());
+        $this::assertEquals(-1.0, $component->getMappedValue());
     }
 
     public function testUnmarshall21EmptyMapKeyForInteger()
@@ -94,13 +94,13 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($component, [BaseType::INTEGER]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('mapEntry', $element->nodeName);
-        $this->assertEquals('1337', $element->getAttribute('mapKey'));
-        $this->assertEquals('1.377', $element->getAttribute('mappedValue'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('mapEntry', $element->nodeName);
+        $this::assertEquals('1337', $element->getAttribute('mapKey'));
+        $this::assertEquals('1.377', $element->getAttribute('mappedValue'));
 
         // Should return an empty string.
-        $this->assertSame('', $element->getAttribute('caseSensitive'));
+        $this::assertSame('', $element->getAttribute('caseSensitive'));
     }
 
     public function testUnmarshall20()
@@ -113,15 +113,15 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.0.0')->createMarshaller($element, [BaseType::INTEGER]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(MapEntry::class, $component);
-        $this->assertInternalType('integer', $component->getMapKey());
-        $this->assertEquals(1337, $component->getMapKey());
-        $this->assertInternalType('float', $component->getMappedValue());
-        $this->assertEquals(1.377, $component->getMappedValue());
+        $this::assertInstanceOf(MapEntry::class, $component);
+        $this::assertIsInt($component->getMapKey());
+        $this::assertEquals(1337, $component->getMapKey());
+        $this::assertIsFloat($component->getMappedValue());
+        $this::assertEquals(1.377, $component->getMappedValue());
 
         // Because default behaviour of the PHP model is true for caseSensitive,
         // make sure its not false.
-        $this->assertInternalType('boolean', $component->isCaseSensitive());
-        $this->assertEquals(true, $component->isCaseSensitive());
+        $this::assertIsBool($component->isCaseSensitive());
+        $this::assertTrue($component->isCaseSensitive());
     }
 }

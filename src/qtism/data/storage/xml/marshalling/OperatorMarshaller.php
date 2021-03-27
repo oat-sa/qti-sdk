@@ -29,6 +29,7 @@ use qtism\common\utils\Reflection;
 use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\AndOperator;
 use qtism\data\expressions\operators\CustomOperator;
+use qtism\data\expressions\operators\MatchOperator;
 use qtism\data\expressions\operators\NotOperator;
 use qtism\data\expressions\operators\Operator;
 use qtism\data\expressions\operators\OrOperator;
@@ -151,6 +152,8 @@ class OperatorMarshaller extends RecursiveMarshaller
             $className = OrOperator::class;
         } elseif ($element->localName === 'not') {
             $className = NotOperator::class;
+        } elseif ($element->localName === 'match') {
+            $className = MatchOperator::class;
         } else {
             $className = 'qtism\\data\\expressions\\operators\\' . ucfirst($element->localName);
         }
@@ -187,7 +190,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
         foreach ($elements as $elt) {
             $element->appendChild($elt);
         }
