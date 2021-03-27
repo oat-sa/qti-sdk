@@ -25,6 +25,7 @@ namespace qtism\common\utils;
 
 use DateInterval;
 use Exception;
+use InvalidArgumentException;
 use qtism\common\utils\data\CharacterMap;
 use ValueError;
 
