@@ -42,6 +42,27 @@ class Track extends Html5EmptyElement
     private $src;
 
     /**
+     * From QTI spec:
+     * The 'srclang' characteristic gives the language of the text track data.
+     * The value must be a valid BCP 47 language tag.
+     * This attribute must be present if the tag's "kind" attribute is in the
+     * subtitles state.
+     *
+     * OAT note:
+     * This is inconsistent indeed because default value for "kind" is actually
+     * "subtitles" and no default value is given for "srcLang", making it
+     * impossible to rely only on default values. We decide to use "en" as a
+     * default value for "srcLang" when "kind" is in "subtitles" state, and an
+     * empty string when "kind" is not in "subtitles" state.
+     *
+     * @see https://en.wikipedia.org/wiki/IETF_language_tag for BCP 47.
+     *
+     * @var string
+     * @qtism-bean-property
+     */
+    private $srcLang = 'en';
+
+    /**
      * When present, the default attribute specifies that the track is to be
      * enabled if the user's preferences do not indicate that another track
      * would be more appropriate.
@@ -64,33 +85,12 @@ class Track extends Html5EmptyElement
     private $kind;
 
     /**
-     * From QTI spec:
-     * The 'srclang' characteristic gives the language of the text track data.
-     * The value must be a valid BCP 47 language tag.
-     * This attribute must be present if the tag's "kind" attribute is in the
-     * subtitles state.
-     *
-     * OAT note:
-     * This is inconsistent indeed because default value for "kind" is actually
-     * "subtitles" and no default value is given for "srcLang", making it
-     * impossible to rely only on default values. We decide to use "en" as a
-     * default value for "srcLang" when "kind" is in "subtitles" state, and an
-     * empty string when "kind" is not in "subtitles" state.
-     *
-     * @see https://en.wikipedia.org/wiki/IETF_language_tag for BCP 47.
-     *
-     * @var string
-     * @qtism-bean-property
-     */
-    private $srcLang = 'en';
-
-    /**
      * Create a new Track object.
      *
      * @param mixed $src A URI.
+     * @param string|null $srcLang The srclang attribute specifies the language of the track text data.
      * @param bool|int|string|null $default Is this track the default track?
      * @param int|string|null $kind Kind of track. One of the TrackKind constants.
-     * @param string|null $srcLang The srclang attribute specifies the language of the track text data.
      * @param string|null $id A QTI identifier.
      * @param string|null $class One or more class names separated by spaces.
      * @param string|null $lang An RFC3066 language.
@@ -100,9 +100,9 @@ class Track extends Html5EmptyElement
      */
     public function __construct(
         $src,
+        $srcLang = null,
         $default = null,
         $kind = null,
-        $srcLang = null,
         $title = null,
         $role = null,
         $id = null,
@@ -112,9 +112,9 @@ class Track extends Html5EmptyElement
     ) {
         parent::__construct($title, $role, $id, $class, $lang, $label);
         $this->setSrc($src);
+        $this->setSrcLang($srcLang);
         $this->setDefault($default);
         $this->setKind($kind);
-        $this->setSrcLang($srcLang);
     }
 
     public function setSrc($src): void
@@ -125,6 +125,37 @@ class Track extends Html5EmptyElement
     public function getSrc(): string
     {
         return $this->src;
+    }
+
+
+    public function setSrcLang(string $srcLang = null): void
+    {
+        $srcLang = $srcLang ?? '';
+
+        if ($srcLang === '' && $this->isKindSubtitles()) {
+            $srcLang = 'en';
+        }
+
+        if ($srcLang !== '' && !Format::isBCP47Lang($srcLang)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "srclang" argument must be a valid BCP 47 language code, "%s" given.',
+                    $srcLang
+                )
+            );
+        }
+
+        $this->srcLang = $srcLang;
+    }
+
+    public function getSrcLang(): string
+    {
+        return $this->srcLang;
+    }
+
+    public function hasSrcLang(): bool
+    {
+        return $this->srcLang !== '';
     }
 
     public function setDefault($default = null): void
@@ -171,36 +202,6 @@ class Track extends Html5EmptyElement
     public function isKindSubtitles(): bool
     {
         return $this->kind === TrackKind::getConstantByName('subtitles');
-    }
-
-    public function setSrcLang(string $srcLang = null): void
-    {
-        $srcLang = $srcLang ?? '';
-
-        if ($srcLang === '' && $this->isKindSubtitles()) {
-            $srcLang = 'en';
-        }
-
-        if ($srcLang !== '' && !Format::isBCP47Lang($srcLang)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "srclang" argument must be a valid BCP 47 language code, "%s" given.',
-                    $srcLang
-                )
-            );
-        }
-
-        $this->srcLang = $srcLang;
-    }
-
-    public function getSrcLang(): string
-    {
-        return $this->srcLang;
-    }
-
-    public function hasSrcLang(): bool
-    {
-        return $this->srcLang !== '';
     }
 
     public function getQtiClassName(): string

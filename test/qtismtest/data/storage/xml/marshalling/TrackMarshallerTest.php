@@ -27,19 +27,19 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
     public function testMarshall22(): void
     {
         $src = 'http://example.com/';
+        $srcLang = 'ja';
         $default = true;
         $kind = 'chapters';
-        $srcLang = 'ja';
 
         $expected = sprintf(
-            '<track src="%s" default="%s" kind="%s" srclang="%s"/>',
+            '<track src="%s" srclang="%s" default="%s" kind="%s"/>',
             $src,
+            $srcLang,
             $default ? 'true' : 'false',
-            $kind,
-            $srcLang
+            $kind
         );
 
-        $track = new Track($src, $default, TrackKind::getConstantByName($kind), $srcLang);
+        $track = new Track($src, $srcLang, $default, TrackKind::getConstantByName($kind));
 
         $this->assertMarshalling($expected, $track);
     }
@@ -72,19 +72,19 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
     public function testUnmarshall22(): void
     {
         $src = 'http://example.com/';
+        $srcLang = 'ja';
         $default = true;
         $kind = 'chapters';
-        $srcLang = 'ja';
 
         $xml = sprintf(
-            '<track src="%s" default="%s" kind="%s" srclang="%s"/>',
+            '<track src="%s" srclang="%s" default="%s" kind="%s"/>',
             $src,
+            $srcLang,
             $default ? 'true' : 'false',
-            $kind,
-            $srcLang
+            $kind
         );
 
-        $expected = new Track($src, $default, TrackKind::getConstantByName($kind), $srcLang);
+        $expected = new Track($src, $srcLang, $default, TrackKind::getConstantByName($kind));
 
         $this->assertUnmarshalling($expected, $xml);
     }

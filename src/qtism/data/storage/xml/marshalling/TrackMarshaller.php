@@ -17,7 +17,7 @@
  *
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
@@ -49,16 +49,16 @@ class TrackMarshaller extends Html5ElementMarshaller
 
         $this->setDOMElementAttribute($element, 'src', $component->getSrc());
 
+        if ($component->hasSrcLang()) {
+            $this->setDOMElementAttribute($element, 'srclang', $component->getSrcLang());
+        }
+
         if ($component->hasDefault()) {
             $this->setDOMElementAttribute($element, 'default', $component->getDefault() ? 'true' : 'false');
         }
 
         if ($component->hasKind()) {
             $this->setDOMElementAttribute($element, 'kind', TrackKind::getNameByConstant($component->getKind()));
-        }
-
-        if ($component->hasSrcLang()) {
-            $this->setDOMElementAttribute($element, 'srclang', $component->getSrcLang());
         }
 
         return $element;
@@ -74,12 +74,12 @@ class TrackMarshaller extends Html5ElementMarshaller
     protected function unmarshall(DOMElement $element)
     {
         $src = $this->getDOMElementAttributeAs($element, 'src');
+        $srcLang = $this->getDOMElementAttributeAs($element, 'srclang');
         $default = $this->getDOMElementAttributeAs($element, 'default', 'boolean');
         $kind = $this->getDOMElementAttributeAs($element, 'kind', TrackKind::class);
-        $srcLang = $this->getDOMElementAttributeAs($element, 'srclang');
 
         try {
-            $component = new Track($src, $default, $kind, $srcLang);
+            $component = new Track($src, $srcLang, $default, $kind);
         } catch (InvalidArgumentException $exception) {
             throw UnmarshallingException::createFromInvalidArgumentException($element, $exception);
         }
