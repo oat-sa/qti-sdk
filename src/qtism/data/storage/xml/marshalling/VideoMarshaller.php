@@ -48,16 +48,16 @@ class VideoMarshaller extends Html5MediaMarshaller
         
         $element = parent::marshall($component);
 
-        if ($component->hasPoster()) {
-            $this->setDOMElementAttribute($element, 'poster', $component->getPoster());
+        if ($component->hasWidth()) {
+            $this->setDOMElementAttribute($element, 'width', $component->getWidth());
         }
 
         if ($component->hasHeight()) {
             $this->setDOMElementAttribute($element, 'height', $component->getHeight());
         }
 
-        if ($component->hasWidth()) {
-            $this->setDOMElementAttribute($element, 'width', $component->getWidth());
+        if ($component->hasPoster()) {
+            $this->setDOMElementAttribute($element, 'poster', $component->getPoster());
         }
 
         return $element;
@@ -73,12 +73,12 @@ class VideoMarshaller extends Html5MediaMarshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        $poster = $this->getDOMElementAttributeAs($element, 'poster');
-        $height = $this->getDOMElementAttributeAs($element, 'height', 'integer');
         $width = $this->getDOMElementAttributeAs($element, 'width', 'integer');
+        $height = $this->getDOMElementAttributeAs($element, 'height', 'integer');
+        $poster = $this->getDOMElementAttributeAs($element, 'poster');
 
         try {
-            $component = new Video($poster, $height, $width);
+            $component = new Video(null, $width, $height, $poster);
         } catch (InvalidArgumentException $exception) {
             throw UnmarshallingException::createFromInvalidArgumentException($element, $exception);
         }

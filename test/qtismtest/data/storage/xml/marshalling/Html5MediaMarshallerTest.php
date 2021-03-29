@@ -21,6 +21,7 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testMarshall22(): void
     {
+        $src = 'http://example.com/video';
         $autoplay = true;
         $controls = true;
         $crossOrigin = 'use-credentials';
@@ -28,17 +29,19 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
         $mediaGroup = 'one normalized string';
         $muted = true;
         $preload = 'auto';
-        $src = 'http://example.com/video';
         $altSrc = 'http://example.com/video2';
         $track1Src = 'http://example.com/track1';
+        $track1Lang = 'it';
         $track2Src = 'http://example.com/track2';
+        $track2Lang = 'es';
 
         $expected = sprintf(
-            '<media autoplay="%s" controls="%s" crossorigin="%s" loop="%s" mediagroup="%s" muted="%s" preload="%s" src="%s">'
+            '<media src="%s" autoplay="%s" controls="%s" crossorigin="%s" loop="%s" mediagroup="%s" muted="%s" preload="%s">'
             . '<source src="%s"/>'
-            . '<track src="%s" srclang="en"/>'
-            . '<track src="%s" srclang="en"/>'
+            . '<track src="%s" srclang="%s"/>'
+            . '<track src="%s" srclang="%s"/>'
             . '</media>',
+            $src,
             $autoplay ? 'true' : 'false',
             $controls ? 'true' : 'false',
             $crossOrigin,
@@ -46,16 +49,17 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
             $mediaGroup,
             $muted ? 'true' : 'false',
             $preload,
-            $src,
             $altSrc,
             $track1Src,
-            $track2Src
+            $track1Lang,
+            $track2Src,
+            $track2Lang
         );
 
-        $media = new FakeHtml5Media($autoplay, $controls, $crossOrigin, $loop, $mediaGroup, $muted, $preload, $src);
+        $media = new FakeHtml5Media($src, $autoplay, $controls, $crossOrigin, $loop, $mediaGroup, $muted, $preload);
         $media->addSource(new Source($altSrc));
-        $media->addTrack(new Track($track1Src));
-        $media->addTrack(new Track($track2Src));
+        $media->addTrack(new Track($track1Src, $track1Lang));
+        $media->addTrack(new Track($track2Src, $track2Lang));
 
         $marshaller = new FakeHtml5MediaMarshaller('2.2.0');
 
@@ -82,6 +86,7 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testUnmarshall22(): void
     {
+        $src = 'http://example.com/video';
         $autoplay = true;
         $controls = true;
         $crossOrigin = 'use-credentials';
@@ -89,17 +94,19 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
         $mediaGroup = 'one normalized string';
         $muted = true;
         $preload = 'auto';
-        $src = 'http://example.com/video';
         $altSrc = 'http://example.com/video2';
         $track1Src = 'http://example.com/track1';
+        $track1Lang = 'it';
         $track2Src = 'http://example.com/track2';
+        $track2Lang = 'es';
 
         $xml = sprintf(
-            '<media autoplay="%s" controls="%s" crossorigin="%s" loop="%s" mediagroup="%s" muted="%s" preload="%s" src="%s">
+            '<media src="%s" autoplay="%s" controls="%s" crossorigin="%s" loop="%s" mediagroup="%s" muted="%s" preload="%s">
                 <source src="%s"/>
-                <track src="%s"/>
-                <track src="%s"/>
+                <track src="%s" srclang="%s"/>
+                <track src="%s" srclang="%s"/>
             </media>',
+            $src,
             $autoplay ? 'true' : 'false',
             $controls ? 'true' : 'false',
             $crossOrigin,
@@ -107,27 +114,28 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
             $mediaGroup,
             $muted ? 'true' : 'false',
             $preload,
-            $src,
             $altSrc,
             $track1Src,
-            $track2Src
+            $track1Lang,
+            $track2Src,
+            $track2Lang
         );
 
         $marshaller = new FakeHtml5MediaMarshaller('2.2.0');
 
         $expected = new FakeHtml5Media(
+            $src,
             $autoplay,
             $controls,
             $crossOrigin,
             $loop,
             $mediaGroup,
             $muted,
-            $preload,
-            $src
+            $preload
         );
         $expected->addSource(new Source($altSrc));
-        $expected->addTrack(new Track($track1Src));
-        $expected->addTrack(new Track($track2Src));
+        $expected->addTrack(new Track($track1Src, $track1Lang));
+        $expected->addTrack(new Track($track2Src, $track2Lang));
 
         $this->assertUnmarshalling($expected, $xml, $marshaller);
     }

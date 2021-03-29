@@ -115,10 +115,10 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         $video->setWidth($width);
         $video->setHeight($height);
         $videoAsXml = sprintf(
-            '<video src="%s" height="%s" width="%s"/>',
+            '<video src="%s" width="%s" height="%s"/>',
             $src,
-            $height,
-            $width
+            $width,
+            $height
         );
 
         $audio = new Audio();

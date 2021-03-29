@@ -50,6 +50,10 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
 
         /** @var Html5Media $component */
 
+        if ($component->hasSrc()) {
+            $this->setDOMElementAttribute($element, 'src', $component->getSrc());
+        }
+
         if ($component->hasAutoPlay()) {
             $this->setDOMElementAttribute($element, 'autoplay', $component->getAutoPlay() ? 'true' : 'false');
         }
@@ -78,10 +82,6 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
             $this->setDOMElementAttribute($element, 'preload', Preload::getNameByConstant($component->getPreload()));
         }
 
-        if ($component->hasSrc()) {
-            $this->setDOMElementAttribute($element, 'src', $component->getSrc());
-        }
-
         foreach ($component->getSources() as $source) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($source);
             $element->appendChild($marshaller->marshall($source));
@@ -98,6 +98,7 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
     /**
      * Fill $bodyElement with the following Html 5 element attributes and children:
      *
+     * * src
      * * autoplay
      * * controls
      * * crossorigin
@@ -105,7 +106,6 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
      * * mediagroup
      * * muted
      * * preload
-     * * src
      * * source
      * * track
      *
@@ -118,6 +118,10 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
     {
         if (Version::compare($this->getVersion(), '2.2.0', '>=') === true) {
             /** @var Html5Media $bodyElement */
+
+            $src = $this->getDOMElementAttributeAs($element, 'src');
+            $bodyElement->setSrc($src);
+
             $autoplay = $this->getDOMElementAttributeAs($element, 'autoplay', 'boolean');
             $bodyElement->setAutoplay($autoplay);
 
@@ -138,9 +142,6 @@ abstract class Html5MediaMarshaller extends Html5ElementMarshaller
 
             $preload = $this->getDOMElementAttributeAs($element, 'preload', Preload::class);
             $bodyElement->setPreload($preload);
-
-            $src = $this->getDOMElementAttributeAs($element, 'src');
-            $bodyElement->setSrc($src);
 
             $sourceElements = $this->getChildElementsByTagName($element, 'source');
             foreach ($sourceElements as $sourceElement) {

@@ -24,6 +24,8 @@ class Html5MediaTest extends QtiSmTestCase
     {
         $subject = new FakeHtml5Media();
 
+        self::assertFalse($subject->hasSrc());
+        self::assertSame('', $subject->getSrc());
         self::assertFalse($subject->hasAutoPlay());
         self::assertFalse($subject->getAutoPlay());
         self::assertFalse($subject->hasControls());
@@ -38,8 +40,6 @@ class Html5MediaTest extends QtiSmTestCase
         self::assertFalse($subject->getMuted());
         self::assertFalse($subject->hasPreload());
         self::assertSame(Preload::getDefault(), $subject->getPreload());
-        self::assertFalse($subject->hasSrc());
-        self::assertSame('', $subject->getSrc());
     }
 
     public function testAddSource(): void
@@ -86,23 +86,25 @@ class Html5MediaTest extends QtiSmTestCase
 
     public function testSetters(): void
     {
+        $src = 'http://example.com/';
         $autoplay = true;
         $controls = true;
         $crossOrigin = CrossOrigin::getConstantByName('use-credentials');
         $loop = true;
         $mediaGroup = 'any normalized string';
         $muted = true;
-        $src = 'http://example.com/';
 
         $subject = new FakeHtml5Media();
+        $subject->setSrc($src);
         $subject->setAutoPlay($autoplay);
         $subject->setControls($controls);
         $subject->setCrossOrigin($crossOrigin);
         $subject->setLoop($loop);
         $subject->setMediaGroup($mediaGroup);
         $subject->setMuted($muted);
-        $subject->setSrc($src);
 
+        self::assertTrue($subject->hasSrc());
+        self::assertEquals($src, $subject->getSrc());
         self::assertTrue($subject->hasAutoPlay());
         self::assertEquals($autoplay, $subject->getAutoPlay());
         self::assertTrue($subject->hasControls());
@@ -115,8 +117,16 @@ class Html5MediaTest extends QtiSmTestCase
         self::assertEquals($mediaGroup, $subject->getMediaGroup());
         self::assertTrue($subject->hasMuted());
         self::assertEquals($muted, $subject->getMuted());
-        self::assertTrue($subject->hasSrc());
-        self::assertEquals($src, $subject->getSrc());
+    }
+
+    public function testCreateWithNonUriSrc(): void
+    {
+        $wrongSrc = '';
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "src" argument must be null or a valid URI, "' . $wrongSrc . '" given.');
+
+        (new FakeHtml5Media())->setSrc($wrongSrc);
     }
 
     public function testSetWithNonBooleanAutoPlay(): void
@@ -187,16 +197,6 @@ class Html5MediaTest extends QtiSmTestCase
         $this->expectExceptionMessage('The "muted" argument must be a boolean, "foo" given.');
 
         (new FakeHtml5Media())->setMuted('foo');
-    }
-
-    public function testCreateWithNonUriSrc(): void
-    {
-        $wrongSrc = '';
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "src" argument must be null or a valid URI, "' . $wrongSrc . '" given.');
-
-        (new FakeHtml5Media())->setSrc($wrongSrc);
     }
 
     public function testGetPreload(): void

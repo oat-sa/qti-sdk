@@ -33,20 +33,14 @@ use qtism\data\QtiComponentCollection;
 abstract class Html5Media extends Html5Element
 {
     /**
-     * Contains the collection of sources.
+     * The 'src' content characteristic on media tags gives the address of the
+     * media resource (video, audio) to show. The attribute, if present, must
+     * contain a valid non-empty URL potentially surrounded by spaces.
      *
-     * @var SourceCollection
+     * @var string
      * @qtism-bean-property
      */
-    private $sources;
-
-    /**
-     * Contains the collection of tracks.
-     *
-     * @var TrackCollection
-     * @qtism-bean-property
-     */
-    private $tracks;
+    private $src = '';
 
     /**
      * The 'autoplay' characteristic is a boolean. When present, the user agent
@@ -123,18 +117,25 @@ abstract class Html5Media extends Html5Element
     private $preload;
 
     /**
-     * The 'src' content characteristic on media tags gives the address of the
-     * media resource (video, audio) to show. The attribute, if present, must
-     * contain a valid non-empty URL potentially surrounded by spaces.
+     * Contains the collection of sources.
      *
-     * @var string
+     * @var SourceCollection
      * @qtism-bean-property
      */
-    private $src = '';
+    private $sources;
+
+    /**
+     * Contains the collection of tracks.
+     *
+     * @var TrackCollection
+     * @qtism-bean-property
+     */
+    private $tracks;
 
     /**
      * Create a new Media object (Audio or Video).
      *
+     * @param string $src
      * @param bool $autoPlay
      * @param bool $controls
      * @param int $crossOrigin
@@ -142,7 +143,6 @@ abstract class Html5Media extends Html5Element
      * @param string $mediaGroup
      * @param bool $muted
      * @param int $preload
-     * @param string $src
      * @param string $id A QTI identifier.
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
@@ -151,6 +151,7 @@ abstract class Html5Media extends Html5Element
      * @param int|null $role A role taken in the Role constants.
      */
     public function __construct(
+        $src = null,
         $autoPlay = null,
         $controls = null,
         $crossOrigin = null,
@@ -158,7 +159,6 @@ abstract class Html5Media extends Html5Element
         $mediaGroup = null,
         $muted = null,
         $preload = null,
-        $src = null,
         $title = null,
         $role = null,
         $id = null,
@@ -167,6 +167,7 @@ abstract class Html5Media extends Html5Element
         $label = null
     ) {
         parent::__construct($title, $role, $id, $class, $lang, $label);
+        $this->setSrc($src);
         $this->setAutoPlay($autoPlay);
         $this->setControls($controls);
         $this->setCrossOrigin($crossOrigin);
@@ -174,39 +175,23 @@ abstract class Html5Media extends Html5Element
         $this->setMediaGroup($mediaGroup);
         $this->setMuted($muted);
         $this->setPreload($preload);
-        $this->setSrc($src);
         $this->sources = new SourceCollection();
         $this->tracks = new TrackCollection();
     }
 
-    public function getComponents(): QtiComponentCollection
+    public function setSrc($src): void
     {
-        $comp = array_merge(
-            $this->sources->getArrayCopy(),
-            $this->tracks->getArrayCopy()
-        );
-
-        return new QtiComponentCollection($comp);
+        $this->src = $this->acceptUriOrNull($src, 'src');
     }
 
-    public function addSource(Source $source): void
+    public function getSrc(): string
     {
-        $this->sources->attach($source);
+        return $this->src;
     }
 
-    public function getSources(): SourceCollection
+    public function hasSrc(): bool
     {
-        return $this->sources;
-    }
-
-    public function addTrack(Track $track): void
-    {
-        $this->tracks->attach($track);
-    }
-
-    public function getTracks(): TrackCollection
-    {
-        return $this->tracks;
+        return $this->src !== '';
     }
 
     public function setAutoPlay($autoPlay): void
@@ -314,18 +299,33 @@ abstract class Html5Media extends Html5Element
         return $this->preload !== Preload::getDefault();
     }
 
-    public function setSrc($src): void
+    public function addSource(Source $source): void
     {
-        $this->src = $this->acceptUriOrNull($src, 'src');
+        $this->sources->attach($source);
     }
 
-    public function getSrc(): string
+    public function getSources(): SourceCollection
     {
-        return $this->src;
+        return $this->sources;
     }
 
-    public function hasSrc(): bool
+    public function addTrack(Track $track): void
     {
-        return $this->src !== '';
+        $this->tracks->attach($track);
+    }
+
+    public function getTracks(): TrackCollection
+    {
+        return $this->tracks;
+    }
+
+    public function getComponents(): QtiComponentCollection
+    {
+        $comp = array_merge(
+            $this->sources->getArrayCopy(),
+            $this->tracks->getArrayCopy()
+        );
+
+        return new QtiComponentCollection($comp);
     }
 }

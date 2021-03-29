@@ -33,15 +33,13 @@ use qtism\data\content\interactions\Media;
 class Video extends Html5Media implements BlockStatic, Media
 {
     /**
-     * The 'poster' characteristic gives the address of an image file that the
-     * user agent can show while no video data is available. The characteristic,
-     * if present, must contain a valid non-empty URL potentially surrounded by
-     * spaces.
+     * Width of the video content in CSS pixels.
+     * A non negative integer.
      *
-     * @var string
+     * @var int
      * @qtism-bean-property
      */
-    private $poster = '';
+    private $width = 0;
 
     /**
      * Height of the video content in CSS pixels.
@@ -53,21 +51,23 @@ class Video extends Html5Media implements BlockStatic, Media
     private $height = 0;
 
     /**
-     * Width of the video content in CSS pixels.
-     * A non negative integer.
+     * The 'poster' characteristic gives the address of an image file that the
+     * user agent can show while no video data is available. The characteristic,
+     * if present, must contain a valid non-empty URL potentially surrounded by
+     * spaces.
      *
-     * @var int
+     * @var string
      * @qtism-bean-property
      */
-    private $width = 0;
-
+    private $poster = '';
 
     /**
      * Create a new Media object (Audio or Video).
      *
-     * @param string $poster
-     * @param int $height
+     * @param string $src
      * @param int $width
+     * @param int $height
+     * @param string $poster
      * @param bool $autoPlay
      * @param bool $controls
      * @param int $crossOrigin
@@ -75,18 +75,18 @@ class Video extends Html5Media implements BlockStatic, Media
      * @param string $mediaGroup
      * @param bool $muted
      * @param int $preload
-     * @param string $src
+     * @param string $title A title in the sense of Html title attribute
+     * @param int|null $role A role taken in the Role constants.
      * @param string $id A QTI identifier.
      * @param string $class One or more class names separated by spaces.
      * @param string $lang An RFC3066 language.
      * @param string $label A label that does not exceed 256 characters.
-     * @param string $title A title in the sense of Html title attribute
-     * @param int|null $role A role taken in the Role constants.
      */
     public function __construct(
-        $poster = null,
-        $height = null,
+        $src = null,
         $width = null,
+        $height = null,
+        $poster = null,
         $autoPlay = null,
         $controls = null,
         $crossOrigin = null,
@@ -94,7 +94,6 @@ class Video extends Html5Media implements BlockStatic, Media
         $mediaGroup = null,
         $muted = null,
         $preload = null,
-        $src = null,
         $title = null,
         $role = null,
         $id = null,
@@ -102,25 +101,40 @@ class Video extends Html5Media implements BlockStatic, Media
         $lang = null,
         $label = null
     ) {
-        parent::__construct($autoPlay, $controls, $crossOrigin, $loop, $mediaGroup, $muted, $preload, $src, $title, $role, $id, $class, $lang, $label);
-        $this->setPoster($poster);
-        $this->setHeight($height);
+        parent::__construct(
+            $src,
+            $autoPlay,
+            $controls,
+            $crossOrigin,
+            $loop,
+            $mediaGroup,
+            $muted,
+            $preload,
+            $title,
+            $role,
+            $id,
+            $class,
+            $lang,
+            $label
+        );
         $this->setWidth($width);
-    }
-    
-    public function setPoster($poster): void
-    {
-        $this->poster = $this->acceptUriOrNull($poster, 'poster');
+        $this->setHeight($height);
+        $this->setPoster($poster);
     }
 
-    public function getPoster(): string
+    public function setWidth($width): void
     {
-        return $this->poster;
+        $this->width = $this->acceptNonNegativeIntegerOrNull($width, 'width', 0);
     }
 
-    public function hasPoster(): bool
+    public function getWidth(): int
     {
-        return $this->poster !== '';
+        return $this->width;
+    }
+
+    public function hasWidth(): bool
+    {
+        return $this->width !== 0;
     }
 
     public function setHeight($height): void
@@ -138,19 +152,19 @@ class Video extends Html5Media implements BlockStatic, Media
         return $this->height !== 0;
     }
 
-    public function setWidth($width): void
+    public function setPoster($poster): void
     {
-        $this->width = $this->acceptNonNegativeIntegerOrNull($width, 'width', 0);
+        $this->poster = $this->acceptUriOrNull($poster, 'poster');
     }
 
-    public function getWidth(): int
+    public function getPoster(): string
     {
-        return $this->width;
+        return $this->poster;
     }
 
-    public function hasWidth(): bool
+    public function hasPoster(): bool
     {
-        return $this->width !== 0;
+        return $this->poster !== '';
     }
 
     public function getQtiClassName(): string

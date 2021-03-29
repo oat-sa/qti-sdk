@@ -24,18 +24,18 @@ class VideoMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testMarshall22(): void
     {
+        $width = 320;
+        $height = 240;
         $poster = 'http://example.com/poster';
-        $height = 320;
-        $width = 240;
 
         $expected = sprintf(
-            '<video poster="%s" height="%s" width="%s"/>',
-            $poster,
+            '<video width="%s" height="%s" poster="%s"/>',
+            $width,
             $height,
-            $width
+            $poster
         );
 
-        $object = new Video($poster, $height, $width);
+        $object = new Video(null, $width, $height, $poster);
 
         $this->assertMarshalling($expected, $object);
     }
@@ -66,25 +66,25 @@ class VideoMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testUnmarshall22(): void
     {
+        $width = 320;
+        $height = 240;
         $poster = 'http://example.com/poster';
-        $height = 320;
-        $width = 240;
 
         $xml = sprintf(
-            '<video poster="%s" height="%s" width="%s"/>',
-            $poster,
+            '<video width="%s" height="%s" poster="%s"/>',
+            $width,
             $height,
-            $width
+            $poster
         );
 
-        $expected = new Video($poster, $height, $width);
+        $expected = new Video(null, $width, $height, $poster);
 
         $this->assertUnmarshalling($expected, $xml);
     }
 
     public function testUnmarshall22WithNonIntegerWidthAndHeightStoresZeros(): void
     {
-        $xml = sprintf('<video height="not integer" width="not integer"/>');
+        $xml = sprintf('<video width="not integer" height="not integer"/>');
 
         $element = $this->createDOMElement($xml);
         $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($element);
@@ -119,17 +119,17 @@ class VideoMarshallerTest extends Html5ElementMarshallerTest
     {
         return [
             // TODO: fix Format::isUri because a relative path is a valid URI but not an empty string.
-            // ['<track src=" "/>', InvalidArgumentException::class, 'The "src" argument must be a valid URI, " " given.'],
+            // ['<video src=" "/>', InvalidArgumentException::class, 'The "src" argument must be a valid URI, " " given.'],
 
             [
-                '<video poster="http://example.com/" height="-1"/>',
-                UnmarshallingException::class,
-                'Error while unmarshalling element "video": The "height" argument must be 0 or a positive integer, "-1" given.',
-            ],
-            [
-                '<video poster="http://example.com/" width="-1"/>',
+                '<video width="-1" poster="http://example.com/"/>',
                 UnmarshallingException::class,
                 'Error while unmarshalling element "video": The "width" argument must be 0 or a positive integer, "-1" given.',
+            ],
+            [
+                '<video height="-1" poster="http://example.com/"/>',
+                UnmarshallingException::class,
+                'Error while unmarshalling element "video": The "height" argument must be 0 or a positive integer, "-1" given.',
             ],
         ];
     }

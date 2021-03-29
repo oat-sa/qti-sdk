@@ -10,57 +10,57 @@ class VideoTest extends QtiSmTestCase
 {
     public function testCreateWithValues(): void
     {
-        $poster = 'http://example.com/poster.jpg';
-        $height = 10;
         $width = 12;
+        $height = 10;
+        $poster = 'http://example.com/poster.jpg';
 
-        $subject = new Video($poster, $height, $width);
+        $subject = new Video(null, $width, $height, $poster);
 
-        self::assertEquals($poster, $subject->getPoster());
-        self::assertEquals($height, $subject->getHeight());
         self::assertEquals($width, $subject->getWidth());
+        self::assertEquals($height, $subject->getHeight());
+        self::assertEquals($poster, $subject->getPoster());
     }
 
     public function testCreateWithDefaultValues(): void
     {
         $subject = new Video();
 
-        self::assertEquals('', $subject->getPoster());
-        self::assertEquals(0, $subject->getHeight());
         self::assertEquals(0, $subject->getWidth());
+        self::assertEquals(0, $subject->getHeight());
+        self::assertEquals('', $subject->getPoster());
     }
 
-    public function testSetPoster(): void
+    public function testSetWidth(): void
     {
-        $poster = 'http://example.com/poster.jpg';
+        $width = 1012;
         $subject = new Video();
 
-        self::assertFalse($subject->hasPoster());
-        self::assertEquals('', $subject->getPoster());
+        self::assertFalse($subject->hasWidth());
+        self::assertEquals(0, $subject->getWidth());
 
-        $subject->setPoster($poster);
-        self::assertTrue($subject->hasPoster());
-        self::assertEquals($poster, $subject->getPoster());
+        $subject->setWidth($width);
+        self::assertTrue($subject->hasWidth());
+        self::assertEquals($width, $subject->getWidth());
     }
 
-    public function testSetPosterWithNonString(): void
+    public function testSetWidthWithNonInteger(): void
     {
-        $wrongPoster = [];
+        $wrongWidth = 'foo';
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "poster" argument must be null or a valid URI, "' . gettype($wrongPoster) . '" given.');
+        $this->expectExceptionMessage('The "width" argument must be 0 or a positive integer, "' . gettype($wrongWidth) . '" given.');
 
-        (new Video())->setPoster($wrongPoster);
+        (new Video())->setWidth($wrongWidth);
     }
 
-    public function testSetPosterWithNonUri(): void
+    public function testSetWidthWithNegativeInteger(): void
     {
-        $wrongPoster = '';
+        $wrongWidth = -12;
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "poster" argument must be null or a valid URI, "' . $wrongPoster . '" given.');
+        $this->expectExceptionMessage('The "width" argument must be 0 or a positive integer, "' . $wrongWidth . '" given.');
 
-        (new Video())->setPoster($wrongPoster);
+        (new Video())->setWidth($wrongWidth);
     }
 
     public function testSetHeight(): void
@@ -96,37 +96,37 @@ class VideoTest extends QtiSmTestCase
         (new Video())->setHeight($wrongHeight);
     }
 
-    public function testSetWidth(): void
+    public function testSetPoster(): void
     {
-        $width = 1012;
+        $poster = 'http://example.com/poster.jpg';
         $subject = new Video();
 
-        self::assertFalse($subject->hasWidth());
-        self::assertEquals(0, $subject->getWidth());
+        self::assertFalse($subject->hasPoster());
+        self::assertEquals('', $subject->getPoster());
 
-        $subject->setWidth($width);
-        self::assertTrue($subject->hasWidth());
-        self::assertEquals($width, $subject->getWidth());
+        $subject->setPoster($poster);
+        self::assertTrue($subject->hasPoster());
+        self::assertEquals($poster, $subject->getPoster());
     }
 
-    public function testSetWidthWithNonInteger(): void
+    public function testSetPosterWithNonString(): void
     {
-        $wrongWidth = 'foo';
+        $wrongPoster = [];
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "width" argument must be 0 or a positive integer, "' . gettype($wrongWidth) . '" given.');
+        $this->expectExceptionMessage('The "poster" argument must be null or a valid URI, "' . gettype($wrongPoster) . '" given.');
 
-        (new Video())->setWidth($wrongWidth);
+        (new Video())->setPoster($wrongPoster);
     }
 
-    public function testSetWidthWithNegativeInteger(): void
+    public function testSetPosterWithNonUri(): void
     {
-        $wrongWidth = -12;
+        $wrongPoster = '';
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "width" argument must be 0 or a positive integer, "' . $wrongWidth . '" given.');
+        $this->expectExceptionMessage('The "poster" argument must be null or a valid URI, "' . $wrongPoster . '" given.');
 
-        (new Video())->setWidth($wrongWidth);
+        (new Video())->setPoster($wrongPoster);
     }
 
     public function testGetQtiClassName(): void
