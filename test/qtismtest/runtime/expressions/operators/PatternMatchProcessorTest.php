@@ -110,7 +110,9 @@ class PatternMatchProcessorTest extends QtiSmTestCase
             [new QtiString('string'), 'shell', false],
             [new QtiString('stringString'), '.*', true], // in xml schema 2, dot matches white-spaces
             [new QtiString('^String$'), 'String', false], // No carret nor dollar in xml schema 2
-            [new QtiString('^String$'), '^String$', true],
+            [new QtiString('String'), 'String', true],
+            [new QtiString('String'), '^String$', true],
+            [new QtiString('^String$'), '^String$', false],
             [new QtiString('Str/ing'), 'Str/ing', true],
             [new QtiString('Str^ing'), 'Str^ing', true],
             [new QtiString('99'), '\d{1,2}', true],
