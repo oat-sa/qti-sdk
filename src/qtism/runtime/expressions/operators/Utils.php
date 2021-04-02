@@ -331,7 +331,8 @@ class Utils
         $pattern = trim($pattern, '^$');
 
         // XML schema always implicitly anchors the entire regular expression
-        // because there is no carret (^) nor dollar ($) signs.
+        // Neither caret (^) nor dollar ($) sign have special meaning so they are
+        // considered as normal characters.
         // see http://www.regular-expressions.info/xml.html
         $pattern = self::escapeSymbols($pattern, ['$', '^']);
         $pattern = self::pregAddDelimiter('^' . $pattern . '$');
