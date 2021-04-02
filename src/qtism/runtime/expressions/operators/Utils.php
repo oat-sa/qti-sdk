@@ -328,7 +328,7 @@ class Utils
      */
     public static function prepareXsdPatternForPcre($pattern)
     {
-        $pattern = trim($pattern, '^$');
+        $pattern = rtrim(ltrim($pattern, '^'), '$');
 
         // XML schema always implicitly anchors the entire regular expression
         // because there is no carret (^) nor dollar ($) signs.
