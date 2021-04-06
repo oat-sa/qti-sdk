@@ -180,7 +180,7 @@ class PositionObjectInteraction extends Interaction
     public function setMinChoices($minChoices)
     {
         if (is_int($minChoices) && ($minChoices > 0 || $minChoices === -1)) {
-            if ($minChoices > $this->getMaxChoices()) {
+            if ($this->maxChoices > 0 && $minChoices > $this->maxChoices) {
                 $msg = "The 'minChoices' argument must be less than or equal to the limits imposed by 'maxChoices'.";
                 throw new InvalidArgumentException($msg);
             }
