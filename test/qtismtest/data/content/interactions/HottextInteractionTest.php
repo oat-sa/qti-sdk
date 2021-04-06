@@ -59,4 +59,16 @@ class HottextInteractionTest extends QtiSmTestCase
         $hottextInteraction->setMaxChoices(1);
         $hottextInteraction->setMinChoices(2);
     }
+
+    public function testSetMinChoicesValidValueWhenMaxChoicesIsZero()
+    {
+        $div = new Div();
+        $div->setContent(new FlowCollection([new TextRun('content...')]));
+        $hottextInteraction = new HottextInteraction('RESPONSE', new BlockStaticCollection([$div]));
+
+        $hottextInteraction->setMaxChoices(0);
+        $hottextInteraction->setMinChoices(2);
+        
+        $this->assertSame(2, $hottextInteraction->getMinChoices());
+    }
 }
