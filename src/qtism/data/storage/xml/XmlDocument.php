@@ -106,7 +106,7 @@ class XmlDocument extends QtiDocument
      */
     public function setFilesystem(Filesystem $filesystem = null)
     {
-        $this->fileSystem = $filesystem;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -119,7 +119,7 @@ class XmlDocument extends QtiDocument
      */
     protected function getFilesystem()
     {
-        return $this->fileSystem;
+        return $this->filesystem;
     }
 
     /**
