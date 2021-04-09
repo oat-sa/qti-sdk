@@ -359,6 +359,10 @@ class Format
      */
     public static function isClass(string $string): bool
     {
+        if (!is_string($string)) {
+            return false;
+        }
+
         $pattern = "/^(?:[^\s]+?(?:\x20){0,})+$/";
         return preg_match($pattern, $string) === 1;
     }
@@ -532,6 +536,10 @@ class Format
 
     public static function isAriaIdRefs(string $ariaIdRefs): bool
     {
+        if (!is_string($ariaIdRefs)) {
+            return false;
+        }
+
         $ariaValues = explode("\x20", $ariaIdRefs);
         foreach ($ariaValues as $ariaValue) {
             if (!self::isIdentifier($ariaValue, false)) {
