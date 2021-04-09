@@ -65,7 +65,7 @@ class XmlDocument extends QtiDocument
      *
      * @var DOMDocument
      */
-    private $domDocument = null;
+    private $domDocument;
 
     /**
      * The Filesystem implementation in use. Contains null
@@ -73,7 +73,7 @@ class XmlDocument extends QtiDocument
      *
      * @var null|Filesystem
      */
-    private $fileSystem = null;
+    private $filesystem;
 
     /**
      * Set the DOMDocument object in use.
@@ -134,28 +134,28 @@ class XmlDocument extends QtiDocument
      * method, the data will be loaded through this implementation. Otherwise, it will be loaded from the
      * local filesystem.
      *
-     * @param string $uri The Uniform Resource Identifier that identifies/locate the file.
+     * @param string $url The Uniform Resource Identifier that identifies/locate the file.
      * @param bool $validate Whether or not the file must be validated unsing XML Schema? Default is false.
      * @throws XmlStorageException If an error occurs while loading the QTI-XML file.
      */
-    public function load($uri, $validate = false)
+    public function load(string $url, $validate = false): void
     {
         if (($filesystem = $this->getFilesystem()) === null) {
-            $this->loadImplementation($uri, $validate, false);
+            $this->loadImplementation($url, $validate, false);
 
             // We now are sure that the URI is valid.
-            $this->setUrl($uri);
+            $this->setUrl($url);
         } else {
             try {
-                $input = $filesystem->read($uri);
+                $input = $filesystem->read($url);
                 $this->loadImplementation($input, $validate, true);
                 $this->setFilesystem($filesystem);
 
                 // Build new custom basePath.
-                $this->setUrl($uri);
+                $this->setUrl($url);
             } catch (FileNotFoundException $e) {
                 throw new XmlStorageException(
-                    "Cannot load QTI file at path '${uri}'. It does not exist or is not readable.",
+                    "Cannot load QTI file at path '${url}'. It does not exist or is not readable.",
                     XmlStorageException::RESOLUTION,
                     $e
                 );
@@ -275,21 +275,20 @@ class XmlDocument extends QtiDocument
      * In case of a Filesystem object being injected prior to the call, data will be stored on through
      * this Filesystem implementation. Otherwise, it will be stored on the local filesystem.
      *
-     * @param string $uri The URI describing the location to save the QTI-XML representation of the Assessment Test.
+     * @param string $url The URL describing the location to save the QTI-XML representation of the Assessment Test.
      * @param bool $formatOutput Whether the XML content of the file must be formatted (new lines, indentation) or not.
      * @throws XmlStorageException If an error occurs while transforming the AssessmentTest object to its QTI-XML representation.
-     * @throws MarshallingException
      */
-    public function save($uri, $formatOutput = true)
+    public function save(string $url, bool $formatOutput = true): void
     {
         if (($filesystem = $this->getFilesystem()) === null) {
-            $this->saveImplementation($uri, $formatOutput);
+            $this->saveImplementation($url, $formatOutput);
         } else {
             $error = false;
 
             try {
                 $output = $this->saveImplementation('', $formatOutput);
-                if (!$filesystem->put($uri, $output)) {
+                if (!$filesystem->put($url, $output)) {
                     $error = true;
                 }
             } catch (LogicException $e) {
@@ -299,7 +298,7 @@ class XmlDocument extends QtiDocument
 
             if ($error) {
                 throw new XmlStorageException(
-                    "An error occurred while saving QTI-XML file at '${uri}'. Maybe the save location is not reachable?",
+                    "An error occurred while saving QTI-XML file at '${url}'. Maybe the save location is not reachable?",
                     XmlStorageException::WRITE
                 );
             }
