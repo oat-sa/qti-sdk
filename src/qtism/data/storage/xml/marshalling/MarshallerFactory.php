@@ -48,17 +48,6 @@ abstract class MarshallerFactory
     private $mapping = [];
 
     /**
-     * Get the associative array which represents the current QTI class <-> Marshaller
-     * mapping.
-     *
-     * @return array An associative array where keys are QTI class names and values are fully qualified PHP class names.
-     */
-    public function &getMapping()
-    {
-        return $this->mapping;
-    }
-
-    /**
      * Whether or not element and attribute serialization must be Web Component friendly.
      *
      * @var bool
@@ -311,8 +300,7 @@ abstract class MarshallerFactory
      */
     public function addMappingEntry($qtiClassName, $marshallerClassName, $ns = 'qtism')
     {
-        $mapping = &$this->getMapping();
-        $mapping[$ns][$qtiClassName] = $marshallerClassName;
+        $this->mapping[$ns][$qtiClassName] = $marshallerClassName;
     }
 
     /**
@@ -324,9 +312,7 @@ abstract class MarshallerFactory
      */
     public function hasMappingEntry($qtiClassName, $ns = 'qtism')
     {
-        $mapping = &$this->getMapping();
-
-        return isset($mapping[$ns]) && isset($mapping[$ns][$qtiClassName]);
+        return isset($this->mapping[$ns][$qtiClassName]);
     }
 
     /**
@@ -338,9 +324,7 @@ abstract class MarshallerFactory
      */
     public function getMappingEntry($qtiClassName, $ns = 'qtism')
     {
-        $mapping = &$this->getMapping();
-
-        return $mapping[$ns][$qtiClassName];
+        return $this->mapping[$ns][$qtiClassName] ?? false;
     }
 
     /**
@@ -351,11 +335,7 @@ abstract class MarshallerFactory
      */
     public function removeMappingEntry($qtiClassName, $ns = 'qtism')
     {
-        $mapping = &$this->getMapping();
-
-        if ($this->hasMappingEntry($qtiClassName, $ns)) {
-            unset($mapping[$ns][$qtiClassName]);
-        }
+        unset($this->mapping[$ns][$qtiClassName]);
     }
 
     /**
