@@ -162,25 +162,16 @@ class QtiVersion extends Version
         return '';
     }
 
-    /**
-     * @return string
-     */
     public function getLocalXsd(): string
     {
         return __DIR__ . '/../schemes/' . static::LOCAL_XSD;
     }
 
-    /**
-     * @return string
-     */
     public function getNamespace(): string
     {
         return static::XMLNS;
     }
 
-    /**
-     * @return string
-     */
     public function getXsdLocation(): string
     {
         return static::XSD;
