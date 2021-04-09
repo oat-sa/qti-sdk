@@ -313,7 +313,7 @@ abstract class Marshaller
      * @param $method
      * @param $args
      * @return DOMElement|mixed
-     * @throws MarshallingException
+     * @throws MarshallingException|UnmarshallingException
      */
     public function __call($method, $args)
     {
@@ -766,7 +766,7 @@ abstract class Marshaller
      *
      * @param QtiComponent $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
-     * @throws MarshallingException If an error occurs during the marshalling process.
+     * @throws MarshallingException|MarshallerNotFoundException If an error occurs during the marshalling process.
      */
     abstract protected function marshall(QtiComponent $component);
 
@@ -775,6 +775,7 @@ abstract class Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A QtiComponent object.
+     * @throws UnmarshallingException|MarshallerNotFoundException If an error occurs during the unmarshalling process.
      */
     abstract protected function unmarshall(DOMElement $element);
 

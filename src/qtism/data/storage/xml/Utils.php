@@ -49,9 +49,11 @@ class Utils
         $root = $document->documentElement;
         $location = false;
 
-        if (empty($root) === false) {
-            $schemaLocation = $root->getAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation');
-            if (empty($schemaLocation) === false) {
+        if ($root !== null) {
+            $schemaLocation = trim(
+                $root->getAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation')
+            );
+            if ($schemaLocation !== '') {
                 $parts = preg_split('/\s+/', $schemaLocation);
 
                 // Look at pairs...
@@ -296,7 +298,7 @@ class Utils
                 return $attr === 'true';
         }
 
-        if (in_array(Enumeration::class, class_implements($datatype), true)){
+        if (in_array(Enumeration::class, class_implements($datatype), true)) {
             if ($attr !== null) {
                 $constant = $datatype::getConstantByName($attr);
                 // Returns the original value when it's unknown in the enumeration.
