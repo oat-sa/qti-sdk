@@ -30,7 +30,7 @@ use ReflectionClass;
  * A MarshallerFactory focusing on instantiating and configuring
  * Marshallers for QTI 2.2.2.
  */
-class Qti222MarshallerFactory extends Qti221MarshallerFactory
+class Qti222MarshallerFactory extends Qti22MarshallerFactory
 {
     /**
      * @param ReflectionClass $class
