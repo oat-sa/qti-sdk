@@ -36,7 +36,7 @@ class UtilsTest extends QtiSmTestCase
      * @dataProvider invalidIntegerProvider
      * @param string $string
      */
-    public function testStringToIntegerInvalid(string $string): void
+    public function testStringToIntegerInvalid($string): void
     {
         $this->expectException(UnexpectedValueException::class);
         Utils::stringToDatatype($string, BaseType::INTEGER);
@@ -74,65 +74,16 @@ class UtilsTest extends QtiSmTestCase
         self::assertSame($expected, $value);
     }
 
-
     /**
-     * @dataProvider stringToBooleanProvider
-     * @param bool $expected
-     * @param string $string
+     * @dataProvider invalidBooleanProvider
+     * @param mixed $string
      */
-    public function testStringToBooleanWithValidValues(bool $expected, string $string): void
-    {
-        $this::assertEquals($expected, Utils::stringToBoolean($string));
-    }
-
-    public function stringToBooleanProvider(): array
-    {
-        return [
-            [true, "  TrUe"],
-            [false, '  FALSE '],
-            [true, 'true'],
-            [
-                true,
-                new class {
-                    public function __toString(): string
-                    {
-                        return 'true';
-                    }
-                },
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider  stringToBooleanInvalidProvider
-     * @param string $string
-     * @throws UnexpectedValueException when the string cannot be converted to boolean.
-     */
-    public function testStringToBooleanWithInvalidValues(string $string): void
+    public function testStringToBooleanInvalid($string): void
     {
         $this->expectException(UnexpectedValueException::class);
-        $this->expectExceptionMessage("'${string}' cannot be transformed into boolean.");
-        Utils::stringToBoolean($string);
+        Utils::stringToDatatype($string, BaseType::BOOLEAN);
     }
 
-    public function stringToBooleanInvalidProvider(): array
-    {
-        return [
-            [''],
-            [78],
-            ['robert'],
-            [true],
-            [false],
-            [
-                new class {
-                    public function __toString(): string
-                    {
-                        return 'blah';
-                    }
-                },
-            ],
-        ];
-    }
     /**
      * @dataProvider validIntOrIdentifierProvider
      * @param string $string
@@ -146,22 +97,12 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidIntOrIdentifierProvider
-     * @param $string
+     * @param mixed $string
      */
-    public function testIntOrIdentifierInvalid(string $string): void
+    public function testIntOrIdentifierInvalid($string): void
     {
         $this->expectException(UnexpectedValueException::class);
         Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
-    }
-
-    /**
-     * @dataProvider invalidBooleanProvider
-     * @param string $string
-     */
-    public function testStringToBooleanInvalid(string $string): void
-    {
-        $this->expectException(UnexpectedValueException::class);
-        Utils::stringToDatatype($string, BaseType::BOOLEAN);
     }
 
     /**
@@ -293,14 +234,14 @@ class UtilsTest extends QtiSmTestCase
      * @param string $uri
      * @param string $expected
      */
-    public function testValidUriToSanitize($uri, $expected): void
+    public function testValidUriToSanitize(string $uri, string $expected): void
     {
         self::assertEquals($expected, Utils::sanitizeUri($uri));
     }
 
     /**
      * @dataProvider invalidUriToSanitizeProvider
-     * @param string $uri
+     * @param mixed $uri
      */
     public function testInvalidUriToSanitize($uri): void
     {
@@ -320,10 +261,7 @@ class UtilsTest extends QtiSmTestCase
         Utils::stringToDatatype('test', -1);
     }
 
-    /**
-     * @return array
-     */
-    public function validCoordsProvider()
+    public function validCoordsProvider(): array
     {
         return [
             ['30, 30, 60, 30', QtiShape::RECT],
@@ -336,10 +274,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidCoordsProvider()
+    public function invalidCoordsProvider(): array
     {
         return [
             ['invalid', QtiShape::RECT],
@@ -348,10 +283,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidShapeProvider()
+    public function invalidShapeProvider(): array
     {
         return [
             ['10, 10, 10', QtiShape::DEF],
@@ -359,10 +291,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validIntegerProvider()
+    public function validIntegerProvider(): array
     {
         return [
             ['25', 25],
@@ -376,10 +305,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidIntegerProvider()
+    public function invalidIntegerProvider(): array
     {
         return [
             ['25.234'],
@@ -391,10 +317,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validFloatProvider()
+    public function validFloatProvider(): array
     {
         return [
             ['25.234', 25.234],
@@ -405,10 +328,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidFloatProvider()
+    public function invalidFloatProvider(): array
     {
         return [
             ['2a'],
@@ -420,10 +340,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validBooleanProvider()
+    public function validBooleanProvider(): array
     {
         return [
             ['true', true],
@@ -433,10 +350,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidBooleanProvider()
+    public function invalidBooleanProvider(): array
     {
         return [
             ['tru'],
@@ -446,10 +360,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validPointProvider()
+    public function validPointProvider(): array
     {
         return [
             ['20 30', new QtiPoint(20, 30)],
@@ -458,10 +369,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidPointProvider()
+    public function invalidPointProvider(): array
     {
         return [
             ['20 x'],
@@ -474,10 +382,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validDurationProvider()
+    public function validDurationProvider(): array
     {
         return [
             ['P1D', new QtiDuration('P1D')], // 1 day
@@ -500,7 +405,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    public function validPairProvider():array
+    public function validPairProvider(): array
     {
         return [
             ['Bidule Trucmuche', new QtiPair('Bidule', 'Trucmuche')],
@@ -528,7 +433,7 @@ class UtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validUriToSanitizeProvider()
+    public function validUriToSanitizeProvider(): array
     {
         return [
             ['http://www.taotesting.com/', 'http://www.taotesting.com'],
@@ -542,10 +447,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidUriToSanitizeProvider()
+    public function invalidUriToSanitizeProvider(): array
     {
         return [
             [new stdClass()],
@@ -554,10 +456,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validIntOrIdentifierProvider()
+    public function validIntOrIdentifierProvider(): array
     {
         return [
             ['identifier', 'identifier', 'string'],
@@ -565,10 +464,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidIntOrIdentifierProvider()
+    public function invalidIntOrIdentifierProvider(): array
     {
         return [
             [3.3],

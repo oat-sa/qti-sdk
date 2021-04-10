@@ -67,9 +67,9 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider validUriFormatProvider
-     * @param string $string
+     * @param mixed $string
      */
-    public function testValidUriFormat(string $string): void
+    public function testValidUriFormat($string): void
     {
         self::assertTrue(Format::isUri($string));
     }
@@ -96,9 +96,9 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidBCP47LanguagesProvider
-     * @param string $string
+     * @param mixed $string
      */
-    public function testInvalidBCP47LanguageFormat(string $string): void
+    public function testInvalidBCP47LanguageFormat($string): void
     {
         $this::assertFalse(Format::isBCP47Lang($string));
     }
@@ -114,9 +114,9 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidClassFormatProvider
-     * @param string $string
+     * @param mixed $string
      */
-    public function testInvalidClassFormatProvider(string $string): void
+    public function testInvalidClassFormatProvider($string): void
     {
         self::assertFalse(Format::isClass($string));
     }
@@ -202,19 +202,19 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider sanitizeProvider2
-     * @param string $dirty
+     * @param mixed $dirty
      */
-    public function testSanitizeIdentifier2(string $dirty): void
+    public function testSanitizeIdentifier2($dirty): void
     {
         self::assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
     }
 
     /**
      * @dataProvider isAriaLevelProvider
-     * @param string $input
+     * @param mixed $input
      * @param bool $expected
      */
-    public function testIsAriaLevel(string $input, bool $expected): void
+    public function testIsAriaLevel($input, bool $expected): void
     {
         self::assertSame($expected, Format::isAriaLevel($input));
     }
@@ -557,9 +557,9 @@ class FormatTest extends QtiSmTestCase
     /**
      * @dataProvider isMimeTypeProvider
      * @param bool $expected
-     * @param string $string
+     * @param mixed $string
      */
-    public function testIsMimeType(bool $expected, string $string): void
+    public function testIsMimeType(bool $expected, $string): void
     {
         $this::assertEquals($expected, Format::isMimeType($string));
     }
@@ -585,9 +585,9 @@ class FormatTest extends QtiSmTestCase
     /**
      * @dataProvider isNormalizedStringProvider
      * @param bool $expected
-     * @param string $string
+     * @param mixed $string
      */
-    public function testIsNormalizedString(bool $expected, string $string): void
+    public function testIsNormalizedString(bool $expected, $string): void
     {
         $this::assertEquals($expected, Format::isNormalizedString($string));
     }
