@@ -26,21 +26,20 @@ class UtilsTest extends QtiSmTestCase
      * @param string $string
      * @param int $expected
      */
-    public function testStringToInteger($string, $expected)
+    public function testStringToInteger(string $string, int $expected): void
     {
         $value = Utils::stringToDatatype($string, BaseType::INTEGER);
-        $this::assertIsInt($value);
-        $this::assertSame($expected, $value);
+        self::assertSame($expected, $value);
     }
 
     /**
      * @dataProvider invalidIntegerProvider
      * @param string $string
      */
-    public function testStringToIntegerInvalid($string)
+    public function testStringToIntegerInvalid($string): void
     {
         $this->expectException(UnexpectedValueException::class);
-        $value = Utils::stringToDatatype($string, BaseType::INTEGER);
+        Utils::stringToDatatype($string, BaseType::INTEGER);
     }
 
     /**
@@ -48,21 +47,20 @@ class UtilsTest extends QtiSmTestCase
      * @param string $string
      * @param float $expected
      */
-    public function testStringToFloatValid($string, $expected)
+    public function testStringToFloatValid(string $string, float $expected): void
     {
         $value = Utils::stringToDatatype($string, BaseType::FLOAT);
-        $this::assertIsFloat($value);
-        $this::assertSame($expected, $value);
+        self::assertSame($expected, $value);
     }
 
     /**
      * @dataProvider invalidFloatProvider
      * @param string $string
      */
-    public function testStringToFloatInvalid($string)
+    public function testStringToFloatInvalid(string $string): void
     {
         $this->expectException(UnexpectedValueException::class);
-        $value = Utils::stringToDatatype($string, BaseType::FLOAT);
+        Utils::stringToDatatype($string, BaseType::FLOAT);
     }
 
     /**
@@ -70,45 +68,41 @@ class UtilsTest extends QtiSmTestCase
      * @param string $string
      * @param bool $expected
      */
-    public function testStringToBooleanValid($string, $expected)
+    public function testStringToBooleanValid(string $string, bool $expected): void
     {
         $value = Utils::stringToDatatype($string, BaseType::BOOLEAN);
-        $this::assertIsBool($value);
-        $this::assertSame($expected, $value);
-    }
-
-    /**
-     * @dataProvider validIntOrIdentifierProvider
-     *
-     * @param $string
-     * @param $expected
-     * @param $type
-     */
-    public function testIntOrIdentifierValid($string, $expected, $type)
-    {
-        $value = Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
-        $this::assertIsString($type);
-        $this::assertSame($expected, $value);
-    }
-
-    /**
-     * @dataProvider invalidIntOrIdentifierProvider
-     * @param $string
-     */
-    public function testIntOrIdentifierInvalid($string)
-    {
-        $this->expectException(UnexpectedValueException::class);
-        Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
+        self::assertSame($expected, $value);
     }
 
     /**
      * @dataProvider invalidBooleanProvider
-     * @param string $string
+     * @param mixed $string
      */
-    public function testStringToBooleanInvalid($string)
+    public function testStringToBooleanInvalid($string): void
     {
         $this->expectException(UnexpectedValueException::class);
-        $value = Utils::stringToDatatype($string, BaseType::BOOLEAN);
+        Utils::stringToDatatype($string, BaseType::BOOLEAN);
+    }
+
+    /**
+     * @dataProvider validIntOrIdentifierProvider
+     * @param string $string
+     * @param mixed $expected
+     */
+    public function testIntOrIdentifierValid(string $string, $expected): void
+    {
+        $value = Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
+        self::assertSame($expected, $value);
+    }
+
+    /**
+     * @dataProvider invalidIntOrIdentifierProvider
+     * @param mixed $string
+     */
+    public function testIntOrIdentifierInvalid($string): void
+    {
+        $this->expectException(UnexpectedValueException::class);
+        Utils::stringToDatatype($string, BaseType::INT_OR_IDENTIFIER);
     }
 
     /**
@@ -116,23 +110,20 @@ class UtilsTest extends QtiSmTestCase
      * @param string $string
      * @param QtiPoint $expected
      */
-    public function testStringToPointValid($string, $expected)
+    public function testStringToPointValid(string $string, QtiPoint $expected): void
     {
         $value = Utils::stringToDatatype($string, BaseType::POINT);
-        $this::assertIsInt($value->getX());
-        $this::assertIsInt($value->getY());
-        $this::assertEquals($expected->getX(), $value->getX());
-        $this::assertEquals($expected->getY(), $value->getY());
+        self::assertEquals($expected, $value);
     }
 
     /**
      * @dataProvider invalidPointProvider
      * @param string $string
      */
-    public function testStringToPointInvalid($string)
+    public function testStringToPointInvalid(string $string): void
     {
         $this->expectException(UnexpectedValueException::class);
-        $value = Utils::stringToDatatype($string, BaseType::POINT);
+        Utils::stringToDatatype($string, BaseType::POINT);
     }
 
     /**
@@ -140,26 +131,20 @@ class UtilsTest extends QtiSmTestCase
      * @param string $string
      * @param QtiDuration $expected
      */
-    public function testStringToDurationValid($string, $expected)
+    public function testStringToDurationValid(string $string, QtiDuration $expected): void
     {
         $value = Utils::stringToDatatype($string, BaseType::DURATION);
-        $this::assertInstanceOf(QtiDuration::class, $value);
-        $this::assertEquals($value->getDays(), $expected->getDays());
-        $this::assertEquals($value->getYears(), $expected->getYears());
-        $this::assertEquals($value->getHours(), $expected->getHours());
-        $this::assertEquals($value->getMinutes(), $expected->getMinutes());
-        $this::assertEquals($value->getMonths(), $expected->getMonths());
-        $this::assertEquals($value->getSeconds(), $expected->getSeconds());
+        self::assertEquals($expected, $value);
     }
 
     /**
      * @dataProvider invalidDurationProvider
      * @param string $string
      */
-    public function testStringToDurationInvalid($string)
+    public function testStringToDurationInvalid(string $string): void
     {
         $this->expectException(UnexpectedValueException::class);
-        $value = Utils::stringToDatatype($string, BaseType::DURATION);
+        Utils::stringToDatatype($string, BaseType::DURATION);
     }
 
     /**
@@ -167,62 +152,58 @@ class UtilsTest extends QtiSmTestCase
      * @param string $string
      * @param QtiPair $expected
      */
-    public function testStringToPairValid($string, $expected)
+    public function testStringToPairValid(string $string, QtiPair $expected): void
     {
         $value = Utils::stringToDatatype($string, BaseType::PAIR);
-        $this::assertInstanceOf(QtiPair::class, $value);
-        $this::assertEquals($expected->getFirst(), $value->getFirst());
-        $this::assertEquals($expected->getSecond(), $value->getSecond());
+        self::assertEquals($expected, $value);
     }
 
     /**
      * @dataProvider invalidPairProvider
      * @param string $string
      */
-    public function testStringToPairInvalid($string)
+    public function testStringToPairInvalid(string $string): void
     {
         $this->expectException(UnexpectedValueException::class);
-        $value = Utils::stringToDatatype($string, BaseType::PAIR);
+        Utils::stringToDatatype($string, BaseType::PAIR);
     }
 
     /**
-     * @dataProvider validPairProvider
+     * @dataProvider validDirectedPairProvider
      * @param string $string
      * @param QtiDirectedPair $expected
      */
-    public function testStringToDirectedPairValid($string, $expected)
+    public function testStringToDirectedPairValid(string $string, QtiDirectedPair $expected): void
     {
         $value = Utils::stringToDatatype($string, BaseType::DIRECTED_PAIR);
-        $this::assertInstanceOf(QtiDirectedPair::class, $value);
-        $this::assertEquals($expected->getFirst(), $value->getFirst());
-        $this::assertEquals($expected->getSecond(), $value->getSecond());
+        self::assertEquals($expected, $value);
     }
 
     /**
      * @dataProvider invalidPairProvider
      * @param string $string
      */
-    public function testStringToDirectedPairInvalid($string)
+    public function testStringToDirectedPairInvalid(string $string): void
     {
         $this->expectException(UnexpectedValueException::class);
-        $value = Utils::stringToDatatype($string, BaseType::DIRECTED_PAIR);
+        Utils::stringToDatatype($string, BaseType::DIRECTED_PAIR);
     }
 
     /**
      * @dataProvider validCoordsProvider
      * @param string $string
-     * @param QtiShape $shape
+     * @param int $shape
      */
-    public function testStringToCoords($string, $shape)
+    public function testStringToCoords(string $string, int $shape): void
     {
         $coords = Utils::stringToCoords($string, $shape);
-        $this::assertInstanceOf(QtiCoords::class, $coords);
+        self::assertInstanceOf(QtiCoords::class, $coords);
 
         $intCoords = explode(',', $string);
-        $this::assertEquals(count($intCoords), count($coords));
+        self::assertEquals(count($intCoords), count($coords));
 
         for ($i = 0; $i < count($intCoords); $i++) {
-            $this::assertEquals((int)$intCoords[$i], $coords[$i]);
+            self::assertEquals((int)$intCoords[$i], $coords[$i]);
         }
     }
 
@@ -231,10 +212,10 @@ class UtilsTest extends QtiSmTestCase
      * @param string $string
      * @param QtiShape $shape
      */
-    public function testStringToCoordsInvalid($string, $shape)
+    public function testStringToCoordsInvalid(string $string, int $shape): void
     {
         $this->expectException(UnexpectedValueException::class);
-        $coords = Utils::stringToCoords($string, $shape);
+        Utils::stringToCoords($string, $shape);
     }
 
     /**
@@ -242,10 +223,10 @@ class UtilsTest extends QtiSmTestCase
      * @param string $string
      * @param mixed $shape
      */
-    public function testStringToCoordsInvalidShapes($string, $shape)
+    public function testStringToCoordsInvalidShapes(string $string, int $shape): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $coords = Utils::stringToCoords($string, $shape);
+        Utils::stringToCoords($string, $shape);
     }
 
     /**
@@ -253,37 +234,34 @@ class UtilsTest extends QtiSmTestCase
      * @param string $uri
      * @param string $expected
      */
-    public function testValidUriToSanitize($uri, $expected)
+    public function testValidUriToSanitize(string $uri, string $expected): void
     {
-        $this::assertEquals($expected, Utils::sanitizeUri($uri));
+        self::assertEquals($expected, Utils::sanitizeUri($uri));
     }
 
     /**
      * @dataProvider invalidUriToSanitizeProvider
-     * @param string $uri
+     * @param mixed $uri
      */
-    public function testInvalidUriToSanitize($uri)
+    public function testInvalidUriToSanitize($uri): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $uri = Utils::sanitizeUri($uri);
+        Utils::sanitizeUri($uri);
     }
 
-    public function testUnsupportedFile()
+    public function testUnsupportedFile(): void
     {
         $this->expectException(RuntimeException::class);
         Utils::stringToDatatype('not supported', BaseType::FILE);
     }
 
-    public function testUnknownType()
+    public function testUnknownType(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        Utils::stringToDatatype('test', 'test');
+        Utils::stringToDatatype('test', -1);
     }
 
-    /**
-     * @return array
-     */
-    public function validCoordsProvider()
+    public function validCoordsProvider(): array
     {
         return [
             ['30, 30, 60, 30', QtiShape::RECT],
@@ -296,10 +274,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidCoordsProvider()
+    public function invalidCoordsProvider(): array
     {
         return [
             ['invalid', QtiShape::RECT],
@@ -308,10 +283,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidShapeProvider()
+    public function invalidShapeProvider(): array
     {
         return [
             ['10, 10, 10', QtiShape::DEF],
@@ -319,10 +291,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validIntegerProvider()
+    public function validIntegerProvider(): array
     {
         return [
             ['25', 25],
@@ -336,10 +305,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidIntegerProvider()
+    public function invalidIntegerProvider(): array
     {
         return [
             ['25.234'],
@@ -348,14 +314,10 @@ class UtilsTest extends QtiSmTestCase
             ['+'],
             ['abcd'],
             ['-bd'],
-            [null],
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validFloatProvider()
+    public function validFloatProvider(): array
     {
         return [
             ['25.234', 25.234],
@@ -366,10 +328,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidFloatProvider()
+    public function invalidFloatProvider(): array
     {
         return [
             ['2a'],
@@ -378,14 +337,10 @@ class UtilsTest extends QtiSmTestCase
             ['+'],
             ['abcd'],
             ['-bd'],
-            [null],
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validBooleanProvider()
+    public function validBooleanProvider(): array
     {
         return [
             ['true', true],
@@ -395,24 +350,17 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidBooleanProvider()
+    public function invalidBooleanProvider(): array
     {
         return [
             ['tru'],
             [''],
             ['f'],
-            [null],
             [24],
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validPointProvider()
+    public function validPointProvider(): array
     {
         return [
             ['20 30', new QtiPoint(20, 30)],
@@ -421,10 +369,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidPointProvider()
+    public function invalidPointProvider(): array
     {
         return [
             ['20 x'],
@@ -434,14 +379,10 @@ class UtilsTest extends QtiSmTestCase
             ['20px 20em'],
             ['20'],
             [''],
-            [null],
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validDurationProvider()
+    public function validDurationProvider(): array
     {
         return [
             ['P1D', new QtiDuration('P1D')], // 1 day
@@ -454,24 +395,17 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidDurationProvider()
+    public function invalidDurationProvider(): array
     {
         return [
             ['D1P'],
             ['3600'],
             [''],
             ['abcdef'],
-            [null],
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validPairProvider()
+    public function validPairProvider(): array
     {
         return [
             ['Bidule Trucmuche', new QtiPair('Bidule', 'Trucmuche')],
@@ -479,23 +413,27 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidPairProvider()
+    public function validDirectedPairProvider(): array
+    {
+        return [
+            ['Bidule Trucmuche', new QtiDirectedPair('Bidule', 'Trucmuche')],
+            ['C D', new QtiDirectedPair('C', 'D')],
+        ];
+    }
+
+    public function invalidPairProvider(): array
     {
         return [
             ['Machinbrol'],
             ['bidule 0'],
             [''],
-            [null],
         ];
     }
 
     /**
      * @return array
      */
-    public function validUriToSanitizeProvider()
+    public function validUriToSanitizeProvider(): array
     {
         return [
             ['http://www.taotesting.com/', 'http://www.taotesting.com'],
@@ -509,10 +447,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidUriToSanitizeProvider()
+    public function invalidUriToSanitizeProvider(): array
     {
         return [
             [new stdClass()],
@@ -521,10 +456,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function validIntOrIdentifierProvider()
+    public function validIntOrIdentifierProvider(): array
     {
         return [
             ['identifier', 'identifier', 'string'],
@@ -532,10 +464,7 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidIntOrIdentifierProvider()
+    public function invalidIntOrIdentifierProvider(): array
     {
         return [
             [3.3],

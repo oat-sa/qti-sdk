@@ -11,14 +11,6 @@ use qtismtest\QtiSmTestCase;
  */
 class ObjectTest extends QtiSmTestCase
 {
-    public function testCreateWrongData()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The 'data' argument must be a URI or an empty string, 'integer' given.");
-
-        new ObjectElement(999, 'image/png');
-    }
-
     public function testCreateWrongType()
     {
         $this->expectException(InvalidArgumentException::class);

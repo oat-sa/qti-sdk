@@ -339,12 +339,10 @@ abstract class BodyElement extends QtiComponent
      * @param string $ariaControls
      * @throws InvalidArgumentException
      */
-    public function setAriaControls($ariaControls)
+    public function setAriaControls(string $ariaControls)
     {
         if ($ariaControls !== '' && !Format::isAriaIdRefs($ariaControls)) {
-            $val = (is_object($ariaControls)) ? ('instance of ' . get_class($ariaControls)) : $ariaControls;
-
-            $msg = "'${val}' is not a valid value for attribute 'aria-controls'.";
+            $msg = "'${ariaControls}' is not a valid value for attribute 'aria-controls'.";
             throw new InvalidArgumentException($msg);
         }
 
@@ -371,12 +369,10 @@ abstract class BodyElement extends QtiComponent
      * @param string $ariaDescribedBy
      * @throws InvalidArgumentException
      */
-    public function setAriaDescribedBy($ariaDescribedBy)
+    public function setAriaDescribedBy(string $ariaDescribedBy): void
     {
         if ($ariaDescribedBy !== '' && !Format::isAriaIdRefs($ariaDescribedBy)) {
-            $val = (is_object($ariaDescribedBy)) ? ('instance of ' . get_class($ariaDescribedBy)) : $ariaDescribedBy;
-
-            $msg = "'${val}' is not a valid value for attribute 'aria-describedby'.";
+            $msg = "'${ariaDescribedBy}' is not a valid value for attribute 'aria-describedby'.";
             throw new InvalidArgumentException($msg);
         }
 
@@ -403,12 +399,10 @@ abstract class BodyElement extends QtiComponent
      * @param string $ariaFlowTo
      * @throws InvalidArgumentException
      */
-    public function setAriaFlowTo($ariaFlowTo)
+    public function setAriaFlowTo(string $ariaFlowTo): void
     {
         if ($ariaFlowTo !== '' && !Format::isAriaIdRefs($ariaFlowTo)) {
-            $val = (is_object($ariaFlowTo)) ? ('instance of ' . get_class($ariaFlowTo)) : $ariaFlowTo;
-
-            $msg = "'${val}' is not a valid value for attribute 'aria-flowto'.";
+            $msg = "'${ariaFlowTo}' is not a valid value for attribute 'aria-flowto'.";
             throw new InvalidArgumentException($msg);
         }
 
@@ -435,12 +429,10 @@ abstract class BodyElement extends QtiComponent
      * @param string $ariaLabelledBy
      * @throws InvalidArgumentException
      */
-    public function setAriaLabelledBy($ariaLabelledBy)
+    public function setAriaLabelledBy(string $ariaLabelledBy): void
     {
         if ($ariaLabelledBy !== '' && !Format::isAriaIdRefs($ariaLabelledBy)) {
-            $val = (is_object($ariaLabelledBy)) ? ('instance of ' . get_class($ariaLabelledBy)) : $ariaLabelledBy;
-
-            $msg = "'${val}' is not a valid value for attribute 'aria-labelledby'.";
+            $msg = "'${ariaLabelledBy}' is not a valid value for attribute 'aria-labelledby'.";
             throw new InvalidArgumentException($msg);
         }
 
@@ -467,12 +459,10 @@ abstract class BodyElement extends QtiComponent
      * @param string $ariaOwns
      * @throws InvalidArgumentException
      */
-    public function setAriaOwns($ariaOwns)
+    public function setAriaOwns(string $ariaOwns): void
     {
         if ($ariaOwns !== '' && !Format::isAriaIdRefs($ariaOwns)) {
-            $val = (is_object($ariaOwns)) ? ('instance of ' . get_class($ariaOwns)) : $ariaOwns;
-
-            $msg = "'${val}' is not a valid value for attribute 'aria-owns'.";
+            $msg = "'${ariaOwns}' is not a valid value for attribute 'aria-owns'.";
             throw new InvalidArgumentException($msg);
         }
 
@@ -499,16 +489,14 @@ abstract class BodyElement extends QtiComponent
      * @param string $ariaLevel
      * @throws InvalidArgumentException
      */
-    public function setAriaLevel($ariaLevel)
+    public function setAriaLevel(string $ariaLevel)
     {
         if ($ariaLevel !== '' && !Format::isAriaLevel($ariaLevel)) {
-            $val = (is_object($ariaLevel)) ? ('instance of ' . get_class($ariaLevel)) : $ariaLevel;
-
-            $msg = "'${val}' is not a valid value for attribute 'aria-level'.";
+            $msg = "'${ariaLevel}' is not a valid value for attribute 'aria-level'.";
             throw new InvalidArgumentException($msg);
         }
 
-        $this->ariaLevel = (string)$ariaLevel;
+        $this->ariaLevel = $ariaLevel;
     }
 
     /**
@@ -531,15 +519,14 @@ abstract class BodyElement extends QtiComponent
      * @param int $ariaLive A value from the AriaLive enumeration or false for no value.
      * @throws InvalidArgumentException
      */
-    public function setAriaLive($ariaLive)
+    public function setAriaLive(int $ariaLive): void
     {
-        if ($ariaLive === false || in_array($ariaLive, AriaLive::asArray(), true)) {
-            $this->ariaLive = $ariaLive;
-        } else {
-            $val = (is_object($ariaLive)) ? ('instance of ' . get_class($ariaLive)) : $ariaLive;
-            $msg = "'${val}' is not a valid value for attribute 'aria-live'.";
+        if ($ariaLive !== false && !in_array($ariaLive, AriaLive::asArray(), true)) {
+            $msg = "'${ariaLive}' is not a valid value for attribute 'aria-live'.";
             throw new InvalidArgumentException($msg);
         }
+
+        $this->ariaLive = $ariaLive;
     }
 
     /**

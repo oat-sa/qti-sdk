@@ -68,7 +68,7 @@ class PhpDocument extends QtiDocument
      * @throws StreamAccessException
      * @throws PhpMarshallingException
      */
-    public function save($url)
+    public function save(string $url): void
     {
         $stream = $this->transformToPhp();
 
@@ -186,7 +186,7 @@ class PhpDocument extends QtiDocument
      * @param string $url A URL (Uniform Resource Locator) describing where to find the PHP document to load.
      * @throws PhpStorageException If an error occurs while loading the PHP file located at $url.
      */
-    public function load($url)
+    public function load(string $url): void
     {
         if (is_readable($url) === false) {
             $msg = "The PHP document located at '${url}' is not readable or does not exist.";

@@ -124,11 +124,11 @@ abstract class QtiDocument
      * @param string $url
      * @throws StorageException
      */
-    abstract public function load($url);
+    abstract public function load(string $url): void;
 
     /**
      * @param string $url
      * @throws StorageException
      */
-    abstract public function save($url);
+    abstract public function save(string $url): void;
 }

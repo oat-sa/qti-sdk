@@ -187,14 +187,9 @@ class MarshallerTest extends QtiSmTestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage("Unknown method Marshaller::'hello'.");
 
-        $marshaller->hello();
+        $marshaller->hello('blah');
     }
 }
-
-
-
-
-
 
 class FakeMarshaller extends Marshaller
 {

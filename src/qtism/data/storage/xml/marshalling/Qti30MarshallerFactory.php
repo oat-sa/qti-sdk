@@ -25,14 +25,13 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Reflection;
 use ReflectionClass;
-use ReflectionException;
 
 /**
  * A QTI 3.0.0 (aQTI) MarshallerFactory
  *
  * It is focusing on instantiating and configuring Marshallers for QTI 3.0.0 (aQTI).
  */
-class Qti30MarshallerFactory extends Qti221MarshallerFactory
+class Qti30MarshallerFactory extends MarshallerFactory
 {
     public function __construct()
     {
