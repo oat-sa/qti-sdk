@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
-                xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqtiv2p2p2_html5_v1p0.xsd"
-                identifier="video-tracks" title="Big Buck Bunny" adaptive="false" timeDependent="false">
+<assessmentItem
+        xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0"
+        identifier="video-tracks" title="Big Buck Bunny" timeDependent="false" adaptive="false"
+        xsi:schemaLocation="
+          http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd
+          http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0 http://www.imsglobal.org/xsd/qti/qtiv2p2p2/imsqtiv2p2p2_html5_v1p0.xsd
+        "
+>
   <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
     <correctResponse>
       <value>C</value>
@@ -19,17 +24,19 @@
       Below is a Big Buck Bunny video trailer with two different Closed Caption tracks: English and Japanese.
       Use the video player's controls to turn the caption tracks (the "CC" button) on and off.
     </p>
-    <qh5:video width="320" height="240" controls="true">
-      <qh5:source src="images/big_buck_bunny.mp4" type="video/mp4" />
-      <qh5:source src="images/big_buck_bunny.webm" type="video/webm" />
-      <qh5:track kind="captions" src="images/texttrack-en.vtt" srclang="en" label="English" default="true"/>
-      <qh5:track kind="captions" src="images/texttrack-jpn.vtt" srclang="ja" label="Japanese"/>
+    <qh5:video controls="true" height="240" width="320">
+      <qh5:source src="images/big_buck_bunny.mp4" type="video/mp4"/>
+      <qh5:source src="images/big_buck_bunny.webm" type="video/webm"/>
+      <qh5:track label="English" src="images/texttrack-en.vtt" default="true" kind="captions" srclang="en"/>
+      <qh5:track label="Japanese" src="images/texttrack-jpn.vtt" kind="captions" srclang="ja"/>
     </qh5:video>
     <p>
       This trailer, and the Big Buck Bunny project, is (c) copyright 2008, Blender Foundation / www.bigbuckbunny.org
     </p>
-    <choiceInteraction maxChoices="1" responseIdentifier="RESPONSE">
-      <prompt><p>How many Caption Tracks are included in the video presentation above?</p></prompt>
+    <choiceInteraction responseIdentifier="RESPONSE" maxChoices="1">
+      <prompt>
+        <p>How many Caption Tracks are included in the video presentation above?</p>
+      </prompt>
       <simpleChoice identifier="A">0</simpleChoice>
       <simpleChoice identifier="B">1</simpleChoice>
       <simpleChoice identifier="C">2</simpleChoice>

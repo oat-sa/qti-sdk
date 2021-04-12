@@ -19,12 +19,13 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @dataProvider validFileProvider
      * @param string $uri
      * @param string $expectedVersion
+     * @param bool $validate
      * @throws XmlStorageException
      */
-    public function testLoad(string $uri, string $expectedVersion): void
+    public function testLoad(string $uri, string $expectedVersion, bool $validate = false): void
     {
         $doc = new XmlDocument();
-        $doc->load($uri);
+        $doc->load($uri, $validate);
         self::assertEquals($expectedVersion, $doc->getVersion());
 
         self::assertInstanceOf(AssessmentItem::class, $doc->getDocumentComponent());
@@ -46,7 +47,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $doc->save($file);
         self::assertFileExists($file);
 
-        $this->testLoad($file, $expectedVersion);
+        $this->testLoad($file, $expectedVersion, true);
 
         unlink($file);
         // Nobody else touched it?
