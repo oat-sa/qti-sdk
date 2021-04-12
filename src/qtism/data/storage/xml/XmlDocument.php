@@ -219,7 +219,7 @@ class XmlDocument extends QtiDocument
             return $marshaller->unmarshall($element);
         } catch (UnmarshallingException $e) {
             $line = $e->getDOMElement()->getLineNo();
-            $msg = "An error occurred while processing QTI-XML at line ${line}." . $e->getMessage();
+            $msg = "An error occurred while processing QTI-XML at line ${line}.";
             throw new XmlStorageException($msg, XmlStorageException::READ, $e);
         } catch (MarshallerNotFoundException $e) {
             throw XmlStorageException::unsupportedComponentInVersion($e, $this->getVersion());
@@ -346,7 +346,7 @@ class XmlDocument extends QtiDocument
             throw new XmlStorageException($msg, XmlStorageException::UNKNOWN, $e);
         }
 
-        $this->decorateRootElement($rootElement);
+        $externalNamespaces = $this->setNamespaces($dom);
 
         $strXml = $dom->saveXML();
         if ($strXml === false) {
@@ -354,6 +354,10 @@ class XmlDocument extends QtiDocument
             $msg = 'An internal error occurred while exporting QTI-XML as string.';
             throw new XmlStorageException($msg, XmlStorageException::WRITE);
         }
+
+        // Since saveXML doesn't support the LIBXML_NSCLEAN option flag yet,
+        // we need to clean redundant namespaces manually. 
+        $strXml = Utils::cleanRedundantNamespaces($strXml, $externalNamespaces);
 
         return $strXml;
     }
@@ -581,23 +585,43 @@ class XmlDocument extends QtiDocument
     public function changeVersion(string $toVersionNumber)
     {
         $this->setVersion($toVersionNumber);
-        $this->decorateRootElement($this->domDocument->documentElement);
+        $this->setNamespaces($this->domDocument);
     }
 
     /**
      * Decorate the root element of the XmlAssessmentDocument with the appropriate
      * namespaces and schema definition.
      *
-     * @param DOMElement $rootElement The root DOMElement object of the document to decorate.
+     * @param DOMDocument $dom The document to decorate.
+     * @return array
      */
-    protected function decorateRootElement(DOMElement $rootElement)
+    protected function setNamespaces(DOMDocument $dom): array
     {
         $namespace = $this->version->getNamespace();
         $xsdLocation = $this->version->getXsdLocation();
+        $schemaLocation = $namespace . ' ' . $xsdLocation;
 
+        $rootElement = $dom->documentElement;
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', $namespace);
         $rootElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $namespace . ' ' . $xsdLocation);
+
+        $externalNamespaces = Utils::findExternalNamespaces($dom->saveXml());
+        foreach ($externalNamespaces as $prefix => $externalNamespace) {
+            $rootElement->setAttributeNS(
+                'http://www.w3.org/2000/xmlns/',
+                'xmlns:' . $prefix,
+                $externalNamespace
+            );
+
+            $externalSchemaLocation = $this->version->getExternalSchemaLocation($prefix);
+            
+            if ($externalSchemaLocation !== '') {
+                $schemaLocation .= ' ' . $externalNamespace . ' ' . $externalSchemaLocation;
+            }
+        }
+        $rootElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $schemaLocation);
+
+        return $externalNamespaces;
     }
 
     /**
