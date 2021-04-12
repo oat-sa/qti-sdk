@@ -26,7 +26,9 @@ namespace qtism\data\storage\xml;
 use DOMDocument;
 use DOMElement;
 use InvalidArgumentException;
+use LibXMLError;
 use qtism\common\enums\Enumeration;
+use SimpleXMLElement;
 use SplStack;
 
 /**
@@ -382,5 +384,70 @@ class Utils
         }
 
         return $returnValue;
+    }
+
+    /**
+     * @param callable $command
+     * @param string $exceptionMessage
+     * @param int $exceptionCode
+     * @throws XmlStorageException
+     */
+    public static function executeSafeXmlCommand(
+        callable $command,
+        string $exceptionMessage,
+        int $exceptionCode
+    ): void {
+        // Disable xml warnings and errors and fetch error information as needed.
+        $oldErrorConfig = libxml_use_internal_errors(true);
+        $command();
+        $libXmlErrors = libxml_get_errors();
+        libxml_clear_errors();
+        libxml_use_internal_errors($oldErrorConfig);
+
+        if (count($libXmlErrors)) {
+            $formattedErrors = self::formatLibXmlErrors($libXmlErrors);
+            throw new XmlStorageException(
+                "${exceptionMessage}:\n${formattedErrors}",
+                $exceptionCode,
+                null,
+                new LibXmlErrorCollection($libXmlErrors)
+            );
+        }
+    }
+
+    /**
+     * Format some $libXmlErrors into an array of strings instead of an array of arrays.
+     *
+     * @param LibXMLError[] $libXmlErrors
+     * @return string
+     */
+    protected static function formatLibXmlErrors(array $libXmlErrors): string
+    {
+        $formattedErrors = [];
+
+        foreach ($libXmlErrors as $error) {
+            switch ($error->level) {
+                case LIBXML_ERR_WARNING:
+                    // Since QTI 2.2, some schemas are imported multiple times.
+                    // Xerces does not produce errors, but libxml does...
+                    if (preg_match('/Skipping import of schema located/ui', $error->message) === 0) {
+                        $formattedErrors[] = 'Warning: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
+                    }
+
+                    break;
+
+                case LIBXML_ERR_ERROR:
+                    $formattedErrors[] = 'Error: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
+                    break;
+
+                case LIBXML_ERR_FATAL:
+                    $formattedErrors[] = 'Fatal Error: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
+                    break;
+            }
+        }
+
+        $formattedErrors = implode("\n", $formattedErrors);
+
+        return $formattedErrors;
     }
 }
