@@ -24,14 +24,18 @@
 namespace qtism\data\content\xhtml\html5;
 
 use qtism\data\content\BlockStatic;
+use qtism\data\content\FlowStatic;
+use qtism\data\content\FlowTrait;
 use qtism\data\content\interactions\Media;
 
 /**
  * Html 5 Video element used for playing videos or movies, and audio files with
  * captions.
  */
-class Video extends Html5Media implements BlockStatic, Media
+class Video extends Html5Media implements BlockStatic, Media, FlowStatic
 {
+    use FlowTrait;
+
     /**
      * Width of the video content in CSS pixels.
      * A non negative integer.

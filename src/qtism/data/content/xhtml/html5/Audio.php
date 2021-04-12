@@ -24,6 +24,8 @@
 namespace qtism\data\content\xhtml\html5;
 
 use qtism\data\content\BlockStatic;
+use qtism\data\content\FlowStatic;
+use qtism\data\content\FlowTrait;
 use qtism\data\content\interactions\Media;
 
 /**
@@ -34,8 +36,10 @@ use qtism\data\content\interactions\Media;
  * text to the users of these older browsers informing them of how to access
  * the audio contents.
  */
-class Audio extends Html5Media implements BlockStatic, Media
+class Audio extends Html5Media implements BlockStatic, Media, FlowStatic
 {
+    use FlowTrait;
+
     public function getQtiClassName(): string
     {
         return 'audio';
