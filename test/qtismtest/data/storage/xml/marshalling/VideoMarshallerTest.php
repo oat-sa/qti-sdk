@@ -29,7 +29,7 @@ class VideoMarshallerTest extends Html5ElementMarshallerTest
         $poster = 'http://example.com/poster';
 
         $expected = sprintf(
-            '<video width="%s" height="%s" poster="%s"/>',
+            '<'.$this->namespaceTag('video').' width="%s" height="%s" poster="%s"/>',
             $width,
             $height,
             $poster
@@ -46,7 +46,7 @@ class VideoMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testMarshall22WithDefaultValues(): void
     {
-        $expected = '<video/>';
+        $expected = '<'.$this->namespaceTag('video').'/>';
 
         $video = new Video();
 
@@ -58,7 +58,7 @@ class VideoMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testUnMarshallerDoesNotExistInQti21(): void
     {
-        $this->assertHtml5UnmarshallingOnlyInQti22AndAbove('<video/>', 'video');
+        $this->assertHtml5UnmarshallingOnlyInQti22AndAbove('<'.$this->namespaceTag('video').'/>', 'video');
     }
 
     /**
@@ -71,7 +71,7 @@ class VideoMarshallerTest extends Html5ElementMarshallerTest
         $poster = 'http://example.com/poster';
 
         $xml = sprintf(
-            '<video width="%s" height="%s" poster="%s"/>',
+            '<'.$this->namespaceTag('video').' width="%s" height="%s" poster="%s"/>',
             $width,
             $height,
             $poster
@@ -84,7 +84,7 @@ class VideoMarshallerTest extends Html5ElementMarshallerTest
 
     public function testUnmarshall22WithNonIntegerWidthAndHeightStoresZeros(): void
     {
-        $xml = sprintf('<video width="not integer" height="not integer"/>');
+        $xml = sprintf('<'.$this->namespaceTag('video').' width="not integer" height="not integer"/>');
 
         $element = $this->createDOMElement($xml);
         $marshaller = $this->getMarshallerFactory('2.2.0')->createMarshaller($element);
@@ -96,7 +96,7 @@ class VideoMarshallerTest extends Html5ElementMarshallerTest
 
     public function testUnmarshall22WithDefaultValues(): void
     {
-        $xml = '<video/>';
+        $xml = '<'.$this->namespaceTag('video').'/>';
 
         $expected = new Video();
 
@@ -122,12 +122,12 @@ class VideoMarshallerTest extends Html5ElementMarshallerTest
             // ['<video src=" "/>', InvalidArgumentException::class, 'The "src" argument must be a valid URI, " " given.'],
 
             [
-                '<video width="-1" poster="http://example.com/"/>',
+                '<'.$this->namespaceTag('video').' width="-1" poster="http://example.com/"/>',
                 UnmarshallingException::class,
                 'Error while unmarshalling element "video": The "width" argument must be 0 or a positive integer, "-1" given.',
             ],
             [
-                '<video height="-1" poster="http://example.com/"/>',
+                '<'.$this->namespaceTag('video').' height="-1" poster="http://example.com/"/>',
                 UnmarshallingException::class,
                 'Error while unmarshalling element "video": The "height" argument must be 0 or a positive integer, "-1" given.',
             ],

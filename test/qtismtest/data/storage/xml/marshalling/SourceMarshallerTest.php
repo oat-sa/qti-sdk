@@ -28,7 +28,7 @@ class SourceMarshallerTest extends Html5ElementMarshallerTest
         $src = 'http://example.com/';
         $type = 'text/plain';
 
-        $expected = sprintf('<source src="%s" type="%s"/>', $src, $type);
+        $expected = sprintf('<'.$this->namespaceTag('source').' src="%s" type="%s"/>', $src, $type);
         $source = new Source($src, $type);
 
         $this->assertMarshalling($expected, $source);
@@ -42,7 +42,7 @@ class SourceMarshallerTest extends Html5ElementMarshallerTest
     {
         $src = 'http://example.com/';
 
-        $expected = sprintf('<source src="%s"/>', $src);
+        $expected = sprintf('<'.$this->namespaceTag('source').' src="%s"/>', $src);
         $source = new Source($src);
 
         $this->assertMarshalling($expected, $source);
@@ -53,7 +53,7 @@ class SourceMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testUnMarshallerDoesNotExistInQti21(): void
     {
-        $this->assertHtml5UnmarshallingOnlyInQti22AndAbove('<source/>', 'source');
+        $this->assertHtml5UnmarshallingOnlyInQti22AndAbove('<'.$this->namespaceTag('source').'/>', 'source');
     }
 
     /**
@@ -64,7 +64,7 @@ class SourceMarshallerTest extends Html5ElementMarshallerTest
         $src = 'http://example.com/';
         $type = 'text/plain';
 
-        $xml = sprintf('<source src="%s" type="%s"/>', $src, $type);
+        $xml = sprintf('<'.$this->namespaceTag('source').' src="%s" type="%s"/>', $src, $type);
 
         $expected = new Source($src, $type);
         $this->assertUnmarshalling($expected, $xml);
@@ -77,7 +77,7 @@ class SourceMarshallerTest extends Html5ElementMarshallerTest
     {
         $src = 'http://example.com/';
 
-        $xml = sprintf('<source src="%s"/>', $src);
+        $xml = sprintf('<'.$this->namespaceTag('source').' src="%s"/>', $src);
 
         $expected = new Source($src);
 
@@ -103,17 +103,17 @@ class SourceMarshallerTest extends Html5ElementMarshallerTest
             // ['<source src="^"/>', InvalidArgumentException::class, 'The "src" argument must be a valid URI, " " given.'],
 
             [
-                '<source/>',
+                '<'.$this->namespaceTag('source').'/>',
                 UnmarshallingException::class,
                 'Error while unmarshalling element "source": The "src" argument must be a valid URI, "NULL" given.',
             ],
             [
-                '<source src=""/>',
+                '<'.$this->namespaceTag('source').' src=""/>',
                 UnmarshallingException::class,
                 'Error while unmarshalling element "source": The "src" argument must be a valid URI, "NULL" given.',
             ],
             [
-                '<source src="http://example.com/" type="blah"/>',
+                '<'.$this->namespaceTag('source').' src="http://example.com/" type="blah"/>',
                 UnmarshallingException::class,
                 'The "type" argument must be a valid Mime type, "blah" given.',
             ],

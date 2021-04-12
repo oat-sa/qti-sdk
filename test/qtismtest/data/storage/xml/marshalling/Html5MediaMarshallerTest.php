@@ -36,11 +36,12 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
         $track2Lang = 'es';
 
         $expected = sprintf(
-            '<media src="%s" autoplay="%s" controls="%s" crossorigin="%s" loop="%s" mediagroup="%s" muted="%s" preload="%s">'
-            . '<source src="%s"/>'
-            . '<track src="%s" srclang="%s"/>'
-            . '<track src="%s" srclang="%s"/>'
-            . '</media>',
+            '<%s src="%s" autoplay="%s" controls="%s" crossorigin="%s" loop="%s" mediagroup="%s" muted="%s" preload="%s">'
+            . '<%s src="%s"/>'
+            . '<%s src="%s" srclang="%s"/>'
+            . '<%s src="%s" srclang="%s"/>'
+            . '</%s>',
+            $this->namespaceTag('media'),
             $src,
             $autoplay ? 'true' : 'false',
             $controls ? 'true' : 'false',
@@ -49,11 +50,15 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
             $mediaGroup,
             $muted ? 'true' : 'false',
             $preload,
+            $this->prefixTag('source'),
             $altSrc,
+            $this->prefixTag('track'),
             $track1Src,
             $track1Lang,
+            $this->prefixTag('track'),
             $track2Src,
-            $track2Lang
+            $track2Lang,
+            $this->prefixTag('media')
         );
 
         $media = new FakeHtml5Media($src, $autoplay, $controls, $crossOrigin, $loop, $mediaGroup, $muted, $preload);
@@ -72,7 +77,7 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testMarshall22WithDefaultValues(): void
     {
-        $expected = '<media/>';
+        $expected = '<' . $this->namespaceTag('media') . '/>';
 
         $media = new FakeHtml5Media();
 
@@ -101,11 +106,12 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
         $track2Lang = 'es';
 
         $xml = sprintf(
-            '<media src="%s" autoplay="%s" controls="%s" crossorigin="%s" loop="%s" mediagroup="%s" muted="%s" preload="%s">
-                <source src="%s"/>
-                <track src="%s" srclang="%s"/>
-                <track src="%s" srclang="%s"/>
-            </media>',
+            '<%s src="%s" autoplay="%s" controls="%s" crossorigin="%s" loop="%s" mediagroup="%s" muted="%s" preload="%s">'
+            . '<%s src="%s"/>'
+            . '<%s src="%s" srclang="%s"/>'
+            . '<%s src="%s" srclang="%s"/>'
+            . '</%s>',
+            $this->namespaceTag('media'),
             $src,
             $autoplay ? 'true' : 'false',
             $controls ? 'true' : 'false',
@@ -114,12 +120,16 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
             $mediaGroup,
             $muted ? 'true' : 'false',
             $preload,
+            $this->prefixTag('source'),
             $altSrc,
+            $this->prefixTag('track'),
             $track1Src,
             $track1Lang,
+            $this->prefixTag('track'),
             $track2Src,
-            $track2Lang
-        );
+            $track2Lang,
+            $this->prefixTag('media')
+       );
 
         $marshaller = new FakeHtml5MediaMarshaller('2.2.0');
 
@@ -142,7 +152,7 @@ class Html5MediaMarshallerTest extends Html5ElementMarshallerTest
 
     public function testUnmarshall22WithDefaultValues(): void
     {
-        $xml = '<media/>';
+        $xml = '<' . $this->namespaceTag('media') . '/>';
 
         $marshaller = new FakeHtml5MediaMarshaller('2.2.0');
 

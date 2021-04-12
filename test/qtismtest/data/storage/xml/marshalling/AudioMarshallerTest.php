@@ -23,7 +23,7 @@ class AudioMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testMarshall22(): void
     {
-        $expected = '<audio/>';
+        $expected = '<' . $this->namespaceTag('audio'). '/>';
 
         $object = new Audio();
 
@@ -35,7 +35,7 @@ class AudioMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testUnMarshallerDoesNotExistInQti21(): void
     {
-        $this->assertHtml5UnmarshallingOnlyInQti22AndAbove('<audio/>', 'audio');
+        $this->assertHtml5UnmarshallingOnlyInQti22AndAbove('<' . $this->namespaceTag('audio'). '/>', 'audio');
     }
 
     /**
@@ -43,7 +43,7 @@ class AudioMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testUnmarshall22(): void
     {
-        $xml = '<audio/>';
+        $xml = '<' . $this->namespaceTag('audio'). '/>';
 
         $expected = new Audio();
 

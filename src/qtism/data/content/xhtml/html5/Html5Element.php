@@ -27,12 +27,16 @@ use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\content\BodyElement;
 use qtism\data\content\enums\Role;
+use qtism\data\storage\xml\DomNamespace;
+use qtism\data\storage\xml\QtiNamespaced;
 
 /**
  * The base Html 5 element.
  */
-abstract class Html5Element extends BodyElement
+abstract class Html5Element extends BodyElement implements QtiNamespaced
 {
+    private const HTML5_NAMESPACE = 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
+
     /**
      * The title characteristic represents advisory information for the tag,
      * such as would be appropriate for a tooltip. On a link, this could be the
@@ -224,7 +228,7 @@ abstract class Html5Element extends BodyElement
                 )
             );
         }
-        
+
         return $value;
     }
 
@@ -295,7 +299,7 @@ abstract class Html5Element extends BodyElement
 
         return $value ?? $default;
     }
-    
+
     /**
      * Set the height attribute.
      *
@@ -322,5 +326,15 @@ abstract class Html5Element extends BodyElement
         }
 
         return $value ?? $default;
+    }
+
+    public function getTargetNamespace(): string
+    {
+        return self::HTML5_NAMESPACE;
+    }
+
+    public function getTargetNamespacePrefix(): string
+    {
+        return 'qh5';
     }
 }

@@ -33,6 +33,8 @@ use qtism\data\storage\xml\marshalling\SimpleInlineMarshaller;
  */
 class Qti22MarshallerFactory extends MarshallerFactory
 {
+    private const HTML5_NAMESPACE = 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
+    
     /**
      * Create a new Qti22MarshallerFactory object.
      */
@@ -40,10 +42,10 @@ class Qti22MarshallerFactory extends MarshallerFactory
     {
         parent::__construct();
         $this->addMappingEntry('bdo', SimpleInlineMarshaller::class);
-        $this->addMappingEntry('audio', AudioMarshaller::class);
-        $this->addMappingEntry('source', SourceMarshaller::class);
-        $this->addMappingEntry('track', TrackMarshaller::class);
-        $this->addMappingEntry('video', VideoMarshaller::class);
+        $this->addMappingEntry('audio', AudioMarshaller::class, self::HTML5_NAMESPACE);
+        $this->addMappingEntry('source', SourceMarshaller::class, self::HTML5_NAMESPACE);
+        $this->addMappingEntry('track', TrackMarshaller::class, self::HTML5_NAMESPACE);
+        $this->addMappingEntry('video', VideoMarshaller::class, self::HTML5_NAMESPACE);
     }
 
     /**

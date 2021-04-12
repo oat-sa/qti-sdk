@@ -21,6 +21,10 @@ use qtismtest\QtiSmTestCase;
  */
 class MediaInteractionMarshallerTest extends QtiSmTestCase
 {
+    private const HTML5_PREFIX = 'qh5';
+
+    private const HTML5_NAMESPACE = 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
+
     /**
      * @dataProvider validMediaProvider
      * @param string $version
@@ -115,7 +119,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         $video->setWidth($width);
         $video->setHeight($height);
         $videoAsXml = sprintf(
-            '<video src="%s" width="%s" height="%s"/>',
+            '<' . $this->namespaceTag('video') . ' src="%s" width="%s" height="%s"/>',
             $src,
             $width,
             $height
@@ -124,7 +128,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         $audio = new Audio();
         $audio->setSrc($src);
         $audioAsXml = sprintf(
-            '<audio src="%s"/>',
+            '<' . $this->namespaceTag('audio') . ' src="%s"/>',
             $src
         );
 
@@ -187,8 +191,8 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
     public function invalidUnmarshallProvider(): array
     {
         return [
-            ['<video/>', "No mapping entry found for QTI class name 'video'."],
-            ['<audio/>', "No mapping entry found for QTI class name 'audio'."],
+            ['<' . $this->namespaceTag('video') . '/>', "No mapping entry found for QTI class name 'video'."],
+            ['<' . $this->namespaceTag('audio') . '/>', "No mapping entry found for QTI class name 'audio'."],
         ];
     }
 
@@ -226,5 +230,15 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         $this->expectExceptionMessage("The mandatory 'responseIdentifier' attribute is missing from the 'mediaInteraction' element.");
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
+    }
+
+    protected function namespaceTag(string $tagName): string
+    {
+        return $this->prefixTag($tagName) . ' xmlns:' . self::HTML5_PREFIX . '="' . self::HTML5_NAMESPACE . '"';
+    }
+
+    protected function prefixTag(string $tagName): string
+    {
+        return self::HTML5_PREFIX . ':' . $tagName;
     }
 }

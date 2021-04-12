@@ -29,6 +29,7 @@ use qtism\data\content\BodyElement;
 use qtism\data\content\enums\Role;
 use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\versions\QtiVersion;
 
 /**
  * Marshalling/Unmarshalling implementation for generic Html5.
@@ -44,7 +45,15 @@ abstract class Html5ElementMarshaller extends Marshaller
     protected function marshall(QtiComponent $component): DOMElement
     {
         /** @var Html5Element $component */
-        $element = static::getDOMCradle()->createElement($component->getQtiClassName());
+
+        $prefix = $component->getTargetNamespacePrefix();
+        $version = QtiVersion::create($this->getVersion());
+        $namespace = $version->getExternalNamespace($prefix);
+        
+        $element = static::getDOMCradle()->createElementNS(
+            $namespace,
+            $prefix . ':' . $component->getQtiClassName()
+        );
 
         $this->fillElement($element, $component);
 

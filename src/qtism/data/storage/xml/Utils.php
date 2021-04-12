@@ -387,6 +387,58 @@ class Utils
     }
 
     /**
+     * Removes namespaces defined on non-root element when they are already
+     * defined on the root element.
+     *
+     * @param string $subject
+     * @param array $redundantNamespaces
+     * @return string
+     */
+    public static function cleanRedundantNamespaces(string $subject, array $redundantNamespaces): string
+    {
+        foreach ($redundantNamespaces as $prefix => $namespace) {
+            $subject = self::removeAllButFirstOccurrence($subject, ' xmlns:' . $prefix . '="' . $namespace . '"');
+        }
+        return $subject;
+    }
+
+    /**
+     * Removes all but first occurrences of a string within a string.
+     *
+     * @param string $subject
+     * @param string $toRemove
+     * @return string
+     */
+    public static function removeAllButFirstOccurrence(string $subject, string $toRemove): string
+    {
+        $firstPosition = strpos($subject, $toRemove);
+        if ($firstPosition !== false) {
+            $begin = substr($subject, 0, $firstPosition + strlen($toRemove));
+            $end = substr($subject, $firstPosition + strlen($toRemove));
+            $subject = $begin . str_replace($toRemove, '', $end);
+        }
+        return $subject;
+    }
+
+    /**
+     * Finds all the custom namespaces defined in the xml payload.
+     *
+     * @param string $xml
+     * @return array
+     */
+    public static function findExternalNamespaces(string $xml): array
+    {
+        $doc = new SimpleXMLElement($xml);
+        return array_filter(
+            $doc->getDocNamespaces(),
+            static function ($key) {
+                return $key !== '' && $key !== 'xsi';
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+    }
+
+    /**
      * @param callable $command
      * @param string $exceptionMessage
      * @param int $exceptionCode

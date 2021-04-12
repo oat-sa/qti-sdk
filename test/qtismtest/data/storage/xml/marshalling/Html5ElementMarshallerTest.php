@@ -14,10 +14,13 @@ use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtismtest\QtiSmTestCase;
-use RuntimeException;
 
 class Html5ElementMarshallerTest extends QtiSmTestCase
 {
+    private const HTML5_PREFIX = 'qh5';
+
+    private const HTML5_NAMESPACE = 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
+
     /**
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
@@ -32,7 +35,8 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
         $label = 'This is a label.';
 
         $expected = sprintf(
-            '<html5 id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
+            '<%s id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
+            $this->namespaceTag('html5'),
             $id,
             $class,
             $lang,
@@ -54,7 +58,7 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
      */
     public function testMarshall22WithDefaultValues(): void
     {
-        $expected = '<html5/>';
+        $expected = '<' . $this->namespaceTag('html5') . '/>';
 
         $html5Element = new FakeHtml5Element();
 
@@ -76,7 +80,8 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
         $label = 'A label';
 
         $xml = sprintf(
-            '<html5 id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
+            '<%s id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
+            $this->namespaceTag('html5'),
             $id,
             $class,
             $lang,
@@ -103,7 +108,7 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshall22WithDefaultValues(): void
     {
-        $xml = '<html5/>';
+        $xml = '<' . $this->namespaceTag('html5') . '/>';
 
         $marshaller = new FakeHtml5ElementMarshaller('2.2.0');
 
@@ -191,6 +196,16 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
         $this->expectExceptionMessage($message);
 
         $marshaller->unmarshall($element);
+    }
+
+    protected function namespaceTag(string $tagName): string
+    {
+        return $this->prefixTag($tagName) . ' xmlns:' . self::HTML5_PREFIX . '="' . self::HTML5_NAMESPACE . '"';
+    }
+
+    protected function prefixTag(string $tagName): string
+    {
+        return self::HTML5_PREFIX . ':' . $tagName;
     }
 }
 

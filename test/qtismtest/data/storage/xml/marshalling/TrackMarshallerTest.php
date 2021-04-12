@@ -32,7 +32,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
         $kind = 'chapters';
 
         $expected = sprintf(
-            '<track src="%s" srclang="%s" default="%s" kind="%s"/>',
+            '<'.$this->namespaceTag('track').' src="%s" srclang="%s" default="%s" kind="%s"/>',
             $src,
             $srcLang,
             $default ? 'true' : 'false',
@@ -52,7 +52,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
     {
         $src = 'http://example.com/';
 
-        $expected = sprintf('<track src="%s" srclang="en"/>', $src);
+        $expected = sprintf('<'.$this->namespaceTag('track').' src="%s" srclang="en"/>', $src);
         $track = new Track($src);
 
         $this->assertMarshalling($expected, $track);
@@ -63,7 +63,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testUnMarshallerDoesNotExistInQti21(): void
     {
-        $this->assertHtml5UnmarshallingOnlyInQti22AndAbove('<track/>', 'track');
+        $this->assertHtml5UnmarshallingOnlyInQti22AndAbove('<'.$this->namespaceTag('track').'/>', 'track');
     }
 
     /**
@@ -77,7 +77,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
         $kind = 'chapters';
 
         $xml = sprintf(
-            '<track src="%s" srclang="%s" default="%s" kind="%s"/>',
+            '<'.$this->namespaceTag('track').' src="%s" srclang="%s" default="%s" kind="%s"/>',
             $src,
             $srcLang,
             $default ? 'true' : 'false',
@@ -96,7 +96,7 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
     {
         $src = 'http://example.com/';
 
-        $xml = sprintf('<track src="%s"/>', $src);
+        $xml = sprintf('<'.$this->namespaceTag('track').' src="%s"/>', $src);
 
         $expected = new Track($src);
 
@@ -122,17 +122,17 @@ class TrackMarshallerTest extends Html5ElementMarshallerTest
             // ['<track src=" "/>', InvalidArgumentException::class, 'The "src" argument must be a valid URI, " " given.'],
 
             [
-                '<track/>',
+                '<'.$this->namespaceTag('track').'/>',
                 UnmarshallingException::class,
                 'Error while unmarshalling element "track": The "src" argument must be a valid URI, "NULL" given.',
             ],
             [
-                '<track src=""/>',
+                '<'.$this->namespaceTag('track').' src=""/>',
                 UnmarshallingException::class,
                 'Error while unmarshalling element "track": The "src" argument must be a valid URI, "NULL" given.',
             ],
             [
-                '<track src="http://example.com/" kind="blah"/>',
+                '<'.$this->namespaceTag('track').' src="http://example.com/" kind="blah"/>',
                 UnmarshallingException::class,
                 'Error while unmarshalling element "track": The "kind" argument must be a value from the TrackKind enumeration, "blah" given.',
             ],
