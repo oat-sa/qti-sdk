@@ -88,7 +88,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         if ($component instanceof TemplateIf || $component instanceof TemplateElseIf) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getExpression());

@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
 class GoldilocksRenderingEngineTest extends QtiSmTestCase
 {
     /**
-     * @dataProvider testRenderingProvider
+     * @dataProvider renderingProvider
      * @param $file
      * @param $expectedFile
      * @param $renderingMode
@@ -41,13 +41,13 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase
         $rendered = $engine->render($doc->getDocumentComponent());
         $strRendered = $rendered->saveXML($rendered->documentElement);
         $strExpected = rtrim(file_get_contents($expectedFile));
-        $this->assertEquals($strExpected, $strRendered);
+        $this::assertEquals($strExpected, $strRendered);
     }
 
     /**
      * @return array
      */
-    public function testRenderingProvider()
+    public function renderingProvider()
     {
         return [
             // choiceInteraction-0

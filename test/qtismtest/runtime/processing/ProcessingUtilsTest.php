@@ -20,7 +20,7 @@ class ProcessingUtilsTest extends QtiSmTestCase
      */
     public function testImpactedVariables(TemplateProcessing $templateProcessing, array $expectedIdentifiers)
     {
-        $this->assertEquals(
+        $this::assertEquals(
             $expectedIdentifiers,
             Utils::templateProcessingImpactedVariables($templateProcessing)
         );

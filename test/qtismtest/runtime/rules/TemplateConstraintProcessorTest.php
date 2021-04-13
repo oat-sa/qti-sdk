@@ -86,6 +86,6 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
         $processor->process();
 
         // Nothing should happen, because the templateConstraint is satisfied.
-        $this->assertTrue(true, 'The template constraint should have been satisfied.');
+        $this::assertTrue(true, 'The template constraint should have been satisfied.');
     }
 }

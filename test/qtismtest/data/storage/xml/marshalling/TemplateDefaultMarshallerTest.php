@@ -22,14 +22,14 @@ class TemplateDefaultMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('templateDefault', $element->nodeName);
-        $this->assertEquals($templateIdentifier, $element->getAttribute('templateIdentifier'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('templateDefault', $element->nodeName);
+        $this::assertEquals($templateIdentifier, $element->getAttribute('templateIdentifier'));
 
         $expressionElt = $element->getElementsByTagName('null');
-        $this->assertEquals(1, $expressionElt->length);
+        $this::assertEquals(1, $expressionElt->length);
         $expressionElt = $expressionElt->item(0);
-        $this->assertEquals('null', $expressionElt->nodeName);
+        $this::assertEquals('null', $expressionElt->nodeName);
     }
 
     public function testUnmarshall()
@@ -47,8 +47,8 @@ class TemplateDefaultMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(TemplateDefault::class, $component);
-        $this->assertEquals($component->getTemplateIdentifier(), 'myTemplate1');
-        $this->assertInstanceOf(NullValue::class, $component->getExpression());
+        $this::assertInstanceOf(TemplateDefault::class, $component);
+        $this::assertEquals('myTemplate1', $component->getTemplateIdentifier());
+        $this::assertInstanceOf(NullValue::class, $component->getExpression());
     }
 }

@@ -27,15 +27,15 @@ class MatchTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component, [BaseType::PAIR]);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('matchTable', $element->nodeName);
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('matchTable', $element->nodeName);
 
         $entryElements = $element->getElementsByTagName('matchTableEntry');
-        $this->assertEquals(2, $entryElements->length);
+        $this::assertEquals(2, $entryElements->length);
         $entry = $entryElements->item(0);
-        $this->assertEquals($entry->getAttribute('targetValue'), 'A B');
-        $this->assertEquals($entry->nodeName, 'matchTableEntry');
-        $this->assertEquals($entry->getAttribute('sourceValue'), '1');
+        $this::assertEquals('A B', $entry->getAttribute('targetValue'));
+        $this::assertEquals('matchTableEntry', $entry->nodeName);
+        $this::assertEquals('1', $entry->getAttribute('sourceValue'));
     }
 
     public function testUnmarshall()
@@ -54,12 +54,12 @@ class MatchTableMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::DIRECTED_PAIR]);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(MatchTable::class, $component);
+        $this::assertInstanceOf(MatchTable::class, $component);
         $matchTableEntries = $component->getMatchTableEntries();
-        $this->assertEquals(2, count($matchTableEntries));
+        $this::assertCount(2, $matchTableEntries);
         $entry = $matchTableEntries[0];
-        $this->assertInstanceOf(MatchTableEntry::class, $entry);
-        $this->assertEquals(1, $entry->getSourceValue());
-        $this->assertInstanceOf(QtiDirectedPair::class, $entry->getTargetValue());
+        $this::assertInstanceOf(MatchTableEntry::class, $entry);
+        $this::assertEquals(1, $entry->getSourceValue());
+        $this::assertInstanceOf(QtiDirectedPair::class, $entry->getTargetValue());
     }
 }

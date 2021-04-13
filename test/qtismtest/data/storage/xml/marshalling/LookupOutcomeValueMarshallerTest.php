@@ -21,12 +21,12 @@ class LookupOutcomeValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('lookupOutcomeValue', $element->nodeName);
-        $this->assertEquals('myVariable1', $element->getAttribute('identifier'));
-        $this->assertEquals(1, $element->getElementsByTagName('baseValue')->length);
-        $this->assertEquals('a value', $element->getElementsByTagName('baseValue')->item(0)->nodeValue);
-        $this->assertEquals('string', $element->getElementsByTagName('baseValue')->item(0)->getAttribute('baseType'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('lookupOutcomeValue', $element->nodeName);
+        $this::assertEquals('myVariable1', $element->getAttribute('identifier'));
+        $this::assertEquals(1, $element->getElementsByTagName('baseValue')->length);
+        $this::assertEquals('a value', $element->getElementsByTagName('baseValue')->item(0)->nodeValue);
+        $this::assertEquals('string', $element->getElementsByTagName('baseValue')->item(0)->getAttribute('baseType'));
     }
 
     public function testUnmarshall()
@@ -44,10 +44,10 @@ class LookupOutcomeValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(LookupOutcomeValue::class, $component);
-        $this->assertInstanceOf(BaseValue::class, $component->getExpression());
-        $this->assertInternalType('string', $component->getExpression()->getValue());
-        $this->assertEquals('a value', $component->getExpression()->getValue());
-        $this->assertEquals(BaseType::STRING, $component->getExpression()->getBaseType());
+        $this::assertInstanceOf(LookupOutcomeValue::class, $component);
+        $this::assertInstanceOf(BaseValue::class, $component->getExpression());
+        $this::assertIsString($component->getExpression()->getValue());
+        $this::assertEquals('a value', $component->getExpression()->getValue());
+        $this::assertEquals(BaseType::STRING, $component->getExpression()->getBaseType());
     }
 }

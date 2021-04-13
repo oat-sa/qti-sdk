@@ -59,27 +59,27 @@ class ItemResultBuilderTest extends QtiSmAssessmentItemTestCase
         $itemResultBuilder = new ItemResultBuilder($itemSession);
         $itemResult = $itemResultBuilder->buildResult();
 
-        $this->assertInstanceOf(ItemResult::class, $itemResult);
-        $this->assertEquals('Q01', $itemResult->getIdentifier());
-        $this->assertInstanceOf(DateTime::class, $itemResult->getDatestamp());
-        $this->assertEquals(SessionStatus::STATUS_FINAL, $itemResult->getSessionStatus());
+        $this::assertInstanceOf(ItemResult::class, $itemResult);
+        $this::assertEquals('Q01', $itemResult->getIdentifier());
+        $this::assertInstanceOf(DateTime::class, $itemResult->getDatestamp());
+        $this::assertEquals(SessionStatus::STATUS_FINAL, $itemResult->getSessionStatus());
 
         $variables = $itemResult->getItemVariables();
-        $this->assertCount(5, $variables);
+        $this::assertCount(5, $variables);
 
-        $this->assertInstanceOf(ResultResponseVariable::class, $variables[0]);
-        $this->assertEquals('numAttempts', $variables[0]->getIdentifier());
+        $this::assertInstanceOf(ResultResponseVariable::class, $variables[0]);
+        $this::assertEquals('numAttempts', $variables[0]->getIdentifier());
 
-        $this->assertInstanceOf(ResultResponseVariable::class, $variables[1]);
-        $this->assertEquals('duration', $variables[1]->getIdentifier());
+        $this::assertInstanceOf(ResultResponseVariable::class, $variables[1]);
+        $this::assertEquals('duration', $variables[1]->getIdentifier());
 
-        $this->assertInstanceOf(ResultOutcomeVariable::class, $variables[2]);
-        $this->assertEquals('completionStatus', $variables[2]->getIdentifier());
+        $this::assertInstanceOf(ResultOutcomeVariable::class, $variables[2]);
+        $this::assertEquals('completionStatus', $variables[2]->getIdentifier());
 
-        $this->assertInstanceOf(ResultOutcomeVariable::class, $variables[3]);
-        $this->assertEquals('SCORE', $variables[3]->getIdentifier());
+        $this::assertInstanceOf(ResultOutcomeVariable::class, $variables[3]);
+        $this::assertEquals('SCORE', $variables[3]->getIdentifier());
 
-        $this->assertInstanceOf(ResultResponseVariable::class, $variables[4]);
-        $this->assertEquals('RESPONSE', $variables[4]->getIdentifier());
+        $this::assertInstanceOf(ResultResponseVariable::class, $variables[4]);
+        $this::assertEquals('RESPONSE', $variables[4]->getIdentifier());
     }
 }

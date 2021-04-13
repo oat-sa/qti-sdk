@@ -43,6 +43,8 @@ class QtiVersion extends Version
         '2.2.0' => QtiVersion220::class,
         '2.2.1' => QtiVersion221::class,
         '2.2.2' => QtiVersion222::class,
+        '2.2.3' => QtiVersion223::class,
+        '2.2.4' => QtiVersion224::class,
         '3.0.0' => QtiVersion300::class,
     ];
 
@@ -147,6 +149,10 @@ class QtiVersion extends Version
                         return '2.2.1';
                     case QtiVersion222::XSD:
                         return '2.2.2';
+                    case QtiVersion223::XSD:
+                        return '2.2.3';
+                    case QtiVersion224::XSD:
+                        return '2.2.4';
                 }
                 return '2.2.0';
 

@@ -61,7 +61,7 @@ class CaptionMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         foreach ($component->getContent() as $c) {
             $marshaller = $this->getMarshallerFactory()->createMarshaller($c);

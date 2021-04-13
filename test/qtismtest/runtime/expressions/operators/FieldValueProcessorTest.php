@@ -46,7 +46,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands[] = new RecordContainer();
         $processor = new FieldValueProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testNullTwo()
@@ -103,12 +103,12 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $processor = new FieldValueProcessor($expression, $operands);
 
         $result = $processor->process();
-        $this->assertEquals(2, $result->getValue());
+        $this::assertEquals(2, $result->getValue());
 
         $expression = $this->createFakeExpression('D');
         $processor->setExpression($expression);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     /**

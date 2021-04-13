@@ -21,6 +21,6 @@ class TextRunRendererTest extends QtiSmTestCase
 
         $xhtml = $renderer->render($textRun);
         $node = $xhtml->firstChild;
-        $this->assertEquals('test text', $node->wholeText);
+        $this::assertEquals('test text', $node->wholeText);
     }
 }

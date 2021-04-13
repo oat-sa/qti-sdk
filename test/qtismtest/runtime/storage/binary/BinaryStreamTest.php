@@ -31,14 +31,14 @@ class BinaryStreamTest extends QtiSmTestCase
         return $this->emptyStream;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->basicStream = new MemoryStream('binary-data');
         $this->emptyStream = new MemoryStream();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->basicStream);
@@ -48,13 +48,13 @@ class BinaryStreamTest extends QtiSmTestCase
     public function testInstantiate()
     {
         $stream = $this->getBasicStream();
-        $this->assertInstanceOf(MemoryStream::class, $stream);
+        $this::assertInstanceOf(MemoryStream::class, $stream);
 
-        $this->assertEquals('binary-data', $stream->getBinary());
-        $this->assertFalse($stream->isOpen());
-        $this->assertInternalType('integer', $stream->getPosition());
-        $this->assertEquals(0, $stream->getPosition());
-        $this->assertEquals(strlen('binary-data'), $stream->getLength());
+        $this::assertEquals('binary-data', $stream->getBinary());
+        $this::assertFalse($stream->isOpen());
+        $this::assertIsInt($stream->getPosition());
+        $this::assertEquals(0, $stream->getPosition());
+        $this::assertEquals(strlen('binary-data'), $stream->getLength());
     }
 
     public function testCloseOnClosedStream()
@@ -64,9 +64,9 @@ class BinaryStreamTest extends QtiSmTestCase
         try {
             $stream->close();
             // An exception must be thrown.
-            $this->assertTrue(false);
+            $this::assertTrue(false);
         } catch (MemoryStreamException $e) {
-            $this->assertEquals(MemoryStreamException::NOT_OPEN, $e->getCode());
+            $this::assertEquals(MemoryStreamException::NOT_OPEN, $e->getCode());
         }
     }
 
@@ -77,9 +77,9 @@ class BinaryStreamTest extends QtiSmTestCase
         try {
             $stream->rewind();
             // An exception must be thrown.
-            $this->assertTrue(false);
+            $this::assertTrue(false);
         } catch (MemoryStreamException $e) {
-            $this->assertEquals(MemoryStreamException::NOT_OPEN, $e->getCode());
+            $this::assertEquals(MemoryStreamException::NOT_OPEN, $e->getCode());
         }
     }
 
@@ -88,7 +88,7 @@ class BinaryStreamTest extends QtiSmTestCase
         $stream = $this->getBasicStream();
         $stream->open();
 
-        $this->assertTrue($stream->isOpen());
+        $this::assertTrue($stream->isOpen());
     }
 
     public function testClose()
@@ -96,7 +96,7 @@ class BinaryStreamTest extends QtiSmTestCase
         $stream = $this->getBasicStream();
         $stream->open();
         $stream->close();
-        $this->assertFalse($stream->isOpen());
+        $this::assertFalse($stream->isOpen());
     }
 
     public function testRead()
@@ -105,31 +105,31 @@ class BinaryStreamTest extends QtiSmTestCase
         $stream->open();
 
         $data = $stream->read(0);
-        $this->assertInternalType('string', $data);
-        $this->assertEquals('', $data);
-        $this->assertFalse($stream->eof());
+        $this::assertIsString($data);
+        $this::assertEquals('', $data);
+        $this::assertFalse($stream->eof());
 
         $data = $stream->read(6);
-        $this->assertEquals('binary', $data);
-        $this->assertEquals(6, $stream->getPosition());
-        $this->assertFalse($stream->eof());
+        $this::assertEquals('binary', $data);
+        $this::assertEquals(6, $stream->getPosition());
+        $this::assertFalse($stream->eof());
 
         $data = $stream->read(1);
-        $this->assertEquals('-', $data);
-        $this->assertEquals(7, $stream->getPosition());
-        $this->assertFalse($stream->eof());
+        $this::assertEquals('-', $data);
+        $this::assertEquals(7, $stream->getPosition());
+        $this::assertFalse($stream->eof());
 
         $data = $stream->read(4);
-        $this->assertEquals('data', $data);
-        $this->assertEquals(11, $stream->getPosition());
-        $this->assertTrue($stream->eof());
+        $this::assertEquals('data', $data);
+        $this::assertEquals(11, $stream->getPosition());
+        $this::assertTrue($stream->eof());
 
         try {
             // EOF is reached... cannot read more.
             $data = $stream->read(1);
-            $this->assertTrue(false);
+            $this::assertTrue(false);
         } catch (MemoryStreamException $e) {
-            $this->assertTrue(true);
+            $this::assertTrue(true);
         }
 
         $stream->close();
@@ -141,29 +141,29 @@ class BinaryStreamTest extends QtiSmTestCase
         $stream = $this->getEmptyStream();
         $stream->open();
 
-        $this->assertInternalType('string', $stream->getBinary());
-        $this->assertEquals('', $stream->getBinary());
+        $this::assertIsString($stream->getBinary());
+        $this::assertEquals('', $stream->getBinary());
 
         $toWrite = 'binary';
-        $this->assertEquals(strlen($toWrite), $stream->write($toWrite));
-        $this->assertEquals(strlen($toWrite), $stream->getLength());
-        $this->assertEquals($toWrite, $stream->getBinary());
-        $this->assertEquals(strlen($toWrite), $stream->getPosition());
+        $this::assertEquals(strlen($toWrite), $stream->write($toWrite));
+        $this::assertEquals(strlen($toWrite), $stream->getLength());
+        $this::assertEquals($toWrite, $stream->getBinary());
+        $this::assertEquals(strlen($toWrite), $stream->getPosition());
 
-        $this->assertEquals(0, $stream->write(''));
-        $this->assertEquals(strlen($toWrite), $stream->getLength());
-        $this->assertEquals($toWrite, $stream->getBinary());
-        $this->assertEquals(strlen($toWrite), $stream->getPosition());
+        $this::assertEquals(0, $stream->write(''));
+        $this::assertEquals(strlen($toWrite), $stream->getLength());
+        $this::assertEquals($toWrite, $stream->getBinary());
+        $this::assertEquals(strlen($toWrite), $stream->getPosition());
 
-        $this->assertEquals(1, $stream->write('-'));
-        $this->assertEquals(7, $stream->getLength());
-        $this->assertEquals('binary-', $stream->getBinary());
-        $this->assertEquals(7, $stream->getPosition());
+        $this::assertEquals(1, $stream->write('-'));
+        $this::assertEquals(7, $stream->getLength());
+        $this::assertEquals('binary-', $stream->getBinary());
+        $this::assertEquals(7, $stream->getPosition());
 
-        $this->assertEquals(4, $stream->write('data'));
-        $this->assertEquals(11, $stream->getLength());
-        $this->assertEquals('binary-data', $stream->getBinary());
-        $this->assertEquals(11, $stream->getPosition());
+        $this::assertEquals(4, $stream->write('data'));
+        $this::assertEquals(11, $stream->getLength());
+        $this::assertEquals('binary-data', $stream->getBinary());
+        $this::assertEquals(11, $stream->getPosition());
 
         $stream->close();
 
@@ -171,11 +171,11 @@ class BinaryStreamTest extends QtiSmTestCase
         $stream = $this->getBasicStream();
         $stream->open();
 
-        $this->assertEquals(5, $stream->write('-1337'));
-        $this->assertEquals(16, $stream->getLength());
-        $this->assertEquals('-1337binary-data', $stream->getBinary());
+        $this::assertEquals(5, $stream->write('-1337'));
+        $this::assertEquals(16, $stream->getLength());
+        $this::assertEquals('-1337binary-data', $stream->getBinary());
 
-        $this->assertEquals('binary', $stream->read(6));
+        $this::assertEquals('binary', $stream->read(6));
 
         $stream->close();
     }
@@ -188,9 +188,9 @@ class BinaryStreamTest extends QtiSmTestCase
             $stream->open();
             $stream->open();
             // An exception must be thrown.
-            $this->assertTrue(false);
+            $this::assertTrue(false);
         } catch (MemoryStreamException $e) {
-            $this->assertEquals(MemoryStreamException::ALREADY_OPEN, $e->getCode());
+            $this::assertEquals(MemoryStreamException::ALREADY_OPEN, $e->getCode());
         }
     }
 }

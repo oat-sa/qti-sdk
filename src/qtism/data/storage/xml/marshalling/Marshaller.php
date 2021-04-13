@@ -420,15 +420,7 @@ abstract class Marshaller
      */
     public static function setDOMElementValue(DOMElement $element, $value)
     {
-        switch (gettype($value)) {
-            case 'boolean':
-                $element->nodeValue = ($value === true) ? 'true' : 'false';
-                break;
-
-            default:
-                $element->nodeValue = $value;
-                break;
-        }
+        XmlUtils::setDOMElementValue($element, $value);
     }
 
     /**
@@ -531,7 +523,7 @@ abstract class Marshaller
     {
         $scan = ['aria-flowto'];
 
-        if (in_array($bodyElement->getQtiClassName(), self::$flowsToClasses, true)) {
+        if ($this->needsFlowsToFix($bodyElement->getQtiClassName())) {
             array_unshift($scan, 'aria-flowsto');
         }
 
@@ -542,6 +534,18 @@ abstract class Marshaller
                 break;
             }
         }
+    }
+
+    /**
+     * Do we need to apply the fix for aria-flowSto?
+     *
+     * @param string $className
+     * @return bool
+     */
+    private function needsFlowsToFix(string $className): bool
+    {
+        return Version::compare($this->getVersion(), '2.2.3', '<')
+            && in_array($className, self::$flowsToClasses, true);
     }
 
     /**
@@ -638,7 +642,7 @@ abstract class Marshaller
     protected function fillElementFlowto(DOMElement $element, BodyElement $bodyElement)
     {
         if (($ariaFlowTo = $bodyElement->getAriaFlowTo()) !== '') {
-            if (in_array($element->localName, self::$flowsToClasses, true)) {
+            if ($this->needsFlowsToFix($element->localName)) {
                 $element->setAttribute('aria-flowsto', $ariaFlowTo);
             } else {
                 $element->setAttribute('aria-flowto', $ariaFlowTo);

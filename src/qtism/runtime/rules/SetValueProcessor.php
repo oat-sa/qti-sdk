@@ -30,6 +30,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\utils\Reflection;
 use qtism\runtime\expressions\ExpressionEngine;
+use qtism\runtime\expressions\ExpressionProcessingException;
 
 /**
  * Base class for SetOutcomeValue and setTemplateValue Rule Processors.

@@ -28,14 +28,14 @@ class QtiComponentIteratorTest extends QtiSmTestCase
 
         $iterations = 0;
         foreach ($iterator as $k => $i) {
-            $this->assertSame($sum, $iterator->parent());
-            $this->assertSame($baseValues[$iterations], $i);
-            $this->assertSame($sum, $iterator->getCurrentContainer());
-            $this->assertEquals($k, $i->getQtiClassName());
+            $this::assertSame($sum, $iterator->parent());
+            $this::assertSame($baseValues[$iterations], $i);
+            $this::assertSame($sum, $iterator->getCurrentContainer());
+            $this::assertEquals($k, $i->getQtiClassName());
             $iterations++;
         }
 
-        $this->assertSame(null, $iterator->parent());
+        $this::assertNull($iterator->parent());
     }
 
     public function testOneChildComponents()
@@ -45,14 +45,15 @@ class QtiComponentIteratorTest extends QtiSmTestCase
         $sum = new Sum($baseValues);
         $iterator = new QtiComponentIterator($sum);
 
-        // Iterate twice...
+        // We check that we can iterate twice, so that we are sure that the
+        // whole implementation of Iterator is working well...
         for ($j = 0; $j < 2; $j++) {
             $iterations = 0;
             foreach ($iterator as $i) {
-                $this->assertEquals('baseValue', $i->getQtiClassName());
+                $this::assertEquals('baseValue', $i->getQtiClassName());
                 $iterations++;
             }
-            $this->assertEquals(1, $iterations);
+            $this::assertEquals(1, $iterations);
         }
     }
 
@@ -65,10 +66,10 @@ class QtiComponentIteratorTest extends QtiSmTestCase
 
         $iterations = 0;
         foreach ($iterator as $i) {
-            $this->assertEquals('baseValue', $i->getQtiClassName());
+            $this::assertEquals('baseValue', $i->getQtiClassName());
             $iterations++;
         }
-        $this->assertEquals(1, $iterations);
+        $this::assertEquals(1, $iterations);
     }
 
     public function testNoChildComponents()
@@ -76,13 +77,13 @@ class QtiComponentIteratorTest extends QtiSmTestCase
         $baseValue = new BaseValue(BaseType::FLOAT, 10);
         $iterator = new QtiComponentIterator($baseValue);
 
-        $this->assertFalse($iterator->valid());
-        $this->assertSame($iterator->current(), null);
+        $this::assertFalse($iterator->valid());
+        $this::assertNull($iterator->current());
 
         // Just try to iterate again, just for fun...
         $iterator->next();
-        $this->assertFalse($iterator->valid());
-        $this->assertTrue($iterator->current() === null);
+        $this::assertFalse($iterator->valid());
+        $this::assertNull($iterator->current());
     }
 
     public function testAvoidRecursions()
@@ -101,11 +102,11 @@ class QtiComponentIteratorTest extends QtiSmTestCase
             $iterations++;
         }
 
-        $this->assertEquals($iterations, 4);
+        $this::assertEquals(4, $iterations);
     }
 
     /**
-     * @dataProvider testClassSelectionProvider
+     * @dataProvider classSelectionProvider
      *
      * @param string $file
      * @param int $iterations
@@ -119,25 +120,25 @@ class QtiComponentIteratorTest extends QtiSmTestCase
 
         $iterator = new QtiComponentIterator($doc->getDocumentComponent(), $classNames);
 
-        // We check that we can iterate twice, so that we are sure that the whole implementation
-        // of Iterator is working well...
+        // We check that we can iterate twice, so that we are sure that the
+        // whole implementation of Iterator is working well...
         $j = 0;
         for ($j = 0; $j < 2; $j++) {
             $i = 0;
 
             foreach ($iterator as $responseProcessing) {
-                $this->assertTrue(in_array($iterator->key(), $classNames));
+                $this::assertTrue(in_array($iterator->key(), $classNames));
                 $i++;
             }
 
-            $this->assertEquals($iterations, $i);
+            $this::assertEquals($iterations, $i);
         }
     }
 
     /**
      * @return array
      */
-    public function testClassSelectionProvider()
+    public function classSelectionProvider()
     {
         $dir = self::samplesDir();
 

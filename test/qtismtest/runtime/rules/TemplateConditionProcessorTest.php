@@ -37,7 +37,7 @@ class TemplateConditionProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertEquals(1, $state['TPL1']->getValue());
+        $this::assertEquals(1, $state['TPL1']->getValue());
     }
 
     /**
@@ -70,9 +70,9 @@ class TemplateConditionProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertEquals(1, $state['TPL1']->getValue());
-        $this->assertEquals('Choice1', $state->getVariable('RSP1')->getDefaultValue()->getValue());
-        $this->assertEquals('Choice2', $state->getVariable('RSP1')->getCorrectResponse()->getValue());
+        $this::assertEquals(1, $state['TPL1']->getValue());
+        $this::assertEquals('Choice1', $state->getVariable('RSP1')->getDefaultValue()->getValue());
+        $this::assertEquals('Choice2', $state->getVariable('RSP1')->getCorrectResponse()->getValue());
     }
 
     /**
@@ -121,7 +121,7 @@ class TemplateConditionProcessorTest extends QtiSmTestCase
         $processor->setState($state);
         $processor->process();
 
-        $this->assertEquals($expectedTpl1Value, $state['TPL1']->getValue());
+        $this::assertEquals($expectedTpl1Value, $state['TPL1']->getValue());
     }
 
     /**

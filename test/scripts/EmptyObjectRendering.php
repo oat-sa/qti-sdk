@@ -3,7 +3,7 @@
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 
-require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 /*
  * The goal of this script is to demonstrate that empty <qti:object> elements
@@ -11,7 +11,7 @@ require_once(dirname(__FILE__) . '/../../vendor/autoload.php');
  */
 
 $doc = new XmlDocument();
-$doc->load(dirname(__FILE__) . '/../samples/rendering/empty_object.xml');
+$doc->load(__DIR__ . '/../samples/rendering/empty_object.xml');
 
 $renderer = new XhtmlRenderingEngine();
 

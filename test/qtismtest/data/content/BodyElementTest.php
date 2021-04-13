@@ -38,33 +38,33 @@ class BodyElementTest extends QtiSmTestCase
     public function testRawInstantiation()
     {
         $span = new Span();
-        $this->assertSame('', $span->getAriaControls());
-        $this->assertSame('', $span->getAriaDescribedBy());
-        $this->assertSame('', $span->getAriaFlowTo());
-        $this->assertSame('', $span->getAriaLabel());
-        $this->assertSame('', $span->getAriaLabelledBy());
-        $this->assertSame('', $span->getAriaLevel());
-        $this->assertFalse($span->getAriaLive());
-        $this->assertFalse($span->getAriaOrientation());
-        $this->assertSame('', $span->getAriaOwns());
-        $this->assertSame('', $span->getId());
-        $this->assertSame('', $span->getClass());
-        $this->assertSame('', $span->getLang());
-        $this->assertSame('', $span->getLabel());
-        $this->assertFalse($span->getAriaHidden());
-        $this->assertFalse($span->hasId());
-        $this->assertFalse($span->hasClass());
-        $this->assertFalse($span->hasLang());
-        $this->assertFalse($span->hasLabel());
-        $this->assertFalse($span->hasAriaControls());
-        $this->assertFalse($span->hasAriaDescribedBy());
-        $this->assertFalse($span->hasAriaFlowTo());
-        $this->assertFalse($span->hasAriaLabel());
-        $this->assertFalse($span->hasAriaLabelledBy());
-        $this->assertFalse($span->hasAriaLive());
-        $this->assertFalse($span->hasAriaOrientation());
-        $this->assertFalse($span->hasAriaOwns());
-        $this->assertFalse($span->hasAriaHidden());
+        $this::assertSame('', $span->getAriaControls());
+        $this::assertSame('', $span->getAriaDescribedBy());
+        $this::assertSame('', $span->getAriaFlowTo());
+        $this::assertSame('', $span->getAriaLabel());
+        $this::assertSame('', $span->getAriaLabelledBy());
+        $this::assertSame('', $span->getAriaLevel());
+        $this::assertFalse($span->getAriaLive());
+        $this::assertFalse($span->getAriaOrientation());
+        $this::assertSame('', $span->getAriaOwns());
+        $this::assertSame('', $span->getId());
+        $this::assertSame('', $span->getClass());
+        $this::assertSame('', $span->getLang());
+        $this::assertSame('', $span->getLabel());
+        $this::assertFalse($span->getAriaHidden());
+        $this::assertFalse($span->hasId());
+        $this::assertFalse($span->hasClass());
+        $this::assertFalse($span->hasLang());
+        $this::assertFalse($span->hasLabel());
+        $this::assertFalse($span->hasAriaControls());
+        $this::assertFalse($span->hasAriaDescribedBy());
+        $this::assertFalse($span->hasAriaFlowTo());
+        $this::assertFalse($span->hasAriaLabel());
+        $this::assertFalse($span->hasAriaLabelledBy());
+        $this::assertFalse($span->hasAriaLive());
+        $this::assertFalse($span->hasAriaOrientation());
+        $this::assertFalse($span->hasAriaOwns());
+        $this::assertFalse($span->hasAriaHidden());
     }
 
     public function testSetId()
@@ -85,6 +85,14 @@ class BodyElementTest extends QtiSmTestCase
         $this->expectExceptionMessage("The 'class' argument must be a valid class name, '999' given");
 
         $span->setClass(999);
+    }
+
+    public function testVeryLongClass()
+    {
+        $wrongClass = 'x-tao-upload-type-application_zip x-tao-upload-type-text_plain x-tao-upload-type-application_pdf x-tao-upload-type-image_jpeg x-tao-upload-type-image_png x-tao-upload-type-image_gif x-tao-upload-type-image_svg+xml x-tao-upload-type-audio_mpeg x-tao-upload-type-audio_x-ms-wma x-tao-upload-type-audio_x-wav x-tao-upload-type-video_mpeg x-tao-upload-type-video_mp4 x-tao-upload-type-video_quicktime x-tao-upload-type-video_x-ms-wmv x-tao-upload-type-video_x-flv x-tao-upload-type-text_csv x-tao-upload-type-application_msword x-tao-upload-type-application_vnd.ms-excel x-tao-upload-type-application_vnd.ms-powerpoint x-tao-upload-type-application_vnd.oasis.opendocument.text x-tao-upload-type-application_vnd.oasis.opendocument.spreadsheet x-tao-upload-type-text_x-c x-tao-upload-type-text_x-csrc x-tao-upload-type-text_pascal x-tao-upload-type-video_avi x-tao-upload-type-image_bmp x-tao-upload-type-text_css x-tao-upload-type-image_x-emf x-tao-upload-type-application_vnd.geogebra.file x-tao-upload-type-text_x-h x-tao-upload-type-application_winhlp x-tao-upload-type-text_html x-tao-upload-type-text_javascript x-tao-upload-type-application_vnd.ms-access x-tao-upload-type-image_vnd.ms-modi x-tao-upload-type-multipart_related x-tao-upload-type-application_base64 x-tao-upload-type-audio_x-m4a x-tao-upload-type-video_x-sgi-movie x-tao-upload-type-application_vnd.ms-project x-tao-upload-type-application_vnd.oasis.opendocument.database x-tao-upload-type-application_vnd.oasis.opendocument.presentation x-tao-upload-type-application_vnd.oasis.opendocument.text-template x-tao-upload-type-application_octet-stream x-tao-upload-type-application_vnd.rn-realmedia x-tao-upload-type-application_rtf x-tao-upload-type-application_vnd.sun.xml.writer.template x-tao-upload-type-application_x-shockwave-flash x-tao-upload-type-application_x-sibelius-score x-tao-upload-type-application_x-tar x-tao-upload-type-application_vnd.sun.xml.calc x-tao-upload-type-application_vnd.sun.xml.writer x-tao-upload-type-application_x-tex x-tao-upload-type-image_tiff x-tao-upload-type-application_vnd.visio x-tao-upload-type-application_vnd.ms-works x-tao-upload-type-image_x-wmf x-tao-upload-type-application_x-mswrite x-tao-upload-type-text_xml x-tao-upload-type-application_vnd.ms-xpsdocument x-tao-upload-type-application_x-7z-compressed x-tao-upload-type-application_x-gzip x-tao-upload-type-application_x-rar-compressed x-tao-upload-type-application_x-tar x-tao-upload-type-application_x-compress';
+        $span = new Span('', $wrongClass);
+
+        $this::assertSame($wrongClass, $span->getClass());
     }
 
     public function testSetLabelWrongType()
@@ -116,7 +124,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaControls($value);
 
-        $this->assertEquals($value, $span->getAriaControls());
+        $this::assertEquals($value, $span->getAriaControls());
     }
 
     /**
@@ -140,7 +148,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaDescribedBy($value);
 
-        $this->assertEquals($value, $span->getAriaDescribedBy());
+        $this::assertEquals($value, $span->getAriaDescribedBy());
     }
 
     /**
@@ -164,7 +172,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaFlowTo($value);
 
-        $this->assertEquals($value, $span->getAriaFlowTo());
+        $this::assertEquals($value, $span->getAriaFlowTo());
     }
 
     /**
@@ -188,7 +196,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaLabelledBy($value);
 
-        $this->assertEquals($value, $span->getAriaLabelledBy());
+        $this::assertEquals($value, $span->getAriaLabelledBy());
     }
 
     /**
@@ -212,7 +220,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaOwns($value);
 
-        $this->assertEquals($value, $span->getAriaOwns());
+        $this::assertEquals($value, $span->getAriaOwns());
     }
 
     /**
@@ -228,10 +236,10 @@ class BodyElementTest extends QtiSmTestCase
     }
 
     /**
-     * @param $value
      * @dataProvider validAriaLevelAttributesProvider
+     * @param mixed $value
      */
-    public function testValidAriaLevelAttributes(string $value): void
+    public function testValidAriaLevelAttributes($value): void
     {
         $span = new Span();
         $span->setAriaLevel($value);
@@ -283,7 +291,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaOrientation($value);
 
-        $this->assertEquals($value, $span->getAriaOrientation());
+        $this::assertEquals($value, $span->getAriaOrientation());
     }
 
     /**
@@ -306,7 +314,7 @@ class BodyElementTest extends QtiSmTestCase
         $span = new Span();
         $span->setAriaLabel($value);
 
-        $this->assertEquals($value, $span->getAriaLabel());
+        $this::assertEquals($value, $span->getAriaLabel());
     }
 
     /**
@@ -344,7 +352,7 @@ class BodyElementTest extends QtiSmTestCase
      * @dataProvider invalidAriaControlsAttributesProvider
      * @param mixed $value
      */
-    public function testInvalidAriaControlsAttributes(string $value): void
+    public function testInvalidAriaControlsAttributes($value): void
     {
         $msg = "'${value}' is not a valid value for attribute 'aria-controls'.";
 
@@ -369,7 +377,7 @@ class BodyElementTest extends QtiSmTestCase
      * @dataProvider invalidAriaDescribedByAttributesProvider
      * @param mixed $value
      */
-    public function testInvalidAriaDescribedByAttributes(string $value): void
+    public function testInvalidAriaDescribedByAttributes($value): void
     {
         $msg = "'${value}' is not a valid value for attribute 'aria-describedby'.";
 
@@ -394,7 +402,7 @@ class BodyElementTest extends QtiSmTestCase
      * @dataProvider invalidAriaFlowToAttributesProvider
      * @param mixed $value
      */
-    public function testInvalidAriaFlowToAttributes(string $value): void
+    public function testInvalidAriaFlowToAttributes($value): void
     {
         $msg = "'${value}' is not a valid value for attribute 'aria-flowto'.";
 
@@ -419,7 +427,7 @@ class BodyElementTest extends QtiSmTestCase
      * @dataProvider invalidAriaLabelledByAttributesProvider
      * @param mixed $value
      */
-    public function testInvalidAriaLabelledByAttributes(string $value): void
+    public function testInvalidAriaLabelledByAttributes($value): void
     {
         $msg = "'${value}' is not a valid value for attribute 'aria-labelledby'.";
 
@@ -444,7 +452,7 @@ class BodyElementTest extends QtiSmTestCase
      * @dataProvider invalidAriaOwnsAttributesProvider
      * @param mixed $value
      */
-    public function testInvalidAriaOwnsAttributes(string $value): void
+    public function testInvalidAriaOwnsAttributes($value): void
     {
         $msg = "'${value}' is not a valid value for attribute 'aria-owns'.";
 
@@ -467,7 +475,7 @@ class BodyElementTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidAriaLevelAttributesProvider
-     * @param mixed $value
+     * @param string $value
      */
     public function testInvalidAriaLevelAttributes(string $value): void
     {
@@ -484,6 +492,32 @@ class BodyElementTest extends QtiSmTestCase
     {
         return [
             ['ABCD 999999'],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidAriaLiveAttributesProvider
+     * @param mixed $value
+     */
+    public function testInvalidAriaLiveAttributes($value): void
+    {
+        $msg = "'${value}' is not a valid value for attribute 'aria-live'.";
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($msg);
+
+        $span = new Span();
+        $span->setAriaLive($value);
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidAriaLiveAttributesProvider()
+    {
+        return [
+            [999999],
+            [-1],
         ];
     }
 

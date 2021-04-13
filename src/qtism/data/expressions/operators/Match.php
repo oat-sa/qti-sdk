@@ -17,44 +17,23 @@
  *
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
 
 namespace qtism\data\expressions\operators;
 
-use qtism\data\expressions\ExpressionCollection;
-
 /**
- * From IMS QTI:
- *
- * The match operator takes two sub-expressions which must both have the same base-type
- * and cardinality. The result is a single boolean with a value of true if the two
- * expressions represent the same value and false if they do not. If either
- * sub-expression is NULL then the operator results in NULL.
- *
- * The match operator must not be confused with broader notions of equality such as
- * numerical equality. To avoid confusion, the match operator should not be used to
- * compare subexpressions with base-types of float and must not be used on
- * sub-expressions with a base-type of duration.
+ * This class provides backward compatibility Match operator in PHP 7.*.
+ * In PHP 8.*, match is a reserved word, the Match operator class has been
+ * renamed MacthOperator but compact tests contain generated PHP code which
+ * contains references to the Match class. This class makes sure these compact
+ * tests still run in PHP 7.*. When run on PHP 8.0, the compact tests have to
+ * be updated either by re-publishing the test or by running a script to update
+ * the generated PHP code.
  */
-class Match extends Operator
-{
-    /**
-     * Create a new Match object.
-     *
-     * @param ExpressionCollection $expressions
-     */
-    public function __construct(ExpressionCollection $expressions)
+if (version_compare(PHP_VERSION, '8.0.0', '<')) {
+    class Match extends MatchOperator
     {
-        parent::__construct($expressions, 2, 2, [OperatorCardinality::SAME], [OperatorBaseType::SAME]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getQtiClassName()
-    {
-        return 'match';
     }
 }

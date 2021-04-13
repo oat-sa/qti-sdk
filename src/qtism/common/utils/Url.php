@@ -33,7 +33,7 @@ class Url
      * or $urlComponent.
      *
      * @param string $urlComponent
-     * @return The trimmed URL or URL component.
+     * @return string The trimmed URL or URL component.
      */
     public static function trim($urlComponent)
     {
@@ -47,7 +47,7 @@ class Url
      * or $urlComponent.
      *
      * @param string $urlComponent
-     * @return The trimmed URL or URL component.
+     * @return string The trimmed URL or URL component.
      */
     public static function ltrim($urlComponent)
     {
@@ -59,7 +59,7 @@ class Url
      * or $urlComponent.
      *
      * @param string $urlComponent
-     * @return The trimmed URL or URL component.
+     * @return string The trimmed URL or URL component.
      */
     public static function rtrim($urlComponent)
     {

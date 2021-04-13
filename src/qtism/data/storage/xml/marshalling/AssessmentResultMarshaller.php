@@ -47,7 +47,7 @@ class AssessmentResultMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement($this->getExpectedQtiClassName());
+        $element = $this->createElement($component);
 
         $context = $component->getContext();
         $element->appendChild($this->getMarshallerFactory()->createMarshaller($context)->marshall($context));

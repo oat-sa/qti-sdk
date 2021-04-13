@@ -16,31 +16,31 @@ class UrlTest extends QtiSmTestCase
      */
     public function testValidRelativeUrl($url)
     {
-        $this->assertTrue(Url::isRelative($url));
+        $this::assertTrue(Url::isRelative($url));
     }
 
     /**
      * @dataProvider invalidRelativeUrlProvider
-     * @param unknown_type $url
+     * @param string $url
      */
     public function testInvalidRelativeUrl($url)
     {
-        $this->assertFalse(Url::isRelative($url));
+        $this::assertFalse(Url::isRelative($url));
     }
 
     public function testTrim()
     {
-        $this->assertEquals('hello', Url::trim("/hello/\n"));
+        $this::assertEquals('hello', Url::trim("/hello/\n"));
     }
 
     public function testLtrim()
     {
-        $this->assertEquals("hello/\n", Url::ltrim("/hello/\n"));
+        $this::assertEquals("hello/\n", Url::ltrim("/hello/\n"));
     }
 
     public function testRtrim()
     {
-        $this->assertEquals('/hello', Url::rtrim("/hello/\n"));
+        $this::assertEquals('/hello', Url::rtrim("/hello/\n"));
     }
 
     /**

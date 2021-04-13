@@ -23,11 +23,11 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $factory = new Compact21MarshallerFactory();
         $ref = $factory->createMarshaller($element)->unmarshall($element);
 
-        $this->assertEquals('showme', $ref->getIdentifier());
-        $this->assertEquals('SHOW_FEEDBACK', $ref->getOutcomeIdentifier());
-        $this->assertEquals(TestFeedbackAccess::DURING, $ref->getAccess());
-        $this->assertEquals(ShowHide::SHOW, $ref->getShowHide());
-        $this->assertEquals('./TF01.xml', $ref->getHref());
+        $this::assertEquals('showme', $ref->getIdentifier());
+        $this::assertEquals('SHOW_FEEDBACK', $ref->getOutcomeIdentifier());
+        $this::assertEquals(TestFeedbackAccess::DURING, $ref->getAccess());
+        $this::assertEquals(ShowHide::SHOW, $ref->getShowHide());
+        $this::assertEquals('./TF01.xml', $ref->getHref());
     }
 
     public function testMarshall()
@@ -37,11 +37,11 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $marshaller = $factory->createMarshaller($ref);
         $elt = $marshaller->marshall($ref);
 
-        $this->assertEquals('showme', $elt->getAttribute('identifier'));
-        $this->assertEquals('SHOW_FEEDBACK', $elt->getAttribute('outcomeIdentifier'));
-        $this->assertEquals('during', $elt->getAttribute('access'));
-        $this->assertEquals('show', $elt->getAttribute('showHide'));
-        $this->assertEquals('./TF01.xml', $elt->getAttribute('href'));
+        $this::assertEquals('showme', $elt->getAttribute('identifier'));
+        $this::assertEquals('SHOW_FEEDBACK', $elt->getAttribute('outcomeIdentifier'));
+        $this::assertEquals('during', $elt->getAttribute('access'));
+        $this::assertEquals('show', $elt->getAttribute('showHide'));
+        $this::assertEquals('./TF01.xml', $elt->getAttribute('href'));
     }
 
     public function testUnmarshallMissingIdentifier()

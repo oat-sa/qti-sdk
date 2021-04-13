@@ -42,7 +42,7 @@ class TestFeedbackRefMarshaller extends Marshaller
      */
     public function marshall(QtiComponent $component)
     {
-        $element = self::getDOMCradle()->createElement('testFeedbackRef');
+        $element = $this->createElement($component);
 
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
         $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());

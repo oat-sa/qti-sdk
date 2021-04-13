@@ -17,19 +17,19 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
 
-        $session = new AssessmentItemSession($doc->getDocumentComponent());
+        $session = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $session->beginItemSession();
 
         $shufflingStates = $session->getShufflingStates();
-        $this->assertCount(1, $shufflingStates);
+        $this::assertCount(1, $shufflingStates);
 
         $shufflingGroups = $shufflingStates[0]->getShufflingGroups();
-        $this->assertCount(1, $shufflingGroups);
-        $this->assertCount(4, $shufflingGroups[0]->getIdentifiers());
-        $this->assertTrue($shufflingGroups[0]->getIdentifiers()->contains('ChoiceA'));
-        $this->assertTrue($shufflingGroups[0]->getIdentifiers()->contains('ChoiceB'));
-        $this->assertTrue($shufflingGroups[0]->getIdentifiers()->contains('ChoiceC'));
-        $this->assertTrue($shufflingGroups[0]->getIdentifiers()->contains('ChoiceD'));
+        $this::assertCount(1, $shufflingGroups);
+        $this::assertCount(4, $shufflingGroups[0]->getIdentifiers());
+        $this::assertTrue($shufflingGroups[0]->getIdentifiers()->contains('ChoiceA'));
+        $this::assertTrue($shufflingGroups[0]->getIdentifiers()->contains('ChoiceB'));
+        $this::assertTrue($shufflingGroups[0]->getIdentifiers()->contains('ChoiceC'));
+        $this::assertTrue($shufflingGroups[0]->getIdentifiers()->contains('ChoiceD'));
     }
 
     /**
@@ -40,15 +40,15 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
 
-        $session = new AssessmentItemSession($doc->getDocumentComponent());
+        $session = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $session->beginItemSession();
 
         $identifiers = ['ChoiceA', 'ChoiceB', 'ChoiceC', 'ChoiceD'];
 
-        $this->assertTrue(in_array($session->getShuffledChoiceIdentifierAt(0, 0), $identifiers));
-        $this->assertTrue(in_array($session->getShuffledChoiceIdentifierAt(0, 1), $identifiers));
-        $this->assertTrue(in_array($session->getShuffledChoiceIdentifierAt(0, 2), $identifiers));
-        $this->assertTrue(in_array($session->getShuffledChoiceIdentifierAt(0, 3), $identifiers));
+        $this::assertTrue(in_array($session->getShuffledChoiceIdentifierAt(0, 0), $identifiers));
+        $this::assertTrue(in_array($session->getShuffledChoiceIdentifierAt(0, 1), $identifiers));
+        $this::assertTrue(in_array($session->getShuffledChoiceIdentifierAt(0, 2), $identifiers));
+        $this::assertTrue(in_array($session->getShuffledChoiceIdentifierAt(0, 3), $identifiers));
     }
 
     public function testGetShuffledChoiceIdentifierAtInvalidShufflingStateIndex()
@@ -56,7 +56,7 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
 
-        $session = new AssessmentItemSession($doc->getDocumentComponent());
+        $session = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $session->beginItemSession();
 
         $this->expectException(OutOfBoundsException::class);
@@ -69,7 +69,7 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
 
-        $session = new AssessmentItemSession($doc->getDocumentComponent());
+        $session = $this->createAssessmentItemSession($doc->getDocumentComponent());
         $session->beginItemSession();
 
         $this->expectException(OutOfBoundsException::class);

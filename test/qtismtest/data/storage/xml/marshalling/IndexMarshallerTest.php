@@ -20,12 +20,12 @@ class IndexMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('index', $element->nodeName);
-        $this->assertEquals('3', $element->getAttribute('n'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('index', $element->nodeName);
+        $this::assertEquals('3', $element->getAttribute('n'));
 
         $sub1 = $element->getElementsByTagName('variable')->item(0);
-        $this->assertEquals('orderedVar', $sub1->getAttribute('identifier'));
+        $this::assertEquals('orderedVar', $sub1->getAttribute('identifier'));
     }
 
     public function testUnmarshall()
@@ -43,12 +43,12 @@ class IndexMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Index::class, $component);
-        $this->assertEquals(3, $component->getN());
+        $this::assertInstanceOf(Index::class, $component);
+        $this::assertEquals(3, $component->getN());
 
         $sub1 = $component->getExpressions();
         $sub1 = $sub1[0];
-        $this->assertInstanceOf(Variable::class, $sub1);
-        $this->assertEquals('orderedVar', $sub1->getIdentifier());
+        $this::assertInstanceOf(Variable::class, $sub1);
+        $this::assertEquals('orderedVar', $sub1->getIdentifier());
     }
 }

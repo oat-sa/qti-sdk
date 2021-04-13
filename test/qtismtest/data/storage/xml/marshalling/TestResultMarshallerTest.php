@@ -53,16 +53,16 @@ class TestResultMarshallerTest extends QtiSmTestCase
             </testResult>
         ');
 
-        $this->assertInstanceOf(TestResult::class, $testResult);
+        $this::assertInstanceOf(TestResult::class, $testResult);
 
-        $this->assertEquals('fixture-identifier', $testResult->getIdentifier()->getValue());
-        $this->assertEquals('fixture-identifier', $testResult->getIdentifier());
+        $this::assertEquals('fixture-identifier', $testResult->getIdentifier()->getValue());
+        $this::assertEquals('fixture-identifier', $testResult->getIdentifier());
 
-        $this->assertInstanceOf(DateTime::class, $testResult->getDatestamp());
+        $this::assertInstanceOf(DateTime::class, $testResult->getDatestamp());
 
-        $this->assertTrue($testResult->hasItemVariables());
-        $this->assertInstanceOf(ItemVariableCollection::class, $testResult->getItemVariables());
-        $this->assertEquals(2, $testResult->getItemVariables()->count());
+        $this::assertTrue($testResult->hasItemVariables());
+        $this::assertInstanceOf(ItemVariableCollection::class, $testResult->getItemVariables());
+        $this::assertEquals(2, $testResult->getItemVariables()->count());
     }
 
     public function testUnmarshallMinimal()
@@ -72,15 +72,15 @@ class TestResultMarshallerTest extends QtiSmTestCase
             <testResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529" />
         ');
 
-        $this->assertInstanceOf(TestResult::class, $testResult);
+        $this::assertInstanceOf(TestResult::class, $testResult);
 
-        $this->assertEquals('fixture-identifier', $testResult->getIdentifier()->getValue());
-        $this->assertEquals('fixture-identifier', $testResult->getIdentifier());
+        $this::assertEquals('fixture-identifier', $testResult->getIdentifier()->getValue());
+        $this::assertEquals('fixture-identifier', $testResult->getIdentifier());
 
-        $this->assertInstanceOf(DateTime::class, $testResult->getDatestamp());
+        $this::assertInstanceOf(DateTime::class, $testResult->getDatestamp());
 
-        $this->assertFalse($testResult->hasItemVariables());
-        $this->assertNull($testResult->getItemVariables());
+        $this::assertFalse($testResult->hasItemVariables());
+        $this::assertNull($testResult->getItemVariables());
     }
 
     public function testMarshall()
@@ -104,16 +104,16 @@ class TestResultMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
+        $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
+        $this::assertEquals($component->getQtiClassName(), $element->nodeName);
 
-        $this->assertEquals('fixture-identifier', $element->getAttribute('identifier'));
-        $this->assertTrue($element->hasAttribute('datestamp'));
-        $this->assertEquals('2018-06-27T09:41:45+00:00', $element->getAttribute('datestamp'));
+        $this::assertEquals('fixture-identifier', $element->getAttribute('identifier'));
+        $this::assertTrue($element->hasAttribute('datestamp'));
+        $this::assertEquals('2018-06-27T09:41:45+00:00', $element->getAttribute('datestamp'));
 
-        $this->assertEquals(1, $element->getElementsByTagName('responseVariable')->length);
-        $this->assertEquals(1, $element->getElementsByTagName('templateVariable')->length);
+        $this::assertEquals(1, $element->getElementsByTagName('responseVariable')->length);
+        $this::assertEquals(1, $element->getElementsByTagName('templateVariable')->length);
     }
 
     public function testMarshallMinimal()
@@ -126,17 +126,17 @@ class TestResultMarshallerTest extends QtiSmTestCase
         /** @var DOMElement $element */
         $element = $this->getMarshallerFactory()->createMarshaller($component)->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
+        $this::assertInstanceOf(DOMElement::class, $element);
 
-        $this->assertEquals($component->getQtiClassName(), $element->nodeName);
+        $this::assertEquals($component->getQtiClassName(), $element->nodeName);
 
         $attributes = [];
         for ($i = 0; $i < 2; $i++) {
             $attributes[] = $element->attributes->item($i)->name;
         }
-        $this->assertEmpty(array_diff($attributes, ['identifier', 'datestamp']));
+        $this::assertEmpty(array_diff($attributes, ['identifier', 'datestamp']));
 
-        $this->assertFalse($element->hasChildNodes());
+        $this::assertFalse($element->hasChildNodes());
     }
 
     public function testGetExpectedQtiClassName()
@@ -146,6 +146,6 @@ class TestResultMarshallerTest extends QtiSmTestCase
             new DateTime('2018-06-27T09:41:45.529')
         );
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);
-        $this->assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
+        $this::assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
     }
 }

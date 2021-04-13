@@ -17,7 +17,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testValidIdentifierFormat(string $string): void
     {
-        $this::assertTrue(Format::isIdentifier($string));
+        self::assertTrue(Format::isIdentifier($string));
     }
 
     /**
@@ -26,7 +26,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testInvalidIdentifierFormat(string $string): void
     {
-        $this::assertFalse(Format::isIdentifier($string));
+        self::assertFalse(Format::isIdentifier($string));
     }
 
     /**
@@ -35,7 +35,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testValidVariableRefFormat(string $string): void
     {
-        $this::assertTrue(Format::isVariableRef($string));
+        self::assertTrue(Format::isVariableRef($string));
     }
 
     /**
@@ -44,7 +44,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testInvalidVariableRefFormat(string $string): void
     {
-        $this::assertFalse(Format::isVariableRef($string));
+        self::assertFalse(Format::isVariableRef($string));
     }
 
     /**
@@ -53,7 +53,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testValidCoordinatesFormat(string $string): void
     {
-        $this::assertTrue(Format::isCoords($string));
+        self::assertTrue(Format::isCoords($string));
     }
 
     /**
@@ -62,16 +62,16 @@ class FormatTest extends QtiSmTestCase
      */
     public function testInvalidCoordinatesFormat(string $string): void
     {
-        $this::assertFalse(Format::isCoords($string));
+        self::assertFalse(Format::isCoords($string));
     }
 
     /**
      * @dataProvider validUriFormatProvider
-     * @param string $string
+     * @param mixed $string
      */
-    public function testValidUriFormat(string $string): void
+    public function testValidUriFormat($string): void
     {
-        $this::assertTrue(Format::isUri($string));
+        self::assertTrue(Format::isUri($string));
     }
 
     /**
@@ -96,9 +96,9 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidBCP47LanguagesProvider
-     * @param string $string
+     * @param mixed $string
      */
-    public function testInvalidBCP47LanguageFormat(string $string): void
+    public function testInvalidBCP47LanguageFormat($string): void
     {
         $this::assertFalse(Format::isBCP47Lang($string));
     }
@@ -109,16 +109,16 @@ class FormatTest extends QtiSmTestCase
      */
     public function testValidClassFormatProvider(string $string): void
     {
-        $this::assertTrue(Format::isClass($string));
+        self::assertTrue(Format::isClass($string));
     }
 
     /**
      * @dataProvider invalidClassFormatProvider
-     * @param string $string
+     * @param mixed $string
      */
-    public function testInvalidClassFormatProvider(string $string): void
+    public function testInvalidClassFormatProvider($string): void
     {
-        $this::assertFalse(Format::isClass($string));
+        self::assertFalse(Format::isClass($string));
     }
 
     /**
@@ -127,7 +127,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testValidString256Provider(string $string): void
     {
-        $this::assertTrue(Format::isString256($string));
+        self::assertTrue(Format::isString256($string));
     }
 
     /**
@@ -136,7 +136,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testInvalidString256Provider(string $string): void
     {
-        $this::assertFalse(Format::isString256($string));
+        self::assertFalse(Format::isString256($string));
     }
 
     /**
@@ -145,7 +145,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testValidFile(string $string): void
     {
-        $this::assertTrue(Format::isFile($string));
+        self::assertTrue(Format::isFile($string));
     }
 
     /**
@@ -157,7 +157,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testScale10(float $float, string $expected, string $x = 'x', $precision = false): void
     {
-        $this::assertEquals($expected, Format::scale10($float, $x, $precision));
+        self::assertEquals($expected, Format::scale10($float, $x, $precision));
     }
 
     /**
@@ -167,7 +167,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testIsPrintfIsoFormat(string $input, bool $expected): void
     {
-        $this::assertEquals($expected, Format::isPrintfIsoFormat($input));
+        self::assertEquals($expected, Format::isPrintfIsoFormat($input));
     }
 
     /**
@@ -177,7 +177,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testPrintfFormatIsoToPhp(string $input, string $expected): void
     {
-        $this::assertEquals($expected, Format::printfFormatIsoToPhp($input));
+        self::assertEquals($expected, Format::printfFormatIsoToPhp($input));
     }
 
     /**
@@ -187,7 +187,7 @@ class FormatTest extends QtiSmTestCase
      */
     public function testIsXhtmlLength($input, bool $expected): void
     {
-        $this::assertSame($expected, Format::isXhtmlLength($input));
+        self::assertSame($expected, Format::isXhtmlLength($input));
     }
 
     /**
@@ -197,26 +197,26 @@ class FormatTest extends QtiSmTestCase
      */
     public function testSanitizeIdentifier(string $dirty, string $clean): void
     {
-        $this::assertEquals($clean, Format::sanitizeIdentifier($dirty));
+        self::assertEquals($clean, Format::sanitizeIdentifier($dirty));
     }
 
     /**
      * @dataProvider sanitizeProvider2
-     * @param string $dirty
+     * @param mixed $dirty
      */
-    public function testSanitizeIdentifier2(string $dirty): void
+    public function testSanitizeIdentifier2($dirty): void
     {
-        $this::assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
+        self::assertTrue(Format::isIdentifier(Format::sanitizeIdentifier($dirty), false));
     }
 
     /**
      * @dataProvider isAriaLevelProvider
-     * @param string $input
+     * @param mixed $input
      * @param bool $expected
      */
-    public function testIsAriaLevel(string $input, bool $expected): void
+    public function testIsAriaLevel($input, bool $expected): void
     {
-        $this::assertSame($expected, Format::isAriaLevel($input));
+        self::assertSame($expected, Format::isAriaLevel($input));
     }
 
     public function scale10Provider(): array
@@ -557,9 +557,9 @@ class FormatTest extends QtiSmTestCase
     /**
      * @dataProvider isMimeTypeProvider
      * @param bool $expected
-     * @param string $string
+     * @param mixed $string
      */
-    public function testIsMimeType(bool $expected, string $string): void
+    public function testIsMimeType(bool $expected, $string): void
     {
         $this::assertEquals($expected, Format::isMimeType($string));
     }
@@ -585,9 +585,9 @@ class FormatTest extends QtiSmTestCase
     /**
      * @dataProvider isNormalizedStringProvider
      * @param bool $expected
-     * @param string $string
+     * @param mixed $string
      */
-    public function testIsNormalizedString(bool $expected, string $string): void
+    public function testIsNormalizedString(bool $expected, $string): void
     {
         $this::assertEquals($expected, Format::isNormalizedString($string));
     }

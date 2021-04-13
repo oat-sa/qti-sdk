@@ -32,38 +32,38 @@ class RoundToProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(1239451);
         $processor = new RoundToProcessor($expr, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(round(1240000), round($result->getValue()));
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(round(1240000), round($result->getValue()));
 
         $operands[0] = new QtiFloat(12.1257);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(round(12.1, 1), round($result->getValue(), 1));
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(round(12.1, 1), round($result->getValue(), 1));
 
         $operands[0] = new QtiFloat(0.0681);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(round(0.0681, 4), round($result->getValue(), 4));
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(round(0.0681, 4), round($result->getValue(), 4));
 
         $operands[0] = new QtiInteger(5);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(5, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(5, $result->getValue());
 
         $operands[0] = new QtiInteger(0);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(0, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(0, $result->getValue());
 
         $operands[0] = new QtiFloat(-12.1257);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(round(-12.1, 1), round($result->getValue(), 1));
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(round(-12.1, 1), round($result->getValue(), 1));
     }
 
     public function testFiguresFromRef()
@@ -85,8 +85,8 @@ class RoundToProcessorTest extends QtiSmTestCase
             )
         );
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(round(1240000), round($result->getValue()));
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(round(1240000), round($result->getValue()));
     }
 
     public function testFiguresFromRefNoRef()
@@ -126,8 +126,8 @@ class RoundToProcessorTest extends QtiSmTestCase
             )
         );
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(round(1240000), round($result->getValue()));
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(round(1240000), round($result->getValue()));
     }
 
     public function testFiguresFromRefNegativeWhenSignificantFigureInUse()
@@ -151,8 +151,8 @@ class RoundToProcessorTest extends QtiSmTestCase
             )
         );
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(round(1240000), round($result->getValue()));
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(round(1240000), round($result->getValue()));
     }
 
     public function testDecimalPlaces()
@@ -167,40 +167,40 @@ class RoundToProcessorTest extends QtiSmTestCase
         $operands[] = new QtiFloat(3.4);
         $processor = new RoundToProcessor($expr, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(3, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(3, $result->getValue());
 
         $operands[0] = new QtiFloat(3.5);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(4, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(4, $result->getValue());
 
         $operands[0] = new QtiFloat(3.6);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(4, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(4, $result->getValue());
 
         $operands[0] = new QtiFloat(4.0);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(4, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(4, $result->getValue());
 
         $expr->setFigures(2); // We now go for 2 figures...
         $operands[0] = new QtiFloat(1.95583);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(1.96, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(1.96, $result->getValue());
 
         $operands[0] = new QtiFloat(5.045);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(5.05, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(5.05, $result->getValue());
 
         $expr->setFigures(2);
         $operands[0] = new QtiFloat(5.055);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiFloat::class, $result);
-        $this->assertEquals(5.06, $result->getValue());
+        $this::assertInstanceOf(QtiFloat::class, $result);
+        $this::assertEquals(5.06, $result->getValue());
     }
 
     public function testNoOperands()
@@ -228,7 +228,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $processor = new RoundToProcessor($expr, $operands);
         $result = $processor->process();
 
-        $this->assertNull($result);
+        $this::assertNull($result);
     }
 
     public function testTooMuchOperands()
@@ -312,7 +312,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiFloat(NAN)]);
         $processor = new RoundToProcessor($expr, $operands);
         $result = $processor->process();
-        $this->assertTrue(is_null($result));
+        $this::assertNull($result);
     }
 
     public function testInfinity()
@@ -325,12 +325,12 @@ class RoundToProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiFloat(INF)]);
         $processor = new RoundToProcessor($expr, $operands);
         $result = $processor->process();
-        $this->assertTrue(is_infinite($result->getValue()));
-        $this->assertTrue(INF === $result->getValue());
+        $this::assertTrue(is_infinite($result->getValue()));
+        $this::assertSame(INF, $result->getValue());
 
         $processor->setOperands(new OperandsCollection([new QtiFloat(-INF)]));
         $result = $processor->process();
-        $this->assertTrue(is_infinite($result->getValue()));
-        $this->assertTrue(-INF === $result->getValue());
+        $this::assertTrue(is_infinite($result->getValue()));
+        $this::assertSame(-INF, $result->getValue());
     }
 }

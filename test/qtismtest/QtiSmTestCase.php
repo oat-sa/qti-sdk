@@ -29,7 +29,7 @@ abstract class QtiSmTestCase extends TestCase
      */
     private $outputFileSystem = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -42,7 +42,7 @@ abstract class QtiSmTestCase extends TestCase
         $this->setOutputFileSystem(new Filesystem($adapter));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
     }

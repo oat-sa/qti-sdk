@@ -25,20 +25,20 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(5)]);
         $processor = new IntegerModulusProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(0, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(0, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(49), new QtiInteger(-5)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(4, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(4, $result->getValue());
 
         $operands = new OperandsCollection([new QtiInteger(36), new QtiInteger(7)]);
         $processor->setOperands($operands);
         $result = $processor->process();
-        $this->assertInstanceOf(QtiInteger::class, $result);
-        $this->assertEquals(1, $result->getValue());
+        $this::assertInstanceOf(QtiInteger::class, $result);
+        $this::assertEquals(1, $result->getValue());
     }
 
     public function testNull()
@@ -47,7 +47,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([null, new QtiInteger(5)]);
         $processor = new IntegerModulusProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testModulusByZero()
@@ -56,7 +56,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection([new QtiInteger(50), new QtiInteger(0)]);
         $processor = new IntegerModulusProcessor($expression, $operands);
         $result = $processor->process();
-        $this->assertSame(null, $result);
+        $this::assertNull($result);
     }
 
     public function testWrongCardinality()

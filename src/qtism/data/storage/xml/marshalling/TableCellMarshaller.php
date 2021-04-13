@@ -102,7 +102,7 @@ class TableCellMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
-        $element = self::getDOMCradle()->createElement($component->getQtiClassName());
+        $element = $this->createElement($component);
 
         $headers = $component->getHeaders();
         if (count($headers) > 0) {

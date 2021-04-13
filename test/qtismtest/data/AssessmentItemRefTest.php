@@ -66,10 +66,10 @@ class AssessmentItemRefTest extends QtiSmTestCase
 
         $cloneAssessmentItemRef = clone $assessmentItemRef;
 
-        $this->assertNotSame($assessmentItemRef, $cloneAssessmentItemRef);
-        $this->assertNotSame($itemSessionControl, $cloneAssessmentItemRef->getItemSessionControl());
-        $this->assertNotSame($timeLimits, $cloneAssessmentItemRef->getTimeLimits());
-        $this->assertNotSame($preConditions, $cloneAssessmentItemRef->getPreConditions());
-        $this->assertNotSame($branchRules, $cloneAssessmentItemRef->getBranchRules());
+        $this::assertNotSame($assessmentItemRef, $cloneAssessmentItemRef);
+        $this::assertNotSame($itemSessionControl, $cloneAssessmentItemRef->getItemSessionControl());
+        $this::assertNotSame($timeLimits, $cloneAssessmentItemRef->getTimeLimits());
+        $this::assertNotSame($preConditions, $cloneAssessmentItemRef->getPreConditions());
+        $this::assertNotSame($branchRules, $cloneAssessmentItemRef->getBranchRules());
     }
 }

@@ -300,7 +300,7 @@ class Utils
                 return $attr === 'true';
         }
 
-        if (in_array(Enumeration::class, class_implements($datatype), true)) {
+        if (in_array(Enumeration::class, class_implements($datatype), true)){
             if ($attr !== null) {
                 $constant = $datatype::getConstantByName($attr);
                 // Returns the original value when it's unknown in the enumeration.
@@ -323,17 +323,36 @@ class Utils
      * @param string $attribute An XML attribute name.
      * @param mixed $value A given value.
      */
-    public static function setDOMElementAttribute(DOMElement $element, $attribute, $value)
+    public static function setDOMElementAttribute(DOMElement $element, string $attribute, $value)
     {
-        switch (gettype($value)) {
-            case 'boolean':
-                $element->setAttribute($attribute, ($value === true) ? 'true' : 'false');
-                break;
+        $element->setAttribute($attribute, self::valueAsString($value));
+    }
 
-            default:
-                $element->setAttribute($attribute, '' . $value);
-                break;
+    /**
+     * Set the node value of a given DOMElement object. Boolean values will be transformed as 'true'|'false'.
+     *
+     * @param DOMElement $element A DOMElement object.
+     * @param mixed $value A given value.
+     */
+    public static function setDOMElementValue(DOMElement $element, $value)
+    {
+        $element->nodeValue = self::valueAsString($value);
+    }
+
+    /**
+     * Converts value to an XML insertable string.
+     * Boolean is converted to either 'true' or 'false' string.
+     * Other variable types are optionally using string conversion.
+     *
+     * @param mixed $value
+     * @return string
+     */
+    public static function valueAsString($value)
+    {
+        if (is_bool($value)) {
+            return $value === true ? 'true' : 'false';
         }
+        return (string)$value;
     }
 
     /**

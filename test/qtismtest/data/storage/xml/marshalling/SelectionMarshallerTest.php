@@ -24,12 +24,12 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('selection', $element->nodeName);
-        $this->assertSame($select . '', $element->getAttribute('select'));
-        $this->assertEquals('true', $element->getAttribute('withReplacement'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('selection', $element->nodeName);
+        $this::assertSame($select . '', $element->getAttribute('select'));
+        $this::assertEquals('true', $element->getAttribute('withReplacement'));
 
-        $this->assertEquals(0, $element->childNodes->length);
+        $this::assertEquals(0, $element->childNodes->length);
     }
 
     public function testMarshallWithExternalData()
@@ -45,12 +45,12 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('selection', $element->nodeName);
-        $this->assertSame($select . '', $element->getAttribute('select'));
-        $this->assertEquals('true', $element->getAttribute('withReplacement'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('selection', $element->nodeName);
+        $this::assertSame($select . '', $element->getAttribute('select'));
+        $this::assertEquals('true', $element->getAttribute('withReplacement'));
 
-        $this->assertEquals($element->ownerDocument->saveXML($element), '<selection select="2" withReplacement="true"><som:adaptiveItemSelection xmlns:som="http://www.my-namespace.com"/></selection>');
+        $this::assertEquals('<selection select="2" withReplacement="true"><som:adaptiveItemSelection xmlns:som="http://www.my-namespace.com"/></selection>', $element->ownerDocument->saveXML($element));
     }
 
     public function testUnmarshallValid()
@@ -62,9 +62,9 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Selection::class, $component);
-        $this->assertEquals($component->getSelect(), 2);
-        $this->assertEquals($component->isWithReplacement(), true);
+        $this::assertInstanceOf(Selection::class, $component);
+        $this::assertEquals(2, $component->getSelect());
+        $this::assertTrue($component->isWithReplacement());
     }
 
     public function testUnmarshallValidTwo()
@@ -76,9 +76,9 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Selection::class, $component);
-        $this->assertEquals($component->getSelect(), 2);
-        $this->assertEquals($component->isWithReplacement(), false);
+        $this::assertInstanceOf(Selection::class, $component);
+        $this::assertEquals(2, $component->getSelect());
+        $this::assertFalse($component->isWithReplacement());
     }
 
     public function testUnmarshallValidWithExtension()
@@ -99,14 +99,14 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(Selection::class, $component);
-        $this->assertEquals($component->getSelect(), 2);
-        $this->assertEquals($component->isWithReplacement(), false);
+        $this::assertInstanceOf(Selection::class, $component);
+        $this::assertEquals(2, $component->getSelect());
+        $this::assertFalse($component->isWithReplacement());
 
-        $this->assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveItemSelection')->length);
-        $this->assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveEngineRef')->length);
-        $this->assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'qtiUsagedataRef')->length);
-        $this->assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'qtiMetadataRef')->length);
+        $this::assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveItemSelection')->length);
+        $this::assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'adaptiveEngineRef')->length);
+        $this::assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'qtiUsagedataRef')->length);
+        $this::assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'qtiMetadataRef')->length);
     }
 
     public function testUnmarshallInvalid()

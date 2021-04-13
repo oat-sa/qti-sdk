@@ -18,11 +18,11 @@ class ParamMarshallerTest extends QtiSmTestCase
             <param name="movie" value="movie.swf" valuetype="REF" type="application/x-shockwave-flash"/>            
 	    ');
 
-        $this->assertInstanceOf(Param::class, $param);
-        $this->assertEquals('movie', $param->getName());
-        $this->assertEquals('movie.swf', $param->getValue());
-        $this->assertEquals(ParamType::REF, $param->getValueType());
-        $this->assertEquals('application/x-shockwave-flash', $param->getType());
+        $this::assertInstanceOf(Param::class, $param);
+        $this::assertEquals('movie', $param->getName());
+        $this::assertEquals('movie.swf', $param->getValue());
+        $this::assertEquals(ParamType::REF, $param->getValueType());
+        $this::assertEquals('application/x-shockwave-flash', $param->getType());
     }
 
     public function testMarshallSimple()
@@ -33,6 +33,6 @@ class ParamMarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
 
-        $this->assertEquals('<param name="movie" value="movie.swf" valuetype="REF" type="application/x-shockwave-flash"/>', $dom->saveXml($element));
+        $this::assertEquals('<param name="movie" value="movie.swf" valuetype="REF" type="application/x-shockwave-flash"/>', $dom->saveXml($element));
     }
 }

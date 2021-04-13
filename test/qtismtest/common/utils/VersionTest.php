@@ -21,7 +21,7 @@ class VersionTest extends QtiSmTestCase
      */
     public function testVersionCompareValid($version1, $version2, $operator, $expected)
     {
-        $this->assertSame($expected, Version::compare($version1, $version2, $operator));
+        $this::assertSame($expected, Version::compare($version1, $version2, $operator));
     }
 
     public function testUnknownOperator()
@@ -77,7 +77,7 @@ class VersionTest extends QtiSmTestCase
      */
     public function testAppendPatchVersion($originalVersion, $patchedVersion)
     {
-        $this->assertEquals($patchedVersion, Version::appendPatchVersion($originalVersion));
+        $this::assertEquals($patchedVersion, Version::appendPatchVersion($originalVersion));
     }
 
     /**
@@ -96,6 +96,8 @@ class VersionTest extends QtiSmTestCase
             ['2.2.0', '2.2.0'],
             ['2.2.1', '2.2.1'],
             ['2.2.2', '2.2.2'],
+            ['2.2.3', '2.2.3'],
+            ['2.2.4', '2.2.4'],
             ['3', '3.0.0'],
             ['3.0', '3.0.0'],
             ['3.0.0', '3.0.0'],

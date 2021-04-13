@@ -29,13 +29,13 @@ class VariableDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this->assertInstanceOf(DOMElement::class, $element);
-        $this->assertEquals('variableDeclaration', $element->nodeName);
-        $this->assertEquals('myVar', $element->getAttribute('identifier'));
-        $this->assertEquals('integer', $element->getAttribute('baseType'));
+        $this::assertInstanceOf(DOMElement::class, $element);
+        $this::assertEquals('variableDeclaration', $element->nodeName);
+        $this::assertEquals('myVar', $element->getAttribute('identifier'));
+        $this::assertEquals('integer', $element->getAttribute('baseType'));
 
         $defaultValueElts = $element->getElementsByTagName('defaultValue');
-        $this->assertEquals(1, $defaultValueElts->length);
+        $this::assertEquals(1, $defaultValueElts->length);
     }
 
     public function testUnmarshall()
@@ -55,14 +55,14 @@ class VariableDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
 
-        $this->assertInstanceOf(VariableDeclaration::class, $component);
-        $this->assertEquals('myVar', $component->getIdentifier());
-        $this->assertEquals(BaseType::INTEGER, $component->getBaseType());
-        $this->assertEquals(Cardinality::SINGLE, $component->getCardinality());
-        $this->assertInstanceOf(DefaultValue::class, $component->getDefaultValue());
+        $this::assertInstanceOf(VariableDeclaration::class, $component);
+        $this::assertEquals('myVar', $component->getIdentifier());
+        $this::assertEquals(BaseType::INTEGER, $component->getBaseType());
+        $this::assertEquals(Cardinality::SINGLE, $component->getCardinality());
+        $this::assertInstanceOf(DefaultValue::class, $component->getDefaultValue());
 
         $values = $component->getDefaultValue()->getValues();
-        $this->assertEquals(1, count($values));
-        $this->assertInternalType('integer', $values[0]->getValue());
+        $this::assertCount(1, $values);
+        $this::assertIsInt($values[0]->getValue());
     }
 }

@@ -24,7 +24,7 @@ class FeedbackInlineMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this->assertEquals('<feedbackInline id="my-feedback" class="super feedback" outcomeIdentifier="outcome1" identifier="please_hide_me" showHide="hide">This is text...</feedbackInline>', $dom->saveXML($element));
+        $this::assertEquals('<feedbackInline id="my-feedback" class="super feedback" outcomeIdentifier="outcome1" identifier="please_hide_me" showHide="hide">This is text...</feedbackInline>', $dom->saveXML($element));
     }
 
     public function testUnmarshall()
@@ -34,15 +34,15 @@ class FeedbackInlineMarshallerTest extends QtiSmTestCase
 	    ');
 
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
-        $this->assertInstanceOf(FeedbackInline::class, $component);
-        $this->assertEquals('my-feedback', $component->getId());
-        $this->assertEquals('super feedback', $component->getClass());
-        $this->assertEquals('outcome1', $component->getOutcomeIdentifier());
-        $this->assertEquals('please_hide_me', $component->getIdentifier());
-        $this->assertEquals(ShowHide::HIDE, $component->getShowHide());
+        $this::assertInstanceOf(FeedbackInline::class, $component);
+        $this::assertEquals('my-feedback', $component->getId());
+        $this::assertEquals('super feedback', $component->getClass());
+        $this::assertEquals('outcome1', $component->getOutcomeIdentifier());
+        $this::assertEquals('please_hide_me', $component->getIdentifier());
+        $this::assertEquals(ShowHide::HIDE, $component->getShowHide());
 
         $content = $component->getContent();
-        $this->assertEquals(1, count($content));
-        $this->assertEquals('This is text...', $content[0]->getContent());
+        $this::assertCount(1, $content);
+        $this::assertEquals('This is text...', $content[0]->getContent());
     }
 }

@@ -24,16 +24,16 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
         $renderingEngine->setCssClassPolicy(XhtmlRenderingEngine::CSSCLASS_ABSTRACT);
         $rendering = $renderingEngine->render($div);
 
-        $this->assertInstanceOf(DOMDocument::class, $rendering);
+        $this::assertInstanceOf(DOMDocument::class, $rendering);
 
         $divElt = $rendering->documentElement;
-        $this->assertEquals('div', $divElt->nodeName);
-        $this->assertEquals('my-div', $divElt->getAttribute('id'));
-        $this->assertEquals('qti-bodyElement qti-div container', $divElt->getAttribute('class'));
+        $this::assertEquals('div', $divElt->nodeName);
+        $this::assertEquals('my-div', $divElt->getAttribute('id'));
+        $this::assertEquals('qti-bodyElement qti-div container', $divElt->getAttribute('class'));
 
         $text = $divElt->firstChild;
-        $this->assertInstanceOf(DOMText::class, $text);
-        $this->assertEquals('bla bla', $text->wholeText);
+        $this::assertInstanceOf(DOMText::class, $text);
+        $this::assertEquals('bla bla', $text->wholeText);
     }
 
     public function testIgnoreClassesOne()
@@ -49,13 +49,13 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
 	   ');
 
         $divElt = $renderingEngine->render($div)->documentElement;
-        $this->assertEquals('div', $divElt->nodeName);
+        $this::assertEquals('div', $divElt->nodeName);
 
         $h1s = $divElt->getElementsByTagName('h1');
-        $this->assertEquals(0, $h1s->length);
+        $this::assertEquals(0, $h1s->length);
 
         $ps = $divElt->getElementsByTagName('p');
-        $this->assertEquals(1, $ps->length);
+        $this::assertEquals(1, $ps->length);
     }
 
     public function testSeparateStylesheetOne()
@@ -64,7 +64,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
         // with a single stylesheet component within.
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'rendering/rubricblock_2.xml');
-        $this->assertEquals(1, count($doc->getDocumentComponent()->getStylesheets()));
+        $this::assertCount(1, $doc->getDocumentComponent()->getStylesheets());
 
         $renderingEngine = new XhtmlRenderingEngine();
         $renderingEngine->setStylesheetPolicy(XhtmlRenderingEngine::STYLESHEET_SEPARATE);
@@ -72,18 +72,18 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
 
         // The main rendering must not contain <link> XHTML elements at all.
         $linkElts = $rendering->getElementsByTagName('link');
-        $this->assertEquals(0, $linkElts->length);
+        $this::assertEquals(0, $linkElts->length);
 
         // The separate rendering must contain a single <link> element.
         $linksFragment = $renderingEngine->getStylesheets();
-        $this->assertInstanceOf(DOMDocumentFragment::class, $linksFragment);
-        $this->assertEquals(1, $linksFragment->childNodes->length);
+        $this::assertInstanceOf(DOMDocumentFragment::class, $linksFragment);
+        $this::assertEquals(1, $linksFragment->childNodes->length);
         $linkElt = $linksFragment->firstChild;
-        $this->assertEquals('link', $linkElt->localName);
-        $this->assertEquals('style.css', $linkElt->getAttribute('href'));
-        $this->assertEquals('text/css', $linkElt->getAttribute('type'));
-        $this->assertEquals('screen', $linkElt->getAttribute('media'));
-        $this->assertEquals('My Very First Stylesheet I am Proud of', $linkElt->getAttribute('title'));
+        $this::assertEquals('link', $linkElt->localName);
+        $this::assertEquals('style.css', $linkElt->getAttribute('href'));
+        $this::assertEquals('text/css', $linkElt->getAttribute('type'));
+        $this::assertEquals('screen', $linkElt->getAttribute('media'));
+        $this::assertEquals('My Very First Stylesheet I am Proud of', $linkElt->getAttribute('title'));
     }
 
     public function testSeparateStylesheetTwo()
@@ -93,33 +93,33 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
 
         $doc = new XmlDocument('2.1');
         $doc->load(self::samplesDir() . 'rendering/rubricblock_3.xml');
-        $this->assertEquals(2, count($doc->getDocumentComponent()->getStylesheets()));
+        $this::assertCount(2, $doc->getDocumentComponent()->getStylesheets());
 
         $renderingEngine = new XhtmlRenderingEngine();
         $renderingEngine->setStylesheetPolicy(XhtmlRenderingEngine::STYLESHEET_SEPARATE);
         $rendering = $renderingEngine->render($doc->getDocumentComponent());
 
         $linkElts = $rendering->getElementsByTagName('link');
-        $this->assertEquals(0, $linkElts->length);
+        $this::assertEquals(0, $linkElts->length);
 
         $linksFragment = $renderingEngine->getStylesheets();
-        $this->assertInstanceOf(DOMDocumentFragment::class, $linksFragment);
-        $this->assertEquals(2, $linksFragment->childNodes->length);
+        $this::assertInstanceOf(DOMDocumentFragment::class, $linksFragment);
+        $this::assertEquals(2, $linksFragment->childNodes->length);
 
         // Test first <link> element.
         $linkElt = $linksFragment->childNodes->item(0);
-        $this->assertEquals('link', $linkElt->localName);
-        $this->assertEquals('style1.css', $linkElt->getAttribute('href'));
-        $this->assertEquals('text/css', $linkElt->getAttribute('type'));
-        $this->assertEquals('screen', $linkElt->getAttribute('media'));
-        $this->assertEquals('\0_ !HOURRAY! _0/', $linkElt->getAttribute('title'));
+        $this::assertEquals('link', $linkElt->localName);
+        $this::assertEquals('style1.css', $linkElt->getAttribute('href'));
+        $this::assertEquals('text/css', $linkElt->getAttribute('type'));
+        $this::assertEquals('screen', $linkElt->getAttribute('media'));
+        $this::assertEquals('\0_ !HOURRAY! _0/', $linkElt->getAttribute('title'));
 
         // Test second <link> element.
         $linkElt = $linksFragment->childNodes->item(1);
-        $this->assertEquals('link', $linkElt->localName);
-        $this->assertEquals('style2.css', $linkElt->getAttribute('href'));
-        $this->assertEquals('text/css', $linkElt->getAttribute('type'));
-        $this->assertEquals('screen', $linkElt->getAttribute('media'));
-        $this->assertEquals('0/*\0 (Jedi duel)', $linkElt->getAttribute('title'));
+        $this::assertEquals('link', $linkElt->localName);
+        $this::assertEquals('style2.css', $linkElt->getAttribute('href'));
+        $this::assertEquals('text/css', $linkElt->getAttribute('type'));
+        $this::assertEquals('screen', $linkElt->getAttribute('media'));
+        $this::assertEquals('0/*\0 (Jedi duel)', $linkElt->getAttribute('title'));
     }
 }

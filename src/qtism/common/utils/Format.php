@@ -25,6 +25,8 @@ namespace qtism\common\utils;
 
 use DateInterval;
 use Exception;
+use qtism\common\utils\data\CharacterMap;
+use ValueError;
 
 /**
  * A utility class focusing on string format checks.
@@ -94,24 +96,16 @@ class Format
      */
     public static function isIdentifier(string $string, bool $strict = true): bool
     {
-        if ($strict !== true) {
+        if (!$strict) {
             return preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $string) === 1;
         }
 
-        $letter = '(?:' . self::$perlXmlBaseChar . '|' . self::$perlXmlIdeographic . ')';
-        $digit = self::$perlXmlDigit;
-        $combiningChar = self::$perlXmlCombiningChar;
-        $extender = self::$perlXmlExtender;
-
-        $string = str_split($string);
-        $first = array_shift($string);
-
-        if (preg_match("/(?:_|${letter})/u", $first) !== 1) {
+        if (!isset($string[0]) || !isset(CharacterMap::$identifier_first[$string[0]])) {
             return false;
         }
 
-        foreach ($string as $s) {
-            if (preg_match("/${letter}|${digit}/u", $s) === 0 && preg_match("/${combiningChar}|${extender}/u", $s) === 0 && preg_match("/_|\\-|\\./u", $s) === 0) {
+        for ($i = strlen($string) - 1; $i > 0; $i--) {
+            if (!isset(CharacterMap::$identifier_other[$string[$i]])) {
                 return false;
             }
         }
@@ -169,7 +163,7 @@ class Format
     /**
      * Whether a given $string is a URI.
      *
-     * @param mixed $string A string value.
+     * @param string $string A string value.
      * @return bool Whether $string is a valid URI.
      * @link http://en.wikipedia.org/wiki/Uniform_Resource_Identifier
      */
@@ -325,7 +319,7 @@ class Format
      *
      * For compatibility reasons, float formatted numbers will also
      * be accepted as valid numbers to compose coordinates.
-     * 
+     *
      * For example '0, 20, 100, 20' is a valid coordinate collection to
      * describe a rectangle shape.
      *
@@ -359,11 +353,7 @@ class Format
      */
     public static function isClass(string $string): bool
     {
-        if (!is_string($string)) {
-            return false;
-        }
-
-        $pattern = "/^(?:[^\s]+?(?:\x20){0,})+$/";
+        $pattern = "/^\S+(?: +\S+)*$/";
         return preg_match($pattern, $string) === 1;
     }
 
@@ -510,6 +500,46 @@ class Format
     }
 
     /**
+     * Performs a failsafe sprintf with the same behavior in PHP 7 and 8.
+     * In PHP 7, when encountering an invalid format specifier, sprintf just
+     * returns an empty string and concatenates is with the rest of the format.
+     * In PHP 8, when encountering an invalid format specifier, sprintf throws
+     * a ValueError.
+     * When run under PHP 8, this methods simulates PHP 7 behavior by removing
+     * the invalid specifier from the format string and tries to perform the
+     * sprintf call again.
+     *
+     * NB: this is probably overkill but kept to ensure backward compatibility
+     * for any user-provided format.
+     *
+     * @param string $format
+     * @param float $value
+     * @return mixed|string
+     */
+    public static function permissiveSprintf(string $format, float $value)
+    {
+        $format = self::printfFormatIsoToPhp($format);
+        try {
+            // Php 7 only runs this line.
+            return sprintf($format, $value);
+        } catch (ValueError $exception) {
+            // Php 8 runs this when invalid format is found.
+            $result = false;
+            while ($result === false) {
+                if (!preg_match('/^Unknown format specifier "([A-Za-z])"$/', $exception->getMessage(), $matches)) {
+                    throw $exception;
+                }
+                $format = preg_replace('/%(?:[0-9]+\$)?-?(?:\.[0-9]+)?' . $matches[1] . '/', '', $format);
+                try {
+                    $result = sprintf($format, $value);
+                } catch (ValueError $exception) {
+                }
+            }
+            return $result;
+        }
+    }
+
+    /**
      * Whether or not a given $length is a compliant XHTML
      * length (e.g. "10%", 10, ...).
      *
@@ -531,15 +561,11 @@ class Format
 
     public static function isAriaLevel(string $level): bool
     {
-         return is_numeric($level) && (int)$level >= 1;
+        return is_numeric($level) && (int)$level >= 1;
     }
 
     public static function isAriaIdRefs(string $ariaIdRefs): bool
     {
-        if (!is_string($ariaIdRefs)) {
-            return false;
-        }
-
         $ariaValues = explode("\x20", $ariaIdRefs);
         foreach ($ariaValues as $ariaValue) {
             if (!self::isIdentifier($ariaValue, false)) {

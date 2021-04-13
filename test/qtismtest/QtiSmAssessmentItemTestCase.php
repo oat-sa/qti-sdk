@@ -4,6 +4,7 @@ namespace qtismtest;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\data\ExtendedAssessmentItemRef;
+use qtism\data\IAssessmentItem;
 use qtism\data\storage\xml\marshalling\ExtendedAssessmentItemRefMarshaller;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -15,14 +16,23 @@ use qtism\runtime\tests\SessionManager;
  */
 abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
+    }
+
+    /**
+     * @param IAssessmentItem $assessmentItem
+     * @return AssessmentItemSession
+     */
+    protected function createAssessmentItemSession(IAssessmentItem $assessmentItem): AssessmentItemSession
+    {
+        return new AssessmentItemSession($assessmentItem);
     }
 
     /**

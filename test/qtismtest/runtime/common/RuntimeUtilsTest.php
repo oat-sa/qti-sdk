@@ -34,7 +34,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function testInferBaseType($value, $expectedBaseType)
     {
-        $this->assertTrue(Utils::inferBaseType($value) === $expectedBaseType);
+        $this::assertSame($expectedBaseType, Utils::inferBaseType($value));
     }
 
     /**
@@ -44,7 +44,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function testInferCardinality($value, $expectedCardinality)
     {
-        $this->assertTrue(Utils::inferCardinality($value) === $expectedCardinality);
+        $this::assertSame($expectedCardinality, Utils::inferCardinality($value));
     }
 
     /**
@@ -55,7 +55,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function testIsValidVariableIdentifier($string, $expected)
     {
-        $this->assertSame($expected, Utils::isValidVariableIdentifier($string));
+        $this::assertSame($expected, Utils::isValidVariableIdentifier($string));
     }
 
     /**
@@ -66,7 +66,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function testIsNull(QtiDatatype $value = null, $expected)
     {
-        $this->assertSame($expected, Utils::isNull($value));
+        $this::assertSame($expected, Utils::isNull($value));
     }
 
     /**
@@ -78,7 +78,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function testEquals(QtiDatatype $a = null, QtiDatatype $b = null, $expected)
     {
-        $this->assertSame($expected, Utils::equals($a, $b));
+        $this::assertSame($expected, Utils::equals($a, $b));
     }
 
     /**
@@ -101,7 +101,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function testFloatArrayToInteger($floatArray, $integerArray)
     {
-        $this->assertEquals($integerArray, Utils::floatArrayToInteger($floatArray));
+        $this::assertEquals($integerArray, Utils::floatArrayToInteger($floatArray));
     }
 
     /**
@@ -111,7 +111,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      */
     public function testIntegerArrayToFloat($integerArray, $floatArray)
     {
-        $this->assertEquals($floatArray, Utils::integerArrayToFloat($integerArray));
+        $this::assertEquals($floatArray, Utils::integerArrayToFloat($integerArray));
     }
 
     /**

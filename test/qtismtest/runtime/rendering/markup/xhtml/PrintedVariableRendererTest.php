@@ -34,16 +34,16 @@ class PrintedVariableRendererTest extends QtiSmTestCase
 
         $element = $renderer->render($pv)->firstChild;
 
-        $this->assertEquals('span', $element->nodeName);
-        $this->assertEquals('my-id', $element->getAttribute('id'));
-        $this->assertEquals('qti-printedVariable', $element->getAttribute('class'));
-        $this->assertEquals('%d', $element->getAttribute('data-format'));
-        $this->assertEquals('true', $element->getAttribute('data-power-form'));
-        $this->assertEquals('1', $element->getAttribute('data-index'));
-        $this->assertEquals('10', $element->getAttribute('data-base'));
-        $this->assertEquals(',', $element->getAttribute('data-delimiter'));
-        $this->assertEquals('field', $element->getAttribute('data-field'));
-        $this->assertEquals('=', $element->getAttribute('data-mapping-indicator'));
+        $this::assertEquals('span', $element->nodeName);
+        $this::assertEquals('my-id', $element->getAttribute('id'));
+        $this::assertEquals('qti-printedVariable', $element->getAttribute('class'));
+        $this::assertEquals('%d', $element->getAttribute('data-format'));
+        $this::assertEquals('true', $element->getAttribute('data-power-form'));
+        $this::assertEquals('1', $element->getAttribute('data-index'));
+        $this::assertEquals('10', $element->getAttribute('data-base'));
+        $this::assertEquals(',', $element->getAttribute('data-delimiter'));
+        $this::assertEquals('field', $element->getAttribute('data-field'));
+        $this::assertEquals('=', $element->getAttribute('data-mapping-indicator'));
     }
 
     public function testRenderContextAware()
@@ -64,14 +64,14 @@ class PrintedVariableRendererTest extends QtiSmTestCase
 
         $element = $renderer->render($pv)->firstChild;
 
-        $this->assertEquals('span', $element->nodeName);
-        $this->assertEquals('my-id', $element->getAttribute('id'));
-        $this->assertEquals('OUTCOME1', $element->getAttribute('data-identifier'));
-        $this->assertEquals('%d', $element->getAttribute('data-format'));
-        $this->assertEquals('false', $element->getAttribute('data-power-form'));
-        $this->assertEquals('10', $element->getAttribute('data-base'));
-        $this->assertEquals(';', $element->getAttribute('data-delimiter'));
-        $this->assertEquals('=', $element->getAttribute('data-mapping-indicator'));
-        $this->assertEquals('qti-printedVariable', $element->getAttribute('class'));
+        $this::assertEquals('span', $element->nodeName);
+        $this::assertEquals('my-id', $element->getAttribute('id'));
+        $this::assertEquals('OUTCOME1', $element->getAttribute('data-identifier'));
+        $this::assertEquals('%d', $element->getAttribute('data-format'));
+        $this::assertEquals('false', $element->getAttribute('data-power-form'));
+        $this::assertEquals('10', $element->getAttribute('data-base'));
+        $this::assertEquals(';', $element->getAttribute('data-delimiter'));
+        $this::assertEquals('=', $element->getAttribute('data-mapping-indicator'));
+        $this::assertEquals('qti-printedVariable', $element->getAttribute('class'));
     }
 }
