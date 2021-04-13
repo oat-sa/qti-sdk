@@ -104,8 +104,8 @@ class PatternMatchProcessorTest extends QtiSmTestCase
      */
     public function patternMatchProvider()
     {
-        return [[new QtiString('^String$'), '[^String]*$', false]
-/*            [new QtiString('string'), 'string', true],
+        return [
+            [new QtiString('string'), 'string', true],
             [new QtiString('string'), 'stRing', false],
             [new QtiString('string'), 'shell', false],
             [new QtiString('stringString'), '.*', true], // in xml schema 2, dot matches white-spaces
@@ -116,7 +116,7 @@ class PatternMatchProcessorTest extends QtiSmTestCase
             [new QtiString('Str/ing'), 'Str/ing', true],
             [new QtiString('Str^ing'), 'Str^ing', true],
             [new QtiString('99'), '\d{1,2}', true],
-            [new QtiString('abc'), '\d{1,2}', false],*/
+            [new QtiString('abc'), '\d{1,2}', false],
         ];
     }
 
