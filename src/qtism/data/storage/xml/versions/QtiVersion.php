@@ -27,6 +27,7 @@ namespace qtism\data\storage\xml\versions;
 use DOMDocument;
 use InvalidArgumentException;
 use qtism\common\utils\Version;
+use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\Utils;
 use qtism\data\storage\xml\XmlStorageException;
 
@@ -162,35 +163,24 @@ class QtiVersion extends Version
         return '';
     }
 
-    /**
-     * @return string
-     */
     public function getLocalXsd(): string
     {
         return __DIR__ . '/../schemes/' . static::LOCAL_XSD;
     }
 
-    /**
-     * @return string
-     */
     public function getNamespace(): string
     {
         return static::XMLNS;
     }
 
-    /**
-     * @return string
-     */
     public function getXsdLocation(): string
     {
         return static::XSD;
     }
 
-    /**
-     * @return string
-     */
-    public function getMarshallerFactoryClass(): string
+    public function getMarshallerFactory(): MarshallerFactory
     {
-        return static::MARSHALLER_FACTORY;
+        $factoryClass = static::MARSHALLER_FACTORY;
+        return new $factoryClass();
     }
 }

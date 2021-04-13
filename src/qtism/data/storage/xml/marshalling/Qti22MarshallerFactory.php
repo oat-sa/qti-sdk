@@ -25,7 +25,6 @@ namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Reflection;
 use ReflectionClass;
-use qtism\data\storage\xml\marshalling\SimpleInlineMarshaller;
 
 /**
  * A MarshallerFactory focusing on instantiating and configuring

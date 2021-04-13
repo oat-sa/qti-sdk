@@ -236,7 +236,10 @@ class Utils
             // Check escaping.
             // If the amount of preceding backslashes is odd, it is escaped.
             // If the amount of preceding backslashes is even, it is not escaped.
-            if ((in_array($char, $symbols)) && static::getPrecedingBackslashesCount($string, $i) % 2 === 0) {
+            // If a caret is preceded by a left bracket, don't escape it
+            if ((in_array($char, $symbols)) && static::getPrecedingBackslashesCount($string, $i) % 2 === 0
+                && ($i === 0 || $char !== '^' || $string[$i-1] !== '[')
+            ) {
                 // It is not escaped, so ecape it.
                 $returnValue .= '\\';
             }
@@ -329,7 +332,8 @@ class Utils
     public static function prepareXsdPatternForPcre($pattern)
     {
         // XML schema always implicitly anchors the entire regular expression
-        // because there is no carret (^) nor dollar ($) signs.
+        // Neither caret (^) nor dollar ($) sign have special meaning so they are
+        // considered as normal characters.
         // see http://www.regular-expressions.info/xml.html
         $pattern = self::escapeSymbols($pattern, ['$', '^']);
         $pattern = self::pregAddDelimiter('^' . $pattern . '$');

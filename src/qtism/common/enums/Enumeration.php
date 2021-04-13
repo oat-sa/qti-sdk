@@ -39,7 +39,8 @@ interface Enumeration
      * Get a constant value by its name. If $name does not match any of the value
      * of the enumeration, false is returned.
      *
-     * @param int|false $name The value relevant to $name or false if not found.
+     * @param string $name The name of a constant of the enumeration.
+     * @return int|false The value relevant to $name or false if not found.
      */
     public static function getConstantByName($name);
 
@@ -47,7 +48,8 @@ interface Enumeration
      * Get a constant name by its value. If $constant does not match any of the names
      * of the enumeration, false is returned.
      *
-     * @param string|false $constant The relevant name or false if not found.
+     * @param int $constant A constant from the enumeration.
+     * @return string|false The relevant name or false if not found.
      */
     public static function getNameByConstant($constant);
 }

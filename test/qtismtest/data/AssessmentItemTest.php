@@ -795,7 +795,7 @@ class AssessmentItemTest extends QtiSmTestCase
         $this->expectExceptionMessage('The label argument must be a string with at most 256 characters.');
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
-        $assessmentItem->setLabel(1337);
+        $assessmentItem->setLabel(str_repeat('1337', 65));
     }
 
     public function testSetAdaptiveWrongType()
@@ -822,7 +822,7 @@ class AssessmentItemTest extends QtiSmTestCase
         $this->expectExceptionMessage('The toolName argument must be a string with at most 256 characters.');
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
-        $assessmentItem->setToolName(9999);
+        $assessmentItem->setToolName(str_repeat('tool', 65));
     }
 
     public function testSetToolVersionWrongType()
@@ -831,6 +831,6 @@ class AssessmentItemTest extends QtiSmTestCase
         $this->expectExceptionMessage('The toolVersion argument must be a string with at most 256 characters.');
 
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false);
-        $assessmentItem->setToolVersion(9999);
+        $assessmentItem->setToolVersion(str_repeat('1337', 65));
     }
 }

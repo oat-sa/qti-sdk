@@ -33,6 +33,7 @@ use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\Utils as XmlUtils;
+use qtism\data\storage\xml\versions\QtiVersion;
 use RuntimeException;
 
 /**
@@ -71,91 +72,91 @@ abstract class Marshaller
      * @var string[]
      */
     private static $dirClasses = [
-        'associateInteraction',
-        'choiceInteraction',
-        'drawingInteraction',
-        'extendedTextInteraction',
-        'gapMatchInteraction',
-        'graphicAssociateInteraction',
-        'hotspotInteraction',
-        'hottextInteraction',
-        'matchInteraction',
-        'mediaInteraction',
-        'orderInteraction',
-        'selectPointInteraction',
-        'sliderInteraction',
-        'uploadInteraction',
-        'bdo',
-        'caption',
-        'colgroup',
-        'gapImg',
-        'gapText',
-        'infoControl',
-        'inlineChoice',
-        'li',
-        'prompt',
-        'simpleAssociableChoice',
-        'simpleChoice',
-        'stimulusBody',
-        'tbody',
-        'tfoot',
-        'thead',
-        'td',
-        'th',
-        'tr',
-        'customInteraction',
-        'graphicGapMatchInteraction',
-        'graphicOrderInteraction',
-        'inlineChoiceInteraction',
-        'positionObjecInteraction',
         'a',
-        'dd',
-        'div',
-        'dl',
-        'dt',
-        'feedbackBlock',
-        'feedbackInline',
-        'hottext',
         'abbr',
         'acronym',
         'address',
+        'associateInteraction',
         'b',
+        'bdo',
         'big',
+        'br',
+        'caption',
+        'choiceInteraction',
         'cite',
         'code',
+        'col',
+        'colgroup',
+        'customInteraction',
+        'dd',
         'dfn',
+        'div',
+        'dl',
+        'drawingInteraction',
+        'dt',
         'em',
+        'extendedTextInteraction',
+        'feedbackBlock',
+        'feedbackInline',
+        'gapImg',
+        'gapMatchInteraction',
+        'gapText',
+        'graphicAssociateInteraction',
+        'graphicGapMatchInteraction',
+        'graphicOrderInteraction',
         'h1',
         'h2',
         'h3',
         'h4',
         'h5',
         'h6',
+        'hotspotInteraction',
+        'hottext',
+        'hottext',
+        'hottextInteraction',
+        'hr',
         'i',
+        'img',
+        'infoControl',
+        'inlineChoice',
+        'inlineChoiceInteraction',
         'kbd',
+        'label',
+        'li',
+        'matchInteraction',
+        'mediaInteraction',
+        'object',
+        'orderInteraction',
         'p',
+        'positionObjecInteraction',
         'pre',
+        'prompt',
+        'q',
+        'rubricBlock',
         'samp',
+        'selectPointInteraction',
+        'simpleAssociableChoice',
+        'simpleChoice',
+        'sliderInteraction',
         'small',
         'span',
+        'stimulusBody',
         'strong',
         'sub',
         'sup',
-        'tt',
-        'var',
-        'br',
-        'col',
-        'hr',
-        'img',
-        'q',
-        'label',
-        'object',
-        'ul',
-        'rubricBlock',
         'table',
+        'tbody',
+        'td',
         'templateBlock',
         'templateInline',
-        'hottext',
+        'tfoot',
+        'th',
+        'thead',
+        'tr',
+        'tt',
+        'ul',
+        'uploadInteraction',
+        'var',
     ];
 
     /**
@@ -165,44 +166,44 @@ abstract class Marshaller
      */
     public static $webComponentFriendlyClasses = [
         'associableHotspot',
-        'gap',
-        'gapImg',
-        'gapText',
-        'simpleAssociableChoice',
-        'hotspotChoice',
-        'hottext',
-        'inlineChoice',
-        'simpleChoice',
         'associateInteraction',
         'choiceInteraction',
+        'customInteraction',
         'drawingInteraction',
+        'endAttemptInteraction',
         'extendedTextInteraction',
+        'feedbackBlock',
+        'feedbackInline',
+        'gap',
+        'gapImg',
         'gapMatchInteraction',
+        'gapText',
         'graphicAssociateInteraction',
         'graphicGapMatchInteraction',
         'graphicOrderInteraction',
+        'hotspotChoice',
         'hotspotInteraction',
-        'selectPointInteraction',
+        'hottext',
         'hottextInteraction',
+        'infoControl',
+        'inlineChoice',
+        'inlineChoiceInteraction',
         'matchInteraction',
         'mediaInteraction',
         'orderInteraction',
-        'sliderInteraction',
-        'uploadInteraction',
-        'customInteraction',
-        'endAttemptInteraction',
-        'inlineChoiceInteraction',
-        'textEntryInteraction',
         'positionObjectInteraction',
         'positionObjectStage',
         'printedVariable',
         'prompt',
-        'feedbackBlock',
-        'feedbackInline',
         'rubricBlock',
+        'selectPointInteraction',
+        'simpleAssociableChoice',
+        'simpleChoice',
+        'sliderInteraction',
         'templateBlock',
         'templateInline',
-        'infoControl',
+        'textEntryInteraction',
+        'uploadInteraction',
     ];
 
     /**
@@ -211,29 +212,29 @@ abstract class Marshaller
      * @var string[]
      */
     private static $flowsToClasses = [
+        'associableHotspot',
         'associateInteraction',
+        'br',
         'choiceInteraction',
+        'col',
         'drawingInteraction',
+        'endAttemptInteraction',
         'extendedTextInteraction',
+        'gap',
         'gapMatchInteraction',
         'graphicAssociateInteraction',
+        'hotspotChoice',
         'hotspotInteraction',
         'hottextInteraction',
+        'hr',
+        'img',
         'matchInteraction',
         'mediaInteraction',
         'orderInteraction',
         'selectPointInteraction',
         'sliderInteraction',
-        'uploadInteraction',
-        'associableHotspot',
-        'br',
-        'col',
-        'endAttemptInteraction',
-        'gap',
-        'hotspotChoice',
-        'hr',
-        'img',
         'textEntryInteraction',
+        'uploadInteraction',
     ];
 
     /**
@@ -266,7 +267,7 @@ abstract class Marshaller
      *
      * @param MarshallerFactory $marshallerFactory A MarshallerFactory object.
      */
-    public function setMarshallerFactory(MarshallerFactory $marshallerFactory = null)
+    public function setMarshallerFactory(MarshallerFactory $marshallerFactory): void
     {
         $this->marshallerFactory = $marshallerFactory;
     }
@@ -278,10 +279,11 @@ abstract class Marshaller
      *
      * @return MarshallerFactory A MarshallerFactory object.
      */
-    public function getMarshallerFactory()
+    public function getMarshallerFactory(): MarshallerFactory
     {
         if ($this->marshallerFactory === null) {
-            $this->setMarshallerFactory(new Qti21MarshallerFactory());
+            $version = QtiVersion::create($this->version);
+            $this->marshallerFactory = $version->getMarshallerFactory();
         }
 
         return $this->marshallerFactory;
@@ -311,37 +313,46 @@ abstract class Marshaller
      * @param $method
      * @param $args
      * @return DOMElement|mixed
-     * @throws MarshallingException
+     * @throws MarshallingException|UnmarshallingException
      */
     public function __call($method, $args)
     {
-        if ($method == 'marshall' || $method == 'unmarshall') {
-            if (count($args) >= 1) {
-                if ($method == 'marshall') {
-                    $component = $args[0];
-                    if ($component instanceof QtiComponent && ($this->getExpectedQtiClassName() === '' || ($component->getQtiClassName() == $this->getExpectedQtiClassName()))) {
-                        return $this->marshall($component);
-                    } else {
-                        $componentName = $this->getComponentName($component);
-                        throw new RuntimeException("No marshaller implementation found while marshalling component '${componentName}'.");
-                    }
-                } else {
-                    $element = $args[0];
-                    if ($element instanceof DOMElement && ($this->getExpectedQtiClassName() === '' || ($element->localName == $this->getExpectedQtiClassName()))) {
-                        return $this->unmarshall(...$args);
-                    } else {
-                        $nodeName = $this->getElementName($element);
-                        throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
-                    }
-                }
-            } else {
-                throw new RuntimeException("Method '${method}' only accepts a single argument.");
-            }
+        if (count($args) < 1) {
+            throw new RuntimeException("Method '${method}' only accepts a single argument.");
         }
 
-        throw new RuntimeException("Unknown method Marshaller::'${method}'.");
+        switch ($method) {
+            case 'marshall':
+                $component = $args[0];
+                $this->checkMarshallerImplementation($component);
+                return $this->marshall($component);
+
+            case 'unmarshall':
+                $this->checkUnmarshallerImplementation($args[0]);
+
+                return $this->unmarshall(...$args);
+
+            default:
+                throw new RuntimeException("Unknown method Marshaller::'${method}'.");
+        }
     }
 
+    protected function checkMarshallerImplementation($component)
+    {
+        if (!$component instanceof QtiComponent || ($this->getExpectedQtiClassName() !== '' && $component->getQtiClassName() !== $this->getExpectedQtiClassName())) {
+            $componentName = $this->getComponentName($component);
+            throw new RuntimeException("No marshaller implementation found while marshalling component '${componentName}'.");
+        }
+    }
+
+    protected function checkUnmarshallerImplementation($element)
+    {
+        if (!$element instanceof DOMElement || ($this->getExpectedQtiClassName() !== '' && $element->localName !== $this->getExpectedQtiClassName())) {
+            $nodeName = $this->getElementName($element);
+            throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
+        }
+    }
+    
     /**
      * Get Attribute Name to Use for Marshalling
      *
@@ -365,7 +376,7 @@ abstract class Marshaller
      */
     protected function getAttributeName(DOMElement $element, $attribute)
     {
-        if ($this->isWebComponentFriendly() === true && preg_match('/^qti-/', $element->localName) === 1) {
+        if ($this->isWebComponentFriendly() === true && strpos($element->localName, "qti-") === 0) {
             $qtiFriendlyClassName = XmlUtils::qtiFriendlyName($element->localName);
 
             if (in_array($qtiFriendlyClassName, self::$webComponentFriendlyClasses)) {
@@ -760,7 +771,7 @@ abstract class Marshaller
      *
      * @param QtiComponent $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
-     * @throws MarshallingException If an error occurs during the marshalling process.
+     * @throws MarshallingException|MarshallerNotFoundException If an error occurs during the marshalling process.
      */
     abstract protected function marshall(QtiComponent $component);
 
@@ -769,6 +780,7 @@ abstract class Marshaller
      *
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A QtiComponent object.
+     * @throws UnmarshallingException|MarshallerNotFoundException If an error occurs during the unmarshalling process.
      */
     abstract protected function unmarshall(DOMElement $element);
 

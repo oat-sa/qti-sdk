@@ -48,8 +48,8 @@ class TestFeedbackRefTest extends QtiSmTestCase
     public function testSetHrefWrongType()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("'999' is not a valid URI.");
+        $this->expectExceptionMessage("'' is not a valid URI.");
 
-        $testFeedbackRef = new TestFeedbackRef('IDENTIFIER', 'OUTCOMEIDENTIFIER', TestFeedbackAccess::DURING, ShowHide::SHOW, 999);
+        $testFeedbackRef = new TestFeedbackRef('IDENTIFIER', 'OUTCOMEIDENTIFIER', TestFeedbackAccess::DURING, ShowHide::SHOW, '');
     }
 }
