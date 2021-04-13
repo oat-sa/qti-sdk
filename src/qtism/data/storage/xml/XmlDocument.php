@@ -253,10 +253,10 @@ class XmlDocument extends QtiDocument
     {
         Utils::executeSafeXmlCommand(
             function () {
-                $schema = $this->version->getLocalXsd();
+                $schema = realpath($this->version->getLocalXsd());
                 $this->domDocument->schemaValidate($schema);
             },
-            'The document could not be validated with XML Schema',
+            "The document could not be validated with XML Schema '" . realpath($this->version->getLocalXsd()) . "'",
             XmlStorageException::XSD_VALIDATION
         );
     }

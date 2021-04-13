@@ -476,13 +476,16 @@ class Utils
         libxml_use_internal_errors($oldErrorConfig);
 
         if (count($libXmlErrors)) {
+            // Formats the xml errors and filters out the warning for duplicate schema inclusion.
             $formattedErrors = self::formatLibXmlErrors($libXmlErrors);
-            throw new XmlStorageException(
-                "${exceptionMessage}:\n${formattedErrors}",
-                $exceptionCode,
-                null,
-                new LibXmlErrorCollection($libXmlErrors)
-            );
+            if ($formattedErrors !== '') {
+                throw new XmlStorageException(
+                    "${exceptionMessage}:\n${formattedErrors}",
+                    $exceptionCode,
+                    null,
+                    new LibXmlErrorCollection($libXmlErrors)
+                );
+            }
         }
     }
 
