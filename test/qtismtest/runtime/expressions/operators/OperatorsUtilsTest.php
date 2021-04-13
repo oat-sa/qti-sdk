@@ -191,6 +191,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
             ['10$ are 10$', ['$', '^'], '10\\$ are 10\\$'],
             ['$$$Jackpot$$$', '$', '\\$\\$\\$Jackpot\\$\\$\\$'],
             ['^exp$', ['$', '^'], '\\^exp\\$'],
+            ['(?:[^\s]+)$', ['$', '^'], '(?:[^\s]+)\\$'],
         ];
     }
 
