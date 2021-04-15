@@ -182,15 +182,14 @@ class OperatorsUtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function escapeSymbolsProvider()
+    public function escapeSymbolsProvider(): array
     {
         return [
             ['10$ are 10$', ['$', '^'], '10\\$ are 10\\$'],
             ['$$$Jackpot$$$', '$', '\\$\\$\\$Jackpot\\$\\$\\$'],
             ['^exp$', ['$', '^'], '\\^exp\\$'],
+            ['(?:[^\s]+)$', ['$', '^'], '(?:[^\s]+)\\$'],
+            ['(?:[\s^]+)$', ['$', '^'], '(?:[\s\\^]+)\\$'],
         ];
     }
 
