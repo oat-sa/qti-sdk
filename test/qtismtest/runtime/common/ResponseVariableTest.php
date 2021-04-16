@@ -224,6 +224,8 @@ class ResponseVariableTest extends QtiSmTestCase
 
     public function testGetDataModelValuesRecordCardinality(): void
     {
+        $qtiPair = new QtiPair('A', 'B');
+
         $responseVariable = new ResponseVariable(
             'MYVAR',
             Cardinality::RECORD,
@@ -233,16 +235,17 @@ class ResponseVariableTest extends QtiSmTestCase
                     'twelve' => new QtiInteger(12),
                     'foo' => new QtiString('bar'),
                     'null' => null,
-                    'pair' => new QtiPair('A', 'B'),
+                    'pair' => $qtiPair,
                 ]
             )
         );
         $values = $responseVariable->getDataModelValues();
 
-        $this::assertCount(3, $values);
-        $this::assertEquals(12, $values[0]->getValue());
-        $this::assertEquals('bar', $values[1]->getValue());
-        $this::assertEquals('A B', $values[2]->getValue());
+        $this::assertCount(4, $values);
+        $this::assertSame(12, $values[0]->getValue());
+        $this::assertSame('bar', $values[1]->getValue());
+        $this::assertNull($values[2]->getValue());
+        $this::assertTrue($qtiPair->equals($values[3]->getValue()));
     }
 
     public function testClone()

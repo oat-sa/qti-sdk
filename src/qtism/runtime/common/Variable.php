@@ -164,7 +164,7 @@ abstract class Variable
     /**
      * Get the baseType of the Variable.
      *
-     * @return int A value from the Cardinality enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -552,9 +552,9 @@ abstract class Variable
 
             case Cardinality::RECORD:
                 foreach ($this->getValue() as $v) {
-                    if ($v !== null) {
-                        $values[] = $this->createRecordValue($v);
-                    }
+                    $values[] = $v === null
+                        ? $this->createRecordNullValue()
+                        : $this->createRecordValue($v);
                 }
                 break;
         }
@@ -586,6 +586,18 @@ abstract class Variable
     private function createRecordValue(QtiDatatype $value): Value
     {
         $value = $this->createValue($value, $value->getBaseType());
+        $value->setPartOfRecord(true);
+        return $value;
+    }
+
+    /**
+     * Creates a null value to fill a gap in a record set.
+     *
+     * @return Value
+     */
+    private function createRecordNullValue(): Value
+    {
+        $value = new Value(null);
         $value->setPartOfRecord(true);
         return $value;
     }
