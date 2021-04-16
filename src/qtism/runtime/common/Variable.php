@@ -164,7 +164,7 @@ abstract class Variable
     /**
      * Get the baseType of the Variable.
      *
-     * @return int A value from the Cardinality enumeration.
+     * @return int A value from the BaseType enumeration.
      */
     public function getBaseType()
     {
@@ -549,6 +549,14 @@ abstract class Variable
                     $values[] = $this->createValue($v);
                 }
                 break;
+
+            case Cardinality::RECORD:
+                foreach ($this->getValue() as $v) {
+                    $values[] = $v === null
+                        ? $this->createRecordNullValue()
+                        : $this->createRecordValue($v);
+                }
+                break;
         }
 
         return $values;
@@ -556,18 +564,42 @@ abstract class Variable
 
     /**
      * @param QtiDatatype $value
+     * @param int|null $baseType
      * @return Value
      */
-    private function createValue(QtiDatatype $value): Value
+    private function createValue(QtiDatatype $value, int $baseType = null): Value
     {
         if (!$value instanceof QtiFile || !$this->isFile()) {
             $value = StorageUtils::stringToDatatype(
                 (string)$value,
-                $this->getBaseType()
+                $baseType ?? $this->getBaseType()
             );
         }
 
         return new Value($value);
+    }
+
+    /**
+     * @param QtiDatatype $value
+     * @return Value
+     */
+    private function createRecordValue(QtiDatatype $value): Value
+    {
+        $value = $this->createValue($value, $value->getBaseType());
+        $value->setPartOfRecord(true);
+        return $value;
+    }
+
+    /**
+     * Creates a null value to fill a gap in a record set.
+     *
+     * @return Value
+     */
+    private function createRecordNullValue(): Value
+    {
+        $value = new Value(null);
+        $value->setPartOfRecord(true);
+        return $value;
     }
 
     /**
