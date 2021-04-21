@@ -70,7 +70,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * The width. -1 means no height was provided.
      *
-     * @var int
+     * @var string|int
      * @qtism-bean-property
      */
     private $width = -1;
@@ -78,7 +78,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * The height. -1 means no height was provided.
      *
-     * @var int
+     * @var string|int
      * @qtism-bean-property
      */
     private $height = -1;
@@ -161,12 +161,12 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A negative value describes that no width is provided.
      *
-     * @param int $width A width.
+     * @param string|int $width A width.
      * @throws InvalidArgumentException
      */
     public function setWidth($width)
     {
-        if (is_int($width)) {
+        if ((is_int($width) && $width === -1) || Format::isXhtmlLength($width) === true) {
             $this->width = $width;
         } else {
             $msg = "The 'width' argument must be an integer, '" . gettype($width) . "' given.";
@@ -201,12 +201,12 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A negative value describes that no height is provided.
      *
-     * @param int $height A height.
+     * @param string|int $height A height.
      * @throws InvalidArgumentException If $height is not an integer value.
      */
     public function setHeight($height)
     {
-        if (is_int($height)) {
+        if ((is_int($height) && $height === -1) || Format::isXhtmlLength($height) === true) {
             $this->height = $height;
         } else {
             $msg = "The 'height' argument must be an integer, '" . gettype($height) . "' given.";

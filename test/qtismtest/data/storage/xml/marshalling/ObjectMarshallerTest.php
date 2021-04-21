@@ -16,8 +16,9 @@ class ObjectMarshallerTest extends QtiSmTestCase
 {
     public function testUnmarshallSimple()
     {
+        /** @var ObjectElement $object */
         $object = $this->createComponentFromXml('
-	        <object id="flash-movie" data="http://mywebsite.com/movie.swf" type="application/x-shockwave-flash">
+	        <object id="flash-movie" data="https://mywebsite.com/movie.swf" type="application/x-shockwave-flash">
 	            <param name="movie" value="movie.swf" valuetype="REF"/>
 	            <param name="quality" value="high" valuetype="DATA"/>
 	        </object>                
@@ -25,7 +26,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
 
         $this::assertInstanceOf(ObjectElement::class, $object);
         $this::assertEquals('flash-movie', $object->getId());
-        $this::assertEquals('http://mywebsite.com/movie.swf', $object->getData());
+        $this::assertEquals('https://mywebsite.com/movie.swf', $object->getData());
         $this::assertEquals('application/x-shockwave-flash', $object->getType());
 
         $objectContent = $object->getContent();
@@ -42,6 +43,9 @@ class ObjectMarshallerTest extends QtiSmTestCase
         $this::assertEquals('quality', $param2->getName());
         $this::assertEquals('high', $param2->getValue());
         $this::assertEquals(ParamType::DATA, $param2->getValueType());
+
+        $this::assertFalse($object->hasHeight());
+        $this::assertFalse($object->hasWidth());
     }
 
     public function testUnmarshallNoDataAttributeValue()
@@ -54,6 +58,32 @@ class ObjectMarshallerTest extends QtiSmTestCase
         $this::assertEquals('flash-movie', $object->getId());
         $this::assertEquals('', $object->getData());
         $this::assertEquals('application/x-shockwave-flash', $object->getType());
+    }
+
+    public function testUnmarshallWithDimensionPercentAttributesValue()
+    {
+        /** @var ObjectElement $object */
+        $object = $this->createComponentFromXml('
+	        <object id="flash-movie" width="100%" height="10%" data="" type="application/x-shockwave-flash"/>
+	    ');
+
+        $this::assertTrue($object->hasWidth());
+        $this::assertTrue($object->hasHeight());
+        $this::assertEquals('10%', $object->getHeight());
+        $this::assertEquals('100%', $object->getWidth());
+    }
+
+    public function testUnmarshallWithDimensionIntegerAttributesValue()
+    {
+        /** @var ObjectElement $object */
+        $object = $this->createComponentFromXml('
+	        <object id="flash-movie" width="1000" height="1" data="" type="application/x-shockwave-flash"/>
+	    ');
+
+        $this::assertTrue($object->hasWidth());
+        $this::assertTrue($object->hasHeight());
+        $this::assertEquals('1', $object->getHeight());
+        $this::assertEquals('1000', $object->getWidth());
     }
 
     public function testMarshallSimple()
