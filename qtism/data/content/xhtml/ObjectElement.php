@@ -179,7 +179,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A negative value describes that no width is provided.
      *
-     * @return int A width.
+     * @return string|int A width.
      */
     public function getWidth()
     {
@@ -218,7 +218,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * Get the width of the object. A negative value describes that no height is
      * provided.
      *
-     * @return int A height.
+     * @return string|int A height.
      */
     public function getHeight()
     {
