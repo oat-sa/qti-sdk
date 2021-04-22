@@ -161,7 +161,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A negative value describes that no width is provided.
      *
-     * @param string|int $width A width.
+     * @param mixed $width A width.
      * @throws InvalidArgumentException
      */
     public function setWidth($width)
@@ -201,7 +201,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A negative value describes that no height is provided.
      *
-     * @param string|int $height A height.
+     * @param mixed $height A height.
      * @throws InvalidArgumentException If $height is not an integer value.
      */
     public function setHeight($height)
