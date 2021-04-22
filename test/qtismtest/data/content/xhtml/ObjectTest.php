@@ -30,7 +30,7 @@ class ObjectTest extends QtiSmTestCase
     public function testSetWidthWrongType()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The 'width' argument must be an integer, 'double' given.");
+        $this->expectExceptionMessage("The 'width' argument must be a valid XHTML Length, '999.999' given.");
 
         $object = new ObjectElement('./my-image.png', 'image/png');
         $object->setWidth(999.999);
@@ -39,7 +39,7 @@ class ObjectTest extends QtiSmTestCase
     public function testSetHeightWrongType()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The 'height' argument must be an integer, 'double' given.");
+        $this->expectExceptionMessage("The 'height' argument must be a valid XHTML Length, '999.999' given.");
 
         $object = new ObjectElement('./my-image.png', 'image/png');
         $object->setHeight(999.999);

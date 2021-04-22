@@ -52,7 +52,8 @@ class ObjectMarshaller extends ContentMarshaller
             $component = new $fqClass($data, $type);
             $component->setContent(new ObjectFlowCollection($children->getArrayCopy()));
 
-            if (($height = self::getDOMElementAttributeAs($element, 'height', 'string')) !== null) {
+            $height = self::getDOMElementAttributeAs($element, 'height', 'string');
+            if ($height !== null) {
                 if (stripos($height, '%') === false) {
                     $component->setHeight(intval($height));
                 }
@@ -61,7 +62,8 @@ class ObjectMarshaller extends ContentMarshaller
                 }
             }
 
-            if (($width = self::getDOMElementAttributeAs($element, 'width', 'string')) !== null) {
+            $width = self::getDOMElementAttributeAs($element, 'width', 'string');
+            if ($width !== null) {
                 if (stripos($width, '%') === false) {
                     $component->setWidth(intval($width));
                 }
