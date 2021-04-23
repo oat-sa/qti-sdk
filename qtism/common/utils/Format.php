@@ -597,20 +597,18 @@ class Format
 
     /**
      * Whether or not a given $length is a compliant XHTML
-     * length (e.g. "10%", 10, ...).
+     * length (e.g. "10%", "10", ...).
      *
-     * @param mixed $length A length as a string or integer.
+     * @param string $length A length as a string or integer.
      * @return bool
      */
     public static function isXhtmlLength($length)
     {
-        if (is_int($length)) {
-            return $length >= 0;
-        } elseif (is_string($length)) {
+        if (is_string($length)){
             return preg_match('/^[0-9]+%?$/', $length) === 1;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

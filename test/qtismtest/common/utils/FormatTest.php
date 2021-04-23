@@ -463,18 +463,19 @@ class FormatTest extends QtiSmTestCase
     {
         return [
             // input, expected
-            [0, true],
-            [1, true],
-            [100, true],
+            ['', false],
+            ['0', true],
+            ['1', true],
+            ['100', true],
             ['100%', true],
             ['1%', true],
             ['0%', true],
-            [new stdClass(), false],
-            [-10, false],
+            ['0.5%', false],
             ['-10', false],
             ['10', true],
-            [true, false],
-            [10.0, false],
+            ['10.0', false],
+            ['10.01', false],
+            ['-10.0', false],
         ];
     }
 

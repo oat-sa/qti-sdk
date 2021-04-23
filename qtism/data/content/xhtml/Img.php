@@ -57,32 +57,28 @@ class Img extends AtomicInline
     private $longdesc = '';
 
     /**
-     * The img's height attribute. A negative (< 0) value
-     * means that no height is indicated.
+     * The img's height attribute.
      *
      * The value of this attribute can be:
+     * * a string, in order to describe a percentage e.g. "10%" or a height in pixels e.g. 10.
+     * * a null which means that no height is indicated.
      *
-     * * a string, in order to describe a percentage e.g. "10%".
-     * * an integer, in order to describe a width in pixels e.g. 10.
-     *
-     * @var int|string
+     * @var string|null
      * @qtism-bean-property
      */
-    private $height = -1;
+    private $height;
 
     /**
-     * The img's width attribute. A negative (< 0) value
-     * means that no width is indicated.
+     * The img's width attribute.
      *
      * The value of this attribute can be:
+     * * a string, in order to describe a percentage e.g. "10%" or a width in pixels e.g. 10.
+     * * a null which means that no width is indicated.
      *
-     * * a string, in order to describe a percentag e.g. "10%".
-     * * an integer, in order to describe a width in pixels e.g. 10.
-     *
-     * @var int
+     * @var string|null
      * @qtism-bean-property
      */
-    private $width = -1;
+    private $width;
 
     /**
      * Create a new Img object.
@@ -101,8 +97,6 @@ class Img extends AtomicInline
         $this->setSrc($src);
         $this->setAlt($alt);
         $this->setLongdesc('');
-        $this->setHeight(-1);
-        $this->setWidth(-1);
     }
 
     /**
@@ -194,27 +188,28 @@ class Img extends AtomicInline
     }
 
     /**
-     * Set the height attribute. A negative (< 0) value for $height means there
+     * Set the height attribute. A null value for $height means there
      * is no height indicated.
      *
-     * @param int|string $height An integer (pixels) or a string (percentage).
+     * @param string|null $height A string (pixels or percentage) or null to reset.
      * @throws InvalidArgumentException If $height is not a valid integer or string value.
      */
     public function setHeight($height)
     {
-        if ((is_int($height) && $height === -1) || Format::isXhtmlLength($height) === true) {
+        if ($height === null || Format::isXhtmlLength($height) === true) {
             $this->height = $height;
-        } else {
-            $msg = "The 'height' argument must be a valid XHTML length value, '" . $height . "' given.";
-            throw new InvalidArgumentException($msg);
+            return;
         }
+
+        $msg = "The 'height' argument must be a valid XHTML length value, '" . $height . "' given.";
+        throw new InvalidArgumentException($msg);
     }
 
     /**
-     * Get the height attribute. A negative (< 0) value for $height means there
+     * Get the height attribute. A null value for $height means there
      * is no height indicated.
      *
-     * @return int A height.
+     * @return string|null A height.
      */
     public function getHeight()
     {
@@ -228,31 +223,32 @@ class Img extends AtomicInline
      */
     public function hasHeight()
     {
-        return $this->getHeight() >= 0;
+        return $this->getHeight() !== null;
     }
 
     /**
-     * Set the width attribute. A negative (< 0) value for $width means there
+     * Set the width attribute. A null value for $width means there
      * is no width indicated.
      *
-     * @param int $width An integer (pixels) or a string (percentage).
+     * @param string|null $width A string (pixels or percentage) or null to reset.
      * @throws InvalidArgumentException If $width is not an integer value.
      */
     public function setWidth($width)
     {
-        if ((is_int($width) && $width === -1) || Format::isXhtmlLength($width) === true) {
+        if ($width === null || Format::isXhtmlLength($width) === true) {
             $this->width = $width;
-        } else {
-            $msg = "The 'width' argument must be a valid XHTML length value, '" . $width . "' given.";
-            throw new InvalidArgumentException($msg);
+            return;
         }
+
+        $msg = "The 'width' argument must be a valid XHTML length value, '" . $width . "' given.";
+        throw new InvalidArgumentException($msg);
     }
 
     /**
-     * Get the width attribute. A negative (< 0) value for $width means there
+     * Get the width attribute. A null value for $width means there
      * is no width indicated.
      *
-     * @return int a width.
+     * @return string|null a width.
      */
     public function getWidth()
     {
@@ -266,7 +262,7 @@ class Img extends AtomicInline
      */
     public function hasWidth()
     {
-        return $this->getWidth() >= 0;
+        return $this->getWidth() !== null;
     }
 
     /**
