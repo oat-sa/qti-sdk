@@ -166,7 +166,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      */
     public function setWidth($width)
     {
-        if ((is_int($width) && $width === -1) || Format::isXhtmlLength($width)) {
+        if ($width === -1 || Format::isXhtmlLength($width)) {
             $this->width = $width;
         } else {
             $msg = "The 'width' argument must be a valid XHTML Length, '" . $width . "' given.";
@@ -206,7 +206,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      */
     public function setHeight($height)
     {
-        if ((is_int($height) && $height === -1) || Format::isXhtmlLength($height)) {
+        if ($height === -1 || Format::isXhtmlLength($height)) {
             $this->height = $height;
         } else {
             $msg = "The 'height' argument must be a valid XHTML Length, '" . $height . "' given.";

@@ -54,22 +54,12 @@ class ObjectMarshaller extends ContentMarshaller
 
             $height = self::getDOMElementAttributeAs($element, 'height', 'string');
             if ($height !== null) {
-                if (stripos($height, '%') === false) {
-                    $component->setHeight(intval($height));
-                }
-                else {
-                    $component->setHeight($height);
-                }
+                $component->setHeight($height);
             }
 
             $width = self::getDOMElementAttributeAs($element, 'width', 'string');
             if ($width !== null) {
-                if (stripos($width, '%') === false) {
-                    $component->setWidth(intval($width));
-                }
-                else {
-                    $component->setWidth($width);
-                }
+                $component->setWidth($width);
             }
 
             if (($xmlBase = self::getXmlBase($element)) !== false) {
