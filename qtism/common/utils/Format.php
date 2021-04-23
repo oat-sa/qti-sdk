@@ -607,7 +607,7 @@ class Format
         if (is_int($length)) {
             return $length >= 0;
         } elseif (is_string($length)) {
-            return preg_match('/[0-9]+%/', $length) === 1;
+            return preg_match('/^[0-9]+%?$/', $length) === 1;
         } else {
             return false;
         }
