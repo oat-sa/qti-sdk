@@ -196,7 +196,7 @@ class Img extends AtomicInline
      */
     public function setHeight($height)
     {
-        if ($height === null || Format::isXhtmlLength($height) === true) {
+        if ($height === null || Format::isXhtmlLength($height)) {
             $this->height = $height;
             return;
         }
@@ -235,7 +235,7 @@ class Img extends AtomicInline
      */
     public function setWidth($width)
     {
-        if ($width === null || Format::isXhtmlLength($width) === true) {
+        if ($width === null || Format::isXhtmlLength($width)) {
             $this->width = $width;
             return;
         }
