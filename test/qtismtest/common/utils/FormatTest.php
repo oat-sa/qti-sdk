@@ -472,7 +472,7 @@ class FormatTest extends QtiSmTestCase
             [new stdClass(), false],
             [-10, false],
             ['-10', false],
-            ['10', false],
+            ['10', true],
             [true, false],
             [10.0, false],
         ];

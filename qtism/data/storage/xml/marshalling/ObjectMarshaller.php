@@ -52,12 +52,14 @@ class ObjectMarshaller extends ContentMarshaller
             $component = new $fqClass($data, $type);
             $component->setContent(new ObjectFlowCollection($children->getArrayCopy()));
 
-            if (($width = $this->getDOMElementAttributeAs($element, 'width', 'integer')) !== null) {
-                $component->setWidth($width);
+            $height = self::getDOMElementAttributeAs($element, 'height', 'string');
+            if ($height !== null) {
+                $component->setHeight($height);
             }
 
-            if (($height = $this->getDOMElementAttributeAs($element, 'height', 'integer')) !== null) {
-                $component->setHeight($height);
+            $width = self::getDOMElementAttributeAs($element, 'width', 'string');
+            if ($width !== null) {
+                $component->setWidth($width);
             }
 
             if (($xmlBase = self::getXmlBase($element)) !== false) {
