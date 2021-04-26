@@ -71,8 +71,8 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * The object's width attribute.
      *
      * The value of this attribute can be:
-     * * a string, in order to describe a percentage e.g. "10%" or a width in pixels e.g. 10.
-     * * a null which means that no width is indicated.
+     * * a string: a percentage e.g. "10%" or a length in pixels e.g. 10
+     * * null: no width is set
      *
      * @var string|null
      * @qtism-bean-property
@@ -83,8 +83,8 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * The object's height attribute.
      *
      * The value of this attribute can be:
-     * * a string, in order to describe a percentage e.g. "10%" or a height in pixels e.g. 10.
-     * * a null which means that no height is indicated.
+     * * a string: a percentage e.g. "10%" or a length in pixels e.g. 10
+     * * null: no height is set
      *
      * @var string|null
      * @qtism-bean-property
@@ -167,28 +167,36 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * A null value describes that no width is provided.
      *
-     * @param string $width A width.
+     * @param mixed $width A width.
      * @throws InvalidArgumentException
      */
-    public function setWidth($width)
+    public function setWidth($width): void
     {
-        if ($width === null || Format::isXhtmlLength($width)) {
-            $this->width = $width;
-            return;
+        // Allows -1 as former null value still existing in compiled items.
+        if ($width === -1) {
+            $width = null;
         }
-            $msg = "The 'width' argument must be a valid XHTML Length, '" . $width . "' given.";
-            throw new InvalidArgumentException($msg);
 
+        if ($width !== null && !Format::isXhtmlLength($width)) {
+            $given = is_string($width) || is_int($width) || is_float($width)
+                ? $width
+                : gettype($width);
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "width" argument must be a positive integer with optional percent sign, "%s" given.',
+                    $given
+                )
+            );
+        }
+        
+        $this->width = (string) $width;
     }
 
     /**
      * Get the width of the object.
-     *
-     * A negative value describes that no width is provided.
-     *
-     * @return string|int A width.
+     * A negative value means that no width is provided.
      */
-    public function getWidth()
+    public function getWidth(): ?string
     {
         return $this->width;
     }
@@ -198,7 +206,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * @return bool.
      */
-    public function hasWidth()
+    public function hasWidth(): bool
     {
         return $this->width !== null;
     }
@@ -211,24 +219,35 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * @param mixed $height A height.
      * @throws InvalidArgumentException If $height is not an integer value.
      */
-    public function setHeight($height)
+    public function setHeight($height): void
     {
-        if ($height === null || Format::isXhtmlLength($height)) {
-            $this->height = $height;
-            return;
+        // Allows -1 as former null value still existing in compiled items.
+        if ($height === -1) {
+            $height = null;
         }
-            $msg = "The 'height' argument must be a valid XHTML Length, '" . $height . "' given.";
-            throw new InvalidArgumentException($msg);
+
+        if ($height !== null && !Format::isXhtmlLength($height)) {
+            $given = is_string($height) || is_int($height) || is_float($height)
+                ? $height
+                : gettype($height);
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "height" argument must be a positive integer with optional percent sign, "%s" given.',
+                    $given
+                )
+            );
+        }
+
+        $this->height = (string) $height;
+            
 
     }
 
     /**
-     * Get the width of the object. A negative value describes that no height is
-     * provided.
-     *
-     * @return string|int A height.
+     * Get the width of the object.
+     * A null value means that no height is provided.
      */
-    public function getHeight()
+    public function getHeight(): ?string
     {
         return $this->height;
     }
@@ -236,7 +255,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * Whether the object has a height.
      */
-    public function hasHeight()
+    public function hasHeight(): bool
     {
         return $this->height !== null;
     }
