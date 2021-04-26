@@ -57,11 +57,11 @@ class Img extends AtomicInline
     private $longdesc = '';
 
     /**
-     * The img's height attribute.
+     * The image's height attribute.
      *
      * The value of this attribute can be:
-     * * a string, in order to describe a percentage e.g. "10%" or a height in pixels e.g. 10.
-     * * a null which means that no height is indicated.
+     * * a string: a percentage e.g. "10%" or a length in pixels e.g. 10
+     * * null: no height is set
      *
      * @var string|null
      * @qtism-bean-property
@@ -69,11 +69,11 @@ class Img extends AtomicInline
     private $height;
 
     /**
-     * The img's width attribute.
+     * The image's width attribute.
      *
      * The value of this attribute can be:
-     * * a string, in order to describe a percentage e.g. "10%" or a width in pixels e.g. 10.
-     * * a null which means that no width is indicated.
+     * * a string: a percentage e.g. "10%" or a length in pixels e.g. 10
+     * * null: no width is set
      *
      * @var string|null
      * @qtism-bean-property
@@ -188,81 +188,62 @@ class Img extends AtomicInline
     }
 
     /**
-     * Set the height attribute. A null value for $height means there
-     * is no height indicated.
+     * Set the height of the image.
      *
-     * @param string|null $height A string (pixels or percentage) or null to reset.
-     * @throws InvalidArgumentException If $height is not a valid integer or string value.
+     * A null value means that no height is provided.
+     *
+     * @param mixed $height A height.
+     * @throws InvalidArgumentException when $height is not valid.
      */
-    public function setHeight($height)
+    public function setHeight($height): void
     {
-        if ($height === null || Format::isXhtmlLength($height)) {
-            $this->height = $height;
-            return;
-        }
-
-        $msg = "The 'height' argument must be a valid XHTML length value, '" . $height . "' given.";
-        throw new InvalidArgumentException($msg);
+        $this->height = Format::sanitizeXhtmlLength($height, 'height');
     }
 
     /**
-     * Get the height attribute. A null value for $height means there
-     * is no height indicated.
-     *
-     * @return string|null A height.
+     * Get the height of the image.
+     * Null means that no height is set.
      */
-    public function getHeight()
+    public function getHeight(): ?string
     {
         return $this->height;
     }
 
     /**
-     * Whether a height attribute is defined.
-     *
-     * @return bool
+     * Whether a height is set.
      */
-    public function hasHeight()
+    public function hasHeight(): bool
     {
-        return $this->getHeight() !== null;
+        return $this->height !== null;
     }
 
     /**
-     * Set the width attribute. A null value for $width means there
-     * is no width indicated.
+     * Set the width of the image.
+     * A null value means that no width is set.
      *
-     * @param string|null $width A string (pixels or percentage) or null to reset.
-     * @throws InvalidArgumentException If $width is not an integer value.
+     * @param mixed $width A width.
+     * @throws InvalidArgumentException when $width is not valid.
      */
-    public function setWidth($width)
+    public function setWidth($width): void
     {
-        if ($width === null || Format::isXhtmlLength($width)) {
-            $this->width = $width;
-            return;
-        }
-
-        $msg = "The 'width' argument must be a valid XHTML length value, '" . $width . "' given.";
-        throw new InvalidArgumentException($msg);
+        $this->width = Format::sanitizeXhtmlLength($width, 'width');
     }
 
     /**
-     * Get the width attribute. A null value for $width means there
-     * is no width indicated.
-     *
-     * @return string|null a width.
+     * Get the width of the image.
+     * Null means that no width is set.
      */
-    public function getWidth()
+    public function getWidth(): ?string
     {
         return $this->width;
     }
 
     /**
-     * Whether a width attribute is defined.
-     *
-     * @return bool
+     * Whether a width is set.
      */
-    public function hasWidth()
+    public function hasWidth(): bool
     {
-        return $this->getWidth() !== null;
+        return $this->width !== null;
     }
 
     /**

@@ -28,7 +28,7 @@ class ObjectTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider widthsToTest
+     * @dataProvider lengthsToTest
      * @param mixed $width
      * @param string|null $expected
      */
@@ -40,7 +40,7 @@ class ObjectTest extends QtiSmTestCase
     }
 
     /**
-     * @dataProvider widthsToTest
+     * @dataProvider lengthsToTest
      * @param mixed $height
      * @param string|null $expected
      */
@@ -51,10 +51,10 @@ class ObjectTest extends QtiSmTestCase
         self::assertEquals($expected, $object->getHeight());
     }
 
-    public function widthsToTest(): array
+    public function lengthsToTest(): array
     {
         return [
-            ['10%','10%'],
+            ['10%', '10%'],
             [10, '10'],
             ['10', '10'],
             [null, null],
@@ -97,12 +97,15 @@ class ObjectTest extends QtiSmTestCase
             [-10],
             ['10px'],
             [[], 'array'],
-            [new class() {
-                public function __toString(): string
-                {
-                    return '10%';
-                }
-            }, 'object'],
+            [
+                new class() {
+                    public function __toString(): string
+                    {
+                        return '10%';
+                    }
+                },
+                'object',
+            ],
         ];
     }
 }

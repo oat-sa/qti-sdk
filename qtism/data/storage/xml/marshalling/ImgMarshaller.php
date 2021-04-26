@@ -40,24 +40,25 @@ class ImgMarshaller extends Marshaller
      */
     protected function marshall(QtiComponent $component)
     {
+        /** @var Img $component */
         $element = $this->createElement($component);
 
         $this->setDOMElementAttribute($element, 'src', $component->getSrc());
         $this->setDOMElementAttribute($element, 'alt', $component->getAlt());
 
-        if ($component->hasWidth() === true) {
+        if ($component->hasWidth()) {
             $this->setDOMElementAttribute($element, 'width', $component->getWidth());
         }
 
-        if ($component->hasHeight() === true) {
+        if ($component->hasHeight()) {
             $this->setDOMElementAttribute($element, 'height', $component->getHeight());
         }
 
-        if ($component->hasLongdesc() === true) {
+        if ($component->hasLongdesc()) {
             $this->setDOMElementAttribute($element, 'longdesc', $component->getLongdesc());
         }
 
-        if ($component->hasXmlBase() === true) {
+        if ($component->hasXmlBase()) {
             self::setXmlBase($element, $component->getXmlBase());
         }
 
@@ -75,33 +76,34 @@ class ImgMarshaller extends Marshaller
      */
     protected function unmarshall(DOMElement $element)
     {
-        if (($src = $this->getDOMElementAttributeAs($element, 'src')) !== null) {
-            if (($alt = $this->getDOMElementAttributeAs($element, 'alt')) === null) {
-                // The XSD does not force the 'alt' attribute to be non-empty,
-                // thus we consider the 'alt' attribute value as an empty string ('').
-                $alt = '';
-            }
-
-            $component = new Img($src, $alt);
-
-            if (($longdesc = $this->getDOMElementAttributeAs($element, 'longdesc')) !== null) {
-                $component->setLongdesc($longdesc);
-            }
-
-            $component->setHeight($this->getDOMElementAttributeAs($element, 'height', 'string'));
-            $component->setWidth($this->getDOMElementAttributeAs($element, 'width', 'string'));
-
-            if (($xmlBase = self::getXmlBase($element)) !== false) {
-                $component->setXmlBase($xmlBase);
-            }
-
-            $this->fillBodyElement($component, $element);
-
-            return $component;
-        } else {
+        $src = $this->getDOMElementAttributeAs($element, 'src');
+        if ($src === null) {
             $msg = "The 'mandatory' attribute 'src' is missing from element 'img'.";
             throw new UnmarshallingException($msg, $element);
         }
+
+        // The XSD does not force the 'alt' attribute to be non-empty,
+        // thus we consider the 'alt' attribute value as an empty string ('').
+        $alt = $this->getDOMElementAttributeAs($element, 'alt') ?? '';
+
+        $component = new Img($src, $alt);
+
+        $longDesc = $this->getDOMElementAttributeAs($element, 'longdesc');
+        if ($longDesc !== null) {
+            $component->setLongdesc($longDesc);
+        }
+
+        $component->setHeight($this->getDOMElementAttributeAs($element, 'height'));
+        $component->setWidth($this->getDOMElementAttributeAs($element, 'width'));
+
+        $xmlBase = self::getXmlBase($element);
+        if ($xmlBase !== false) {
+            $component->setXmlBase($xmlBase);
+        }
+
+        $this->fillBodyElement($component, $element);
+
+        return $component;
     }
 
     /**

@@ -164,7 +164,6 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
 
     /**
      * Set the width of the object.
-     *
      * A null value means that no width is set.
      *
      * @param mixed $width A width.
@@ -196,8 +195,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
 
     /**
      * Set the height of the object.
-     *
-     * A null value means that no height is provided.
+     * A null value means that no height is set.
      *
      * @param mixed $height A height.
      * @throws InvalidArgumentException when $height is not valid.
