@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use qtism\data\content\ObjectFlowCollection;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 
@@ -43,28 +44,27 @@ class ObjectMarshaller extends ContentMarshaller
     {
         // At item authoring time, we could admit that an empty data attribute
         // may occur.
-        if (($data = $this->getDOMElementAttributeAs($element, 'data')) === null) {
-            $data = '';
-        }
+        $data = $this->getDOMElementAttributeAs($element, 'data') ?? '';
 
-        if (($type = $this->getDOMElementAttributeAs($element, 'type')) !== null) {
-            $fqClass = $this->lookupClass($element);
-            $component = new $fqClass($data, $type);
-            $component->setContent(new ObjectFlowCollection($children->getArrayCopy()));
-            $component->setHeight(self::getDOMElementAttributeAs($element, 'height', 'string'));
-            $component->setWidth(self::getDOMElementAttributeAs($element, 'width', 'string'));
-
-            if (($xmlBase = self::getXmlBase($element)) !== false) {
-                $component->setXmlBase($xmlBase);
-            }
-
-            $this->fillBodyElement($component, $element);
-
-            return $component;
-        } else {
+        $type = $this->getDOMElementAttributeAs($element, 'type');
+        if ($type === null) {
             $msg = "The mandatory attribute 'type' is missign from the 'object' element.";
             throw new UnmarshallingException($msg, $element);
         }
+
+        $fqClass = $this->lookupClass($element);
+        $component = new $fqClass($data, $type);
+        $component->setContent(new ObjectFlowCollection($children->getArrayCopy()));
+        $component->setHeight($this->getDOMElementAttributeAs($element, 'height'));
+        $component->setWidth($this->getDOMElementAttributeAs($element, 'width'));
+
+        if (($xmlBase = self::getXmlBase($element)) !== false) {
+            $component->setXmlBase($xmlBase);
+        }
+
+        $this->fillBodyElement($component, $element);
+
+        return $component;
     }
 
     /**
@@ -72,21 +72,24 @@ class ObjectMarshaller extends ContentMarshaller
      * @param array $elements
      * @return DOMElement
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
-    {
+    protected function marshallChildrenKnown(
+        QtiComponent $component,
+        array $elements
+    ): DOMElement {
+        /** @var ObjectElement $component */
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'data', $component->getData());
         $this->setDOMElementAttribute($element, 'type', $component->getType());
 
-        if ($component->hasWidth() === true) {
+        if ($component->hasWidth()) {
             $this->setDOMElementAttribute($element, 'width', $component->getWidth());
         }
 
-        if ($component->hasHeight() === true) {
+        if ($component->hasHeight()) {
             $this->setDOMElementAttribute($element, 'height', $component->getHeight());
         }
 
-        if ($component->hasXmlBase() === true) {
+        if ($component->hasXmlBase()) {
             self::setXmlBase($element, $component->getXmlBase());
         }
 
