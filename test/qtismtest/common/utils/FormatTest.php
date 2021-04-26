@@ -159,7 +159,7 @@ class FormatTest extends QtiSmTestCase
      * @param mixed $input
      * @param bool $expected
      */
-    public function testIsXhtmlLength($input, $expected)
+    public function testIsXhtmlLength($input, bool $expected): void
     {
         $this::assertSame($expected, Format::isXhtmlLength($input));
     }
@@ -456,13 +456,13 @@ class FormatTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function isXhtmlLengthProvider()
+    public function isXhtmlLengthProvider(): array
     {
         return [
             // input, expected
+            [0, true],
+            [1, true],
+            [100, true],
             ['', false],
             ['0', true],
             ['1', true],
@@ -471,11 +471,29 @@ class FormatTest extends QtiSmTestCase
             ['1%', true],
             ['0%', true],
             ['0.5%', false],
+            [new stdClass(), false],
+            [
+                new class() {
+                    public function __toString(): string
+                    {
+                        return '10';
+                    }
+                },
+                false,
+            ],
+            [-1, false],
+            [null, false],
+            [-10, false],
             ['-10', false],
             ['10', true],
             ['10.0', false],
             ['10.01', false],
             ['-10.0', false],
+            [true, false],
+            [10.0, false],
+            [10.01, false],
+            [-10.0, false],
+            [-10.01, false],
         ];
     }
 
