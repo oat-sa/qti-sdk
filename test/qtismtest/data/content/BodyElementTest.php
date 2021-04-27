@@ -236,8 +236,8 @@ class BodyElementTest extends QtiSmTestCase
     }
 
     /**
-     * @param $value
      * @dataProvider validAriaLevelAttributesProvider
+     * @param mixed $value
      */
     public function testValidAriaLevelAttributes($value): void
     {
@@ -475,9 +475,9 @@ class BodyElementTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidAriaLevelAttributesProvider
-     * @param mixed $value
+     * @param string $value
      */
-    public function testInvalidAriaLevelAttributes($value): void
+    public function testInvalidAriaLevelAttributes(string $value): void
     {
         $msg = "'${value}' is not a valid value for attribute 'aria-level'.";
 
