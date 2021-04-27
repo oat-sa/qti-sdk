@@ -43,6 +43,15 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic, Med
     use FlowTrait;
 
     /**
+     * Authorized and recognized file formats.
+     */
+    private const AUDIO_TYPES = ['audio/mpeg', 'audio/ogg', 'audio/wav'];
+
+    private const IMAGE_TYPES = ['image/jpeg', 'image/gif', 'image/png', 'image/bmp', 'image/x-bmp'];
+
+    private const VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/ogg'];
+
+    /**
      * The content elements of the object.
      *
      * @var ObjectFlowCollection
@@ -157,6 +166,21 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic, Med
         return $this->type;
     }
 
+    public function isAudio(): bool
+    {
+        return in_array($this->getType(), self::AUDIO_TYPES, true);
+    }
+
+    public function isImage(): bool
+    {
+        return in_array($this->getType(), self::IMAGE_TYPES, true);
+    }
+
+    public function isVideo(): bool
+    {
+        return in_array($this->getType(), self::VIDEO_TYPES, true);
+    }
+
     /**
      * Set the width of the object.
      *
@@ -192,7 +216,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic, Med
      *
      * @return bool.
      */
-    public function hasWidth()
+    public function hasWidth(): bool
     {
         return $this->width >= 0;
     }
@@ -229,7 +253,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic, Med
     /**
      * Whether the object has a height.
      */
-    public function hasHeight()
+    public function hasHeight(): bool
     {
         return $this->height >= 0;
     }
