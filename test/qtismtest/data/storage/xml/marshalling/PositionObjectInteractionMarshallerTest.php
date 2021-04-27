@@ -20,8 +20,8 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
     public function testMarshall21()
     {
         $object = new ObjectElement('myimg.jpg', 'image/jpeg');
-        $object->setWidth(400);
-        $object->setHeight(300);
+        $object->setWidth('400');
+        $object->setHeight('300');
 
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
