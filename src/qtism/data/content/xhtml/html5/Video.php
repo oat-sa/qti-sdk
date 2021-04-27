@@ -32,7 +32,7 @@ use qtism\data\content\interactions\Media;
  * Html 5 Video element used for playing videos or movies, and audio files with
  * captions.
  */
-class Video extends Html5Media implements BlockStatic, Media, FlowStatic
+class Video extends Html5Media implements BlockStatic, FlowStatic
 {
     use FlowTrait;
 

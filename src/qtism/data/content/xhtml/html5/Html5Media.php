@@ -25,12 +25,13 @@ namespace qtism\data\content\xhtml\html5;
 
 use qtism\data\content\enums\CrossOrigin;
 use qtism\data\content\enums\Preload;
+use qtism\data\content\interactions\Media;
 use qtism\data\QtiComponentCollection;
 
 /**
  * All the common features of Html 5 media (audio and video).
  */
-abstract class Html5Media extends Html5Element
+abstract class Html5Media extends Html5Element implements Media
 {
     /**
      * The 'src' content characteristic on media tags gives the address of the
@@ -256,7 +257,7 @@ abstract class Html5Media extends Html5Element
 
     public function setMediaGroup($mediaGroup): void
     {
-        $this->mediaGroup = $this->acceptNormalizedStringOrNull($mediaGroup, 'src', '');
+        $this->mediaGroup = $this->acceptNormalizedStringOrNull($mediaGroup, 'mediagroup', '');
     }
 
     public function getMediaGroup(): string

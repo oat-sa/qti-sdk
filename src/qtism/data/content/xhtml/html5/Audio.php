@@ -36,7 +36,7 @@ use qtism\data\content\interactions\Media;
  * text to the users of these older browsers informing them of how to access
  * the audio contents.
  */
-class Audio extends Html5Media implements BlockStatic, Media, FlowStatic
+class Audio extends Html5Media implements BlockStatic, FlowStatic
 {
     use FlowTrait;
 
