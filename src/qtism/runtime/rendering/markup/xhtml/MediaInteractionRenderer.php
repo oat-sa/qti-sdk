@@ -24,6 +24,14 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use DOMDocumentFragment;
+use qtism\data\content\interactions\Media;
+use qtism\data\content\interactions\MediaInteraction;
+use qtism\data\content\xhtml\html5\Audio;
+use qtism\data\content\xhtml\html5\Html5Media;
+use qtism\data\content\xhtml\html5\Source;
+use qtism\data\content\xhtml\html5\Track;
+use qtism\data\content\xhtml\html5\Video;
+use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponent;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
@@ -46,97 +54,13 @@ use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 class MediaInteractionRenderer extends InteractionRenderer
 {
     /**
-     * An array representing the supported audio mime-types.
-     *
-     * @var array
-     */
-    private $audioTypes = [];
-
-    /**
-     * An array representing the supported video mime-types.
-     *
-     * @var array
-     */
-    private $videoTypes = [];
-
-    /**
-     * An array representing the supported image mime-types.
-     *
-     * @var array
-     */
-    private $imageTypes = [];
-
-    /**
-     * Set the array of supported audio mime-types.
-     *
-     * @param array $audioTypes An array of strings representing mime-types.
-     */
-    protected function setAudioTypes(array $audioTypes)
-    {
-        $this->audioTypes = $audioTypes;
-    }
-
-    /**
-     * Get the array of supported audio mime-types.
-     *
-     * @return array An array of strings representing mime-types.
-     */
-    protected function getAudioTypes()
-    {
-        return $this->audioTypes;
-    }
-
-    /**
-     * Set the array of supported video mime-types.
-     *
-     * @param array $videoTypes An array of strings representing mime-types.
-     */
-    protected function setVideoTypes(array $videoTypes)
-    {
-        $this->videoTypes = $videoTypes;
-    }
-
-    /**
-     * Get the array of supported video mime-types.
-     *
-     * @return array An array of strings representing mime-types.
-     */
-    protected function getVideoTypes()
-    {
-        return $this->videoTypes;
-    }
-
-    /**
-     * Set the array of supported image mime-types.
-     *
-     * @param array $imageTypes An array of strings representing mime-types.
-     */
-    protected function setImageTypes(array $imageTypes)
-    {
-        $this->imageTypes = $imageTypes;
-    }
-
-    /**
-     * Get the array of supported image mime-types.
-     *
-     * @return array An array of strings representing mime-types.
-     */
-    protected function getImageTypes()
-    {
-        return $this->imageTypes;
-    }
-
-    /**
      * Create a new MediaInteractionRenderer object.
      *
-     * @param AbstractMarkupRenderingEngine $renderingEngine
+     * @param AbstractMarkupRenderingEngine|null $renderingEngine
      */
     public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         parent::__construct($renderingEngine);
-        $this->setVideoTypes(['video/mp4', 'video/webm', 'video/ogg']);
-        $this->setAudioTypes(['audio/mpeg', 'audio/ogg', 'audio/wav']);
-        $this->setImageTypes(['image/jpeg', 'image/gif', 'image/png', 'image/bmp', 'image/x-bmp']);
         $this->transform('div');
     }
 
@@ -164,52 +88,41 @@ class MediaInteractionRenderer extends InteractionRenderer
      */
     protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
+        /** @var MediaInteraction $component */
         parent::appendChildren($fragment, $component, $base);
 
-        $width = null;
-        $height = null;
-        if ($component->getObject()->hasWidth() === true) {
-            $width = $component->getObject()->getWidth();
-        }
+        $qtiMedia = $component->getMedia();
 
-        if ($component->getObject()->hasHeight() === true) {
-            $height = $component->getObject()->getHeight();
-        }
+        if ($qtiMedia instanceof ObjectElement) {
+            if ($qtiMedia->isVideo()) {
+                // Transform the object element representing the video.
+                $media = $fragment->ownerDocument->createElement('video');
+                $source = $fragment->ownerDocument->createElement('source');
+                $source->setAttribute('type', $qtiMedia->getType());
+                $source->setAttribute('src', $qtiMedia->getData());
+                $media->appendChild($source);
+            } elseif ($qtiMedia->isAudio()) {
+                $media = $fragment->ownerDocument->createElement('audio');
+                $source = $fragment->ownerDocument->createElement('source');
+                $source->setAttribute('type', $qtiMedia->getType());
+                $source->setAttribute('src', $qtiMedia->getData());
+                $media->appendChild($source);
+            } elseif ($qtiMedia->isImage()) {
+                $media = $fragment->ownerDocument->createElement('img');
+                $media->setAttribute('src', $qtiMedia->getData());
+            }
 
-        $media = null;
-        $isAudio = false;
+            if (empty($media) !== true) {
+                // Search for the <object> to be replaced.
+                $objects = $fragment->firstChild->getElementsByTagName('object');
+                $fragment->firstChild->replaceChild($media, $objects->item(0));
 
-        if (in_array($component->getObject()->getType(), $this->getVideoTypes())) {
-            // Transform the object element representing the video.
-            $media = $fragment->ownerDocument->createElement('video');
-            $source = $fragment->ownerDocument->createElement('source');
-            $source->setAttribute('type', $component->getObject()->getType());
-            $source->setAttribute('src', $component->getObject()->getData());
-            $media->appendChild($source);
-        } elseif (in_array($component->getObject()->getType(), $this->getAudioTypes())) {
-            $media = $fragment->ownerDocument->createElement('audio');
-            $source = $fragment->ownerDocument->createElement('source');
-            $source->setAttribute('type', $component->getObject()->getType());
-            $source->setAttribute('src', $component->getObject()->getData());
-            $media->appendChild($source);
-            $isAudio = true;
-        } elseif (in_array($component->getObject()->getType(), $this->getImageTypes())) {
-            $media = $fragment->ownerDocument->createElement('img');
-            $media->setAttribute('src', $component->getObject()->getData());
-        }
-
-        if (empty($media) !== true) {
-            // Search for the <object> to be replaced.
-            $objects = $fragment->firstChild->getElementsByTagName('object');
-            $fragment->firstChild->replaceChild($media, $objects->item(0));
-
-            if ($isAudio === false) {
-                if (empty($width) !== true) {
-                    $media->setAttribute('width', $width);
+                if (!$qtiMedia->isAudio() && $qtiMedia->hasWidth()) {
+                    $media->setAttribute('width', $qtiMedia->getWidth());
                 }
 
-                if (empty($height) !== true) {
-                    $media->setAttribute('height', $height);
+                if (!$qtiMedia->isAudio() && $qtiMedia->hasHeight()) {
+                    $media->setAttribute('height', $qtiMedia->getHeight());
                 }
             }
         }

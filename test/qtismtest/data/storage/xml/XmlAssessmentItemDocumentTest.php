@@ -525,7 +525,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::samplesDir() . 'custom/items/rich_gap_text.xml', '2.2.0'],
             [self::samplesDir() . 'custom/items/infocontrol.xml', '2.1.0'],
             [self::samplesDir() . 'custom/items/2_2/biditorture1.xml', '2.2.0'],
-            [self::samplesDir() . 'custom/items/2_2/media_interaction_video.xml', '2.2.2'],
+            [self::samplesDir() . 'custom/items/2_2/media_video_html5.xml', '2.2.0'],
         ];
     }
 

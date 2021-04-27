@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem
+  xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0"
+  xsi:schemaLocation="
+    http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd
+    http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0 http://www.imsglobal.org/xsd/qti/qtiv2p2p2/imsqtiv2p2p2_html5_v1p0.xsd
+  "
+  identifier="media-audio" title="Media with Audio" adaptive="false" timeDependent="false"
+>
+  <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="integer"/>
+  <itemBody>
+    <p>A Media Interaction using html5 audio tag.</p>
+    <mediaInteraction responseIdentifier="RESPONSE" autostart="true" minPlays="1" maxPlays="1" loop="false">
+      <qh5:audio controls="true" height="240" width="320">
+        <qh5:source src="images/big_buck_bunny.mp4" type="video/mp4"/>
+        <qh5:source src="images/big_buck_bunny.webm" type="video/webm"/>
+        <qh5:track label="English" src="images/texttrack-en.vtt" default="true" kind="captions" srclang="en"/>
+        <qh5:track label="Japanese" src="images/texttrack-jpn.vtt" kind="captions" srclang="ja"/>
+      </qh5:audio>
+    </mediaInteraction>
+  </itemBody>
+</assessmentItem>

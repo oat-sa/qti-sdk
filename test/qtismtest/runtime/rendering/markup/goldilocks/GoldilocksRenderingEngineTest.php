@@ -24,7 +24,7 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws RenderingException
      */
-    public function testRendering($file, $expectedFile, $renderingMode, $xmlBasePolicy, $stylesheetPolicy, $cssClassPolicy)
+    public function testRendering($file, $expectedFile, $renderingMode, $xmlBasePolicy, $stylesheetPolicy, $cssClassPolicy): void
     {
         $engine = new GoldilocksRenderingEngine();
         $engine->setChoiceShowHidePolicy($renderingMode);
@@ -44,10 +44,7 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase
         $this::assertEquals($strExpected, $strRendered);
     }
 
-    /**
-     * @return array
-     */
-    public function renderingProvider()
+    public function renderingProvider(): array
     {
         return [
             // choiceInteraction-0
@@ -266,10 +263,28 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase
                 GoldilocksRenderingEngine::STYLESHEET_INLINE,
                 GoldilocksRenderingEngine::CSSCLASS_CONCRETE,
             ],
+            // mediaInteraction-0
+            [
+                self::samplesDir() . 'custom/items/2_2/media_audio_html5.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/mediaInteraction-0-html5.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE,
+            ],
             // mediaInteraction-1
             [
                 self::samplesDir() . 'custom/items/media_video.xml',
                 self::samplesDir() . 'rendering/goldilocks/rendered/mediaInteraction-1.html',
+                GoldilocksRenderingEngine::CONTEXT_STATIC,
+                GoldilocksRenderingEngine::XMLBASE_IGNORE,
+                GoldilocksRenderingEngine::STYLESHEET_INLINE,
+                GoldilocksRenderingEngine::CSSCLASS_CONCRETE,
+            ],
+            // mediaInteraction-1-video
+            [
+                self::samplesDir() . 'custom/items/2_2/media_video_html5.xml',
+                self::samplesDir() . 'rendering/goldilocks/rendered/mediaInteraction-1-html5.html',
                 GoldilocksRenderingEngine::CONTEXT_STATIC,
                 GoldilocksRenderingEngine::XMLBASE_IGNORE,
                 GoldilocksRenderingEngine::STYLESHEET_INLINE,
