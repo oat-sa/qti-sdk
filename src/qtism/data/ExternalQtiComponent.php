@@ -24,12 +24,13 @@
 namespace qtism\data;
 
 use qtism\common\dom\SerializableDomDocument;
+use qtism\data\storage\xml\QtiNamespaced;
 use RuntimeException;
 
 /**
  * Represents a gateway to a component from an external (non-QTI) particular namespace.
  */
-class ExternalQtiComponent extends QtiComponent implements IExternal
+class ExternalQtiComponent extends QtiComponent implements IExternal, QtiNamespaced
 {
     /**
      * @var string
@@ -135,7 +136,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
      *
      * @return string
      */
-    public function getTargetNamespace()
+    public function getTargetNamespace(): string
     {
         return $this->targetNamespace;
     }
