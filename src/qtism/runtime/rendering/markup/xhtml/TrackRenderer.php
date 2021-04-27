@@ -45,7 +45,7 @@ class TrackRenderer extends Html5ElementRenderer
         /** @var Track $component */
         $fragment->firstChild->setAttribute('src', $this->transformUri($component->getSrc(), $base));
         if ($component->hasSrcLang()) {
-            $fragment->firstChild->setAttribute('srclang', $this->transformUri($component->getSrcLang(), $base));
+            $fragment->firstChild->setAttribute('srclang', $component->getSrcLang());
         }
         if ($component->getDefault()) {
             $fragment->firstChild->setAttribute('default', 'true');

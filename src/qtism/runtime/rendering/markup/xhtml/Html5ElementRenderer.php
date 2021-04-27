@@ -24,6 +24,7 @@
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use DOMDocumentFragment;
+use qtism\data\content\enums\Role;
 use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponent;
 
@@ -43,10 +44,10 @@ class Html5ElementRenderer extends BodyElementRenderer
 
         /** @var Html5Element $component */
         if ($component->hasTitle()) {
-            $fragment->firstChild->setAttribute('title', $this->transformUri($component->getTitle(), $base));
+            $fragment->firstChild->setAttribute('title', $component->getTitle());
         }
         if ($component->hasRole()) {
-            $fragment->firstChild->setAttribute('role', $this->transformUri($component->getRole(), $base));
+            $fragment->firstChild->setAttribute('role', Role::getNameByConstant($component->getRole()));
         }
     }
 }

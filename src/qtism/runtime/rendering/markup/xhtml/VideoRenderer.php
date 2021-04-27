@@ -43,10 +43,10 @@ class VideoRenderer extends Html5MediaRenderer
 
         /** @var Video $component */
         if ($component->hasWidth()) {
-            $fragment->firstChild->setAttribute('width', $this->transformUri($component->getWidth(), $base));
+            $fragment->firstChild->setAttribute('width', $component->getWidth());
         }
         if ($component->hasHeight()) {
-            $fragment->firstChild->setAttribute('height', $this->transformUri($component->getHeight(), $base));
+            $fragment->firstChild->setAttribute('height', $component->getHeight());
         }
         if ($component->hasPoster()) {
             $fragment->firstChild->setAttribute('poster', $this->transformUri($component->getPoster(), $base));
