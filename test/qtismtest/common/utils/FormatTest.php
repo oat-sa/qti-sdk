@@ -155,13 +155,12 @@ class FormatTest extends QtiSmTestCase
 
     /**
      * @dataProvider isXhtmlLengthProvider
-     *
      * @param mixed $input
      * @param bool $expected
      */
     public function testIsXhtmlLength($input, bool $expected): void
     {
-        $this::assertSame($expected, Format::isXhtmlLength($input));
+        self::assertSame($expected, Format::isXhtmlLength($input));
     }
 
     /**

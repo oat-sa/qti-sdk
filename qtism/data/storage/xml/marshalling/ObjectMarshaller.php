@@ -58,7 +58,8 @@ class ObjectMarshaller extends ContentMarshaller
         $component->setHeight($this->getDOMElementAttributeAs($element, 'height'));
         $component->setWidth($this->getDOMElementAttributeAs($element, 'width'));
 
-        if (($xmlBase = self::getXmlBase($element)) !== false) {
+        $xmlBase = self::getXmlBase($element);
+        if ($xmlBase !== false) {
             $component->setXmlBase($xmlBase);
         }
 
@@ -72,10 +73,8 @@ class ObjectMarshaller extends ContentMarshaller
      * @param array $elements
      * @return DOMElement
      */
-    protected function marshallChildrenKnown(
-        QtiComponent $component,
-        array $elements
-    ): DOMElement {
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
         /** @var ObjectElement $component */
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'data', $component->getData());
