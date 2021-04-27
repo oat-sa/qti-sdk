@@ -272,7 +272,7 @@ class XmlDocumentTest extends QtiSmTestCase
         // This path does not resolve anything.
         $path = self::samplesDir() . 'invalid/unknown.xml';
 
-        $expectedMsg = "Cannot load QTI file '${path}'. It does not exist or is not readable.";
+        $expectedMsg = "Cannot load QTI file at path '${path}'. It does not exist or is not readable.";
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
         $this->expectExceptionCode(XmlStorageException::RESOLUTION);
@@ -457,16 +457,6 @@ class XmlDocumentTest extends QtiSmTestCase
         $uri = self::samplesDir() . 'invalid/xsdinvalid.xml';
         $doc = new XmlDocument('2.1.0');
         $doc->load($uri, true);
-    }
-
-    public function testSchemaValidateUnknownFile()
-    {
-        $doc = new XmlDocument();
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Schema 'blub' cannot be read. Does this file exist? Is it readable?");
-
-        $doc->schemaValidate('blub');
     }
 
     public function testXIncludeNoComponent()
