@@ -545,10 +545,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $version = '2.2.4';
         $uri = self::decorateUri('uploadinteraction-with-multiple-mime-types.xml', $version);
-        
+
         $doc = new XmlDocument();
         $doc->load($uri, true);
-        
+
         $this::assertEquals($version, $doc->getVersion());
     }
 

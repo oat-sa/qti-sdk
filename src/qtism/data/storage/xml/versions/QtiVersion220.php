@@ -47,7 +47,7 @@ class QtiVersion220 extends QtiVersion
         if ($prefix === 'qh5') {
             return static::QH5_XSD;
         }
-        
+
         return '';
     }
 
