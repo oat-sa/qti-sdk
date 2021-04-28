@@ -82,7 +82,7 @@ class FormatTest extends QtiSmTestCase
     {
         // TODO: fix the isUri method because a relative path can be
         // accepted as a valid URI but not an empty string.
-        self::assertFalse(Format::isUri($string));
+        $this::assertFalse(Format::isUri($string));
     }
 
     /**

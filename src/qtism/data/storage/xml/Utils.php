@@ -26,7 +26,9 @@ namespace qtism\data\storage\xml;
 use DOMDocument;
 use DOMElement;
 use InvalidArgumentException;
+use LibXMLError;
 use qtism\common\enums\Enumeration;
+use SimpleXMLElement;
 use SplStack;
 
 /**
@@ -401,5 +403,125 @@ class Utils
         }
 
         return $returnValue;
+    }
+
+    /**
+     * Removes namespaces defined on non-root element when they are already
+     * defined on the root element.
+     *
+     * @param string $subject
+     * @param array $redundantNamespaces
+     * @return string
+     */
+    public static function cleanRedundantNamespaces(string $subject, array $redundantNamespaces): string
+    {
+        foreach ($redundantNamespaces as $prefix => $namespace) {
+            $subject = self::removeAllButFirstOccurrence($subject, ' xmlns:' . $prefix . '="' . $namespace . '"');
+        }
+        return $subject;
+    }
+
+    /**
+     * Removes all but first occurrences of a string within a string.
+     *
+     * @param string $subject
+     * @param string $toRemove
+     * @return string
+     */
+    public static function removeAllButFirstOccurrence(string $subject, string $toRemove): string
+    {
+        $firstPosition = strpos($subject, $toRemove);
+        if ($firstPosition !== false) {
+            $begin = substr($subject, 0, $firstPosition + strlen($toRemove));
+            $end = substr($subject, $firstPosition + strlen($toRemove));
+            $subject = $begin . str_replace($toRemove, '', $end);
+        }
+        return $subject;
+    }
+
+    /**
+     * Finds all the custom namespaces defined in the xml payload.
+     *
+     * @param string $xml
+     * @return array
+     */
+    public static function findExternalNamespaces(string $xml): array
+    {
+        $doc = new SimpleXMLElement($xml);
+        return array_filter(
+            $doc->getDocNamespaces(),
+            static function ($key) {
+                return $key !== '' && $key !== 'xsi';
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+    }
+
+    /**
+     * @param callable $command
+     * @param string $exceptionMessage
+     * @param int $exceptionCode
+     * @throws XmlStorageException
+     */
+    public static function executeSafeXmlCommand(
+        callable $command,
+        string $exceptionMessage,
+        int $exceptionCode
+    ): void {
+        // Disable xml warnings and errors and fetch error information as needed.
+        $oldErrorConfig = libxml_use_internal_errors(true);
+        $command();
+        $libXmlErrors = libxml_get_errors();
+        libxml_clear_errors();
+        libxml_use_internal_errors($oldErrorConfig);
+
+        if (count($libXmlErrors)) {
+            // Formats the xml errors and filters out the warning for duplicate schema inclusion.
+            $formattedErrors = self::formatLibXmlErrors($libXmlErrors);
+            if ($formattedErrors !== '') {
+                throw new XmlStorageException(
+                    "${exceptionMessage}:\n${formattedErrors}",
+                    $exceptionCode,
+                    null,
+                    new LibXmlErrorCollection($libXmlErrors)
+                );
+            }
+        }
+    }
+
+    /**
+     * Format some $libXmlErrors into an array of strings instead of an array of arrays.
+     *
+     * @param LibXMLError[] $libXmlErrors
+     * @return string
+     */
+    protected static function formatLibXmlErrors(array $libXmlErrors): string
+    {
+        $formattedErrors = [];
+
+        foreach ($libXmlErrors as $error) {
+            switch ($error->level) {
+                case LIBXML_ERR_WARNING:
+                    // Since QTI 2.2, some schemas are imported multiple times.
+                    // Xerces does not produce errors, but libxml does...
+                    if (preg_match('/Skipping import of schema located/ui', $error->message) === 0) {
+                        $formattedErrors[] = 'Warning: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
+                    }
+
+                    break;
+
+                case LIBXML_ERR_ERROR:
+                    $formattedErrors[] = 'Error: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
+                    break;
+
+                case LIBXML_ERR_FATAL:
+                    $formattedErrors[] = 'Fatal Error: ' . trim($error->message) . ' at ' . $error->line . ':' . $error->column . '.';
+                    break;
+            }
+        }
+
+        $formattedErrors = implode("\n", $formattedErrors);
+
+        return $formattedErrors;
     }
 }

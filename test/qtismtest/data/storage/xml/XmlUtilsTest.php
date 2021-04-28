@@ -4,6 +4,8 @@ namespace qtismtest\data\storage\xml;
 
 use DOMDocument;
 use DOMElement;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\data\storage\xml\Utils;
 use qtismtest\QtiSmTestCase;
 
@@ -248,7 +250,7 @@ class XmlUtilsTest extends QtiSmTestCase
     public function getDOMElementAttributeAsProvider()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML('<foo string="str" integer="1" float="1.1" double="1.1" boolean="true"/>');
+        $dom->loadXML('<foo string="str" integer="1" float="1.1" double="1.1" boolean="true" baseType="duration" wrongEnumValue="blah"/>');
         $elt = $dom->documentElement;
 
         return [
@@ -257,6 +259,10 @@ class XmlUtilsTest extends QtiSmTestCase
             [$elt, 'float', 'float', 1.1],
             [$elt, 'double', 'double', 1.1],
             [$elt, 'boolean', 'boolean', true],
+            [$elt, 'not-existing', '', null],
+            [$elt, 'baseType', BaseType::class, BaseType::DURATION],
+            [$elt, 'wrongEnumValue', BaseType::class, 'blah'],
+            [$elt, 'cardinality', Cardinality::class, null],
         ];
     }
 
@@ -291,5 +297,75 @@ class XmlUtilsTest extends QtiSmTestCase
         $element = $dom->documentElement;
 
         $this::assertCount(0, Utils::getChildElementsByTagName($element, 'child'));
+    }
+
+    public function testFindCustomNamespaces()
+    {
+        $xml = ('<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem
+        xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0"
+        xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        identifier="video-tracks" title="Big Buck Bunny" timeDependent="false" adaptive="false"
+        xsi:schemaLocation="
+          http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd
+        "
+>
+  <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+    <correctResponse>
+      <value>C</value>
+    </correctResponse>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0">
+    <p>
+      Below is a Big Buck Bunny video trailer with two different Closed Caption tracks: English and Japanese.
+      Use the video player\'s controls to turn the caption tracks (the "CC" button) on and off.
+    </p>
+    <qh5:video xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" controls="true" height="240" width="320">
+      <qh5:source src="images/big_buck_bunny.mp4" type="video/mp4"/>
+      <qh5:source src="images/big_buck_bunny.webm" type="video/webm"/>
+      <qh5:track label="English" src="images/texttrack-en.vtt" default="true" kind="captions" srclang="en"/>
+      <qh5:track label="Japanese" src="images/texttrack-jpn.vtt" kind="captions" srclang="ja"/>
+    </qh5:video>
+    <p>
+    This trailer, and the Big Buck Bunny project, is (c) copyright 2008, Blender Foundation / www.bigbuckbunny.org
+    </p>
+    <choiceInteraction responseIdentifier="RESPONSE" maxChoices="1">
+      <prompt>
+        <p>How many Caption Tracks are included in the video presentation above?</p>
+      </prompt>
+      <simpleChoice identifier="A">0</simpleChoice>
+      <simpleChoice identifier="B">1</simpleChoice>
+      <simpleChoice identifier="C">2</simpleChoice>
+      <simpleChoice identifier="D">3</simpleChoice>
+    </choiceInteraction>
+    <mediaInteraction xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" responseIdentifier="RESPONSE1" autostart="false">
+      <qh5:audio xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="images/big_buck_bunny.mp4"/>
+    </mediaInteraction>
+  </itemBody>
+  <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+</assessmentItem>
+');
+
+        self::assertSame(
+            ['qh5'=>'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0'],
+            Utils::findExternalNamespaces($xml)
+        );
+    }
+
+    public function testremoveAllButFirstOccurrence()
+    {
+        $subject = 'abc 12 abc 345abc678abc';
+        $toRemove = 'abc';
+        $expected = 'abc 12  345678';
+        self::assertSame(
+            $expected,
+            Utils::removeAllButFirstOccurrence($subject, $toRemove)
+        );
     }
 }

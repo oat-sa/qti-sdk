@@ -25,7 +25,6 @@ namespace qtism\common\utils;
 
 use DateInterval;
 use Exception;
-use InvalidArgumentException;
 use qtism\common\utils\data\CharacterMap;
 use ValueError;
 
@@ -562,7 +561,7 @@ class Format
 
     public static function isAriaLevel(string $level): bool
     {
-         return is_numeric($level) && (int)$level >= 1;
+        return is_numeric($level) && (int)$level >= 1;
     }
 
     public static function isAriaIdRefs(string $ariaIdRefs): bool

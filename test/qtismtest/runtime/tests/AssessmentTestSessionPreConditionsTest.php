@@ -88,7 +88,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
     {
         // This test aims at testing that when forcing preconditions is in force,
         // they are executed even if the current navigation mode is non linear.
-        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_nonlinear.xml', null, AssessmentTestSession::FORCE_PRECONDITIONS);
+        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_nonlinear.xml', false, AssessmentTestSession::FORCE_PRECONDITIONS);
         $testSession->beginTestSession();
 
         // Q01 - Answer incorrect to be redirected by successive false evaluated preconditions.

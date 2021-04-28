@@ -27,6 +27,7 @@ use DOMElement;
 use InvalidArgumentException;
 use qtism\data\ExternalQtiComponent;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\QtiNamespaced;
 use qtism\data\storage\xml\Utils;
 use ReflectionClass;
 use ReflectionException;
@@ -396,7 +397,7 @@ abstract class MarshallerFactory
                 // Look for a mapping entry.
                 if ($object instanceof DOMElement && $this->hasMappingEntry($qtiClassName, $object->namespaceURI)) {
                     $class = new ReflectionClass($this->getMappingEntry($qtiClassName, $object->namespaceURI));
-                } elseif ($object instanceof ExternalQtiComponent && $this->hasMappingEntry($qtiClassName, $object->getTargetNamespace())) {
+                } elseif ($object instanceof QtiNamespaced && $this->hasMappingEntry($qtiClassName, $object->getTargetNamespace())) {
                     $class = new ReflectionClass($this->getMappingEntry($qtiClassName, $object->getTargetNamespace()));
                 } elseif ($this->hasMappingEntry($qtiClassName)) {
                     $class = new ReflectionClass($this->getMappingEntry($qtiClassName));

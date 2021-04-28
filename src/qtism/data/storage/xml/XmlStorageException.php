@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml;
 
 use Exception;
 use qtism\data\storage\StorageException;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 
 /**
  * An exception type that represent an error when dealing with QTI-XML files.
@@ -84,6 +85,19 @@ class XmlStorageException extends StorageException
             null,
             new LibXmlErrorCollection($libXmlErrors)
         );
+    }
+
+    /**
+     * @param MarshallerNotFoundException $e
+     * @param string $version
+     * @return mixed
+     */
+    public static function unsupportedComponentInVersion(
+        MarshallerNotFoundException $e,
+        string $version
+    ): self {
+        $msg = "'" . $e->getQtiClassName() . "' components are not supported in QTI version '${version}'.";
+        return new self($msg, self::VERSION, $e);
     }
 
     /**

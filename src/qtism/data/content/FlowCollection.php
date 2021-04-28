@@ -41,7 +41,7 @@ class FlowCollection extends QtiComponentCollection
     protected function checkType($value)
     {
         if (!$value instanceof Flow) {
-            $msg = 'FlowCollection objects only accept to store Flow objects.';
+            $msg = 'FlowCollection objects only accept to store Flow objects, "' . get_class($value) . '" given';
             throw new InvalidArgumentException($msg);
         }
     }

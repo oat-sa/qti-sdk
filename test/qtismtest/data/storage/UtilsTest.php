@@ -36,7 +36,7 @@ class UtilsTest extends QtiSmTestCase
      * @dataProvider invalidIntegerProvider
      * @param string $string
      */
-    public function testStringToIntegerInvalid($string): void
+    public function testStringToIntegerInvalid(string $string): void
     {
         $this->expectException(UnexpectedValueException::class);
         Utils::stringToDatatype($string, BaseType::INTEGER);
@@ -76,7 +76,7 @@ class UtilsTest extends QtiSmTestCase
 
     /**
      * @dataProvider invalidBooleanProvider
-     * @param mixed $string
+     * @param string $string
      */
     public function testStringToBooleanInvalid($string): void
     {
@@ -430,9 +430,6 @@ class UtilsTest extends QtiSmTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
     public function validUriToSanitizeProvider(): array
     {
         return [

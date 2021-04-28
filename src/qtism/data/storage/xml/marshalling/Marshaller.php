@@ -329,7 +329,6 @@ abstract class Marshaller
 
             case 'unmarshall':
                 $this->checkUnmarshallerImplementation($args[0]);
-
                 return $this->unmarshall(...$args);
 
             default:
@@ -352,7 +351,7 @@ abstract class Marshaller
             throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
         }
     }
-    
+
     /**
      * Get Attribute Name to Use for Marshalling
      *
