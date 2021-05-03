@@ -229,9 +229,8 @@ abstract class BodyElement extends QtiComponent
 
             if (empty($class) || Format::isClass($class) === true) {
                 $this->class = $class;
+                return;
             }
-            
-            return;
         }
 
         $msg = "The 'class' argument must be a valid class name, '" . $class . "' given";
