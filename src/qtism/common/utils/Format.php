@@ -588,7 +588,7 @@ class Format
         $given = is_string($length) || is_int($length) || is_float($length)
             ? $length
             : gettype($length);
-        throw new InvalidArgumentException(
+        throw new \InvalidArgumentException(
             sprintf(
                 'The "%s" argument must be a positive integer with optional percent sign, "%s" given.',
                 $argumentName,
