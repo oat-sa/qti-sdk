@@ -25,7 +25,6 @@ namespace qtism\common\utils;
 
 use DateInterval;
 use Exception;
-use InvalidArgumentException;
 use qtism\common\utils\data\CharacterMap;
 use ValueError;
 
@@ -572,7 +571,7 @@ class Format
      * @param mixed $length length to sanitize
      * @param string $argumentName argument name for exception message
      * @return string|null length as string or null if not set
-     * @throws InvalidArgumentException when the length is not valid
+     * @throws \InvalidArgumentException when the length is not valid
      */
     public static function sanitizeXhtmlLength($length, string $argumentName): ?string
     {
@@ -588,7 +587,7 @@ class Format
         $given = is_string($length) || is_int($length) || is_float($length)
             ? $length
             : gettype($length);
-        throw new InvalidArgumentException(
+        throw new \InvalidArgumentException(
             sprintf(
                 'The "%s" argument must be a positive integer with optional percent sign, "%s" given.',
                 $argumentName,
