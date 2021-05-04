@@ -188,11 +188,9 @@ class Img extends AtomicInline
     }
 
     /**
-     * Set the height of the image.
+     * Set the height of the image. A null value unsets height.
      *
-     * A null value means that no height is provided.
-     *
-     * @param mixed $height A height.
+     * @param mixed $height
      * @throws InvalidArgumentException when $height is not valid.
      */
     public function setHeight($height): void
@@ -200,28 +198,20 @@ class Img extends AtomicInline
         $this->height = Format::sanitizeXhtmlLength($height, 'height');
     }
 
-    /**
-     * Get the height of the image.
-     * Null means that no height is set.
-     */
     public function getHeight(): ?string
     {
         return $this->height;
     }
 
-    /**
-     * Whether a height is set.
-     */
     public function hasHeight(): bool
     {
         return $this->height !== null;
     }
 
     /**
-     * Set the width of the image.
-     * A null value means that no width is set.
+     * Set the width of the image. A null value unsets width.
      *
-     * @param mixed $width A width.
+     * @param mixed $width
      * @throws InvalidArgumentException when $width is not valid.
      */
     public function setWidth($width): void
@@ -229,18 +219,11 @@ class Img extends AtomicInline
         $this->width = Format::sanitizeXhtmlLength($width, 'width');
     }
 
-    /**
-     * Get the width of the image.
-     * Null means that no width is set.
-     */
     public function getWidth(): ?string
     {
         return $this->width;
     }
 
-    /**
-     * Whether a width is set.
-     */
     public function hasWidth(): bool
     {
         return $this->width !== null;

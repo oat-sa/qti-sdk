@@ -163,10 +163,9 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-     * Set the width of the object.
-     * A null value means that no width is set.
+     * Set the width of the object. A null value unsets width.
      *
-     * @param mixed $width A width.
+     * @param mixed $width
      * @throws InvalidArgumentException when $width is not valid.
      */
     public function setWidth($width): void
@@ -174,30 +173,20 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
         $this->width = Format::sanitizeXhtmlLength($width, 'width');
     }
 
-    /**
-     * Get the width of the object.
-     * Null means that no width is set.
-     */
     public function getWidth(): ?string
     {
         return $this->width;
     }
 
-    /**
-     * Whether a width is set for the object.
-     *
-     * @return bool.
-     */
     public function hasWidth(): bool
     {
         return $this->width !== null;
     }
 
     /**
-     * Set the height of the object.
-     * A null value means that no height is set.
+     * Set the height of the object. A null value unsets height.
      *
-     * @param mixed $height A height.
+     * @param mixed $height
      * @throws InvalidArgumentException when $height is not valid.
      */
     public function setHeight($height): void
@@ -205,18 +194,11 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
         $this->height = Format::sanitizeXhtmlLength($height, 'height');
     }
 
-    /**
-     * Get the height of the object.
-     * A null value means that no height is set.
-     */
     public function getHeight(): ?string
     {
         return $this->height;
     }
 
-    /**
-     * Whether a height is set for the object.
-     */
     public function hasHeight(): bool
     {
         return $this->height !== null;
