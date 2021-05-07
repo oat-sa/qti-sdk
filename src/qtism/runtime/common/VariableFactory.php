@@ -54,16 +54,18 @@ final class VariableFactory implements VariableFactoryInterface
      */
     private function createVariableClass(VariableDeclaration $variableDeclaration): string
     {
-        if (!isset(self::VARIABLE_DECLARATION_MAP[$variableDeclaration::class])) {
+        $variableDeclarationClass = get_class($variableDeclaration);
+
+        if (!isset(self::VARIABLE_DECLARATION_MAP[$variableDeclarationClass])) {
             throw new UnexpectedValueException(
                 sprintf(
                     '`%s` is an unexpected `%s` implementation.',
-                    $variableDeclaration::class,
+                    $variableDeclarationClass,
                     VariableDeclaration::class
                 )
             );
         }
 
-        return self::VARIABLE_DECLARATION_MAP[$variableDeclaration::class];
+        return self::VARIABLE_DECLARATION_MAP[$variableDeclarationClass];
     }
 }
