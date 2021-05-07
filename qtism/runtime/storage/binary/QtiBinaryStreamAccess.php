@@ -46,7 +46,7 @@ use qtism\common\storage\StreamAccessException;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreConditionCollection;
-use qtism\data\state\OutcomeDeclaration;
+use qtism\data\state\VariableDeclaration;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -55,6 +55,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\Utils;
 use qtism\runtime\common\Variable;
+use qtism\runtime\common\VariableFactoryInterface;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\tests\AssessmentItemSession;
@@ -74,10 +75,11 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
     const RW_CORRECTRESPONSE = 2;
 
-    /**
-     * @var FileManager
-     */
+    /** @var FileManager */
     private $fileManager;
+
+    /** @var VariableFactoryInterface */
+    private $variableFactory;
 
     /**
      * Create a new QtiBinaryStreamAccess object.
@@ -86,10 +88,11 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * @param FileManager $fileManager The FileManager object to handle file variable.
      * @throws StreamAccessException
      */
-    public function __construct(IStream $stream, FileManager $fileManager)
+    public function __construct(IStream $stream, FileManager $fileManager, VariableFactoryInterface $variableFactory)
     {
         parent::__construct($stream);
         $this->setFileManager($fileManager);
+        $this->variableFactory = $variableFactory;
     }
 
     /**
@@ -615,16 +618,24 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $isOutcome = $this->readBoolean();
                 $varPosition = $this->readShort();
 
-                $variable = null;
-
                 try {
-                    $variable = $seeker->seekComponent(($isOutcome === true) ? 'outcomeDeclaration' : 'responseDeclaration', $varPosition);
+                    /** @var VariableDeclaration $variableDeclaration */
+                    $variableDeclaration = $seeker->seekComponent(
+                        ($isOutcome === true) ? 'outcomeDeclaration' : 'responseDeclaration',
+                        $varPosition
+                    );
                 } catch (OutOfBoundsException $e) {
                     $msg = "No variable found at position ${varPosition} in the assessmentTest tree structure.";
-                    throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
+                    throw new QtiBinaryStreamAccessException(
+                        $msg,
+                        $this,
+                        QtiBinaryStreamAccessException::ITEM_SESSION,
+                        $e
+                    );
                 }
 
-                $variable = ($variable instanceof OutcomeDeclaration) ? OutcomeVariable::createFromDataModel($variable) : ResponseVariable::createFromDataModel($variable);
+                $variable = $session->getVariable($variableDeclaration->getIdentifier())
+                    ?? $this->variableFactory->createFromDataModel($variableDeclaration);
 
                 // If we are here, we have our variable.
                 $this->readVariableValue($variable);
