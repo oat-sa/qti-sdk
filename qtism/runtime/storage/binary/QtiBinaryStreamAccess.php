@@ -60,6 +60,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\Utils;
 use qtism\runtime\common\Variable;
+use qtism\runtime\common\VariableFactory;
 use qtism\runtime\common\VariableFactoryInterface;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\tests\AbstractSessionManager;
@@ -93,11 +94,14 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * @param FileManager $fileManager The FileManager object to handle file variable.
      * @throws StreamAccessException
      */
-    public function __construct(IStream $stream, FileManager $fileManager, VariableFactoryInterface $variableFactory)
-    {
+    public function __construct(
+        IStream $stream,
+        FileManager $fileManager,
+        VariableFactoryInterface $variableFactory = null
+    ) {
         parent::__construct($stream);
         $this->setFileManager($fileManager);
-        $this->variableFactory = $variableFactory;
+        $this->variableFactory = $variableFactory ?? new VariableFactory();
     }
 
     /**
