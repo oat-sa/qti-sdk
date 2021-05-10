@@ -81,11 +81,9 @@ use qtism\runtime\tests\RouteItem;
  */
 class QtiBinaryStreamAccess extends BinaryStreamAccess
 {
-    const RW_VALUE = 0;
-
-    const RW_DEFAULTVALUE = 1;
-
-    const RW_CORRECTRESPONSE = 2;
+    public const RW_VALUE = 0;
+    public const RW_DEFAULTVALUE = 1;
+    public const RW_CORRECTRESPONSE = 2;
 
     private const VARIABLE_TYPES = [
         0 => 'outcomeDeclaration',
