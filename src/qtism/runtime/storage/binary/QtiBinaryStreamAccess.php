@@ -50,6 +50,7 @@ use qtism\data\IAssessmentItem;
 use qtism\data\ItemSessionControl;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreConditionCollection;
+use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingCollection;
@@ -85,10 +86,14 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     public const RW_DEFAULTVALUE = 1;
     public const RW_CORRECTRESPONSE = 2;
 
-    private const VARIABLE_TYPES = [
-        0 => 'outcomeDeclaration',
-        1 => 'responseDeclaration',
-        2 => 'templateDeclaration',
+    private const ENCODED_OUTCOME_DECLARATION = 0;
+    private const ENCODED_RESPONSE_DECLARATION = 1;
+    private const ENCODED_TEMPLATE_DECLARATION = 2;
+
+    private const VARIABLE_DECLARATION_TYPES = [
+        self::ENCODED_OUTCOME_DECLARATION => 'outcomeDeclaration',
+        self::ENCODED_RESPONSE_DECLARATION => 'responseDeclaration',
+        self::ENCODED_TEMPLATE_DECLARATION => 'templateDeclaration',
     ];
 
     /** @var FileManager */
@@ -751,7 +756,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 try {
                     /** @var VariableDeclaration $variableDeclaration */
                     $variableDeclaration = $seeker->seekComponent(
-                        $this->decodeVariableType($varNature),
+                        $this->decodeVariableDeclarationType($varNature),
                         $varPosition
                     );
                 } catch (OutOfBoundsException $e) {
@@ -858,20 +863,20 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 if (in_array($varId, ['numAttempts', 'duration', 'completionStatus']) === false) {
                     $var = $session->getVariable($varId);
                     if ($var instanceof OutcomeVariable) {
-                        /** @var VariableDeclaration $variableDeclaration */
+                        /** @var OutcomeDeclaration $variableDeclaration */
                         $variableDeclaration = $itemOutcomes[$varId];
                         $variable = OutcomeVariable::createFromDataModel($variableDeclaration);
-                        $varNature = 0;
+                        $varNature = self::ENCODED_OUTCOME_DECLARATION;
                     } elseif ($var instanceof ResponseVariable) {
                         /** @var ResponseDeclaration $variableDeclaration */
                         $variableDeclaration = $itemResponses[$varId];
                         $variable = ResponseVariable::createFromDataModel($variableDeclaration);
-                        $varNature = 1;
+                        $varNature = self::ENCODED_RESPONSE_DECLARATION;
                     } elseif ($var instanceof TemplateVariable) {
                         /** @var TemplateDeclaration $variableDeclaration */
                         $variableDeclaration = $itemTemplates[$varId];
                         $variable = TemplateVariable::createFromDataModel($variableDeclaration);
-                        $varNature = 2;
+                        $varNature = self::ENCODED_TEMPLATE_DECLARATION;
                     }
 
                     $this->writeShort($varNature);
@@ -1182,18 +1187,18 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     }
 
     /**
-     * @param int $encodedType An encoded variable type
+     * @param int $encodedType An encoded variable declaration type
      *
-     * @return string A decoded variable type
+     * @return string A decoded variable declaration type
      *
      * @throws InvalidArgumentException
      */
-    private function decodeVariableType(int $encodedType): string
+    private function decodeVariableDeclarationType(int $encodedType): string
     {
-        if (!isset(self::VARIABLE_TYPES[$encodedType])) {
-            throw new InvalidArgumentException("`$encodedType` is not a known encoded variable type.");
+        if (!isset(self::VARIABLE_DECLARATION_TYPES[$encodedType])) {
+            throw new InvalidArgumentException("`$encodedType` is not a known encoded variable declaration type.");
         }
 
-        return self::VARIABLE_TYPES[$encodedType];
+        return self::VARIABLE_DECLARATION_TYPES[$encodedType];
     }
 }
