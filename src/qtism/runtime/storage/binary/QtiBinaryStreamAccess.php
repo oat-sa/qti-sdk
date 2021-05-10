@@ -44,14 +44,20 @@ use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\IStream;
 use qtism\common\storage\StreamAccessException;
+use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSectionCollection;
+use qtism\data\IAssessmentItem;
+use qtism\data\ItemSessionControl;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreConditionCollection;
+use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingCollection;
 use qtism\data\state\ShufflingGroup;
 use qtism\data\state\ShufflingGroupCollection;
+use qtism\data\state\TemplateDeclaration;
 use qtism\data\state\VariableDeclaration;
+use qtism\data\TestPart;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -699,6 +705,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     ) {
         try {
             $itemRefPosition = $this->readShort();
+            /** @var IAssessmentItem $assessmentItemRef */
             $assessmentItemRef = $seeker->seekComponent('assessmentItemRef', $itemRefPosition);
 
             $session = $manager->createAssessmentItemSession($assessmentItemRef);
@@ -709,6 +716,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $session->setAttempting($this->readBoolean());
 
             if ($this->readBoolean() === true) {
+                /** @var ItemSessionControl $itemSessionControl */
                 $itemSessionControl = $seeker->seekComponent('itemSessionControl', $this->readShort());
                 $session->setItemSessionControl($itemSessionControl);
             }
@@ -848,14 +856,17 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 if (in_array($varId, ['numAttempts', 'duration', 'completionStatus']) === false) {
                     $var = $session->getVariable($varId);
                     if ($var instanceof OutcomeVariable) {
+                        /** @var VariableDeclaration $variableDeclaration */
                         $variableDeclaration = $itemOutcomes[$varId];
                         $variable = OutcomeVariable::createFromDataModel($variableDeclaration);
                         $varNature = 0;
                     } elseif ($var instanceof ResponseVariable) {
+                        /** @var ResponseDeclaration $variableDeclaration */
                         $variableDeclaration = $itemResponses[$varId];
                         $variable = ResponseVariable::createFromDataModel($variableDeclaration);
                         $varNature = 1;
                     } elseif ($var instanceof TemplateVariable) {
+                        /** @var TemplateDeclaration $variableDeclaration */
                         $variableDeclaration = $itemTemplates[$varId];
                         $variable = TemplateVariable::createFromDataModel($variableDeclaration);
                         $varNature = 2;
@@ -914,7 +925,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     {
         try {
             $occurence = $this->readTinyInt();
+            /** @var AssessmentItemRef $itemRef */
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
+            /** @var TestPart $testPart */
             $testPart = $seeker->seekComponent('testPart', $this->readShort());
 
             $sectionsCount = $this->readTinyInt();
@@ -1011,6 +1024,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $varCount = $this->readTinyInt();
 
             for ($i = 0; $i < $varCount; $i++) {
+                /** @var ResponseDeclaration $responseDeclaration */
                 $responseDeclaration = $seeker->seekComponent('responseDeclaration', $this->readShort());
                 $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
                 $this->readVariableValue($responseVariable);
@@ -1018,6 +1032,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             }
 
             // Read the assessmentItemRef.
+            /** @var AssessmentItemRef $itemRef */
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
 
             // Read the occurence number.
