@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./vendor/autoload.php"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-    <coverage>
-        <include>
-            <directory suffix=".php">./src/</directory>
-        </include>
-        <exclude>
-            <directory suffix=".php">./src/qtism/runtime/processing/templates</directory>
-            <file phpVersion="8.0.0" phpVersionOperator=">=">
-                ./src/qtism/data/expressions/operators/Match.php
-            </file>
-        </exclude>
-    </coverage>
+<phpunit bootstrap="./vendor/autoload.php">
     <testsuites>
         <testsuite name="QTI-SDK Test Suite">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src/</directory>
+            <exclude>
+                <directory suffix=".php">./src/qtism/runtime/processing/templates</directory>
+            </exclude>
+            <file phpVersion="8.0.0" phpVersionOperator=">=">./src/qtism/data/expressions/operators/Match.php</file>
+        </whitelist>
+    </filter>
     <!-- PHP configuration -->
     <php>
         <!-- About 300Mo are consumed on Travis CI or ContinuousPHP. -->
