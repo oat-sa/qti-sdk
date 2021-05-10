@@ -81,9 +81,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     const RW_CORRECTRESPONSE = 2;
 
     private const VARIABLE_TYPES = [
-        'outcomeDeclaration',
-        'responseDeclaration',
-        'templateDeclaration',
+        0 => 'outcomeDeclaration',
+        1 => 'responseDeclaration',
+        2 => 'templateDeclaration',
     ];
 
     /** @var FileManager */
