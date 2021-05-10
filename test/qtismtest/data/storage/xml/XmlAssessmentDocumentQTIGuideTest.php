@@ -225,9 +225,8 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
             ['Hottext_801974120', 'Hottext_801974120.xml'],
         ];
 
-        for ($i = 0; $i < count($assessmentItemRefs); $i++) {
-            $id = $expectedItems[$i][0];
-            $file = $expectedItems[$i][1];
+        for ($i = 0, $iMax = count($assessmentItemRefs); $i < $iMax; $i++) {
+            [$id, $file] = $expectedItems[$i];
 
             $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs[$id]);
             $this::assertEquals($id, $assessmentItemRefs[$id]->getIdentifier());
@@ -279,7 +278,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $this::assertEquals('http://www.imsglobal.org/xsd/imsqti_v2p1', $outcomeDeclarationElt->namespaceURI);
 
         unlink($file);
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     /**

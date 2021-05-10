@@ -686,9 +686,9 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $storage->delete($session);
 
         // -- Check files that files are removed from the file system after deletion of the session.
-        $this::assertFileNotExists($path1);
-        $this::assertFileNotExists($path2);
-        $this::assertFileNotExists($path3);
+        $this::assertFileDoesNotExist($path1);
+        $this::assertFileDoesNotExist($path2);
+        $this::assertFileDoesNotExist($path3);
     }
 
     public function testTemplateProcessingBasic1()

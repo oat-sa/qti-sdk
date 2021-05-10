@@ -262,7 +262,7 @@ class PhpDocumentTest extends QtiSmTestCase
         $this::assertEquals($file, $phpDoc->getUrl());
 
         unlink($file);
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     public function testLoadInteractionMixSaschsen()
@@ -281,7 +281,7 @@ class PhpDocumentTest extends QtiSmTestCase
 
         $this::assertEquals('InteractionMixSachsen_1901710679', $phpDoc->getDocumentComponent()->getIdentifier());
         unlink($file);
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     /**
