@@ -745,9 +745,13 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             for ($i = 0; $i < $varCount; $i++) {
                 // For each of these variables...
 
-                // Detect the nature of the variable
-                // 0 = outcomeVariable, 1 = responseVariable, 2 = templateVariable
-                $varNature = $this->readShort();
+                /**
+                 * Detect the type of the variable
+                 * @see QtiBinaryStreamAccess::VARIABLE_DECLARATION_TYPES
+                 */
+                $variableType = $this->decodeVariableDeclarationType(
+                    $this->readShort()
+                );
 
                 // Read the position of the associated variableDeclaration
                 // in the assessment tree.
@@ -755,10 +759,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
                 try {
                     /** @var VariableDeclaration $variableDeclaration */
-                    $variableDeclaration = $seeker->seekComponent(
-                        $this->decodeVariableDeclarationType($varNature),
-                        $varPosition
-                    );
+                    $variableDeclaration = $seeker->seekComponent($variableType, $varPosition);
                 } catch (OutOfBoundsException $e) {
                     $msg = "No variable found at position ${varPosition} in the assessmentTest tree structure.";
                     throw new QtiBinaryStreamAccessException(
