@@ -44,7 +44,9 @@ final class VariableFactory implements VariableFactoryInterface
      */
     public function createFromDataModel(VariableDeclaration $variableDeclaration): Variable
     {
-        return [$this->createVariableClass($variableDeclaration), 'createFromDataModel']($variableDeclaration);
+        $variableClassName = $this->createVariableClassName($variableDeclaration);
+
+        return $variableClassName::createFromDataModel($variableDeclaration);
     }
 
     /**
@@ -52,7 +54,7 @@ final class VariableFactory implements VariableFactoryInterface
      * @return string|Variable A matching Variable class
      * @throws UnexpectedValueException If $variableDeclaration is not consistent.
      */
-    private function createVariableClass(VariableDeclaration $variableDeclaration): string
+    private function createVariableClassName(VariableDeclaration $variableDeclaration): string
     {
         $variableDeclarationClass = get_class($variableDeclaration);
 
