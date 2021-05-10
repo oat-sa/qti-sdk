@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <phpunit bootstrap="./vendor/autoload.php">
     <testsuites>
-        <testsuite name ="QTI-SDK Test Suite">
+        <testsuite name="QTI-SDK Test Suite">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
@@ -11,11 +11,12 @@
             <exclude>
                 <directory suffix=".php">./src/qtism/runtime/processing/templates</directory>
             </exclude>
+            <file phpVersion="8.0.0" phpVersionOperator=">=">./src/qtism/data/expressions/operators/Match.php</file>
         </whitelist>
     </filter>
     <!-- PHP configuration -->
     <php>
         <!-- About 300Mo are consumed on Travis CI or ContinuousPHP. -->
-        <ini name="memory_limit" value="1024M" />
+        <ini name="memory_limit" value="1024M"/>
     </php>
 </phpunit>

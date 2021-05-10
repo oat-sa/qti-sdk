@@ -67,7 +67,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
         unlink($file);
         // Nobody else touched it?
-        self::assertFileNotExists($file);
+        self::assertFileDoesNotExist($file);
     }
 
     /**
@@ -94,7 +94,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
         unlink($file);
         // Nobody else touched it?
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     public function testLoad224()
@@ -248,7 +248,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->testLoadTemplate($file);
 
         unlink($file);
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     /**
@@ -589,22 +589,36 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         if ($version === '2.1' || $version === '2.1.0') {
             return self::samplesDir() . 'ims/items/2_1/' . $uri;
-        } elseif ($version === '2.1.1') {
-            return self::samplesDir() . 'ims/items/2_1_1/' . $uri;
-        } elseif ($version === '2.2' || $version === '2.2.0') {
-            return self::samplesDir() . 'ims/items/2_2/' . $uri;
-        } elseif ($version === '2.2.1') {
-            return self::samplesDir() . 'ims/items/2_2_1/' . $uri;
-        } elseif ($version === '2.2.2') {
-            return self::samplesDir() . 'ims/items/2_2_2/' . $uri;
-        } elseif ($version === '2.2.3') {
-            return self::samplesDir() . 'ims/items/2_2_3/' . $uri;
-        } elseif ($version === '2.2.4') {
-            return self::samplesDir() . 'ims/items/2_2_4/' . $uri;
-        } elseif ($version === '3.0.0') {
-            return self::samplesDir() . 'ims/items/3_0/' . $uri;
-        } else {
-            return self::samplesDir() . 'ims/items/2_0/' . $uri;
         }
+
+        if ($version === '2.1.1') {
+            return self::samplesDir() . 'ims/items/2_1_1/' . $uri;
+        }
+
+        if ($version === '2.2' || $version === '2.2.0') {
+            return self::samplesDir() . 'ims/items/2_2/' . $uri;
+        }
+
+        if ($version === '2.2.1') {
+            return self::samplesDir() . 'ims/items/2_2_1/' . $uri;
+        }
+
+        if ($version === '2.2.2') {
+            return self::samplesDir() . 'ims/items/2_2_2/' . $uri;
+        }
+
+        if ($version === '2.2.3') {
+            return self::samplesDir() . 'ims/items/2_2_3/' . $uri;
+        }
+
+        if ($version === '2.2.4') {
+            return self::samplesDir() . 'ims/items/2_2_4/' . $uri;
+        }
+
+        if ($version === '3.0.0') {
+            return self::samplesDir() . 'ims/items/3_0/' . $uri;
+        }
+
+        return self::samplesDir() . 'ims/items/2_0/' . $uri;
     }
 }
