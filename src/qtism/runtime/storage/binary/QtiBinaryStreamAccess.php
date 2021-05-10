@@ -924,7 +924,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     public function readRouteItem(AssessmentTestSeeker $seeker)
     {
         try {
-            $occurence = $this->readTinyInt();
+            $occurrence = $this->readTinyInt();
             /** @var AssessmentItemRef $itemRef */
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
             /** @var TestPart $testPart */
@@ -952,7 +952,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             }
 
             $routeItem = new RouteItem($itemRef, $sections, $testPart, $seeker->getAssessmentTest());
-            $routeItem->setOccurence($occurence);
+            $routeItem->setOccurence($occurrence);
             $routeItem->setBranchRules($branchRules);
             $routeItem->setPreConditions($preConditions);
 
@@ -1035,10 +1035,10 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             /** @var AssessmentItemRef $itemRef */
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
 
-            // Read the occurence number.
-            $occurence = $this->readTinyInt();
+            // Read the occurrence number.
+            $occurrence = $this->readTinyInt();
 
-            return new PendingResponses($state, $itemRef, $occurence);
+            return new PendingResponses($state, $itemRef, $occurrence);
         } catch (BinaryStreamAccessException $e) {
             $msg = 'An error occurred while reading some pending responses.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
@@ -1060,7 +1060,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             $state = $pendingResponses->getState();
             $itemRef = $pendingResponses->getAssessmentItemRef();
-            $occurence = $pendingResponses->getOccurence();
+            $occurrence = $pendingResponses->getOccurence();
 
             // Write the state.
             $responseDeclarations = $itemRef->getResponseDeclarations();
@@ -1081,8 +1081,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             // Write the assessmentItemRef.
             $this->writeShort($seeker->seekPosition($itemRef));
 
-            // Write the occurence number.
-            $this->writeTinyInt($occurence);
+            // Write the occurrence number.
+            $this->writeTinyInt($occurrence);
         } catch (BinaryStreamAccessException $e) {
             $msg = 'An error occurred while reading some pending responses.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
