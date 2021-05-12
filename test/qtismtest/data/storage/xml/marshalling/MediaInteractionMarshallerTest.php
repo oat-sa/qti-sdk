@@ -18,8 +18,8 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
     public function testMarshall()
     {
         $object = new ObjectElement('my-video.mp4', 'video/mp4');
-        $object->setWidth(400);
-        $object->setHeight(300);
+        $object->setWidth('400');
+        $object->setHeight('300');
 
         $mediaInteraction = new MediaInteraction('RESPONSE', false, $object, 'my-media');
         $mediaInteraction->setMinPlays(1);

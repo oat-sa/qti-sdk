@@ -21,8 +21,8 @@ class PositionObjectInteractionTest extends QtiSmTestCase
         $div = new Div();
         $div->setContent(new FlowCollection([new TextRun('content...')]));
         $object = new ObjectElement('myimg.jpg', 'image/jpeg');
-        $object->setWidth(400);
-        $object->setHeight(300);
+        $object->setWidth('400');
+        $object->setHeight('300');
 
         $positionObjectInteraction = new PositionObjectInteraction('RESPONSE', $object, 'my-pos');
 

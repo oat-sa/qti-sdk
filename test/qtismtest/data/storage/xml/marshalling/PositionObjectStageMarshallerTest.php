@@ -18,8 +18,8 @@ class PositionObjectStageMarshallerTest extends QtiSmTestCase
     public function testMarshall()
     {
         $interactionObject = new ObjectElement('airplane.jpg', 'image/jpeg');
-        $interactionObject->setHeight(16);
-        $interactionObject->setWidth(16);
+        $interactionObject->setHeight('16');
+        $interactionObject->setWidth('16');
 
         $interaction = new PositionObjectInteraction('RESPONSE', $interactionObject);
         $interaction->setCenterPoint(new QtiPoint(8, 8));

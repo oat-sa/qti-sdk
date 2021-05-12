@@ -25,6 +25,7 @@ namespace qtism\common\utils;
 
 use DateInterval;
 use Exception;
+use InvalidArgumentException;
 use qtism\common\utils\data\CharacterMap;
 use ValueError;
 
@@ -602,15 +603,54 @@ class Format
      * @param mixed $length A length as a string or integer.
      * @return bool
      */
-    public static function isXhtmlLength($length)
+    public static function isXhtmlLength($length): bool
     {
         if (is_int($length)) {
             return $length >= 0;
-        } elseif (is_string($length)) {
-            return preg_match('/^[0-9]+%?$/', $length) === 1;
-        } else {
-            return false;
         }
+
+        if (is_string($length)) {
+            return preg_match('/^[0-9]+%?$/', $length) === 1;
+        }
+
+        return false;
+    }
+
+    /**
+     * Sanitize length to positive integer with optional percent sign or
+     * special value for non-set length.
+     *
+     * Authorized values are:
+     * * positive integers as strings or integers
+     * * strings containing positive integer and "%" sign
+     * * null and -1 (kept for backward compatibility) for a length non set.
+     *
+     * @param mixed $length length to sanitize
+     * @param string $argumentName argument name for exception message
+     * @return string|null length as string or null if not set
+     * @throws InvalidArgumentException when the length is not valid
+     */
+    public static function sanitizeXhtmlLength($length, string $argumentName): ?string
+    {
+        // Allows -1 as former null value still existing in compiled items.
+        if ($length === null || $length === -1) {
+            return null;
+        }
+
+        if (self::isXhtmlLength($length)) {
+            return (string)$length;
+        }
+
+        $given = is_string($length) || is_int($length) || is_float($length)
+            ? $length
+            : gettype($length);
+        throw new InvalidArgumentException(
+            sprintf(
+                'The "%s" argument must be a positive integer with optional percent sign, "%s" given.',
+                $argumentName,
+                $given
+            )
+        );
     }
 
     /**

@@ -68,20 +68,28 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     private $type;
 
     /**
-     * The width. -1 means no height was provided.
+     * The object's width attribute.
      *
-     * @var string|int
+     * The value of this attribute can be:
+     * * a string: a percentage e.g. "10%" or a length in pixels e.g. 10
+     * * null: no width is set
+     *
+     * @var string|null
      * @qtism-bean-property
      */
-    private $width = -1;
+    private $width;
 
     /**
-     * The height. -1 means no height was provided.
+     * The object's height attribute.
      *
-     * @var string|int
+     * The value of this attribute can be:
+     * * a string: a percentage e.g. "10%" or a length in pixels e.g. 10
+     * * null: no height is set
+     *
+     * @var string|null
      * @qtism-bean-property
      */
-    private $height = -1;
+    private $height;
 
     /**
      * Create a new ObjectElement object.
@@ -99,8 +107,6 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
         parent::__construct($id, $class, $lang, $label);
         $this->setData($data);
         $this->setType($type);
-        $this->setWidth(-1);
-        $this->setHeight(-1);
         $this->setContent(new ObjectFlowCollection());
     }
 
@@ -157,80 +163,45 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     }
 
     /**
-     * Set the width of the object.
+     * Set the width of the object. A null value unsets width.
      *
-     * A negative value describes that no width is provided.
-     *
-     * @param mixed $width A width.
-     * @throws InvalidArgumentException
+     * @param mixed $width
+     * @throws InvalidArgumentException when $width is not valid.
      */
-    public function setWidth($width)
+    public function setWidth($width): void
     {
-        if ($width === -1 || Format::isXhtmlLength($width)) {
-            $this->width = $width;
-        } else {
-            $msg = "The 'width' argument must be a valid XHTML Length, '" . $width . "' given.";
-            throw new InvalidArgumentException($msg);
-        }
+        $this->width = Format::sanitizeXhtmlLength($width, 'width');
     }
 
-    /**
-     * Get the width of the object.
-     *
-     * A negative value describes that no width is provided.
-     *
-     * @return string|int A width.
-     */
-    public function getWidth()
+    public function getWidth(): ?string
     {
         return $this->width;
     }
 
-    /**
-     * Whether a width is defined for the object.
-     *
-     * @return bool.
-     */
-    public function hasWidth()
+    public function hasWidth(): bool
     {
-        return $this->width >= 0;
+        return $this->width !== null;
     }
 
     /**
-     * Set the height of the object.
+     * Set the height of the object. A null value unsets height.
      *
-     * A negative value describes that no height is provided.
-     *
-     * @param mixed $height A height.
-     * @throws InvalidArgumentException If $height is not an integer value.
+     * @param mixed $height
+     * @throws InvalidArgumentException when $height is not valid.
      */
-    public function setHeight($height)
+    public function setHeight($height): void
     {
-        if ($height === -1 || Format::isXhtmlLength($height)) {
-            $this->height = $height;
-        } else {
-            $msg = "The 'height' argument must be a valid XHTML Length, '" . $height . "' given.";
-            throw new InvalidArgumentException($msg);
-        }
+        $this->height = Format::sanitizeXhtmlLength($height, 'height');
     }
 
-    /**
-     * Get the width of the object. A negative value describes that no height is
-     * provided.
-     *
-     * @return string|int A height.
-     */
-    public function getHeight()
+    public function getHeight(): ?string
     {
         return $this->height;
     }
 
-    /**
-     * Whether the object has a height.
-     */
-    public function hasHeight()
+    public function hasHeight(): bool
     {
-        return $this->height >= 0;
+        return $this->height !== null;
     }
 
     /**
