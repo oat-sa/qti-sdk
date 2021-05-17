@@ -77,12 +77,53 @@ class BodyElementTest extends QtiSmTestCase
         $span->setId(999);
     }
 
-    public function testVeryLongClass()
+    /**
+     * @dataProvider validClassesToTest
+     * @param mixed $class
+     */
+    public function testSetClassWithValidClass($class): void
     {
-        $wrongClass = 'x-tao-upload-type-application_zip x-tao-upload-type-text_plain x-tao-upload-type-application_pdf x-tao-upload-type-image_jpeg x-tao-upload-type-image_png x-tao-upload-type-image_gif x-tao-upload-type-image_svg+xml x-tao-upload-type-audio_mpeg x-tao-upload-type-audio_x-ms-wma x-tao-upload-type-audio_x-wav x-tao-upload-type-video_mpeg x-tao-upload-type-video_mp4 x-tao-upload-type-video_quicktime x-tao-upload-type-video_x-ms-wmv x-tao-upload-type-video_x-flv x-tao-upload-type-text_csv x-tao-upload-type-application_msword x-tao-upload-type-application_vnd.ms-excel x-tao-upload-type-application_vnd.ms-powerpoint x-tao-upload-type-application_vnd.oasis.opendocument.text x-tao-upload-type-application_vnd.oasis.opendocument.spreadsheet x-tao-upload-type-text_x-c x-tao-upload-type-text_x-csrc x-tao-upload-type-text_pascal x-tao-upload-type-video_avi x-tao-upload-type-image_bmp x-tao-upload-type-text_css x-tao-upload-type-image_x-emf x-tao-upload-type-application_vnd.geogebra.file x-tao-upload-type-text_x-h x-tao-upload-type-application_winhlp x-tao-upload-type-text_html x-tao-upload-type-text_javascript x-tao-upload-type-application_vnd.ms-access x-tao-upload-type-image_vnd.ms-modi x-tao-upload-type-multipart_related x-tao-upload-type-application_base64 x-tao-upload-type-audio_x-m4a x-tao-upload-type-video_x-sgi-movie x-tao-upload-type-application_vnd.ms-project x-tao-upload-type-application_vnd.oasis.opendocument.database x-tao-upload-type-application_vnd.oasis.opendocument.presentation x-tao-upload-type-application_vnd.oasis.opendocument.text-template x-tao-upload-type-application_octet-stream x-tao-upload-type-application_vnd.rn-realmedia x-tao-upload-type-application_rtf x-tao-upload-type-application_vnd.sun.xml.writer.template x-tao-upload-type-application_x-shockwave-flash x-tao-upload-type-application_x-sibelius-score x-tao-upload-type-application_x-tar x-tao-upload-type-application_vnd.sun.xml.calc x-tao-upload-type-application_vnd.sun.xml.writer x-tao-upload-type-application_x-tex x-tao-upload-type-image_tiff x-tao-upload-type-application_vnd.visio x-tao-upload-type-application_vnd.ms-works x-tao-upload-type-image_x-wmf x-tao-upload-type-application_x-mswrite x-tao-upload-type-text_xml x-tao-upload-type-application_vnd.ms-xpsdocument x-tao-upload-type-application_x-7z-compressed x-tao-upload-type-application_x-gzip x-tao-upload-type-application_x-rar-compressed x-tao-upload-type-application_x-tar x-tao-upload-type-application_x-compress';
-        $span = new Span('', $wrongClass);
+        $span = new Span('', $class);
+        $span->setClass($class);
 
-        $this::assertSame($wrongClass, $span->getClass());
+        $this::assertSame(trim($class), $span->getClass());
+    }
+
+    public function validClassesToTest(): array
+    {
+        return [
+            ['x-tao-upload-type-application_zip x-tao-upload-type-text_plain x-tao-upload-type-application_pdf x-tao-upload-type-image_jpeg x-tao-upload-type-image_png x-tao-upload-type-image_gif x-tao-upload-type-image_svg+xml x-tao-upload-type-audio_mpeg x-tao-upload-type-audio_x-ms-wma x-tao-upload-type-audio_x-wav x-tao-upload-type-video_mpeg x-tao-upload-type-video_mp4 x-tao-upload-type-video_quicktime x-tao-upload-type-video_x-ms-wmv x-tao-upload-type-video_x-flv x-tao-upload-type-text_csv x-tao-upload-type-application_msword x-tao-upload-type-application_vnd.ms-excel x-tao-upload-type-application_vnd.ms-powerpoint x-tao-upload-type-application_vnd.oasis.opendocument.text x-tao-upload-type-application_vnd.oasis.opendocument.spreadsheet x-tao-upload-type-text_x-c x-tao-upload-type-text_x-csrc x-tao-upload-type-text_pascal x-tao-upload-type-video_avi x-tao-upload-type-image_bmp x-tao-upload-type-text_css x-tao-upload-type-image_x-emf x-tao-upload-type-application_vnd.geogebra.file x-tao-upload-type-text_x-h x-tao-upload-type-application_winhlp x-tao-upload-type-text_html x-tao-upload-type-text_javascript x-tao-upload-type-application_vnd.ms-access x-tao-upload-type-image_vnd.ms-modi x-tao-upload-type-multipart_related x-tao-upload-type-application_base64 x-tao-upload-type-audio_x-m4a x-tao-upload-type-video_x-sgi-movie x-tao-upload-type-application_vnd.ms-project x-tao-upload-type-application_vnd.oasis.opendocument.database x-tao-upload-type-application_vnd.oasis.opendocument.presentation x-tao-upload-type-application_vnd.oasis.opendocument.text-template x-tao-upload-type-application_octet-stream x-tao-upload-type-application_vnd.rn-realmedia x-tao-upload-type-application_rtf x-tao-upload-type-application_vnd.sun.xml.writer.template x-tao-upload-type-application_x-shockwave-flash x-tao-upload-type-application_x-sibelius-score x-tao-upload-type-application_x-tar x-tao-upload-type-application_vnd.sun.xml.calc x-tao-upload-type-application_vnd.sun.xml.writer x-tao-upload-type-application_x-tex x-tao-upload-type-image_tiff x-tao-upload-type-application_vnd.visio x-tao-upload-type-application_vnd.ms-works x-tao-upload-type-image_x-wmf x-tao-upload-type-application_x-mswrite x-tao-upload-type-text_xml x-tao-upload-type-application_vnd.ms-xpsdocument x-tao-upload-type-application_x-7z-compressed x-tao-upload-type-application_x-gzip x-tao-upload-type-application_x-rar-compressed x-tao-upload-type-application_x-tar x-tao-upload-type-application_x-compress'],
+            ['custom-text-box '],
+            [''],
+            [' '],
+            // todo: check that it's intended to be that permissive.
+            ['   e v e n   that kind of things */4231\'"("        -(&é(   '],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidClassesToTest
+     * @param mixed $class the class to set
+     * @param string|null $message the expected message or null if identical to $class to set
+     */
+    public function testSetClassWithInvalidClass($class, string $message = null): void
+    {
+        $span = new Span();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "class" argument must be a valid class name, "' . $message ?? $class . '" given');
+
+        $span->setClass($class);
+    }
+
+    public function invalidClassesToTest(): array
+    {
+        return [
+            [999, 'integer'],
+            [[999], 'array'],
+            ["a\tb"],
+            ["  a\tb  "],
+        ];
     }
 
     public function testSetLabelWrongType()

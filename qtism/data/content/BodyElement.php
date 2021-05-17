@@ -215,13 +215,19 @@ abstract class BodyElement extends QtiComponent
      */
     public function setClass($class = '')
     {
-        $class = trim($class);
-        if (is_string($class) && (empty($class) || Format::isClass($class) === true)) {
-            $this->class = $class;
-        } else {
-            $msg = "The 'class' argument must be a valid class name, '" . $class . "' given";
+        if (!is_string($class)) {
+            $msg = 'The "class" argument must be a valid class name, "' . gettype($class) . '" given';
             throw new InvalidArgumentException($msg);
         }
+
+        $class = trim($class);
+
+        if ($class !== '' && !Format::isClass($class)) {
+            $msg = 'The "class" argument must be a valid class name, "' . $class . '" given';
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->class = $class;
     }
 
     /**
