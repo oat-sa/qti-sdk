@@ -44,13 +44,21 @@ use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\IStream;
 use qtism\common\storage\StreamAccessException;
+use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSectionCollection;
+use qtism\data\IAssessmentItem;
+use qtism\data\ItemSessionControl;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreConditionCollection;
+use qtism\data\state\OutcomeDeclaration;
+use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\Shuffling;
 use qtism\data\state\ShufflingCollection;
 use qtism\data\state\ShufflingGroup;
 use qtism\data\state\ShufflingGroupCollection;
+use qtism\data\state\TemplateDeclaration;
+use qtism\data\state\VariableDeclaration;
+use qtism\data\TestPart;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -60,6 +68,8 @@ use qtism\runtime\common\State;
 use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\common\Utils;
 use qtism\runtime\common\Variable;
+use qtism\runtime\common\VariableFactory;
+use qtism\runtime\common\VariableFactoryInterface;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\tests\AssessmentItemSession;
@@ -72,16 +82,25 @@ use qtism\runtime\tests\RouteItem;
  */
 class QtiBinaryStreamAccess extends BinaryStreamAccess
 {
-    const RW_VALUE = 0;
+    public const RW_VALUE = 0;
+    public const RW_DEFAULTVALUE = 1;
+    public const RW_CORRECTRESPONSE = 2;
 
-    const RW_DEFAULTVALUE = 1;
+    private const ENCODED_OUTCOME_DECLARATION = 0;
+    private const ENCODED_RESPONSE_DECLARATION = 1;
+    private const ENCODED_TEMPLATE_DECLARATION = 2;
 
-    const RW_CORRECTRESPONSE = 2;
+    private const VARIABLE_DECLARATION_TYPES = [
+        self::ENCODED_OUTCOME_DECLARATION => 'outcomeDeclaration',
+        self::ENCODED_RESPONSE_DECLARATION => 'responseDeclaration',
+        self::ENCODED_TEMPLATE_DECLARATION => 'templateDeclaration',
+    ];
 
-    /**
-     * @var FileManager
-     */
+    /** @var FileManager */
     private $fileManager;
+
+    /** @var VariableFactoryInterface */
+    private $variableFactory;
 
     /**
      * Create a new QtiBinaryStreamAccess object.
@@ -90,10 +109,14 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * @param FileManager $fileManager The FileManager object to handle file variable.
      * @throws StreamAccessException
      */
-    public function __construct(IStream $stream, FileManager $fileManager)
-    {
+    public function __construct(
+        IStream $stream,
+        FileManager $fileManager,
+        VariableFactoryInterface $variableFactory = null
+    ) {
         parent::__construct($stream);
         $this->setFileManager($fileManager);
+        $this->variableFactory = $variableFactory ?? new VariableFactory();
     }
 
     /**
@@ -689,6 +712,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     ) {
         try {
             $itemRefPosition = $this->readShort();
+            /** @var IAssessmentItem $assessmentItemRef */
             $assessmentItemRef = $seeker->seekComponent('assessmentItemRef', $itemRefPosition);
 
             $session = $manager->createAssessmentItemSession($assessmentItemRef);
@@ -699,6 +723,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $session->setAttempting($this->readBoolean());
 
             if ($this->readBoolean() === true) {
+                /** @var ItemSessionControl $itemSessionControl */
                 $itemSessionControl = $seeker->seekComponent('itemSessionControl', $this->readShort());
                 $session->setItemSessionControl($itemSessionControl);
             }
@@ -720,34 +745,33 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             for ($i = 0; $i < $varCount; $i++) {
                 // For each of these variables...
 
-                // Detect the nature of the variable
-                // 0 = outcomeVariable, 1 = responseVariable, 2 = templateVariable
-                $varNature = $this->readShort();
+                /**
+                 * Detect the type of the variable
+                 * @see QtiBinaryStreamAccess::VARIABLE_DECLARATION_TYPES
+                 */
+                $variableType = $this->decodeVariableDeclarationType(
+                    $this->readShort()
+                );
 
                 // Read the position of the associated variableDeclaration
                 // in the assessment tree.
                 $varPosition = $this->readShort();
 
-                $variable = null;
-
                 try {
-                    if ($varNature === 0) {
-                        // outcome
-                        $variable = $seeker->seekComponent('outcomeDeclaration', $varPosition);
-                        $variable = OutcomeVariable::createFromDataModel($variable);
-                    } elseif ($varNature === 1) {
-                        // response
-                        $variable = $seeker->seekComponent('responseDeclaration', $varPosition);
-                        $variable = ResponseVariable::createFromDataModel($variable);
-                    } elseif ($varNature === 2) {
-                        // template
-                        $variable = $seeker->seekComponent('templateDeclaration', $varPosition);
-                        $variable = TemplateVariable::createFromDataModel($variable);
-                    }
+                    /** @var VariableDeclaration $variableDeclaration */
+                    $variableDeclaration = $seeker->seekComponent($variableType, $varPosition);
                 } catch (OutOfBoundsException $e) {
                     $msg = "No variable found at position ${varPosition} in the assessmentTest tree structure.";
-                    throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
+                    throw new QtiBinaryStreamAccessException(
+                        $msg,
+                        $this,
+                        QtiBinaryStreamAccessException::ITEM_SESSION,
+                        $e
+                    );
                 }
+
+                $variable = $session->getVariable($variableDeclaration->getIdentifier())
+                    ?? $this->variableFactory->createFromDataModel($variableDeclaration);
 
                 // If we are here, we have our variable. We can read its value(s).
 
@@ -840,17 +864,20 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 if (in_array($varId, ['numAttempts', 'duration', 'completionStatus']) === false) {
                     $var = $session->getVariable($varId);
                     if ($var instanceof OutcomeVariable) {
+                        /** @var OutcomeDeclaration $variableDeclaration */
                         $variableDeclaration = $itemOutcomes[$varId];
                         $variable = OutcomeVariable::createFromDataModel($variableDeclaration);
-                        $varNature = 0;
+                        $varNature = self::ENCODED_OUTCOME_DECLARATION;
                     } elseif ($var instanceof ResponseVariable) {
+                        /** @var ResponseDeclaration $variableDeclaration */
                         $variableDeclaration = $itemResponses[$varId];
                         $variable = ResponseVariable::createFromDataModel($variableDeclaration);
-                        $varNature = 1;
+                        $varNature = self::ENCODED_RESPONSE_DECLARATION;
                     } elseif ($var instanceof TemplateVariable) {
+                        /** @var TemplateDeclaration $variableDeclaration */
                         $variableDeclaration = $itemTemplates[$varId];
                         $variable = TemplateVariable::createFromDataModel($variableDeclaration);
-                        $varNature = 2;
+                        $varNature = self::ENCODED_TEMPLATE_DECLARATION;
                     }
 
                     $this->writeShort($varNature);
@@ -905,8 +932,10 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     public function readRouteItem(AssessmentTestSeeker $seeker)
     {
         try {
-            $occurence = $this->readTinyInt();
+            $occurrence = $this->readTinyInt();
+            /** @var AssessmentItemRef $itemRef */
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
+            /** @var TestPart $testPart */
             $testPart = $seeker->seekComponent('testPart', $this->readShort());
 
             $sectionsCount = $this->readTinyInt();
@@ -931,7 +960,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             }
 
             $routeItem = new RouteItem($itemRef, $sections, $testPart, $seeker->getAssessmentTest());
-            $routeItem->setOccurence($occurence);
+            $routeItem->setOccurence($occurrence);
             $routeItem->setBranchRules($branchRules);
             $routeItem->setPreConditions($preConditions);
 
@@ -1003,6 +1032,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $varCount = $this->readTinyInt();
 
             for ($i = 0; $i < $varCount; $i++) {
+                /** @var ResponseDeclaration $responseDeclaration */
                 $responseDeclaration = $seeker->seekComponent('responseDeclaration', $this->readShort());
                 $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
                 $this->readVariableValue($responseVariable);
@@ -1010,12 +1040,13 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             }
 
             // Read the assessmentItemRef.
+            /** @var AssessmentItemRef $itemRef */
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
 
-            // Read the occurence number.
-            $occurence = $this->readTinyInt();
+            // Read the occurrence number.
+            $occurrence = $this->readTinyInt();
 
-            return new PendingResponses($state, $itemRef, $occurence);
+            return new PendingResponses($state, $itemRef, $occurrence);
         } catch (BinaryStreamAccessException $e) {
             $msg = 'An error occurred while reading some pending responses.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
@@ -1037,7 +1068,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             $state = $pendingResponses->getState();
             $itemRef = $pendingResponses->getAssessmentItemRef();
-            $occurence = $pendingResponses->getOccurence();
+            $occurrence = $pendingResponses->getOccurence();
 
             // Write the state.
             $responseDeclarations = $itemRef->getResponseDeclarations();
@@ -1058,8 +1089,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             // Write the assessmentItemRef.
             $this->writeShort($seeker->seekPosition($itemRef));
 
-            // Write the occurence number.
-            $this->writeTinyInt($occurence);
+            // Write the occurrence number.
+            $this->writeTinyInt($occurrence);
         } catch (BinaryStreamAccessException $e) {
             $msg = 'An error occurred while reading some pending responses.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
@@ -1154,5 +1185,21 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $msg = 'An error occurred while writing the path.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PATH, $e);
         }
+    }
+
+    /**
+     * @param int $encodedType An encoded variable declaration type
+     *
+     * @return string A decoded variable declaration type
+     *
+     * @throws InvalidArgumentException
+     */
+    private function decodeVariableDeclarationType(int $encodedType): string
+    {
+        if (!isset(self::VARIABLE_DECLARATION_TYPES[$encodedType])) {
+            throw new InvalidArgumentException("`$encodedType` is not a known encoded variable declaration type.");
+        }
+
+        return self::VARIABLE_DECLARATION_TYPES[$encodedType];
     }
 }
