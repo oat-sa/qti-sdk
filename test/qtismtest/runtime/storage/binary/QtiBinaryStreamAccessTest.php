@@ -39,6 +39,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\common\Variable;
+use qtism\runtime\common\VariableFactory;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccessException;
 use qtism\runtime\storage\binary\QtiBinaryVersion;
@@ -70,7 +71,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     {
         $stream = new MemoryStream($binary);
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
         $access->readVariableValue($variable, $valueType);
 
         switch ($valueType) {
@@ -468,7 +469,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         // Empty stream.
         $stream = new MemoryStream('');
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $this->expectException(QtiBinaryStreamAccessException::class);
         $this->expectExceptionMessage('An error occurred while reading a Variable value.');
@@ -486,7 +487,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
 
         $stream = new MemoryStream($bin);
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $this->expectException(QtiBinaryStreamAccessException::class);
         $this->expectExceptionMessage("Datatype mismatch for variable 'VAR'.");
@@ -511,7 +512,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     {
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         switch ($valueType) {
             case QtiBinaryStreamAccess::RW_DEFAULTVALUE:
@@ -907,7 +908,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $bin = implode('', [$position, $state, $navigationMode, $submissionMode, $attempting, $hasItemSessionControl, $numAttempts, $duration, $completionStatus, $timeReference, $varCount, $score, $response]);
         $stream = new MemoryStream($bin);
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), ['assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl']);
 
         $version = $this->createVersionMock(2);
@@ -938,7 +939,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), ['assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl']);
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $session = $this->createAssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'));
         $session->beginItemSession();
@@ -967,7 +968,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), ['assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'templateDeclaration', 'itemSessionControl']);
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $session = $this->createAssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q01'));
         $session->beginItemSession();
@@ -996,7 +997,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), ['assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl']);
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $session = $this->createAssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q02'));
         $session->beginItemSession();
@@ -1028,7 +1029,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), ['assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl']);
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         // Make the item session control a non-default one.
         $itemSessionControl = new ItemSessionControl();
@@ -1060,7 +1061,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), ['assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl']);
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $doc->getDocumentComponent()->getComponentByIdentifier('Q02')->getResponseDeclarations()['RESPONSE']->setCorrectResponse(
             new CorrectResponse(
@@ -1098,7 +1099,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $wrongSeeker = new AssessmentTestSeeker($doc2->getDocumentComponent(), ['assessmentItemRef', 'outcomeDeclaration', 'responseDeclaration', 'itemSessionControl']);
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $session = $this->createAssessmentItemSession($doc->getDocumentComponent()->getComponentByIdentifier('Q01'));
         $session->beginItemSession();
@@ -1126,7 +1127,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
 
         $stream = new MemoryStream($bin);
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $version = $this->createVersionMock(3);
         $routeItem = $access->readRouteItem($seeker, $version);
@@ -1148,7 +1149,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), ['assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition']);
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         // Get route item at index 2 which is the route item describing
         // item occurence 0 of Q03.
@@ -1186,7 +1187,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
 
         $stream = new MemoryStream($bin);
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $pendingResponses = $access->readPendingResponses($seeker);
         $state = $pendingResponses->getState();
@@ -1209,7 +1210,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $seeker = new AssessmentTestSeeker($doc->getDocumentComponent(), ['assessmentItemRef', 'assessmentSection', 'testPart', 'outcomeDeclaration', 'responseDeclaration', 'branchRule', 'preCondition']);
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $factory = new SessionManager();
         $session = $factory->createAssessmentTestSession($doc->getDocumentComponent());
@@ -1236,7 +1237,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     {
         $stream = new MemoryStream('');
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $this->expectException(QtiBinaryStreamAccessException::class);
         $this->expectExceptionMessage('An error occurred while reading a Record Field.');
@@ -1248,7 +1249,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     {
         $stream = new MemoryStream('');
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $this->expectException(QtiBinaryStreamAccessException::class);
         $this->expectExceptionMessage('An error occurred while reading an identifier.');
@@ -1260,7 +1261,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     {
         $stream = new MemoryStream('');
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $this->expectException(QtiBinaryStreamAccessException::class);
         $this->expectExceptionMessage('An error occurred while reading a point.');
@@ -1272,7 +1273,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     {
         $stream = new MemoryStream('');
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $this->expectException(QtiBinaryStreamAccessException::class);
         $this->expectExceptionMessage('An error occurred while reading a pair.');
@@ -1284,7 +1285,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     {
         $stream = new MemoryStream('');
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $this->expectException(QtiBinaryStreamAccessException::class);
         $this->expectExceptionMessage('An error occurred while reading a directedPair.');
@@ -1296,7 +1297,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     {
         $stream = new MemoryStream('');
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $this->expectException(QtiBinaryStreamAccessException::class);
         $this->expectExceptionMessage('An error occurred while reading a duration.');
@@ -1308,7 +1309,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     {
         $stream = new MemoryStream('');
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $this->expectException(QtiBinaryStreamAccessException::class);
         $this->expectExceptionMessage('An error occurred while reading a URI.');
@@ -1320,7 +1321,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     {
         $stream = new MemoryStream('');
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $this->expectException(QtiBinaryStreamAccessException::class);
         $this->expectExceptionMessage('An error occurred while reading an intOrIdentifier.');

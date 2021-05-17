@@ -7,6 +7,7 @@ use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\MemoryStream;
 use qtism\common\storage\MemoryStreamException;
 use qtism\common\storage\StreamAccessException;
+use qtism\runtime\common\VariableFactory;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
 use qtism\runtime\storage\binary\QtiBinaryVersion;
 use qtismtest\QtiSmTestCase;
@@ -20,7 +21,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
     {
         $stream = new MemoryStream();
         $stream->open();
-        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        $access = new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
 
         $subject = new QtiBinaryVersion();
         $subject->persist($access);
@@ -167,6 +168,6 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         }
         $stream = new MemoryStream($binary);
         $stream->open();
-        return new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        return new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
     }
 }

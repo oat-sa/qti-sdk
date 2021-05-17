@@ -27,6 +27,7 @@ use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\storage\IStream;
 use qtism\common\storage\MemoryStream;
 use qtism\common\storage\StreamAccessException;
+use qtism\runtime\common\VariableFactory;
 use qtism\runtime\tests\AssessmentTestSession;
 use RuntimeException;
 
@@ -88,6 +89,6 @@ class TemporaryQtiBinaryStorage extends AbstractQtiBinaryStorage
      */
     protected function createBinaryStreamAccess(IStream $stream)
     {
-        return new QtiBinaryStreamAccess($stream, new FileSystemFileManager());
+        return new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
     }
 }

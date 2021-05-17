@@ -43,10 +43,15 @@ use qtism\common\storage\BinaryStreamAccess;
 use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\IStream;
 use qtism\common\storage\StreamAccessException;
+use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSectionCollection;
+use qtism\data\IAssessmentItem;
+use qtism\data\ItemSessionControl;
 use qtism\data\rules\BranchRuleCollection;
 use qtism\data\rules\PreConditionCollection;
-use qtism\data\state\OutcomeDeclaration;
+use qtism\data\state\ResponseDeclaration;
+use qtism\data\state\VariableDeclaration;
+use qtism\data\TestPart;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\OutcomeVariable;
@@ -55,6 +60,8 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\Utils;
 use qtism\runtime\common\Variable;
+use qtism\runtime\common\VariableFactory;
+use qtism\runtime\common\VariableFactoryInterface;
 use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\tests\AssessmentItemSession;
@@ -68,16 +75,15 @@ use qtism\runtime\tests\RouteItem;
  */
 class QtiBinaryStreamAccess extends BinaryStreamAccess
 {
-    const RW_VALUE = 0;
+    public const RW_VALUE = 0;
+    public const RW_DEFAULTVALUE = 1;
+    public const RW_CORRECTRESPONSE = 2;
 
-    const RW_DEFAULTVALUE = 1;
-
-    const RW_CORRECTRESPONSE = 2;
-
-    /**
-     * @var FileManager
-     */
+    /** @var FileManager */
     private $fileManager;
+
+    /** @var VariableFactoryInterface */
+    private $variableFactory;
 
     /**
      * Create a new QtiBinaryStreamAccess object.
@@ -86,10 +92,14 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * @param FileManager $fileManager The FileManager object to handle file variable.
      * @throws StreamAccessException
      */
-    public function __construct(IStream $stream, FileManager $fileManager)
-    {
+    public function __construct(
+        IStream $stream,
+        FileManager $fileManager,
+        VariableFactoryInterface $variableFactory = null
+    ) {
         parent::__construct($stream);
         $this->setFileManager($fileManager);
+        $this->variableFactory = $variableFactory ?? new VariableFactory();
     }
 
     /**
@@ -578,6 +588,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     ) {
         try {
             $itemRefPosition = $this->readShort();
+            /** @var IAssessmentItem $assessmentItemRef */
             $assessmentItemRef = $seeker->seekComponent('assessmentItemRef', $itemRefPosition);
 
             $session = $manager->createAssessmentItemSession($assessmentItemRef);
@@ -592,6 +603,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             }
 
             if ($this->readBoolean() === true) {
+                /** @var ItemSessionControl $itemSessionControl */
                 $itemSessionControl = $seeker->seekComponent('itemSessionControl', $this->readShort());
                 $session->setItemSessionControl($itemSessionControl);
             }
@@ -615,16 +627,24 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $isOutcome = $this->readBoolean();
                 $varPosition = $this->readShort();
 
-                $variable = null;
-
                 try {
-                    $variable = $seeker->seekComponent(($isOutcome === true) ? 'outcomeDeclaration' : 'responseDeclaration', $varPosition);
+                    /** @var VariableDeclaration $variableDeclaration */
+                    $variableDeclaration = $seeker->seekComponent(
+                        ($isOutcome === true) ? 'outcomeDeclaration' : 'responseDeclaration',
+                        $varPosition
+                    );
                 } catch (OutOfBoundsException $e) {
                     $msg = "No variable found at position ${varPosition} in the assessmentTest tree structure.";
-                    throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
+                    throw new QtiBinaryStreamAccessException(
+                        $msg,
+                        $this,
+                        QtiBinaryStreamAccessException::ITEM_SESSION,
+                        $e
+                    );
                 }
 
-                $variable = ($variable instanceof OutcomeDeclaration) ? OutcomeVariable::createFromDataModel($variable) : ResponseVariable::createFromDataModel($variable);
+                $variable = $session->getVariable($variableDeclaration->getIdentifier())
+                    ?? $this->variableFactory->createFromDataModel($variableDeclaration);
 
                 // If we are here, we have our variable.
                 $this->readVariableValue($variable);
@@ -686,6 +706,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 if (in_array($varId, ['numAttempts', 'duration', 'completionStatus']) === false) {
                     $var = $session->getVariable($varId);
                     $isOutcome = $var instanceof OutcomeVariable;
+                    /** @var VariableDeclaration $variableDeclaration */
                     $variableDeclaration = ($isOutcome === true) ? $itemOutcomes[$varId] : $itemResponses[$varId];
 
                     try {
@@ -719,7 +740,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     public function readRouteItem(AssessmentTestSeeker $seeker, QtiBinaryVersion $version)
     {
         try {
-            $occurence = $this->readTinyInt();
+            $occurrence = $this->readTinyInt();
+            /** @var AssessmentItemRef $itemRef */
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
 
             // Prior to version 3, only a singe assessmentSection might be bound to the RouteItem.
@@ -727,6 +749,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $sections = $seeker->seekComponent('assessmentSection', $this->readShort());
             }
 
+            /** @var TestPart $testPart */
             $testPart = $seeker->seekComponent('testPart', $this->readShort());
 
             // From version 3, multiple assessmentSections might be bound to the RouteItem.
@@ -754,7 +777,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             }
 
             $routeItem = new RouteItem($itemRef, $sections, $testPart, $seeker->getAssessmentTest());
-            $routeItem->setOccurence($occurence);
+            $routeItem->setOccurence($occurrence);
             $routeItem->setBranchRules($branchRules);
             $routeItem->setPreConditions($preConditions);
 
@@ -826,6 +849,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $varCount = $this->readTinyInt();
 
             for ($i = 0; $i < $varCount; $i++) {
+                /** @var ResponseDeclaration $responseDeclaration */
                 $responseDeclaration = $seeker->seekComponent('responseDeclaration', $this->readShort());
                 $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
                 $this->readVariableValue($responseVariable);
@@ -833,12 +857,13 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             }
 
             // Read the assessmentItemRef.
+            /** @var AssessmentItemRef $itemRef */
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
 
-            // Read the occurence number.
-            $occurence = $this->readTinyInt();
+            // Read the occurrence number.
+            $occurrence = $this->readTinyInt();
 
-            return new PendingResponses($state, $itemRef, $occurence);
+            return new PendingResponses($state, $itemRef, $occurrence);
         } catch (BinaryStreamAccessException $e) {
             $msg = 'An error occurred while reading some pending responses.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
@@ -860,7 +885,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         try {
             $state = $pendingResponses->getState();
             $itemRef = $pendingResponses->getAssessmentItemRef();
-            $occurence = $pendingResponses->getOccurence();
+            $occurrence = $pendingResponses->getOccurence();
 
             // Write the state.
             $responseDeclarations = $itemRef->getResponseDeclarations();
@@ -881,8 +906,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             // Write the assessmentItemRef.
             $this->writeShort($seeker->seekPosition($itemRef));
 
-            // Write the occurence number.
-            $this->writeTinyInt($occurence);
+            // Write the occurrence number.
+            $this->writeTinyInt($occurrence);
         } catch (BinaryStreamAccessException $e) {
             $msg = 'An error occurred while reading some pending responses.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
