@@ -19,16 +19,16 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @dataProvider validFileProvider
      * @param string $uri
      * @param string $expectedVersion
+     * @param bool $validate
      * @throws XmlStorageException
      */
-    public function testLoad($uri, $expectedVersion)
+    public function testLoad(string $uri, string $expectedVersion, bool $validate = false): void
     {
         $doc = new XmlDocument();
-        $doc->load($uri);
-        $this::assertEquals($expectedVersion, $doc->getVersion());
+        $doc->load($uri, $validate);
+        self::assertEquals($expectedVersion, $doc->getVersion());
 
-        $assessmentItem = $doc->getDocumentComponent();
-        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
+        self::assertInstanceOf(AssessmentItem::class, $doc->getDocumentComponent());
     }
 
     /**
@@ -54,24 +54,20 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws MarshallingException
      */
-    public function testWrite($uri, $expectedVersion)
+    public function testWrite(string $uri, string $expectedVersion): void
     {
         $doc = new XmlDocument();
         $doc->load($uri);
-        $this::assertEquals($expectedVersion, $doc->getVersion());
-
-        $assessmentItem = $doc->getDocumentComponent();
-        $this::assertInstanceOf(AssessmentItem::class, $assessmentItem);
 
         $file = tempnam('/tmp', 'qsm');
         $doc->save($file);
+        self::assertFileExists($file);
 
-        $this::assertFileExists($file);
-        $this->testLoad($file, $expectedVersion);
+        $this->testLoad($file, $expectedVersion, true);
 
         unlink($file);
         // Nobody else touched it?
-        $this::assertFileNotExists($file);
+        self::assertFileDoesNotExist($file);
     }
 
     /**
@@ -98,7 +94,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
 
         unlink($file);
         // Nobody else touched it?
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     public function testLoad224()
@@ -127,7 +123,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'ims/items/2_2_2/choice.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
 
         $this::assertEquals('2.2.2', $doc->getVersion());
 
@@ -138,7 +134,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
 
         $this::assertEquals('2.2.1', $doc->getVersion());
         $this::assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml'));
@@ -148,7 +144,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'ims/items/2_2/associate.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
 
         $this::assertEquals('2.2.0', $doc->getVersion());
     }
@@ -157,7 +153,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'custom/items/2_2/no_schema_location.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
 
         $this::assertEquals('2.2.0', $doc->getVersion());
     }
@@ -166,7 +162,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'ims/items/2_1_1/associate.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
 
         $this::assertEquals('2.1.1', $doc->getVersion());
     }
@@ -175,7 +171,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'ims/items/2_1/associate.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
 
         $this::assertEquals('2.1.0', $doc->getVersion());
     }
@@ -184,7 +180,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'custom/items/2_1/no_schema_location.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
 
         $this::assertEquals('2.1.0', $doc->getVersion());
     }
@@ -193,7 +189,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $file = self::samplesDir() . 'ims/items/2_0/associate.xml';
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
 
         $this::assertEquals('2.0.0', $doc->getVersion());
     }
@@ -207,7 +203,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $file = (empty($uri)) ? self::samplesDir() . 'ims/items/2_1/template.xml' : $uri;
 
         $doc = new XmlDocument();
-        $doc->load($file);
+        $doc->load($file, true);
 
         $item = $doc->getDocumentComponent();
 
@@ -252,7 +248,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this->testLoadTemplate($file);
 
         unlink($file);
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     /**
@@ -262,7 +258,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     public function testLoadPCIItem($url = '')
     {
         $doc = new XmlDocument();
-        $doc->load((empty($url)) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url);
+        $doc->load((empty($url)) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url, true);
         $item = $doc->getDocumentComponent();
 
         $this::assertInstanceOf(AssessmentItem::class, $item);
@@ -383,9 +379,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::decorateUri('choice.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('extended_text_rubric.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('extended_text.xml', '2.2.0'), '2.2.0'],
-            [self::decorateUri('feedbackblock_adaptive.xml', '2.2.0'), '2.2.0'],
+            // Removed because the 2.2.0 XSD is now looking correctly at the feedback->id atomicity!
+            //[self::decorateUri('feedbackblock_adaptive.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('feedbackblock_solution_random.xml', '2.2.0'), '2.2.0'],
-            [self::decorateUri('feedbackblock_templateblock.xml', '2.2.0'), '2.2.0'],
+            //[self::decorateUri('feedbackblock_templateblock.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('feedbackInline.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('gap_match.xml', '2.2.0'), '2.2.0'],
             [self::decorateUri('graphic_associate.xml', '2.2.0'), '2.2.0'],
@@ -449,7 +446,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
             [self::decorateUri('orkney2.xml', '2.1.1'), '2.1.1'],
             [self::decorateUri('nested_object.xml', '2.1.1'), '2.1.1'],
             [self::decorateUri('likert.xml', '2.1.1'), '2.1.1'],
-            [self::decorateUri('feedbackblock_templateblock.xml', '2.1.1'), '2.1.1'],
+            //[self::decorateUri('feedbackblock_templateblock.xml', '2.1.1'), '2.1.1'],
 
             // -- 2.1.0
             [self::decorateUri('adaptive.xml', '2.1.0'), '2.1.0'],
@@ -547,10 +544,10 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         $version = '2.2.4';
         $uri = self::decorateUri('uploadinteraction-with-multiple-mime-types.xml', $version);
-        
+
         $doc = new XmlDocument();
         $doc->load($uri, true);
-        
+
         $this::assertEquals($version, $doc->getVersion());
     }
 
@@ -592,22 +589,36 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     {
         if ($version === '2.1' || $version === '2.1.0') {
             return self::samplesDir() . 'ims/items/2_1/' . $uri;
-        } elseif ($version === '2.1.1') {
-            return self::samplesDir() . 'ims/items/2_1_1/' . $uri;
-        } elseif ($version === '2.2' || $version === '2.2.0') {
-            return self::samplesDir() . 'ims/items/2_2/' . $uri;
-        } elseif ($version === '2.2.1') {
-            return self::samplesDir() . 'ims/items/2_2_1/' . $uri;
-        } elseif ($version === '2.2.2') {
-            return self::samplesDir() . 'ims/items/2_2_2/' . $uri;
-        } elseif ($version === '2.2.3') {
-            return self::samplesDir() . 'ims/items/2_2_3/' . $uri;
-        } elseif ($version === '2.2.4') {
-            return self::samplesDir() . 'ims/items/2_2_4/' . $uri;
-        } elseif ($version === '3.0.0') {
-            return self::samplesDir() . 'ims/items/3_0/' . $uri;
-        } else {
-            return self::samplesDir() . 'ims/items/2_0/' . $uri;
         }
+
+        if ($version === '2.1.1') {
+            return self::samplesDir() . 'ims/items/2_1_1/' . $uri;
+        }
+
+        if ($version === '2.2' || $version === '2.2.0') {
+            return self::samplesDir() . 'ims/items/2_2/' . $uri;
+        }
+
+        if ($version === '2.2.1') {
+            return self::samplesDir() . 'ims/items/2_2_1/' . $uri;
+        }
+
+        if ($version === '2.2.2') {
+            return self::samplesDir() . 'ims/items/2_2_2/' . $uri;
+        }
+
+        if ($version === '2.2.3') {
+            return self::samplesDir() . 'ims/items/2_2_3/' . $uri;
+        }
+
+        if ($version === '2.2.4') {
+            return self::samplesDir() . 'ims/items/2_2_4/' . $uri;
+        }
+
+        if ($version === '3.0.0') {
+            return self::samplesDir() . 'ims/items/3_0/' . $uri;
+        }
+
+        return self::samplesDir() . 'ims/items/2_0/' . $uri;
     }
 }

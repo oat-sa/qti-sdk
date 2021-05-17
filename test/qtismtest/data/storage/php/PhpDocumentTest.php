@@ -262,7 +262,7 @@ class PhpDocumentTest extends QtiSmTestCase
         $this::assertEquals($file, $phpDoc->getUrl());
 
         unlink($file);
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     public function testLoadInteractionMixSaschsen()
@@ -281,7 +281,7 @@ class PhpDocumentTest extends QtiSmTestCase
 
         $this::assertEquals('InteractionMixSachsen_1901710679', $phpDoc->getDocumentComponent()->getIdentifier());
         unlink($file);
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     /**
@@ -311,6 +311,7 @@ class PhpDocumentTest extends QtiSmTestCase
             [self::samplesDir() . 'rendering/choiceinteraction_1.xml', ItemBody::class],
             [self::samplesDir() . 'rendering/choiceinteraction_2.xml', ItemBody::class],
             [self::samplesDir() . 'rendering/drawinginteraction_1.xml', ItemBody::class],
+            [self::samplesDir() . 'rendering/drawinginteraction_2.xml', ItemBody::class],
             [self::samplesDir() . 'rendering/endattemptinteraction_1.xml', ItemBody::class],
             [self::samplesDir() . 'rendering/extendedtextinteraction_1.xml', ItemBody::class],
             [self::samplesDir() . 'rendering/gapmatchinteraction_1.xml', ItemBody::class],

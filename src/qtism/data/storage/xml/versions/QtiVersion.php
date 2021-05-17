@@ -178,6 +178,16 @@ class QtiVersion extends Version
         return static::XSD;
     }
 
+    public function getExternalSchemaLocation(string $prefix): string
+    {
+        return '';
+    }
+
+    public function getExternalNamespace(string $prefix): string
+    {
+        return '';
+    }
+
     public function getMarshallerFactory(): MarshallerFactory
     {
         $factoryClass = static::MARSHALLER_FACTORY;

@@ -30,7 +30,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      */
     public function testLoad(XmlCompactDocument $doc = null)
     {
-        if (empty($doc)) {
+        if ($doc === null) {
             $doc = new XmlCompactDocument('2.1');
             $this::assertEquals('2.1.0', $doc->getVersion());
 
@@ -92,7 +92,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this->testLoad($doc);
 
         unlink($file);
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     public function versionsToTest()
@@ -289,7 +289,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $compactDoc->schemaValidate();
 
         unlink($file);
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     public function createFromExplodedProvider()
@@ -473,7 +473,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this->testLoadRubricBlockRefs('', false, $doc);
 
         unlink($file);
-        $this::assertFileNotExists($file);
+        $this::assertFileDoesNotExist($file);
     }
 
     public function testExplodeRubricBlocks()
@@ -493,12 +493,12 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $path = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . 'rubricBlock_RB_S01_1.xml';
         $this::assertFileExists($path);
         unlink($path);
-        $this::assertFileNotExists($path);
+        $this::assertFileDoesNotExist($path);
 
         $path = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . 'rubricBlock_RB_S01_2.xml';
         $this::assertFileExists($path);
         unlink($path);
-        $this::assertFileNotExists($path);
+        $this::assertFileDoesNotExist($path);
 
         unlink($file);
 
@@ -692,7 +692,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument('2.1');
         $file = self::samplesDir() . 'custom/tests/invalidassessmentitemref.xml';
         $doc->load($file);
-        $compactDoc = XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
+        XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
     }
 
     public function testCreateFromAssessmentTestResponseValidityConstraints()

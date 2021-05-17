@@ -8,11 +8,14 @@ use DOMDocument;
 use DOMElement;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\versions\QtiVersion;
+use RuntimeException;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 /**
  * Class QtiSmTestCase
@@ -102,6 +105,23 @@ abstract class QtiSmTestCase extends TestCase
     }
 
     /**
+     * Asserts that a file does not exist.
+     *
+     * @throws InvalidArgumentException
+     * @throws ExpectationFailedException
+     */
+    public static function assertFileDoesNotExist(string $filename, string $message = ''): void
+    {
+        $parent = get_parent_class(self::class);
+
+        $fileDoesNotExistAssertionMethod = method_exists($parent, __FUNCTION__)
+            ? __FUNCTION__
+            : 'assertFileNotExists';
+
+        [$parent, $fileDoesNotExistAssertionMethod]($filename, $message);
+    }
+
+    /**
      * Returns the canonical path to the samples directory, with the
      * trailing slash.
      *
@@ -116,6 +136,7 @@ abstract class QtiSmTestCase extends TestCase
      * Create a directory in OS temp directory with a unique name.
      *
      * @return string The path to the created directory.
+     * @throws RuntimeException If the directory has not been created.
      */
     public static function tempDir()
     {
@@ -127,7 +148,9 @@ abstract class QtiSmTestCase extends TestCase
             unlink($tmpFile);
         }
 
-        mkdir($tmpFile);
+        if (!mkdir($tmpFile) && !is_dir($tmpFile)) {
+            throw new RuntimeException(sprintf('Directory "%s" was not created', $tmpFile));
+        }
 
         return $tmpFile;
     }

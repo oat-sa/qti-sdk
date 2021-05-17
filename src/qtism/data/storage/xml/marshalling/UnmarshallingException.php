@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use Exception;
+use InvalidArgumentException;
 
 /**
  * Exception to be thrown when an error occurs during the unmarshalling process
@@ -50,6 +51,21 @@ class UnmarshallingException extends Exception
     {
         parent::__construct($message, 0, $previous);
         $this->setDOMElement($element);
+    }
+
+    public static function createFromInvalidArgumentException(
+        DOMElement $element,
+        InvalidArgumentException $exception
+    ): self {
+        return new self(
+            sprintf(
+                'Error while unmarshalling element "%s": %s',
+                $element->localName,
+                $exception->getMessage()
+            ),
+            $element,
+            $exception
+        );
     }
 
     /**
