@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2021 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -553,10 +553,47 @@ class Format
         }
 
         if (is_string($length)) {
-            return preg_match('/[0-9]+%/', $length) === 1;
+            return preg_match('/^[0-9]+%?$/', $length) === 1;
         }
 
         return false;
+    }
+
+    /**
+     * Sanitize length to positive integer with optional percent sign or
+     * special value for non-set length.
+     *
+     * Authorized values are:
+     * * positive integers as strings or integers
+     * * strings containing positive integer and "%" sign
+     * * null and -1 (kept for backward compatibility) for a length non set.
+     *
+     * @param mixed $length length to sanitize
+     * @param string $argumentName argument name for exception message
+     * @return string|null length as string or null if not set
+     * @throws \InvalidArgumentException when the length is not valid
+     */
+    public static function sanitizeXhtmlLength($length, string $argumentName): ?string
+    {
+        // Allows -1 as former null value still existing in compiled items.
+        if ($length === null || $length === -1) {
+            return null;
+        }
+
+        if (self::isXhtmlLength($length)) {
+            return (string)$length;
+        }
+
+        $given = is_string($length) || is_int($length) || is_float($length)
+            ? $length
+            : gettype($length);
+        throw new \InvalidArgumentException(
+            sprintf(
+                'The "%s" argument must be a positive integer with optional percent sign, "%s" given.',
+                $argumentName,
+                $given
+            )
+        );
     }
 
     public static function isAriaLevel(string $level): bool

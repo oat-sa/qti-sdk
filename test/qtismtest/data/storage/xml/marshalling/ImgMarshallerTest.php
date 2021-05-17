@@ -38,7 +38,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $img = new Img('my/image.png', 'An Image...', 'my-img');
         $img->setClass('beautiful');
         $img->setHeight('40%');
-        $img->setWidth(30);
+        $img->setWidth('30');
         $img->setLang('en-YO');
         $img->setLongdesc('A Long Description...');
         $img->setXmlBase('/home/jerome');
@@ -120,7 +120,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(Img::class, $img);
         $this::assertEquals('my/image.png', $img->getSrc());
         $this::assertEquals('An Image...', $img->getAlt());
-        $this::assertSame(30, $img->getWidth());
+        $this::assertSame('30', $img->getWidth());
         $this::assertEquals('40%', $img->getHeight());
         $this::assertEquals('A Long Description...', $img->getLongDesc());
         $this::assertEquals('my-img', $img->getId());
