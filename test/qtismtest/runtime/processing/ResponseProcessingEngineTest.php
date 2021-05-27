@@ -159,34 +159,6 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
                                     <correct identifier="RESPONSE"/>
                                 </fieldValue>
                             </match>
-                            <match>
-                                <fieldValue fieldIdentifier="functionGraphType">
-                                    <variable identifier="RESPONSE"/>
-                                </fieldValue>
-                                <fieldValue fieldIdentifier="functionGraphType">
-                                    <correct identifier="RESPONSE"/>
-                                </fieldValue>
-                            </match>
-                            <not>
-                                <match>
-                                    <index n="1">
-                                        <customOperator class="qti.customOperators.CsvToOrdered"><fieldValue fieldIdentifier="points"><variable identifier="RESPONSE"/></fieldValue>
-                                        </customOperator>
-                                    </index>
-                                    <index n="2">
-                                        <customOperator class="qti.customOperators.CsvToOrdered"><fieldValue fieldIdentifier="points"><variable identifier="RESPONSE"/></fieldValue>
-                                        </customOperator>
-                                    </index>
-                                </match>
-                            </not>
-                            <equal toleranceMode="exact">
-                                <customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation"><customOperator class="qti.customOperators.CsvToMultiple"><fieldValue fieldIdentifier="points"><variable identifier="RESPONSE"/></fieldValue>
-                                </customOperator><fieldValue fieldIdentifier="equation"><correct identifier="RESPONSE"/></fieldValue>
-                                </customOperator>
-                                <fieldValue fieldIdentifier="numberPointsRequired">
-                                    <correct identifier="RESPONSE"/>
-                                </fieldValue>
-                            </equal>
                         </and>
                         <setOutcomeValue identifier="SCORE">
                             <sum>
