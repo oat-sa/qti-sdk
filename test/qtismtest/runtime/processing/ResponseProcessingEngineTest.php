@@ -9,6 +9,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
+use qtism\runtime\common\ProcessingException;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\processing\ResponseProcessingEngine;
@@ -137,6 +138,74 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine->setContext($state);
         $engine->process();
         $this::assertEquals(1, $state['OUTCOME']->getValue());
+    }
+
+    public function testResponseProcessingWithError(): void
+    {
+        $this->expectException(ProcessingException::class);
+        $this->expectExceptionMessage('The FieldValue operator only accepts operands with a cardinality of record.');
+
+        $responseProcessing = $this->createComponentFromXml('
+            <responseProcessing>
+                <responseCondition>
+                    <responseIf>
+                        <and>
+                            <match>
+                                <index n="1">
+                                    <customOperator class="qti.customOperators.CsvToOrdered"><fieldValue fieldIdentifier="points"><variable identifier="RESPONSE"/></fieldValue>
+                                    </customOperator>
+                                </index>
+                                <fieldValue fieldIdentifier="vertex">
+                                    <correct identifier="RESPONSE"/>
+                                </fieldValue>
+                            </match>
+                            <match>
+                                <fieldValue fieldIdentifier="functionGraphType">
+                                    <variable identifier="RESPONSE"/>
+                                </fieldValue>
+                                <fieldValue fieldIdentifier="functionGraphType">
+                                    <correct identifier="RESPONSE"/>
+                                </fieldValue>
+                            </match>
+                            <not>
+                                <match>
+                                    <index n="1">
+                                        <customOperator class="qti.customOperators.CsvToOrdered"><fieldValue fieldIdentifier="points"><variable identifier="RESPONSE"/></fieldValue>
+                                        </customOperator>
+                                    </index>
+                                    <index n="2">
+                                        <customOperator class="qti.customOperators.CsvToOrdered"><fieldValue fieldIdentifier="points"><variable identifier="RESPONSE"/></fieldValue>
+                                        </customOperator>
+                                    </index>
+                                </match>
+                            </not>
+                            <equal toleranceMode="exact">
+                                <customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation"><customOperator class="qti.customOperators.CsvToMultiple"><fieldValue fieldIdentifier="points"><variable identifier="RESPONSE"/></fieldValue>
+                                </customOperator><fieldValue fieldIdentifier="equation"><correct identifier="RESPONSE"/></fieldValue>
+                                </customOperator>
+                                <fieldValue fieldIdentifier="numberPointsRequired">
+                                    <correct identifier="RESPONSE"/>
+                                </fieldValue>
+                            </equal>
+                        </and>
+                        <setOutcomeValue identifier="SCORE">
+                            <sum>
+                                <variable identifier="SCORE"/>
+                                <baseValue baseType="float">1</baseValue>
+                            </sum>
+                        </setOutcomeValue>
+                    </responseIf>
+                    <responseElse>
+                        <setOutcomeValue identifier="SCORE">
+                            <baseValue baseType="float">0</baseValue>
+                        </setOutcomeValue>
+                    </responseElse>
+                </responseCondition>
+            </responseProcessing>
+        ');
+
+        $engine = new ResponseProcessingEngine($responseProcessing);
+        $engine->process();
     }
 
     public function testSetOutcomeValueWithSum()

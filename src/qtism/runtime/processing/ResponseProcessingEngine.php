@@ -161,19 +161,26 @@ class ResponseProcessingEngine extends AbstractEngine
     public function process()
     {
         $rules = $this->getResponseProcessingRules();
+        $exception = null;
 
-        try {
-            foreach ($rules as $rule) {
+        foreach ($rules as $rule) {
+            try {
                 $engine = new RuleEngine($rule, $this->getContext());
                 $engine->process();
                 $this->trace($rule->getQtiClassName() . ' executed');
+            } catch (\Throwable $exception) {
+                if ($exception instanceof RuleProcessingException
+                    && $exception->getCode() === RuleProcessingException::EXIT_RESPONSE
+                ) {
+                    $exception = null;
+                    $this->trace('Termination of response processing.');
+                    break;
+                }
             }
-        } catch (RuleProcessingException $e) {
-            if ($e->getCode() !== RuleProcessingException::EXIT_RESPONSE) {
-                throw $e;
-            } else {
-                $this->trace('Termination of response processing.');
-            }
+        }
+
+        if ($exception) {
+            throw $exception;
         }
     }
 

@@ -2194,6 +2194,20 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $assessmentTestSession->isCurrentAssessmentItemInteracting();
     }
 
+    public function testItThrowsClearErrorCodeOnProcessingError(): void
+    {
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/incorrect_outcome_processing.xml');
+
+        $this->expectException(AssessmentTestSessionException::class);
+        $this->expectExceptionMessage('An unexpected error occurred at the level of the Test Session.');
+
+        $assessmentTestSession->beginTestSession();
+
+        // jump to item-4 with broken processing rule
+        $assessmentTestSession->jumpTo(3);
+        $assessmentTestSession->endAttempt(new State());
+    }
+
     public function testWhichLastOccurenceUpdateWrongType()
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
