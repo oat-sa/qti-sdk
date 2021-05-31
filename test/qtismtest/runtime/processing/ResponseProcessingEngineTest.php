@@ -9,12 +9,10 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
-use qtism\runtime\common\ProcessingException;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\processing\ResponseProcessingEngine;
 use qtism\runtime\rules\ProcessingCollectionException;
-use qtism\runtime\rules\RuleProcessingException;
 use qtismtest\QtiSmTestCase;
 
 /**
