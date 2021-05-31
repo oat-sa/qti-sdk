@@ -33,6 +33,7 @@ use qtism\runtime\common\ProcessingException;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\RuleEngine;
 use qtism\runtime\rules\RuleProcessingException;
+use qtism\runtime\rules\ProcessingCollectionException;
 
 /**
  * Class ResponseProcessingEngine
@@ -161,7 +162,7 @@ class ResponseProcessingEngine extends AbstractEngine
     public function process()
     {
         $rules = $this->getResponseProcessingRules();
-        $exception = null;
+        $processingCollectionException = null;
 
         foreach ($rules as $rule) {
             try {
@@ -172,15 +173,20 @@ class ResponseProcessingEngine extends AbstractEngine
                 if ($exception instanceof RuleProcessingException
                     && $exception->getCode() === RuleProcessingException::EXIT_RESPONSE
                 ) {
-                    $exception = null;
                     $this->trace('Termination of response processing.');
                     break;
                 }
+
+                if ($processingCollectionException === null) {
+                    $processingCollectionException = new ProcessingCollectionException('Unexpected error(s) occurred while processing response');
+                }
+
+                $processingCollectionException->addProcessingExceptions($exception);
             }
         }
 
-        if ($exception) {
-            throw $exception;
+        if ($processingCollectionException !== null) {
+            throw $processingCollectionException;
         }
     }
 
