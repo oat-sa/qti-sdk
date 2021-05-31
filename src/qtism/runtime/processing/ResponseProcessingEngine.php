@@ -29,7 +29,6 @@ use qtism\data\QtiComponent;
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\runtime\common\AbstractEngine;
-use qtism\runtime\common\ProcessingException;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\RuleEngine;
 use qtism\runtime\rules\RuleProcessingException;
