@@ -27,7 +27,7 @@ use qtism\runtime\common\ProcessingException;
 use RuntimeException;
 
 /**
- * A collection of RuleProcessingException to be thrown
+ * A collection of ProcessingException to be thrown
  */
 class ProcessingCollectionException extends RuntimeException
 {
