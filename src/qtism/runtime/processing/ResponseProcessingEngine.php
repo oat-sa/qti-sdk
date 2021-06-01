@@ -29,10 +29,10 @@ use qtism\data\QtiComponent;
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\runtime\common\AbstractEngine;
-use qtism\runtime\common\ProcessingException;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\RuleEngine;
 use qtism\runtime\rules\RuleProcessingException;
+use qtism\runtime\rules\ProcessingCollectionException;
 
 /**
  * Class ResponseProcessingEngine
@@ -161,19 +161,31 @@ class ResponseProcessingEngine extends AbstractEngine
     public function process()
     {
         $rules = $this->getResponseProcessingRules();
+        $processingCollectionException = null;
 
-        try {
-            foreach ($rules as $rule) {
+        foreach ($rules as $rule) {
+            try {
                 $engine = new RuleEngine($rule, $this->getContext());
                 $engine->process();
                 $this->trace($rule->getQtiClassName() . ' executed');
+            } catch (\Throwable $exception) {
+                if ($exception instanceof RuleProcessingException
+                    && $exception->getCode() === RuleProcessingException::EXIT_RESPONSE
+                ) {
+                    $this->trace('Termination of response processing.');
+                    break;
+                }
+
+                if ($processingCollectionException === null) {
+                    $processingCollectionException = new ProcessingCollectionException('Unexpected error(s) occurred while processing response');
+                }
+
+                $processingCollectionException->addProcessingExceptions($exception);
             }
-        } catch (RuleProcessingException $e) {
-            if ($e->getCode() !== RuleProcessingException::EXIT_RESPONSE) {
-                throw $e;
-            } else {
-                $this->trace('Termination of response processing.');
-            }
+        }
+
+        if ($processingCollectionException !== null) {
+            throw $processingCollectionException;
         }
     }
 

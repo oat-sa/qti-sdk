@@ -6,5 +6,6 @@ composer.lock
 composer.phar
 phpDocumentor.phar
 phpunit.xml
+.phpunit.result.cache
 *.geany
 .idea
