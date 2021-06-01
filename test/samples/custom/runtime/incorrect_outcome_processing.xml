@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" identifier="Matematikkeksempeloppgaver1" title="Matematikk eksempeloppgaver 1" toolName="tao" toolVersion="3.4.0-sprint135" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v2p1.xsd">
+    <testPart identifier="testPart-1" navigationMode="nonlinear" submissionMode="individual">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <assessmentSection identifier="assessmentSection-1" required="true" fixed="false" title="Section 1" visible="true" keepTogether="true">
+            <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+            <timeLimits allowLateSubmission="false"/>
+            <assessmentItemRef identifier="item-2" required="false" fixed="false" href="./item-2/item.json" adaptive="false" timeDependent="false" title="K01 212416 Orientering" label="K01 21 02 1 07 16 T1 Likning Orientering">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <timeLimits allowLateSubmission="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="integer">
+                    <correctResponse>
+                        <value>9</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="1"/>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>1</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-1" required="false" fixed="false" href="./item-1/item.json" adaptive="false" timeDependent="false" title="212712 0011 Økt bruk av strømmetjenester" label="K01 21 02 1 13 12 T1 Økt bruk av strømmetjenester">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="integer">
+                    <correctResponse>
+                        <value>100</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="1"/>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>1</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-3" required="false" fixed="false" href="./item-3/item.json" adaptive="false" timeDependent="false" title="1P-K4_Variable generalisering-2-Kubbelys" label="K04 21 02 1 13 03 T1 Kubbelys">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
+                    <correctResponse>
+                        <value>choice_2 choice_3</value>
+                        <value>choice_1 choice_4</value>
+                        <value>choice_5 choice_4</value>
+                        <value>choice_6 choice_4</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="multiple" baseType="directedPair">
+                    <correctResponse>
+                        <value>choice_12 choice_9</value>
+                        <value>choice_7 choice_10</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="2"/>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>2</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <shuffling responseIdentifier="RESPONSE">
+                    <shufflingGroup identifiers="choice_1 choice_2 choice_5 choice_6"/>
+                    <shufflingGroup identifiers="choice_3 choice_4"/>
+                </shuffling>
+                <shuffling responseIdentifier="RESPONSE_1">
+                    <shufflingGroup identifiers="choice_7 choice_8 choice_11 choice_12"/>
+                    <shufflingGroup identifiers="choice_9 choice_10"/>
+                </shuffling>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="4">
+                    <associationValidityConstraint identifier="choice_1" minConstraint="0" maxConstraint="0"/>
+                    <associationValidityConstraint identifier="choice_2" minConstraint="0" maxConstraint="0"/>
+                    <associationValidityConstraint identifier="choice_5" minConstraint="0" maxConstraint="0"/>
+                    <associationValidityConstraint identifier="choice_6" minConstraint="0" maxConstraint="0"/>
+                    <associationValidityConstraint identifier="choice_3" minConstraint="0" maxConstraint="0"/>
+                    <associationValidityConstraint identifier="choice_4" minConstraint="0" maxConstraint="0"/>
+                </responseValidityConstraint>
+                <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="4">
+                    <associationValidityConstraint identifier="choice_7" minConstraint="0" maxConstraint="0"/>
+                    <associationValidityConstraint identifier="choice_8" minConstraint="0" maxConstraint="0"/>
+                    <associationValidityConstraint identifier="choice_11" minConstraint="0" maxConstraint="0"/>
+                    <associationValidityConstraint identifier="choice_12" minConstraint="0" maxConstraint="0"/>
+                    <associationValidityConstraint identifier="choice_9" minConstraint="0" maxConstraint="0"/>
+                    <associationValidityConstraint identifier="choice_10" minConstraint="0" maxConstraint="0"/>
+                </responseValidityConstraint>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-4" required="false" fixed="false" href="./item-4/item.json" adaptive="false" timeDependent="false" title="1P-K5_Tolke og bruke formler-1-Lonn selgere" label="K05 21 02 1 13 04 T1 Lønn selgere">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
+                    <correctResponse>
+                        <value>choice_4 gap_3</value>
+                        <value>choice_3 gap_2</value>
+                        <value>choice_2 gap_1</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <and>
+                                <match>
+                                    <index n="1">
+                                        <customOperator class="qti.customOperators.CsvToOrdered"><fieldValue fieldIdentifier="points"><variable identifier="RESPONSE"/></fieldValue>
+
+                                        </customOperator>
+                                    </index>
+                                    <fieldValue fieldIdentifier="vertex">
+                                        <correct identifier="RESPONSE"/>
+                                    </fieldValue>
+                                </match>
+                                <match>
+                                    <fieldValue fieldIdentifier="functionGraphType">
+                                        <variable identifier="RESPONSE"/>
+                                    </fieldValue>
+                                    <fieldValue fieldIdentifier="functionGraphType">
+                                        <correct identifier="RESPONSE"/>
+                                    </fieldValue>
+                                </match>
+                                <not>
+                                    <match>
+                                        <index n="1">
+                                            <customOperator class="qti.customOperators.CsvToOrdered"><fieldValue fieldIdentifier="points"><variable identifier="RESPONSE"/></fieldValue>
+
+                                            </customOperator>
+                                        </index>
+                                        <index n="2">
+                                            <customOperator class="qti.customOperators.CsvToOrdered"><fieldValue fieldIdentifier="points"><variable identifier="RESPONSE"/></fieldValue>
+
+                                            </customOperator>
+                                        </index>
+                                    </match>
+                                </not>
+                                <equal toleranceMode="exact">
+                                    <customOperator class="qti.customOperators.math.graph.CountPointsThatSatisfyEquation"><customOperator class="qti.customOperators.CsvToMultiple"><fieldValue fieldIdentifier="points"><variable identifier="RESPONSE"/></fieldValue>
+
+                                    </customOperator><fieldValue fieldIdentifier="equation"><correct identifier="RESPONSE"/></fieldValue>
+
+
+                                    </customOperator>
+                                    <fieldValue fieldIdentifier="numberPointsRequired">
+                                        <correct identifier="RESPONSE"/>
+                                    </fieldValue>
+                                </equal>
+                            </and>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="float">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                        <responseElse>
+                            <setOutcomeValue identifier="SCORE">
+                                <baseValue baseType="float">0</baseValue>
+                            </setOutcomeValue>
+                        </responseElse>
+                    </responseCondition>
+                </responseProcessing>
+                <shuffling responseIdentifier="RESPONSE">
+                    <shufflingGroup identifiers="choice_2 choice_3 choice_4 choice_1"/>
+                </shuffling>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0">
+                    <associationValidityConstraint identifier="choice_2" minConstraint="0" maxConstraint="1"/>
+                    <associationValidityConstraint identifier="choice_3" minConstraint="0" maxConstraint="1"/>
+                    <associationValidityConstraint identifier="choice_4" minConstraint="0" maxConstraint="1"/>
+                    <associationValidityConstraint identifier="choice_1" minConstraint="0" maxConstraint="1"/>
+                </responseValidityConstraint>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-5" required="false" fixed="false" href="./item-5/item.json" adaptive="false" timeDependent="false" title="K08 212423 Kalsium Benevninger" label="K08 21 02 1 07 23 T1 Kalsium Benevninger">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string">
+                    <correctResponse>
+                        <value>4</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="1"/>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>1</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-6" required="false" fixed="false" href="./item-6/item.json" adaptive="false" timeDependent="false" title="K12 212413" label="K12 21 02 1 07 13 T1 Standardform Kraftverk">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string">
+                    <correctResponse>
+                        <value>1000</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="1"/>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>1</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+            </assessmentItemRef>
+            <rubricBlockRef identifier="RB_assessmentSection-1_1" href="/rubricBlocks/rubricBlock_RB_assessmentSection-1_1.html.twig"/>
+        </assessmentSection>
+        <assessmentSection identifier="assessmentSection-2" required="false" fixed="false" title="Section 2" visible="false" keepTogether="true">
+            <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+            <assessmentItemRef identifier="item-7" required="false" fixed="false" href="./item-7/item.json" adaptive="false" timeDependent="false" title="Vei, fart og tid" label="K01 21 02 2 10 01 T2 Møtepunkt">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="file"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-8" required="false" fixed="false" href="./item-8/item.json" adaptive="false" timeDependent="false" title="Harmonisk gjennomsnitt" label="K05 21 02 2 10 07 T2 Harmonisk gjennomsnitt">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="file"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="file"/>
+                <responseDeclaration identifier="RESPONSE_2" cardinality="single" baseType="string"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_2"/>
+                                <correct identifier="RESPONSE_2"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE_2" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-9" required="false" fixed="false" href="./item-9/item.json" adaptive="false" timeDependent="false" title="K06 21 2 1 01 Vekstfaktor" label="K06 21 02 2 02 01 T2 Vekstfaktor">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="file"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-10" required="false" fixed="false" href="./item-10/item.json" adaptive="false" timeDependent="false" title="Kredittkort" label="K06 21 02 2 10 10 T2 Kredittkort Drøfte funksjoner bis">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="file"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-11" required="false" fixed="false" href="./item-11/item.json" adaptive="false" timeDependent="false" title="K12 21 2 1 02 Rotuttrykk og potenser" label="K12 21 02 2 02 02 T2 Rotuttrykk og potenser">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="file"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <rubricBlockRef identifier="RB_assessmentSection-2_1" href="/rubricBlocks/rubricBlock_RB_assessmentSection-2_1.html.twig"/>
+        </assessmentSection>
+        <assessmentSection identifier="assessmentSection-3" required="false" fixed="false" title="Section 3" visible="false" keepTogether="true">
+            <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+            <assessmentItemRef identifier="item-13" required="false" fixed="false" href="./item-13/item.json" adaptive="false" timeDependent="false" title="1P-K2_Utforske premisser samf- og arbeidsliv-1" label="K02 21 02 3 13 21 T3 Lav lønn enslig">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="file"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-12" required="false" fixed="false" href="./item-12/item.json" adaptive="false" timeDependent="false" title="212708 0083 Sykkeltur" label="K08 21 02 3 13 09 T3 Sykkeltur">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="file"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+        </assessmentSection>
+        <assessmentSection identifier="assessmentSection-4" required="false" fixed="false" title="Section 4" visible="false" keepTogether="true">
+            <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+            <assessmentItemRef identifier="item-14" required="false" fixed="false" href="./item-14/item.json" adaptive="false" timeDependent="false" title="Herons formel" label="K03 21 03 1 10 05 T1 Herons Formel">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string">
+                    <correctResponse>
+                        <value>84</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="1"/>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>1</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-15" required="false" fixed="false" href="./item-15/item.json" adaptive="false" timeDependent="false" title="Lufttrykk" label="K08 21 03 1 10 13 T1 Mount Everest Vekstfaktor">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string">
+                    <correctResponse>
+                        <value>326,88</value>
+                    </correctResponse>
+                </responseDeclaration>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>1</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="1"/>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+            </assessmentItemRef>
+        </assessmentSection>
+        <assessmentSection identifier="assessmentSection-5" required="false" fixed="false" title="Section 5" visible="false" keepTogether="true">
+            <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+            <assessmentItemRef identifier="item-16" required="false" fixed="false" href="./item-16/item.json" adaptive="false" timeDependent="false" title="Kjøretid" label="K01 21 03 2 10 01 T2 Kjøretid Problemoppgave">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_2" cardinality="single" baseType="file"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_2"/>
+                                <correct identifier="RESPONSE_2"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-17" required="false" fixed="false" href="./item-17/item.json" adaptive="false" timeDependent="false" title="Kvadrat" label="K03 21 03 2 10 08 T2 Kvadrat">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_2" cardinality="single" baseType="file"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_2"/>
+                                <correct identifier="RESPONSE_2"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-18" required="false" fixed="false" href="./item-18/item.json" adaptive="false" timeDependent="false" title="K4213104 Strategier likninger" label="K04  21 03 2 02 04 T2 Strategier likninger">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="string"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>0</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-19" required="false" fixed="false" href="./item-19/item.json" adaptive="false" timeDependent="false" title="K10213101" label="K10 21 03 2 02 01 T2 Gjennomsnittlig vekstfart">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>0</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-20" required="false" fixed="false" href="./item-20/item.json" adaptive="false" timeDependent="false" title="K10 21 3 1 11 Den deriverte" label="K10 21 03 2 02 11 T2 Den deriverte">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="file"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-21" required="false" fixed="false" href="./item-21/item.json" adaptive="false" timeDependent="false" title="K11213102 Polynomdivisjon" label="K11 21 03 2 02 02 T2 Polynomdivisjon">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE_2" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_3" cardinality="single" baseType="file"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_2"/>
+                                <correct identifier="RESPONSE_2"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_3"/>
+                                <correct identifier="RESPONSE_3"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="0"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE_2" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-22" required="false" fixed="false" href="./item-22/item.json" adaptive="false" timeDependent="false" title="K13213108 Arealsetningen ALT 1" label="K13 21 03 2 02 08 T2 Arealsetningen ALT 1">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE_2" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_3" cardinality="single" baseType="file"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>0</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_2"/>
+                                <correct identifier="RESPONSE_2"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE_2" minConstraint="0" maxConstraint="0"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+        </assessmentSection>
+        <assessmentSection identifier="assessmentSection-6" required="false" fixed="false" title="Section 6" visible="false" keepTogether="true">
+            <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+            <assessmentItemRef identifier="item-23" required="false" fixed="false" href="./item-23/item.json" adaptive="false" timeDependent="false" title="K1 21 3 1 15 Algoritmisk tenking" label="K01 21 03 3 02 15 T3 Algoritmisk tenking">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="file"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE_2" cardinality="single" baseType="string"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_2"/>
+                                <correct identifier="RESPONSE_2"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE"/>
+                                <correct identifier="RESPONSE"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="0"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE_2" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-24" required="false" fixed="false" href="./item-24/item.json" adaptive="false" timeDependent="false" title="Rasjonal funksjon til drøfting" label="K09  21 03 3 02 17 T3 Rasjonal funksjon til drøfting">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="file"/>
+                <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="file"/>
+                <responseDeclaration identifier="RESPONSE_2" cardinality="single" baseType="string"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float"/>
+                <responseProcessing>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_2"/>
+                                <correct identifier="RESPONSE_2"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                    <responseCondition>
+                        <responseIf>
+                            <match>
+                                <variable identifier="RESPONSE_1"/>
+                                <correct identifier="RESPONSE_1"/>
+                            </match>
+                            <setOutcomeValue identifier="SCORE">
+                                <sum>
+                                    <variable identifier="SCORE"/>
+                                    <baseValue baseType="integer">1</baseValue>
+                                </sum>
+                            </setOutcomeValue>
+                        </responseIf>
+                    </responseCondition>
+                </responseProcessing>
+                <responseValidityConstraint responseIdentifier="RESPONSE_2" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+        </assessmentSection>
+    </testPart>
+    <outcomeProcessing/>
+</assessmentTest>
