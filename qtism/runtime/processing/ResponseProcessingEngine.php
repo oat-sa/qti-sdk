@@ -29,6 +29,7 @@ use qtism\data\QtiComponent;
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\runtime\common\AbstractEngine;
+use qtism\runtime\common\ProcessingCollectionException;
 use qtism\runtime\common\ProcessingException;
 use qtism\runtime\common\State;
 use qtism\runtime\rules\RuleEngine;
@@ -157,11 +158,24 @@ class ResponseProcessingEngine extends AbstractEngine
     public function process()
     {
         $rules = $this->getResponseProcessingRules();
+        $processingCollectionException = null;
 
         foreach ($rules as $rule) {
-            $engine = new RuleEngine($rule, $this->getContext());
-            $engine->process();
-            $this->trace($rule->getQtiClassName() . ' executed');
+            try {
+                $engine = new RuleEngine($rule, $this->getContext());
+                $engine->process();
+                $this->trace($rule->getQtiClassName() . ' executed');
+            } catch (ProcessingException $exception) {
+                if ($processingCollectionException === null) {
+                    $processingCollectionException = new ProcessingCollectionException('Unexpected error(s) occurred while processing response');
+                }
+
+                $processingCollectionException->addProcessingExceptions($exception);
+            }
+        }
+
+        if ($processingCollectionException !== null) {
+            throw $processingCollectionException;
         }
     }
 

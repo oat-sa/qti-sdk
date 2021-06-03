@@ -9,7 +9,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OutcomeVariable;
-use qtism\runtime\common\ProcessingException;
+use qtism\runtime\common\ProcessingCollectionException;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\processing\ResponseProcessingEngine;
@@ -128,9 +128,17 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
 
         $engine = new ResponseProcessingEngine($responseProcessing);
 
-        $this->expectException(RuleProcessingException::class);
-        $this->expectExceptionCode(RuleProcessingException::EXIT_RESPONSE);
-        $engine->process();
+        try {
+            $engine->process();
+        } catch (\Throwable $processingCollectionException) {}
+
+        self::assertInstanceOf(ProcessingCollectionException::class, $processingCollectionException);
+        self::assertEquals('Unexpected error(s) occurred while processing response', $processingCollectionException->getMessage());
+
+        $processingException = $processingCollectionException->getProcessingExceptions()[0];
+
+        self::assertEquals(RuleProcessingException::EXIT_RESPONSE, $processingException->getCode());
+        self::assertInstanceOf(RuleProcessingException::class, $processingException);
     }
 
     public function testSetOutcomeValueWithSum()
