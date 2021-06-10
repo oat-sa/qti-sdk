@@ -928,7 +928,7 @@ class AssessmentItemSession extends State
             $msg = "Skipping item '${itemIdentifier}' is not allowed.";
             throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::SKIPPING_FORBIDDEN);
         } else {
-            // Detect all response variables and submit them with their default value or NULL. state 3
+            // Detect all response variables and submit them with their default value or NULL.
             foreach ($this->getAssessmentItem()->getResponseDeclarations() as $responseDeclaration) {
                 $this->getVariable($responseDeclaration->getIdentifier())->applyDefaultValue();
             }

@@ -1394,7 +1394,7 @@ class AssessmentTestSession extends State
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
-        $item = $this->getCurrentAssessmentItemRef(); // aga
+        $item = $this->getCurrentAssessmentItemRef();
         $occurence = $this->getCurrentAssessmentItemRefOccurence();
         $session = $this->getItemSession($item, $occurence);
 
@@ -1407,7 +1407,6 @@ class AssessmentTestSession extends State
                 $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
                 $this->addPendingResponses($pendingResponses);
             } else {
-                // SHOULDBEHERE
                 $this->submitItemResults($session, $occurence);
                 $this->outcomeProcessing();
             }
@@ -1455,7 +1454,7 @@ class AssessmentTestSession extends State
      * @qtism-test-interaction
      * @qtism-test-duration-update
      */
-    public function endAttempt(State $responses, $allowLateSubmission = true)
+    public function endAttempt(State $responses, $allowLateSubmission = false)
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED.';
