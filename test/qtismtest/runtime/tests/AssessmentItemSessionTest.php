@@ -655,4 +655,27 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertTrue($itemSession->isResponded());
         $this::assertTrue($itemSession->isResponded(false));
     }
+
+    public function testItAllowsToFinishUntouchedItemsWhenConfiguredSo()
+    {
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
+        $itemSession->beginItemSession();
+
+        $allowUntouchedItems = true;
+
+        // assert there's no AssessmentItemSessionException
+        $this->assertNull($itemSession->endAttempt(null, true, false, $allowUntouchedItems));
+    }
+
+    public function testItDoesNotAllowToFinishUntouchedItemsWhenConfiguredSo()
+    {
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
+        $itemSession->beginItemSession();
+
+        $allowUntouchedItems = false;
+
+        $this->expectException(AssessmentItemSessionException::class);
+
+        $itemSession->endAttempt(null, true, false, $allowUntouchedItems);
+    }
 }
