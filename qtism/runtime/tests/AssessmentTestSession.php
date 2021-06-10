@@ -1381,30 +1381,33 @@ class AssessmentTestSession extends State
     /**
      * Skip the current item.
      *
+     * @param bool $allowUntouchedItems whether to allow skipping items in state INITIAL (not ever seen yet by the TT)
+     *
      * @throws AssessmentTestSessionException If the test session is not running or it is the last route item of the testPart but the SIMULTANEOUS submission mode is in force and not all responses were provided.
      * @qtism-test-interaction
      * @qtism-test-duration-update
      */
-    public function skip()
+    public function skip($allowUntouchedItems = false)
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot skip the current item while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
-        $item = $this->getCurrentAssessmentItemRef();
+        $item = $this->getCurrentAssessmentItemRef(); // aga
         $occurence = $this->getCurrentAssessmentItemRefOccurence();
         $session = $this->getItemSession($item, $occurence);
 
         try {
             // Might throw an AssessmentItemSessionException.
-            $session->skip();
+            $session->skip($allowUntouchedItems);
 
             if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
                 // Store the responses for a later processing at the end of the test part.
                 $pendingResponses = new PendingResponses($session->getResponseVariables(false), $item, $occurence);
                 $this->addPendingResponses($pendingResponses);
             } else {
+                // SHOULDBEHERE
                 $this->submitItemResults($session, $occurence);
                 $this->outcomeProcessing();
             }
@@ -1452,7 +1455,7 @@ class AssessmentTestSession extends State
      * @qtism-test-interaction
      * @qtism-test-duration-update
      */
-    public function endAttempt(State $responses, $allowLateSubmission = false)
+    public function endAttempt(State $responses, $allowLateSubmission = true)
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED.';

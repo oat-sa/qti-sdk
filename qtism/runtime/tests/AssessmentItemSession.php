@@ -644,19 +644,20 @@ class AssessmentItemSession extends State
      * @param State $responses (optional) A State composed by the candidate's responses to the item.
      * @param bool $responseProcessing (optional) Whether to execute the responseProcessing or not.
      * @param bool $allowLateSubmission If set to true, maximum time limits will not be taken into account, even if the a maximum time limit is in force.
+     * @param bool $allowUntouchedItems whether to allow skipping items in state INITIAL (not ever seen yet by the TT)
+     *
      * @throws AssessmentItemSessionException
      * @throws PhpStorageException
      */
-    public function endAttempt(State $responses = null, $responseProcessing = true, $allowLateSubmission = false)
+    public function endAttempt(State $responses = null, $responseProcessing = true, $allowLateSubmission = false, $allowUntouchedItems = false)
     {
         // We are required to check if our item does contain externalScored attribute in OutcomeDeclaration.
         // If item have to be externally scored we are not processing response
         if ($this->isExternallyScored($this->assessmentItem->getOutcomeDeclarations())) {
             $responseProcessing = false;
         }
-
         // End of attempt, go in SUSPEND state.
-        $this->suspend();
+        $this->suspend($allowUntouchedItems);
 
         // Flag to indicate if time is exceed or not.
         $maxTimeExceeded = false;
@@ -793,12 +794,20 @@ class AssessmentItemSession extends State
      * Suspend the item session. The state will switch to SUSPENDED and the
      * 'duration' built-in variable is updated.
      *
+     * @param bool whether to allow skipping items in state INITIAL (not ever seen yet by the TT)
+     *
      * @throws AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INTERACTING nor MODAL_FEEDBACK prior to suspension.
      */
-    public function suspend()
+    public function suspend($allowUntouchedItems = false)
     {
         if ($this->state !== AssessmentItemSessionState::SUSPENDED) {
-            if ($this->state !== AssessmentItemSessionState::INTERACTING && $this->state !== AssessmentItemSessionState::MODAL_FEEDBACK) {
+            $allowedStates = [AssessmentItemSessionState::INTERACTING, AssessmentItemSessionState::MODAL_FEEDBACK];
+
+            if ($allowUntouchedItems) {
+                $allowedStates[] = AssessmentItemSessionState::INITIAL;
+            }
+
+            if (!in_array($this->state, $allowedStates)) {
                 $msg = "Cannot switch from state '" . AssessmentItemSessionState::getNameByConstant($this->state) . "' to state 'suspended'.";
                 $code = AssessmentItemSessionException::STATE_VIOLATION;
                 throw new AssessmentItemSessionException($msg, $this, $code);
@@ -905,10 +914,12 @@ class AssessmentItemSession extends State
      * Skip the item of the current item session. All response variables involved in the item session
      * will be set to their default value or NULL and submitted.
      *
+     * @param bool $allowUntouchedItems whether to allow skipping items in state INITIAL (not ever seen yet by the TT)
+     *
      * @throws AssessmentItemSessionException If skipping is not allowed with respect with the current itemSessionControl.
      * @throws PhpStorageException
      */
-    public function skip()
+    public function skip($allowUntouchedItems = false)
     {
         // allowSkipping is taken into account only if submission mode is INDIVIDUAL.
         if ($this->getItemSessionControl()->doesAllowSkipping() === false && $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL) {
@@ -917,13 +928,13 @@ class AssessmentItemSession extends State
             $msg = "Skipping item '${itemIdentifier}' is not allowed.";
             throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::SKIPPING_FORBIDDEN);
         } else {
-            // Detect all response variables and submit them with their default value or NULL.
+            // Detect all response variables and submit them with their default value or NULL. state 3
             foreach ($this->getAssessmentItem()->getResponseDeclarations() as $responseDeclaration) {
                 $this->getVariable($responseDeclaration->getIdentifier())->applyDefaultValue();
             }
 
             // End the attempt with a null state.
-            $this->endAttempt(null, $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL);
+            $this->endAttempt(null, $this->getSubmissionMode() === SubmissionMode::INDIVIDUAL, false, $allowUntouchedItems);
         }
     }
 
