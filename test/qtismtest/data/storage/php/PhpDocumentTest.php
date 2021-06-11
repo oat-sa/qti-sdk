@@ -137,7 +137,7 @@ class PhpDocumentTest extends QtiSmTestCase
         $outcomeDeclarations = $assessmentItemRefs['Q04']->getOutcomeDeclarations();
         $this::assertInstanceOf(OutcomeDeclarationCollection::class, $outcomeDeclarations);
         foreach ($outcomeDeclarations as $outcomeDeclaration) {
-            $this::asserttrue($outcomeDeclaration->isScoredByHuman());
+            $this::assertTrue($outcomeDeclaration->isScoredByHuman());
         }
     }
 
