@@ -36,6 +36,7 @@ use qtism\data\expressions\ExpressionCollection;
 use qtism\data\expressions\operators\Equal;
 use qtism\data\expressions\operators\ToleranceMode;
 use qtism\data\NavigationMode;
+use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\storage\php\marshalling\PhpMarshallingException;
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\php\PhpStorageException;
@@ -93,10 +94,11 @@ class PhpDocumentTest extends QtiSmTestCase
         $this::assertTrue($assessmentSections['S01']->isVisible());
 
         $assessmentItemRefs = $assessmentSections['S01']->getSectionParts();
-        $this::assertCount(3, $assessmentItemRefs);
+        $this::assertCount(4, $assessmentItemRefs);
         $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q01']);
         $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q02']);
         $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q03']);
+        $this::assertInstanceOf(AssessmentItemRef::class, $assessmentItemRefs['Q04']);
 
         $this::assertEquals('Q01', $assessmentItemRefs['Q01']->getIdentifier());
         $this::assertEquals('./Q01.xml', $assessmentItemRefs['Q01']->getHref());
@@ -131,6 +133,12 @@ class PhpDocumentTest extends QtiSmTestCase
         $this::assertFalse($responseProcessing->hasTemplate());
         $responseRules = $responseProcessing->getResponseRules();
         $this::assertCount(1, $responseRules);
+
+        $outcomeDeclarations = $assessmentItemRefs['Q04']->getOutcomeDeclarations();
+        $this::assertInstanceOf(OutcomeDeclarationCollection::class, $outcomeDeclarations);
+        foreach ($outcomeDeclarations as $outcomeDeclaration) {
+            $this::asserttrue($outcomeDeclaration->isScoredByHuman());
+        }
     }
 
     public function testSimpleSave()

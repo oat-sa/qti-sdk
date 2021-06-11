@@ -152,6 +152,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * The externalScored attribute is determining custom way to score item
      *
      * @var int|null
+     * @qtism-bean-property
      */
     private $externalScored = null;
 

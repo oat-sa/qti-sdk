@@ -70,6 +70,12 @@
 				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMinimum="-2"/>
 				<responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response"/>
 			</assessmentItemRef>
+
+			<assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false" category="mathematics minimum">
+				<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+				<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" externalScored="human"/>
+				<responseProcessing/>
+			</assessmentItemRef>
 		</assessmentSection>
 	</testPart>
 </assessmentTest>
