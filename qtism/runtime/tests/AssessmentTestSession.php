@@ -1902,6 +1902,30 @@ class AssessmentTestSession extends State
     }
 
     /**
+     * Iterate to the last item of the Test and end test session
+     *
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
+     * @throws PhpStorageException
+     */
+    public function moveTestLastItem()
+    {
+        if ($this->isRunning() === false) {
+            $msg = 'Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.';
+            throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
+        }
+
+        $route = $this->getRoute();
+        while ($route->valid() === true) {
+            $this->nextRouteItem();
+        }
+
+        if ($this->isRunning()) {
+            $this->endTestSession();
+        }
+    }
+
+    /**
      * Set the position in the Route at the very next TestPart in the Route sequence or, if the current
      * testPart is the last one of the test session, the test session ends gracefully. If the submission mode
      * is simultaneous, the pending responses are processed.
@@ -2063,6 +2087,8 @@ class AssessmentTestSession extends State
 
         // If there are still pending responses to be sent, apply a deffered response processing + outcomeProcessing.
         $this->defferedResponseProcessing();
+
+        $this->outcomeProcessing();
 
         if ($this->getTestResultsSubmission() === TestResultsSubmission::END) {
             $this->submitTestResults();
@@ -2359,7 +2385,7 @@ class AssessmentTestSession extends State
         $considerMinTime = $this->mustConsiderMinTime();
 
         $constraints = new TimeConstraintCollection();
-        
+
         if ($places & AssessmentTestPlace::ASSESSMENT_TEST) {
             $source = $routeItem->getAssessmentTest();
             $duration = $durationStore[$source->getIdentifier()];
