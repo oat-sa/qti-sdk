@@ -962,6 +962,22 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertEquals(1.0, $session['Q01.scoring']->getValue());
     }
 
+    public function testMoveThroughAndEndTestSession()
+    {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/routeitem_timelimits.xml');
+        $session->beginTestSession();
+
+        $this::assertEquals(1, $session->numberSelected());
+
+        $session->moveThroughAndEndTestSession();
+
+        $this::assertEquals(14, $session->numberSelected());
+        $this::assertEquals(0, $session->numberPresented());
+        $this::assertEquals(0, $session->numberResponded());
+
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+    }
+
     public function testUnlimitedAttempts()
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/unlimited_attempts.xml');

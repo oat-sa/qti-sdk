@@ -1902,16 +1902,16 @@ class AssessmentTestSession extends State
     }
 
     /**
-     * Iterate to the last item of the Test and end test session
+     * Iterate through route items and end test session
      *
      * @throws AssessmentItemSessionException
      * @throws AssessmentTestSessionException
      * @throws PhpStorageException
      */
-    public function moveTestLastItem()
+    public function moveThroughAndEndTestSession()
     {
         if ($this->isRunning() === false) {
-            $msg = 'Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.';
+            $msg = 'Cannot move to the test ending while the state of the test session is INITIAL or CLOSED.';
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::STATE_VIOLATION);
         }
 
