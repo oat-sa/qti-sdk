@@ -1616,6 +1616,14 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $assessmentTestSession->endTestSession();
     }
 
+    public function testEndTestSessionOutcomeProcessing()
+    {
+        $this->state->beginTestSession();
+
+        $this->state->moveThroughAndEndTestSession();
+        $this::assertEquals(20.0, $this->state['SCORE_TOTAL_MAX']->getValue());
+    }
+
     public function testBeginAttemptNotRunning()
     {
         $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection.xml');
