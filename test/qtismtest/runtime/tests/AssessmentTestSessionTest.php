@@ -962,6 +962,22 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertEquals(1.0, $session['Q01.scoring']->getValue());
     }
 
+    public function testMoveThroughAndEndTestSession()
+    {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/routeitem_timelimits.xml');
+        $session->beginTestSession();
+
+        $this::assertEquals(1, $session->numberSelected());
+
+        $session->moveThroughAndEndTestSession();
+
+        $this::assertEquals(14, $session->numberSelected());
+        $this::assertEquals(0, $session->numberPresented());
+        $this::assertEquals(0, $session->numberResponded());
+
+        $this::assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+    }
+
     public function testUnlimitedAttempts()
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/unlimited_attempts.xml');
@@ -1598,6 +1614,14 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $this->expectExceptionMessage('Cannot end the test session while the state of the test session is INITIAL or CLOSED.');
 
         $assessmentTestSession->endTestSession();
+    }
+
+    public function testEndTestSessionOutcomeProcessing()
+    {
+        $this->state->beginTestSession();
+
+        $this->state->moveThroughAndEndTestSession();
+        $this::assertEquals(20.0, $this->state['SCORE_TOTAL_MAX']->getValue());
     }
 
     public function testBeginAttemptNotRunning()
