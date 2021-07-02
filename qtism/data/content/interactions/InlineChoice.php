@@ -24,8 +24,6 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
-use qtism\data\content\TextOrVariableCollection;
-use qtism\data\QtiComponentCollection;
 
 /**
  * From IMS QTI:
@@ -33,16 +31,8 @@ use qtism\data\QtiComponentCollection;
  * A simple run of text to be displayed to the user, may be subject to
  * variable value substitution with printedVariable.
  */
-class InlineChoice extends Choice
+class InlineChoice extends SimpleChoice
 {
-    /**
-     * A collection of TextOrVariable objects.
-     *
-     * @var TextOrVariableCollection
-     * @qtism-bean-property
-     */
-    private $content;
-
     /**
      * Create a new InlineChoice object.
      *
@@ -56,41 +46,12 @@ class InlineChoice extends Choice
     public function __construct($identifier, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($identifier, $id, $class, $lang, $label);
-        $this->setContent(new TextOrVariableCollection());
-    }
-
-    /**
-     * Set the content of the InlineChoice.
-     *
-     * @param TextOrVariableCollection $content A collection of TextOrVariable objects.
-     */
-    public function setContent(TextOrVariableCollection $content)
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * Get the content of the InlineChoice.
-     *
-     * @return TextOrVariableCollection A collection of TextOrVariable objects.
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * @return TextOrVariableCollection|QtiComponentCollection
-     */
-    public function getComponents()
-    {
-        return $this->content;
     }
 
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'inlineChoice';
     }

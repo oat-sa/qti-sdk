@@ -24,8 +24,7 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
-use InvalidArgumentException;
-use qtism\data\content\TextOrVariableCollection;
+use qtism\data\content\FlowStaticCollection;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\ShowHide;
@@ -45,20 +44,7 @@ class InlineChoiceMarshaller extends ContentMarshaller
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $fqClass = $this->lookupClass($element);
-
-            try {
-                $component = new $fqClass($identifier);
-            } catch (InvalidArgumentException $e) {
-                $msg = "'${identifier}' is not a valid identifier for an 'inlineChoice' element.";
-                throw new UnmarshallingException($msg, $element, $e);
-            }
-
-            try {
-                $component->setContent(new TextOrVariableCollection($children->getArrayCopy()));
-            } catch (InvalidArgumentException $e) {
-                $msg = "'inlineChoice' elements must only contain text or 'printedVariable' elements.";
-                throw new UnmarshallingException($msg, $element, $e);
-            }
+            $component = new $fqClass($identifier);
 
             if (($fixed = $this->getDOMElementAttributeAs($element, 'fixed', 'boolean')) !== null) {
                 $component->setFixed($fixed);
@@ -72,6 +58,7 @@ class InlineChoiceMarshaller extends ContentMarshaller
                 $component->setShowHide(ShowHide::getConstantByName($showHide));
             }
 
+            $component->setContent(new FlowStaticCollection($children->getArrayCopy()));
             $this->fillBodyElement($component, $element);
 
             return $component;
@@ -90,6 +77,7 @@ class InlineChoiceMarshaller extends ContentMarshaller
     {
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
+
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
 
         if ($component->isFixed() === true) {
