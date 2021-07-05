@@ -39,7 +39,6 @@ use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
-use qtism\data\rules\PreCondition;
 use qtism\data\state\Weight;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
@@ -1876,7 +1875,6 @@ class AssessmentTestSession extends State
 
             // Preconditions on target?
             if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true) {
-                // Foreach preCondition at this point of the Route...
                 for ($i = 0; $i < count($preConditions); $i++) {
                     $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
                     $condition = $engine->process();
