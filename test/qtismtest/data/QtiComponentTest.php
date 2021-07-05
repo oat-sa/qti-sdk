@@ -169,42 +169,4 @@ class QtiComponentTest extends QtiSmTestCase
         $this::assertSame($assessmentSection1b, $search[2]);
         $this::assertSame($assessmentItemRef1b, $search[3]);
     }
-
-    public function testGetParentComponentOnItself()
-    {
-        $assessmentSection = new AssessmentSection('S01', 'Section 01', true);
-        $this::assertNull($assessmentSection->getParentComponent($assessmentSection));
-    }
-
-    public function testGetParentComponentOneLevelDepth()
-    {
-        $assessmentSection = new AssessmentSection('S01', 'Section S01', true);
-        $assessmentSection1a = new AssessmentSection('S01a', 'Section S01a', true);
-        $assessmentSection->setSectionParts(new SectionPartCollection([$assessmentSection1a]));
-
-        $this->assertSame($assessmentSection, $assessmentSection1a->getParentComponent($assessmentSection));
-    }
-
-    public function testGetParentComponentMultipleDepths()
-    {
-        $assessmentSection = new AssessmentSection('S01', 'Section S01', true);
-        $assessmentSection1a = new AssessmentSection('S01a', 'Section S01a', true);
-        $assessmentSection1b = new AssessmentSection('S01b', 'Section S01b', true);
-        $assessmentSection1c = new AssessmentSection('S01c', 'Section S01c', true);
-
-        $assessmentSection1a->setSectionParts(new SectionPartCollection([$assessmentSection1b, $assessmentSection1c]));
-        $assessmentSection->setSectionParts(new SectionPartCollection([$assessmentSection1a]));
-
-        $testPart = new TestPart('T01', new AssessmentSectionCollection([$assessmentSection]));
-
-        $this::assertSame($testPart, $assessmentSection->getParentComponent($testPart));
-
-        $this::assertSame($assessmentSection, $assessmentSection1a->getParentComponent($testPart));
-        $this::assertSame($assessmentSection, $assessmentSection1a->getParentComponent($assessmentSection));
-
-        $this::assertSame($assessmentSection1a, $assessmentSection1b->getParentComponent($testPart));
-        $this::assertSame($assessmentSection1a, $assessmentSection1c->getParentComponent($testPart));
-
-        $this::assertNull($assessmentSection1c->getParentComponent($assessmentSection1b));
-    }
 }
