@@ -157,4 +157,30 @@ abstract class QtiComponent
 
         return ($collision === true) ? new QtiComponentCollection($foundComponents) : new QtiIdentifiableCollection($foundComponents);
     }
+
+    /**
+     * Get the parent QtiComponent of this QtiComponent depending on the search $context.
+     *
+     * @param QtiComponent $context A search context.
+     * @return QtiComponent|null A QtiComponent corresponding to the parent of this Component or null value if not found in $context.
+     */
+    public function getParentComponent(QtiComponent $context)
+    {
+        $iterator = $context->getIterator();
+        $foundParent = null;
+
+        // Maybe it's the $context itself...
+        if ($context->getComponents()->contains($this)) {
+            $foundParent = $context;
+        } else {
+            foreach ($iterator as $component) {
+                if ($component instanceof $this && $component->getComponents()->contains($this)) {
+                    $foundParent = $component;
+                    break;
+                }
+            }
+        }
+
+        return $foundParent;
+    }
 }
