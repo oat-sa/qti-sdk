@@ -163,4 +163,34 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
 
         $this::assertFalse($testSession->isRunning());
     }
+
+    public function testSectionLevelByTakingS02()
+    {
+        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_sections_level_linear.xml');
+        $testSession->beginTestSession();
+
+        // We are on Q01, where we select the next flow by responding 'GotoS02' or 'GotoS03'.
+        $this::assertEquals('Q01', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+
+        // Let's go to Section 'S02'.
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GotoS02'))]));
+        $testSession->moveNext();
+        $this::assertTrue($testSession['Q01.RESPONSE']->equals(new QtiIdentifier('GotoS02')));
+        $this::assertEquals('S02', $testSession->getCurrentAssessmentSection()->getIdentifier());
+        $this::assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+
+        // Let's take Section 'S02'. We should arrive at the end of the test, not taking S03 (protected by preCondition).
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State());
+        $testSession->moveNext();
+        $this::assertEquals('S02', $testSession->getCurrentAssessmentSection()->getIdentifier());
+        $this::assertEquals('Q03', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
+        $testSession->beginAttempt();
+        $testSession->endAttempt(new State());
+        $testSession->moveNext();
+
+        // The test session should be finished.
+        $this::assertFalse($testSession->isRunning());
+    }
 }
