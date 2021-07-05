@@ -224,7 +224,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this::assertEquals('S03', $testSession->getCurrentAssessmentSection()->getIdentifier());
         $this::assertEquals('Q04', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
 
-        // Let's take Section 'S02'. We should arrive at the end of the test, not taking S03 (protected by preCondition).
+        // Let's take Section 'S03'. We should arrive at the end of the test, not taking S02 (protected by preCondition).
         $testSession->beginAttempt();
         $testSession->endAttempt(new State());
         $testSession->moveNext();
