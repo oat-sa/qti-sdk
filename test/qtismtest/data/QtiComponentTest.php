@@ -4,9 +4,7 @@ namespace qtismtest\data;
 
 use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
-use qtism\data\AssessmentSectionCollection;
 use qtism\data\SectionPartCollection;
-use qtism\data\TestPart;
 use qtismtest\QtiSmTestCase;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiIdentifiableCollection;

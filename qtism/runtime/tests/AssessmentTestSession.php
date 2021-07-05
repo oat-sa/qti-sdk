@@ -1878,7 +1878,7 @@ class AssessmentTestSession extends State
             if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true) {
                 // Foreach preCondition at this point of the Route...
                 for ($i = 0; $i < count($preConditions); $i++) {
-                    $engine = new ExpressionEngine($preConditions[$i], $this);
+                    $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
                     $condition = $engine->process();
 
                     if ($condition !== null && $condition->getValue() === true) {
