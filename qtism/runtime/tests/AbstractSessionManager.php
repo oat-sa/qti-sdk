@@ -247,8 +247,10 @@ abstract class AbstractSessionManager
                             $route->getLastRouteItem()->addBranchRules($current->getBranchRules());
 
                             // Do the same as for branch rules for pre conditions, except that they must be
-                            // attached on the first item of the route.
-                            $route->getFirstRouteItem()->addPreConditions($current->getPreConditions());
+                            // attached on all the items of the selected route.
+                            foreach ($route as $selectableRouteItem) {
+                                $selectableRouteItem->addPreConditions($current->getPreConditions());
+                            }
                         }
 
                         array_push($routeStack, $route);
