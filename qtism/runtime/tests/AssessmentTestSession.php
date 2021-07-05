@@ -39,6 +39,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
+use qtism\data\rules\PreCondition;
 use qtism\data\state\Weight;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
@@ -1875,15 +1876,32 @@ class AssessmentTestSession extends State
 
             // Preconditions on target?
             if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true) {
+                // Foreach preCondition at this point of the Route...
                 for ($i = 0; $i < count($preConditions); $i++) {
-                    $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
+                    /** @var PreCondition $preCondition */
+                    $preCondition = $preConditions[$i];
+                    $engine = new ExpressionEngine($preCondition->getExpression(), $this);
                     $condition = $engine->process();
 
                     if ($condition !== null && $condition->getValue() === true) {
                         // The item must be presented.
                         $stop = true;
                         break;
-                    }
+                    } /** else {
+                        // The item must NOT be presented. Should we skip the assessmentItemRef
+                        // or the assessmentSection? Let's find the parent of the preCondition
+                        // and reach the next sibling.
+                        if (!($preCondition->getParentComponent($route->current()->getAssessmentItemRef()) instanceof AssessmentItemRef)) {
+                            foreach ($route->current()->getAssessmentSections() as $preConditionAssessmentSection) {
+                                if (($preConditionParent = $preCondition->getParentComponent($preConditionAssessmentSection)) !== null) {
+                                    // We have to skip this entire section!
+                                    $this->moveOutOfSection($preConditionParent);
+                                }
+                            }
+                        } else {
+                            echo "Section Precondition\n";
+                        }
+                    } */
                 }
             } else {
                 $stop = true;
@@ -1974,6 +1992,27 @@ class AssessmentTestSession extends State
         $from = $route->current();
 
         while ($route->valid() === true && $route->current()->getAssessmentSection() === $from->getAssessmentSection()) {
+            $this->nextRouteItem();
+        }
+
+        if ($this->isRunning() === true) {
+            $this->interactWithItemSession();
+        }
+    }
+
+    /**
+     * Move out of a given $section by moving forward in the item flow.
+     *
+     * @param AssessmentSection $section A Given AssessmentSection object
+     * @throws AssessmentItemSessionException
+     * @throws AssessmentTestSessionException
+     * @throws PhpStorageException
+     */
+    protected function moveOutOfSection(AssessmentSection $section)
+    {
+        $route = $this->getRoute();
+
+        while ($route->valid() && $route->current()->getAssessmentSections()->contains($section)) {
             $this->nextRouteItem();
         }
 
