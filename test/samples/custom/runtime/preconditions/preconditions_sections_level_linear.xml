@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v2p1.xsd"
+                identifier="preconditions_sections_level_linear" title="PreConditions Sections Level Linear">
+    <testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+        <assessmentSection identifier="S01" fixed="false" title="Section1" visible="true">
+            <branchRule target="S02">
+                <match>
+                    <variable identifier="Q01.RESPONSE"/>
+                    <baseValue baseType="identifier">GotoS02</baseValue>
+                </match>
+            </branchRule>
+            <branchRule target="S03">
+                <match>
+                    <variable identifier="Q01.RESPONSE"/>
+                    <baseValue baseType="identifier">GotoS03</baseValue>
+                </match>
+            </branchRule>
+            <assessmentItemRef identifier="Q01" href="./Q01.xml" fixed="false" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+            </assessmentItemRef>
+        </assessmentSection>
+        <assessmentSection identifier="S02" title="Section2" visible="true">
+            <preCondition>
+                <match>
+                    <variable identifier="Q01.RESPONSE"/>
+                    <baseValue baseType="identifier">GotoS02</baseValue>
+                </match>
+            </preCondition>
+            <assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false"/>
+            <assessmentItemRef identifier="Q03" href="./Q03.xml" timeDependent="false"/>
+        </assessmentSection>
+        <assessmentSection identifier="S03" title="Section3" visible="true">
+            <preCondition>
+                <match>
+                    <variable identifier="Q01.RESPONSE"/>
+                    <baseValue baseType="identifier">GotoS03</baseValue>
+                </match>
+            </preCondition>
+            <assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false"/>
+            <assessmentItemRef identifier="Q05" href="./Q05.xml" timeDependent="false"/>
+        </assessmentSection>
+    </testPart>
+</assessmentTest>
