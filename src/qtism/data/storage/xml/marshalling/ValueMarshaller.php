@@ -23,12 +23,14 @@
 
 namespace qtism\data\storage\xml\marshalling;
 
+use DOMCdataSection;
 use DOMElement;
 use InvalidArgumentException;
 use qtism\common\enums\BaseType;
 use qtism\data\QtiComponent;
 use qtism\data\state\Value;
 use qtism\data\storage\Utils;
+use qtism\data\storage\xml\Utils as XmlUtils;
 
 /**
  * Marshalling/Unmarshalling implementation for value.
@@ -97,7 +99,7 @@ class ValueMarshaller extends Marshaller
         $fieldIdentifer = $component->getFieldIdentifier();
         $baseType = $component->getBaseType();
 
-        self::setDOMElementValue($element, $component->getValue());
+        $element->appendChild($this->encloseValueInCDATASection($component->getValue()));
 
         if (!empty($fieldIdentifer)) {
             $this->setDOMElementAttribute($element, 'fieldIdentifier', $fieldIdentifer);
@@ -121,11 +123,13 @@ class ValueMarshaller extends Marshaller
     {
         $object = null;
 
+        $nodeValue = $this->extractValueFromCDATASection($element);
+
         if (($baseType = $this->getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {
             // baseType attribute is set -> part of a record.
             $baseTypeCst = BaseType::getConstantByName($baseType);
             if ($baseTypeCst !== false) {
-                $object = new Value(Utils::stringToDatatype(trim($element->nodeValue), $baseTypeCst), $baseTypeCst);
+                $object = new Value(Utils::stringToDatatype($nodeValue, $baseTypeCst), $baseTypeCst);
                 $object->setPartOfRecord(true);
             } else {
                 $msg = "The 'baseType' attribute value ('$baseType') is not a valid QTI baseType in element '" . $element->localName . "'.";
@@ -133,7 +137,6 @@ class ValueMarshaller extends Marshaller
             }
         } else {
             // baseType attribute not set -> not part of a record.
-            $nodeValue = trim($element->nodeValue);
 
             // Try to use the marshaller as parametric to know how to unserialize the value.
             if ($this->getBaseType() !== -1) {
@@ -163,5 +166,31 @@ class ValueMarshaller extends Marshaller
     public function getExpectedQtiClassName()
     {
         return 'value';
+    }
+
+    /**
+     * @param mixed $value
+     * @return DOMCdataSection|false
+     */
+    private function encloseValueInCDATASection($value)
+    {
+        return self::getDOMCradle()->createCDATASection(XmlUtils::valueAsString($value));
+    }
+
+    /**
+     * @param DOMElement $element
+     * @return string
+     */
+    private function extractValueFromCDATASection(DOMElement $element)
+    {
+        $valueChildNodes = self::getChildElements($element, true);
+        if (!empty($valueChildNodes)
+            && ($node = reset($valueChildNodes))
+            && $node->nodeType === XML_CDATA_SECTION_NODE
+        ) {
+            return trim($node->nodeValue);
+        } else {
+            return trim($element->nodeValue);
+        }
     }
 }

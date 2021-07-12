@@ -112,7 +112,24 @@ class ValueMarshallerTest extends QtiSmTestCase
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $element = $marshaller->marshall($component);
 
-        $this::assertSame('<value>Hello &lt;b&gt;bold&lt;/b&gt;</value>', $element->ownerDocument->saveXML($element));
+        $this::assertSame('<value><![CDATA[Hello <b>bold</b>]]></value>', $element->ownerDocument->saveXML($element));
+    }
+
+    public function testUnmarshallCDATAFallback()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">text</value>');
+        $element = $dom->documentElement;
+
+        $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element, [BaseType::STRING]);
+        $component = $marshaller->unmarshall($element);
+        $this::assertEquals('text', $component->getValue());
+
+        $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"><![CDATA[text]]></value>');
+        $element = $dom->documentElement;
+
+        $component = $marshaller->unmarshall($element);
+        $this::assertEquals('text', $component->getValue());
     }
 
     public function testUnmarshallNoValueStringExpected()
