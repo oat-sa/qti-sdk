@@ -7,60 +7,60 @@
   <testResult identifier="fixture-test-identifier" datestamp="2018-06-27T09:41:45.529000Z">
     <responseVariable identifier="response-identifier" cardinality="single">
       <correctResponse>
-        <value>fixture-test-value1</value>
-        <value>fixture-test-value2</value>
+        <value><![CDATA[fixture-test-value1]]></value>
+        <value><![CDATA[fixture-test-value2]]></value>
       </correctResponse>
       <candidateResponse>
-        <value fieldIdentifier="test-id-1">fixture-test-value1</value>
-        <value fieldIdentifier="test-id-2">fixture-test-value2</value>
-        <value fieldIdentifier="test-id-3">fixture-test-value3</value>
+        <value fieldIdentifier="test-id-1"><![CDATA[fixture-test-value1]]></value>
+        <value fieldIdentifier="test-id-2"><![CDATA[fixture-test-value2]]></value>
+        <value fieldIdentifier="test-id-3"><![CDATA[fixture-test-value3]]></value>
       </candidateResponse>
     </responseVariable>
     <templateVariable identifier="response-identifier" cardinality="single">
-      <value>test1</value>
-      <value>test2</value>
+      <value><![CDATA[test1]]></value>
+      <value><![CDATA[test2]]></value>
     </templateVariable>
   </testResult>
   <itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529000Z" sessionStatus="final" sequenceIndex="2">
     <candidateComment>comment-fixture</candidateComment>
     <responseVariable identifier="fixture-identifier" cardinality="single" baseType="string" choiceSequence="value-id-1">
       <correctResponse>
-        <value>fixture-value1</value>
-        <value>fixture-value2</value>
+        <value><![CDATA[fixture-value1]]></value>
+        <value><![CDATA[fixture-value2]]></value>
       </correctResponse>
       <candidateResponse>
-        <value fieldIdentifier="value-id-1">fixture-value1</value>
-        <value fieldIdentifier="value-id-2">fixture-value2</value>
-        <value fieldIdentifier="value-id-3">fixture-value3</value>
+        <value fieldIdentifier="value-id-1"><![CDATA[fixture-value1]]></value>
+        <value fieldIdentifier="value-id-2"><![CDATA[fixture-value2]]></value>
+        <value fieldIdentifier="value-id-3"><![CDATA[fixture-value3]]></value>
       </candidateResponse>
     </responseVariable>
     <outcomeVariable identifier="fixture-identifier" cardinality="single" baseType="string" view="candidate" interpretation="fixture-interpretation" longInterpretation="http://fixture-interpretation" normalMinimum="2" normalMaximum="3" masteryValue="4">
-      <value>fixture-value1</value>
-      <value>fixture-value2</value>
-      <value>fixture-value3</value>
+      <value><![CDATA[fixture-value1]]></value>
+      <value><![CDATA[fixture-value2]]></value>
+      <value><![CDATA[fixture-value3]]></value>
     </outcomeVariable>
     <templateVariable identifier="fixture-identifier" cardinality="single" baseType="string">
-      <value>fixture-value1</value>
-      <value>fixture-value2</value>
-      <value>fixture-value3</value>
+      <value><![CDATA[fixture-value1]]></value>
+      <value><![CDATA[fixture-value2]]></value>
+      <value><![CDATA[fixture-value3]]></value>
     </templateVariable>
   </itemResult>
   <itemResult identifier="fixture-identifier" datestamp="2018-06-27T09:41:45.529000Z" sessionStatus="final" sequenceIndex="2">
     <responseVariable identifier="fixture-identifier" cardinality="single" baseType="string" choiceSequence="value-id-1">
       <correctResponse>
-        <value>fixture-value1</value>
-        <value>fixture-value2</value>
+        <value><![CDATA[fixture-value1]]></value>
+        <value><![CDATA[fixture-value2]]></value>
       </correctResponse>
       <candidateResponse>
-        <value fieldIdentifier="value-id-1">fixture-value1</value>
-        <value fieldIdentifier="value-id-2">fixture-value2</value>
-        <value fieldIdentifier="value-id-3">fixture-value3</value>
+        <value fieldIdentifier="value-id-1"><![CDATA[fixture-value1]]></value>
+        <value fieldIdentifier="value-id-2"><![CDATA[fixture-value2]]></value>
+        <value fieldIdentifier="value-id-3"><![CDATA[fixture-value3]]></value>
       </candidateResponse>
     </responseVariable>
     <outcomeVariable identifier="fixture-identifier" cardinality="single" baseType="string" view="candidate" interpretation="fixture-interpretation" longInterpretation="http://fixture-interpretation" normalMinimum="2" normalMaximum="3" masteryValue="4">
-      <value>fixture-value1</value>
-      <value>fixture-value2</value>
-      <value>fixture-value3</value>
+      <value><![CDATA[fixture-value1]]></value>
+      <value><![CDATA[fixture-value2]]></value>
+      <value><![CDATA[fixture-value3]]></value>
     </outcomeVariable>
   </itemResult>
 </assessmentResult>

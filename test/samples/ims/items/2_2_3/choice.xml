@@ -2,12 +2,12 @@
 <assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" identifier="choice" title="Unattended Luggage" timeDependent="false" adaptive="false" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p3.xsd">
   <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
     <correctResponse>
-      <value>ChoiceA</value>
+      <value><![CDATA[ChoiceA]]></value>
     </correctResponse>
   </responseDeclaration>
   <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
     <defaultValue>
-      <value>0</value>
+      <value><![CDATA[0]]></value>
     </defaultValue>
   </outcomeDeclaration>
   <itemBody>

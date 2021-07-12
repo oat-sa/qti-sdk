@@ -25,7 +25,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->importNode($element, true);
-        $this::assertEquals('<templateDeclaration identifier="tpl1" cardinality="single" baseType="identifier"><defaultValue><value>tplx</value></defaultValue></templateDeclaration>', $dom->saveXML($element));
+        $this::assertEquals('<templateDeclaration identifier="tpl1" cardinality="single" baseType="identifier"><defaultValue><value><![CDATA[tplx]]></value></defaultValue></templateDeclaration>', $dom->saveXML($element));
     }
 
     public function testUnmarshall21()
