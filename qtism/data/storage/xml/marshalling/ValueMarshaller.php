@@ -184,13 +184,10 @@ class ValueMarshaller extends Marshaller
     private function extractValueFromCDATASection(DOMElement $element)
     {
         $valueChildNodes = self::getChildElements($element, true);
-        if (!empty($valueChildNodes)
-            && ($node = reset($valueChildNodes))
-            && $node->nodeType === XML_CDATA_SECTION_NODE
-        ) {
-            return trim($node->nodeValue);
-        } else {
-            return trim($element->nodeValue);
+        if (empty($valueChildNodes)) {
+            return '';
         }
+
+        return trim($valueChildNodes[0]->nodeValue);
     }
 }
