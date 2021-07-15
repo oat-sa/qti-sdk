@@ -208,14 +208,12 @@ class Utils
     public static function escapeXmlSpecialChars($string, $isAttribute = false)
     {
         if ($isAttribute === false) {
-            $fullSearch = ['"', "'", '<', '>'];
-            $fullReplace = ['&quot;', '&apos;', '&lt;', '&gt;'];
-            $string = str_replace('&', '&amp;', $string);
+            $fullSearch = ['&', '"', "'", '<', '>'];
+            $fullReplace = ['&amp;', '&quot;', '&apos;', '&lt;', '&gt;'];
             $string = str_replace($fullSearch, $fullReplace, $string);
             return $string;
         } else {
-            $string = str_replace('&', '&amp;', $string);
-            $string = str_replace('"', '&quot;', $string);
+            $string = str_replace(['&', '"'], ['&amp;', '&quot;'], $string);
             return $string;
         }
     }
