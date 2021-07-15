@@ -262,7 +262,7 @@ class Utils
         if (is_bool($value)) {
             return $value === true ? 'true' : 'false';
         }
-        return (string)$value;
+        return htmlspecialchars($value, ENT_XML1);
     }
 
     /**
