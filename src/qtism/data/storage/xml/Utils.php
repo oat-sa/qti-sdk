@@ -297,7 +297,8 @@ class Utils
                 return $attr === 'true';
         }
 
-        if (in_array(Enumeration::class, class_implements($datatype), true)){
+        if (in_array(Enumeration::class, class_implements($datatype), true)) {
+            /** @var Enumeration $datatype */
             if ($attr !== null) {
                 $constant = $datatype::getConstantByName($attr);
                 // Returns the original value when it's unknown in the enumeration.
@@ -349,7 +350,7 @@ class Utils
         if (is_bool($value)) {
             return $value === true ? 'true' : 'false';
         }
-        return (string)$value;
+        return htmlspecialchars($value, ENT_XML1);
     }
 
     /**
