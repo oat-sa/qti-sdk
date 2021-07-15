@@ -207,15 +207,14 @@ class Utils
      */
     public static function escapeXmlSpecialChars($string, $isAttribute = false)
     {
-        if ($isAttribute === false) {
-            $fullSearch = ['&', '"', "'", '<', '>'];
-            $fullReplace = ['&amp;', '&quot;', '&apos;', '&lt;', '&gt;'];
-            $string = str_replace($fullSearch, $fullReplace, $string);
-            return $string;
-        } else {
-            $string = str_replace(['&', '"'], ['&amp;', '&quot;'], $string);
-            return $string;
+        if ($isAttribute !== false) {
+            return str_replace(['&', '"'], ['&amp;', '&quot;'], $string);
         }
+
+        $fullSearch = ['&', '"', "'", '<', '>'];
+        $fullReplace = ['&amp;', '&quot;', '&apos;', '&lt;', '&gt;'];
+
+        return str_replace($fullSearch, $fullReplace, $string);
     }
 
     /**
