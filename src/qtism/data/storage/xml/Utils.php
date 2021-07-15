@@ -124,7 +124,7 @@ class Utils
             $node = $stack->pop();
 
             if ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array($node, $traversed, true) === false) {
-                array_push($traversed, $node);
+                $traversed[] = $node;
                 $stack->push($node);
 
                 for ($i = 0; $i < $node->childNodes->length; $i++) {
@@ -144,9 +144,9 @@ class Utils
                     $newNode->appendChild(array_pop($children));
                 }
 
-                array_push($children, $newNode);
+                $children[] = $newNode;
             } else {
-                array_push($children, $node->cloneNode());
+                $children[] = $node->cloneNode();
             }
         }
 
