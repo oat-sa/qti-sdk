@@ -350,7 +350,7 @@ class Utils
         if (is_bool($value)) {
             return $value === true ? 'true' : 'false';
         }
-        return htmlspecialchars($value, ENT_XML1);
+        return htmlspecialchars($value, ENT_XML1, 'UTF-8');
     }
 
     /**
