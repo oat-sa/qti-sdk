@@ -124,7 +124,7 @@ class Utils
             $node = $stack->pop();
 
             if ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array($node, $traversed, true) === false) {
-                array_push($traversed, $node);
+                $traversed[] = $node;
                 $stack->push($node);
 
                 for ($i = 0; $i < $node->childNodes->length; $i++) {
@@ -144,9 +144,9 @@ class Utils
                     $newNode->appendChild(array_pop($children));
                 }
 
-                array_push($children, $newNode);
+                $children[] = $newNode;
             } else {
-                array_push($children, $node->cloneNode());
+                $children[] = $node->cloneNode();
             }
         }
 
@@ -207,17 +207,14 @@ class Utils
      */
     public static function escapeXmlSpecialChars($string, $isAttribute = false)
     {
-        if ($isAttribute === false) {
-            $fullSearch = ['"', "'", '<', '>'];
-            $fullReplace = ['&quot;', '&apos;', '&lt;', '&gt;'];
-            $string = str_replace('&', '&amp;', $string);
-            $string = str_replace($fullSearch, $fullReplace, $string);
-            return $string;
-        } else {
-            $string = str_replace('&', '&amp;', $string);
-            $string = str_replace('"', '&quot;', $string);
-            return $string;
+        if ($isAttribute !== false) {
+            return str_replace(['&', '"'], ['&amp;', '&quot;'], $string);
         }
+
+        $fullSearch = ['&', '"', "'", '<', '>'];
+        $fullReplace = ['&amp;', '&quot;', '&apos;', '&lt;', '&gt;'];
+
+        return str_replace($fullSearch, $fullReplace, $string);
     }
 
     /**
@@ -300,7 +297,8 @@ class Utils
                 return $attr === 'true';
         }
 
-        if (in_array(Enumeration::class, class_implements($datatype), true)){
+        if (in_array(Enumeration::class, class_implements($datatype), true)) {
+            /** @var Enumeration $datatype */
             if ($attr !== null) {
                 $constant = $datatype::getConstantByName($attr);
                 // Returns the original value when it's unknown in the enumeration.
@@ -352,7 +350,7 @@ class Utils
         if (is_bool($value)) {
             return $value === true ? 'true' : 'false';
         }
-        return (string)$value;
+        return htmlspecialchars($value, ENT_XML1, 'UTF-8');
     }
 
     /**
