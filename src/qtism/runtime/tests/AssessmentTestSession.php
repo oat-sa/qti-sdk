@@ -698,7 +698,7 @@ class AssessmentTestSession extends State
      */
     public function mustAlwaysAllowJumps()
     {
-        return (bool)($this->getConfig() & self::ALWAYS_ALLOW_JUMPS) || $this->alwaysAllowJumps;
+        return $this->alwaysAllowJumps || (bool)($this->getConfig() & self::ALWAYS_ALLOW_JUMPS);
     }
 
     /**
