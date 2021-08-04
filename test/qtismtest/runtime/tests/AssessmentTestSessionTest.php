@@ -2056,6 +2056,13 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
 
         $assessmentTestSession->jumpTo(1);
         $this::assertEquals(1, $assessmentTestSession->getRoute()->getPosition());
+
+        $assessmentTestSession = self::instantiate(self::samplesDir() . 'custom/runtime/linear_5_items.xml', false);
+        $assessmentTestSession->setAlwaysAllowJumps(true);
+        $assessmentTestSession->beginTestSession();
+
+        $assessmentTestSession->jumpTo(1);
+        $this::assertEquals(1, $assessmentTestSession->getRoute()->getPosition());
     }
 
     public function testSetSessionIdEmptyString()
