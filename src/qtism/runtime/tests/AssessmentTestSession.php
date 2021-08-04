@@ -197,6 +197,15 @@ class AssessmentTestSession extends State
     private $config = 0;
 
     /**
+     * Whether or not allowing jump in any case.
+     *
+     * If enabled, jumps will be allowed even if the current navigation mode is linear.
+     *
+     * @var bool
+     */
+    private $alwaysAllowJumps = false;
+
+    /**
      * Create a new AssessmentTestSession object.
      *
      * @param AssessmentTest $assessmentTest The AssessmentTest object which represents the assessmenTest the context belongs to.
@@ -669,6 +678,18 @@ class AssessmentTestSession extends State
     }
 
     /**
+     * Set whether or not to always allow jumps.
+     *
+     * When turned on, jumps will be allowed even if the current navigation mode is linear.
+     *
+     * @param bool $alwaysAllowJumps
+     */
+    public function setAlwaysAllowJumps($alwaysAllowJumps)
+    {
+        $this->alwaysAllowJumps = $alwaysAllowJumps;
+    }
+
+    /**
      * Know whether or not to always allow jumps.
      *
      * When turned on, jumps will be allowed even if the current navigation mode is linear.
@@ -677,7 +698,7 @@ class AssessmentTestSession extends State
      */
     public function mustAlwaysAllowJumps()
     {
-        return (bool)($this->getConfig() & self::ALWAYS_ALLOW_JUMPS);
+        return $this->alwaysAllowJumps || (bool)($this->getConfig() & self::ALWAYS_ALLOW_JUMPS);
     }
 
     /**
