@@ -736,8 +736,15 @@ class AssessmentItemSession extends State
             $this[$endAttemptIdentifier] = new QtiBoolean(false);
         }
 
-        // Increment the built-in variable 'numAttempts' by one.
-        $this['numAttempts']->setValue($numAttempts + 1);
+        if (
+            $this['numAttempts']->getValue() === 0
+            || $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED
+        ) {
+            // Increment the built-in variable 'numAttempts' by one.
+            $this['numAttempts']->setValue($numAttempts + 1);
+
+            $this['completionStatus']->setValue(self::COMPLETION_STATUS_UNKNOWN);
+        }
 
         // The session get the INTERACTING state.
         $this->setState(AssessmentItemSessionState::INTERACTING);
@@ -960,7 +967,6 @@ class AssessmentItemSession extends State
             $code = AssessmentItemSessionException::STATE_VIOLATION;
             throw new AssessmentItemSessionException($msg, $this, $code);
         } else {
-            $this->endAttempt(null, false);
             $this->setState(AssessmentItemSessionState::SUSPENDED);
         }
     }
