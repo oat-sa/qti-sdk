@@ -48,7 +48,7 @@ class AssessmentTestSessionAttemptsTest extends QtiSmAssessmentTestSessionTestCa
         $this::assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $this->session['Q01.completionStatus']);
     }
 
-    public function testDoesNotTakeAttemptsWhenInvokingBeginAttemptForSuspendedItemsWithoutEndAttempt()
+    public function testDoesNotTakeAnAttemptWhenInvokingBeginAttemptConsecutivelyWithoutEndingTheAttempt()
     {
         $this->session->beginTestSession();
 
