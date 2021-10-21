@@ -375,4 +375,29 @@ class JsonUnmarshallerTest extends QtiSmTestCase
             ['{ "record" : [ { "namez" } ] '],
         ];
     }
+
+    public function testUnmarshallListType()
+    {
+        $unmarshaller = self::createUnmarshaller();
+        $json = '
+            {
+                "record": [
+                    { "name" : "Søyler", "list": {"string" : ["SØYLE 1: navn=1, verdi=3", "SØYLE 2: navn=1, verdi=4"] } }
+                ]
+            }
+        ';
+
+        $container = $unmarshaller->unmarshall($json);
+        $list = $container->getArrayCopy(true);
+
+        $key = "Søyler";
+
+        $this::assertTrue(array_key_exists($key, $list) );
+
+        $list = $list[$key];
+        $items = $list->getItems();
+
+        $this::assertEquals("SØYLE 1: navn=1, verdi=3", $items[0]->getValue());
+        $this::assertEquals("SØYLE 2: navn=1, verdi=4", $items[1]->getValue());
+    }
 }

@@ -36,6 +36,7 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiIntOrIdentifier;
+use qtism\common\datatypes\QtiList;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiString;
@@ -201,14 +202,32 @@ class Unmarshaller
 
                 if (isset($v['base']) || (array_key_exists('base', $v) && $v['base'] === null)) {
                     $unit = ['base' => $v['base']];
+                    $unmarshallItem = $this->unmarshallUnit($unit);
+                } elseif (isset($v['list']) || (array_key_exists('list', $v) && $v['list'] === null)) {
+                    $list = $v['list'];
+                    $listNewItems = [];
+
+                    $baseType = key($list);
+                    $listItems = $list[$baseType];
+
+                    foreach ($listItems as $listItem) {
+                        $listItemToConvert = [
+                            'base' => [$baseType => $listItem]
+                        ];
+                        $listNewItems[] = $this->unmarshallUnit($listItemToConvert);
+                    }
+
+                    $unmarshallItem = new QtiList($baseType, $listNewItems);
                 } else {
+
                     // No value found, let's go for a null value.
                     $unit = ['base' => null];
+                    $unmarshallItem = $this->unmarshallUnit($unit);
                 }
 
-                $returnValue[$v['name']] = $this->unmarshallUnit($unit);
-            }
+                $returnValue[$v['name']] = $unmarshallItem;
 
+            }
             return $returnValue;
         } else {
             // This is a state.
@@ -279,7 +298,7 @@ class Unmarshaller
                 case FileHash::FILE_HASH_KEY:
                     return $this->unmarshallFileHash($unit);
                     break;
-                    
+
                 case 'uri':
                     return $this->unmarshallUri($unit);
                     break;
@@ -438,7 +457,7 @@ class Unmarshaller
             $fileHashArray['data']
         );
     }
-    
+
     /**
      * Unmarshall a URI JSON PCI representation.
      *
