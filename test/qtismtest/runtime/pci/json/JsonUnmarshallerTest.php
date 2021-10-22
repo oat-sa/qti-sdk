@@ -103,8 +103,8 @@ class JsonUnmarshallerTest extends QtiSmTestCase
 
         $json = sprintf(
             '{ "base" : { "%s" : {
-            "mime" : "%s", 
-            "data" : "%s", 
+            "mime" : "%s",
+            "data" : "%s",
             "name" : "%s",
             "id" : "%s" } } }',
             FileHash::FILE_HASH_KEY,
@@ -374,5 +374,30 @@ class JsonUnmarshallerTest extends QtiSmTestCase
             ['{ "liste" : { "boolean" : true } } '],
             ['{ "record" : [ { "namez" } ] '],
         ];
+    }
+
+    public function testUnmarshallListWithinRecord()
+    {
+        $unmarshaller = self::createUnmarshaller();
+        $json = '
+            {
+                "record": [
+                    { "name" : "Søyler", "list": {"string" : ["SØYLE 1: navn=1, verdi=3", "SØYLE 2: navn=1, verdi=4"] } }
+                ]
+            }
+        ';
+
+        $container = $unmarshaller->unmarshall($json);
+        $list = $container->getArrayCopy(true);
+
+        $key = "Søyler";
+
+        $this::assertTrue(array_key_exists($key, $list) );
+
+        $list = $list[$key];
+        $items = $list->getArrayCopy();
+
+        $this::assertEquals("SØYLE 1: navn=1, verdi=3", $items[0]->getValue());
+        $this::assertEquals("SØYLE 2: navn=1, verdi=4", $items[1]->getValue());
     }
 }

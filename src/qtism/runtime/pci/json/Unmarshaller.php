@@ -146,44 +146,7 @@ class Unmarshaller
             // This is a base.
             return $this->unmarshallUnit($json);
         } elseif (in_array('list', $keys)) {
-            $keys = array_keys($json['list']);
-            if (isset($keys[0]) === false) {
-                $msg = 'No baseType provided for list.';
-                throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI);
-            }
-
-            $baseType = BaseType::getConstantByName($keys[0]);
-
-            if ($baseType === false) {
-                $msg = "Unknown QTI baseType '" . $keys[0] . "'.";
-                $code = UnmarshallingException::NOT_PCI;
-                throw new UnmarshallingException($msg, $code);
-            }
-
-            $returnValue = new MultipleContainer($baseType);
-
-            if (!is_array($json['list'][$keys[0]])) {
-                $msg = 'list is not an array';
-                throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI);
-            }
-
-            // This is a list.
-            foreach ($json['list'][$keys[0]] as $v) {
-                try {
-                    if ($v === null) {
-                        $returnValue[] = $this->unmarshallUnit(['base' => $v]);
-                    } else {
-                        $returnValue[] = $this->unmarshallUnit(['base' => [$keys[0] => $v]]);
-                    }
-                } catch (InvalidArgumentException $e) {
-                    $strBaseType = BaseType::getNameByConstant($baseType);
-                    $msg = "A value is not compliant with the '${strBaseType}' baseType.";
-                    $code = UnmarshallingException::NOT_PCI;
-                    throw new UnmarshallingException($msg, $code);
-                }
-            }
-
-            return $returnValue;
+            return $this->unmarshallList($json);
         } elseif (in_array('record', $keys)) {
             // This is a record.
             $returnValue = new RecordContainer();
@@ -199,14 +162,14 @@ class Unmarshaller
                     throw new UnmarshallingException($msg, $code);
                 }
 
-                if (isset($v['base']) || (array_key_exists('base', $v) && $v['base'] === null)) {
-                    $unit = ['base' => $v['base']];
+                if (isset($v['base'])) {
+                    $returnValue[$v['name']] = $this->unmarshallUnit(['base' => $v['base']]);
+                } elseif (isset($v['list'])) {
+                    $returnValue[$v['name']] = $this->unmarshallList($v);
                 } else {
                     // No value found, let's go for a null value.
-                    $unit = ['base' => null];
+                    $returnValue[$v['name']] = $this->unmarshallUnit(['base' => null]);
                 }
-
-                $returnValue[$v['name']] = $this->unmarshallUnit($unit);
             }
 
             return $returnValue;
@@ -473,5 +436,57 @@ class Unmarshaller
     protected function unmarshallIdentifier(array $unit)
     {
         return new QtiIdentifier($unit['base']['identifier']);
+    }
+
+    /**
+     * Parse associate array, return MultipleContainer
+     * which contains converted to BaseType items of 'list'
+     *
+     * @param array $parsedJson
+     * @return MultipleContainer
+     * @throws FileManagerException
+     * @throws UnmarshallingException
+     */
+    protected function unmarshallList(array $parsedJson)
+    {
+        $list = $parsedJson['list'];
+        $key = key($list);
+
+        if ($key === null) {
+            $msg = 'No baseType provided for list.';
+            throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI);
+        }
+
+        $baseType = BaseType::getConstantByName($key);
+
+        if ($baseType === false) {
+            $msg = "Unknown QTI baseType '" . $key . "'.";
+            $code = UnmarshallingException::NOT_PCI;
+            throw new UnmarshallingException($msg, $code);
+        }
+
+        $returnValue = new MultipleContainer($baseType);
+
+        if (!is_array($list[$key])) {
+            $msg = 'list is not an array';
+            throw new UnmarshallingException($msg, UnmarshallingException::NOT_PCI);
+        }
+
+        foreach ($list[$key] as $v) {
+            try {
+                if ($v === null) {
+                    $returnValue[] = $this->unmarshallUnit(['base' => $v]);
+                } else {
+                    $returnValue[] = $this->unmarshallUnit(['base' => [$key => $v]]);
+                }
+            } catch (InvalidArgumentException $e) {
+                $strBaseType = BaseType::getNameByConstant($baseType);
+                $msg = "A value is not compliant with the '${strBaseType}' baseType.";
+                $code = UnmarshallingException::NOT_PCI;
+                throw new UnmarshallingException($msg, $code);
+            }
+        }
+
+        return $returnValue;
     }
 }
