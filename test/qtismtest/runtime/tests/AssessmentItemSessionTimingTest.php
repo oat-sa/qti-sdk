@@ -288,7 +288,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 
         // Try again by waiting too much to respect max time at endAttempt time.
         $itemSession->beginAttempt();
-        $this::assertEquals(0, $itemSession->getRemainingAttempts());
+        $this::assertEquals(1, $itemSession->getRemainingAttempts());
         $itemSession->setTime(self::createDate('2014-07-14 13:00:03'));
 
         try {
@@ -298,7 +298,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
             $this::assertEquals(AssessmentItemSessionException::DURATION_OVERFLOW, $e->getCode());
         }
 
-        $this::assertEquals(2, $itemSession['numAttempts']->getValue());
+        $this::assertEquals(1, $itemSession['numAttempts']->getValue());
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $itemSession->getState());
         $this::assertInstanceOf(QtiFloat::class, $itemSession['SCORE']);
         $this::assertEquals(0.0, $itemSession['SCORE']->getValue());
