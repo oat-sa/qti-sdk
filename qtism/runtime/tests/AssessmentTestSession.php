@@ -1548,7 +1548,7 @@ class AssessmentTestSession extends State
 
                 // Check the time limits after the jump is trully performed.
                 if ($allowTimeout === false) {
-                    $this->checkTimeLimits(false, true);
+                    $this->checkTimeLimits(false, true, false);
                 }
 
                 // No exception thrown, interact!
