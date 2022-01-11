@@ -24,13 +24,14 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use Exception;
+use qtism\common\ContentPackageExceptionInterface;
 use qtism\data\QtiComponent;
 
 /**
  * Exception to be thrown when an error occurs during the marshalling process
  * of a QtiComponent.
  */
-class MarshallingException extends Exception
+class MarshallingException extends Exception implements ContentPackageExceptionInterface
 {
     /**
      * A QtiComponent object that caused the exception to be thrown.

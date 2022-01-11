@@ -24,12 +24,13 @@
 namespace qtism\data;
 
 use Exception;
+use qtism\common\ContentPackageExceptionInterface;
 
 /**
  * An exception to be thrown when an error occurs while dealing with
  * target of BranchingRules in AssessmentTest.
  */
-class BranchRuleTargetException extends Exception
+class BranchRuleTargetException extends Exception implements ContentPackageExceptionInterface
 {
     /**
      * The target is unknown.

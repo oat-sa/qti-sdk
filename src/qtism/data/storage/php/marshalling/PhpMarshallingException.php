@@ -24,11 +24,12 @@
 namespace qtism\data\storage\php\marshalling;
 
 use Exception;
+use qtism\common\ContentPackageExceptionInterface;
 
 /**
  * The exception class to use when exception occurs during PHP marshalling time.
  */
-class PhpMarshallingException extends Exception
+class PhpMarshallingException extends Exception implements ContentPackageExceptionInterface
 {
     /**
      * Error code to use when the error is unknown.
