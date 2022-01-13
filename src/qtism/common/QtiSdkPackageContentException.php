@@ -24,8 +24,8 @@ declare(strict_types=1);
 namespace qtism\common;
 
 /**
- * The ContentPackageExceptionInterface intended to help unify the exception handlers behavior
+ * The QtiSdkPackageContentException intended to help unify the exception handlers behavior
  */
-interface ContentPackageExceptionInterface
+interface QtiSdkPackageContentException
 {
 }

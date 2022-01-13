@@ -24,11 +24,11 @@
 namespace qtism\data\results;
 
 use Exception;
-use qtism\common\ContentPackageExceptionInterface;
+use qtism\common\QtiSdkPackageContentException;
 
 /**
  * Class DuplicateSourceIdException
  */
-class DuplicateSourceIdException extends Exception implements ContentPackageExceptionInterface
+class DuplicateSourceIdException extends Exception implements QtiSdkPackageContentException
 {
 }
