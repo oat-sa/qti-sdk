@@ -24,13 +24,13 @@
 namespace qtism\runtime\storage\common;
 
 use Exception;
-use qtism\common\ContentPackageExceptionInterface;
+use qtism\common\QtiSdkPackageContentException;
 
 /**
  * The StorageException class represents exceptions that AssessmentTestSession
  * Storage Services encounter an error.
  */
-class StorageException extends Exception implements ContentPackageExceptionInterface
+class StorageException extends Exception implements QtiSdkPackageContentException
 {
     /**
      * The error code to be used when the nature of the error is unknown.

@@ -24,13 +24,13 @@
 namespace qtism\runtime\pci\json;
 
 use Exception;
-use qtism\common\ContentPackageExceptionInterface;
+use qtism\common\QtiSdkPackageContentException;
 
 /**
  * Exception to be thrown when a Marshalling error occurs while
  * dealing with JSON Data.
  */
-class MarshallingException extends Exception implements ContentPackageExceptionInterface
+class MarshallingException extends Exception implements QtiSdkPackageContentException
 {
     const UNKNOWN = 0;
 

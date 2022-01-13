@@ -24,13 +24,13 @@
 namespace qtism\runtime\rendering;
 
 use Exception;
-use qtism\common\ContentPackageExceptionInterface;
+use qtism\common\QtiSdkPackageContentException;
 
 /**
  * Exception to be thrown when an error occurs during a Rendering
  * process.
  */
-class RenderingException extends Exception implements ContentPackageExceptionInterface
+class RenderingException extends Exception implements QtiSdkPackageContentException
 {
     /**
      * Error code to use when the nature of the error
