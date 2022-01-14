@@ -8,27 +8,24 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2019-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2022 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author Julien Sébire <julien@taotesting.com>
  * @license GPLv2
  */
+declare(strict_types=1);
 
-namespace qtism\data\results;
-
-use Exception;
-use qtism\common\QtiSdkPackageContentException;
+namespace qtism\common;
 
 /**
- * Class DuplicateSourceIdException
+ * The QtiSdkPackageContentException intended to help unify the exception handlers behavior
  */
-class DuplicateSourceIdException extends Exception implements QtiSdkPackageContentException
+interface QtiSdkPackageContentException
 {
 }
