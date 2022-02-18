@@ -222,7 +222,7 @@ class Utils
      * @param array|string $symbols An array of symbols or a single symbol.
      * @return string The escaped string.
      */
-    public static function escapeSymbols($string, $symbols)
+    public static function escapeSymbols(string $string, $symbols)
     {
         if (!is_array($symbols)) {
             $symbols = [$symbols];
@@ -335,11 +335,31 @@ class Utils
         // Neither caret (^) nor dollar ($) sign have special meaning so they are
         // considered as normal characters.
         // see http://www.regular-expressions.info/xml.html
-        $pattern = self::escapeSymbols($pattern, ['$', '^']);
-        $pattern = self::pregAddDelimiter('^' . $pattern . '$');
+//        $pattern = self::escapeSymbols($pattern, ['$', '^']);
+        $pattern = self::beginsCaret($pattern);
+        $pattern = self::endDollar($pattern);
+        $pattern = self::pregAddDelimiter($pattern);
 
         // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
         $pattern .= 's';
+
+        return $pattern;
+    }
+
+    private static function beginsCaret(string $pattern): string
+    {
+        if (substr($pattern, 0, 1) !== '^') {
+            $pattern = '^'.$pattern;
+        }
+
+        return $pattern;
+    }
+
+    private static function endDollar(string $pattern): string
+    {
+        if ($pattern[strlen($pattern) - 1] !== '$') {
+            $pattern = $pattern.'$';
+        }
 
         return $pattern;
     }

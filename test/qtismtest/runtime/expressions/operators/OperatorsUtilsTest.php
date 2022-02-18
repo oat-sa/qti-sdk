@@ -163,6 +163,14 @@ class OperatorsUtilsTest extends QtiSmTestCase
     }
 
     /**
+     * @dataProvider patternForPcreProvider
+     */
+    public function testPrepareXsdPatternForPcre($pattern, $expected)
+    {
+        $this->assertEquals($expected, OperatorsUtils::prepareXsdPatternForPcre($pattern));
+    }
+
+    /**
      * @return array
      */
     public function pregAddDelimiterProvider()
@@ -333,8 +341,25 @@ class OperatorsUtilsTest extends QtiSmTestCase
         return [
             ['', 'foobar', 'PCRE Engine internal error'],
             ['/***', 'foobar', 'PCRE Engine internal error'],
-            ['/(?:\D+|<\d+>)*[!?]/', 'foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar', 'PCRE Engine backtrack limit exceeded'],
+            [
+                '/(?:\D+|<\d+>)*[!?]/',
+                'foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar',
+                'PCRE Engine backtrack limit exceeded',
+            ],
             ['/abc/u', "\xa0\xa1", 'PCRE Engine malformed UTF-8 error'],
+        ];
+    }
+
+    public function patternForPcreProvider()
+    {
+        return [
+            'max 5 chars string pattern' => ['^[\s\S]{0,5}$', '/^[\s\S]{0,5}$/s'],
+            'only digits pattern' => ['[0,1]+', '/^[0,1]+$/s'],
+            'only digits pattern v2' => ['^[0,1]+$', '/^[0,1]+$/s'],
+            'max 5 words pattern' => [
+                '^(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}$',
+                '/^(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}$/s',
+            ],
         ];
     }
 }
