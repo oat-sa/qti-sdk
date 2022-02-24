@@ -189,7 +189,7 @@ class Utils
      * @param string $string
      * @return string|bool The delimited string or false if no appropriate delimiters can be found.
      */
-    public static function pregAddDelimiter($string)
+    public static function pregAddDelimiter(string $string)
     {
         return '/'.static::escapeSymbols($string, '/').'/';
     }
