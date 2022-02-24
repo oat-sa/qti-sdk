@@ -333,59 +333,26 @@ class Utils
      * @param string $pattern
      * @return string
      */
-    public static function prepareXsdPatternForPcre($pattern): string
-    {
-        // XML schema always implicitly anchors the entire regular expression
-        // Neither caret (^) nor dollar ($) sign have special meaning so they are
-        // considered as normal characters.
-        // see http://www.regular-expressions.info/xml.html
-        $pattern = self::removeCaretFromBegging($pattern);
-        $pattern = self::removeDollarFromEnd($pattern);
-        $pattern = self::escapeSymbols($pattern, ['$', '^']);
-        $pattern = self::withStartOfStringToken($pattern);
-        $pattern = self::withEndOfStringToken($pattern);
-        $pattern = self::pregAddDelimiter($pattern);
+     public static function prepareXsdPatternForPcre(string $pattern): string
+     {
+         // XML schema always implicitly anchors the entire regular expression
+         // Neither caret (^) nor dollar ($) sign have special meaning so they are
+         // considered as normal characters.
+         // see http://www.regular-expressions.info/xml.html
+         $pattern = self::withoutStringAnchors($pattern);
+         $pattern = self::escapeSymbols($pattern, ['$', '^']);
+         $pattern = self::pregAddDelimiter('^' . $pattern . '$');
 
-        // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
-        $pattern .= 's';
+         // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
+         $pattern .= 's';
 
-        return $pattern;
-    }
+         return $pattern;
+     }
 
-    private static function removeCaretFromBegging(string $pattern): string
-    {
-        if ($pattern[0] === '^' && ($pattern[1] === '[' || $pattern[1] === '(' || $pattern[1] === '{')) {
-            $pattern = ltrim($pattern, '^');
-        }
+     private static function withoutStringAnchors(string $pattern): string
+     {
+         $pattern = ltrim($pattern, '^');
 
-        return $pattern;
-    }
-
-    private static function removeDollarFromEnd(string $pattern): string
-    {
-        $length = strlen($pattern) - 1;
-        if ($pattern[$length] === '$' && ($pattern[$length - 1] === ']' || $pattern[$length - 1] === ')' || $pattern[$length - 1] === '}' || $pattern[$length - 1] === '+')) {
-            $pattern = rtrim($pattern, '$');
-        }
-
-        return $pattern;
-    }
-
-    private static function withStartOfStringToken(string $pattern): string
-    {
-        if (substr($pattern, 0, 1) !== '^') {
-            $pattern = '^'.$pattern;
-        }
-
-        return $pattern;
-    }
-
-    private static function withEndOfStringToken(string $pattern): string
-    {
-        if ($pattern[strlen($pattern) - 1] !== '$') {
-            $pattern = $pattern.'$';
-        }
-
-        return $pattern;
-    }
+         return rtrim($pattern, '$');
+     }
 }
