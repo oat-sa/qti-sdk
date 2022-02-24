@@ -191,7 +191,7 @@ class Utils
      */
     public static function pregAddDelimiter(string $string)
     {
-        return '/'.static::escapeSymbols($string, '/').'/';
+        return '/' . static::escapeSymbols($string, '/') . '/';
     }
 
     /**
