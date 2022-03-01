@@ -82,7 +82,8 @@ class Utils
      * Compute the arithmetic mean of $sample.
      *
      * @param array An array of numeric values.
-     * @return false|number The arithmetic mean of $sample or false if any of the values of $sample is not numeric or if $sample is empty.
+     * @return false|number The arithmetic mean of $sample or false if any of the values of $sample is not numeric or
+     *     if $sample is empty.
      */
     public static function mean(array $sample)
     {
@@ -117,7 +118,7 @@ class Utils
      * returns false.
      *
      * @param array $sample An array of numeric values.
-     * @param bool $correction (optional) Apply the Bessel's correction on the computed variance.
+     * @param bool  $correction (optional) Apply the Bessel's correction on the computed variance.
      * @return false|number The variance of $sample or false if $sample is empty or contains non-numeric values.
      * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
      */
@@ -154,7 +155,8 @@ class Utils
     /**
      * Compute the standard deviation of $sample.
      *
-     * * To compute the population standard deviation: $sample is considered as a population if $correction equals false.
+     * * To compute the population standard deviation: $sample is considered as a population if $correction equals
+     * false.
      * * To compute the sample standard deviation: $sample is considered as sample if $correction equals true.
      *
      * IMPORTANT:
@@ -162,8 +164,9 @@ class Utils
      * returns false.
      *
      * @param array $sample An array of numeric values.
-     * @param bool $correction (optional) Whether to apply Bessel's correction.
-     * @return false|number The standard deviation of $sample or false if $sample is empty or contains non-numeric values.
+     * @param bool  $correction (optional) Whether to apply Bessel's correction.
+     * @return false|number The standard deviation of $sample or false if $sample is empty or contains non-numeric
+     *     values.
      * @link http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance
      */
     public static function standardDeviation(array $sample, $correction = true)
@@ -186,7 +189,7 @@ class Utils
      * @param string $string
      * @return string|bool The delimited string or false if no appropriate delimiters can be found.
      */
-    public static function pregAddDelimiter($string)
+    public static function pregAddDelimiter(string $string)
     {
         return '/' . static::escapeSymbols($string, '/') . '/';
     }
@@ -195,7 +198,7 @@ class Utils
      * Get the amout of backslash (\) characters in $string that precede $offset.
      *
      * @param string $string
-     * @param int $offset
+     * @param int    $offset
      * @return int
      */
     public static function getPrecedingBackslashesCount($string, $offset)
@@ -218,11 +221,11 @@ class Utils
     /**
      * Escape with a backslash (\) the $symbols in $string.
      *
-     * @param string $string
+     * @param string       $string
      * @param array|string $symbols An array of symbols or a single symbol.
      * @return string The escaped string.
      */
-    public static function escapeSymbols($string, $symbols)
+    public static function escapeSymbols(string $string, $symbols): string
     {
         if (!is_array($symbols)) {
             $symbols = [$symbols];
@@ -238,9 +241,9 @@ class Utils
             // If the amount of preceding backslashes is even, it is not escaped.
             // If a caret is preceded by a left bracket, don't escape it
             if ((in_array($char, $symbols)) && static::getPrecedingBackslashesCount($string, $i) % 2 === 0
-                && ($i === 0 || $char !== '^' || $string[$i-1] !== '[')
+                && ($i === 0 || $char !== '^' || $string[$i - 1] !== '[')
             ) {
-                // It is not escaped, so ecape it.
+                // It is not escaped, so escape it.
                 $returnValue .= '\\';
             }
 
@@ -255,7 +258,8 @@ class Utils
      * fully qualified class name e.g. 'org\qtism\custom\Explode'.
      *
      * @param string $class A custom operator class name where namespace separator is '.' (dot).
-     * @return bool|string A fully qualified PHP class name corresponding to $class or false if the transformation failed.
+     * @return bool|string A fully qualified PHP class name corresponding to $class or false if the transformation
+     *     failed.
      */
     public static function customOperatorClassToPhpClass($class)
     {
@@ -329,18 +333,26 @@ class Utils
      * @param string $pattern
      * @return string
      */
-    public static function prepareXsdPatternForPcre($pattern)
-    {
-        // XML schema always implicitly anchors the entire regular expression
-        // Neither caret (^) nor dollar ($) sign have special meaning so they are
-        // considered as normal characters.
-        // see http://www.regular-expressions.info/xml.html
-        $pattern = self::escapeSymbols($pattern, ['$', '^']);
-        $pattern = self::pregAddDelimiter('^' . $pattern . '$');
+     public static function prepareXsdPatternForPcre(string $pattern): string
+     {
+         // XML schema always implicitly anchors the entire regular expression
+         // Neither caret (^) nor dollar ($) sign have special meaning so they are
+         // considered as normal characters.
+         // see http://www.regular-expressions.info/xml.html
+         $pattern = self::withoutStringAnchors($pattern);
+         $pattern = self::escapeSymbols($pattern, ['$', '^']);
+         $pattern = self::pregAddDelimiter('^' . $pattern . '$');
 
-        // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
-        $pattern .= 's';
+         // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
+         $pattern .= 's';
 
-        return $pattern;
-    }
+         return $pattern;
+     }
+
+     private static function withoutStringAnchors(string $pattern): string
+     {
+         $pattern = ltrim($pattern, '^');
+
+         return rtrim($pattern, '$');
+     }
 }
