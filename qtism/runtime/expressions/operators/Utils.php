@@ -330,12 +330,13 @@ class Utils
      * @param string $pattern
      * @return string
      */
-    public static function prepareXsdPatternForPcre($pattern)
+    public static function prepareXsdPatternForPcre(string $pattern): string
     {
-        // XML schema always implicitly anchors the entire regular expression.
-        // Neither caret (^) nor dollar ($) sign have special meaning so they
-        // are considered normal characters.
+        // XML schema always implicitly anchors the entire regular expression
+        // Neither caret (^) nor dollar ($) sign have special meaning so they are
+        // considered as normal characters.
         // see http://www.regular-expressions.info/xml.html
+        $pattern = self::withoutStringAnchors($pattern);
         $pattern = self::escapeSymbols($pattern, ['$', '^']);
         $pattern = self::pregAddDelimiter('^' . $pattern . '$');
 
@@ -343,5 +344,12 @@ class Utils
         $pattern .= 's';
 
         return $pattern;
+    }
+
+    private static function withoutStringAnchors(string $pattern): string
+    {
+        $pattern = ltrim($pattern, '^');
+
+        return rtrim($pattern, '$');
     }
 }
