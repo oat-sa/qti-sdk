@@ -163,6 +163,14 @@ class OperatorsUtilsTest extends QtiSmTestCase
     }
 
     /**
+     * @dataProvider patternForPcreProvider
+     */
+    public function testPrepareXsdPatternForPcre($pattern, $expected)
+    {
+        $this->assertEquals($expected, OperatorsUtils::prepareXsdPatternForPcre($pattern));
+    }
+
+    /**
      * @return array
      */
     public function pregAddDelimiterProvider()
@@ -332,6 +340,26 @@ class OperatorsUtilsTest extends QtiSmTestCase
             ['/***', 'foobar', 'PCRE Engine internal error'],
             ['/(?:\D+|<\d+>)*[!?]/', 'foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar', 'PCRE Engine backtrack limit exceeded'],
             ['/abc/u', "\xa0\xa1", 'PCRE Engine malformed UTF-8 error'],
+        ];
+    }
+
+    public function patternForPcreProvider(): array
+    {
+        return [
+            'max chars string pattern without anchors' => ['[\s\S]{0,5}', '/^[\s\S]{0,5}$/s'],
+            'max chars string pattern with anchors' => ['^[\s\S]{0,5}$', '/^[\s\S]{0,5}$/s'],
+            'digits only pattern' => ['[0,1]+', '/^[0,1]+$/s'],
+            'digits only pattern with anchors' => ['^[0,1]+$', '/^[0,1]+$/s'],
+            'string prefix without anchors' => ['test(.*)', '/^test(.*)$/s'],
+            'string prefix with anchors' => ['^test(.*)$', '/^test(.*)$/s'],
+            'max words pattern without anchors' => [
+                '(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}',
+                '/^(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}$/s',
+            ],
+            'max words pattern with anchors' => [
+                '^(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}$',
+                '/^(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}$/s',
+            ],
         ];
     }
 }
