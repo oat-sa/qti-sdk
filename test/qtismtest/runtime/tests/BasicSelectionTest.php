@@ -57,6 +57,37 @@ class BasicSelectionTest extends QtiSmTestCase
         $this::assertTrue($routeCheck1 === true || $routeCheck2 === true);
     }
 
+    public function testSelectRequired()
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/selection_ordering/selection_and_ordering.xml');
+
+        $testPart = $doc->getDocumentComponent()->getComponentByIdentifier('testPart');
+
+        $s04 = $doc->getDocumentComponent()->getComponentByIdentifier('S04', true);
+        $this::assertEquals('S04', $s04->getIdentifier());
+
+        $s04RouteCollection = new SelectableRouteCollection();
+
+        /** @var SectionPart $sectionPart */
+        foreach ($s04->getSectionParts() as $sectionPart) {
+            $route = new SelectableRoute();
+            $route->addRouteItem($sectionPart, $s04, $testPart, $doc->getDocumentComponent());
+            $route->setRequired($sectionPart->isRequired());
+            $s04RouteCollection->attach($route);
+        }
+
+        $selection = new BasicSelection($s04, $s04RouteCollection);
+        $selectedRoutes = $selection->select();
+        $itemRefs = [];
+        foreach ($selectedRoutes as $r) {
+            foreach ($r->getAssessmentItemRefs() as $itemRef) {
+                $itemRefs[] = $itemRef->getIdentifier();
+            }
+        }
+        $this::assertEquals(5, count(array_unique($itemRefs)));
+     }
+
     /**
      * @param SelectableRoute $route
      * @param array $expectedIdentifiers
