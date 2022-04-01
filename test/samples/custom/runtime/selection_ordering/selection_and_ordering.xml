@@ -28,5 +28,13 @@
 			<assessmentItemRef identifier="Q11" href="./Q11.xml" fixed="false" timeDependent="false"/>
 			<assessmentItemRef identifier="Q12" href="./Q12.xml" fixed="false" timeDependent="false"/>
 		</assessmentSection>
+		<assessmentSection identifier="S04" fixed="false" title="Section S04" visible="true">
+			<selection select="5"/>
+			<assessmentItemRef identifier="Q1" required="false" href="./Q1.xml" fixed="false" timeDependent="false" />
+			<assessmentItemRef identifier="Q2" required="true" href="./Q2.xml" fixed="false" timeDependent="false" />
+			<assessmentItemRef identifier="Q3" required="false" href="./Q3.xml" fixed="false" timeDependent="false" />
+			<assessmentItemRef identifier="Q7" required="true" href="./Q7.xml" fixed="false" timeDependent="false" />
+			<assessmentItemRef identifier="Q8" required="false" href="./Q8.xml" fixed="false" timeDependent="false" />
+		</assessmentSection>
 	</testPart>
 </assessmentTest>
