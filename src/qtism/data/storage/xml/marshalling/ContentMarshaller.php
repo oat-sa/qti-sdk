@@ -52,6 +52,8 @@ use qtism\data\content\ModalFeedback;
 use qtism\data\content\SimpleInline;
 use qtism\data\content\TemplateBlock;
 use qtism\data\content\TemplateInline;
+use qtism\data\content\xhtml\html5\Figcaption;
+use qtism\data\content\xhtml\html5\Figure;
 use qtism\data\content\xhtml\lists\Dl;
 use qtism\data\content\xhtml\lists\DlElement;
 use qtism\data\content\xhtml\lists\Li;
@@ -124,8 +126,6 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         'tfoot',
         'thead',
         'uploadInteraction',
-        'figure',
-        'figcaption'
     ];
 
     private static $simpleComposites = [
@@ -179,6 +179,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         'modalFeedback',
         'feedbackBlock',
         'bdo',
+        Figure::QTI_CLASS_NAME,
+        Figcaption::QTI_CLASS_NAME
     ];
 
     /**
