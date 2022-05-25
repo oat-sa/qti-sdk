@@ -124,6 +124,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         'tfoot',
         'thead',
         'uploadInteraction',
+        'figure',
+        'figcaption'
     ];
 
     private static $simpleComposites = [
