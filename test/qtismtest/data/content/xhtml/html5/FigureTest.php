@@ -32,7 +32,7 @@ class FigureTest extends QtiSmTestCase
         $id = 'testid';
         $class = 'test_class';
 
-        $subject = new Figure($id, $class);
+        $subject = new Figure(null, null, $id, $class);
 
         self::assertEquals($id, $subject->getId());
         self::assertEquals($class, $subject->getClass());
@@ -50,6 +50,6 @@ class FigureTest extends QtiSmTestCase
     {
         $subject = new Figure();
 
-        self::assertEquals(Figure::QTI_CLASS_NAME, $subject->getQtiClassName());
+        self::assertEquals(Figure::QTI_CLASS_NAME_FIGURE, $subject->getQtiClassName());
     }
 }

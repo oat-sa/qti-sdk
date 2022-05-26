@@ -34,7 +34,7 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testMarshallerDoesNotExistInQti21(): void
     {
-        $this->assertHtml5MarshallingOnlyInQti22AndAbove(new Figure(), Figure::QTI_CLASS_NAME);
+        $this->assertHtml5MarshallingOnlyInQti22AndAbove(new Figure(), Figure::QTI_CLASS_NAME_FIGURE);
     }
 
     /**
@@ -48,7 +48,7 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
 
         $expected = sprintf(
             '<%1$s id="%2$s " class="%3$s"></%1$s>',
-            $this->namespaceTag(Figure::QTI_CLASS_NAME),
+            $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE),
             $id,
             $class,
         );
@@ -64,7 +64,7 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testMarshall22WithDefaultValues(): void
     {
-        $expected = sprintf('<%1$s></%1$s>', $this->namespaceTag(Figure::QTI_CLASS_NAME));
+        $expected = sprintf('<%1$s></%1$s>', $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE));
 
         $video = new Figure();
 
@@ -77,8 +77,8 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
     public function testUnMarshallerDoesNotExistInQti21(): void
     {
         $this->assertHtml5UnmarshallingOnlyInQti22AndAbove(
-            sprintf('<%1$s></%1$s>', $this->namespaceTag(Figure::QTI_CLASS_NAME)),
-            Figure::QTI_CLASS_NAME
+            sprintf('<%1$s></%1$s>', $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE)),
+            Figure::QTI_CLASS_NAME_FIGURE
         );
     }
 
@@ -92,7 +92,7 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
 
         $xml = sprintf(
             '<%1$s id="%2$s " class="%3$s"></%1$s>',
-            $this->namespaceTag(Figure::QTI_CLASS_NAME),
+            $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE),
             $id,
             $class,
         );
@@ -104,7 +104,7 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
 
     public function testUnmarshall22WithDefaultValues(): void
     {
-        $xml = sprintf('<%1$s></%1$s>', $this->namespaceTag(Figure::QTI_CLASS_NAME));
+        $xml = sprintf('<%1$s></%1$s>', $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE));
 
         $expected = new Figure();
 
