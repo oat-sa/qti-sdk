@@ -31,7 +31,7 @@ class Figcaption extends Html5Element implements BlockStatic, FlowStatic
 {
     use FlowTrait;
 
-    public const QTI_CLASS_NAME = 'figure';
+    public const QTI_CLASS_NAME_FIGCAPTION = 'figcaption';
 
     /**
      * The Block components composing the SimpleBlock object.
@@ -42,22 +42,17 @@ class Figcaption extends Html5Element implements BlockStatic, FlowStatic
     private $content;
 
     /**
-     * Create a new Div object.
-     *
-     * @param string $id The id of the bodyElement.
-     * @param string $class The class of the bodyElement.
-     * @param string $lang The language of the bodyElement.
-     * @param string $label The label of the bodyElement.
+     * Create a new figcaption object.
      */
-    public function __construct($id = '', $class = '', $lang = '', $label = '')
+    public function __construct($title = null, $role = null, $id = null, $class = null, $lang = null, $label = null)
     {
-        parent::__construct($id, $class, $lang, $label);
+        parent::__construct($title, $role, $id, $class, $lang, $label);
         $this->setContent(new InlineCollection());
     }
 
     public function getQtiClassName()
     {
-        return self::QTI_CLASS_NAME;
+        return self::QTI_CLASS_NAME_FIGCAPTION;
     }
 
     public function getComponents()

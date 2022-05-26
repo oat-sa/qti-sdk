@@ -179,8 +179,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         'modalFeedback',
         'feedbackBlock',
         'bdo',
-        Figure::QTI_CLASS_NAME,
-        Figcaption::QTI_CLASS_NAME
+        Figure::QTI_CLASS_NAME_FIGURE,
+        Figcaption::QTI_CLASS_NAME_FIGCAPTION
     ];
 
     /**

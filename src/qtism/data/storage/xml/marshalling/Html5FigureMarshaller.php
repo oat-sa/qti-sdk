@@ -30,6 +30,9 @@ use qtism\data\QtiComponent;
 
 class Html5FigureMarshaller extends Html5ElementMarshaller
 {
+    /**
+     * @param QtiComponent&Figure $component
+     */
     protected function marshall(QtiComponent $component): DOMElement
     {
         /** @var Figure $component */
@@ -68,6 +71,6 @@ class Html5FigureMarshaller extends Html5ElementMarshaller
 
     public function getExpectedQtiClassName()
     {
-        return Version::compare($this->getVersion(), '2.2', '>=') ? Figure::QTI_CLASS_NAME : 'not_existing';
+        return Version::compare($this->getVersion(), '2.2', '>=') ? Figure::QTI_CLASS_NAME_FIGURE : 'not_existing';
     }
 }

@@ -30,6 +30,9 @@ use qtism\data\QtiComponent;
 
 class Html5FigcaptionMarshaller extends Html5ElementMarshaller
 {
+    /**
+     * @param QtiComponent&Figcaption $component
+     */
     protected function marshall(QtiComponent $component): DOMElement
     {
         /** @var Figcaption $component */
@@ -68,6 +71,6 @@ class Html5FigcaptionMarshaller extends Html5ElementMarshaller
 
     public function getExpectedQtiClassName()
     {
-        return Version::compare($this->getVersion(), '2.2', '>=') ? Figcaption::QTI_CLASS_NAME : 'not_existing';
+        return Version::compare($this->getVersion(), '2.2', '>=') ? Figcaption::QTI_CLASS_NAME_FIGCAPTION : 'not_existing';
     }
 }

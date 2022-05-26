@@ -28,6 +28,9 @@ use DOMDocumentFragment;
 
 class FigcaptionRenderer extends Html5ElementRenderer
 {
+    /**
+     * @param QtiComponent&Figcaption $component
+     */
     protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
     {
         parent::appendAttributes($fragment, $component, $base);
