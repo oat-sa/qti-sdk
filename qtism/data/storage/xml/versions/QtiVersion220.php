@@ -37,4 +37,17 @@ class QtiVersion220 extends QtiVersion
     const LOCAL_XSD = 'qtiv2p2/imsqti_v2p2.xsd';
 
     const MARSHALLER_FACTORY = Qti22MarshallerFactory::class;
+
+    const QH5_NS = 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
+
+    const QH5_XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqtiv2p2p2_html5_v1p0.xsd';
+
+    public function getExternalNamespace(string $prefix): string
+    {
+        if ($prefix === 'qh5') {
+            return self::QH5_NS;
+        }
+
+        return '';
+    }
 }

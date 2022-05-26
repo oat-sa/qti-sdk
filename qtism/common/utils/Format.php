@@ -689,4 +689,17 @@ class Format
 
         return true;
     }
+
+    /**
+     * Is the given string a normalized string (no line break nor tabulation)?
+     *
+     * @param string $string
+     * @return bool
+     */
+    public static function isNormalizedString(string $string): bool
+    {
+        return strpos($string, "\n") === false
+            && strpos($string, "\r") === false
+            && strpos($string, "\t") === false;
+    }
 }

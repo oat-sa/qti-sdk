@@ -25,6 +25,8 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use InvalidArgumentException;
+use qtism\data\content\xhtml\html5\Figcaption;
+use qtism\data\content\xhtml\html5\Figure;
 use qtism\data\QtiComponent;
 use ReflectionClass;
 use ReflectionException;
@@ -88,6 +90,8 @@ abstract class MarshallerFactory
         $this->addMappingEntry('equalRounded', EqualRoundedMarshaller::class);
         $this->addMappingEntry('exitResponse', ExitResponseMarshaller::class);
         $this->addMappingEntry('exitTest', ExitTestMarshaller::class);
+        $this->addMappingEntry(Figure::QTI_CLASS_NAME, Html5LayoutMarshaller::class);
+        $this->addMappingEntry(Figcaption::QTI_CLASS_NAME, Html5LayoutMarshaller::class);
         $this->addMappingEntry('fieldValue', FieldValueMarshaller::class);
         $this->addMappingEntry('hottextInteraction', HottextInteractionMarshaller::class);
         $this->addMappingEntry('inlineChoiceInteraction', InlineChoiceInteractionMarshaller::class);

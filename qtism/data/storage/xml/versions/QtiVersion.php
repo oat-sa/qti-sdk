@@ -193,4 +193,9 @@ class QtiVersion extends Version
     {
         return static::MARSHALLER_FACTORY;
     }
+
+    public function getExternalNamespace(string $prefix): string
+    {
+        return '';
+    }
 }
