@@ -23,12 +23,19 @@ declare(strict_types=1);
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
+use qtism\data\content\FlowCollection;
+use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\html5\Figure;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 
 class Html5FigureMarshaller extends Html5ContentMarshaller
 {
+    public function getExpectedQtiClassName()
+    {
+        return Figure::QTI_CLASS_NAME_FIGURE;
+    }
+
     /**
      *
      * @param QtiComponent&Figure $component
@@ -69,5 +76,10 @@ class Html5FigureMarshaller extends Html5ContentMarshaller
         }
 
         return $element;
+    }
+
+    protected static function getContentCollectionClassName()
+    {
+        return FlowCollection::class;
     }
 }

@@ -66,6 +66,7 @@ use qtism\data\content\xhtml\tables\Th;
 use qtism\data\content\xhtml\tables\Tr;
 use qtism\data\content\xhtml\text\Blockquote;
 use qtism\data\content\xhtml\text\Div;
+use qtism\data\content\xhtml\Img;
 use qtism\data\ExternalQtiComponent;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
@@ -108,7 +109,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         'graphicGapMatchInteraction',
         'hotspotChoice',
         'hr',
-        'img',
+        Img::QTI_CLASS_NAME_IMG,
         'include',
         'math',
         'mediaInteraction',
@@ -292,10 +293,6 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             return $component->getContent()->getArrayCopy();
         } elseif ($component instanceof InfoControl) {
             return $component->getContent()->getArrayCopy();
-        } elseif ($component instanceof Figure) {
-            return $component->getContent()->getArrayCopy();
-        } elseif ($component instanceof Figcaption) {
-            return $component->getContent()->getArrayCopy();
         }
     }
 
@@ -349,6 +346,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             return self::getChildElements($element);
         } elseif ($localName === 'simpleMatchSet') {
             return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
+        } elseif ($localName === Figure::QTI_CLASS_NAME_FIGURE) {
+            return $this->getChildElementsByTagName($element, [Figcaption::QTI_CLASS_NAME_FIGCAPTION, Img::QTI_CLASS_NAME_IMG]);
         } elseif ($localName === 'gapImg') {
             return $this->getChildElementsByTagName($element, 'object');
         } else {

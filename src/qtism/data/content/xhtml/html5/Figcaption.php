@@ -22,12 +22,11 @@ declare(strict_types=1);
 
 namespace qtism\data\content\xhtml\html5;
 
-use qtism\data\content\BlockStatic;
 use qtism\data\content\FlowStatic;
 use qtism\data\content\FlowTrait;
 use qtism\data\content\InlineCollection;
 
-class Figcaption extends Html5Element implements BlockStatic, FlowStatic
+class Figcaption extends Html5Element implements FlowStatic
 {
     use FlowTrait;
 

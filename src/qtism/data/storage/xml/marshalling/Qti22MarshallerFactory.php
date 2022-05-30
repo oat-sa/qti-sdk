@@ -43,8 +43,8 @@ class Qti22MarshallerFactory extends MarshallerFactory
     {
         parent::__construct();
         $this->addMappingEntry('bdo', SimpleInlineMarshaller::class);
-        $this->addMappingEntry(Figure::QTI_CLASS_NAME_FIGURE, Html5FigureMarshaller::class, self::HTML5_NAMESPACE);
-        $this->addMappingEntry(Figcaption::QTI_CLASS_NAME_FIGCAPTION, Html5FigcaptionMarshaller::class, self::HTML5_NAMESPACE);
+        $this->addMappingEntry(Figure::QTI_CLASS_NAME_FIGURE, Html5FigureMarshaller::class);
+        $this->addMappingEntry(Figcaption::QTI_CLASS_NAME_FIGCAPTION, Html5FigcaptionMarshaller::class);
     }
 
     /**

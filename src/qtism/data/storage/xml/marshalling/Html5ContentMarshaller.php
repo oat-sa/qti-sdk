@@ -26,6 +26,7 @@ namespace qtism\data\storage\xml\marshalling;
 use DOMElement;
 use qtism\common\utils\Version;
 use qtism\data\content\FlowCollection;
+use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\trait\QtiHtml5AttributeTrait;
@@ -35,10 +36,17 @@ use qtism\data\QtiComponentCollection;
 /**
  * Marshalling/Unmarshalling implementation for generic Html5.
  */
-abstract class Html5ContentMarshaller extends ContextMarshaller
+abstract class Html5ContentMarshaller extends ContentMarshaller
 {
     use QtiNamespacePrefixTrait;
     use QtiHtml5AttributeTrait;
+
+    public function getExpectedQtiClassName()
+    {
+        return Version::compare($this->getVersion(), '2.2', '>=') ? static::getExpectedQtiClassName() : 'not_existing';
+    }
+
+    abstract protected static function getContentCollectionClassName();
 
     /**
      * @param DOMElement $element
@@ -50,7 +58,9 @@ abstract class Html5ContentMarshaller extends ContextMarshaller
     {
         $fqClass = $this->lookupClass($element);
         $component = new $fqClass();
-        $component->setContent(new FlowCollection($children->getArrayCopy()));
+        $collectionClassName = static::getContentCollectionClassName() ?? FlowCollection::class;
+
+        $component->setContent(new $collectionClassName($children->getArrayCopy()));
 
         if (($xmlBase = self::getXmlBase($element)) !== false) {
             $component->setXmlBase($xmlBase);
@@ -90,13 +100,7 @@ abstract class Html5ContentMarshaller extends ContextMarshaller
     {
         $this->lookupClasses = [
             "qtism\\data\\content\\xhtml",
-            "qtism\\data\\content\\xhtml\\html5",
-            "qtism\\data\\content\\xhtml\\text",
+            "qtism\\data\\content\\xhtml\\html5"
         ];
-    }
-
-    public function getExpectedQtiClassName()
-    {
-        return Version::compare($this->getVersion(), '2.2', '>=') ? parent::getExpectedQtiClassName() : 'not_existing';
     }
 }
