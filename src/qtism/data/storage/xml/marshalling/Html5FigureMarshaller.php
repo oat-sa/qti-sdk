@@ -23,20 +23,42 @@ declare(strict_types=1);
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
-use Psr\Log\InvalidArgumentException;
-use qtism\common\utils\Version;
 use qtism\data\content\xhtml\html5\Figure;
 use qtism\data\QtiComponent;
+use qtism\data\QtiComponentCollection;
 
-class Html5FigureMarshaller extends Html5ElementMarshaller
+class Html5FigureMarshaller extends Html5ContentMarshaller
 {
     /**
+     *
      * @param QtiComponent&Figure $component
+     * @param QtiComponentCollection $children
+     * @return mixed
+     * @throws UnmarshallingException
      */
-    protected function marshall(QtiComponent $component): DOMElement
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
     {
-        /** @var Figure $component */
-        $element = parent::marshall($component);
+        $component = parent::unmarshallChildrenKnown($element, $children);
+
+        if ($component->hasId()) {
+            $this->setDOMElementAttribute($element, 'id', $component->getId());
+        }
+
+        if ($component->hasClass()) {
+            $this->setDOMElementAttribute($element, 'class', $component->getClass());
+        }
+
+        return $component;
+    }
+
+    /**
+     * @param QtiComponent $component
+     * @param array $elements
+     * @return DOMElement
+     */
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    {
+        $element = parent::marshallChildrenKnown($component, $elements);
 
         if ($component->hasId()) {
             $this->setDOMElementAttribute($element, 'id', $component->getId());
@@ -47,30 +69,5 @@ class Html5FigureMarshaller extends Html5ElementMarshaller
         }
 
         return $element;
-    }
-
-    /**
-     * @return Figure
-     * @throws UnmarshallingException
-     */
-    protected function unmarshall(DOMElement $element)
-    {
-        try {
-            $id = $this->getDOMElementAttributeAs($element, 'id');
-            $class = $this->getDOMElementAttributeAs($element, 'class');
-
-            $component = new Figure($id, $class);
-        } catch (InvalidArgumentException $exception) {
-            throw UnmarshallingException::createFromInvalidArgumentException($element, $exception);
-        }
-
-        $this->fillBodyElement($component, $element);
-
-        return $component;
-    }
-
-    public function getExpectedQtiClassName()
-    {
-        return Version::compare($this->getVersion(), '2.2', '>=') ? Figure::QTI_CLASS_NAME_FIGURE : 'not_existing';
     }
 }
