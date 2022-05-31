@@ -22,6 +22,10 @@ declare(strict_types=1);
 
 namespace qtismtest\data\storage\xml\marshalling;
 
+use qtism\data\content\FlowCollection;
+use qtism\data\content\InlineCollection;
+use qtism\data\content\TextRun;
+use qtism\data\content\xhtml\html5\Figcaption;
 use qtism\data\content\xhtml\html5\Figure;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
@@ -47,13 +51,19 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
         $class = 'testclass';
 
         $expected = sprintf(
-            '<%1$s id="%2$s " class="%3$s"></%1$s>',
+            '<%1$s id="%2$s" class="%3$s"><%5$s>text content</%5$s></%4$s>',
             $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE),
             $id,
             $class,
+            $this->prefixTag(Figure::QTI_CLASS_NAME_FIGURE),
+            $this->prefixTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION),
         );
 
-        $object = new Figure($id, $class);
+        $figcaption = new Figcaption();
+        $figcaption->setContent(new InlineCollection([new TextRun('text content')]));
+
+        $object = new Figure(null, null, $id, $class);
+        $object->setContent(new FlowCollection([$figcaption]));
 
         $this->assertMarshalling($expected, $object);
     }
@@ -64,7 +74,10 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testMarshall22WithDefaultValues(): void
     {
-        $expected = sprintf('<%1$s></%1$s>', $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE));
+        $expected = sprintf(
+            '<%s/>',
+            $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE),
+        );
 
         $video = new Figure();
 
@@ -77,7 +90,11 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
     public function testUnMarshallerDoesNotExistInQti21(): void
     {
         $this->assertHtml5UnmarshallingOnlyInQti22AndAbove(
-            sprintf('<%1$s></%1$s>', $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE)),
+            sprintf(
+                '<%s></%s>',
+                $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE),
+                $this->prefixTag(Figure::QTI_CLASS_NAME_FIGURE)
+            ),
             Figure::QTI_CLASS_NAME_FIGURE
         );
     }
@@ -91,31 +108,28 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
         $class = 'testclass';
 
         $xml = sprintf(
-            '<%1$s id="%2$s " class="%3$s"></%1$s>',
+            '<%1$s id="%2$s" class="%3$s"></%4$s>',
             $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE),
             $id,
             $class,
+            $this->prefixTag(Figure::QTI_CLASS_NAME_FIGURE),
         );
 
-        $expected = new Figure($id, $class);
+        $expected = new Figure(null, null, $id, $class);
 
         $this->assertUnmarshalling($expected, $xml);
     }
 
     public function testUnmarshall22WithDefaultValues(): void
     {
-        $xml = sprintf('<%1$s></%1$s>', $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE));
+        $xml = sprintf(
+            '<%s></%s>',
+            $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE),
+            $this->prefixTag(Figure::QTI_CLASS_NAME_FIGURE)
+        );
 
         $expected = new Figure();
 
         $this->assertUnmarshalling($expected, $xml);
-    }
-
-    /**
-     * @throws MarshallerNotFoundException
-     */
-    public function testUnmarshallWithWrongTypesOrValues(string $xml, string $exception, string $message): void
-    {
-        $this->assertUnmarshallingException($xml, $exception, $message);
     }
 }

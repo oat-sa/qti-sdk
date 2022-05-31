@@ -22,9 +22,12 @@ declare(strict_types=1);
 
 namespace qtismtest\data\storage\xml\marshalling;
 
+use qtism\data\content\InlineCollection;
+use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\html5\Figcaption;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
+use Symfony\Component\Yaml\Inline;
 
 class Html5FigcaptionMarshallerTest extends Html5ElementMarshallerTest
 {
@@ -47,13 +50,15 @@ class Html5FigcaptionMarshallerTest extends Html5ElementMarshallerTest
         $class = 'testclass';
 
         $expected = sprintf(
-            '<%1$s id="%2$s " class="%3$s">text content</%1$s>',
+            '<%1$s id="%2$s" class="%3$s">text content</%4$s>',
             $this->namespaceTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION),
             $id,
             $class,
+            $this->prefixTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION),
         );
 
         $object = new Figcaption(null, null, $id, $class);
+        $object->setContent(new InlineCollection([new TextRun('text content')]));
 
         $this->assertMarshalling($expected, $object);
     }
@@ -64,11 +69,16 @@ class Html5FigcaptionMarshallerTest extends Html5ElementMarshallerTest
      */
     public function testMarshall22WithDefaultValues(): void
     {
-        $expected = sprintf('<%1$s>text content</%1$s>', $this->namespaceTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION));
+        $expected = sprintf(
+            '<%s>text content</%s>',
+            $this->namespaceTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION),
+            $this->prefixTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION)
+        );
 
-        $video = new Figcaption();
+        $object = new Figcaption();
+        $object->setContent(new InlineCollection([new TextRun('text content')]));
 
-        $this->assertMarshalling($expected, $video);
+        $this->assertMarshalling($expected, $object);
     }
 
     /**
@@ -77,7 +87,11 @@ class Html5FigcaptionMarshallerTest extends Html5ElementMarshallerTest
     public function testUnMarshallerDoesNotExistInQti21(): void
     {
         $this->assertHtml5UnmarshallingOnlyInQti22AndAbove(
-            sprintf('<%1$s></%1$s>', $this->namespaceTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION)),
+            sprintf(
+                '<%s></%s>',
+                $this->namespaceTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION),
+                $this->prefixTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION)
+            ),
             Figcaption::QTI_CLASS_NAME_FIGCAPTION
         );
     }
@@ -91,31 +105,30 @@ class Html5FigcaptionMarshallerTest extends Html5ElementMarshallerTest
         $class = 'testclass';
 
         $xml = sprintf(
-            '<%1$s id="%2$s " class="%3$s">text content</%1$s>',
+            '<%1$s id="%2$s" class="%3$s">text content</%4$s>',
             $this->namespaceTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION),
             $id,
             $class,
+            $this->prefixTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION)
         );
 
         $expected = new Figcaption(null, null, $id, $class);
+        $expected->setContent(new InlineCollection([new TextRun('text content')]));
 
         $this->assertUnmarshalling($expected, $xml);
     }
 
     public function testUnmarshall22WithDefaultValues(): void
     {
-        $xml = sprintf('<%1$s>text content</%1$s>', $this->namespaceTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION));
+        $xml = sprintf(
+            '<%s>text content</%s>',
+            $this->namespaceTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION),
+            $this->prefixTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION)
+        );
 
         $expected = new Figcaption();
+        $expected->setContent(new InlineCollection([new TextRun('text content')]));
 
         $this->assertUnmarshalling($expected, $xml);
-    }
-
-    /**
-     * @throws MarshallerNotFoundException
-     */
-    public function testUnmarshallWithWrongTypesOrValues(string $xml, string $exception, string $message): void
-    {
-        $this->assertUnmarshallingException($xml, $exception, $message);
     }
 }
