@@ -70,7 +70,7 @@ abstract class Html5ElementMarshaller extends Marshaller
      */
     protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element)
     {
-        $this->fillBodyElementAttributes($bodyElement);
+        $this->fillBodyElementAttributes($bodyElement, $element);
 
         parent::fillBodyElement($bodyElement, $element);
     }

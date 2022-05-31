@@ -293,6 +293,10 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             return $component->getContent()->getArrayCopy();
         } elseif ($component instanceof InfoControl) {
             return $component->getContent()->getArrayCopy();
+        } elseif ($component instanceof Figure) {
+            return $component->getContent()->getArrayCopy();
+        } elseif ($component instanceof Figcaption) {
+            return $component->getContent()->getArrayCopy();
         }
     }
 
