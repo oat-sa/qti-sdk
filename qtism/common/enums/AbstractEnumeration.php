@@ -70,7 +70,7 @@ abstract class AbstractEnumeration implements Enumeration
                 sprintf(
                     'The "%s" argument must be a value from the %s enumeration, "%s" given.',
                     $argumentName,
-                    basename(str_replace('\\', '/', static::class)),
+                    basename(str_replace('\\', DIRECTORY_SEPARATOR, static::class)),
                     $value
                 )
             );

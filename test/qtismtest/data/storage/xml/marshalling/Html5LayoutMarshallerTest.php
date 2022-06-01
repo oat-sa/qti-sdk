@@ -17,9 +17,9 @@ use qtismtest\QtiSmTestCase;
 class Html5LayoutMarshallerTest extends QtiSmTestCase
 {
     private const SUBJECT_XML = '
-         <qh5:figure xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" title="title" id="figureId">
+         <qh5:figure xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" id="figureId" title="title">
             <img src="assets/local_asset.jpg" alt="alt" width="100" class="imgClass"/>
-            <qh5:figcaption role="article" id="figcaptionId">caption text</qh5:figcaption>
+            <qh5:figcaption id="figcaptionId" role="article">caption text</qh5:figcaption>
          </qh5:figure>
         ';
 

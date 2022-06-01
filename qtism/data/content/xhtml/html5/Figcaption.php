@@ -22,10 +22,9 @@ declare(strict_types=1);
 
 namespace qtism\data\content\xhtml\html5;
 
-use qtism\data\content\BlockStatic;
 use qtism\data\content\FlowStatic;
 
-class Figcaption extends Html5LayoutElement implements BlockStatic, FlowStatic
+class Figcaption extends Html5LayoutElement implements FlowStatic
 {
     public const QTI_CLASS_NAME_FIGCAPTION = 'figcaption';
 

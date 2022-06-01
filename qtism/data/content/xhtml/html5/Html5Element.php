@@ -25,13 +25,16 @@ use qtism\common\utils\Format;
 use qtism\data\content\BodyElement;
 use qtism\data\content\enums\Role;
 use qtism\data\storage\xml\QtiNamespaced;
+use qtism\data\storage\xml\versions\QtiVersion220;
 
 /**
  * The base Html 5 element.
  */
 abstract class Html5Element extends BodyElement implements QtiNamespaced
 {
-    private const HTML5_NAMESPACE = 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
+    private const HTML5_NAMESPACE = QtiVersion220::HTML5_NAMESPACE;
+
+    private const HTML5_NAMESPACE_PREFIX = QtiVersion220::HTML5_NAMESPACE_PREFIX;
 
     /**
      * The title characteristic represents advisory information for the tag,
@@ -155,6 +158,6 @@ abstract class Html5Element extends BodyElement implements QtiNamespaced
 
     public function getTargetNamespacePrefix(): string
     {
-        return 'qh5';
+        return self::HTML5_NAMESPACE_PREFIX;
     }
 }
