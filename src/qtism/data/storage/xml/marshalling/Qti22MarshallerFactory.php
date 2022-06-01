@@ -34,7 +34,7 @@ use ReflectionClass;
  */
 class Qti22MarshallerFactory extends MarshallerFactory
 {
-    private const HTML5_NAMESPACE = 'https://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
+    private const HTML5_NAMESPACE = 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
 
     /**
      * Create a new Qti22MarshallerFactory object.
