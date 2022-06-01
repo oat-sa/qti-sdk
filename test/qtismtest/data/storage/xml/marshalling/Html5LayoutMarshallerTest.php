@@ -17,9 +17,9 @@ use qtismtest\QtiSmTestCase;
 class Html5LayoutMarshallerTest extends QtiSmTestCase
 {
     private const SUBJECT_XML = '
-         <qh5:figure xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" id="figureId">
+         <qh5:figure xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" title="title" id="figureId">
             <img src="assets/local_asset.jpg" alt="alt" width="100" class="imgClass"/>
-            <qh5:figcaption id="figcaptionId">caption text</qh5:figcaption>
+            <qh5:figcaption role="article" id="figcaptionId">caption text</qh5:figcaption>
          </qh5:figure>
         ';
 
@@ -50,7 +50,7 @@ class Html5LayoutMarshallerTest extends QtiSmTestCase
 
     public function testMarshall()
     {
-        $figCaption = new Figcaption(null, "figcaptionId");
+        $figCaption = new Figcaption(null, 'article', 'figcaptionId');
         $figCaption->setContent(new FlowCollection([
             new TextRun('caption text')
         ]));
@@ -58,7 +58,7 @@ class Html5LayoutMarshallerTest extends QtiSmTestCase
         $img = new Img('assets/local_asset.jpg', 'alt', '', 'imgClass');
         $img->setWidth('100');
 
-        $figure = new Figure(null, "figureId");
+        $figure = new Figure('title',null, "figureId");
         $figure->setContent(new FlowCollection([$img, $figCaption]));
 
         $element = $this->getMarshallerFactory('2.2.2')->createMarshaller($figure)->marshall($figure);

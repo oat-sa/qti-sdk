@@ -8,23 +8,22 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
- *
- * @author Jérôme Bogaerts <jerome@taotesting.com>
- * @license GPLv2
+ * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use qtism\common\utils\Version;
+use qtism\data\content\BodyElement;
+use qtism\data\content\enums\Role;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponent;
@@ -62,7 +61,7 @@ class Html5LayoutMarshaller extends ContentMarshaller
      * @param array $elements
      * @return DOMElement
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         /** @var Html5Element $component */
         $prefix = $component->getTargetNamespacePrefix();
@@ -84,6 +83,14 @@ class Html5LayoutMarshaller extends ContentMarshaller
 
         $this->fillElement($element, $component);
 
+        if ($component->hasTitle()) {
+            $this->setDOMElementAttribute($element, 'title', $component->getTitle());
+        }
+
+        if ($component->hasRole()) {
+            $this->setDOMElementAttribute($element, 'role', Role::getNameByConstant($component->getRole()));
+        }
+
         return $element;
     }
 
@@ -99,5 +106,17 @@ class Html5LayoutMarshaller extends ContentMarshaller
     public function getExpectedQtiClassName()
     {
        return Version::compare($this->getVersion(), '2.2', '>=') ? parent::getExpectedQtiClassName() : 'not_existing';
+    }
+
+    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element) {
+        if (Version::compare($this->getVersion(), '2.2.0', '>=') === true) {
+            $title = $this->getDOMElementAttributeAs($element, 'title');
+            $bodyElement->setTitle($title);
+
+            $role = $this->getDOMElementAttributeAs($element, 'role', Role::class);
+            $bodyElement->setRole($role);
+        }
+
+        parent::fillBodyElement($bodyElement, $element);
     }
 }

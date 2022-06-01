@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace qtismtest\data\content\xhtml\html5;
 
+use qtism\data\content\enums\Role;
 use qtism\data\content\xhtml\html5\Figcaption;
 use qtismtest\QtiSmTestCase;
 
@@ -30,14 +31,16 @@ class FigcaptionTest extends QtiSmTestCase
     public function testCreateWithValues(): void
     {
         $title = 'title';
+        $role = 'article';
         $id = 'testid';
         $class = 'test_class';
         $lang = 'lang';
         $label = 'label';
 
-        $subject = new Figcaption($title, $id, $class, $lang, $label);
+        $subject = new Figcaption($title, $role, $id, $class, $lang, $label);
 
         self::assertEquals($title, $subject->getTitle());
+        self::assertEquals(Role::getConstantByName($role), $subject->getRole());
         self::assertEquals($id, $subject->getId());
         self::assertEquals($class, $subject->getClass());
         self::assertEquals($lang, $subject->getLang());
@@ -56,6 +59,6 @@ class FigcaptionTest extends QtiSmTestCase
     {
         $subject = new Figcaption();
 
-        self::assertEquals(Figcaption::QTI_CLASS_NAME, $subject->getQtiClassName());
+        self::assertEquals(Figcaption::QTI_CLASS_NAME_FIGCAPTION, $subject->getQtiClassName());
     }
 }

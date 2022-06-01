@@ -26,6 +26,7 @@ namespace qtism\data\storage\xml\marshalling;
 use DOMElement;
 use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;
+use qtism\data\content\enums\Role;
 use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\versions\QtiVersion;
@@ -60,6 +61,10 @@ abstract class Html5ElementMarshaller extends Marshaller
             $this->setDOMElementAttribute($element, 'title', $component->getTitle());
         }
 
+        if ($component->hasRole()) {
+            $this->setDOMElementAttribute($element, 'role', Role::getNameByConstant($component->getRole()));
+        }
+
         return $element;
     }
 
@@ -77,6 +82,9 @@ abstract class Html5ElementMarshaller extends Marshaller
         if (Version::compare($this->getVersion(), '2.2.0', '>=') === true) {
             $title = $this->getDOMElementAttributeAs($element, 'title');
             $bodyElement->setTitle($title);
+
+            $role = $this->getDOMElementAttributeAs($element, 'role', Role::class);
+            $bodyElement->setRole($role);
         }
 
         parent::fillBodyElement($bodyElement, $element);

@@ -8,17 +8,14 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
- *
- * @author Julien Sébire <julien@taotesting.com>
- * @license GPLv2
+ * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
 namespace qtism\data\content\xhtml\html5;
@@ -26,6 +23,7 @@ namespace qtism\data\content\xhtml\html5;
 use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\content\BodyElement;
+use qtism\data\content\enums\Role;
 use qtism\data\storage\xml\QtiNamespaced;
 
 /**
@@ -50,6 +48,17 @@ abstract class Html5Element extends BodyElement implements QtiNamespaced
     private $title = '';
 
     /**
+     * The Html5 ARIA role enumeration.
+     * Roles are defined and described by their characteristics.
+     * Characteristics define the structural function of a role, such as what a
+     * role is, concepts behind it, and what instances the role can or must
+     * contain.
+     *
+     * @var ?int
+     */
+    private $role;
+
+    /**
      * Create a new Html5 element.
      *
      * For the reason why using null instead of default values, see:
@@ -64,6 +73,7 @@ abstract class Html5Element extends BodyElement implements QtiNamespaced
      */
     public function __construct(
         $title = null,
+        $role = null,
         $id = null,
         $class = null,
         $lang = null,
@@ -72,6 +82,7 @@ abstract class Html5Element extends BodyElement implements QtiNamespaced
         parent::__construct($id ?? '', $class ?? '', $lang ?? '', $label ?? '');
 
         $this->setTitle($title);
+        $this->setRole($role);
     }
 
     /**
@@ -93,6 +104,26 @@ abstract class Html5Element extends BodyElement implements QtiNamespaced
     {
         return $this->title !== '';
     }
+
+    /**
+     * @param mixed $role One of the Role constants.
+     * @throws InvalidArgumentException when $role parameter is not one of Role constants.
+     */
+    public function setRole($role = null): void
+    {
+        $this->role = Role::accept($role, 'role');
+    }
+
+    public function getRole(): ?int
+    {
+        return $this->role;
+    }
+
+    public function hasRole(): bool
+    {
+        return $this->role !== null;
+    }
+
 
     protected function acceptNormalizedStringOrNull($value, string $argumentName, string $default = null): string
     {

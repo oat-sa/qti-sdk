@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\content\xhtml\html5;
 
+use qtism\data\content\enums\Role;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\xhtml\A;
 use qtism\data\content\xhtml\html5\Html5LayoutElement;
@@ -14,14 +15,16 @@ class Html5LayoutElementTest extends QtiSmTestCase
     public function testCreateWithValues(): void
     {
         $title = 'a title';
+        $role = 'article';
         $id = 'the_id';
         $class = 'css class';
         $lang = 'en';
         $label = 'This is the label.';
 
-        $subject = new FakeHtml5LayoutElement($title, $id, $class, $lang, $label);
+        $subject = new FakeHtml5LayoutElement($title, $role, $id, $class, $lang, $label);
 
         self::assertSame($title, $subject->getTitle());
+        self::assertEquals(Role::getConstantByName($role), $subject->getRole());
         self::assertSame($id, $subject->getId());
         self::assertSame($class, $subject->getClass());
         self::assertSame($lang, $subject->getLang());
