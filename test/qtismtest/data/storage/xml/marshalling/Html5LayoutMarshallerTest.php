@@ -78,7 +78,7 @@ class Html5LayoutMarshallerTest extends QtiSmTestCase
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(
-            "No marshaller implementation found while marshalling component with class name 'figure"
+            "No marshaller implementation could be found for component 'figure'."
         );
 
         $this->getMarshallerFactory('2.1.0')->createMarshaller($figure)->marshall($figure);

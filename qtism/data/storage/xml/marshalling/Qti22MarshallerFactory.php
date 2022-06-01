@@ -24,6 +24,8 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Reflection;
+use qtism\data\content\xhtml\html5\Figcaption;
+use qtism\data\content\xhtml\html5\Figure;
 use ReflectionClass;
 
 /**
@@ -38,6 +40,8 @@ class Qti22MarshallerFactory extends MarshallerFactory
     public function __construct()
     {
         parent::__construct();
+        $this->addMappingEntry(Figure::QTI_CLASS_NAME_FIGURE, Html5ContentMarshaller::class);
+        $this->addMappingEntry(Figcaption::QTI_CLASS_NAME_FIGCAPTION, Html5ContentMarshaller::class);
     }
 
     /**

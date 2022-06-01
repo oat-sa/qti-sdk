@@ -103,11 +103,6 @@ class Html5ContentMarshaller extends ContentMarshaller
         ];
     }
 
-    public function getExpectedQtiClassName()
-    {
-       return Version::compare($this->getVersion(), '2.2', '>=') ? parent::getExpectedQtiClassName() : 'not_existing';
-    }
-
     protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element) {
         if (Version::compare($this->getVersion(), '2.2.0', '>=') === true) {
             $title = $this->getDOMElementAttributeAs($element, 'title');
