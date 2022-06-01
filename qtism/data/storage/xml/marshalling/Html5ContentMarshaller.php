@@ -33,7 +33,7 @@ use qtism\data\storage\xml\versions\QtiVersion;
 /**
  * The Marshaller implementation for object elements of the content model.
  */
-class Html5LayoutMarshaller extends ContentMarshaller
+class Html5ContentMarshaller extends ContentMarshaller
 {
     /**
      * @param DOMElement $element
