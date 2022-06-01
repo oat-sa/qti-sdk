@@ -27,10 +27,10 @@ use qtism\data\content\FlowStatic;
 
 class Figcaption extends Html5LayoutElement implements BlockStatic, FlowStatic
 {
-    public const QTI_CLASS_NAME = 'figcaption';
+    public const QTI_CLASS_NAME_FIGCAPTION = 'figcaption';
 
     public function getQtiClassName(): string
     {
-        return self::QTI_CLASS_NAME;
+        return self::QTI_CLASS_NAME_FIGCAPTION;
     }
 }

@@ -175,8 +175,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         'hottext',
         'modalFeedback',
         'feedbackBlock',
-        Figure::QTI_CLASS_NAME,
-        Figcaption::QTI_CLASS_NAME,
+        Figure::QTI_CLASS_NAME_FIGURE,
+        Figcaption::QTI_CLASS_NAME_FIGCAPTION,
     ];
 
     /**
