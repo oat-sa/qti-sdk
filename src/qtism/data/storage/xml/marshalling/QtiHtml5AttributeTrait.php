@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace qtism\data\storage\xml\marshalling\trait;
+namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;

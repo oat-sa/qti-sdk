@@ -24,14 +24,9 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
-use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;
-use qtism\data\content\enums\Role;
 use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponent;
-use qtism\data\storage\xml\marshalling\trait\QtiHtml5AttributeTrait;
-use qtism\data\storage\xml\marshalling\trait\QtiNamespacePrefixTrait;
-use qtism\data\storage\xml\versions\QtiVersion;
 
 /**
  * Marshalling/Unmarshalling implementation for generic Html5.

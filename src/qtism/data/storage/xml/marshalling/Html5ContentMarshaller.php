@@ -26,11 +26,8 @@ namespace qtism\data\storage\xml\marshalling;
 use DOMElement;
 use qtism\common\utils\Version;
 use qtism\data\content\FlowCollection;
-use qtism\data\content\InlineCollection;
 use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponent;
-use qtism\data\storage\xml\marshalling\trait\QtiHtml5AttributeTrait;
-use qtism\data\storage\xml\marshalling\trait\QtiNamespacePrefixTrait;
 use qtism\data\QtiComponentCollection;
 
 /**
