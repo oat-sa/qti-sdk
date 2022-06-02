@@ -7,12 +7,12 @@ use qtismtest\QtiSmEnumTestCase;
 
 class RoleTest extends QtiSmEnumTestCase
 {
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return Role::class;
     }
 
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'article',
@@ -56,12 +56,12 @@ class RoleTest extends QtiSmEnumTestCase
         ];
     }
 
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return $this->getNames();
     }
 
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return array_map(
             [Role::class, 'getConstantByName'],

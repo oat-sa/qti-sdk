@@ -23,7 +23,7 @@ class Html5LayoutMarshallerTest extends QtiSmTestCase
          </qh5:figure>
         ';
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $figure = $this->createComponentFromXml(self::SUBJECT_XML, '2.2.2');
 
@@ -48,7 +48,7 @@ class Html5LayoutMarshallerTest extends QtiSmTestCase
         $this::assertEquals('caption text', $figcaptionContent[0]->getContent());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $figCaption = new Figcaption(null, 'article', 'figcaptionId');
         $figCaption->setContent(new FlowCollection([
@@ -70,7 +70,7 @@ class Html5LayoutMarshallerTest extends QtiSmTestCase
         $this::assertEquals($expected, $dom->saveXML($element));
     }
 
-    public function testMarshallerBelow2p2Fails()
+    public function testMarshallerBelow2p2Fails(): void
     {
         $figCaption = new Figcaption();
         $figure = new Figure();

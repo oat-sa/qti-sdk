@@ -38,11 +38,11 @@ class QtiVersion220 extends QtiVersion
 
     const MARSHALLER_FACTORY = Qti22MarshallerFactory::class;
 
-    const HTML5_NAMESPACE = 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
+    public const HTML5_NAMESPACE = 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
 
-    const HTML5_NAMESPACE_PREFIX = 'qh5';
+    public const HTML5_NAMESPACE_PREFIX = 'qh5';
 
-    const HTML5_XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqtiv2p2p2_html5_v1p0.xsd';
+    public const HTML5_XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqtiv2p2p2_html5_v1p0.xsd';
 
     public function getExternalNamespace(string $prefix): string
     {

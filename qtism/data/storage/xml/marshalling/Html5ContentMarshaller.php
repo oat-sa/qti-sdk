@@ -103,7 +103,7 @@ class Html5ContentMarshaller extends ContentMarshaller
         ];
     }
 
-    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element) {
+    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element): void {
         if (Version::compare($this->getVersion(), '2.2.0', '>=') === true) {
             $title = $this->getDOMElementAttributeAs($element, 'title');
             $bodyElement->setTitle($title);
