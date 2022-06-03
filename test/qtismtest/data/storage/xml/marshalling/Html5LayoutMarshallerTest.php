@@ -51,14 +51,16 @@ class Html5LayoutMarshallerTest extends QtiSmTestCase
     public function testMarshall(): void
     {
         $figCaption = new Figcaption(null, 'article', 'figcaptionId');
-        $figCaption->setContent(new FlowCollection([
-            new TextRun('caption text')
-        ]));
+        $figCaption->setContent(
+            new FlowCollection([
+                new TextRun('caption text')
+            ])
+        );
 
         $img = new Img('assets/local_asset.jpg', 'alt', '', 'imgClass');
         $img->setWidth('100');
 
-        $figure = new Figure('title',null, "figureId");
+        $figure = new Figure('title', null, "figureId");
         $figure->setContent(new FlowCollection([$img, $figCaption]));
 
         $element = $this->getMarshallerFactory('2.2.2')->createMarshaller($figure)->marshall($figure);

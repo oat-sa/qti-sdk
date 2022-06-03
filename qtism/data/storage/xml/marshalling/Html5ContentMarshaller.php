@@ -94,7 +94,7 @@ class Html5ContentMarshaller extends ContentMarshaller
         return $element;
     }
 
-    protected function setLookupClasses()
+    protected function setLookupClasses(): void
     {
         $this->lookupClasses = [
             "qtism\\data\\content\\xhtml",
@@ -103,7 +103,8 @@ class Html5ContentMarshaller extends ContentMarshaller
         ];
     }
 
-    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element): void {
+    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element): void
+    {
         if (Version::compare($this->getVersion(), '2.2.0', '>=') === true) {
             $title = $this->getDOMElementAttributeAs($element, 'title');
             $bodyElement->setTitle($title);
