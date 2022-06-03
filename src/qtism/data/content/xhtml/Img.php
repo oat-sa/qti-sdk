@@ -32,6 +32,8 @@ use qtism\data\content\AtomicInline;
  */
 class Img extends AtomicInline
 {
+    public const QTI_CLASS_NAME_IMG='img';
+
     /**
      * The img's src attribute.
      *

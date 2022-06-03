@@ -24,6 +24,8 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Reflection;
+use qtism\data\content\xhtml\html5\Figcaption;
+use qtism\data\content\xhtml\html5\Figure;
 use ReflectionClass;
 
 /**
@@ -41,6 +43,8 @@ class Qti22MarshallerFactory extends MarshallerFactory
     {
         parent::__construct();
         $this->addMappingEntry('bdo', SimpleInlineMarshaller::class);
+        $this->addMappingEntry(Figure::QTI_CLASS_NAME_FIGURE, Html5FigureMarshaller::class);
+        $this->addMappingEntry(Figcaption::QTI_CLASS_NAME_FIGCAPTION, Html5FigcaptionMarshaller::class);
     }
 
     /**

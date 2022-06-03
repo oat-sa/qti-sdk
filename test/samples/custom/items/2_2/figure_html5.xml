@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd" identifier="i6269131bafa3b1664354b1e940def53" title="fig 1" label="fig 1" xml:lang="en-US" adaptive="false" timeDependent="false" toolName="TAO" toolVersion="2022.01">
+  <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier"/>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <div class="grid-row">
+      <div class="col-12">
+        <qh5:figure>
+          <img src="assets/b398c78c6269135f5fc67.jpg" alt="AWS.jpg" width="100%" type="image/jpeg" class=""/>
+          <qh5:figcaption>A sample t-shirt size table.</qh5:figcaption>
+        </qh5:figure>
+        <p> </p>
+        <p> </p>
+      </div>
+    </div>
+    <div class="grid-row">
+      <div class="col-12">
+        <choiceInteraction responseIdentifier="RESPONSE" shuffle="false" maxChoices="0" minChoices="0" orientation="vertical">
+          <simpleChoice identifier="choice_1" fixed="false" showHide="show">choice #1</simpleChoice>
+          <simpleChoice identifier="choice_2" fixed="false" showHide="show">choice #2</simpleChoice>
+          <simpleChoice identifier="choice_3" fixed="false" showHide="show">choice #3</simpleChoice>
+        </choiceInteraction>
+      </div>
+    </div>
+  </itemBody>
+  <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+</assessmentItem>

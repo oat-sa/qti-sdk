@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use qtism\data\content\xhtml\html5\Figcaption;
+use qtism\data\content\xhtml\html5\Figure;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
 /**
@@ -119,6 +121,8 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
         $this->registerRenderer('extendedTextInteraction', new ExtendedTextInteractionRenderer());
         $this->registerRenderer('feedbackBlock', new FeedbackBlockRenderer());
         $this->registerRenderer('feedbackInline', new FeedbackInlineRenderer());
+        $this->registerRenderer(Figure::QTI_CLASS_NAME_FIGURE, new FigureRenderer());
+        $this->registerRenderer(Figcaption::QTI_CLASS_NAME_FIGCAPTION, new FigcaptionRenderer());
         $this->registerRenderer('gap', new GapRenderer());
         $this->registerRenderer('gapImg', new GapImgRenderer());
         $this->registerRenderer('gapMatchInteraction', new GapMatchInteractionRenderer());
