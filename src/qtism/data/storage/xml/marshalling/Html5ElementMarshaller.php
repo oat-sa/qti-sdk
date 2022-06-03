@@ -24,48 +24,33 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
-use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;
-use qtism\data\content\enums\Role;
 use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponent;
-use qtism\data\storage\xml\versions\QtiVersion;
 
 /**
  * Marshalling/Unmarshalling implementation for generic Html5.
  */
 abstract class Html5ElementMarshaller extends Marshaller
 {
+    use QtiNamespacePrefixTrait;
+    use QtiHtml5AttributeTrait;
+
     /**
      * Marshall a Html5 element object into a DOMElement object.
      *
      * @param QtiComponent $component
      * @return DOMElement The according DOMElement object.
+     * @throws \DOMException
      */
     protected function marshall(QtiComponent $component): DOMElement
     {
         /** @var Html5Element $component */
 
-        $prefix = $component->getTargetNamespacePrefix();
-        $version = QtiVersion::create($this->getVersion());
-        $namespace = $version->getExternalNamespace($prefix);
-        
-        $element = static::getDOMCradle()->createElementNS(
-            $namespace,
-            $prefix . ':' . $component->getQtiClassName()
-        );
-
+        $element = $this->getNamespacedElement($component);
         $this->fillElement($element, $component);
 
-        if ($component->hasTitle()) {
-            $this->setDOMElementAttribute($element, 'title', $component->getTitle());
-        }
-
-        if ($component->hasRole()) {
-            $this->setDOMElementAttribute($element, 'role', Role::getNameByConstant($component->getRole()));
-        }
-
-        return $element;
+        return $this->marshallHtml5Attributes($component, $element);
     }
 
     /**
@@ -80,13 +65,7 @@ abstract class Html5ElementMarshaller extends Marshaller
      */
     protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element)
     {
-        if (Version::compare($this->getVersion(), '2.2.0', '>=') === true) {
-            $title = $this->getDOMElementAttributeAs($element, 'title');
-            $bodyElement->setTitle($title);
-
-            $role = $this->getDOMElementAttributeAs($element, 'role', Role::class);
-            $bodyElement->setRole($role);
-        }
+        $this->fillBodyElementAttributes($bodyElement, $element);
 
         parent::fillBodyElement($bodyElement, $element);
     }
