@@ -38,7 +38,7 @@ class Html5ContentMarshaller extends ContentMarshaller
     /**
      * @param DOMElement $element
      * @param QtiComponentCollection $children
-     * @return mixed
+     * @return QtiComponent
      * @throws UnmarshallingException
      */
     protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
