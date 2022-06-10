@@ -30,11 +30,19 @@ abstract class AbstractEnumeration implements Enumeration
 {
     abstract public static function asArray(): array;
 
+    /**
+     * @param $name
+     * @return false|int
+     */
     public static function getConstantByName($name)
     {
         return static::asArray()[$name] ?? false;
     }
 
+    /**
+     * @param $constant
+     * @return false|string
+     */
     public static function getNameByConstant($constant)
     {
         $constants = array_flip(static::asArray());
