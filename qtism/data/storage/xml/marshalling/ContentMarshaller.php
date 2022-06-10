@@ -52,6 +52,8 @@ use qtism\data\content\ModalFeedback;
 use qtism\data\content\SimpleInline;
 use qtism\data\content\TemplateBlock;
 use qtism\data\content\TemplateInline;
+use qtism\data\content\xhtml\html5\Figcaption;
+use qtism\data\content\xhtml\html5\Figure;
 use qtism\data\content\xhtml\lists\Dl;
 use qtism\data\content\xhtml\lists\DlElement;
 use qtism\data\content\xhtml\lists\Li;
@@ -173,6 +175,8 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         'hottext',
         'modalFeedback',
         'feedbackBlock',
+        Figure::QTI_CLASS_NAME_FIGURE,
+        Figcaption::QTI_CLASS_NAME_FIGCAPTION,
     ];
 
     /**
@@ -283,6 +287,10 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         } elseif ($component instanceof ModalFeedback) {
             return $component->getContent()->getArrayCopy();
         } elseif ($component instanceof InfoControl) {
+            return $component->getContent()->getArrayCopy();
+        } elseif ($component instanceof Figure) {
+            return $component->getContent()->getArrayCopy();
+        } elseif ($component instanceof Figcaption) {
             return $component->getContent()->getArrayCopy();
         }
     }
