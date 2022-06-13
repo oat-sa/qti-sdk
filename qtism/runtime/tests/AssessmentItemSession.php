@@ -649,12 +649,6 @@ class AssessmentItemSession extends State
      */
     public function endAttempt(State $responses = null, $responseProcessing = true, $allowLateSubmission = false)
     {
-        // We are required to check if our item does contain externalScored attribute in OutcomeDeclaration.
-        // If item have to be externally scored we are not processing response
-        if ($this->isExternallyScored($this->assessmentItem->getOutcomeDeclarations())) {
-            $responseProcessing = false;
-        }
-
         // End of attempt, go in SUSPEND state.
         $this->suspend();
 
@@ -691,36 +685,6 @@ class AssessmentItemSession extends State
             }
         }
 
-        // As per specs, when validateResponses is turned on (true) then the candidates are not
-        // allowed to submit the item until they have provided valid responses for all
-        // interactions. When turned off (false) invalid responses may be accepted by the
-        // system.
-        /*if ($this->submissionMode === SubmissionMode::INDIVIDUAL && $this->itemSessionControl->mustValidateResponses() === true) {
-            // Use the correct expression to control if the responses
-            // are correct.
-            foreach ($responses as $response) {
-                // @todo Reconsider the 'valid' concept.
-                $correctExpression = new Correct($response->getIdentifier());
-                $correctProcessor = new CorrectProcessor($correctExpression);
-                $correctProcessor->setState($responses);
-
-                try {
-                    if ($correctProcessor->process() !== true) {
-                        $responseIdentifier = $response->getIdentifier();
-                        $msg = "The current itemSessionControl.validateResponses attribute is set to true but ";
-                        $msg.= "response '${responseIdentifier}' is incorrect.";
-                        throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::INVALID_RESPONSE);
-                    }
-                }
-                catch (ExpressionProcessingException $e) {
-                    $responseIdentifier = $response->getIdentifier();
-                    $msg = "The current itemSessionControl.validResponses attribute is set to true but an error ";
-                    $msg.= "occurred while trying to detect if response '${responseIdentifier}' was correct.";
-                    throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::RUNTIME_ERROR, $e);
-                }
-            }
-        }*/
-
         // The code above has been deactivated as it was a total misunderstanding of the specification. Indeed,
         // a valid response is actually a response that meet the constraints expressed at the interaction level
         // (e.g. min/max responses), and not the fact that it is correct or not. In order to prevent illegitimate
@@ -748,11 +712,11 @@ class AssessmentItemSession extends State
                 $this->resetOutcomeVariables();
             }
 
-            $responseProcessing = $this->assessmentItem->getResponseProcessing();
+            $rule = $this->assessmentItem->getResponseProcessing();
 
             // Some items (especially to collect information) have no response processing!
-            if ($responseProcessing !== null && ($responseProcessing->hasTemplate() === true || $responseProcessing->hasTemplateLocation() === true || count($responseProcessing->getResponseRules()) > 0)) {
-                $engine = $this->createResponseProcessingEngine($responseProcessing);
+            if ($rule !== null && ($rule->hasTemplate() === true || $rule->hasTemplateLocation() === true || count($rule->getResponseRules()) > 0)) {
+                $engine = $this->createResponseProcessingEngine($rule);
                 $engine->process();
             }
         }
@@ -1219,25 +1183,5 @@ class AssessmentItemSession extends State
         }
 
         $this->setDataPlaceHolder($newData);
-    }
-
-    /**
-     * Method will determine if an item is externally scored
-     * Item that contain externalScored attribute in OutcomeDeclaration is considered as item externally scored
-     *
-     * @param OutcomeDeclarationCollection $outcomeDeclarations
-     *
-     * @return bool
-     */
-    private function isExternallyScored(OutcomeDeclarationCollection $outcomeDeclarations)
-    {
-        /** @var OutcomeDeclaration $outcomeDeclaration */
-        foreach ($outcomeDeclarations as $outcomeDeclaration) {
-            if ($outcomeDeclaration->isExternallyScored()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
