@@ -797,10 +797,6 @@ class AssessmentItemSession extends State
             $this->mergeResponses($responses);
         }
 
-        if ($this->isExternallyScored($this->assessmentItem->getOutcomeDeclarations())) {
-            $responseProcessing = false;
-        }
-
         // Apply response processing.
         // As per QTI 2.1 specs, For Non-adaptive Items, the values of the outcome variables are reset to their
         // default values prior to each invocation of responseProcessing. For Adaptive Items the outcome variables
