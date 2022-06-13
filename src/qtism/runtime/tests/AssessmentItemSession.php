@@ -1404,25 +1404,6 @@ class AssessmentItemSession extends State
     }
 
     /**
-     * Method will determine if an item is externally scored
-     * Item that contain externalScored attribute in OutcomeDeclaration is considered as item externally scored
-     *
-     * @param OutcomeDeclarationCollection $outcomeDeclarations
-     * @return bool
-     */
-    private function isExternallyScored(OutcomeDeclarationCollection $outcomeDeclarations)
-    {
-        /** @var OutcomeDeclaration $outcomeDeclaration */
-        foreach ($outcomeDeclarations as $outcomeDeclaration) {
-            if ($outcomeDeclaration->isExternallyScored()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * @see \qtism\common\collections\AbstractCollection::__clone()
      */
     public function __clone()
