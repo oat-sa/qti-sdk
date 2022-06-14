@@ -48,7 +48,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $responses = new State([$response]);
         $itemSession->endAttempt($responses);
 
-        $this::assertEquals(1, $itemSession->getState());
+        $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $itemSession->getState());
         $this::assertTrue($itemSession->isResponded());
     }
 
