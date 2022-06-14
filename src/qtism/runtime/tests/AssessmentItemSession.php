@@ -853,7 +853,11 @@ class AssessmentItemSession extends State
         }
 
         // End of attempt, go in SUSPEND state (only if real endAttempt).
-        if ($this->getState() !== AssessmentItemSessionState::CLOSED && $responseProcessing === true) {
+        if (
+            $this->getState() !== AssessmentItemSessionState::CLOSED
+            && $responseProcessing === true
+            && !$this->isExternallyScored($this->assessmentItem->getOutcomeDeclarations())
+        ) {
             // Real end attempt.
 
             if ($mustModalFeedback === false) {
@@ -1401,6 +1405,25 @@ class AssessmentItemSession extends State
                 }
             }
         }
+    }
+
+    /**
+     * Method will determine if an item is externally scored
+     * Item that contain externalScored attribute in OutcomeDeclaration is considered as item externally scored
+     *
+     * @param OutcomeDeclarationCollection $outcomeDeclarations
+     * @return bool
+     */
+    private function isExternallyScored(OutcomeDeclarationCollection $outcomeDeclarations)
+    {
+        /** @var OutcomeDeclaration $outcomeDeclaration */
+        foreach ($outcomeDeclarations as $outcomeDeclaration) {
+            if ($outcomeDeclaration->isExternallyScored()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
