@@ -56,7 +56,7 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
             $id,
             $class,
             $this->prefixTag(Figure::QTI_CLASS_NAME_FIGURE),
-            $this->prefixTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION),
+            $this->prefixTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION)
         );
 
         $figcaption = new Figcaption();
@@ -112,7 +112,7 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
             $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE),
             $id,
             $class,
-            $this->prefixTag(Figure::QTI_CLASS_NAME_FIGURE),
+            $this->prefixTag(Figure::QTI_CLASS_NAME_FIGURE)
         );
 
         $expected = new Figure(null, null, $id, $class);
