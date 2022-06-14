@@ -76,7 +76,7 @@ class Html5FigureMarshallerTest extends Html5ElementMarshallerTest
     {
         $expected = sprintf(
             '<%s/>',
-            $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE),
+            $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE)
         );
 
         $video = new Figure();
