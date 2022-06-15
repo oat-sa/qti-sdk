@@ -54,7 +54,7 @@ class Html5FigcaptionMarshallerTest extends Html5ElementMarshallerTest
             $this->namespaceTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION),
             $id,
             $class,
-            $this->prefixTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION),
+            $this->prefixTag(Figcaption::QTI_CLASS_NAME_FIGCAPTION)
         );
 
         $object = new Figcaption(null, null, $id, $class);
