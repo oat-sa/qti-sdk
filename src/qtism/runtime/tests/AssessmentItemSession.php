@@ -797,10 +797,6 @@ class AssessmentItemSession extends State
             $this->mergeResponses($responses);
         }
 
-        if ($this->isExternallyScored($this->assessmentItem->getOutcomeDeclarations())) {
-            $responseProcessing = false;
-        }
-
         // Apply response processing.
         // As per QTI 2.1 specs, For Non-adaptive Items, the values of the outcome variables are reset to their
         // default values prior to each invocation of responseProcessing. For Adaptive Items the outcome variables
@@ -857,7 +853,10 @@ class AssessmentItemSession extends State
         }
 
         // End of attempt, go in SUSPEND state (only if real endAttempt).
-        if ($this->getState() !== AssessmentItemSessionState::CLOSED && $responseProcessing === true) {
+        if (
+            $this->getState() !== AssessmentItemSessionState::CLOSED
+            && $responseProcessing === true
+        ) {
             // Real end attempt.
 
             if ($mustModalFeedback === false) {
@@ -1405,25 +1404,6 @@ class AssessmentItemSession extends State
                 }
             }
         }
-    }
-
-    /**
-     * Method will determine if an item is externally scored
-     * Item that contain externalScored attribute in OutcomeDeclaration is considered as item externally scored
-     *
-     * @param OutcomeDeclarationCollection $outcomeDeclarations
-     * @return bool
-     */
-    private function isExternallyScored(OutcomeDeclarationCollection $outcomeDeclarations)
-    {
-        /** @var OutcomeDeclaration $outcomeDeclaration */
-        foreach ($outcomeDeclarations as $outcomeDeclaration) {
-            if ($outcomeDeclaration->isExternallyScored()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
