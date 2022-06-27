@@ -84,7 +84,13 @@ class Utils
                 $values = ($cardinality === Cardinality::SINGLE) ? [$response->getValue()] : $response->getArrayCopy();
             }
 
-            $patternMask = OperatorUtils::prepareXsdPatternForPcre($patternMask);
+            // Is the patternMask a length validator or not?
+            // If it is, apply unicode flag - this will prevent a mismatch between frontend and backend on the string lengths counted as valid
+            $lengthPattern = '/\^\[\\\\s\\\\S\]\{0,\d+\}\$/';
+            $isLengthValidator = @preg_match($lengthPattern, $patternMask) === 1;
+            $pcreFlags = $isLengthValidator ? 'u' : '';
+
+            $patternMask = OperatorUtils::prepareXsdPatternForPcre($patternMask, $pcreFlags);
 
             foreach ($values as $value) {
                 $result = @preg_match($patternMask, $value);
