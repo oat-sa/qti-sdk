@@ -350,10 +350,16 @@ class Utils
         return $pattern;
     }
 
-     private static function withoutStringAnchors(string $pattern): string
-     {
-         $pattern = ltrim($pattern, '^');
+    /**
+     * Remove start and end anchors from a pattern.
+     *
+     * @param string $pattern
+     * @return string
+     */
+    private static function withoutStringAnchors(string $pattern): string
+    {
+        $pattern = ltrim($pattern, '^');
 
-         return rtrim($pattern, '$');
-     }
+        return rtrim($pattern, '$');
+    }
 }
