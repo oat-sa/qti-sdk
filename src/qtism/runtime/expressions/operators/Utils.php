@@ -334,7 +334,7 @@ class Utils
      * @param string $pcreFlags
      * @return string
      */
-    public static function prepareXsdPatternForPcre(string $pattern, string $pcreFlags = ''): string
+    public static function prepareXsdPatternForPcre(string $pattern, string $pcreFlags = 'su'): string
     {
         // XML schema always implicitly anchors the entire regular expression
         // Neither caret (^) nor dollar ($) sign have special meaning so they are
@@ -345,7 +345,6 @@ class Utils
         $pattern = self::pregAddDelimiter('^' . $pattern . '$');
 
         // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
-        $pattern .= 's';
         $pattern .= $pcreFlags;
 
         return $pattern;
