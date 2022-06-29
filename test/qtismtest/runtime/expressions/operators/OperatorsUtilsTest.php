@@ -353,19 +353,19 @@ class OperatorsUtilsTest extends QtiSmTestCase
     public function patternForPcreProvider(): array
     {
         return [
-            'max chars string pattern without anchors' => ['[\s\S]{0,5}', '/^[\s\S]{0,5}$/s'],
-            'max chars string pattern with anchors' => ['^[\s\S]{0,5}$', '/^[\s\S]{0,5}$/s'],
-            'digits only pattern' => ['[0,1]+', '/^[0,1]+$/s'],
-            'digits only pattern with anchors' => ['^[0,1]+$', '/^[0,1]+$/s'],
-            'string prefix without anchors' => ['test(.*)', '/^test(.*)$/s'],
-            'string prefix with anchors' => ['^test(.*)$', '/^test(.*)$/s'],
+            'max chars string pattern without anchors' => ['[\s\S]{0,5}', '/^[\s\S]{0,5}$/su'],
+            'max chars string pattern with anchors' => ['^[\s\S]{0,5}$', '/^[\s\S]{0,5}$/su'],
+            'digits only pattern' => ['[0,1]+', '/^[0,1]+$/su'],
+            'digits only pattern with anchors' => ['^[0,1]+$', '/^[0,1]+$/su'],
+            'string prefix without anchors' => ['test(.*)', '/^test(.*)$/su'],
+            'string prefix with anchors' => ['^test(.*)$', '/^test(.*)$/su'],
             'max words pattern without anchors' => [
                 '(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}',
-                '/^(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}$/s',
+                '/^(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}$/su',
             ],
             'max words pattern with anchors' => [
                 '^(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}$',
-                '/^(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}$/s',
+                '/^(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,5}$/su',
             ],
         ];
     }

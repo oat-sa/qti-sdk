@@ -70,6 +70,20 @@ class TestUtilsTest extends QtiSmTestCase
             [false, null, new ResponseValidityConstraint('RESPONSE', 1, 1, '/sd$[a-(')],
             [true, new QtiString('string'), new ResponseValidityConstraint('RESPONSE', 1, 1, 'string')],
             [false, new QtiString('strong'), new ResponseValidityConstraint('RESPONSE', 1, 1, 'string')],
+            // PatternMask as maxlength tests - checking the length validation and also if unicode characters are processed with length of 1.
+            [true, new QtiString('hi'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')],
+            [false, new QtiString('hey'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')],
+            [true, new QtiString('hå'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')],
+            [false, new QtiString('håj'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')],
+            [true, new QtiString('hé'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')],
+            [true, new QtiString('hæ'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')],
+            [true, new QtiString('h😊'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')],
+            [true, new QtiString('ты'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')], // ru
+            [true, new QtiString('じす'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')], // jp
+            [true, new QtiString('谢谢'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')], // zh
+            [true, new QtiString('قط'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')], // ar
+            [true, new QtiString('אב'), new ResponseValidityConstraint('RESPONSE', 1, 1, '^[\s\S]{0,2}$')], // he
+
             [true, new MultipleContainer(BaseType::STRING, [new QtiString('string'), new QtiString('string')]), new ResponseValidityConstraint('RESPONSE', 2, 2, 'string')],
             [false, new MultipleContainer(BaseType::STRING, [new QtiString('strong'), new QtiString('string')]), new ResponseValidityConstraint('RESPONSE', 2, 2, 'string')],
             [false, new MultipleContainer(BaseType::STRING, [new QtiString('string'), new QtiString('strong')]), new ResponseValidityConstraint('RESPONSE', 2, 2, 'string')],
