@@ -399,6 +399,14 @@ abstract class Marshaller
             $bodyElement->setLang($element->getAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang'));
             $bodyElement->setLabel($element->getAttribute('label'));
 
+            if ($element->hasAttribute('lang')) {
+                $this->setDOMElementAttribute($element,'lang', $element->getAttribute('lang'));
+            }
+
+            if ($element->hasAttribute('dir')) {
+                $this->setDOMElementAttribute($element,'dir', $element->getAttribute('dir'));
+            }
+
             $version = $this->getVersion();
             if (Version::compare($version, '2.2.0', '>=') === true) {
                 // aria-* attributes
@@ -483,6 +491,18 @@ abstract class Marshaller
      */
     protected function fillElement(DOMElement $element, BodyElement $bodyElement)
     {
+        //FIXME @TODO Remove experiment
+        //FIXME
+        if ($element->hasAttribute('lang')) {
+            $this->setDOMElementAttribute($element,'lang', $element->getAttribute('lang'));
+        }
+
+        if ($element->hasAttribute('dir')) {
+            $this->setDOMElementAttribute($element,'dir', $element->getAttribute('dir'));
+        }
+        //FIXME
+        //FIXME
+
         if (($id = $bodyElement->getId()) !== '') {
             $element->setAttribute('id', $id);
         }
