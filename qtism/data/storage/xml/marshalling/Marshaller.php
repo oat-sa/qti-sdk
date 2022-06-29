@@ -400,11 +400,11 @@ abstract class Marshaller
             $bodyElement->setLabel($element->getAttribute('label'));
 
             if ($element->hasAttribute('lang')) {
-                $this->setDOMElementAttribute($element,'lang', $element->getAttribute('lang'));
+                $bodyElement->setAttribute('lang', $element->getAttribute('lang'));
             }
 
             if ($element->hasAttribute('dir')) {
-                $this->setDOMElementAttribute($element,'dir', $element->getAttribute('dir'));
+                $bodyElement->setAttribute('dir', $element->getAttribute('dir'));
             }
 
             $version = $this->getVersion();
@@ -491,18 +491,6 @@ abstract class Marshaller
      */
     protected function fillElement(DOMElement $element, BodyElement $bodyElement)
     {
-        //FIXME @TODO Remove experiment
-        //FIXME
-        if ($element->hasAttribute('lang')) {
-            $this->setDOMElementAttribute($element,'lang', $element->getAttribute('lang'));
-        }
-
-        if ($element->hasAttribute('dir')) {
-            $this->setDOMElementAttribute($element,'dir', $element->getAttribute('dir'));
-        }
-        //FIXME
-        //FIXME
-
         if (($id = $bodyElement->getId()) !== '') {
             $element->setAttribute('id', $id);
         }
@@ -573,6 +561,10 @@ abstract class Marshaller
 
                 if (($ariaHidden = $bodyElement->getAriaHidden()) !== false) {
                     $element->setAttribute('aria-hidden', 'true');
+                }
+
+                foreach ($bodyElement->getAttributes() as $attribute => $attributeValue) {
+                    $element->setAttribute($attribute, $attributeValue);
                 }
             }
         }

@@ -145,6 +145,9 @@ abstract class BodyElement extends QtiComponent
      */
     private $ariaHidden = false;
 
+    /** @var array */
+    private $attributes = [];
+
     /**
      * Create a new BodyElement object.
      *
@@ -622,5 +625,15 @@ abstract class BodyElement extends QtiComponent
     public function hasAriaHidden()
     {
         return $this->ariaHidden !== false;
+    }
+
+    public function getAttributes(): array
+    {
+        return $this->attributes;
+    }
+
+    public function setAttribute(string $attribute, string $value): void
+    {
+        $this->attributes[$attribute] = $value;
     }
 }

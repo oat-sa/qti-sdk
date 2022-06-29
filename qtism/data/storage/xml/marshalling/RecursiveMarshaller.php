@@ -212,20 +212,6 @@ abstract class RecursiveMarshaller extends Marshaller
         $this->resetMark();
         $this->resetProcessed();
 
-        //FIXME @TODO Remove experiment
-        //FIXME
-        $element = $this->createElement($component);
-
-        if ($element->hasAttribute('lang')) {
-            $this->setDOMElementAttribute($element,'lang', $element->getAttribute('lang'));
-        }
-
-        if ($element->hasAttribute('dir')) {
-            $this->setDOMElementAttribute($element,'dir', $element->getAttribute('dir'));
-        }
-        //FIXME
-        //FIXME
-
         $this->pushTrail($component);
 
         while ($this->countTrail() > 0) {
@@ -279,18 +265,6 @@ abstract class RecursiveMarshaller extends Marshaller
         $this->resetFinal();
         $this->resetMark();
         $this->resetProcessed();
-
-        //FIXME @TODO Remove experiment
-        //FIXME
-        if ($element->hasAttribute('lang')) {
-            $this->setDOMElementAttribute($element,'lang', $element->getAttribute('lang'));
-        }
-
-        if ($element->hasAttribute('dir')) {
-            $this->setDOMElementAttribute($element,'dir', $element->getAttribute('dir'));
-        }
-        //FIXME
-        //FIXME
 
         $this->pushTrail($element);
 
