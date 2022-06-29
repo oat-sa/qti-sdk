@@ -331,28 +331,35 @@ class Utils
      * Prepare an XSD Regular Expression pattern into a PCRE compliant one.
      *
      * @param string $pattern
+     * @param string $pcreFlags
      * @return string
      */
-     public static function prepareXsdPatternForPcre(string $pattern): string
-     {
-         // XML schema always implicitly anchors the entire regular expression
-         // Neither caret (^) nor dollar ($) sign have special meaning so they are
-         // considered as normal characters.
-         // see http://www.regular-expressions.info/xml.html
-         $pattern = self::withoutStringAnchors($pattern);
-         $pattern = self::escapeSymbols($pattern, ['$', '^']);
-         $pattern = self::pregAddDelimiter('^' . $pattern . '$');
+    public static function prepareXsdPatternForPcre(string $pattern, string $pcreFlags = 'su'): string
+    {
+        // XML schema always implicitly anchors the entire regular expression
+        // Neither caret (^) nor dollar ($) sign have special meaning so they are
+        // considered as normal characters.
+        // see http://www.regular-expressions.info/xml.html
+        $pattern = self::withoutStringAnchors($pattern);
+        $pattern = self::escapeSymbols($pattern, ['$', '^']);
+        $pattern = self::pregAddDelimiter('^' . $pattern . '$');
 
-         // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
-         $pattern .= 's';
+        // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
+        $pattern .= $pcreFlags;
 
-         return $pattern;
-     }
+        return $pattern;
+    }
 
-     private static function withoutStringAnchors(string $pattern): string
-     {
-         $pattern = ltrim($pattern, '^');
+    /**
+     * Remove start and end anchors from a pattern.
+     *
+     * @param string $pattern
+     * @return string
+     */
+    private static function withoutStringAnchors(string $pattern): string
+    {
+        $pattern = ltrim($pattern, '^');
 
-         return rtrim($pattern, '$');
-     }
+        return rtrim($pattern, '$');
+    }
 }
