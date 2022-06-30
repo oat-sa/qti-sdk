@@ -37,6 +37,11 @@ use qtism\data\QtiComponent;
  */
 abstract class BodyElement extends QtiComponent
 {
+    public const ALLOWED_ATTRIBUTES = [
+        'dir',
+        'lang',
+    ];
+
     /**
      * From IMS QTI:
      *
@@ -632,8 +637,17 @@ abstract class BodyElement extends QtiComponent
         return $this->attributes;
     }
 
+    public function getAttribute(string $attribute): ?string
+    {
+        return $this->attributes[$attribute] ?? null;
+    }
+
     public function setAttribute(string $attribute, string $value): void
     {
+        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES, true)) {
+            throw new InvalidArgumentException(sprintf('BodyElement attribute "%s" is not supported', $attribute));
+        }
+
         $this->attributes[$attribute] = $value;
     }
 }
