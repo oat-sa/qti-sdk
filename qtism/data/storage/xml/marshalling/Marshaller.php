@@ -399,6 +399,14 @@ abstract class Marshaller
             $bodyElement->setLang($element->getAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang'));
             $bodyElement->setLabel($element->getAttribute('label'));
 
+            if ($element->hasAttribute('lang')) {
+                $bodyElement->setAttribute('lang', $element->getAttribute('lang'));
+            }
+
+            if ($element->hasAttribute('dir')) {
+                $bodyElement->setAttribute('dir', $element->getAttribute('dir'));
+            }
+
             $version = $this->getVersion();
             if (Version::compare($version, '2.2.0', '>=') === true) {
                 // aria-* attributes
@@ -553,6 +561,10 @@ abstract class Marshaller
 
                 if (($ariaHidden = $bodyElement->getAriaHidden()) !== false) {
                     $element->setAttribute('aria-hidden', 'true');
+                }
+
+                foreach ($bodyElement->getAttributes() as $attribute => $attributeValue) {
+                    $element->setAttribute($attribute, $attributeValue);
                 }
             }
         }

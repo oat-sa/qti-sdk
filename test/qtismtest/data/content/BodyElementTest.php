@@ -683,4 +683,30 @@ class BodyElementTest extends QtiSmTestCase
             [new stdClass(), "'instance of stdClass' is not a valid value for attribute 'aria-hidden'."],
         ];
     }
+
+    public function testSetAttributes(): void
+    {
+        $span = new Span();
+        $span->setAttribute('lang', 'ar-AR');
+        $span->setAttribute('dir', 'rtl');
+
+        $this->assertSame(
+            [
+                'lang' => 'ar-AR',
+                'dir' => 'rtl',
+            ],
+            $span->getAttributes()
+        );
+        $this->assertSame('ar-AR', $span->getAttribute('lang'));
+        $this->assertSame('rtl', $span->getAttribute('dir'));
+    }
+
+    public function testSetInvalidAttributeWillThrowException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('BodyElement attribute "foo" is not supported');
+
+        $span = new Span();
+        $span->setAttribute('foo', 'bar');
+    }
 }
