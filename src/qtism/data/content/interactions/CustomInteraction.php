@@ -25,6 +25,7 @@ namespace qtism\data\content\interactions;
 
 use DOMDocument;
 use InvalidArgumentException;
+use qtism\common\dom\SerializableDomDocument;
 use qtism\data\content\Block;
 use qtism\data\content\Flow;
 use qtism\data\content\FlowTrait;
@@ -108,7 +109,7 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow
     /**
      * Get the XML content of the custom interaction itself and its content.
      *
-     * @return DOMDocument A DOMDocument object representing the custom interaction.
+     * @return SerializableDomDocument A DOMDocument object representing the custom interaction.
      * @throws RuntimeException If the XML content of the custom interaction and/or its content cannot be transformed into a valid DOMDocument.
      */
     public function getXml()
