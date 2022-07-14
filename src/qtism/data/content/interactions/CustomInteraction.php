@@ -109,10 +109,10 @@ class CustomInteraction extends Interaction implements IExternal, Block, Flow
     /**
      * Get the XML content of the custom interaction itself and its content.
      *
-     * @return SerializableDomDocument A DOMDocument object representing the custom interaction.
+     * @return SerializableDomDocument|null A DOMDocument object representing the custom interaction.
      * @throws RuntimeException If the XML content of the custom interaction and/or its content cannot be transformed into a valid DOMDocument.
      */
-    public function getXml()
+    public function getXml(): ?SerializableDomDocument
     {
         return $this->getExternalComponent()->getXml();
     }
