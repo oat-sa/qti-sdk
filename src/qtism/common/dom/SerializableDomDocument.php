@@ -36,7 +36,7 @@ use DOMAttr;
 use DOMEntityReference;
 use DOMNode;
 use DOMNodeList;
-use Exception;
+use Error;
 
 /**
  * Serializable DOM Document
@@ -111,9 +111,9 @@ class SerializableDomDocument
     public function __serialize(): array
     {
         return [
-            'version'  => $this->dom->xmlVersion,
-            'encoding' => $this->dom->encoding,
-            'xmlData'  => (string)$this->__toString()
+            'version'  => (string)$this->dom->xmlVersion,
+            'encoding' => (string)$this->dom->encoding,
+            'xmlData'  => (string)$this,
         ];
     }
 
@@ -125,16 +125,14 @@ class SerializableDomDocument
 
     public function __toString(): string
     {
-        return $this->dom->saveXML();
+        $xml = $this->dom->saveXML();
+        return $xml ? : '';
     }
 
-    /**
-     * @throws Exception
-     */
     public function __call($name, $arguments)
     {
         if (!method_exists($this->dom, $name)) {
-            throw new Exception(__CLASS__ . 'has no method::' . $name);
+            throw new Error(sprintf('Call to undefined method %s::%s()', __CLASS__, $name));
         }
 
         return call_user_func_array([$this->dom, $name], $arguments);
@@ -143,7 +141,7 @@ class SerializableDomDocument
     public function __get($name)
     {
         if (!property_exists($this->dom, $name)) {
-            throw new Exception(__CLASS__ . 'has no property::' . $name);
+            trigger_error(sprintf('Undefined property: %s::%s', __CLASS__, $name), E_USER_WARNING);
         }
 
         return $this->dom->$name ?? null;
@@ -151,9 +149,6 @@ class SerializableDomDocument
 
     public function __set($name, $value)
     {
-        if (!property_exists($this->dom, $name)) {
-            throw new Exception(__CLASS__ . 'has no property::' . $name);
-        }
         $this->dom->$name = $value;
 
         return $this->dom;
