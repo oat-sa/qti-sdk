@@ -173,4 +173,14 @@ class SerializableDomDocument
 
         return $this->dom;
     }
+
+    public function __isset(string $name): bool
+    {
+        return isset($this->dom->$name);
+    }
+
+    public function __unset(string $name): void
+    {
+        unset($this->dom->$name);
+    }
 }
