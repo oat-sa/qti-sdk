@@ -4,6 +4,7 @@ namespace qtismtest\common\dom;
 
 use qtism\common\dom\SerializableDomDocument;
 use qtismtest\QtiSmTestCase;
+use Error;
 
 /**
  * Class VersionTest
@@ -33,7 +34,10 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $dom = $this->getSerializableDomDocument();
         $property = 'test';
 
-        $this->expectError();
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage(
+            sprintf('Undefined property: %s::%s', SerializableDomDocument::class, $property)
+        );
 
         $dom->$property;
     }
@@ -69,7 +73,10 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $dom = $this->getSerializableDomDocument();
         $method = 'saveXML2';
 
-        $this->expectError();
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage(
+            sprintf('Call to undefined method %s::%s()', SerializableDomDocument::class, $method)
+        );
 
         $dom->$method();
     }
