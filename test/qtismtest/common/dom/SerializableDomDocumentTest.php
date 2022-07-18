@@ -67,6 +67,19 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $this->assertNotEmpty((string)$dom);
     }
 
+    public function testCallingNotExistedVirtualMethods()
+    {
+        $dom = $this->getSerializableDomDocument();
+        $method = 'saveXML2';
+
+        $this->expectError();
+        $this->expectErrorMessage(
+            sprintf('Call to undefined method %s::%s()', SerializableDomDocument::class, $method)
+        );
+
+        $dom->$method();
+    }
+
     private function getSerializableDomDocument(string $version = '1.0', string $encoding = 'UTF-8'): SerializableDomDocument
     {
         $dom = new SerializableDomDocument($version, $encoding);
