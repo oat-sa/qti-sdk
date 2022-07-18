@@ -34,8 +34,8 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $dom = $this->getSerializableDomDocument();
         $property = 'test';
 
-        $this->expectException(Error::class);
-        $this->expectExceptionMessage(
+        $this->expectWarning();
+        $this->expectWarningMessage(
             sprintf('Undefined property: %s::%s', SerializableDomDocument::class, $property)
         );
 
