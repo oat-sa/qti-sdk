@@ -29,19 +29,6 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $this->assertEquals($xmlVersion, $dom->xmlVersion);
     }
 
-    public function testAccessingInexistentProperty()
-    {
-        $dom = $this->getSerializableDomDocument();
-        $property = 'test';
-
-        $this->expectWarning();
-        $this->expectWarningMessage(
-            sprintf('Undefined property: %s::%s', SerializableDomDocument::class, $property)
-        );
-
-        $dom->$property;
-    }
-
     public function testSettingVirtualPropertyToDom()
     {
         $xmlVersion = '1.0';
