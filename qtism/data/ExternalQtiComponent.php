@@ -62,10 +62,10 @@ class ExternalQtiComponent extends QtiComponent implements IExternal
      * Returns the XML representation of the external component as
      * a DOMDocument object.
      *
-     * @return SerializableDomDocument A DOMDocument (serializable) object representing the content of the external component.
+     * return A DOMDocument (serializable) object representing the content of the external component.
      * @throws RuntimeException If the root element of the XML representation is not from the target namespace or the XML could not be parsed.
      */
-    public function getXml()
+    public function getXml(): ?SerializableDomDocument
     {
         // Build the DOMDocument object only on demand.
         if ($this->xml === null) {

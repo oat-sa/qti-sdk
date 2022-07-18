@@ -24,7 +24,7 @@
 		"GPL-2.0-only"
 	],
 	"require" : {
-		"php" : ">=7.1 <8.1",
+		"php" : ">=7.1",
 		"ext-dom": "*",
 		"ext-json": "*",
 		"ext-libxml": "*",
