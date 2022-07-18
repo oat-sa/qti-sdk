@@ -34,9 +34,6 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $property = 'test';
 
         $this->expectError();
-        $this->expectErrorMessage(
-            sprintf('Undefined property: %s::%s', SerializableDomDocument::class, $property)
-        );
 
         $dom->$property;
     }
@@ -65,6 +62,16 @@ class SerializableDomDocumentTest extends QtiSmTestCase
 
         $this->assertNotEmpty($dom->saveXML());
         $this->assertNotEmpty((string)$dom);
+    }
+
+    public function testCallingNotExistedVirtualMethods()
+    {
+        $dom = $this->getSerializableDomDocument();
+        $method = 'saveXML2';
+
+        $this->expectError();
+
+        $dom->$method();
     }
 
     private function getSerializableDomDocument(string $version = '1.0', string $encoding = 'UTF-8'): SerializableDomDocument
