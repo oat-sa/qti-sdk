@@ -4,6 +4,7 @@ namespace qtismtest\common\dom;
 
 use qtism\common\dom\SerializableDomDocument;
 use qtismtest\QtiSmTestCase;
+use DOMDocument;
 
 /**
  * Class VersionTest
@@ -78,6 +79,24 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         );
 
         $dom->$method();
+    }
+
+    public function testCheckThatUnsetIsWorkingSimilarToRealDomObject()
+    {
+        $serializableDOM = $this->getSerializableDomDocument();
+        $coreDom = new DOMDocument($serializableDOM->xmlVersion, $serializableDOM->encoding);
+
+        $this->assertEquals($coreDom->xmlVersion, $serializableDOM->version);
+        $this->assertEquals($coreDom->encoding, $serializableDOM->encoding);
+
+        unset($coreDom->xmlVersion);
+        unset($coreDom->encoding);
+
+        unset($serializableDOM->xmlVersion);
+        unset($serializableDOM->encoding);
+
+        $this->assertEquals($coreDom->xmlVersion, $serializableDOM->version);
+        $this->assertEquals($coreDom->encoding, $serializableDOM->encoding);
     }
 
     private function getSerializableDomDocument(string $version = '1.0', string $encoding = 'UTF-8'): SerializableDomDocument
