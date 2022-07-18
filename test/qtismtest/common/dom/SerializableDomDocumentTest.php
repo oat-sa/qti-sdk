@@ -4,20 +4,106 @@ namespace qtismtest\common\dom;
 
 use qtism\common\dom\SerializableDomDocument;
 use qtismtest\QtiSmTestCase;
+use DOMDocument;
 
 /**
  * Class VersionTest
  */
-class VersionTest extends QtiSmTestCase
+class SerializableDomDocumentTest extends QtiSmTestCase
 {
     public function testSerialization()
     {
-        $dom = new SerializableDomDocument('1.0', 'UTF-8');
-        $dom->load(self::samplesDir() . 'ims/items/2_2_1/choice.xml');
-
-        $ser = serialize($dom);
+        $ser = serialize($this->getSerializableDomDocument());
         $dom = unserialize($ser);
 
         $this::assertEquals('http://www.imsglobal.org/xsd/imsqti_v2p2', $dom->documentElement->namespaceURI);
+    }
+
+
+    public function testAccessingProperty()
+    {
+        $xmlVersion = '1.0';
+        $dom = $this->getSerializableDomDocument($xmlVersion);
+
+        $this->assertNotEmpty($dom->xmlVersion);
+        $this->assertEquals($xmlVersion, $dom->xmlVersion);
+    }
+
+    public function testAccessingInexistentProperty()
+    {
+        $dom = $this->getSerializableDomDocument();
+        $property = 'test';
+
+        $this->expectError();
+        $this->expectErrorMessage(
+            sprintf('Undefined property: %s::%s', SerializableDomDocument::class, $property)
+        );
+
+        $dom->$property;
+    }
+
+    public function testSettingVirtualPropertyToDom()
+    {
+        $xmlVersion = '1.0';
+        $dom = $this->getSerializableDomDocument($xmlVersion);
+
+        $this->assertEquals($xmlVersion, $dom->xmlVersion);
+
+        $dom->xmlVersion = '1.1';
+        $this->assertEquals('1.1', $dom->xmlVersion);
+    }
+
+    public function testCheckingIfPropertyExists()
+    {
+        $dom = $this->getSerializableDomDocument();
+
+        $this->assertTrue(isset($dom->xmlVersion));
+    }
+
+    public function testCallingVirtualMethods()
+    {
+        $dom = $this->getSerializableDomDocument();
+
+        $this->assertNotEmpty($dom->saveXML());
+        $this->assertNotEmpty((string)$dom);
+    }
+
+    public function testCallingNotExistedVirtualMethods()
+    {
+        $dom = $this->getSerializableDomDocument();
+        $method = 'saveXML2';
+
+        $this->expectError();
+        $this->expectErrorMessage(
+            sprintf('Call to undefined method %s::%s()', SerializableDomDocument::class, $method)
+        );
+
+        $dom->$method();
+    }
+
+    public function testCheckThatUnsetIsWorkingSimilarToRealDomObject()
+    {
+        $serializableDOM = $this->getSerializableDomDocument();
+        $coreDom = new DOMDocument($serializableDOM->xmlVersion, $serializableDOM->encoding);
+
+        $this->assertEquals($coreDom->xmlVersion, $serializableDOM->version);
+        $this->assertEquals($coreDom->encoding, $serializableDOM->encoding);
+
+        unset($coreDom->xmlVersion);
+        unset($coreDom->encoding);
+
+        unset($serializableDOM->xmlVersion);
+        unset($serializableDOM->encoding);
+
+        $this->assertEquals($coreDom->xmlVersion, $serializableDOM->version);
+        $this->assertEquals($coreDom->encoding, $serializableDOM->encoding);
+    }
+
+    private function getSerializableDomDocument(string $version = '1.0', string $encoding = 'UTF-8'): SerializableDomDocument
+    {
+        $dom = new SerializableDomDocument($version, $encoding);
+        $dom->load(self::samplesDir() . 'ims/items/2_2_1/choice.xml');
+
+        return $dom;
     }
 }

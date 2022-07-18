@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use qtism\common\dom\SerializableDomDocument;
 use qtism\data\XInclude;
 use qtismtest\QtiSmTestCase;
 use RuntimeException;
@@ -30,7 +31,7 @@ class XIncludeMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(XInclude::class, $xinclude);
         $this::assertEquals('path/to/file', $xinclude->getHref());
         $xml = $xinclude->getXml();
-        $this::assertInstanceOf(DOMDocument::class, $xml);
+        $this::assertInstanceOf(SerializableDomDocument::class, $xml);
 
         $includeElement = $xml->documentElement;
         $this::assertEquals('xi', $includeElement->prefix);
