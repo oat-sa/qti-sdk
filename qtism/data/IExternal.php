@@ -35,7 +35,6 @@ interface IExternal
      *
      * In case of there is no external data, the implementation may return the null value.
      *
-     * @return SerializableDomDocument
      */
-    public function getXml();
+    public function getXml(): ?SerializableDomDocument;
 }
