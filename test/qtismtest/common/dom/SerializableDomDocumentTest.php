@@ -8,7 +8,7 @@ use qtismtest\QtiSmTestCase;
 /**
  * Class VersionTest
  */
-class VersionTest extends QtiSmTestCase
+class SerializableDomDocumentTest extends QtiSmTestCase
 {
     public function testSerialization()
     {

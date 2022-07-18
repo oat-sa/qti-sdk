@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use qtism\common\dom\SerializableDomDocument;
 use qtism\data\content\Math;
 use qtismtest\QtiSmTestCase;
 use RuntimeException;
@@ -40,7 +41,7 @@ class MathMarshallerTest extends QtiSmTestCase
         $math = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
         $this::assertInstanceOf(Math::class, $math);
         $xml = $math->getXml();
-        $this::assertInstanceOf(DOMDocument::class, $xml);
+        $this::assertInstanceOf(SerializableDomDocument::class, $xml);
 
         $mathElement = $xml->documentElement;
         $this::assertEquals('m', $mathElement->prefix);
