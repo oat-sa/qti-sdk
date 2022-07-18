@@ -129,7 +129,7 @@ class SerializableDomDocument
         return $xml ? : '';
     }
 
-    public function __call($name, $arguments)
+    public function __call(string $name, array $arguments)
     {
         if (!method_exists($this->dom, $name)) {
             throw new Error(sprintf('Call to undefined method %s::%s()', __CLASS__, $name));
@@ -138,7 +138,7 @@ class SerializableDomDocument
         return call_user_func_array([$this->dom, $name], $arguments);
     }
 
-    public function __get($name)
+    public function __get(string $name)
     {
         if (!property_exists($this->dom, $name)) {
             trigger_error(sprintf('Undefined property: %s::%s', __CLASS__, $name), E_USER_WARNING);
@@ -147,10 +147,17 @@ class SerializableDomDocument
         return $this->dom->$name ?? null;
     }
 
-    public function __set($name, $value)
+    public function __set(string $name, $value): void
     {
         $this->dom->$name = $value;
+    }
 
-        return $this->dom;
+    public function __isset(string $name): bool
+    {
+        return isset($this->dom->$name);
+    }
+    public function __unset(string $name): void
+    {
+        unset($this->dom->$name);
     }
 }
