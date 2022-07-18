@@ -185,10 +185,10 @@ class Selection extends QtiComponent implements IExternal
     /**
      * Get the XML content of the selection itself and its content.
      *
-     * @return SerializableDomDocument A DOMDocument (serializable) object representing the selection itself or null if there is no external component.
+     * @return SerializableDomDocument|null A DOMDocument (serializable) object representing the selection itself or null if there is no external component.
      * @throws RuntimeException If the XML content of the selection and/or its content cannot be transformed into a valid DOMDocument.
      */
-    public function getXml()
+    public function getXml(): ?SerializableDomDocument
     {
         if (($externalComponent = $this->getExternalComponent()) !== null) {
             return $this->getExternalComponent()->getXml();
