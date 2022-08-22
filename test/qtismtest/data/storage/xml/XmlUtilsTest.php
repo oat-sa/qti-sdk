@@ -250,11 +250,11 @@ class XmlUtilsTest extends QtiSmTestCase
     public function getDOMElementAttributeAsProvider()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML('<foo string="str" integer="1" float="1.1" double="1.1" boolean="true" baseType="duration" wrongEnumValue="blah"/>');
+        $dom->loadXML('<foo string="str&amp;amp;str" integer="1" float="1.1" double="1.1" boolean="true" baseType="duration" wrongEnumValue="blah"/>');
         $elt = $dom->documentElement;
 
         return [
-            [$elt, 'string', 'string', 'str'],
+            [$elt, 'string', 'string', 'str&str'],
             [$elt, 'integer', 'integer', 1],
             [$elt, 'float', 'float', 1.1],
             [$elt, 'double', 'double', 1.1],
