@@ -3,6 +3,9 @@
 namespace qtismtest\data\storage\xml;
 
 use DOMDocument;
+use DOMElement;
+use qtism\common\enums\BaseType;
+use qtism\common\enums\Cardinality;
 use qtism\data\storage\xml\Utils;
 use qtismtest\QtiSmTestCase;
 
@@ -127,6 +130,41 @@ class XmlUtilsTest extends QtiSmTestCase
                 'http://www.imsglobal.org/xsd/imsqti_v2p0',
                 false,
             ],
+        ];
+    }
+
+    /**
+     * @dataProvider getDOMElementAttributeAsProvider
+     * @param DOMElement $element
+     * @param string $attribute
+     * @param string $datatype
+     * @param mixed $expected
+     */
+    public function testGetDOMElementAttributeAs(DOMElement $element, $attribute, $datatype, $expected)
+    {
+        $result = Utils::getDOMElementAttributeAs($element, $attribute, $datatype);
+        $this::assertSame($expected, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function getDOMElementAttributeAsProvider()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML('<foo string="str&amp;amp;str" integer="1" float="1.1" double="1.1" boolean="true" baseType="duration" wrongEnumValue="blah"/>');
+        $elt = $dom->documentElement;
+
+        return [
+            [$elt, 'string', 'string', 'str&str'],
+            [$elt, 'integer', 'integer', 1],
+            [$elt, 'float', 'float', 1.1],
+            [$elt, 'double', 'double', 1.1],
+            [$elt, 'boolean', 'boolean', true],
+            [$elt, 'not-existing', '', null],
+            [$elt, 'baseType', BaseType::class, BaseType::DURATION],
+            [$elt, 'wrongEnumValue', BaseType::class, 'blah'],
+            [$elt, 'cardinality', Cardinality::class, null],
         ];
     }
 }
