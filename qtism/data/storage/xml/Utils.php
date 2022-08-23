@@ -89,7 +89,11 @@ class Utils
             if ($attrNode->namespaceURI === null) {
                 $newElement->setAttribute($attrName, $attrNode->value);
             } else {
-                $newElement->setAttributeNS($attrNode->namespaceURI, $attrNode->prefix . ':' . $attrName, $attrNode->value);
+                $newElement->setAttributeNS(
+                    $attrNode->namespaceURI,
+                    $attrNode->prefix . ':' . $attrName,
+                    $attrNode->value
+                );
             }
         }
 
@@ -119,14 +123,22 @@ class Utils
         while ($stack->count() > 0) {
             $node = $stack->pop();
 
-            if ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array($node, $traversed, true) === false) {
+            if ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array(
+                    $node,
+                    $traversed,
+                    true
+                ) === false) {
                 $traversed[] = $node;
                 $stack->push($node);
 
                 for ($i = 0; $i < $node->childNodes->length; $i++) {
                     $stack->push($node->childNodes->item($i));
                 }
-            } elseif ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array($node, $traversed, true)) {
+            } elseif ($node->nodeType === XML_ELEMENT_NODE && $node->childNodes->length > 0 && in_array(
+                    $node,
+                    $traversed,
+                    true
+                )) {
                 // Build hierarchical node copy from the current node. All the attributes
                 // of $node must be copied into $newNode.
                 $newNode = $node->ownerDocument->createElement($node->localName);
@@ -205,7 +217,7 @@ class Utils
 
         switch ($datatype) {
             case 'string':
-                return htmlspecialchars_decode($attr);
+                return $attr;
 
             case 'integer':
                 return (int)$attr;
@@ -218,7 +230,7 @@ class Utils
                 return $attr === 'true';
         }
 
-        if (in_array(Enumeration::class, class_implements($datatype), true)){
+        if (in_array(Enumeration::class, class_implements($datatype), true)) {
             if ($attr !== null) {
                 /** @var $datatype Enumeration */
                 $constant = $datatype::getConstantByName($attr);
@@ -244,7 +256,7 @@ class Utils
      */
     public static function setDOMElementAttribute(DOMElement $element, string $attribute, $value)
     {
-        $element->setAttribute($attribute, self::valueAsString($value));
+        $element->setAttribute($attribute, self::valueAsString($value, false));
     }
 
     /**
@@ -264,14 +276,18 @@ class Utils
      * Other variable types are optionally using string conversion.
      *
      * @param mixed $value
+     * @param bool $encode
      * @return string
      */
-    public static function valueAsString($value)
+    public static function valueAsString($value, $encode = true)
     {
         if (is_bool($value)) {
             return $value === true ? 'true' : 'false';
         }
-        return htmlspecialchars($value, ENT_XML1, 'UTF-8');
+        if ($encode) {
+            return htmlspecialchars($value, ENT_XML1, 'UTF-8');
+        }
+        return (string)$value;
     }
 
     /**
@@ -316,7 +332,9 @@ class Utils
         $returnValue = [];
 
         for ($i = 0; $i < $children->length; $i++) {
-            if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && ($children->item($i)->nodeType === XML_TEXT_NODE || $children->item($i)->nodeType === XML_CDATA_SECTION_NODE))) {
+            if ($children->item($i)->nodeType === XML_ELEMENT_NODE || ($withText === true && ($children->item(
+                            $i
+                        )->nodeType === XML_TEXT_NODE || $children->item($i)->nodeType === XML_CDATA_SECTION_NODE))) {
                 $returnValue[] = $children->item($i);
             }
         }
