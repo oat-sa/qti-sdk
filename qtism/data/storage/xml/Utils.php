@@ -205,7 +205,7 @@ class Utils
 
         switch ($datatype) {
             case 'string':
-                return $attr;
+                return htmlspecialchars_decode($attr);
 
             case 'integer':
                 return (int)$attr;
