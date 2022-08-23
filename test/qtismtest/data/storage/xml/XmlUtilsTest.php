@@ -167,4 +167,37 @@ class XmlUtilsTest extends QtiSmTestCase
             [$elt, 'cardinality', Cardinality::class, null],
         ];
     }
+
+    /**
+     * @dataProvider setDOMElementAttributeProvider
+     * @param string $attribute
+     * @param string $value
+     * @param mixed $expected
+     */
+    public function testSetDOMElementAttribute($attribute, $value, $expected)
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->createElement('foo');
+        $dom->appendChild($element);
+
+        Utils::setDOMElementAttribute($element, $attribute, $value);
+        $result = $dom->saveXML($element);
+
+        $this::assertSame($expected, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function setDOMElementAttributeProvider()
+    {
+        return [
+            ['string', 'str&str', '<foo string="str&amp;str"/>'],
+            ['integer', 1, '<foo integer="1"/>'],
+            ['float', 1.1, '<foo float="1.1"/>'],
+            ['double', 1.1, '<foo double="1.1"/>'],
+            ['boolean', true, '<foo boolean="true"/>'],
+            ['not-existing',  null, '<foo not-existing=""/>'],
+        ];
+    }
 }
