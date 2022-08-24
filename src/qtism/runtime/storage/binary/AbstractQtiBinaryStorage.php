@@ -341,7 +341,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 }
 
             $item = $assessmentTestSession->getCurrentAssessmentItemRef();
-            if ($timeLimits = $item->getTimeLimits()) {
+            if ($item && $timeLimits = $item->getTimeLimits()) {
                 if ($timeLimits->hasMaxTime()) {
                     $durationVariable = new OutcomeVariable(
                         $item->getIdentifier(),
