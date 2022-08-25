@@ -250,11 +250,11 @@ class XmlUtilsTest extends QtiSmTestCase
     public function getDOMElementAttributeAsProvider()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML('<foo string="str" integer="1" float="1.1" double="1.1" boolean="true" baseType="duration" wrongEnumValue="blah"/>');
+        $dom->loadXML('<foo string="str&amp;str" integer="1" float="1.1" double="1.1" boolean="true" baseType="duration" wrongEnumValue="blah"/>');
         $elt = $dom->documentElement;
 
         return [
-            [$elt, 'string', 'string', 'str'],
+            [$elt, 'string', 'string', 'str&str'],
             [$elt, 'integer', 'integer', 1],
             [$elt, 'float', 'float', 1.1],
             [$elt, 'double', 'double', 1.1],
@@ -263,6 +263,39 @@ class XmlUtilsTest extends QtiSmTestCase
             [$elt, 'baseType', BaseType::class, BaseType::DURATION],
             [$elt, 'wrongEnumValue', BaseType::class, 'blah'],
             [$elt, 'cardinality', Cardinality::class, null],
+        ];
+    }
+
+    /**
+     * @dataProvider setDOMElementAttributeProvider
+     * @param string $attribute
+     * @param string $value
+     * @param mixed $expected
+     */
+    public function testSetDOMElementAttribute($attribute, $value, $expected)
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $element = $dom->createElement('foo');
+        $dom->appendChild($element);
+
+        Utils::setDOMElementAttribute($element, $attribute, $value);
+        $result = $dom->saveXML($element);
+
+        $this::assertSame($expected, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function setDOMElementAttributeProvider()
+    {
+        return [
+            ['string', 'str&str', '<foo string="str&amp;str"/>'],
+            ['integer', 1, '<foo integer="1"/>'],
+            ['float', 1.1, '<foo float="1.1"/>'],
+            ['double', 1.1, '<foo double="1.1"/>'],
+            ['boolean', true, '<foo boolean="true"/>'],
+            ['not-existing',  null, '<foo not-existing=""/>'],
         ];
     }
 

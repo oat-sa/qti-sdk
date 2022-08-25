@@ -323,7 +323,7 @@ class Utils
      */
     public static function setDOMElementAttribute(DOMElement $element, string $attribute, $value)
     {
-        $element->setAttribute($attribute, self::valueAsString($value));
+        $element->setAttribute($attribute, self::valueAsString($value, false));
     }
 
     /**
@@ -343,14 +343,18 @@ class Utils
      * Other variable types are optionally using string conversion.
      *
      * @param mixed $value
+     * @param bool $encode
      * @return string
      */
-    public static function valueAsString($value)
+    public static function valueAsString($value, $encode = true)
     {
         if (is_bool($value)) {
             return $value === true ? 'true' : 'false';
         }
-        return htmlspecialchars($value, ENT_XML1, 'UTF-8');
+        if ($encode) {
+            return htmlspecialchars($value, ENT_XML1, 'UTF-8');
+        }
+        return (string)$value;
     }
 
     /**
