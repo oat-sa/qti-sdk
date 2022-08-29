@@ -339,31 +339,6 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
                 $access->readVariableValue($durationVariable);
                 $durationStore->setVariable($durationVariable);
             }
-
-            $item = $assessmentTestSession->getCurrentAssessmentItemRef();
-            if ($item && $timeLimits = $item->getTimeLimits()) {
-                if ($timeLimits->hasMaxTime()) {
-                    $durationVariable = new OutcomeVariable(
-                        $item->getIdentifier(),
-                        Cardinality::SINGLE,
-                        BaseType::DURATION
-                    );
-                    $durationVariable->setValue($item->getTimeLimits()->getMaxTime());
-                    $durationStore->setVariable($durationVariable);
-                }
-
-                if ($timeLimits->hasMinTime()) {
-                    $durationVariable = new OutcomeVariable(
-                        $item->getIdentifier(),
-                        Cardinality::SINGLE,
-                        BaseType::DURATION
-                    );
-                    $durationVariable->setValue($item->getTimeLimits()->getMinTime());
-                    $durationStore->setVariable($durationVariable);
-                }
-            }
-
-
             $assessmentTestSession->setDurationStore($durationStore);
 
             $stream->close();
