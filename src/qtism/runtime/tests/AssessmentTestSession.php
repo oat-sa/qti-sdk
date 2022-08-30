@@ -817,9 +817,11 @@ class AssessmentTestSession extends State
      * * The time limits in force at the test level (assessmentTest, testPart, assessmentSection) is exceeded.
      * * The current item session is closed (no more attempts, time limits exceeded).
      *
+     * @param bool $allowLateSubmission If set to true, maximum time limits will not be taken into account.
+     *
      * @throws AssessmentTestSessionException
      */
-    public function beginAttempt()
+    public function beginAttempt($allowLateSubmission = false)
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot begin an attempt for the current item while the state of the test session is INITIAL or CLOSED.';
@@ -827,7 +829,11 @@ class AssessmentTestSession extends State
         }
 
         // Are the time limits in force (at the test level) respected?
-        $this->checkTimeLimits();
+        // -- Are time limits in force respected?
+        if ($allowLateSubmission === false) {
+            $this->checkTimeLimits();
+        }
+
 
         // Time limits are OK! Let's try to begin the attempt.
         $routeItem = $this->getCurrentRouteItem();

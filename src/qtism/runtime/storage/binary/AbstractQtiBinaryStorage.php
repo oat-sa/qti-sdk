@@ -332,15 +332,14 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             // Build the duration store.
             $durationStore = new DurationStore();
-                $durationCount = $access->readShort();
-                for ($i = 0; $i < $durationCount; $i++) {
-                    $varName = $access->readString();
-                    $durationVariable = new OutcomeVariable($varName, Cardinality::SINGLE, BaseType::DURATION);
-                    $access->readVariableValue($durationVariable);
-                    $durationStore->setVariable($durationVariable);
-                }
-
-                $assessmentTestSession->setDurationStore($durationStore);
+            $durationCount = $access->readShort();
+            for ($i = 0; $i < $durationCount; $i++) {
+                $varName = $access->readString();
+                $durationVariable = new OutcomeVariable($varName, Cardinality::SINGLE, BaseType::DURATION);
+                $access->readVariableValue($durationVariable);
+                $durationStore->setVariable($durationVariable);
+            }
+            $assessmentTestSession->setDurationStore($durationStore);
 
             $stream->close();
 
