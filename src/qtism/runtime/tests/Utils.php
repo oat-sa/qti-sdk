@@ -93,18 +93,18 @@ class Utils
                 && self::isSingleMatchGroup($patternMask);
 
             foreach ($values as $value) {
-                if ($isMaxEntryRestriction) {
-                    extract($matches);
-                    $entries = count(preg_split("/$splitPattern/", $response)) - 1;
-                    if ($entries > $max || $entries < $min) {
-                        return false;
-                    }
-                } else {
-                    $result = @preg_match($patternMask, $value);
+                $result = @preg_match($patternMask, $value);
 
-                    if ($result === 0) {
-                        return false;
-                    } elseif ($result === false) {
+                if ($result === 0) {
+                    return false;
+                } elseif ($result === false) {
+                    if ($isMaxEntryRestriction) {
+                        extract($matches);
+                        $entries = count(preg_split("/$splitPattern/", $response)) - 1;
+                        if ($entries > $max || $entries < $min) {
+                            return false;
+                        }
+                    } else {
                         throw new RuntimeException(OperatorUtils::lastPregErrorMessage());
                     }
                 }
