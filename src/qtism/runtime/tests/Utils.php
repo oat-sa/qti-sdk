@@ -36,7 +36,7 @@ use RuntimeException;
  */
 class Utils
 {
-    private const MAX_ENTRY_RESTRICTION_PATTERN = '/^\/\^(?P<splitPattern>\([^{]+)\{(?P<min>\d+),(?P<max>\d+)\}\$\/\w*$/';
+    private const MAX_ENTRY_RESTRICTION_PATTERN = '/^\/\^(?P<splitPattern>\([^{]+)\{(?P<min>\d+)(?:(?P<isRange>,)|,(?P<max>\d+))?\}\$\/\w*$/';
     private const CLOSE_MATCH_GROUP_TOKEN = ')';
     private const OPEN_MATCH_GROUP_TOKEN = '(';
 
@@ -99,7 +99,7 @@ class Utils
                     return false;
                 } elseif ($result === false) {
                     if ($isMaxEntryRestriction) {
-                        extract($matches);
+                        [$splitPattern, $min, $max] = self::extractMaxEntryRestrictionsRestrictions($matches);
                         $entries = count(preg_split("/$splitPattern/", $response)) - 1;
                         if ($entries > $max || $entries < $min) {
                             return false;
@@ -144,5 +144,17 @@ class Utils
     {
         $closeBracketPosition = strpos($patternMask, self::CLOSE_MATCH_GROUP_TOKEN);
         return strpos(substr($patternMask, $closeBracketPosition), self::OPEN_MATCH_GROUP_TOKEN) === false;
+    }
+
+    /**
+     * @return array [(string)$splitPattern, (int)$min, (int)$max]
+     */
+    private static function extractMaxEntryRestrictionsRestrictions(array $matches): array
+    {
+        extract($matches);
+        $isRange = !empty($isRange);
+        $max ??= $isRange ? PHP_INT_MAX : $min;
+
+        return [$splitPattern, (int)$min, (int)$max];
     }
 }
