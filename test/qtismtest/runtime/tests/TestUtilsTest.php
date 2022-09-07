@@ -15,6 +15,7 @@ use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
 use qtism\runtime\tests\Utils as TestUtils;
 use qtismtest\QtiSmTestCase;
+use ReflectionClass;
 use RuntimeException;
 
 /**
@@ -159,5 +160,28 @@ class TestUtilsTest extends QtiSmTestCase
                 '/abc[A-'
             )
         );
+    }
+
+    /**
+     * @dataProvider provideMatchGroups
+     */
+    public function testIsSingleMatchGroup(bool $expected, string $pattern): void
+    {
+        $class = new ReflectionClass(TestUtils::class);
+        $method = $class->getMethod('isSingleMatchGroup');
+        $method->setAccessible(true);
+
+        $result = $method->invoke(null, $pattern);
+
+        self::assertEquals($expected, $result);
+    }
+
+    public function provideMatchGroups(): array
+    {
+        return [
+            [true, '/^(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,30}$/'],
+            [true, '/^test (?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,30}$/'],
+            [false, '/^(?:[^\s\:\!\?\;\…\€]+)(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*){0,30}$/']
+        ];
     }
 }
