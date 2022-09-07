@@ -36,7 +36,7 @@ use RuntimeException;
  */
 class Utils
 {
-    private const MAX_ENTRY_RESTRICTION_PATTERN = '/^\/\^(?P<splitPattern>\([^{]+)\{(?P<min>\d+),(?P<max>\d+)\}\$\/\w+$/';
+    private const MAX_ENTRY_RESTRICTION_PATTERN = '/^\/\^(?P<splitPattern>\([^{]+)\{(?P<min>\d+),(?P<max>\d+)\}\$\/\w*$/';
     private const CLOSE_MATCH_GROUP_TOKEN = ')';
     private const OPEN_MATCH_GROUP_TOKEN = '(';
 
