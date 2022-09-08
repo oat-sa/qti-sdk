@@ -36,8 +36,12 @@ use RuntimeException;
  */
 class Utils
 {
+    private const MAX_ENTRY_RESTRICTION_PATTERN = '/^\/\^(?P<splitPattern>\([^{]+)\{(?P<min>\d+)(?:(?P<isRange>,)|,(?P<max>\d+))?\}\$\/\w*$/';
+    private const CLOSE_MATCH_GROUP_TOKEN = ')';
+    private const OPEN_MATCH_GROUP_TOKEN = '(';
+
     /**
-     * Whether or not a QtiDatatype object is considered valid against a given ResponseValidityConstraint object $constraint.
+     * Whether a QtiDatatype object is considered valid against a given ResponseValidityConstraint object $constraint.
      *
      * Min and Max constraints will be checked first, followed by the patternMask check.
      *
@@ -50,10 +54,9 @@ class Utils
      *
      * Moreover, null values given as a $response will be considered to have no cardinality i.e. count($response) = 0.
      *
-     * @param QtiDatatype $response
+     * @param QtiDatatype|null $response
      * @param ResponseValidityConstraint $constraint
      * @return bool
-     * @throws RuntimeException If An error occurred while validating a patternMask.
      */
     public static function isResponseValid(QtiDatatype $response = null, ResponseValidityConstraint $constraint)
     {
@@ -86,13 +89,24 @@ class Utils
 
             $patternMask = OperatorUtils::prepareXsdPatternForPcre($patternMask);
 
+            $isMaxEntryRestriction = preg_match(self::MAX_ENTRY_RESTRICTION_PATTERN, $patternMask, $matches)
+                && self::isSingleMatchGroup($patternMask);
+
             foreach ($values as $value) {
                 $result = @preg_match($patternMask, $value);
 
                 if ($result === 0) {
                     return false;
                 } elseif ($result === false) {
-                    throw new RuntimeException(OperatorUtils::lastPregErrorMessage());
+                    if ($isMaxEntryRestriction) {
+                        [$splitPattern, $min, $max] = self::extractMaxEntryRestrictionsRestrictions($matches);
+                        $entries = count(preg_split("/$splitPattern/", $value)) - 1;
+                        if ($entries > $max || $entries < $min) {
+                            return false;
+                        }
+                    } else {
+                        throw new RuntimeException(OperatorUtils::lastPregErrorMessage());
+                    }
                 }
             }
         }
@@ -124,5 +138,23 @@ class Utils
         }
 
         return true;
+    }
+
+    private static function isSingleMatchGroup(string $patternMask): bool
+    {
+        $closeBracketPosition = strpos($patternMask, self::CLOSE_MATCH_GROUP_TOKEN);
+        return strpos(substr($patternMask, $closeBracketPosition), self::OPEN_MATCH_GROUP_TOKEN) === false;
+    }
+
+    /**
+     * @return array [(string)$splitPattern, (int)$min, (int)$max]
+     */
+    private static function extractMaxEntryRestrictionsRestrictions(array $matches): array
+    {
+        extract($matches);
+        $isRange = !empty($isRange);
+        $max ??= $isRange ? PHP_INT_MAX : $min;
+
+        return [$splitPattern, (int)$min, (int)$max];
     }
 }
