@@ -100,7 +100,7 @@ class Utils
                 } elseif ($result === false) {
                     if ($isMaxEntryRestriction) {
                         [$splitPattern, $min, $max] = self::extractMaxEntryRestrictionsRestrictions($matches);
-                        $entries = count(preg_split("/$splitPattern/", $response)) - 1;
+                        $entries = count(preg_split("/$splitPattern/", $value)) - 1;
                         if ($entries > $max || $entries < $min) {
                             return false;
                         }
