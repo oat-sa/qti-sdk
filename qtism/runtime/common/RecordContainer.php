@@ -134,4 +134,14 @@ class RecordContainer extends Container implements QtiDatatype
     {
         return -1;
     }
+
+    public function __toString(): string
+    {
+        $bounds = $this->getToStringBounds();
+        foreach ($this->getDataPlaceHolder() as $recordKey => $value) {
+            $strings[] = sprintf("%s: %s", $recordKey, (string) $value);
+        }
+
+        return $bounds[0] . implode('; ', $strings) . $bounds[1];
+    }
 }

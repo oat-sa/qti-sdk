@@ -325,6 +325,12 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
                 $this->writeTinyInt($baseType);
                 $toCall = 'write' . ucfirst(BaseType::getNameByConstant($baseType));
+                if ($value instanceof MultipleContainer) {
+                    foreach ($value as $singleRecordValue) {
+                        $this->$toCall($singleRecordValue);
+                    }
+                    return;
+                }
 
                 $this->$toCall($value instanceof QtiScalar ? $value->getValue() : $value);
             }

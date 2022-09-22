@@ -255,6 +255,10 @@ class Unmarshaller
                     return $this->unmarshallIdentifier($unit);
                     break;
 
+                case 'list':
+                    return $this->unmarshallList($unit['base']);
+                    break;
+
                 default:
                     throw new UnmarshallingException("Unknown QTI baseType '" . $keys[0] . "'");
                     break;
@@ -334,7 +338,7 @@ class Unmarshaller
      */
     protected function unmarshallPair(array $unit)
     {
-        return new QtiPair($unit['base']['pair'][0], $unit['base']['pair'][1]);
+        return new QtiPair((float) $unit['base']['pair'][0], (float) $unit['base']['pair'][1]);
     }
 
     /**
