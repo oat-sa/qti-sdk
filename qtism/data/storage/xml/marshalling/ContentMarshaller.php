@@ -54,6 +54,10 @@ use qtism\data\content\TemplateBlock;
 use qtism\data\content\TemplateInline;
 use qtism\data\content\xhtml\html5\Figcaption;
 use qtism\data\content\xhtml\html5\Figure;
+use qtism\data\content\xhtml\html5\Rb;
+use qtism\data\content\xhtml\html5\Rp;
+use qtism\data\content\xhtml\html5\Rt;
+use qtism\data\content\xhtml\html5\Ruby;
 use qtism\data\content\xhtml\lists\Dl;
 use qtism\data\content\xhtml\lists\DlElement;
 use qtism\data\content\xhtml\lists\Li;
@@ -141,6 +145,10 @@ abstract class ContentMarshaller extends RecursiveMarshaller
         'i',
         'kbd',
         'q',
+        Ruby::QTI_CLASS_NAME,
+        Rb::QTI_CLASS_NAME,
+        Rp::QTI_CLASS_NAME,
+        Rt::QTI_CLASS_NAME,
         'samp',
         'small',
         'span',
@@ -292,6 +300,14 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             return $component->getContent()->getArrayCopy();
         } elseif ($component instanceof Figcaption) {
             return $component->getContent()->getArrayCopy();
+        } elseif ($component instanceof Ruby) {
+            return $component->getContent()->getArrayCopy();
+        } elseif ($component instanceof Rb) {
+            return $component->getContent()->getArrayCopy();
+        } elseif ($component instanceof Rp) {
+            return $component->getContent()->getArrayCopy();
+        } elseif ($component instanceof Rt) {
+            return $component->getContent()->getArrayCopy();
         }
     }
 
@@ -338,6 +354,10 @@ abstract class ContentMarshaller extends RecursiveMarshaller
             return self::getChildElements($element);
         } elseif ($localName === 'simpleMatchSet') {
             return $this->getChildElementsByTagName($element, 'simpleAssociableChoice');
+        } elseif ($localName === Figure::QTI_CLASS_NAME_FIGURE) {
+            return $this->getChildElementsByTagName($element, [Figcaption::QTI_CLASS_NAME_FIGCAPTION, Img::QTI_CLASS_NAME_IMG]);
+        } elseif ($localName === Ruby::QTI_CLASS_NAME) {
+            return $this->getChildElementsByTagName($element, [Rb::QTI_CLASS_NAME, Rp::QTI_CLASS_NAME, Rt::QTI_CLASS_NAME]);
         } elseif ($localName === 'gapImg') {
             return $this->getChildElementsByTagName($element, 'object');
         } elseif ($element->localName === 'infoControl') {
