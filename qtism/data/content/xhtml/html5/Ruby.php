@@ -22,60 +22,14 @@ declare(strict_types=1);
 
 namespace qtism\data\content\xhtml\html5;
 
-use qtism\data\content\FlowCollection;
 use qtism\data\content\FlowStatic;
-use qtism\data\content\FlowTrait;
 
-class Ruby extends Html5Element implements FlowStatic
+class Ruby extends Html5LayoutElement implements FlowStatic
 {
-    use FlowTrait;
-
     public const QTI_CLASS_NAME = 'ruby';
-
-    /**
-     * The Block components composing the SimpleBlock object.
-     *
-     * @var FlowCollection
-     * @qtism-bean-property
-     */
-    private $content;
-
-    /**
-     * Create a new figure object.
-     */
-    public function __construct($title = null, $role = null, $id = null, $class = null, $lang = null, $label = null)
-    {
-        parent::__construct($title, $role, $id, $class, $lang, $label);
-        $this->setContent(new FlowCollection());
-    }
 
     public function getQtiClassName()
     {
         return self::QTI_CLASS_NAME;
-    }
-
-    public function getComponents()
-    {
-        return $this->getContent();
-    }
-
-    /**
-     * Set the collection of Flow objects composing the Div.
-     *
-     * @param FlowCollection $content A collection of Flow objects.
-     */
-    public function setContent(FlowCollection $content)
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * Get the collection of Flow objects composing the Div.
-     *
-     * @return FlowCollection
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 }

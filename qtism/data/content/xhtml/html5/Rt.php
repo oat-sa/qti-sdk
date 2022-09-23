@@ -23,59 +23,13 @@ declare(strict_types=1);
 namespace qtism\data\content\xhtml\html5;
 
 use qtism\data\content\FlowStatic;
-use qtism\data\content\FlowTrait;
-use qtism\data\content\InlineCollection;
 
-class Rt extends Html5Element implements FlowStatic
+class Rt extends Html5LayoutElement implements FlowStatic
 {
-    use FlowTrait;
-
     public const QTI_CLASS_NAME = 'rt';
-
-    /**
-     * The Block components composing the SimpleBlock object.
-     *
-     * @var InlineCollection
-     * @qtism-bean-property
-     */
-    private $content;
-
-    /**
-     * Create a new figcaption object.
-     */
-    public function __construct($title = null, $role = null, $id = null, $class = null, $lang = null, $label = null)
-    {
-        parent::__construct($title, $role, $id, $class, $lang, $label);
-        $this->setContent(new InlineCollection());
-    }
 
     public function getQtiClassName()
     {
         return self::QTI_CLASS_NAME;
-    }
-
-    public function getComponents()
-    {
-        return $this->getContent();
-    }
-
-    /**
-     * Set the collection of Flow objects composing the Div.
-     *
-     * @param InlineCollection $content A collection of Flow objects.
-     */
-    public function setContent(InlineCollection $content)
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * Get the collection of Flow objects composing the Div.
-     *
-     * @return InlineCollection
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 }
