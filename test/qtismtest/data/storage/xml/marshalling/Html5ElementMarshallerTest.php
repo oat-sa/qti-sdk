@@ -8,7 +8,7 @@ use qtism\data\content\enums\Role;
 use qtism\data\content\xhtml\html5\Html5Element;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
-use qtism\data\storage\xml\marshalling\Html5ElementMarshaller;
+use qtism\data\storage\xml\marshalling\Html5ContentMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
@@ -222,7 +222,7 @@ class FakeHtml5Element extends Html5Element
     }
 }
 
-class FakeHtml5ElementMarshaller extends Html5ElementMarshaller
+class FakeHtml5ElementMarshaller extends Html5ContentMarshaller
 {
     /**
      * @throws MarshallingException
