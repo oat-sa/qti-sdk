@@ -178,32 +178,3 @@ class MarshallerTest extends QtiSmTestCase
         $marshaller->hello();
     }
 }
-
-
-
-
-
-
-class FakeMarshaller extends Marshaller
-{
-    /**
-     * @inheritDoc
-     */
-    protected function marshall(QtiComponent $component)
-    {
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function unmarshall(DOMElement $element)
-    {
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getExpectedQtiClassName()
-    {
-    }
-}

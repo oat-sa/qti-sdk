@@ -61,11 +61,3 @@ class Html5LayoutElementTest extends QtiSmTestCase
         self::assertEquals($content, $subject->getComponents());
     }
 }
-
-class FakeHtml5LayoutElement extends Html5LayoutElement
-{
-    public function getQtiClassName(): string
-    {
-        return '';
-    }
-}
