@@ -53,14 +53,14 @@ class Html5RubyMarshallerTest extends Html5ElementMarshallerTest
         $class = 'testclass';
 
         $expected = sprintf(
-            '<%1$s id="%2$s" class="%3$s><%4$s>真</%4$s><%5$s>まこと</%5$s><%6$s>真</%6$s><%7$s>真</%7$s></%1$s>',
+            '<%1$s id="%2$s" class="%3$s"><%4$s>真</%4$s><%5$s>まこと</%5$s><%6$s>真</%6$s></%7$s>',
             $this->namespaceTag(Ruby::QTI_CLASS_NAME),
             $id,
             $class,
-            $this->prefixTag(Ruby::QTI_CLASS_NAME),
-            $this->prefixTag(Rb::QTI_CLASS_NAME),
             $this->prefixTag(Rt::QTI_CLASS_NAME),
-            $this->prefixTag(Rp::QTI_CLASS_NAME)
+            $this->prefixTag(Rb::QTI_CLASS_NAME),
+            $this->prefixTag(Rp::QTI_CLASS_NAME),
+            $this->prefixTag(Ruby::QTI_CLASS_NAME)
         );
 
         $rb = new Rb();
@@ -73,7 +73,7 @@ class Html5RubyMarshallerTest extends Html5ElementMarshallerTest
         $rp->setContent(new InlineCollection([new TextRun('真')]));
 
         $object = new Ruby(null, null, $id, $class);
-        $object->setContent(new FlowCollection([$rb, $rt, $rp]));
+        $object->setContent(new FlowCollection([ $rt, $rb, $rp]));
 
         $this->assertMarshalling($expected, $object);
     }
