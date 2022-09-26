@@ -27,6 +27,8 @@ use qtismtest\QtiSmTestCase;
 
 class RubyTest extends QtiSmTestCase
 {
+    const SUBJECT_QTI_CLASS_NAME = 'ruby';
+
     public function testCreateWithValues(): void
     {
         $id = 'testid';
@@ -50,6 +52,6 @@ class RubyTest extends QtiSmTestCase
     {
         $subject = new Ruby();
 
-        self::assertEquals(Ruby::QTI_CLASS_NAME, $subject->getQtiClassName());
+        self::assertEquals(self::SUBJECT_QTI_CLASS_NAME, $subject->getQtiClassName());
     }
 }

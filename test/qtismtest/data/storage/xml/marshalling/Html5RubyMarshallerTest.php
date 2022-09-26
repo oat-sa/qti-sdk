@@ -34,13 +34,15 @@ use qtism\data\storage\xml\marshalling\MarshallingException;
 
 class Html5RubyMarshallerTest extends Html5ElementMarshallerTest
 {
+    const SUBJECT_QTI_CLASS_NAME = 'ruby';
+
     /**
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     public function testMarshallerDoesNotExistInQti21(): void
     {
-        $this->assertHtml5MarshallingOnlyInQti22AndAbove(new Ruby(), Ruby::QTI_CLASS_NAME);
+        $this->assertHtml5MarshallingOnlyInQti22AndAbove(new Ruby(), self::SUBJECT_QTI_CLASS_NAME);
     }
 
     /**
@@ -54,13 +56,13 @@ class Html5RubyMarshallerTest extends Html5ElementMarshallerTest
 
         $expected = sprintf(
             '<%1$s id="%2$s" class="%3$s"><%4$s>真</%4$s><%5$s>まこと</%5$s><%6$s>真</%6$s></%7$s>',
-            $this->namespaceTag(Ruby::QTI_CLASS_NAME),
+            $this->namespaceTag(self::SUBJECT_QTI_CLASS_NAME),
             $id,
             $class,
             $this->prefixTag(Rt::QTI_CLASS_NAME),
             $this->prefixTag(Rb::QTI_CLASS_NAME),
             $this->prefixTag(Rp::QTI_CLASS_NAME),
-            $this->prefixTag(Ruby::QTI_CLASS_NAME)
+            $this->prefixTag(self::SUBJECT_QTI_CLASS_NAME)
         );
 
         $rb = new Rb();
@@ -86,7 +88,7 @@ class Html5RubyMarshallerTest extends Html5ElementMarshallerTest
     {
         $expected = sprintf(
             '<%s/>',
-            $this->namespaceTag(Ruby::QTI_CLASS_NAME)
+            $this->namespaceTag(self::SUBJECT_QTI_CLASS_NAME)
         );
 
         $ruby = new Ruby();
@@ -102,10 +104,10 @@ class Html5RubyMarshallerTest extends Html5ElementMarshallerTest
         $this->assertHtml5UnmarshallingOnlyInQti22AndAbove(
             sprintf(
                 '<%s></%s>',
-                $this->namespaceTag(Ruby::QTI_CLASS_NAME),
-                $this->prefixTag(Ruby::QTI_CLASS_NAME)
+                $this->namespaceTag(self::SUBJECT_QTI_CLASS_NAME),
+                $this->prefixTag(self::SUBJECT_QTI_CLASS_NAME)
             ),
-            Ruby::QTI_CLASS_NAME
+            self::SUBJECT_QTI_CLASS_NAME
         );
     }
 
@@ -119,10 +121,10 @@ class Html5RubyMarshallerTest extends Html5ElementMarshallerTest
 
         $xml = sprintf(
             '<%1$s id="%2$s" class="%3$s"></%4$s>',
-            $this->namespaceTag(Ruby::QTI_CLASS_NAME),
+            $this->namespaceTag(self::SUBJECT_QTI_CLASS_NAME),
             $id,
             $class,
-            $this->prefixTag(Ruby::QTI_CLASS_NAME)
+            $this->prefixTag(self::SUBJECT_QTI_CLASS_NAME)
         );
 
         $expected = new Ruby(null, null, $id, $class);
@@ -134,8 +136,8 @@ class Html5RubyMarshallerTest extends Html5ElementMarshallerTest
     {
         $xml = sprintf(
             '<%s></%s>',
-            $this->namespaceTag(Ruby::QTI_CLASS_NAME),
-            $this->prefixTag(Ruby::QTI_CLASS_NAME)
+            $this->namespaceTag(self::SUBJECT_QTI_CLASS_NAME),
+            $this->prefixTag(self::SUBJECT_QTI_CLASS_NAME)
         );
 
         $expected = new Ruby();

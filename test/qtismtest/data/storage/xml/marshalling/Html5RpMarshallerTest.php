@@ -30,13 +30,15 @@ use qtism\data\storage\xml\marshalling\MarshallingException;
 
 class Html5RpMarshallerTest extends Html5ElementMarshallerTest
 {
+    const SUBJECT_QTI_CLASS_NAME = 'rp';
+
     /**
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
     public function testMarshallerDoesNotExistInQti21(): void
     {
-        $this->assertHtml5MarshallingOnlyInQti22AndAbove(new Rp(), Rp::QTI_CLASS_NAME);
+        $this->assertHtml5MarshallingOnlyInQti22AndAbove(new Rp(), self::SUBJECT_QTI_CLASS_NAME);
     }
 
     /**
@@ -50,10 +52,10 @@ class Html5RpMarshallerTest extends Html5ElementMarshallerTest
 
         $expected = sprintf(
             '<%1$s id="%2$s" class="%3$s">text content</%4$s>',
-            $this->namespaceTag(Rp::QTI_CLASS_NAME),
+            $this->namespaceTag(self::SUBJECT_QTI_CLASS_NAME),
             $id,
             $class,
-            $this->prefixTag(Rp::QTI_CLASS_NAME)
+            $this->prefixTag(self::SUBJECT_QTI_CLASS_NAME)
         );
 
         $object = new Rp(null, null, $id, $class);
@@ -70,8 +72,8 @@ class Html5RpMarshallerTest extends Html5ElementMarshallerTest
     {
         $expected = sprintf(
             '<%s>text content</%s>',
-            $this->namespaceTag(Rp::QTI_CLASS_NAME),
-            $this->prefixTag(Rp::QTI_CLASS_NAME)
+            $this->namespaceTag(self::SUBJECT_QTI_CLASS_NAME),
+            $this->prefixTag(self::SUBJECT_QTI_CLASS_NAME)
         );
 
         $object = new Rp();
@@ -88,10 +90,10 @@ class Html5RpMarshallerTest extends Html5ElementMarshallerTest
         $this->assertHtml5UnmarshallingOnlyInQti22AndAbove(
             sprintf(
                 '<%s></%s>',
-                $this->namespaceTag(Rp::QTI_CLASS_NAME),
-                $this->prefixTag(Rp::QTI_CLASS_NAME)
+                $this->namespaceTag(self::SUBJECT_QTI_CLASS_NAME),
+                $this->prefixTag(self::SUBJECT_QTI_CLASS_NAME)
             ),
-            Rp::QTI_CLASS_NAME
+            self::SUBJECT_QTI_CLASS_NAME
         );
     }
 
@@ -105,10 +107,10 @@ class Html5RpMarshallerTest extends Html5ElementMarshallerTest
 
         $xml = sprintf(
             '<%1$s id="%2$s" class="%3$s">text content</%4$s>',
-            $this->namespaceTag(Rp::QTI_CLASS_NAME),
+            $this->namespaceTag(self::SUBJECT_QTI_CLASS_NAME),
             $id,
             $class,
-            $this->prefixTag(Rp::QTI_CLASS_NAME)
+            $this->prefixTag(self::SUBJECT_QTI_CLASS_NAME)
         );
 
         $expected = new Rp(null, null, $id, $class);
@@ -121,8 +123,8 @@ class Html5RpMarshallerTest extends Html5ElementMarshallerTest
     {
         $xml = sprintf(
             '<%s>text content</%s>',
-            $this->namespaceTag(Rp::QTI_CLASS_NAME),
-            $this->prefixTag(Rp::QTI_CLASS_NAME)
+            $this->namespaceTag(self::SUBJECT_QTI_CLASS_NAME),
+            $this->prefixTag(self::SUBJECT_QTI_CLASS_NAME)
         );
 
         $expected = new Rp();

@@ -27,6 +27,8 @@ use qtismtest\QtiSmTestCase;
 
 class RpTest extends QtiSmTestCase
 {
+    const SUBJECT_QTI_CLASS_NAME = 'rp';
+
     public function testCreateWithValues(): void
     {
         $id = 'testid';
@@ -50,6 +52,6 @@ class RpTest extends QtiSmTestCase
     {
         $subject = new Rp();
 
-        self::assertEquals(Rp::QTI_CLASS_NAME, $subject->getQtiClassName());
+        self::assertEquals(self::SUBJECT_QTI_CLASS_NAME, $subject->getQtiClassName());
     }
 }
