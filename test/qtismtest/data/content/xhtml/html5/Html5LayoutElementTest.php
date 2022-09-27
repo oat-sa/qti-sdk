@@ -21,7 +21,9 @@ class Html5LayoutElementTest extends QtiSmTestCase
         $lang = 'en';
         $label = 'This is the label.';
 
-        $subject = new FakeHtml5LayoutElement($title, $role, $id, $class, $lang, $label);
+        $subject = $this->getMockForAbstractClass(Html5LayoutElement::class, [
+            $title, $role, $id, $class, $lang, $label
+        ]);
 
         self::assertSame($title, $subject->getTitle());
         self::assertEquals(Role::getConstantByName($role), $subject->getRole());
@@ -34,7 +36,7 @@ class Html5LayoutElementTest extends QtiSmTestCase
 
     public function testCreateWithDefaultValues(): void
     {
-        $subject = new FakeHtml5LayoutElement();
+        $subject = $this->getMockForAbstractClass(Html5LayoutElement::class);
 
         self::assertSame('', $subject->getTitle());
         self::assertSame('', $subject->getId());
@@ -46,7 +48,7 @@ class Html5LayoutElementTest extends QtiSmTestCase
 
     public function testSetContent(): void
     {
-        $subject = new FakeHtml5LayoutElement();
+        $subject = $this->getMockForAbstractClass(Html5LayoutElement::class);
         $content = new FlowCollection(
             [
                 new P(),

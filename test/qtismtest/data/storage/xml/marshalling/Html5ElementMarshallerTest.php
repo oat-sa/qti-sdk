@@ -3,16 +3,21 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
-use DOMElement;
+use PHPUnit\Exception;
 use qtism\data\content\enums\Role;
+use qtism\data\content\FlowCollection;
+use qtism\data\content\InlineCollection;
+use qtism\data\content\TextRun;
+use qtism\data\content\xhtml\html5\Figure;
 use qtism\data\content\xhtml\html5\Html5Element;
-use qtism\data\QtiComponent;
-use qtism\data\QtiComponentCollection;
+use qtism\data\content\xhtml\html5\Rb;
+use qtism\data\content\xhtml\html5\Rp;
+use qtism\data\content\xhtml\html5\Rt;
+use qtism\data\content\xhtml\html5\Ruby;
 use qtism\data\storage\xml\marshalling\Html5ContentMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
-use qtism\data\storage\xml\marshalling\UnmarshallingException;
 use qtismtest\QtiSmTestCase;
 
 class Html5ElementMarshallerTest extends QtiSmTestCase
@@ -36,7 +41,7 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
 
         $expected = sprintf(
             '<%s id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
-            $this->namespaceTag('html5'),
+            $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE),
             $id,
             $class,
             $lang,
@@ -45,11 +50,9 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
             $role
         );
 
-        $html5Element = new FakeHtml5Element($title, Role::getConstantByName($role), $id, $class, $lang, $label);
+        $html5Element = new Figure($title, Role::getConstantByName($role), $id, $class, $lang, $label);
 
-        $marshaller = new FakeHtml5ElementMarshaller('2.2.0');
-
-        $this->assertMarshalling($expected, $html5Element, $marshaller);
+        $this->assertMarshalling($expected, $html5Element);
     }
 
     /**
@@ -58,13 +61,11 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
      */
     public function testMarshall22WithDefaultValues(): void
     {
-        $expected = '<' . $this->namespaceTag('html5') . '/>';
+        $expected = '<' . $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE) . '/>';
 
-        $html5Element = new FakeHtml5Element();
+        $html5Element = new Figure();
 
-        $marshaller = new FakeHtml5ElementMarshaller('2.2.0');
-
-        $this->assertMarshalling($expected, $html5Element, $marshaller);
+        $this->assertMarshalling($expected, $html5Element);
     }
 
     /**
@@ -81,7 +82,7 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
 
         $xml = sprintf(
             '<%s id="%s" class="%s" xml:lang="%s" label="%s" title="%s" role="%s"/>',
-            $this->namespaceTag('html5'),
+            $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE),
             $id,
             $class,
             $lang,
@@ -90,17 +91,9 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
             $role
         );
 
-        $marshaller = new FakeHtml5ElementMarshaller('2.2.0');
+        $expected = new Figure($title, Role::getConstantByName($role), $id, $class, $lang, $label);
 
-        $expected = new FakeHtml5Element(
-            $title,
-            Role::getConstantByName($role),
-            $id,
-            $class,
-            $lang,
-            $label
-        );
-        $this->assertUnmarshalling($expected, $xml, $marshaller);
+        $this->assertUnmarshalling($expected, $xml);
     }
 
     /**
@@ -108,12 +101,106 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
      */
     public function testUnmarshall22WithDefaultValues(): void
     {
-        $xml = '<' . $this->namespaceTag('html5') . '/>';
+        $xml = '<' . $this->namespaceTag(Figure::QTI_CLASS_NAME_FIGURE) . '/>';
 
-        $marshaller = new FakeHtml5ElementMarshaller('2.2.0');
+        $expected = new Figure();
 
-        $expected = new FakeHtml5Element();
-        $this->assertUnmarshalling($expected, $xml, $marshaller);
+        $this->assertUnmarshalling($expected, $xml);
+    }
+
+    public function testRubyMarshaller()
+    {
+        $id = 'id';
+        $class = 'testclass';
+
+        $expected = sprintf(
+            '<%1$s id="%2$s" class="%3$s"><%4$s>真</%4$s><%5$s>まこと</%5$s><%6$s>真</%6$s></%7$s>',
+            $this->namespaceTag(Ruby::QTI_CLASS_NAME),
+            $id,
+            $class,
+            $this->prefixTag(Rt::QTI_CLASS_NAME),
+            $this->prefixTag(Rb::QTI_CLASS_NAME),
+            $this->prefixTag(Rp::QTI_CLASS_NAME),
+            $this->prefixTag(Ruby::QTI_CLASS_NAME)
+        );
+
+        $rb = new Rb();
+        $rb->setContent(new FlowCollection([new TextRun('まこと')]));
+
+        $rt = new Rt();
+        $rt->setContent(new FlowCollection([new TextRun('真')]));
+
+        $rp = new Rp();
+        $rp->setContent(new FlowCollection([new TextRun('真')]));
+
+        $object = new Ruby(null, null, $id, $class);
+        $object->setContent(new FlowCollection([ $rt, $rb, $rp]));
+
+        $this->assertMarshalling($expected, $object);
+    }
+    /**
+     * @throws MarshallerNotFoundException
+     * @throws MarshallingException
+     */
+    public function testRubyMarshall22WithDefaultValues(): void
+    {
+        $expected = sprintf(
+            '<%s/>',
+            $this->namespaceTag(Ruby::QTI_CLASS_NAME)
+        );
+
+        $ruby = new Ruby();
+
+        $this->assertMarshalling($expected, $ruby);
+    }
+
+    /**
+     * @throws MarshallerNotFoundException
+     */
+    public function testRubyUnMarshallerDoesNotExistInQti21(): void
+    {
+        $this->assertHtml5UnmarshallingOnlyInQti22AndAbove(
+            sprintf(
+                '<%s></%s>',
+                $this->namespaceTag(Ruby::QTI_CLASS_NAME),
+                $this->prefixTag(Ruby::QTI_CLASS_NAME)
+            ),
+            Ruby::QTI_CLASS_NAME
+        );
+    }
+
+    /**
+     * @throws MarshallerNotFoundException
+     */
+    public function testRubyUnmarshall22(): void
+    {
+        $id = 'id';
+        $class = 'testclass';
+
+        $xml = sprintf(
+            '<%1$s id="%2$s" class="%3$s"></%4$s>',
+            $this->namespaceTag(Ruby::QTI_CLASS_NAME),
+            $id,
+            $class,
+            $this->prefixTag(Ruby::QTI_CLASS_NAME)
+        );
+
+        $expected = new Ruby(null, null, $id, $class);
+
+        $this->assertUnmarshalling($expected, $xml);
+    }
+
+    public function testRubyUnmarshall22WithDefaultValues(): void
+    {
+        $xml = sprintf(
+            '<%s></%s>',
+            $this->namespaceTag(Ruby::QTI_CLASS_NAME),
+            $this->prefixTag(Ruby::QTI_CLASS_NAME)
+        );
+
+        $expected = new Ruby();
+
+        $this->assertUnmarshalling($expected, $xml);
     }
 
     /**
@@ -139,7 +226,10 @@ class Html5ElementMarshallerTest extends QtiSmTestCase
     {
         $element = $this->createDOMElement($xml);
         $this->expectException(MarshallerNotFoundException::class);
-        $this->expectExceptionMessage('No mapping entry found for QTI class name \'' . $elementName . '\'.');
+        $this->expectExceptionMessage(sprintf(
+            "No marshaller implementation could be found for component '%s'.",
+            $elementName
+        ));
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $marshaller->unmarshall($element);
     }
