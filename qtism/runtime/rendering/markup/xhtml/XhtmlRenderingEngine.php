@@ -61,18 +61,11 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
         $this->registerRenderer('abbr', $bodyElementRenderer);
         $this->registerRenderer('acronym', $bodyElementRenderer);
         $this->registerRenderer('address', $bodyElementRenderer);
-        $this->registerRenderer('b', $bodyElementRenderer);
-        $this->registerRenderer('bdo', $bodyElementRenderer);
-        $this->registerRenderer('big', $bodyElementRenderer);
         $this->registerRenderer('br', $bodyElementRenderer);
-        $this->registerRenderer('caption', $bodyElementRenderer);
         $this->registerRenderer('cite', $bodyElementRenderer);
         $this->registerRenderer('code', $bodyElementRenderer);
-        $this->registerRenderer('dd', $bodyElementRenderer);
         $this->registerRenderer('dfn', $bodyElementRenderer);
         $this->registerRenderer('div', $bodyElementRenderer);
-        $this->registerRenderer('dl', $bodyElementRenderer);
-        $this->registerRenderer('dt', $bodyElementRenderer);
         $this->registerRenderer('em', $bodyElementRenderer);
         $this->registerRenderer('h1', $bodyElementRenderer);
         $this->registerRenderer('h2', $bodyElementRenderer);
@@ -80,26 +73,32 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
         $this->registerRenderer('h4', $bodyElementRenderer);
         $this->registerRenderer('h5', $bodyElementRenderer);
         $this->registerRenderer('h6', $bodyElementRenderer);
-        $this->registerRenderer('hr', $bodyElementRenderer);
-        $this->registerRenderer('i', $bodyElementRenderer);
         $this->registerRenderer('kbd', $bodyElementRenderer);
-        $this->registerRenderer('li', $bodyElementRenderer);
-        $this->registerRenderer('ol', $bodyElementRenderer);
         $this->registerRenderer('p', $bodyElementRenderer);
         $this->registerRenderer('pre', $bodyElementRenderer);
         $this->registerRenderer('samp', $bodyElementRenderer);
-        $this->registerRenderer('small', $bodyElementRenderer);
         $this->registerRenderer('span', $bodyElementRenderer);
         $this->registerRenderer('strong', $bodyElementRenderer);
+        $this->registerRenderer('var', $bodyElementRenderer);
+        $this->registerRenderer('dl', $bodyElementRenderer);
+        $this->registerRenderer('dt', $bodyElementRenderer);
+        $this->registerRenderer('dd', $bodyElementRenderer);
+        $this->registerRenderer('ol', $bodyElementRenderer);
+        $this->registerRenderer('ul', $bodyElementRenderer);
+        $this->registerRenderer('li', $bodyElementRenderer);
+        $this->registerRenderer('b', $bodyElementRenderer);
+        $this->registerRenderer('big', $bodyElementRenderer);
+        $this->registerRenderer('hr', $bodyElementRenderer);
+        $this->registerRenderer('i', $bodyElementRenderer);
+        $this->registerRenderer('small', $bodyElementRenderer);
         $this->registerRenderer('sub', $bodyElementRenderer);
         $this->registerRenderer('sup', $bodyElementRenderer);
+        $this->registerRenderer('tt', $bodyElementRenderer);
+        $this->registerRenderer('caption', $bodyElementRenderer);
         $this->registerRenderer('tbody', $bodyElementRenderer);
         $this->registerRenderer('tfoot', $bodyElementRenderer);
         $this->registerRenderer('thead', $bodyElementRenderer);
         $this->registerRenderer('tr', $bodyElementRenderer);
-        $this->registerRenderer('tt', $bodyElementRenderer);
-        $this->registerRenderer('ul', $bodyElementRenderer);
-        $this->registerRenderer('var', $bodyElementRenderer);
 
         // Both col and components elements can be rendered
         // by the ColRenderer.
@@ -125,13 +124,12 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
         $this->registerRenderer('extendedTextInteraction', new ExtendedTextInteractionRenderer());
         $this->registerRenderer('feedbackBlock', new FeedbackBlockRenderer());
         $this->registerRenderer('feedbackInline', new FeedbackInlineRenderer());
-        $this->registerRenderer(Figure::QTI_CLASS_NAME_FIGURE, new FigureRenderer());
-        $this->registerRenderer(Figcaption::QTI_CLASS_NAME_FIGCAPTION, new FigcaptionRenderer());
+        $this->registerRenderer(Figure::QTI_CLASS_NAME_FIGURE, new ExternalQtiComponentRenderer());
+        $this->registerRenderer(Figcaption::QTI_CLASS_NAME_FIGCAPTION, new ExternalQtiComponentRenderer());
         $this->registerRenderer('gap', new GapRenderer());
         $this->registerRenderer('gapImg', new GapImgRenderer());
         $this->registerRenderer('gapMatchInteraction', new GapMatchInteractionRenderer());
         $this->registerRenderer('gapText', new GapTextRenderer());
-        $this->registerRenderer('graphicAssociateInteraction', new GraphicAssociateInteractionRenderer());
         $this->registerRenderer('graphicGapMatchInteraction', new GraphicGapMatchInteractionRenderer());
         $this->registerRenderer('graphicOrderInteraction', new GraphicOrderInteractionRenderer());
         $this->registerRenderer('hotspotChoice', new HotspotChoiceRenderer());
@@ -153,10 +151,10 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
         $this->registerRenderer('printedVariable', new PrintedVariableRenderer());
         $this->registerRenderer('prompt', new PromptRenderer());
         $this->registerRenderer('q', new QRenderer());
-        $this->registerRenderer(Ruby::QTI_CLASS_NAME, new RubyRenderer());
-        $this->registerRenderer(Rb::QTI_CLASS_NAME, new RbRenderer());
-        $this->registerRenderer(Rt::QTI_CLASS_NAME, new RtRenderer());
-        $this->registerRenderer(Rp::QTI_CLASS_NAME, new RpRenderer());
+        $this->registerRenderer(Ruby::QTI_CLASS_NAME, new ExternalQtiComponentRenderer());
+        $this->registerRenderer(Rb::QTI_CLASS_NAME, new ExternalQtiComponentRenderer());
+        $this->registerRenderer(Rt::QTI_CLASS_NAME, new ExternalQtiComponentRenderer());
+        $this->registerRenderer(Rp::QTI_CLASS_NAME, new ExternalQtiComponentRenderer());
         $this->registerRenderer('rubricBlock', new RubricBlockRenderer());
         $this->registerRenderer('selectPointInteraction', new SelectPointInteractionRenderer());
         $this->registerRenderer('simpleAssociableChoice', new SimpleAssociableChoiceRenderer());
@@ -171,6 +169,5 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
 
         // External QTI Components.
         $this->registerRenderer('math', new MathRenderer());
-        $this->registerRenderer('sub', new SsmlSubRenderer(), 'http://www.w3.org/2010/10/synthesis');
     }
 }

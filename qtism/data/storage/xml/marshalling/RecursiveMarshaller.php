@@ -221,14 +221,16 @@ abstract class RecursiveMarshaller extends Marshaller
                 // Hierarchical node, 1st pass.
                 $this->mark($node);
                 $this->pushTrail($node); // repush for a further pass.
-                $children = array_reverse($this->getChildrenComponents($node)); // next nodes to explore.
+                $childrenComponentList = $this->getChildrenComponents($node) ?? [];
+                $children = array_reverse($childrenComponentList); // next nodes to explore.
 
                 foreach ($children as $c) {
                     $this->pushTrail($c);
                 }
-            } elseif ($this->isMarked($node)) {
+            } elseif ($this->isMarked($node) && !$node instanceof DOMElement) {
                 // Push the result on the trail.
-                $finals = $this->emptyFinal(count($this->getChildrenComponents($node)));
+                $childrenComponentList = $this->getChildrenComponents($node) ?? [];
+                $finals = $this->emptyFinal(count($childrenComponentList));
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($node);
                 $element = $marshaller->marshallChildrenKnown($node, $finals);
                 $this->pushProcessed($element);

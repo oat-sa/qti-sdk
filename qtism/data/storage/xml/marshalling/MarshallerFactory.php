@@ -421,7 +421,7 @@ abstract class MarshallerFactory
                 }
             } catch (ReflectionException $e) {
                 $msg = "No marshaller implementation could be found for component '${qtiClassName}'.";
-                throw new RuntimeException($msg, 0, $e);
+                throw new MarshallerNotFoundException($msg, 0, $e);
             }
 
             $marshaller = $this->instantiateMarshaller($class, $args);
