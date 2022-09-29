@@ -870,7 +870,7 @@ class AssessmentTestSession extends State
      * @param bool $allowLateSubmission If set to true, maximum time limits will not be taken into account.
      * @throws AssessmentTestSessionException
      */
-    public function endAttempt(State $responses, $allowLateSubmission = false)
+    public function endAttempt(State $responses, $allowLateSubmission = false, $ignoreAllowSkippingCheck = false)
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED.';
@@ -899,7 +899,7 @@ class AssessmentTestSession extends State
             }
         } else {
             try {
-                $session->endAttempt($responses, true, $allowLateSubmission);
+                $session->endAttempt($responses, true, $allowLateSubmission, $ignoreAllowSkippingCheck);
             } catch (Exception $e) {
                 throw $this->transformException($e);
             }
