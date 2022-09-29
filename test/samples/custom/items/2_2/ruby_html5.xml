@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This example adapted from the PET Handbook, copyright University of Cambridge ESOL Examinations -->
+<!-- The example combines shuffle with the fixation of one simpleChoice in place -->
+<!-- Ruby markup is defined in NS hq5 (HTML5 for QTI), which is referenced in the main QTI 2.2 XSD -->
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" xmlns:m="http://www.w3.org/1998/Math/MathML"
+                xmlns:qh5="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd"
+                identifier="ruby" title="ruby 1" label="ruby 1" xml:lang="en-US"
+                adaptive="false" timeDependent="false" toolName="TAO" toolVersion="2022.01">
+  <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier"/>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <div class="grid-row">
+      <div class="col-12">
+        <p>村田</p>
+        <qh5:ruby>
+          <qh5:rb>真</qh5:rb>
+          <qh5:rt>まこと</qh5:rt>
+        </qh5:ruby>
+        <p>の出身地はどこですか</p>
+      </div>
+    </div>
+    <choiceInteraction responseIdentifier="RESPONSE" shuffle="true" max-choices="1">
+      <prompt>選びなさい</prompt>
+      <simpleChoice identifier="ChoiceHK">
+        <qh5:ruby>
+          <qh5:rb>北海道</qh5:rb>
+          <qh5:rp>ほっかいどう</qh5:rp>
+        </qh5:ruby>
+      </simpleChoice>
+      <simpleChoice identifier="ChoiceTH">東北</simpleChoice>
+      <simpleChoice identifier="ChoiceHR">北陸</simpleChoice>
+      <simpleChoice identifier="ChoiceKT">関東</simpleChoice>
+      <simpleChoice identifier="ChoiceKST">甲信越</simpleChoice>
+      <simpleChoice identifier="ChoiceKK">近畿</simpleChoice>
+      <simpleChoice identifier="ChoiceKS">関西</simpleChoice>
+      <simpleChoice identifier="ChoiceSK">四国</simpleChoice>
+      <simpleChoice identifier="ChoiceTC">中国</simpleChoice>
+      <simpleChoice identifier="ChoiceKY">九州</simpleChoice>
+    </choiceInteraction>
+  </itemBody>
+  <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+</assessmentItem>
