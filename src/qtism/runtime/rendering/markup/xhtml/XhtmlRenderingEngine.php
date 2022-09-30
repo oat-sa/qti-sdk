@@ -25,6 +25,10 @@ namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\data\content\xhtml\html5\Figcaption;
 use qtism\data\content\xhtml\html5\Figure;
+use qtism\data\content\xhtml\html5\Rb;
+use qtism\data\content\xhtml\html5\Rt;
+use qtism\data\content\xhtml\html5\Rp;
+use qtism\data\content\xhtml\html5\Ruby;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
 /**
@@ -149,6 +153,10 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
         $this->registerRenderer('printedVariable', new PrintedVariableRenderer());
         $this->registerRenderer('prompt', new PromptRenderer());
         $this->registerRenderer('q', new QRenderer());
+        $this->registerRenderer(Ruby::QTI_CLASS_NAME, new RubyRenderer());
+        $this->registerRenderer(Rb::QTI_CLASS_NAME, new RbRenderer());
+        $this->registerRenderer(Rt::QTI_CLASS_NAME, new RtRenderer());
+        $this->registerRenderer(Rp::QTI_CLASS_NAME, new RpRenderer());
         $this->registerRenderer('rubricBlock', new RubricBlockRenderer());
         $this->registerRenderer('selectPointInteraction', new SelectPointInteractionRenderer());
         $this->registerRenderer('simpleAssociableChoice', new SimpleAssociableChoiceRenderer());

@@ -769,7 +769,7 @@ class AssessmentItemSession extends State
      * @throws AssessmentItemSessionException If the time limits in force are not respected, an error occurs during response processing, a state violation occurs.
      * @throws PhpStorageException
      */
-    public function endAttempt(State $responses = null, $responseProcessing = true, $forceLateSubmission = false)
+    public function endAttempt(State $responses = null, $responseProcessing = true, $forceLateSubmission = false, $ignoreAllowSkippingCheck = false)
     {
         // Flag to indicate if time is exceed or not.
         $maxTimeExceeded = false;
@@ -793,7 +793,9 @@ class AssessmentItemSession extends State
         // Apply the responses (if provided) to the current state.
         if ($responses !== null) {
             $this->checkResponseValidityConstraints($responses);
-            $this->checkAllowSkipping($responses);
+            if (!$ignoreAllowSkippingCheck) {
+                $this->checkAllowSkipping($responses);
+            }
             $this->mergeResponses($responses);
         }
 
