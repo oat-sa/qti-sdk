@@ -110,8 +110,8 @@ class VariableProcessorTest extends QtiSmTestCase
         $this::assertEquals(13.31, round($result[1]->getValue(), 2));
         // The value in the state must be unchanged.
         $stateVal = $assessmentTestSession['Q01.var2'];
-        $this::assertEquals(10.1, $stateVal[0]->getValue());
-        $this::assertEquals(12.1, $stateVal[1]->getValue());
+        $this::assertEquals(10.1, round($stateVal[0]->getValue(), 2));
+        $this::assertEquals(12.1, round($stateVal[1]->getValue(), 2));
     }
 
     public function testMultipleOccurences()

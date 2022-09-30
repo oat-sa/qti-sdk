@@ -262,6 +262,22 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         }
     }
 
+    public function testIgnoreSkippingForbiddenSimple()
+    {
+        $itemSession = $this->instantiateBasicAssessmentItemSession();
+        $itemSessionControl = new ItemSessionControl();
+        $itemSessionControl->setAllowSkipping(false);
+        $itemSession->setItemSessionControl($itemSessionControl);
+        $itemSession->beginItemSession();
+
+        $itemSession->beginAttempt();
+
+        // Test with empty state...
+        // no exception should be produced
+        $itemSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER)]), true, false, true);
+        $this->assertTrue(true);
+    }
+
     public function testSkippingForbiddenDefaultValue()
     {
         $doc = new XmlDocument();
