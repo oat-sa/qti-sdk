@@ -23,6 +23,12 @@
 
 namespace qtism\runtime\rendering\markup\xhtml;
 
+use OAT\Library\QtiItemJsonCompilation\Rt;
+use qtism\data\content\xhtml\html5\Figcaption;
+use qtism\data\content\xhtml\html5\Figure;
+use qtism\data\content\xhtml\html5\Rb;
+use qtism\data\content\xhtml\html5\Rp;
+use qtism\data\content\xhtml\html5\Ruby;
 use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 
 /**
@@ -154,6 +160,11 @@ class XhtmlRenderingEngine extends AbstractMarkupRenderingEngine
         $this->registerRenderer('positionObjectStage', new PositionObjectStageRenderer());
         $this->registerRenderer('assessmentItem', new AssessmentItemRenderer());
         $this->registerRenderer('printedVariable', new PrintedVariableRenderer());
+        $this->registerRenderer(Figure::QTI_CLASS_NAME_FIGURE, new ExternalQtiComponentRenderer());
+        $this->registerRenderer(Figcaption::QTI_CLASS_NAME_FIGCAPTION, new ExternalQtiComponentRenderer());
+        $this->registerRenderer(Ruby::QTI_CLASS_NAME, new ExternalQtiComponentRenderer());
+        $this->registerRenderer(Rb::QTI_CLASS_NAME, new ExternalQtiComponentRenderer());
+        $this->registerRenderer(Rp::QTI_CLASS_NAME, new ExternalQtiComponentRenderer());
 
         // External QTI Components.
         $this->registerRenderer('math', new MathRenderer());

@@ -3,6 +3,7 @@
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
+use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use \RuntimeException;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\TextRun;
@@ -78,7 +79,7 @@ class Html5LayoutMarshallerTest extends QtiSmTestCase
         $figure = new Figure();
         $figure->setContent(new FlowCollection([$figCaption]));
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(MarshallerNotFoundException::class);
         $this->expectExceptionMessage(
             "No marshaller implementation could be found for component 'figure'."
         );
