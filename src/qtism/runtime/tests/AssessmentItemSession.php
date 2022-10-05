@@ -766,10 +766,11 @@ class AssessmentItemSession extends State
      * @param State $responses (optional) A State composed by the candidate's responses to the item.
      * @param bool $responseProcessing (optional) Whether to execute the responseProcessing or not.
      * @param bool $forceLateSubmission (optional) Force the acceptance of late response submission. In this case, responses that are received out of the time frame indicated by the time limits in force are accepted anyway.
+     * @param bool $forceResponseSave (opional) Force save response even if it empty or validation required
      * @throws AssessmentItemSessionException If the time limits in force are not respected, an error occurs during response processing, a state violation occurs.
      * @throws PhpStorageException
      */
-    public function endAttempt(State $responses = null, $responseProcessing = true, $forceLateSubmission = false, $ignoreAllowSkippingCheck = false)
+    public function endAttempt(State $responses = null, $responseProcessing = true, $forceLateSubmission = false, $forceResponseSave = false)
     {
         // Flag to indicate if time is exceed or not.
         $maxTimeExceeded = false;
@@ -792,8 +793,8 @@ class AssessmentItemSession extends State
 
         // Apply the responses (if provided) to the current state.
         if ($responses !== null) {
-            $this->checkResponseValidityConstraints($responses);
-            if (!$ignoreAllowSkippingCheck) {
+            if (!$forceResponseSave) {
+                $this->checkResponseValidityConstraints($responses);
                 $this->checkAllowSkipping($responses);
             }
             $this->mergeResponses($responses);
