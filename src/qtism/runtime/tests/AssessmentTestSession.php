@@ -2510,6 +2510,10 @@ class AssessmentTestSession extends State
         while ($route->valid() === true && $route->current()->getAssessmentSection() === $from->getAssessmentSection()) {
             $route->next();
         }
+
+        if ($route->valid() === false && $this->isRunning() === true) {
+            $this->endTestSession();
+        }
     }
 
     /**
