@@ -1105,7 +1105,7 @@ class AssessmentItemSession extends State
      *
      * Whether the item of the session has been attempted (at least once) and for which responses were given.
      *
-     * @param bool $partially (optional) Whether or not consider partially responded sessions as responded.
+     * @param bool $partially (optional) Whether to consider partially responded sessions as responded.
      * @return bool
      */
     public function isResponded($partially = true)
