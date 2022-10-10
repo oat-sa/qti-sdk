@@ -1114,27 +1114,21 @@ class AssessmentItemSession extends State
             return false;
         }
 
+        $result = true;
         $excludedResponseVariables = ['numAttempts', 'duration'];
-        foreach ($this->getKeys() as $k) {
-            $var = $this->getVariable($k);
-
-            if (!$var instanceof ResponseVariable || in_array($k, $excludedResponseVariables, true)) {
+        foreach ($this as $key => $var) {
+            if (!$var instanceof ResponseVariable || in_array($key, $excludedResponseVariables, true)) {
                 continue;
             }
 
-            $value = $var->getValue();
-            $defaultValue = $var->getDefaultValue();
-
-            if (Utils::isNull($value)) {
-                if (Utils::isNull($defaultValue) === !$partially) {
-                    return (bool)$partially;
-                }
-            } elseif ($value->equals($defaultValue) === !$partially) {
-                return (bool)$partially;
+            if ($var->isInitializedFromDefaultValue() || Utils::isNull($var->getValue())) {
+                $result = false;
+            } elseif ($partially) {
+                return true;
             }
         }
 
-        return !$partially;
+        return $result;
     }
 
     /**

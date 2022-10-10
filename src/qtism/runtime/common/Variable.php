@@ -40,6 +40,9 @@ use UnexpectedValueException;
  */
 abstract class Variable
 {
+    /** Whether the variable value has been defined or only initialized from the default one */
+    protected bool $isInitializedFromDefaultValue = false;
+
     /**
      * The identifier of the variable.
      *
@@ -203,13 +206,17 @@ abstract class Variable
      * @param QtiDatatype|null $value A QtiDatatype object or null.
      * @throws InvalidArgumentException If the baseType and cardinality of $value are not compliant with the Variable.
      */
-    public function setValue(QtiDatatype $value = null)
+    public function setValue(QtiDatatype $value = null): void
     {
-        if (!Utils::isBaseTypeCompliant($this->getBaseType(), $value) || !Utils::isCardinalityCompliant($this->getCardinality(), $value)) {
+        if (
+            !Utils::isBaseTypeCompliant($this->getBaseType(), $value)
+            || !Utils::isCardinalityCompliant($this->getCardinality(), $value)
+        ) {
             Utils::throwBaseTypeTypingError($this->baseType, $value);
-        } else {
-            $this->value = $value;
         }
+
+        $this->value = $value;
+        $this->isInitializedFromDefaultValue = false;
     }
 
     /**
@@ -311,6 +318,11 @@ abstract class Variable
                 throw new UnexpectedValueException($msg, 0, $e);
             }
         }
+    }
+
+    public function isInitializedFromDefaultValue(): bool
+    {
+        return $this->isInitializedFromDefaultValue;
     }
 
     /**
@@ -609,6 +621,7 @@ abstract class Variable
     public function applyDefaultValue()
     {
         $this->setValue($this->getDefaultValue());
+        $this->isInitializedFromDefaultValue = true;
     }
 
     /**

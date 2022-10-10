@@ -249,6 +249,8 @@ class OutcomeVariable extends Variable
                 $this->setValue(new QtiFloat(0.0));
             }
         }
+
+        $this->isInitializedFromDefaultValue = true;
     }
 
     public function __clone()

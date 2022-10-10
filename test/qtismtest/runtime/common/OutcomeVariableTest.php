@@ -71,10 +71,11 @@ class OutcomeVariableTest extends QtiSmTestCase
         // If I apply the default value, 0 should be inside because
         // baseType is integer, cardinality single, and no default value
         // was given.
-        $variable->setDefaultValue(null);
+        $variable->setDefaultValue();
         $variable->applyDefaultValue();
         $this::assertInstanceOf(QtiInteger::class, $variable->getValue());
         $this::assertEquals(0, $variable->getValue()->getValue());
+        $this::assertTrue($variable->isInitializedFromDefaultValue());
     }
 
     public function testCardinalityMultiple()
