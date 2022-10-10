@@ -1118,21 +1118,23 @@ class AssessmentItemSession extends State
         foreach ($this->getKeys() as $k) {
             $var = $this->getVariable($k);
 
-            if ($var instanceof ResponseVariable && in_array($k, $excludedResponseVariables) === false) {
-                $value = $var->getValue();
-                $defaultValue = $var->getDefaultValue();
+            if (!$var instanceof ResponseVariable || in_array($k, $excludedResponseVariables, true)) {
+                continue;
+            }
 
-                if (Utils::isNull($value) === true) {
-                    if (Utils::isNull($defaultValue) === (($partially) ? false : true)) {
-                        return (($partially) ? true : false);
-                    }
-                } elseif ($value->equals($defaultValue) === (($partially) ? false : true)) {
-                    return (($partially) ? true : false);
+            $value = $var->getValue();
+            $defaultValue = $var->getDefaultValue();
+
+            if (Utils::isNull($value)) {
+                if (Utils::isNull($defaultValue) === !$partially) {
+                    return (bool)$partially;
                 }
+            } elseif ($value->equals($defaultValue) === !$partially) {
+                return (bool)$partially;
             }
         }
 
-        return (($partially) ? false : true);
+        return !$partially;
     }
 
     /**
