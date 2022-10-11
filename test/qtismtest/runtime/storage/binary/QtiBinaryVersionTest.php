@@ -37,7 +37,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         $subject = new QtiBinaryVersion();
         $subject->retrieve($access);
 
-        $this::assertEquals(QtiBinaryVersion::CURRENT_VERSION, $subject->isCurrentVersion());
+        $this::assertTrue($subject->isCurrentVersion());
         $this::assertTrue($subject->isLegacy());
         $this::assertFalse($subject->isMaster());
     }

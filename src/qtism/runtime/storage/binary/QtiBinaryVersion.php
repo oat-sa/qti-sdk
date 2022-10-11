@@ -126,7 +126,7 @@ class QtiBinaryVersion
      */
     public function isCurrentVersion(): bool
     {
-        return $this->version = self::CURRENT_VERSION;
+        return $this->version === self::CURRENT_VERSION;
     }
 
     /**
