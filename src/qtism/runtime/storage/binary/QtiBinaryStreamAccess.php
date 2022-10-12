@@ -689,9 +689,10 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeBoolean(false);
                 $this->writeString($intOrIdentifier);
             } else {
-                $msg = "The intOrIdentifier value to be written must be an integer or a string, '"
-                       . gettype($intOrIdentifier)
-                       . "' given.";
+                $msg = sprintf(
+                    'The intOrIdentifier value to be written must be an integer or a string, \'%s\' given.',
+                    gettype($intOrIdentifier)
+                );
                 throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::INTORIDENTIFIER);
             }
         } catch (BinaryStreamAccessException $e) {
