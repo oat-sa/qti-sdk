@@ -21,6 +21,8 @@
  * @license GPLv2
  */
 
+declare(strict_types=1);
+
 namespace qtism\runtime\storage\binary;
 
 use qtism\common\storage\BinaryStreamAccessException;
@@ -32,51 +34,32 @@ class QtiBinaryVersion
 {
     /**
      * The QTI binary data version number.
-     *
-     * @var int
      */
-    const CURRENT_VERSION = 11;
+    public const CURRENT_VERSION = self::VERSION_VARIABLE_WITH_DEFAULT_VALUE_INITIALIZATION_FLAG;
 
     /**
      * The QTI Sdk branch to select behaviour of the binary storage.
      * 'M' denotes Master. 'L' denotes Legacy.
-     *
-     * @var string
      */
-    const CURRENT_BRANCH = 'M';
+    public const CURRENT_BRANCH = 'M';
 
     /**
-     * These constants make the different versions a bit more self explanatory.
+     * These constants make the different versions a bit more self-explanatory.
      */
-    const VERSION_VARIABLE_COUNT_INTEGER = 11;
+    public const VERSION_VARIABLE_WITH_DEFAULT_VALUE_INITIALIZATION_FLAG = 12;
+    public const VERSION_VARIABLE_COUNT_INTEGER = 11;
+    public const VERSION_FIRST_MASTER = 10;
+    public const VERSION_POSITION_INTEGER = 9;
+    public const VERSION_ALWAYS_ALLOW_JUMPS = 8;
+    public const VERSION_TRACK_PATH = 7;
+    public const VERSION_FORCE_BRANCHING_PRECONDITIONS = 6;
+    public const VERSION_LAST_ACTION = 5;
+    public const VERSION_DURATIONS = 4;
+    public const VERSION_MULTIPLE_SECTIONS = 3;
+    public const VERSION_ATTEMPTING = 2;
 
-    const VERSION_FIRST_MASTER = 10;
-
-    const VERSION_POSITION_INTEGER = 9;
-
-    const VERSION_ALWAYS_ALLOW_JUMPS = 8;
-
-    const VERSION_TRACK_PATH = 7;
-
-    const VERSION_FORCE_BRANCHING_PRECONDITIONS = 6;
-
-    const VERSION_LAST_ACTION = 5;
-
-    const VERSION_DURATIONS = 4;
-
-    const VERSION_MULTIPLE_SECTIONS = 3;
-
-    const VERSION_ATTEMPTING = 2;
-
-    /**
-     * @var int
-     */
-    private $version;
-
-    /**
-     * @var string
-     */
-    private $branch;
+    private int $version;
+    private string $branch;
 
     /**
      * Writes version into binary storage.
@@ -126,7 +109,12 @@ class QtiBinaryVersion
      */
     public function isCurrentVersion(): bool
     {
-        return $this->version = self::CURRENT_VERSION;
+        return $this->version === self::CURRENT_VERSION;
+    }
+
+    public function storesVariableDefaultValueInitializationFlag(): bool
+    {
+        return $this->version >= self::VERSION_VARIABLE_WITH_DEFAULT_VALUE_INITIALIZATION_FLAG;
     }
 
     /**

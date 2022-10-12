@@ -683,13 +683,18 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->endCandidateSession();
     }
 
-    public function testIsRespondedValueNullDefaultNotNull()
+    public function testIsRespondedValueReflectsNonDefaultValues()
     {
+        $value = new QtiIdentifier('ChoiceA');
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
         $itemSession->beginAttempt();
-        $itemSession->getVariable('RESPONSE')->setDefaultValue(new QtiIdentifier('ChoiceA'));
+        $itemSession->getVariable('RESPONSE')->setDefaultValue($value);
 
+        $this::assertFalse($itemSession->isResponded());
+        $this::assertFalse($itemSession->isResponded(false));
+
+        $itemSession->getVariable('RESPONSE')->setValue($value);
         $this::assertTrue($itemSession->isResponded());
         $this::assertTrue($itemSession->isResponded(false));
     }

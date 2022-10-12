@@ -1105,7 +1105,7 @@ class AssessmentItemSession extends State
      *
      * Whether the item of the session has been attempted (at least once) and for which responses were given.
      *
-     * @param bool $partially (optional) Whether or not consider partially responded sessions as responded.
+     * @param bool $partially (optional) Whether to consider partially responded sessions as responded.
      * @return bool
      */
     public function isResponded($partially = true)
@@ -1114,25 +1114,21 @@ class AssessmentItemSession extends State
             return false;
         }
 
+        $result = true;
         $excludedResponseVariables = ['numAttempts', 'duration'];
-        foreach ($this->getKeys() as $k) {
-            $var = $this->getVariable($k);
+        foreach ($this as $key => $var) {
+            if (!$var instanceof ResponseVariable || in_array($key, $excludedResponseVariables, true)) {
+                continue;
+            }
 
-            if ($var instanceof ResponseVariable && in_array($k, $excludedResponseVariables) === false) {
-                $value = $var->getValue();
-                $defaultValue = $var->getDefaultValue();
-
-                if (Utils::isNull($value) === true) {
-                    if (Utils::isNull($defaultValue) === (($partially) ? false : true)) {
-                        return (($partially) ? true : false);
-                    }
-                } elseif ($value->equals($defaultValue) === (($partially) ? false : true)) {
-                    return (($partially) ? true : false);
-                }
+            if ($var->isInitializedFromDefaultValue() || Utils::isNull($var->getValue())) {
+                $result = false;
+            } elseif ($partially) {
+                return true;
             }
         }
 
-        return (($partially) ? false : true);
+        return $result;
     }
 
     /**

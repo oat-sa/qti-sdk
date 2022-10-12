@@ -37,7 +37,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         $subject = new QtiBinaryVersion();
         $subject->retrieve($access);
 
-        $this::assertEquals(QtiBinaryVersion::CURRENT_VERSION, $subject->isCurrentVersion());
+        $this::assertTrue($subject->isCurrentVersion());
         $this::assertTrue($subject->isLegacy());
         $this::assertFalse($subject->isMaster());
     }
@@ -94,6 +94,8 @@ class QtiBinaryVersionTest extends QtiSmTestCase
                 QtiBinaryVersion::VERSION_POSITION_INTEGER => 'storesPositionAndRouteCountAsInteger',
                 QtiBinaryVersion::VERSION_FIRST_MASTER => 'isInBothBranches',
                 QtiBinaryVersion::VERSION_VARIABLE_COUNT_INTEGER => 'storesVariableCountAsInteger',
+                QtiBinaryVersion::VERSION_VARIABLE_WITH_DEFAULT_VALUE_INITIALIZATION_FLAG =>
+                    'storesVariableDefaultValueInitializationFlag',
             ]
         );
     }
@@ -130,6 +132,8 @@ class QtiBinaryVersionTest extends QtiSmTestCase
             [
                 QtiBinaryVersion::VERSION_FIRST_MASTER => 'isInBothBranches',
                 QtiBinaryVersion::VERSION_VARIABLE_COUNT_INTEGER => 'storesVariableCountAsInteger',
+                QtiBinaryVersion::VERSION_VARIABLE_WITH_DEFAULT_VALUE_INITIALIZATION_FLAG =>
+                    'storesVariableDefaultValueInitializationFlag',
             ]
         );
     }
