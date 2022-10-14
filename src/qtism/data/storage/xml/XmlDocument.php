@@ -29,9 +29,9 @@ use DOMElement;
 use DOMException;
 use Exception;
 use InvalidArgumentException;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemException;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use LogicException;
 use qtism\common\utils\Url;
 use qtism\data\AssessmentItem;
@@ -107,7 +107,7 @@ class XmlDocument extends QtiDocument
     public function setFilesystem(Filesystem $filesystem = null)
     {
         if ($filesystem === null) {
-            $filesystem = new Filesystem(new Local('/'));
+            $filesystem = new Filesystem(new LocalFilesystemAdapter('/'));
         }
         $this->filesystem = $filesystem;
     }
@@ -356,7 +356,7 @@ class XmlDocument extends QtiDocument
         }
 
         // Since saveXML doesn't support the LIBXML_NSCLEAN option flag yet,
-        // we need to clean redundant namespaces manually. 
+        // we need to clean redundant namespaces manually.
         $strXml = Utils::cleanRedundantNamespaces($strXml, $externalNamespaces);
 
         return $strXml;
@@ -394,7 +394,7 @@ class XmlDocument extends QtiDocument
     {
         try {
             return $this->getFilesystem()->read($url);
-        } catch (FileNotFoundException $e) {
+        } catch (FilesystemException $e) {
             throw new XmlStorageException(
                 "Cannot load QTI file at path '${url}'. It does not exist or is not readable.",
                 XmlStorageException::RESOLUTION,
@@ -412,7 +412,8 @@ class XmlDocument extends QtiDocument
     protected function saveToFile(string $url, string $content): bool
     {
         try {
-            return $this->getFilesystem()->put($url, $content);
+            $this->getFilesystem()->write($url, $content);
+            return true;
         } catch (Exception $e) {
             throw new XmlStorageException(
                 "An error occurred while saving QTI-XML file at '${url}'. Maybe the save location is not reachable?",
