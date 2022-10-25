@@ -353,6 +353,22 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $json = '{ "record" : [ { "name": "A" } ] }';
         $returnValue[] = [$record, $json];
 
+        $record = new RecordContainer(
+            [
+                'A' => new MultipleContainer(
+                    BaseType::STRING,
+                    [
+                        new QtiString('p'),
+                        new QtiString('a'),
+                        new QtiString('p'),
+                        new QtiString('e'),
+                        new QtiString('r'),
+                    ]
+                )
+            ]);
+        $json = '{ "record" : [ {"name": "A","list": {"string": ["p","a","p","e","r"]} } ] }';
+        $returnValue[] = [$record, $json];
+
         return $returnValue;
     }
 
