@@ -254,6 +254,9 @@ class Unmarshaller
                 case 'identifier':
                     return $this->unmarshallIdentifier($unit);
                     break;
+                case 'list':
+                    return $this->unmarshallList($unit['base']);
+                    break;
 
                 default:
                     throw new UnmarshallingException("Unknown QTI baseType '" . $keys[0] . "'");
