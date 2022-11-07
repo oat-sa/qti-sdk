@@ -22,9 +22,9 @@ declare(strict_types=1);
 
 namespace qtism\data\content\xhtml\html5;
 
-use qtism\data\content\FlowStatic;
+use qtism\data\content\Inline;
 
-class Rb extends Html5LayoutElement implements FlowStatic
+class Rb extends Html5LayoutElement implements Inline
 {
     public const QTI_CLASS_NAME = 'rb';
 
