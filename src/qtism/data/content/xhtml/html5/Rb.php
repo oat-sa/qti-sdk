@@ -24,10 +24,9 @@ namespace qtism\data\content\xhtml\html5;
 
 use qtism\data\content\FlowStatic;
 use qtism\data\content\FlowTrait;
-use qtism\data\content\Inline;
 use qtism\data\content\InlineCollection;
 
-class Rb extends Html5Element implements FlowStatic, Inline
+class Rb extends Html5Element implements FlowStatic
 {
     use FlowTrait;
 
