@@ -25,8 +25,11 @@ namespace qtism\data\content\xhtml\html5;
 use qtism\data\content\FlowCollection;
 use qtism\data\content\FlowStatic;
 use qtism\data\content\FlowTrait;
+use qtism\data\content\Inline;
+use qtism\data\content\InlineStatic;
+use qtism\data\content\TextOrVariable;
 
-class Ruby extends Html5Element implements FlowStatic
+class Ruby extends Html5Element implements FlowStatic, Inline, TextOrVariable, InlineStatic
 {
     use FlowTrait;
 
