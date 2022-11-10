@@ -22,9 +22,7 @@ declare(strict_types=1);
 
 namespace qtism\data\content\xhtml\html5;
 
-use qtism\data\content\FlowStatic;
-
-class Rt extends Html5LayoutElement implements FlowStatic
+class Rt extends Html5LayoutElement
 {
     public const QTI_CLASS_NAME = 'rt';
 

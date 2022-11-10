@@ -20,12 +20,13 @@
 
 namespace qtism\data\content\xhtml\html5;
 
-use qtism\data\content\FlowStatic;
+use qtism\data\content\Inline;
+use qtism\data\content\TextOrVariable;
 
 /**
  * The XHTML figure class.
  */
-class Figure extends Html5LayoutElement implements FlowStatic
+class Figure extends Html5LayoutElement implements Inline, TextOrVariable
 {
     public const QTI_CLASS_NAME_FIGURE = 'figure';
 
