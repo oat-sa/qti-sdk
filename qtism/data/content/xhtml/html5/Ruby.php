@@ -23,8 +23,9 @@ declare(strict_types=1);
 namespace qtism\data\content\xhtml\html5;
 
 use qtism\data\content\Inline;
+use qtism\data\content\TextOrVariable;
 
-class Ruby extends Html5LayoutElement implements Inline
+class Ruby extends Html5LayoutElement implements Inline, TextOrVariable
 {
     public const QTI_CLASS_NAME = 'ruby';
 
