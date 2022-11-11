@@ -30,6 +30,7 @@ use qtism\common\collections\IdentifierCollection;
 use qtism\common\utils\Version;
 use qtism\data\content\FlowStaticCollection;
 use qtism\data\content\TextOrVariableCollection;
+use qtism\data\content\xhtml\html5\Ruby;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\ShowHide;
@@ -69,6 +70,7 @@ class GapChoiceMarshaller extends ContentMarshaller
         'textRun',
         'tt',
         'var',
+        Ruby::QTI_CLASS_NAME
     ];
 
     /**
