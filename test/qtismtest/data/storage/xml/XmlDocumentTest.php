@@ -44,7 +44,10 @@ class XmlDocumentTest extends QtiSmTestCase
         $div = $content[4];
         $this::assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
-        $this::assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
+        $this::assertEquals(
+            'This div and its inner text are perfectly valid from both XSD and paper spec point of views.',
+            trim($divContent[0]->getContent())
+        );
 
         $a = $content[7];
         $this::assertInstanceOf(A::class, $a);
@@ -61,8 +64,13 @@ class XmlDocumentTest extends QtiSmTestCase
         $valid = false;
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
-        $valid = $dom->schemaValidate(__DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
-        $this::assertTrue($valid, 'Even if the content of the rubricBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
+        $valid = $dom->schemaValidate(
+            __DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd'
+        );
+        $this::assertTrue(
+            $valid,
+            'Even if the content of the rubricBlock is invalid from the paper spec point of view, it is XSD valid.'
+        );
 
         $doc->load($file);
         $this::assertTrue(true);
@@ -87,7 +95,10 @@ class XmlDocumentTest extends QtiSmTestCase
         $div = $content[4];
         $this::assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
-        $this::assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
+        $this::assertEquals(
+            'This div and its inner text are perfectly valid from both XSD and paper spec point of views.',
+            trim($divContent[0]->getContent())
+        );
 
         $a = $content[7];
         $this::assertInstanceOf(A::class, $a);
@@ -101,8 +112,13 @@ class XmlDocumentTest extends QtiSmTestCase
         $file = self::samplesDir() . 'custom/paper_vs_xsd/templateblock_other_content_than_block.xml';
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
-        $valid = $dom->schemaValidate(__DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
-        $this::assertTrue($valid, 'Even if the content of the templateBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
+        $valid = $dom->schemaValidate(
+            __DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd'
+        );
+        $this::assertTrue(
+            $valid,
+            'Even if the content of the templateBlock is invalid from the paper spec point of view, it is XSD valid.'
+        );
 
         $doc->load($file);
         $this::assertTrue(true);
@@ -131,7 +147,10 @@ class XmlDocumentTest extends QtiSmTestCase
         $div = $content[4];
         $this::assertInstanceOf(Div::class, $div);
         $divContent = $div->getContent();
-        $this::assertEquals('This div and its inner text are perfectly valid from both XSD and paper spec point of views.', trim($divContent[0]->getContent()));
+        $this::assertEquals(
+            'This div and its inner text are perfectly valid from both XSD and paper spec point of views.',
+            trim($divContent[0]->getContent())
+        );
 
         $a = $content[7];
         $this::assertInstanceOf(A::class, $a);
@@ -145,8 +164,13 @@ class XmlDocumentTest extends QtiSmTestCase
         $file = self::samplesDir() . 'custom/paper_vs_xsd/feedbackblock_other_content_than_block.xml';
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
-        $valid = $dom->schemaValidate(__DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
-        $this::assertTrue($valid, 'Even if the content of the feedbackBlock is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
+        $valid = $dom->schemaValidate(
+            __DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd'
+        );
+        $this::assertTrue(
+            $valid,
+            'Even if the content of the feedbackBlock is invalid from the paper spec point of view, it is XSD valid.'
+        );
 
         $doc->load($file);
         $this::assertTrue(true);
@@ -185,8 +209,13 @@ class XmlDocumentTest extends QtiSmTestCase
         $file = self::samplesDir() . 'custom/paper_vs_xsd/prompt_other_content_than_inlinestatic.xml';
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->load($file);
-        $valid = $dom->schemaValidate(__DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd');
-        $this::assertTrue($valid, 'Even if the content of the prompt is invalid from the paper spec point of view, it is XSD valid. See rupture points.');
+        $valid = $dom->schemaValidate(
+            __DIR__ . '/../../../../../src/qtism/data/storage/xml/schemes/qtiv2p1/imsqti_v2p1.xsd'
+        );
+        $this::assertTrue(
+            $valid,
+            'Even if the content of the prompt is invalid from the paper spec point of view, it is XSD valid.'
+        );
 
         $doc->load($file);
         $this::assertTrue(true);
@@ -210,7 +239,7 @@ class XmlDocumentTest extends QtiSmTestCase
     public function testWrongVersion()
     {
         $this->expectException(InvalidArgumentException::class);
-        $doc = new XMLDocument('2.2.1012');
+        new XMLDocument('2.2.1012');
     }
 
     public function testLoadFromString()
@@ -258,6 +287,35 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc->loadFromString('<assessmentItem>');
     }
 
+    public function testSerialization()
+    {
+        $doc = new XmlDocument('2.1');
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+
+        $this->assertEquals(
+            $doc->saveToString(),
+            unserialize(serialize($doc))->saveToString()
+        );
+    }
+
+    public function testOlderSerializedDataDeserialization()
+    {
+        if (PHP_VERSION_ID >= 80100) {
+            $this->markTestSkipped('DOM objects serialization is impossible in PHP 8.1 or higher.');
+        }
+
+        $unserializedDoc = unserialize(file_get_contents(self::samplesDir(). 'serialized/xmldocument'));
+        $this->assertInstanceOf(XmlDocument::class, $unserializedDoc);
+
+        $doc = new XmlDocument('2.1');
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+
+        $this->assertEquals(
+            $doc->saveToString(),
+            $unserializedDoc->saveToString()
+        );
+    }
+
     public function testLoadNoVersion()
     {
         $doc = new XmlDocument('2.1');
@@ -302,7 +360,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
 
-        $str = $doc->saveToString();
+        $doc->saveToString();
     }
 
     public function testVersionDoesNotChangeLoadFromString()
@@ -315,15 +373,20 @@ class XmlDocumentTest extends QtiSmTestCase
 
     public function testSaveUnknownLocation()
     {
+        $qtiPath = '/unknown/location/qti.xml';
+
         $doc = new XmlDocument('2.1.1');
         $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
 
-        $expectedMsg = "An error occurred while saving QTI-XML file at '/unknown/location/qti.xml'. Maybe the save location is not reachable?";
+        $expectedMsg = sprintf(
+            'An error occurred while saving QTI-XML file at \'%s\'. Maybe the save location is not reachable?',
+            $qtiPath
+        );
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
         $this->expectExceptionCode(XmlStorageException::WRITE);
 
-        $doc->save('/unknown/location/qti.xml');
+        $doc->save($qtiPath);
     }
 
     public function testSaveWrongLocationFileSystem()
@@ -355,7 +418,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
         $this->expectExceptionCode(XmlStorageException::VERSION);
-        $str = $doc->saveToString(true);
+        $doc->saveToString();
     }
 
     public function testUnknownClassWhileLoadingBecauseOfVersion1()
@@ -393,7 +456,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
         $this->expectExceptionCode(XmlStorageException::VERSION);
-        $str = $doc->saveToString(true);
+        $doc->saveToString();
     }
 
     public function testUnknownClassWhileLoadingBecauseOfVersion2()
@@ -428,7 +491,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
         $this->expectExceptionCode(XmlStorageException::VERSION);
-        $str = $doc->saveToString(true);
+        $doc->saveToString();
     }
 
     public function testUnknownClassWhileLoadingBecauseOfVersion3()
@@ -447,11 +510,16 @@ class XmlDocumentTest extends QtiSmTestCase
 
     public function testInvalidAgainstXMLSchema()
     {
-        $xsdLocation = realpath(__DIR__ . '/../../../../../src/qtism/data/storage/xml/versions/../schemes/qtiv2p1/imsqti_v2p1.xsd');
-        $expectedMsg = "The document could not be validated with XML Schema '$xsdLocation':\n";
-        $expectedMsg .= "Error: Element '{http://www.imsglobal.org/xsd/imsqti_v2p1}responseDeclaration', attribute 'foo': The attribute 'foo' is not allowed. at 9:0.";
+        $xsdLocation = realpath(
+            __DIR__ . '/../../../../../src/qtism/data/storage/xml/versions/../schemes/qtiv2p1/imsqti_v2p1.xsd'
+        );
+        $expectedMsgParts = [
+            "The document could not be validated with XML Schema '$xsdLocation':\n",
+            'Error: Element \'{http://www.imsglobal.org/xsd/imsqti_v2p1}responseDeclaration\', attribute \'foo\': ',
+            'The attribute \'foo\' is not allowed. at 9:0.',
+        ];
         $this->expectException(XmlStorageException::class);
-        $this->expectExceptionMessage($expectedMsg);
+        $this->expectExceptionMessage(implode('', $expectedMsgParts));
         $this->expectExceptionCode(XmlStorageException::XSD_VALIDATION);
 
         $uri = self::samplesDir() . 'invalid/xsdinvalid.xml';
@@ -617,7 +685,11 @@ class XmlDocumentTest extends QtiSmTestCase
             [self::samplesDir() . 'ims/items/2_1_1/likert.xml', '2.1.1'],
             [self::samplesDir() . 'ims/items/2_1/associate.xml', '2.1.0'],
             [self::samplesDir() . 'ims/items/2_0/associate.xml', '2.0.0'],
-            [self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', '2.1.0'],
+            [
+                self::samplesDir()
+                . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml',
+                '2.1.0',
+            ],
             [self::samplesDir() . 'ims/items/2_2_1/choice.xml', '2.2.1'],
             [self::samplesDir() . 'ims/items/2_2_2/choice.xml', '2.2.2'],
             [self::samplesDir() . 'ims/items/2_2_3/choice.xml', '2.2.3'],
