@@ -78,6 +78,16 @@ class XmlDocument extends QtiDocument
         parent::__construct($version, $documentComponent);
     }
 
+    public function __serialize(): array
+    {
+        return ['domDocument' => $this->saveToString(false)];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->loadFromString($data['domDocument']);
+    }
+
     /**
      * Set the DOMDocument object in use.
      *
@@ -329,14 +339,14 @@ class XmlDocument extends QtiDocument
         }
 
         $doc = $this->getDomDocument();
-        
+
         $oldErrorConfig = libxml_use_internal_errors(true);
         $valid = $doc->schemaValidate($filename);
 
         $libXmlErrors = libxml_get_errors();
         libxml_clear_errors();
         libxml_use_internal_errors($oldErrorConfig);
-        
+
         if (!$valid) {
             $formattedErrors = self::formatLibXmlErrors($libXmlErrors);
 
@@ -345,7 +355,7 @@ class XmlDocument extends QtiDocument
                 realpath($filename),
                 $formattedErrors
             );
-            
+
             throw XmlStorageException::createValidationException($msg, $libXmlErrors);
         }
     }
