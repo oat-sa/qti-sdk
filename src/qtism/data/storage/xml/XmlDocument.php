@@ -77,6 +77,16 @@ class XmlDocument extends QtiDocument
      */
     private $filesystem;
 
+    public function __serialize(): array
+    {
+        return ['domDocument' => $this->saveToString(false)];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->loadFromString($data['domDocument']);
+    }
+
     /**
      * Set the DOMDocument object in use.
      *

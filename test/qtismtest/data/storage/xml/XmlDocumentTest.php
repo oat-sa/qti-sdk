@@ -287,6 +287,17 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc->loadFromString('<assessmentItem>');
     }
 
+    public function testSerialization()
+    {
+        $doc = new XmlDocument('2.1');
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+
+        $this->assertEquals(
+            $doc->saveToString(),
+            unserialize(serialize($doc))->saveToString()
+        );
+    }
+
     public function testLoadNoVersion()
     {
         $doc = new XmlDocument('2.1');
