@@ -23,19 +23,19 @@
 
 namespace qtism\common\dom;
 
+use DOMAttr;
+use DOMCDATASection;
+use DOMComment;
 use DOMDocument;
+use DOMDocumentFragment;
 use DOMDocumentType;
 use DOMElement;
-use DOMImplementation;
-use DOMDocumentFragment;
-use DOMComment;
-use DOMCDATASection;
-use DOMProcessingInstruction;
-use DOMText;
-use DOMAttr;
 use DOMEntityReference;
+use DOMImplementation;
 use DOMNode;
 use DOMNodeList;
+use DOMProcessingInstruction;
+use DOMText;
 use Error;
 
 /**
@@ -182,5 +182,10 @@ class SerializableDomDocument
     public function __unset(string $name): void
     {
         unset($this->dom->$name);
+    }
+
+    public function getDom(): DOMDocument
+    {
+        return $this->dom;
     }
 }

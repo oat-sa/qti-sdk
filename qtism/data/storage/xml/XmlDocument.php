@@ -30,6 +30,7 @@ use DOMException;
 use InvalidArgumentException;
 use LibXMLError;
 use LogicException;
+use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
 use qtism\data\content\Flow;
 use qtism\data\QtiComponent;
@@ -59,7 +60,7 @@ class XmlDocument extends QtiDocument
      * The produced domDocument after a successful call to
      * XmlDocument::load or XmlDocument::save.
      *
-     * @var DOMDocument
+     * @var SerializableDomDocument
      */
     private $domDocument = null;
 
@@ -78,12 +79,17 @@ class XmlDocument extends QtiDocument
         parent::__construct($version, $documentComponent);
     }
 
+    public function __toString(): string
+    {
+        return $this->saveToString(false);
+    }
+
     /**
-     * Set the DOMDocument object in use.
+     * Set the SerializableDomDocument object in use.
      *
-     * @param DOMDocument $domDocument A DOMDocument object.
+     * @param SerializableDomDocument $domDocument A DOMDocument object.
      */
-    protected function setDomDocument(DOMDocument $domDocument)
+    protected function setDomDocument(SerializableDomDocument $domDocument)
     {
         $this->domDocument = $domDocument;
     }
@@ -95,7 +101,7 @@ class XmlDocument extends QtiDocument
      */
     public function getDomDocument()
     {
-        return $this->domDocument;
+        return $this->domDocument->getDom();
     }
 
     /**
@@ -137,7 +143,7 @@ class XmlDocument extends QtiDocument
     protected function loadImplementation($data, $validate = false, $fromString = false)
     {
         try {
-            $this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
+            $this->setDomDocument(new SerializableDomDocument('1.0', 'UTF-8'));
             $this->getDomDocument()->preserveWhiteSpace = true;
 
             // Disable xml warnings and errors and fetch error information as needed.
@@ -260,7 +266,7 @@ class XmlDocument extends QtiDocument
         $assessmentTest = $this->getDocumentComponent();
 
         if (!empty($assessmentTest)) {
-            $this->setDomDocument(new DOMDocument('1.0', 'UTF-8'));
+            $this->setDomDocument(new SerializableDomDocument('1.0', 'UTF-8'));
 
             if ($formatOutput == true) {
                 $this->getDomDocument()->formatOutput = true;
@@ -329,14 +335,14 @@ class XmlDocument extends QtiDocument
         }
 
         $doc = $this->getDomDocument();
-        
+
         $oldErrorConfig = libxml_use_internal_errors(true);
         $valid = $doc->schemaValidate($filename);
 
         $libXmlErrors = libxml_get_errors();
         libxml_clear_errors();
         libxml_use_internal_errors($oldErrorConfig);
-        
+
         if (!$valid) {
             $formattedErrors = self::formatLibXmlErrors($libXmlErrors);
 
@@ -345,7 +351,7 @@ class XmlDocument extends QtiDocument
                 realpath($filename),
                 $formattedErrors
             );
-            
+
             throw XmlStorageException::createValidationException($msg, $libXmlErrors);
         }
     }

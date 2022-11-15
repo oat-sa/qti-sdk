@@ -254,6 +254,35 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc->loadFromString('<assessmentItem>');
     }
 
+    public function testSerialization()
+    {
+        $doc = new XmlDocument('2.1');
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+
+        $this->assertEquals(
+            $doc->saveToString(),
+            unserialize(serialize($doc))->saveToString()
+        );
+    }
+
+    public function testOlderSerializedDataDeserialization()
+    {
+        if (PHP_VERSION_ID >= 80100 || PHP_VERSION_ID < 70400) {
+            $this->markTestSkipped('DOM objects serialization is impossible in PHP 8.1 or higher.');
+        }
+
+        $unserializedDoc = unserialize(file_get_contents(self::samplesDir(). 'serialized/xmldocument'));
+        $this->assertInstanceOf(XmlDocument::class, $unserializedDoc);
+
+        $doc = new XmlDocument('2.1');
+        $doc->loadFromString('<assessmentItemRef identifier="Q01" href="./Q01.xml"/>');
+
+        $this->assertEquals(
+            $doc->saveToString(),
+            $unserializedDoc->saveToString()
+        );
+    }
+
     public function testLoadNoVersion()
     {
         $doc = new XmlDocument('2.1');
