@@ -33,6 +33,7 @@ use League\Flysystem\Adapter\Local;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
 use LogicException;
+use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
 use qtism\data\AssessmentItem;
 use qtism\data\content\Flow;
@@ -65,7 +66,7 @@ class XmlDocument extends QtiDocument
      * The produced domDocument after a successful call to
      * XmlDocument::load or XmlDocument::save.
      *
-     * @var DOMDocument
+     * @var SerializableDomDocument
      */
     private $domDocument;
 
@@ -77,27 +78,17 @@ class XmlDocument extends QtiDocument
      */
     private $filesystem;
 
-    public function __serialize(): array
-    {
-        return ['domDocument' => (string)$this];
-    }
-
-    public function __unserialize(array $data): void
-    {
-        $this->loadFromString($data['domDocument']);
-    }
-
     public function __toString(): string
     {
         return $this->saveToString(false);
     }
 
     /**
-     * Set the DOMDocument object in use.
+     * Set the SerializableDomDocument object in use.
      *
-     * @param DOMDocument $domDocument A DOMDocument object.
+     * @param SerializableDomDocument $domDocument A SerializableDomDocument object.
      */
-    protected function setDomDocument(DOMDocument $domDocument)
+    protected function setDomDocument(SerializableDomDocument $domDocument)
     {
         $this->domDocument = $domDocument;
     }
@@ -109,7 +100,7 @@ class XmlDocument extends QtiDocument
      */
     public function getDomDocument()
     {
-        return $this->domDocument;
+        return $this->domDocument->getDom();
     }
 
     /**
@@ -195,7 +186,7 @@ class XmlDocument extends QtiDocument
             throw new XmlStorageException($msg, XmlStorageException::READ);
         }
 
-        $doc = new DOMDocument('1.0', 'UTF-8');
+        $doc = new SerializableDomDocument('1.0', 'UTF-8');
         $doc->preserveWhiteSpace = true;
         $this->setDomDocument($doc);
 
@@ -351,7 +342,7 @@ class XmlDocument extends QtiDocument
     {
         $element = $this->marshallElement($this->getDocumentComponent());
 
-        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom = new SerializableDomDocument('1.0', 'UTF-8');
         if ($formatOutput === true) {
             $dom->formatOutput = true;
         }
@@ -620,10 +611,10 @@ class XmlDocument extends QtiDocument
      * Decorate the root element of the XmlAssessmentDocument with the appropriate
      * namespaces and schema definition.
      *
-     * @param DOMDocument $dom The document to decorate.
+     * @param SerializableDomDocument $dom The document to decorate.
      * @return array
      */
-    protected function setNamespaces(DOMDocument $dom): array
+    protected function setNamespaces(SerializableDomDocument $dom): array
     {
         $namespace = $this->version->getNamespace();
         $xsdLocation = $this->version->getXsdLocation();
