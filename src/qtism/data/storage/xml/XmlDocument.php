@@ -33,6 +33,7 @@ use League\Flysystem\Adapter\Local;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
 use LogicException;
+use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
 use qtism\data\AssessmentItem;
 use qtism\data\content\Flow;
@@ -63,9 +64,8 @@ class XmlDocument extends QtiDocument
      * The produced domDocument after a successful call to
      * XmlDocument::load or XmlDocument::save.
      *
-     * @var DOMDocument
      */
-    private $domDocument;
+    private SerializableDomDocument $domDocument;
 
     /**
      * The Filesystem implementation in use. Contains null
@@ -82,7 +82,8 @@ class XmlDocument extends QtiDocument
      */
     protected function setDomDocument(DOMDocument $domDocument)
     {
-        $this->domDocument = $domDocument;
+        $this->domDocument = new SerializableDomDocument($domDocument->xmlVersion, $domDocument->encoding);
+        $this->domDocument->setOriginal($domDocument);
     }
 
     /**
@@ -92,7 +93,7 @@ class XmlDocument extends QtiDocument
      */
     public function getDomDocument()
     {
-        return $this->domDocument;
+        return $this->domDocument->getOriginal();
     }
 
     /**

@@ -160,4 +160,14 @@ class SerializableDomDocument
     {
         unset($this->dom->$name);
     }
+
+    public function getOriginal(): DOMDocument
+    {
+        return $this->dom;
+    }
+
+    public function setOriginal(DOMDocument $dom): void
+    {
+        $this->dom = $dom;
+    }
 }
