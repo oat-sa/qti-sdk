@@ -93,12 +93,13 @@ class FileSystemFileManager implements FileManager
      * @param string $data The binary data of the FileSystemFile object to be created.
      * @param string $mimeType A mime-type.
      * @param string $filename A file name e.g. "myfile.txt".
+     * @param string|null $path A path for file provided externally
      * @return FileSystemFile
      * @throws FileManagerException
      */
-    public function createFromData($data, $mimeType, $filename = '')
+    public function createFromData($data, $mimeType, $filename = '', $path = null)
     {
-        $destination = $this->buildDestination();
+        $destination = $path ?: $this->buildDestination();
 
         try {
             return FileSystemFile::createFromData($data, $destination, $mimeType, $filename);

@@ -372,7 +372,8 @@ class Unmarshaller
         return $this->getFileManager()->createFromData(
             base64_decode($fileArray['data']),
             $fileArray['mime'],
-            $fileArray['name'] ?? ''
+            $fileArray['name'] ?? '',
+            $fileArray['path'] ?? null
         );
     }
 
