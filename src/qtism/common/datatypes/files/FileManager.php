@@ -67,9 +67,10 @@ interface FileManager
      * Retrieve a previously created instance by $identifier.
      *
      * @param string $identifier
+     * @param string|null $filename
      * @throws FileManagerException
      */
-    public function retrieve($identifier);
+    public function retrieve($identifier, $filename = null);
 
     /**
      * Delete a given QtiFile from its storage.

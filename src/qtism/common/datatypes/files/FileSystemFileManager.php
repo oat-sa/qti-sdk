@@ -112,11 +112,12 @@ class FileSystemFileManager implements FileManager
     /**
      * Retrieve a FileSystemFile object from its unique identifier.
      *
-     * @param string identifier
+     * @param string $identifier
+     * @param string|null $filename
      * @return FileSystemFile
      * @throws FileManagerException
      */
-    public function retrieve($identifier)
+    public function retrieve($identifier, $filename = null)
     {
         try {
             return FileSystemFile::retrieveFile($identifier);
