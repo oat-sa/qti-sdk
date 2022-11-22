@@ -32,6 +32,7 @@ use InvalidArgumentException;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\UnableToReadFile;
+use League\Flysystem\UnableToWriteFile;
 use LogicException;
 use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
@@ -420,8 +421,9 @@ class XmlDocument extends QtiDocument
     protected function saveToFile(string $url, string $content): bool
     {
         try {
-            return $this->getFilesystem()->write($url, $content);
-        } catch (Exception $e) {
+            $this->getFilesystem()->write($url, $content);
+            return true;
+        } catch (UnableToWriteFile $e) {
             throw new XmlStorageException(
                 "An error occurred while saving QTI-XML file at '${url}'. Maybe the save location is not reachable?",
                 XmlStorageException::WRITE
