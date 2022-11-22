@@ -29,9 +29,9 @@ use DOMElement;
 use DOMException;
 use Exception;
 use InvalidArgumentException;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\FileNotFoundException;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\Filesystem;
+use League\Flysystem\UnableToReadFile;
 use LogicException;
 use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
@@ -115,7 +115,7 @@ class XmlDocument extends QtiDocument
     public function setFilesystem(Filesystem $filesystem = null)
     {
         if ($filesystem === null) {
-            $filesystem = new Filesystem(new Local('/'));
+            $filesystem = new Filesystem(new LocalFilesystemAdapter('/'));
         }
         $this->filesystem = $filesystem;
     }
@@ -402,7 +402,7 @@ class XmlDocument extends QtiDocument
     {
         try {
             return $this->getFilesystem()->read($url);
-        } catch (FileNotFoundException $e) {
+        } catch (UnableToReadFile $e) {
             throw new XmlStorageException(
                 "Cannot load QTI file at path '${url}'. It does not exist or is not readable.",
                 XmlStorageException::RESOLUTION,
@@ -420,7 +420,7 @@ class XmlDocument extends QtiDocument
     protected function saveToFile(string $url, string $content): bool
     {
         try {
-            return $this->getFilesystem()->put($url, $content);
+            return $this->getFilesystem()->write($url, $content);
         } catch (Exception $e) {
             throw new XmlStorageException(
                 "An error occurred while saving QTI-XML file at '${url}'. Maybe the save location is not reachable?",

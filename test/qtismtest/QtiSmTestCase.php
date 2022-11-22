@@ -6,7 +6,7 @@ use DateTime;
 use DateTimeZone;
 use DOMDocument;
 use DOMElement;
-use League\Flysystem\Adapter\Local;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\Filesystem;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
@@ -37,11 +37,11 @@ abstract class QtiSmTestCase extends TestCase
         parent::setUp();
 
         // Set up File System Local adapter for testing.
-        $adapter = new Local(self::samplesDir());
+        $adapter = new LocalFilesystemAdapter(self::samplesDir());
         $this->setFileSystem(new Filesystem($adapter));
 
         // Set up File System Local adapter for output.
-        $adapter = new Local(sys_get_temp_dir() . '/qsmout');
+        $adapter = new LocalFilesystemAdapter(sys_get_temp_dir() . '/qsmout');
         $this->setOutputFileSystem(new Filesystem($adapter));
     }
 
