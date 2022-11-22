@@ -27,12 +27,11 @@ namespace qtism\data\storage\xml;
 use DOMDocument;
 use DOMElement;
 use DOMException;
-use Exception;
 use InvalidArgumentException;
+use League\Flysystem\FilesystemException;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\UnableToReadFile;
-use League\Flysystem\UnableToWriteFile;
 use LogicException;
 use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
@@ -423,7 +422,7 @@ class XmlDocument extends QtiDocument
         try {
             $this->getFilesystem()->write($url, $content);
             return true;
-        } catch (UnableToWriteFile $e) {
+        } catch (FilesystemException $e) {
             throw new XmlStorageException(
                 "An error occurred while saving QTI-XML file at '${url}'. Maybe the save location is not reachable?",
                 XmlStorageException::WRITE
