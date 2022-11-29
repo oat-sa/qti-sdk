@@ -32,6 +32,7 @@ use League\Flysystem\FilesystemException;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\UnableToReadFile;
+use League\MimeTypeDetection\ExtensionMimeTypeDetector;
 use LogicException;
 use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
@@ -115,7 +116,15 @@ class XmlDocument extends QtiDocument
     public function setFilesystem(Filesystem $filesystem = null)
     {
         if ($filesystem === null) {
-            $filesystem = new Filesystem(new LocalFilesystemAdapter('/'));
+            $filesystem = new Filesystem(
+                new LocalFilesystemAdapter(
+                    '/',
+                    null,
+                    LOCK_EX,
+                    LocalFilesystemAdapter::DISALLOW_LINKS,
+                    new ExtensionMimeTypeDetector()
+                )
+            );
         }
         $this->filesystem = $filesystem;
     }
