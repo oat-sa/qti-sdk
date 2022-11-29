@@ -31,7 +31,7 @@
 		"ext-libxml": "*",
 		"ext-mbstring": "*",
 		"ext-simplexml": "*",
-		"league/flysystem": "^1.0",
+		"league/flysystem": "^1.0|^2.0|^3.0",
 		"oat-sa/lib-beeme": "0.2.0",
 		"wp-cli/php-cli-tools": "0.10.3"
 	},
