@@ -35,9 +35,9 @@ class PhpMarshallingContextTest extends QtiSmTestCase
     }
 
     /**
-     * @return mixed
+     * @return PhpStreamAccess
      */
-    protected function getStreamAccess(): mixed
+    protected function getStreamAccess(): ?PhpStreamAccess
     {
         return $this->streamAccess;
     }
