@@ -91,7 +91,6 @@ class TemplateProcessing extends QtiComponent
     /**
      * @return QtiComponentCollection|TemplateRuleCollection
      */
-    #[\ReturnTypeWillChange]
     public function getComponents(): QtiComponentCollection
     {
         return $this->getTemplateRules();
