@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;

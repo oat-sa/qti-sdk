@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -17,7 +19,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $object = new ObjectElement('myimg.jpg', 'image/jpeg');
         $object->setWidth('400');
@@ -41,7 +43,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         // Make sure minChoices is not taken into account in a QTI 2.0 context.
         $object = new ObjectElement('myimg.jpg', 'image/jpeg');
@@ -59,7 +61,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2"><object data="myimg.jpg" type="image/jpeg" width="400" height="300"/></positionObjectInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
             <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="150 74" id="my-pos">
@@ -84,7 +86,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21InvalidCenterPoint()
+    public function testUnmarshall21InvalidCenterPoint(): void
     {
         $element = $this->createDOMElement('
             <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="invalid" id="my-pos">
@@ -101,7 +103,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21InvalidCenterPointFirstValue()
+    public function testUnmarshall21InvalidCenterPointFirstValue(): void
     {
         $element = $this->createDOMElement('
             <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="invalid 74" id="my-pos">
@@ -118,7 +120,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21InvalidCenterPointSecondValue()
+    public function testUnmarshall21InvalidCenterPointSecondValue(): void
     {
         $element = $this->createDOMElement('
             <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="74 invalid" id="my-pos">
@@ -135,7 +137,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21NoObject()
+    public function testUnmarshall21NoObject(): void
     {
         $element = $this->createDOMElement('
             <positionObjectInteraction responseIdentifier="RESPONSE" maxChoices="2" minChoices="1" centerPoint="74 invalid" id="my-pos"/>
@@ -150,7 +152,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21MissingResponseIdentifier()
+    public function testUnmarshall21MissingResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <positionObjectInteraction maxChoices="2" minChoices="1" centerPoint="74 invalid" id="my-pos">
@@ -167,7 +169,7 @@ class PositionObjectInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         // Make sure minChoices is not in output in a QTI 2.0 context.
         $element = $this->createDOMElement('

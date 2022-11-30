@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\php\marshalling;
 
 use InvalidArgumentException;
@@ -28,7 +30,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
      * @param QtiDatatype $qtiDatatype
      * @throws PhpMarshallingException
      */
-    public function testMarshall($expectedInStream, QtiDatatype $qtiDatatype)
+    public function testMarshall($expectedInStream, QtiDatatype $qtiDatatype): void
     {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, $qtiDatatype);
@@ -37,7 +39,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $this::assertEquals($expectedInStream, $this->getStream()->getBinary());
     }
 
-    public function testMarshallWrongDataType()
+    public function testMarshallWrongDataType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $ctx = $this->createMarshallingContext();
@@ -47,7 +49,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
     /**
      * @return array
      */
-    public function marshallDataProvider()
+    public function marshallDataProvider(): array
     {
         return [
             ['$array_0 = array(10, 10, 5);' . "\n" . '$qticoords_0 = new ' . QtiCoords::class . '(2, $array_0);' . "\n", new QtiCoords(QtiShape::CIRCLE, [10, 10, 5])],
@@ -59,7 +61,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         ];
     }
 
-    public function testMarshallUnsupported()
+    public function testMarshallUnsupported(): void
     {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiInteger(1337));
@@ -70,7 +72,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller->marshall();
     }
 
-    public function testMarshallCoordsClosedStream()
+    public function testMarshallCoordsClosedStream(): void
     {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiCoords(QtiShape::CIRCLE, [10, 10, 5]));
@@ -82,7 +84,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller->marshall();
     }
 
-    public function testMarshallPairClosedStream()
+    public function testMarshallPairClosedStream(): void
     {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiPair('A', 'B'));
@@ -94,7 +96,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller->marshall();
     }
 
-    public function testMarshallDurationClosedStream()
+    public function testMarshallDurationClosedStream(): void
     {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiDuration('PT30S'));
@@ -106,7 +108,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller->marshall();
     }
 
-    public function testMarshallIdentifierClosedStream()
+    public function testMarshallIdentifierClosedStream(): void
     {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiIdentifier('MYID'));
@@ -118,7 +120,7 @@ class PhpQtiDatatypeMarshallerTest extends QtiSmPhpMarshallerTestCase
         $marshaller->marshall();
     }
 
-    public function testMarshallPointClosedStream()
+    public function testMarshallPointClosedStream(): void
     {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpQtiDatatypeMarshaller($ctx, new QtiPoint(9, 9));

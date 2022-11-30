@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtism\data\AssessmentSectionRef;
@@ -15,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $elt = $this->createDOMElement('
             <assessmentSection identifier="S01" title="Section 01" visible="true">
@@ -48,7 +50,7 @@ class ExtendedAssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertCount(0, $section->getRubricBlocks());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $section = new ExtendedAssessmentSection('S01', 'Section 01', true);
         $section->setSectionParts(new SectionPartCollection([new AssessmentSectionRef('SR01', './SR01.xml')]));

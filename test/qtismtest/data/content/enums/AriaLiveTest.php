@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,7 +36,7 @@ class AriaLiveTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return AriaLive::class;
     }
@@ -42,7 +44,7 @@ class AriaLiveTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'off',
@@ -54,7 +56,7 @@ class AriaLiveTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'OFF',
@@ -66,7 +68,7 @@ class AriaLiveTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             AriaLive::OFF,

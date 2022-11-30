@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators\custom;
 
 use qtism\common\datatypes\QtiInteger;
@@ -22,7 +24,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExplodeProcessorTest extends QtiSmTestCase
 {
-    public function testNotEnoughOperandsOne()
+    public function testNotEnoughOperandsOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -33,7 +35,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperandsTwo()
+    public function testNotEnoughOperandsTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('Hello-World!')]);
@@ -44,7 +46,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(2), new QtiPoint(0, 0)]);
@@ -54,7 +56,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new RecordContainer(['a' => new QtiString('String!')]), new QtiString('Hey!')]);
@@ -64,7 +66,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNullOperands()
+    public function testNullOperands(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -75,7 +77,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testExplodeOne()
+    public function testExplodeOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('-'), new QtiString('Hello-World-This-Is-Me')]);
@@ -87,7 +89,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $this::assertEquals(['Hello', 'World', 'This', 'Is', 'Me'], $result->getArrayCopy());
     }
 
-    public function testExplodeTwo()
+    public function testExplodeTwo(): void
     {
         // Specific case, the delimiter is not found in the original string.
         $expression = $this->createFakeExpression();
@@ -100,7 +102,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
         $this::assertEquals(['Hello World!'], $result->getArrayCopy());
     }
 
-    public function testExplodeThree()
+    public function testExplodeThree(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString(' '), new QtiString('Hello World!')]);
@@ -116,7 +118,7 @@ class ExplodeProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<customOperator class="qtism.runtime.expressions.operators.custom.Explode">

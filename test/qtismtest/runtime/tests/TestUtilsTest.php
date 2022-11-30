@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use qtism\common\datatypes\QtiDatatype;
@@ -29,7 +31,7 @@ class TestUtilsTest extends QtiSmTestCase
      * @param QtiDatatype|null $response
      * @param ResponseValidityConstraint $constraint
      */
-    public function testIsResponseValid($expected, $response, ResponseValidityConstraint $constraint)
+    public function testIsResponseValid($expected, $response, ResponseValidityConstraint $constraint): void
     {
         $this::assertEquals($expected, TestUtils::isResponseValid($response, $constraint));
     }
@@ -37,7 +39,7 @@ class TestUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function isResponseValidProvider()
+    public function isResponseValidProvider(): array
     {
         $tests = [
             // Null values tests.
@@ -192,7 +194,7 @@ class TestUtilsTest extends QtiSmTestCase
         return $tests;
     }
 
-    public function testIsResponseValidRuntimeException()
+    public function testIsResponseValidRuntimeException(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('PCRE Engine internal error');

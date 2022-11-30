@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest;
 
 use qtism\data\AssessmentItemRef;
@@ -45,7 +47,7 @@ abstract class QtiSmRouteTestCase extends QtiSmTestCase
      * @param int $itemCount
      * @return Route
      */
-    public static function buildSimpleRoute($routeClass = Route::class, $testPartCount = 1, $itemCount = 3)
+    public static function buildSimpleRoute($routeClass = Route::class, $testPartCount = 1, $itemCount = 3): Route
     {
         $route = new $routeClass();
         $assessmentTest = new AssessmentTest('test', 'A Test');

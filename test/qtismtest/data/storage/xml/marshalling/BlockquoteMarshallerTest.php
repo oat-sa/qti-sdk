@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -17,7 +19,7 @@ use qtismtest\QtiSmTestCase;
  */
 class BlockquoteMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $blockquote = $this->createComponentFromXml('
 	        <blockquote class="physics" cite="http://www.world.com/einstein" xml:base="/home/jerome">
@@ -48,7 +50,7 @@ class BlockquoteMarshallerTest extends QtiSmTestCase
         $this::assertEquals('An old Physicist.', $divContent[0]->getContent());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $div = new Div();
         $div->setClass('description');

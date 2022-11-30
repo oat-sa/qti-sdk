@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -16,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class RoundToMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $subExpr = new ExpressionCollection([new BaseValue(BaseType::FLOAT, 24.3333)]);
         $component = new RoundTo($subExpr, 2);
@@ -33,7 +35,7 @@ class RoundToMarshallerTest extends QtiSmTestCase
         $this::assertEquals('24.3333', $subExprElts->item(0)->nodeValue);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

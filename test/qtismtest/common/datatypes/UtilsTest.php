@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +38,7 @@ class UtilsTest extends TestCase
      * @param mixed $integer integer to test
      * @param bool test result
      */
-    public function testIsQtiInteger($integer, $expected)
+    public function testIsQtiInteger($integer, $expected): void
     {
         $this::assertEquals($expected, Utils::isQtiInteger($integer));
     }
@@ -62,7 +64,7 @@ class UtilsTest extends TestCase
      * @param string $string
      * @param string $normalizedString
      */
-    public function testNormalizeString($string, $normalizedString)
+    public function testNormalizeString($string, $normalizedString): void
     {
         $this::assertEquals($normalizedString, Utils::normalizeString($string));
     }
@@ -70,7 +72,7 @@ class UtilsTest extends TestCase
     /**
      * @return array
      */
-    public function stringsToNormalize()
+    public function stringsToNormalize(): array
     {
         return [
             [

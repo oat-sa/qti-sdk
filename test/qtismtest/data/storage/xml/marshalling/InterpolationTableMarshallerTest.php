@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -17,7 +19,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class InterpolationTableMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $baseType = BaseType::BOOLEAN;
         $entries = new InterpolationTableEntryCollection(); // Simulate that the variableDeclaration baseType is boolean.
@@ -47,7 +49,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $this::assertEquals(2.0, $element->getAttribute('defaultValue'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -79,7 +81,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $this::assertTrue($entry->doesIncludeBoundary());
     }
 
-    public function testUnmarshallNonFloatDefaultValue()
+    public function testUnmarshallNonFloatDefaultValue(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -101,7 +103,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNoInterpolationTableEntries()
+    public function testUnmarshallNoInterpolationTableEntries(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -120,7 +122,7 @@ class InterpolationTableMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testInvalidBaseType()
+    public function testInvalidBaseType(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use qtism\common\datatypes\QtiFloat;
@@ -16,7 +18,7 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
  */
 class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionTestCase
 {
-    public function testInstantiationSample1()
+    public function testInstantiationSample1(): void
     {
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_linear.xml');
         $route = $testSession->getRoute();
@@ -47,7 +49,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this::assertEquals('Q03.SCORE', $var[0]->getIdentifier());
     }
 
-    public function testSingleSectionLinear1()
+    public function testSingleSectionLinear1(): void
     {
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_single_section_linear.xml');
         $testSession->beginTestSession();
@@ -66,7 +68,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this::assertNull($testSession['Q04.SCORE']);
     }
 
-    public function testSingleSectionNonLinear1()
+    public function testSingleSectionNonLinear1(): void
     {
         // This test aims at checking that preconditions are by default ignored when
         // the navigation mode is non linear.
@@ -84,7 +86,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this::assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
     }
 
-    public function testSingleSectionNonLinearForcePreconditions()
+    public function testSingleSectionNonLinearForcePreconditions(): void
     {
         // This test aims at testing that when forcing preconditions is in force,
         // they are executed even if the current navigation mode is non linear.
@@ -105,7 +107,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this::assertNull($testSession['Q04.SCORE']);
     }
 
-    public function testKillerTestEpicFail()
+    public function testKillerTestEpicFail(): void
     {
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_killertest.xml');
         $testSession->beginTestSession();
@@ -126,7 +128,7 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this::assertNull($testSession['Q05.SCORE']);
     }
 
-    public function testKillerTestEpicWin()
+    public function testKillerTestEpicWin(): void
     {
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_killertest.xml');
         $testSession->beginTestSession();

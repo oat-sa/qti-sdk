@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use InvalidArgumentException;
@@ -17,7 +19,7 @@ class ProcessorUtilsTest extends QtiSmTestCase
      * @param string $value
      * @param string $expected
      */
-    public function testSanitizeVariableRefValid($value, $expected)
+    public function testSanitizeVariableRefValid($value, $expected): void
     {
         $ref = $this::assertEquals(Utils::sanitizeVariableRef($value), $expected);
     }
@@ -26,7 +28,7 @@ class ProcessorUtilsTest extends QtiSmTestCase
      * @dataProvider sanitizeVariableRefInvalidProvider
      * @param mixed $value
      */
-    public function testSanitizeVariableRefInvalid($value)
+    public function testSanitizeVariableRefInvalid($value): void
     {
         $this->expectException(InvalidArgumentException::class);
         $ref = Utils::sanitizeVariableRef($value);
@@ -35,7 +37,7 @@ class ProcessorUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function sanitizeVariableRefValidProvider()
+    public function sanitizeVariableRefValidProvider(): array
     {
         return [
             ['variableRef', 'variableRef'],
@@ -51,7 +53,7 @@ class ProcessorUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function sanitizeVariableRefInvalidProvider()
+    public function sanitizeVariableRefInvalidProvider(): array
     {
         return [
             [new stdClass()],

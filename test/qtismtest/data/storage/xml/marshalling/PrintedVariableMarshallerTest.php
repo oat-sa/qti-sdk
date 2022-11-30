@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -20,7 +22,7 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $component = new PrintedVariable('PRID');
         $component->setIndex(0);
@@ -42,7 +44,7 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    public function testMarshall22()
+    public function testMarshall22(): void
     {
         $component = new PrintedVariable('PRID');
         $component->setAriaOrientation(AriaOrientation::VERTICAL);
@@ -55,7 +57,7 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
         $this::assertFalse($element->hasAttribute('aria-orientation'));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<printedVariable xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="PRID" index="0" field="field" xml:base="/home/jerome"/>');
@@ -74,7 +76,7 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
     /**
      * @throws MarshallerNotFoundException
      */
-    public function testUnmarshall22()
+    public function testUnmarshall22(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<printedVariable xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" identifier="PRID" aria-orientation="horizontal"/>');
@@ -92,7 +94,7 @@ class PrintedVariableMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshallNoIdentifier()
+    public function testUnmarshallNoIdentifier(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<printedVariable xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" index="0" field="field" xml:base="/home/jerome"/>');

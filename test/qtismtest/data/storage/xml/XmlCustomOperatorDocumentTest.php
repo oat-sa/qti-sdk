@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml;
 
 use qtism\common\enums\BaseType;
@@ -19,7 +21,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
      * @param string $url
      * @throws XmlStorageException
      */
-    public function testReadNoLax($url = '')
+    public function testReadNoLax($url = ''): void
     {
         $doc = new XmlDocument();
         $url = (empty($url)) ? (self::samplesDir() . 'custom/operators/custom_operator_1.xml') : $url;
@@ -41,7 +43,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $this::assertEquals('Param1Data', $expressions[0]->getValue());
     }
 
-    public function testWriteNoLax()
+    public function testWriteNoLax(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/operators/custom_operator_1.xml');
@@ -57,7 +59,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
      * @param string $url
      * @throws XmlStorageException
      */
-    public function testReadQTIOnly($url = '')
+    public function testReadQTIOnly($url = ''): void
     {
         $doc = new XmlDocument();
         $url = (empty($url)) ? (self::samplesDir() . 'custom/operators/custom_operator_2.xml') : $url;
@@ -73,7 +75,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $this::assertEquals('Param1Data', $expressions[0]->getValue());
     }
 
-    public function testWriteQTIOnly()
+    public function testWriteQTIOnly(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/operators/custom_operator_2.xml');
@@ -89,7 +91,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
      * @param string $url
      * @throws XmlStorageException
      */
-    public function testReadFullLax($url = '')
+    public function testReadFullLax($url = ''): void
     {
         $doc = new XmlDocument();
         $url = (empty($url)) ? (self::samplesDir() . 'custom/operators/custom_operator_3.xml') : $url;
@@ -129,7 +131,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws MarshallingException
      */
-    public function testWriteFullLax($url = '')
+    public function testWriteFullLax($url = ''): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/operators/custom_operator_3.xml');
@@ -145,7 +147,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
      * @param string $url
      * @throws XmlStorageException
      */
-    public function testReadNestedLax($url = '')
+    public function testReadNestedLax($url = ''): void
     {
         $doc = new XmlDocument();
         $url = (empty($url)) ? (self::samplesDir() . 'custom/operators/custom_operator_nested_1.xml') : $url;
@@ -198,7 +200,7 @@ class XmlCustomOperatorDocumentTest extends QtiSmTestCase
         $this::assertEquals('Param1Data', $baseValue->getValue());
     }
 
-    public function testWriteNestedLax()
+    public function testWriteNestedLax(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/operators/custom_operator_nested_1.xml');

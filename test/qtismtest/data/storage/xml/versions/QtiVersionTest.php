@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\versions;
 
 use qtism\data\storage\xml\versions\QtiVersion;
@@ -20,13 +22,13 @@ use qtismtest\QtiSmTestCase;
  */
 class QtiVersionTest extends QtiSmTestCase
 {
-    public function testVersionCompareValid()
+    public function testVersionCompareValid(): void
     {
         $this::assertTrue(QtiVersion::compare('2', '2.0.0', '='));
         $this::assertFalse(QtiVersion::compare('2', '2.1', '='));
     }
 
-    public function testVersionCompareInvalidVersion1()
+    public function testVersionCompareInvalidVersion1(): void
     {
         $msg = 'QTI version "2.1.4" is not supported. Supported versions are "2.0.0", "2.1.0", "2.1.1", "2.2.0", "2.2.1", "2.2.2", "2.2.3", "2.2.4", "3.0.0".';
         $this->expectException(QtiVersionException::class);
@@ -34,7 +36,7 @@ class QtiVersionTest extends QtiSmTestCase
         QtiVersion::compare('2.1.4', '2.1.1', '>');
     }
 
-    public function testVersionCompareInvalidVersion2()
+    public function testVersionCompareInvalidVersion2(): void
     {
         $msg = 'QTI version "2.1.4" is not supported. Supported versions are "2.0.0", "2.1.0", "2.1.1", "2.2.0", "2.2.1", "2.2.2", "2.2.3", "2.2.4", "3.0.0".';
         $this->expectException(QtiVersionException::class);
@@ -48,7 +50,7 @@ class QtiVersionTest extends QtiSmTestCase
      * @param string $expectedVersion
      * @param string $expectedClass
      */
-    public function testCreateWithSupportedVersion(string $version, string $expectedVersion, string $expectedClass)
+    public function testCreateWithSupportedVersion(string $version, string $expectedVersion, string $expectedClass): void
     {
         $versionObject = QtiVersion::create($version);
         $this::assertInstanceOf($expectedClass, $versionObject);
@@ -73,7 +75,7 @@ class QtiVersionTest extends QtiSmTestCase
         ];
     }
 
-    public function testCreateWithUnsupportedVersionThrowsException()
+    public function testCreateWithUnsupportedVersionThrowsException(): void
     {
         $wrongVersion = '36.15';
 

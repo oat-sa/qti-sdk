@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -12,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SectionPartMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $identifier = 'mySectionPart1';
 
@@ -25,7 +27,7 @@ class SectionPartMarshallerTest extends QtiSmTestCase
         $this::assertEquals($identifier, $element->getAttribute('identifier'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<sectionPart xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="mySectionPart1"/>');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\processing;
 
 use InvalidArgumentException;
@@ -20,7 +22,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ResponseProcessingEngineTest extends QtiSmTestCase
 {
-    public function testResponseProcessingMatchCorrect()
+    public function testResponseProcessingMatchCorrect(): void
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
@@ -61,7 +63,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $this::assertEquals(0.0, $context['SCORE']->getValue());
     }
 
-    public function testResponseProcessingNoResponseRule()
+    public function testResponseProcessingNoResponseRule(): void
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing>
@@ -117,7 +119,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $this::assertEquals(1.0, $context['SCORE']->getValue());
     }
 
-    public function testResponseProcessingExitResponse()
+    public function testResponseProcessingExitResponse(): void
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing>
@@ -226,7 +228,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         );
     }
 
-    public function testSetOutcomeValueWithSum()
+    public function testSetOutcomeValueWithSum(): void
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing>
@@ -297,7 +299,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $this::assertEquals(1., $state['MAXSCORE']->getValue());
     }
 
-    public function testWrongComponentType()
+    public function testWrongComponentType(): void
     {
         $responseProcessing = $this->createComponentFromXml(
             '<responseIf>
@@ -316,7 +318,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine = new ResponseProcessingEngine($responseProcessing);
     }
 
-    public function testAddTemplateMappingWrongFirstParam()
+    public function testAddTemplateMappingWrongFirstParam(): void
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
@@ -330,7 +332,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine->addTemplateMapping(10, 'http://taotesting.com');
     }
 
-    public function testAddTemplateMappingWrongSecondParam()
+    public function testAddTemplateMappingWrongSecondParam(): void
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
@@ -344,7 +346,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine->addTemplateMapping('http://taotesting.com', 10);
     }
 
-    public function testRemoveTemplateMappingWrongUrl()
+    public function testRemoveTemplateMappingWrongUrl(): void
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
@@ -358,7 +360,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $engine->removeTemplateMapping(10);
     }
 
-    public function testRemoveTemplateMapping()
+    public function testRemoveTemplateMapping(): void
     {
         $responseProcessing = $this->createComponentFromXml('
             <responseProcessing template="http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct"/>
@@ -370,7 +372,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
         $this::assertTrue(true, 'The template mapping removal should not produce any error.');
     }
 
-    public function testNotOperator()
+    public function testNotOperator(): void
     {
         $var = new OutcomeVariable('NOTRESULT', Cardinality::SINGLE, BaseType::BOOLEAN);
         $state = new State([$var]);

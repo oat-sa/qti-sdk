@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -13,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TemplateDefaultMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $templateIdentifier = 'myTemplate1';
         $expression = new NullValue();
@@ -32,7 +34,7 @@ class TemplateDefaultMarshallerTest extends QtiSmTestCase
         $this::assertEquals('null', $expressionElt->nodeName);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

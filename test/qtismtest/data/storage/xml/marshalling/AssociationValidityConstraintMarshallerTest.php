@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -13,7 +15,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshallSimple()
+    public function testUnmarshallSimple(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint identifier="IDENTIFIER" minConstraint="0" maxConstraint="1"/>');
@@ -27,7 +29,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1, $component->getMaxConstraint());
     }
 
-    public function testUnmarshallNoIdentifier()
+    public function testUnmarshallNoIdentifier(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint minConstraint="0" maxConstraint="1"/>');
@@ -39,7 +41,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallNoMinConstraint()
+    public function testUnmarshallNoMinConstraint(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint identifier="IDENTIFIER" maxConstraint="1"/>');
@@ -51,7 +53,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallNoMaxConstraint()
+    public function testUnmarshallNoMaxConstraint(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint identifier="IDENTIFIER" minConstraint="0"/>');
@@ -63,7 +65,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallInvalidMaxConstraintOne()
+    public function testUnmarshallInvalidMaxConstraintOne(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint identifier="RESPONSE" minConstraint="0" maxConstraint="-2"/>');
@@ -75,7 +77,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallInvalidMaxConstraintTwo()
+    public function testUnmarshallInvalidMaxConstraintTwo(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<associationValidityConstraint identifier="IDENTIFIER" minConstraint="2" maxConstraint="1"/>');
@@ -87,7 +89,7 @@ class AssociationValidityConstraintMarshallerTest extends QtiSmTestCase
         $component = $factory->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testMarshallSimple()
+    public function testMarshallSimple(): void
     {
         $component = new AssociationValidityConstraint('IDENTIFIER', 0, 1);
         $factory = new Compact21MarshallerFactory();

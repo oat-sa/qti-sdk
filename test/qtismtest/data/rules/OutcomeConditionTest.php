@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\state;
 
 use qtism\common\enums\BaseType;
@@ -18,7 +20,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeConditionTest extends QtiSmTestCase
 {
-    public function testHasOutcomeElseGetComponents()
+    public function testHasOutcomeElseGetComponents(): void
     {
         $outcomeIf = new OutcomeIf(
             new MatchOperator(

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
@@ -41,7 +43,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function createExtendedAssessmentItemRefFromXml($xmlString)
+    protected function createExtendedAssessmentItemRefFromXml($xmlString): ExtendedAssessmentItemRef
     {
         $marshaller = new ExtendedAssessmentItemRefMarshaller('2.1');
         $element = $this->createDOMElement($xmlString);
@@ -60,7 +62,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function instantiateBasicAssessmentItemSession()
+    protected function instantiateBasicAssessmentItemSession(): AssessmentItemSession
     {
         $itemRef = $this->createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="false" timeDependent="false">
@@ -96,7 +98,7 @@ abstract class QtiSmAssessmentItemTestCase extends QtiSmTestCase
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function instantiateBasicAdaptiveAssessmentItem()
+    protected function instantiateBasicAdaptiveAssessmentItem(): AssessmentItemSession
     {
         $itemRef = $this->createExtendedAssessmentItemRefFromXml('
             <assessmentItemRef identifier="Q01" href="./Q01.xml" adaptive="true" timeDependent="false">

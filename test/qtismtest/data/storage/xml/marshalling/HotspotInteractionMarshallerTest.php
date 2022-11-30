@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -20,7 +22,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class HotspotInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
@@ -46,7 +48,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testMarshall21XmlBase()
+    public function testMarshall21XmlBase(): void
     {
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
@@ -76,7 +78,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         // minChoices must be ignored.
         $choice1 = new HotspotChoice('hotspotchoice1', QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, [77, 115, 8]));
@@ -94,7 +96,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<hotspotInteraction responseIdentifier="RESPONSE" maxChoices="1"><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/></hotspotInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>
@@ -125,7 +127,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21XmlBase()
+    public function testUnmarshall21XmlBase(): void
     {
         $element = $this->createDOMElement('
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>
@@ -139,7 +141,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21InvalidContentIgnored()
+    public function testUnmarshall21InvalidContentIgnored(): void
     {
         $element = $this->createDOMElement('
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><simpleChoice identifier="simplechoice"/></hotspotInteraction>
@@ -152,7 +154,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21NoChoices()
+    public function testUnmarshall21NoChoices(): void
     {
         $element = $this->createDOMElement('
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/></hotspotInteraction>
@@ -167,7 +169,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21NoObject()
+    public function testUnmarshall21NoObject(): void
     {
         $element = $this->createDOMElement('
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE" maxChoices="1"><prompt>Prompt...</prompt><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>
@@ -182,7 +184,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21NoResponseIdentifier()
+    public function testUnmarshall21NoResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <hotspotInteraction id="my-hotspot" maxChoices="1"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><hotspotChoice identifier="hotspotchoice2" shape="circle" coords="118,184,8"/><hotspotChoice identifier="hotspotchoice3" shape="circle" coords="150,235,8"/></hotspotInteraction>
@@ -194,7 +196,7 @@ class HotspotInteractionMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshall20MissingMaxChoices()
+    public function testUnmarshall20MissingMaxChoices(): void
     {
         $element = $this->createDOMElement('
             <hotspotInteraction id="my-hotspot" responseIdentifier="RESPONSE"><prompt>Prompt...</prompt><object data="./img/img.png" type="image/png"/><hotspotChoice identifier="hotspotchoice1" shape="circle" coords="77,115,8"/><simpleChoice identifier="simplechoice"/></hotspotInteraction>

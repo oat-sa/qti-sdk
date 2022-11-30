@@ -27,7 +27,7 @@ use qtismtest\QtiSmTestCase;
 
 class RubyTest extends QtiSmTestCase
 {
-    const SUBJECT_QTI_CLASS_NAME = 'ruby';
+    public const SUBJECT_QTI_CLASS_NAME = 'ruby';
 
     public function testCreateWithValues(): void
     {

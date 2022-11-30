@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -13,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeMaximumMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $sectionIdentifier = 'mySection1';
         $outcomeIdentifier = 'myOutcome1';
@@ -37,7 +39,7 @@ class OutcomeMaximumMarshallerTest extends QtiSmTestCase
         $this::assertEquals($excludeCategory, $element->getAttribute('excludeCategory'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<outcomeMaximum xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1" outcomeIdentifier="myOutcome1" includeCategory="cat1" excludeCategory="cat2 cat3" weightIdentifier="myWeight1"/>');

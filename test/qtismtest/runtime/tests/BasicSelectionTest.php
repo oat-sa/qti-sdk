@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use qtism\data\AssessmentItemRef;
@@ -15,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class BasicSelectionTest extends QtiSmTestCase
 {
-    public function testBasicSelection()
+    public function testBasicSelection(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/selection_ordering/selection_and_ordering.xml');
@@ -60,7 +62,7 @@ class BasicSelectionTest extends QtiSmTestCase
 
     }
 
-    public function testSelectRequired()
+    public function testSelectRequired(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/selection_ordering/selection_and_ordering.xml');
@@ -96,7 +98,7 @@ class BasicSelectionTest extends QtiSmTestCase
      * @param array $expectedIdentifiers
      * @return bool
      */
-    private static function isRouteCorrect(SelectableRoute $route, array $expectedIdentifiers)
+    private static function isRouteCorrect(SelectableRoute $route, array $expectedIdentifiers): bool
     {
         $i = 0;
         foreach ($route as $routeItem) {

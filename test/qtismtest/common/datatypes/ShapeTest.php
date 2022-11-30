@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\common\datatypes;
 
 use qtism\common\datatypes\QtiShape;
@@ -13,7 +15,7 @@ class ShapeTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return QtiShape::class;
     }
@@ -21,7 +23,7 @@ class ShapeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'default',
@@ -35,7 +37,7 @@ class ShapeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'DEF',
@@ -49,7 +51,7 @@ class ShapeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             QtiShape::DEF,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
@@ -22,7 +24,7 @@ class AssessmentTestSessionConfigInitializationAllItemsTest extends QtiSmAssessm
      * @param int $expectedCountOfItems
      * @throws XmlStorageException
      */
-    public function testConfigInitializationAllItemsWorksProperly($config, $path, $expectedCountOfItems = 1)
+    public function testConfigInitializationAllItemsWorksProperly($config, $path, $expectedCountOfItems = 1): void
     {
         $doc = new XmlCompactDocument('2.1');
         $doc->load($path);
@@ -41,7 +43,7 @@ class AssessmentTestSessionConfigInitializationAllItemsTest extends QtiSmAssessm
     /**
      * @return array
      */
-    public function getBranchingTestCases()
+    public function getBranchingTestCases(): array
     {
         return [
             // config INITIALIZE_ALL_ITEMS is enabled

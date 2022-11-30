@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\content\xhtml;
 
 use InvalidArgumentException;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ObjectTest extends QtiSmTestCase
 {
-    public function testCreateWrongType()
+    public function testCreateWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'type' argument must be a non-empty string, 'integer' given.");

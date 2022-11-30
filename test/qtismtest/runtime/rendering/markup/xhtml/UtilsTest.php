@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\rendering\markup\xhtml;
 
 use DOMDocument;
@@ -13,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class RenderingMarkupXhtmlUtils extends QtiSmTestCase
 {
-    public function testShuffleWithFixed()
+    public function testShuffleWithFixed(): void
     {
         // It is difficult to test a random algorithm.
         // In this way, we just check it runs. Deeper
@@ -69,7 +71,7 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $this::assertTrue($node0Id === 'choice1' && $node1Id === 'choice3' || $node0Id === 'choice3' && $node1Id === 'choice1');
     }
 
-    public function testShuffleWithStatements()
+    public function testShuffleWithStatements(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
@@ -89,7 +91,7 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $this::assertTrue(true);
     }
 
-    public function testHasClass()
+    public function testHasClass(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $node = $dom->createElement('root');
@@ -103,7 +105,7 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $this::assertFalse(Utils::hasClass($node, ['unknown', 'class']));
     }
 
-    public function testExtractStatements()
+    public function testExtractStatements(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $node = $dom->createElement('fakenode');
@@ -123,7 +125,7 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $this::assertEquals('qtism-endif', $statements[1]->data);
     }
 
-    public function testExtractStatementsNothing()
+    public function testExtractStatementsNothing(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $node = $dom->createElement('fakenode');
@@ -135,7 +137,7 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $this::assertEquals([], Utils::extractStatements($div));
     }
 
-    public function testExtractStatementsIfOnly()
+    public function testExtractStatementsIfOnly(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $node = $dom->createElement('fakenode');

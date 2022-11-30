@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlDocument;
 
@@ -10,7 +12,7 @@ require_once(__DIR__ . '/../../vendor/autoload.php');
  * @param $end
  * @return mixed
  */
-function spentTime($start, $end)
+function spentTime($start, $end): mixed
 {
     $startTime = explode(' ', $start);
     $endTime = explode(' ', $end);

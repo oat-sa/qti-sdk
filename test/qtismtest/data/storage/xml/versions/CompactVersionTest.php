@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\versions;
 
 use qtism\data\storage\xml\versions\CompactVersion;
@@ -13,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class CompactVersionTest extends QtiSmTestCase
 {
-    public function testVersionCompareSupported()
+    public function testVersionCompareSupported(): void
     {
         $this::assertTrue(CompactVersion::compare('2.1', '2.1.0', '='));
     }
@@ -24,7 +26,7 @@ class CompactVersionTest extends QtiSmTestCase
      * @param string $expectedVersion
      * @param string $expectedClass
      */
-    public function testCreateWithSupportedVersion(string $version, string $expectedVersion, string $expectedClass)
+    public function testCreateWithSupportedVersion(string $version, string $expectedVersion, string $expectedClass): void
     {
         $versionObject = CompactVersion::create($version);
         $this::assertInstanceOf($expectedClass, $versionObject);
@@ -47,7 +49,7 @@ class CompactVersionTest extends QtiSmTestCase
         ];
     }
 
-    public function testCreateWithUnsupportedVersionThrowsException()
+    public function testCreateWithUnsupportedVersionThrowsException(): void
     {
         $wrongVersion = '2.0';
 

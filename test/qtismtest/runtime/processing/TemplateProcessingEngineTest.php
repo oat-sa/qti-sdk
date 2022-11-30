@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\processing;
 
 use InvalidArgumentException;
@@ -16,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TemplateProcessingEngineTest extends QtiSmTestCase
 {
-    public function testWrongInput()
+    public function testWrongInput(): void
     {
         $component = $this->createComponentFromXml('
             <outcomeProcessing>
@@ -28,7 +30,7 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
         $templateProcessing = new TemplateProcessingEngine($component);
     }
 
-    public function testVeryBasic()
+    public function testVeryBasic(): void
     {
         $component = $this->createComponentFromXml('
             <templateProcessing>
@@ -51,7 +53,7 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
     /**
      * @depends testVeryBasic
      */
-    public function testExitTemplate()
+    public function testExitTemplate(): void
     {
         $component = $this->createComponentFromXml('
             <templateProcessing>
@@ -78,7 +80,7 @@ class TemplateProcessingEngineTest extends QtiSmTestCase
     /**
      * @depends testVeryBasic
      */
-    public function testTemplateConstraintImpossibleWithTemplateVariableOnly()
+    public function testTemplateConstraintImpossibleWithTemplateVariableOnly(): void
     {
         $component = $this->createComponentFromXml('
             <templateProcessing>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiPoint;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class BaseValueProcessorTest extends QtiSmTestCase
 {
-    public function testBaseValue()
+    public function testBaseValue(): void
     {
         $baseValue = $this->createComponentFromXml('<baseValue baseType="boolean">true</baseValue>');
         $baseValueProcessor = new BaseValueProcessor($baseValue);

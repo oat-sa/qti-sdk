@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\content\interactions;
 
 use InvalidArgumentException;
@@ -15,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MatchInteractionTest extends QtiSmTestCase
 {
-    public function testSetShuffleWrongType()
+    public function testSetShuffleWrongType(): void
     {
         $matchSet1 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceA', 1)]));
         $matchSet2 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceB', 1)]));
@@ -34,7 +36,7 @@ class MatchInteractionTest extends QtiSmTestCase
         $matchInteraction->setShuffle('true');
     }
 
-    public function testSetMaxAssociationsWrongType()
+    public function testSetMaxAssociationsWrongType(): void
     {
         $matchSet1 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceA', 1)]));
         $matchSet2 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceB', 1)]));
@@ -53,7 +55,7 @@ class MatchInteractionTest extends QtiSmTestCase
         $matchInteraction->setMaxAssociations('true');
     }
 
-    public function testSetMinAssociationsWrongType()
+    public function testSetMinAssociationsWrongType(): void
     {
         $matchSet1 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceA', 1)]));
         $matchSet2 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceB', 1)]));
@@ -72,7 +74,7 @@ class MatchInteractionTest extends QtiSmTestCase
         $matchInteraction->setMinAssociations('true');
     }
 
-    public function testSetMinAssociationsWrongValue()
+    public function testSetMinAssociationsWrongValue(): void
     {
         $matchSet1 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceA', 1)]));
         $matchSet2 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceB', 1)]));
@@ -92,7 +94,7 @@ class MatchInteractionTest extends QtiSmTestCase
         $matchInteraction->setMinAssociations(4);
     }
 
-    public function testHasMinAssociations()
+    public function testHasMinAssociations(): void
     {
         $matchSet1 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceA', 1)]));
         $matchSet2 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceB', 1)]));
@@ -108,7 +110,7 @@ class MatchInteractionTest extends QtiSmTestCase
         $this::assertFalse($matchInteraction->hasMinAssociations());
     }
 
-    public function testNotEnoughMatchSets()
+    public function testNotEnoughMatchSets(): void
     {
         $matchSet1 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceA', 1)]));
 
@@ -123,7 +125,7 @@ class MatchInteractionTest extends QtiSmTestCase
         );
     }
 
-    public function testGetSourceChoices()
+    public function testGetSourceChoices(): void
     {
         $matchSet1 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceA', 1)]));
         $matchSet2 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceB', 1)]));
@@ -139,7 +141,7 @@ class MatchInteractionTest extends QtiSmTestCase
         $this::assertSame($matchSet1, $matchInteraction->getSourceChoices());
     }
 
-    public function testGetTargetChoices()
+    public function testGetTargetChoices(): void
     {
         $matchSet1 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceA', 1)]));
         $matchSet2 = new SimpleMatchSet(new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('ChoiceB', 1)]));

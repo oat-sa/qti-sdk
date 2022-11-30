@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\rules;
 
 use qtism\common\datatypes\QtiPair;
@@ -15,7 +17,7 @@ use qtism\runtime\rules\RuleProcessingException;
  */
 class LookupOutcomeValueProcessorTest extends QtiSmTestCase
 {
-    public function testLookupOutcomeValueSimpleMatchTable()
+    public function testLookupOutcomeValueSimpleMatchTable(): void
     {
         $rule = $this->createComponentFromXml('
 			<lookupOutcomeValue identifier="outcome1">
@@ -52,7 +54,7 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase
         $this::assertTrue($state['outcome1']->equals(new QtiPair('Y', 'Z')));
     }
 
-    public function testLookupOutcomeValueSimpleInterpolationTable()
+    public function testLookupOutcomeValueSimpleInterpolationTable(): void
     {
         $rule = $this->createComponentFromXml('
 			<lookupOutcomeValue identifier="outcome1">
@@ -97,7 +99,7 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase
         $this::assertEquals("What's going on?", $state['outcome1']->getValue());
     }
 
-    public function testLookupOutcomeValueNoVariable()
+    public function testLookupOutcomeValueNoVariable(): void
     {
         $rule = $this->createComponentFromXml('
 			<lookupOutcomeValue identifier="outcome1">
@@ -115,7 +117,7 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testLookupOutcomeValueNoLookupTable()
+    public function testLookupOutcomeValueNoLookupTable(): void
     {
         $rule = $this->createComponentFromXml('
 			<lookupOutcomeValue identifier="outcome1">
@@ -138,7 +140,7 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testLookupOutcomeWrongLookupValueTypeForInterpolationTable()
+    public function testLookupOutcomeWrongLookupValueTypeForInterpolationTable(): void
     {
         $rule = $this->createComponentFromXml('
 			<lookupOutcomeValue identifier="outcome1">
@@ -167,7 +169,7 @@ class LookupOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testLookupOutcomeWrongLookupValueTypeForMatchTable()
+    public function testLookupOutcomeWrongLookupValueTypeForMatchTable(): void
     {
         $rule = $this->createComponentFromXml('
 			<lookupOutcomeValue identifier="outcome1">

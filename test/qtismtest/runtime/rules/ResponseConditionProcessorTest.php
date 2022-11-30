@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\rules;
 
 use qtism\common\datatypes\QtiFloat;
@@ -23,7 +25,7 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
      * @param float $expectedScore The expected score for a given $response
      * @throws MarshallerNotFoundException
      */
-    public function testResponseConditionMatchCorrect($response, $expectedScore)
+    public function testResponseConditionMatchCorrect($response, $expectedScore): void
     {
         $rule = $this->createComponentFromXml('
 			<responseCondition>
@@ -79,7 +81,7 @@ class ResponseConditionProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function responseConditionMatchCorrectProvider()
+    public function responseConditionMatchCorrectProvider(): array
     {
         return [
             [new QtiIdentifier('ChoiceA'), new QtiFloat(1.0)],

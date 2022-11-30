@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use OutOfBoundsException;
@@ -12,7 +14,7 @@ use qtismtest\QtiSmAssessmentItemTestCase;
  */
 class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
 {
-    public function testShufflingOccurs()
+    public function testShufflingOccurs(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
@@ -35,7 +37,7 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
     /**
      * @depends testShufflingOccurs
      */
-    public function testGetShuffledChoiceIdentifierAt()
+    public function testGetShuffledChoiceIdentifierAt(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
@@ -51,7 +53,7 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $this::assertTrue(in_array($session->getShuffledChoiceIdentifierAt(0, 3), $identifiers));
     }
 
-    public function testGetShuffledChoiceIdentifierAtInvalidShufflingStateIndex()
+    public function testGetShuffledChoiceIdentifierAtInvalidShufflingStateIndex(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');
@@ -64,7 +66,7 @@ class AssessmentItemSessionShufflingTest extends QtiSmAssessmentItemTestCase
         $session->getShuffledChoiceIdentifierAt(1, 3);
     }
 
-    public function testGetShuffledChoiceIdentifierAtInvalidShuffledChoiceIndex()
+    public function testGetShuffledChoiceIdentifierAtInvalidShuffledChoiceIndex(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/choice_fixed.xml');

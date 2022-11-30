@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -13,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshallNoTitle()
+    public function testUnmarshallNoTitle(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<modalFeedbackRule outcomeIdentifier="SHOW_HIM" identifier="SHOW_MEH" showHide="show"/>');
@@ -29,7 +31,7 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
         $this::assertSame('', $mf->getTitle());
     }
 
-    public function testMarshallNoTitle()
+    public function testMarshallNoTitle(): void
     {
         $mf = new ModalFeedbackRule('SHOW_HIM', ShowHide::SHOW, 'SHOW_MEH');
         $factory = new Compact21MarshallerFactory();
@@ -46,7 +48,7 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshallNoTitle
      */
-    public function testUnmarshallTitle()
+    public function testUnmarshallTitle(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<modalFeedbackRule outcomeIdentifier="SHOW_HIM" identifier="SHOW_MEH" showHide="show" href="./MF01.xml" title="Beautiful Feedback!"/>');
@@ -61,7 +63,7 @@ class ModalFeedbackRuleMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshallNoTitle
      */
-    public function testMarshallTitle()
+    public function testMarshallTitle(): void
     {
         $mf = new ModalFeedbackRule('SHOW_HIM', ShowHide::SHOW, 'SHOW_MEH', 'Beautiful Feedback!');
         $factory = new Compact21MarshallerFactory();

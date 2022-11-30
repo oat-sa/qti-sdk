@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use qtism\runtime\tests\SelectableRoute;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SelectableRouteCollectionTest extends QtiSmTestCase
 {
-    public function testInsertAt()
+    public function testInsertAt(): void
     {
         $routeA = new SelectableRoute();
         $routeB = new SelectableRoute();

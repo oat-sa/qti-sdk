@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -17,7 +19,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class TemplateBlockMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $templateBlock = new TemplateBlock('tpl1', 'block1');
         $div = new Div();
@@ -34,7 +36,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall
      */
-    public function testMarshallXmlBase()
+    public function testMarshallXmlBase(): void
     {
         $templateBlock = new TemplateBlock('tpl1', 'block1');
         $div = new Div();
@@ -49,7 +51,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<templateBlock templateIdentifier="tpl1" identifier="block1" showHide="show" xml:base="/home/jerome"><div>Templatable...</div></templateBlock>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <templateBlock templateIdentifier="tpl1" identifier="block1" showHide="show"><div>Templatable...</div></templateBlock>
@@ -65,7 +67,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallInvalidShowHide()
+    public function testUnmarshallInvalidShowHide(): void
     {
         $element = $this->createDOMElement('
 	        <templateBlock templateIdentifier="tpl1" identifier="block1" showHide="snow"><div>Templatable...</div></templateBlock>
@@ -80,7 +82,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallInvalidContent()
+    public function testUnmarshallInvalidContent(): void
     {
         $element = $this->createDOMElement('
 	        <templateBlock templateIdentifier="tpl1" identifier="block1" showHide="show"><hottext identifier="myhottext"/></templateBlock>
@@ -95,7 +97,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoTemplateIdentifier()
+    public function testUnmarshallNoTemplateIdentifier(): void
     {
         $element = $this->createDOMElement('
 	        <templateBlock identifier="block1" showHide="show">Templatable...</templateBlock>
@@ -110,7 +112,7 @@ class TemplateBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallXmlBase()
+    public function testUnmarshallXmlBase(): void
     {
         $element = $this->createDOMElement('
 	        <templateBlock templateIdentifier="tpl1" identifier="block1" showHide="show" xml:base="/home/jerome"><div>Templatable...</div></templateBlock>

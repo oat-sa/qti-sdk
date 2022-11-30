@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -17,7 +19,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class AssociateInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $choice1 = new SimpleAssociableChoice('choice_1', 1);
         $choice1->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
@@ -45,7 +47,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
             <associateInteraction responseIdentifier="RESPONSE" maxAssociations="2" xml:base="/home/jerome">
@@ -74,7 +76,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         $this::assertCount(2, $simpleChoices);
     }
 
-    public function testUnmarshall21NoResponseIdentifier()
+    public function testUnmarshall21NoResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <associateInteraction maxAssociations="2" xml:base="/home/jerome">
@@ -92,7 +94,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testMarshallSimple20()
+    public function testMarshallSimple20(): void
     {
         $choice1 = new SimpleAssociableChoice('choice_1', 1);
         $choice1->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
@@ -116,7 +118,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshallSimple20
      */
-    public function testMarshallMinAssociationAvoided20()
+    public function testMarshallMinAssociationAvoided20(): void
     {
         // Aims at testing that minAssociation is not in the output
         // in a QTI 2.0 context.
@@ -134,7 +136,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<associateInteraction responseIdentifier="RESPONSE" shuffle="false" maxAssociations="1"><simpleAssociableChoice identifier="choice_1" matchMax="1">Choice #1</simpleAssociableChoice></associateInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         $element = $this->createDOMElement('
             <associateInteraction responseIdentifier="RESPONSE" maxAssociations="2" shuffle="true">
@@ -156,7 +158,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallAvoidMinAssociations20()
+    public function testUnmarshallAvoidMinAssociations20(): void
     {
         // Aims at testing that minAssociations has no influence
         // in a QTI 2.0 context.
@@ -177,7 +179,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallExceptionWhenNoMaxAssociations20()
+    public function testUnmarshallExceptionWhenNoMaxAssociations20(): void
     {
         // Aims at testing that minAssociations has no influence
         // in a QTI 2.0 context.
@@ -197,7 +199,7 @@ class AssociateInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallExceptionWhenNoShuffle20()
+    public function testUnmarshallExceptionWhenNoShuffle20(): void
     {
         // Aims at testing that minAssociations has no influence
         // in a QTI 2.0 context.

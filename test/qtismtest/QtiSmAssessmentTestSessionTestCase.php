@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
@@ -31,7 +33,7 @@ abstract class QtiSmAssessmentTestSessionTestCase extends QtiSmTestCase
      * @return AssessmentTestSession
      * @throws XmlStorageException
      */
-    protected static function instantiate($url, $validate = false, $config = 0)
+    protected static function instantiate($url, $validate = false, $config = 0): AssessmentTestSession
     {
         $doc = new XmlCompactDocument();
         $doc->load($url, $validate);

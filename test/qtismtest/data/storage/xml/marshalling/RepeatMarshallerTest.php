@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -17,7 +19,7 @@ use qtismtest\QtiSmTestCase;
  */
 class RepeatMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $sub1 = new BaseValue(BaseType::FLOAT, 23.545);
         $sub21 = new BaseValue(BaseType::FLOAT, 1.68);
@@ -43,7 +45,7 @@ class RepeatMarshallerTest extends QtiSmTestCase
         $this::assertEquals('1.68', $sub22->nodeValue);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

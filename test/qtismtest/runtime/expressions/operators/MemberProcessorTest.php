@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
@@ -25,7 +27,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class MemberProcessorTest extends QtiSmTestCase
 {
-    public function testMultiple()
+    public function testMultiple(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -43,7 +45,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testOrdered()
+    public function testOrdered(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -61,7 +63,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -81,7 +83,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testDifferentBaseTypeOne()
+    public function testDifferentBaseTypeOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -93,7 +95,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testDifferentBaseTypeTwo()
+    public function testDifferentBaseTypeTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -104,7 +106,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityOne()
+    public function testWrongCardinalityOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -115,7 +117,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityTwo()
+    public function testWrongCardinalityTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -126,7 +128,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -135,7 +137,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $processor = new MemberProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -146,7 +148,7 @@ class MemberProcessorTest extends QtiSmTestCase
         $processor = new MemberProcessor($expression, $operands);
     }
 
-    public function testSingleCardinalitySecondOperand()
+    public function testSingleCardinalitySecondOperand(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -163,7 +165,7 @@ class MemberProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<member>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\common\utils;
 
 use Exception;
@@ -19,12 +21,12 @@ class ReflectionTest extends QtiSmTestCase
      * @param mixed $expected
      * @param mixed $object
      */
-    public function testShortClassName($expected, $object)
+    public function testShortClassName($expected, $object): void
     {
         $this::assertSame($expected, Reflection::shortClassName($object));
     }
 
-    public function testNewInstanceWithArguments()
+    public function testNewInstanceWithArguments(): void
     {
         $clazz = new ReflectionClass(Exception::class);
         $args = ['A message', 12];
@@ -35,7 +37,7 @@ class ReflectionTest extends QtiSmTestCase
         $this::assertEquals(12, $instance->getCode());
     }
 
-    public function testNewInstanceWithoutArguments()
+    public function testNewInstanceWithoutArguments(): void
     {
         $clazz = new ReflectionClass(stdClass::class);
         $instance = Reflection::newInstance($clazz);
@@ -46,7 +48,7 @@ class ReflectionTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function shortClassNameProvider()
+    public function shortClassNameProvider(): array
     {
         return [
             ['SomeClass', 'SomeClass'],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data;
 
 use InvalidArgumentException;
@@ -21,7 +23,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssessmentTestTest extends QtiSmTestCase
 {
-    public function testTimeLimits()
+    public function testTimeLimits(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/timelimits.xml');
@@ -35,7 +37,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $this::assertTrue($timeLimits->doesAllowLateSubmission());
     }
 
-    public function testCreateAssessmentTestWrongIdentifier()
+    public function testCreateAssessmentTestWrongIdentifier(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
@@ -43,7 +45,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $test = new AssessmentTest('999', 'Nine Nine Nine');
     }
 
-    public function testCreateAssessmentTestWrongTitle()
+    public function testCreateAssessmentTestWrongTitle(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Title must be a string, 'integer' given.");
@@ -51,7 +53,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $test = new AssessmentTest('ABC', 999);
     }
 
-    public function testSetToolNameWrongType()
+    public function testSetToolNameWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Toolname must be a string, 'integer' given.");
@@ -60,7 +62,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $test->setToolName(999);
     }
 
-    public function testSetToolVersionWrongType()
+    public function testSetToolVersionWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("ToolVersion must be a string, 'integer' given.");
@@ -69,7 +71,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $test->setToolVersion(999);
     }
 
-    public function testComponentsWithTimeLimits()
+    public function testComponentsWithTimeLimits(): void
     {
         $test = new AssessmentTest('ABC', 'ABC');
         $test->setTimeLimits(
@@ -80,13 +82,13 @@ class AssessmentTestTest extends QtiSmTestCase
         $this::assertInstanceOf(TimeLimits::class, $components[count($components) - 1]);
     }
 
-    public function testIsExclusivelyLinearNoTestParts()
+    public function testIsExclusivelyLinearNoTestParts(): void
     {
         $test = new AssessmentTest('ABC', 'ABC');
         $this::assertFalse($test->isExclusivelyLinear());
     }
 
-    public function testIsExclusivelyLinear()
+    public function testIsExclusivelyLinear(): void
     {
         $test = new AssessmentTest('ABC', 'ABC');
 
@@ -114,7 +116,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $this::assertTrue($test->isExclusivelyLinear());
     }
 
-    public function testGetPossiblePaths()
+    public function testGetPossiblePaths(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
@@ -173,7 +175,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
-    public function testPossiblePathswithPreCondition()
+    public function testPossiblePathswithPreCondition(): void
     {
         // Case 1
 
@@ -216,7 +218,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
-    public function testPossiblePathsWitPreOnSectionsAndTPs()
+    public function testPossiblePathsWitPreOnSectionsAndTPs(): void
     {
         // Case with testParts and sections
 
@@ -241,7 +243,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
-    public function testPossiblePathsWitPreOnSubSections()
+    public function testPossiblePathsWitPreOnSubSections(): void
     {
         // Case with subsections
 
@@ -266,7 +268,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
-    public function testPossiblePathWithSectsAndTPs()
+    public function testPossiblePathWithSectsAndTPs(): void
     {
         // Testing branching on sections
 
@@ -310,7 +312,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
-    public function testPossiblePathWithBranchingStartAndEnd()
+    public function testPossiblePathWithBranchingStartAndEnd(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingstartandend1.xml');
@@ -368,7 +370,7 @@ class AssessmentTestTest extends QtiSmTestCase
 
     // Testing special cases
 
-    public function testRecursiveBranching()
+    public function testRecursiveBranching(): void
     {
         $this->expectException(BranchRuleTargetException::class);
         $doc = new XmlDocument();
@@ -377,7 +379,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $test->getPossiblePaths(false);
     }
 
-    public function testRecursiveBranching2()
+    public function testRecursiveBranching2(): void
     {
         $this->expectException(BranchRuleTargetException::class);
         $doc = new XmlDocument();
@@ -386,7 +388,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $test->getPossiblePaths(false);
     }
 
-    public function testRecursiveBranching3()
+    public function testRecursiveBranching3(): void
     {
         $this->expectException(BranchRuleTargetException::class);
         $doc = new XmlDocument();
@@ -395,7 +397,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $test->getPossiblePaths(false);
     }
 
-    public function testRecursiveBranching4()
+    public function testRecursiveBranching4(): void
     {
         $this->expectException(BranchRuleTargetException::class);
         $doc = new XmlDocument();
@@ -404,7 +406,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $test->getPossiblePaths(false);
     }
 
-    public function testRecursiveBranching5()
+    public function testRecursiveBranching5(): void
     {
         $this->expectException(BranchRuleTargetException::class);
         $doc = new XmlDocument();
@@ -413,7 +415,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $test->getPossiblePaths(false);
     }
 
-    public function testBackwardBranching()
+    public function testBackwardBranching(): void
     {
         $this->expectException(BranchRuleTargetException::class);
         $doc = new XmlDocument();
@@ -422,7 +424,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $test->getPossiblePaths(false);
     }
 
-    public function testWrongTargetBranching()
+    public function testWrongTargetBranching(): void
     {
         $this->expectException(BranchRuleTargetException::class);
         $doc = new XmlDocument();
@@ -431,7 +433,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $test->getPossiblePaths(false);
     }
 
-    public function testGetPossiblePathsWithExitMentions()
+    public function testGetPossiblePathsWithExitMentions(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingwithexitmentions.xml');
@@ -505,7 +507,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $this::assertEquals($possible_paths, $test->getPossiblePaths(false));
     }
 
-    public function testGetShortestPaths()
+    public function testGetShortestPaths(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
@@ -546,7 +548,7 @@ class AssessmentTestTest extends QtiSmTestCase
         $this::assertEquals($shortest_paths, $test->getShortestPaths());
     }
 
-    public function testGetLongestPaths()
+    public function testGetLongestPaths(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');

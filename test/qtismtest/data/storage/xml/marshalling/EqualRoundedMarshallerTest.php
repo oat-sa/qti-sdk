@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -16,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class EqualRoundedMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $subs = new ExpressionCollection();
         $subs[] = new BaseValue(BaseType::FLOAT, 3.175);
@@ -36,7 +38,7 @@ class EqualRoundedMarshallerTest extends QtiSmTestCase
         $this::assertEquals(2, $element->getElementsByTagName('baseValue')->length);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

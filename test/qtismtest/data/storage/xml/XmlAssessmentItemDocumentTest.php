@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml;
 
 use qtism\common\enums\BaseType;
@@ -37,7 +39,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @param string $expectedVersion
      * @throws XmlStorageException
      */
-    public function testLoadFromString($uri, $expectedVersion)
+    public function testLoadFromString($uri, $expectedVersion): void
     {
         $doc = new XmlDocument($expectedVersion);
         $doc->loadFromString(file_get_contents($uri));
@@ -77,7 +79,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws MarshallingException
      */
-    public function testSaveToString($uri, $expectedVersion)
+    public function testSaveToString($uri, $expectedVersion): void
     {
         $doc = new XmlDocument();
         $doc->load($uri);
@@ -97,7 +99,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertFileDoesNotExist($file);
     }
 
-    public function testLoad224()
+    public function testLoad224(): void
     {
         $file = self::samplesDir() . 'ims/items/2_2_4/choice.xml';
         $doc = new XmlDocument();
@@ -108,7 +110,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_4/choice.xml'));
     }
 
-    public function testLoad223()
+    public function testLoad223(): void
     {
         $file = self::samplesDir() . 'ims/items/2_2_3/choice.xml';
         $doc = new XmlDocument();
@@ -119,7 +121,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_3/choice.xml'));
     }
 
-    public function testLoad222()
+    public function testLoad222(): void
     {
         $file = self::samplesDir() . 'ims/items/2_2_2/choice.xml';
         $doc = new XmlDocument();
@@ -130,7 +132,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_2/choice.xml'));
     }
 
-    public function testLoad221()
+    public function testLoad221(): void
     {
         $file = self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml';
         $doc = new XmlDocument();
@@ -140,7 +142,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertEquals($doc->saveToString(), file_get_contents(self::samplesDir() . 'ims/items/2_2_1/choice_aria.xml'));
     }
 
-    public function testLoad22()
+    public function testLoad22(): void
     {
         $file = self::samplesDir() . 'ims/items/2_2/associate.xml';
         $doc = new XmlDocument();
@@ -149,7 +151,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertEquals('2.2.0', $doc->getVersion());
     }
 
-    public function testLoad22NoSchemaLocation()
+    public function testLoad22NoSchemaLocation(): void
     {
         $file = self::samplesDir() . 'custom/items/2_2/no_schema_location.xml';
         $doc = new XmlDocument();
@@ -158,7 +160,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertEquals('2.2.0', $doc->getVersion());
     }
 
-    public function testLoad211()
+    public function testLoad211(): void
     {
         $file = self::samplesDir() . 'ims/items/2_1_1/associate.xml';
         $doc = new XmlDocument();
@@ -167,7 +169,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertEquals('2.1.1', $doc->getVersion());
     }
 
-    public function testLoad21()
+    public function testLoad21(): void
     {
         $file = self::samplesDir() . 'ims/items/2_1/associate.xml';
         $doc = new XmlDocument();
@@ -176,7 +178,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertEquals('2.1.0', $doc->getVersion());
     }
 
-    public function testLoad21NoSchemaLocation()
+    public function testLoad21NoSchemaLocation(): void
     {
         $file = self::samplesDir() . 'custom/items/2_1/no_schema_location.xml';
         $doc = new XmlDocument();
@@ -185,7 +187,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertEquals('2.1.0', $doc->getVersion());
     }
 
-    public function testLoad20()
+    public function testLoad20(): void
     {
         $file = self::samplesDir() . 'ims/items/2_0/associate.xml';
         $doc = new XmlDocument();
@@ -198,7 +200,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @param string $uri
      * @throws XmlStorageException
      */
-    public function testLoadTemplate($uri = '')
+    public function testLoadTemplate($uri = ''): void
     {
         $file = (empty($uri)) ? self::samplesDir() . 'ims/items/2_1/template.xml' : $uri;
 
@@ -236,7 +238,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertFalse($templateDeclarations['MIN']->isParamVariable());
     }
 
-    public function testWriteTemplate()
+    public function testWriteTemplate(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/template.xml');
@@ -255,7 +257,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @param string $url
      * @throws XmlStorageException
      */
-    public function testLoadPCIItem($url = '')
+    public function testLoadPCIItem($url = ''): void
     {
         $doc = new XmlDocument();
         $doc->load((empty($url)) ? self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml' : $url, true);
@@ -332,7 +334,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         $this::assertEquals('width:500px; height:500px;', $divElts->item(0)->getAttribute('style'));
     }
 
-    public function testWritePCIItem()
+    public function testWritePCIItem(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/interactions/custom_interaction_pci.xml');
@@ -347,7 +349,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validFileProvider()
+    public function validFileProvider(): array
     {
         return [
             // -- 2.2.4
@@ -528,7 +530,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
         ];
     }
 
-    public function testRetrievePromptFromGraphicGapMatch()
+    public function testRetrievePromptFromGraphicGapMatch(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::decorateUri('graphic_gap_match.xml', '2.2'));
@@ -585,7 +587,7 @@ class XmlAssessmentItemDocumentTest extends QtiSmTestCase
      * @param string $version
      * @return string
      */
-    private static function decorateUri($uri, $version = '2.1')
+    private static function decorateUri($uri, $version = '2.1'): string
     {
         if ($version === '2.1' || $version === '2.1.0') {
             return self::samplesDir() . 'ims/items/2_1/' . $uri;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\expressions\operators;
 
 use InvalidArgumentException;
@@ -15,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MaxTest extends QtiSmTestCase
 {
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $expressions = new ExpressionCollection();
         $expressions[] = new BaseValue(BaseType::INTEGER, 15);
@@ -35,7 +37,7 @@ class MaxTest extends QtiSmTestCase
     /**
      * @depends testInstantiation
      */
-    public function testSetMinOperandsWrongType()
+    public function testSetMinOperandsWrongType(): void
     {
         $expressions = new ExpressionCollection();
         $expressions[] = new BaseValue(BaseType::INTEGER, 15);
@@ -51,7 +53,7 @@ class MaxTest extends QtiSmTestCase
     /**
      * @depends testInstantiation
      */
-    public function testSetMaxOperandsWrongType()
+    public function testSetMaxOperandsWrongType(): void
     {
         $expressions = new ExpressionCollection();
         $expressions[] = new BaseValue(BaseType::INTEGER, 15);
@@ -67,7 +69,7 @@ class MaxTest extends QtiSmTestCase
     /**
      * @depends testInstantiation
      */
-    public function testSetAcceptedCardinalitiesWrongValue()
+    public function testSetAcceptedCardinalitiesWrongValue(): void
     {
         $expressions = new ExpressionCollection();
         $expressions[] = new BaseValue(BaseType::INTEGER, 15);
@@ -83,7 +85,7 @@ class MaxTest extends QtiSmTestCase
     /**
      * @depends testInstantiation
      */
-    public function testSetAcceptedBaseTypesWrongValue()
+    public function testSetAcceptedBaseTypesWrongValue(): void
     {
         $expressions = new ExpressionCollection();
         $expressions[] = new BaseValue(BaseType::INTEGER, 15);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
@@ -24,7 +26,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class ContainsProcessorTest extends QtiSmTestCase
 {
-    public function testPrimitiveOrderedTrailing()
+    public function testPrimitiveOrderedTrailing(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -54,7 +56,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testPrimitiveOrderedLeading()
+    public function testPrimitiveOrderedLeading(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -76,7 +78,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testPrimitiveOrderedInBetween()
+    public function testPrimitiveOrderedInBetween(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -106,7 +108,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testPrimitiveMultipleTrailing()
+    public function testPrimitiveMultipleTrailing(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -136,7 +138,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testPrimitiveMultipleLeading()
+    public function testPrimitiveMultipleLeading(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -158,7 +160,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testPrimitiveMultipleInBetween()
+    public function testPrimitiveMultipleInBetween(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -188,7 +190,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testComplexOrderedTrailing()
+    public function testComplexOrderedTrailing(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -218,7 +220,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testComplexOrderedLeading()
+    public function testComplexOrderedLeading(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -240,7 +242,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testComplexOrderedInBetween()
+    public function testComplexOrderedInBetween(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -270,7 +272,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testComplexMultipleTrailing()
+    public function testComplexMultipleTrailing(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -300,7 +302,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testComplexMultipleLeading()
+    public function testComplexMultipleLeading(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -330,7 +332,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testComplexMultipleInBetween()
+    public function testComplexMultipleInBetween(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -360,7 +362,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testMultipleOccurences()
+    public function testMultipleOccurences(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection(
@@ -374,7 +376,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([null, new MultipleContainer(BaseType::INTEGER, [new QtiInteger(25)])]);
@@ -388,7 +390,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testNotSameBaseTypeOne()
+    public function testNotSameBaseTypeOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -399,7 +401,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testNotSameBaseTypeTwo()
+    public function testNotSameBaseTypeTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -410,7 +412,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotSameCardinality()
+    public function testNotSameCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -421,7 +423,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -432,7 +434,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2)])]);
@@ -440,7 +442,7 @@ class ContainsProcessorTest extends QtiSmTestCase
         $processor = new ContainsProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -455,7 +457,7 @@ class ContainsProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<contains>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiInteger;
@@ -22,7 +24,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class IndexProcessorTest extends QtiSmTestCase
 {
-    public function testIndexNumeric()
+    public function testIndexNumeric(): void
     {
         // first trial at the trail of the collection.
         $expression = $this->createFakeExpression(1);
@@ -48,7 +50,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $this::assertEquals(5, $result->getValue());
     }
 
-    public function testIndexVariableReference()
+    public function testIndexVariableReference(): void
     {
         $expression = $this->createFakeExpression('variable1');
         $operands = new OperandsCollection();
@@ -64,7 +66,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $this::assertEquals(3, $result->getValue());
     }
 
-    public function testIndexVariableReferenceNotFound()
+    public function testIndexVariableReferenceNotFound(): void
     {
         $expression = $this->createFakeExpression('variable1');
         $operands = new OperandsCollection();
@@ -78,7 +80,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testVariableReferenceNotInteger()
+    public function testVariableReferenceNotInteger(): void
     {
         $expression = $this->createFakeExpression('variable1');
         $operands = new OperandsCollection();
@@ -92,7 +94,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testOutOfRangeOne()
+    public function testOutOfRangeOne(): void
     {
         // 1. non-zero integer
         $expression = $this->createFakeExpression(-3);
@@ -103,7 +105,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testOutOfRangeTwo()
+    public function testOutOfRangeTwo(): void
     {
         // 2. out of range
         $expression = $this->createFakeExpression(1000);
@@ -114,7 +116,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -124,7 +126,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -134,7 +136,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -142,7 +144,7 @@ class IndexProcessorTest extends QtiSmTestCase
         $processor = new IndexProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -157,7 +159,7 @@ class IndexProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression($n = -1)
+    public function createFakeExpression($n = -1): QtiComponent
     {
         if ($n === -1) {
             $n = 3;

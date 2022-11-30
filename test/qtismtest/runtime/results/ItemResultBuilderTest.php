@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ use qtismtest\QtiSmAssessmentItemTestCase;
  */
 class ItemResultBuilderTest extends QtiSmAssessmentItemTestCase
 {
-    public function testBasic()
+    public function testBasic(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginAttempt();

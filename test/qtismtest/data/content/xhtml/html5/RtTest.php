@@ -27,7 +27,7 @@ use qtismtest\QtiSmTestCase;
 
 class RtTest extends QtiSmTestCase
 {
-    const SUBJECT_QTI_CLASS_NAME = 'rt';
+    public const SUBJECT_QTI_CLASS_NAME = 'rt';
 
     public function testCreateWithValues(): void
     {

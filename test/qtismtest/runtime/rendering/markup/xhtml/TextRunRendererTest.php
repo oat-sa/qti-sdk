@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\rendering\markup\xhtml;
 
 use qtism\data\content\TextRun;
@@ -12,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TextRunRendererTest extends QtiSmTestCase
 {
-    public function testRender()
+    public function testRender(): void
     {
         $ctx = new XhtmlRenderingEngine();
         $textRun = new TextRun('test text');

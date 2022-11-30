@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use qtism\common\collections\IdentifierCollection;
@@ -34,7 +36,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
      * @throws AssessmentTestSessionException
      * @throws PhpStorageException
      */
-    public function testTestVariables(TestVariables $expression, $expectedResult)
+    public function testTestVariables(TestVariables $expression, $expectedResult): void
     {
         $session = $this->getTestSession();
 
@@ -121,7 +123,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
     /**
      * @return array
      */
-    public function variablesProvider()
+    public function variablesProvider(): array
     {
         return [
             [self::getTestVariables('SCORE'), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(1.0), new QtiFloat(3.0), new QtiFloat(2.0), new QtiFloat(0.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(0.0)])],
@@ -165,7 +167,7 @@ class TestVariablesProcessorTest extends QtiSmItemSubsetTestCase
      * @param IdentifierCollection|null $excludeCategories
      * @return TestVariables
      */
-    protected static function getTestVariables($variableIdentifier, $baseType = -1, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
+    protected static function getTestVariables($variableIdentifier, $baseType = -1, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null): TestVariables
     {
         $testVariables = new TestVariables($variableIdentifier, $baseType, $weightIdentifier);
         $testVariables->setSectionIdentifier($sectionIdentifier);

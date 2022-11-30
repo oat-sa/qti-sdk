@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators\custom;
 
 use qtism\common\datatypes\QtiInteger;
@@ -20,7 +22,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ImplodeProcessorTest extends QtiSmTestCase
 {
-    public function testNotEnoughOperandsOne()
+    public function testNotEnoughOperandsOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -31,7 +33,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperandsTwo()
+    public function testNotEnoughOperandsTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('Hello-World!')]);
@@ -42,7 +44,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(2), new QtiPoint(0, 0)]);
@@ -52,7 +54,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityOne()
+    public function testWrongCardinalityOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::STRING, [new QtiString('String!')]), new QtiString('Hello World!')]);
@@ -62,7 +64,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityTwo()
+    public function testWrongCardinalityTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('-'), new QtiString('Hello-World!')]);
@@ -72,7 +74,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNullOperands()
+    public function testNullOperands(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -82,7 +84,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testImplodeOne()
+    public function testImplodeOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('-'), new MultipleContainer(BaseType::STRING, [new QtiString('Hello'), new QtiString('World')])]);
@@ -97,7 +99,7 @@ class ImplodeProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<customOperator class="qtism.runtime.expressions.operators.custom.Implode">

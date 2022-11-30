@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\php\marshalling;
 
 use qtism\common\datatypes\QtiPair;
@@ -18,7 +20,7 @@ class PhpMarshallingUtilsTest extends QtiSmTestCase
      * @param int $occurence
      * @param string $expected
      */
-    public function testVariableName($value, $occurence, $expected)
+    public function testVariableName($value, $occurence, $expected): void
     {
         $this::assertEquals($expected, PhpMarshallingUtils::variableName($value, $occurence));
     }
@@ -26,7 +28,7 @@ class PhpMarshallingUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function variableNameDataProvider()
+    public function variableNameDataProvider(): array
     {
         return [
             [null, 0, 'scalarnullvalue_0'],

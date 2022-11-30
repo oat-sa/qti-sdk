@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +38,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ContextMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         /** @var Context $context */
         $context = $this->createComponentFromXml('
@@ -58,7 +60,7 @@ class ContextMarshallerTest extends QtiSmTestCase
         $this::assertEquals(2, $context->getSessionIdentifiers()->count());
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         /** @var Context $context */
         $context = $this->createComponentFromXml('
@@ -72,7 +74,7 @@ class ContextMarshallerTest extends QtiSmTestCase
         $this::assertFalse($context->hasSessionIdentifiers());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $sourcedId = 'fixture-sourcedId';
 
@@ -99,7 +101,7 @@ class ContextMarshallerTest extends QtiSmTestCase
         }
     }
 
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $component = new Context();
 
@@ -113,7 +115,7 @@ class ContextMarshallerTest extends QtiSmTestCase
         $this::assertFalse($element->hasChildNodes());
     }
 
-    public function testGetExpectedQtiClassName()
+    public function testGetExpectedQtiClassName(): void
     {
         $component = new Context();
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);

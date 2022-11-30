@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
@@ -27,7 +29,7 @@ use qtism\runtime\expressions\operators\OperatorProcessingException;
  */
 class RepeatProcessorTest extends QtiSmTestCase
 {
-    public function testRepeatScalarOnly()
+    public function testRepeatScalarOnly(): void
     {
         $initialVal = [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)];
         $expression = $this->createFakeExpression(1);
@@ -42,7 +44,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->equals(new OrderedContainer(BaseType::INTEGER, array_merge($initialVal, $initialVal))));
     }
 
-    public function testRepeatVariableRef()
+    public function testRepeatVariableRef(): void
     {
         $initialVal = [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)];
         $expression = $this->createFakeExpression('repeat');
@@ -54,7 +56,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->equals(new OrderedContainer(BaseType::INTEGER, array_merge($initialVal, $initialVal))));
     }
 
-    public function testRepeatVariableRefNullRef()
+    public function testRepeatVariableRefNullRef(): void
     {
         $initialVal = [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)];
         $expression = $this->createFakeExpression('repeat');
@@ -67,7 +69,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testRepeatVariableRefNonIntegerRef()
+    public function testRepeatVariableRefNonIntegerRef(): void
     {
         $initialVal = [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)];
         $expression = $this->createFakeExpression('repeat');
@@ -81,7 +83,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testOrderedOnly()
+    public function testOrderedOnly(): void
     {
         $expression = $this->createFakeExpression(2);
         $ordered1 = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)]);
@@ -94,7 +96,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $this::assertTrue($comparison->equals($result));
     }
 
-    public function testMixed()
+    public function testMixed(): void
     {
         $expression = $this->createFakeExpression(2);
         $operands = new OperandsCollection();
@@ -113,7 +115,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $this::assertTrue($comparison->equals($result));
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         // If all sub-expressions are NULL, the result is NULL.
         $expression = $this->createFakeExpression(1);
@@ -131,7 +133,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->equals($comparison));
     }
 
-    public function testWrongBaseTypeOne()
+    public function testWrongBaseTypeOne(): void
     {
         $expression = $this->createFakeExpression(1);
         $operands = new OperandsCollection();
@@ -146,7 +148,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)])]);
@@ -155,7 +157,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeTwo()
+    public function testWrongBaseTypeTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]), new QtiFloat(10.3)]);
@@ -164,7 +166,7 @@ class RepeatProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -177,7 +179,7 @@ class RepeatProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression($numberRepeats = 1)
+    public function createFakeExpression($numberRepeats = 1): QtiComponent
     {
         return $this->createComponentFromXml('
 			<repeat numberRepeats="' . $numberRepeats . '">

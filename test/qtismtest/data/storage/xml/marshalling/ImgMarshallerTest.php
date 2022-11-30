@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,7 +35,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class ImgMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $img = new Img('my/image.png', 'An Image...', 'my-img');
         $img->setClass('beautiful');
@@ -54,7 +56,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<img src="my/image.png" alt="An Image..." width="30" height="40%" longdesc="A Long Description..." xml:base="/home/jerome" id="my-img" class="beautiful" xml:lang="en-YO"/>', $dom->saveXML($element));
     }
 
-    public function testMarshall22()
+    public function testMarshall22(): void
     {
         $img = new Img('my/image.png', 'An Image...', 'my-img');
 
@@ -80,7 +82,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<img src="my/image.png" alt="An Image..." id="my-img" aria-flowsto="IDREF2" aria-owns="IDREF"/>', $dom->saveXML($element));
     }
 
-    public function testMarshall223()
+    public function testMarshall223(): void
     {
         $img = new Img('my/image.png', 'An Image...', 'my-img');
 
@@ -106,7 +108,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<img src="my/image.png" alt="An Image..." id="my-img" aria-flowto="IDREF2" aria-owns="IDREF"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
             <img xml:base="/home/jerome" src="my/image.png" alt="An Image..." width="30" height="40%" longdesc="A Long Description..." id="my-img" class="beautiful" xml:lang="en-YO" aria-owns="IDREF" aria-hidden="true"/>
@@ -134,7 +136,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $this::assertFalse($img->hasAriaHidden());
     }
 
-    public function testUnmarshall22()
+    public function testUnmarshall22(): void
     {
         $element = $this->createDOMElement('
             <img xml:base="/home/jerome" src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowsto="IDREF2" aria-hidden="true"/>
@@ -152,7 +154,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $this::assertTrue($img->getAriaHidden());
     }
 
-    public function testUnmarshall22PreferFlowsTo()
+    public function testUnmarshall22PreferFlowsTo(): void
     {
         $element = $this->createDOMElement('
             <img src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowsto="IDREF2" aria-flowto="IDREF3"/>
@@ -167,7 +169,7 @@ class ImgMarshallerTest extends QtiSmTestCase
         $this::assertEquals('IDREF2', $img->getAriaFlowTo());
     }
 
-    public function testUnmarshall22FallbackFlowTo()
+    public function testUnmarshall22FallbackFlowTo(): void
     {
         $element = $this->createDOMElement('
             <img src="my/image.png" alt="An Image..." aria-owns="IDREF" aria-flowto="IDREF3"/>
@@ -186,7 +188,7 @@ class ImgMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshallPercentage()
+    public function testUnmarshallPercentage(): void
     {
         $element = $this->createDOMElement('
             <img src="my/image.png" alt="An Image..." width="30%" height="40%"/>
@@ -202,7 +204,7 @@ class ImgMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshallMissingSrc()
+    public function testUnmarshallMissingSrc(): void
     {
         $element = $this->createDOMElement('
             <img/>

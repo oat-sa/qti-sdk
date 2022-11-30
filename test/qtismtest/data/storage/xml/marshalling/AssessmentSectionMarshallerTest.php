@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -23,7 +25,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class AssessmentSectionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $identifier = 'myAssessmentSection';
         $title = 'A Minimal Assessment Section';
@@ -43,7 +45,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertEquals(0, $element->getElementsByTagName('assessmentItemRef')->length);
     }
 
-    public function testMarshallNotRecursive()
+    public function testMarshallNotRecursive(): void
     {
         $identifier = 'myAssessmentSection';
         $title = 'A non Recursive Assessment Section';
@@ -100,7 +102,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('S01', $element->getElementsByTagName('assessmentSectionRef')->item(0)->getAttribute('identifier'));
     }
 
-    public function testMarshallRecursive()
+    public function testMarshallRecursive(): void
     {
         // sub1
         $identifier = 'sub1AssessmentSection';
@@ -172,7 +174,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertSame($sub2Elt, $sub22Elt->parentNode);
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -192,7 +194,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertCount(0, $component->getSectionParts());
     }
 
-    public function testUnmarshallNotRecursive()
+    public function testUnmarshallNotRecursive(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -254,7 +256,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshallNotRecursive
      */
-    public function testUnmarshallNotRecursiveZeroSelection()
+    public function testUnmarshallNotRecursiveZeroSelection(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -283,7 +285,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertFalse($component->hasSelection());
     }
 
-    public function testUnmarshallRecursive()
+    public function testUnmarshallRecursive(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -336,7 +338,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('S01', $subSectionParts['S01']->getIdentifier());
     }
 
-    public function testUnmarshallOneSectionAssessmentItemRefOnly()
+    public function testUnmarshallOneSectionAssessmentItemRefOnly(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -359,7 +361,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertCount(3, $assessmentItemRefs);
     }
 
-    public function testUnmarshallDecorated()
+    public function testUnmarshallDecorated(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<assessmentSection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myAssessmentSection" title="A Minimal Assessment Section" visible="true"/>');
@@ -377,7 +379,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $this::assertFalse($decorated->isVisible());
     }
 
-    public function testUnmarshallMissingVisibleAttribute()
+    public function testUnmarshallMissingVisibleAttribute(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -395,7 +397,7 @@ class AssessmentSectionMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallMissingTitleAttribute()
+    public function testUnmarshallMissingTitleAttribute(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

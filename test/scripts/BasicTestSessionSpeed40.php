@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\enums\BaseType;
@@ -27,7 +29,7 @@ require_once(__DIR__ . '/../../vendor/autoload.php');
  * @return QtiComponent
  * @throws PhpStorageException
  */
-function loadTestDefinition(array &$average = null)
+function loadTestDefinition(array &$average = null): QtiComponent
 {
     $start = microtime();
 
@@ -44,7 +46,7 @@ function loadTestDefinition(array &$average = null)
 /**
  * @return SessionManager
  */
-function createFactory()
+function createFactory(): SessionManager
 {
     return new SessionManager(new FileSystemFileManager());
 }
@@ -54,7 +56,7 @@ function createFactory()
  * @param AssessmentTest $test
  * @return LocalQtiBinaryStorage
  */
-function createStorage(SessionManager $factory, AssessmentTest $test)
+function createStorage(SessionManager $factory, AssessmentTest $test): LocalQtiBinaryStorage
 {
     return new LocalQtiBinaryStorage($factory, $test);
 }
@@ -65,7 +67,7 @@ function createStorage(SessionManager $factory, AssessmentTest $test)
  * @param array|null $registration
  * @return mixed
  */
-function spentTime($start, $end, array &$registration = null)
+function spentTime($start, $end, array &$registration = null): mixed
 {
     $startTime = explode(' ', $start);
     $endTime = explode(' ', $end);
@@ -84,7 +86,7 @@ function spentTime($start, $end, array &$registration = null)
  * @param array|null $average
  * @throws AssessmentTestSessionException
  */
-function attempt(AssessmentTestSession $session, $identifier, array &$average = null)
+function attempt(AssessmentTestSession $session, $identifier, array &$average = null): void
 {
     $start = microtime();
 
@@ -103,7 +105,7 @@ function attempt(AssessmentTestSession $session, $identifier, array &$average = 
  * @return mixed
  * @throws StorageException
  */
-function retrieve(AbstractStorage $storage, $sessionId, array &$average = null)
+function retrieve(AbstractStorage $storage, $sessionId, array &$average = null): mixed
 {
     $start = microtime();
 
@@ -122,7 +124,7 @@ function retrieve(AbstractStorage $storage, $sessionId, array &$average = null)
  * @param null $average
  * @throws StorageException
  */
-function persist(AbstractStorage $storage, AssessmentTestSession $session, &$average = null)
+function persist(AbstractStorage $storage, AssessmentTestSession $session, &$average = null): void
 {
     $start = microtime();
 
@@ -140,7 +142,7 @@ function persist(AbstractStorage $storage, AssessmentTestSession $session, &$ave
  * @throws AssessmentTestSessionException
  * @throws PhpStorageException
  */
-function moveNext(AssessmentTestSession $session, array &$average)
+function moveNext(AssessmentTestSession $session, array &$average): void
 {
     $start = microtime();
 
@@ -155,7 +157,7 @@ function moveNext(AssessmentTestSession $session, array &$average)
  * @param AssessmentTestSession $session
  * @param array|null $average
  */
-function neighbourhood(AssessmentTestSession $session, array &$average = null)
+function neighbourhood(AssessmentTestSession $session, array &$average = null): void
 {
     $start = microtime();
     $neighbourhood = $session->getPossibleJumps();

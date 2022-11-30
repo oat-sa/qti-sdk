@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class RandomFloatMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $min = 1;
         $max = '{tplVariable1}';
@@ -21,7 +23,7 @@ class RandomFloatMarshallerTest extends QtiSmTestCase
         $this::assertTrue(true);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<randomFloat xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" min="1.3" max="{tplVariable1}"/>');

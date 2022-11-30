@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data;
 
 use OutOfRangeException;
@@ -13,7 +15,7 @@ use UnexpectedValueException;
  */
 class QtiIdentifiableCollectionTest extends QtiSmTestCase
 {
-    public function testWithWeights()
+    public function testWithWeights(): void
     {
         $weight1 = new Weight('weight1', 1.0);
         $weight2 = new Weight('weight2', 1.1);
@@ -45,7 +47,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
     /**
      * @depends testWithWeights
      */
-    public function testReplace()
+    public function testReplace(): void
     {
         $weight1 = new Weight('weight1', 1.0);
         $weight2 = new Weight('weight2', 1.1);
@@ -84,7 +86,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
     /**
      * @depends testReplace
      */
-    public function testReplaceNotFound()
+    public function testReplaceNotFound(): void
     {
         $weight1 = new Weight('weight1', 1.0);
         $weight2 = new Weight('weight2', 1.2);
@@ -100,7 +102,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
     /**
      * @depends testWithWeights
      */
-    public function testEventsUnset()
+    public function testEventsUnset(): void
     {
         $weight1 = new Weight('weight1', 1.0);
         $weight2 = new Weight('weight2', 1.2);
@@ -125,7 +127,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
         $this::assertNotSame($weight1, $weights['weight2']);
     }
 
-    public function testRenamingOrder()
+    public function testRenamingOrder(): void
     {
         $weight1 = new Weight('weight1', 1.0);
         $weight2 = new Weight('weight2', 1.2);
@@ -146,7 +148,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
         );
     }
 
-    public function testOffsetGetNonString()
+    public function testOffsetGetNonString(): void
     {
         $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage('The requested offset must be a non-empty string.');
@@ -155,7 +157,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
         $val = $collection[0];
     }
 
-    public function testOffsetSetNonNull()
+    public function testOffsetSetNonNull(): void
     {
         $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage("No specific offset can be set in a QtiIdentifiableCollection. The offset is always infered from the 'identifier' attribute of the given QtiIdentifiable object. Given offset is 'offset'.");
@@ -164,7 +166,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
         $val = $collection['offset'] = new Weight('weight1', 1.0);
     }
 
-    public function testOffsetUnsetNonString()
+    public function testOffsetUnsetNonString(): void
     {
         $this->expectException(OutOfRangeException::class);
         $this->expectExceptionMessage('The requested offset must be a non-empty string.');
@@ -173,7 +175,7 @@ class QtiIdentifiableCollectionTest extends QtiSmTestCase
         unset($collection[0]);
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         $collection = new WeightCollection();
         $w01 = new Weight('W01', 1.0);

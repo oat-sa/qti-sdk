@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -57,7 +59,7 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
      * @throws PhpStorageException
      * @throws XmlStorageException
      */
-    public function testCompletion($testFile, $identifiers, $finalNumberCompleted)
+    public function testCompletion($testFile, $identifiers, $finalNumberCompleted): void
     {
         $session = self::instantiate($testFile);
         $session->beginTestSession();
@@ -100,7 +102,7 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
     /**
      * @return array
      */
-    public function completionPureLinearProvider()
+    public function completionPureLinearProvider(): array
     {
         return [
             [self::samplesDir() . '/custom/runtime/linear_5_items.xml', ['skip', 'skip', 'skip', 'skip', 'skip'], 5],

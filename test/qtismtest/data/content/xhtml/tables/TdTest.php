@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\content\xhtml\tables;
 
 use InvalidArgumentException;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TdTest extends QtiSmTestCase
 {
-    public function testSetScopeWrongValue()
+    public function testSetScopeWrongValue(): void
     {
         $td = new Td();
 
@@ -21,7 +23,7 @@ class TdTest extends QtiSmTestCase
         $td->setScope(true);
     }
 
-    public function testSetAbbrWrongType()
+    public function testSetAbbrWrongType(): void
     {
         $td = new Td();
 
@@ -31,7 +33,7 @@ class TdTest extends QtiSmTestCase
         $td->setAbbr(true);
     }
 
-    public function testSetAxisWrongType()
+    public function testSetAxisWrongType(): void
     {
         $td = new Td();
 
@@ -41,7 +43,7 @@ class TdTest extends QtiSmTestCase
         $td->setAxis(true);
     }
 
-    public function testSetRowspanWrongType()
+    public function testSetRowspanWrongType(): void
     {
         $td = new Td();
 
@@ -51,7 +53,7 @@ class TdTest extends QtiSmTestCase
         $td->setRowspan(true);
     }
 
-    public function testSetColspanWrongType()
+    public function testSetColspanWrongType(): void
     {
         $td = new Td();
 

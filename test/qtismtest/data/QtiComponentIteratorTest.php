@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data;
 
 use qtism\common\enums\BaseType;
@@ -16,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class QtiComponentIteratorTest extends QtiSmTestCase
 {
-    public function testSimple()
+    public function testSimple(): void
     {
         $baseValues = new ExpressionCollection();
         $baseValues[] = new BaseValue(BaseType::FLOAT, 0.5);
@@ -38,7 +40,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
         $this::assertNull($iterator->parent());
     }
 
-    public function testOneChildComponents()
+    public function testOneChildComponents(): void
     {
         $baseValues = new ExpressionCollection();
         $baseValues[] = new BaseValue(BaseType::FLOAT, 0.5);
@@ -57,7 +59,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
         }
     }
 
-    public function testOneChildComponentsByClassName()
+    public function testOneChildComponentsByClassName(): void
     {
         $baseValues = new ExpressionCollection();
         $baseValues[] = new BaseValue(BaseType::FLOAT, 0.5);
@@ -72,7 +74,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
         $this::assertEquals(1, $iterations);
     }
 
-    public function testNoChildComponents()
+    public function testNoChildComponents(): void
     {
         $baseValue = new BaseValue(BaseType::FLOAT, 10);
         $iterator = new QtiComponentIterator($baseValue);
@@ -86,7 +88,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
         $this::assertNull($iterator->current());
     }
 
-    public function testAvoidRecursions()
+    public function testAvoidRecursions(): void
     {
         $baseValues = new ExpressionCollection();
         $baseValues[] = new BaseValue(BaseType::FLOAT, 0.5);
@@ -113,7 +115,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
      * @param array $classNames
      * @throws XmlStorageException
      */
-    public function testClassSelection($file, $iterations, array $classNames)
+    public function testClassSelection($file, $iterations, array $classNames): void
     {
         $doc = new XmlCompactDocument();
         $doc->load($file);
@@ -138,7 +140,7 @@ class QtiComponentIteratorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function classSelectionProvider()
+    public function classSelectionProvider(): array
     {
         $dir = self::samplesDir();
 

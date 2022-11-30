@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiInteger;
@@ -12,7 +14,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class RandomIntegerProcessorTest extends QtiSmTestCase
 {
-    public function testSimple()
+    public function testSimple(): void
     {
         $randomIntegerExpr = $this->createComponentFromXml('<randomInteger max="100"/>');
         $randomIntegerProcessor = new RandomIntegerProcessor($randomIntegerExpr);
@@ -38,7 +40,7 @@ class RandomIntegerProcessorTest extends QtiSmTestCase
         $this::assertEquals(0, $result->getValue() % 4);
     }
 
-    public function testMinLessThanMax()
+    public function testMinLessThanMax(): void
     {
         $expression = $this->createComponentFromXml('<randomInteger min="100" max="10"/>');
         $processor = new RandomIntegerProcessor($expression);

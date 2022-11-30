@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -12,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal21()
+    public function testMarshallMinimal21(): void
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($extendedTextInteraction)->marshall($extendedTextInteraction);
@@ -22,7 +24,7 @@ class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<extendedTextInteraction responseIdentifier="RESPONSE"/>', $dom->saveXML($element));
     }
 
-    public function testMarshallMaximal21()
+    public function testMarshallMaximal21(): void
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
         $extendedTextInteraction->setBase(2);
@@ -41,7 +43,7 @@ class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<extendedTextInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..." maxStrings="10" minStrings="2" expectedLines="1" format="preFormatted"/>', $dom->saveXML($element));
     }
 
-    public function testMarshallNoOutputMinStringsFormat20()
+    public function testMarshallNoOutputMinStringsFormat20(): void
     {
         // Make sure minStrings and format attributes are never
         // in the output in a QTI 2.0 context.
@@ -55,7 +57,7 @@ class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<extendedTextInteraction responseIdentifier="RESPONSE"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallMinimal21()
+    public function testUnmarshallMinimal21(): void
     {
         $element = $this->createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE"/>');
         $extendedTextInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
@@ -69,7 +71,7 @@ class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
         $this::assertFalse($extendedTextInteraction->hasPlaceholderText());
     }
 
-    public function testUnmarshallMaximal21()
+    public function testUnmarshallMaximal21(): void
     {
         $element = $this->createDOMElement('<extendedTextInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..." maxStrings="10" minStrings="2" expectedLines="1" format="preFormatted"/>');
         $extendedTextInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
@@ -92,7 +94,7 @@ class ExtendedTextInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals(TextFormat::PRE_FORMATTED, $extendedTextInteraction->getFormat());
     }
 
-    public function testUnmarshallNoInfluenceMinStringsFormat20()
+    public function testUnmarshallNoInfluenceMinStringsFormat20(): void
     {
         // Make sure minStrings and format have no influcence
         // in a QTI 2.0 context.

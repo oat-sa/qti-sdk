@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\content;
 
 use qtism\common\dom\SerializableDomDocument;
@@ -13,7 +15,7 @@ use RuntimeException;
  */
 class MathTest extends QtiSmTestCase
 {
-    public function testMalformedXml()
+    public function testMalformedXml(): void
     {
         $xml = '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML"></m:mathS>';
         $math = new Math($xml);
@@ -22,7 +24,7 @@ class MathTest extends QtiSmTestCase
         $dom = $math->getXml();
     }
 
-    public function testWrongNamespace()
+    public function testWrongNamespace(): void
     {
         $xml = '<m:math xmlns:m="http://www.w3.org/1998/Math/YogourtML"></m:math>';
         $math = new Math($xml);
@@ -31,7 +33,7 @@ class MathTest extends QtiSmTestCase
         $dom = $math->getXml();
     }
 
-    public function testCorrect()
+    public function testCorrect(): void
     {
         $xml = '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML"></m:math>';
         $math = new Math($xml);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExitTemplateMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $exitTemplate = new ExitTemplate();
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($exitTemplate)->marshall($exitTemplate);
@@ -21,7 +23,7 @@ class ExitTemplateMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<exitTemplate/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('<exitTemplate/>');
 

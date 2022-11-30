@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\runtime\expressions\operators\Utils as OperatorsUtils;
@@ -18,7 +20,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @param int $b
      * @param int $expected
      */
-    public function testGcd($a, $b, $expected)
+    public function testGcd($a, $b, $expected): void
     {
         $result = OperatorsUtils::gcd($a, $b);
         $this::assertIsInt($result);
@@ -32,7 +34,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @param int $b
      * @param int $expected
      */
-    public function testLcm($a, $b, $expected)
+    public function testLcm($a, $b, $expected): void
     {
         $result = OperatorsUtils::lcm($a, $b);
         $this::assertIsInt($result);
@@ -45,7 +47,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @param array $sample
      * @param number $expected
      */
-    public function testMean(array $sample, $expected)
+    public function testMean(array $sample, $expected): void
     {
         $result = OperatorsUtils::mean($sample);
         $this::assertSame($expected, $result);
@@ -58,7 +60,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @param bool Apply Bessel's correction?
      * @param number $expected
      */
-    public function testVariance(array $sample, $correction, $expected)
+    public function testVariance(array $sample, $correction, $expected): void
     {
         $result = OperatorsUtils::variance($sample, $correction);
         $this::assertSame($expected, $result);
@@ -71,7 +73,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @param bool Apply Bessel's standard correction?
      * @param number $expected
      */
-    public function testStandardDeviation(array $sample, $correction, $expected)
+    public function testStandardDeviation(array $sample, $correction, $expected): void
     {
         $result = OperatorsUtils::standardDeviation($sample, $correction);
 
@@ -89,7 +91,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @param int $offset
      * @param int $expected Expected preceding backslashes count.
      */
-    public function testGetPrecedingBackslashesCount($string, $offset, $expected)
+    public function testGetPrecedingBackslashesCount($string, $offset, $expected): void
     {
         $this::assertSame($expected, OperatorsUtils::getPrecedingBackslashesCount($string, $offset));
     }
@@ -100,7 +102,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @param string $string
      * @param string $expected
      */
-    public function testPregAddDelimiter($string, $expected)
+    public function testPregAddDelimiter($string, $expected): void
     {
         $this::assertSame($expected, OperatorsUtils::pregAddDelimiter($string));
     }
@@ -112,7 +114,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @param array|string $symbols
      * @param string $expected
      */
-    public function testEscapeSymbols($string, $symbols, $expected)
+    public function testEscapeSymbols($string, $symbols, $expected): void
     {
         $this::assertSame($expected, OperatorsUtils::escapeSymbols($string, $symbols));
     }
@@ -123,7 +125,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @param string $customClass
      * @param string $expected
      */
-    public function testValidCustomOperatorClassToPhpClass($customClass, $expected)
+    public function testValidCustomOperatorClassToPhpClass($customClass, $expected): void
     {
         $this::assertEquals($expected, OperatorsUtils::customOperatorClassToPhpClass($customClass));
     }
@@ -133,7 +135,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      *
      * @param string $customClass
      */
-    public function testInvalidCustomOperatorClassToPhpClass($customClass)
+    public function testInvalidCustomOperatorClassToPhpClass($customClass): void
     {
         $this::assertFalse(OperatorsUtils::customOperatorClassToPhpClass($customClass));
     }
@@ -146,7 +148,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
      * @param string $message
      * @param int $recursionLimit
      */
-    public function testLastPregErrorMessage($pcre, $subject, $message, $recursionLimit = 0)
+    public function testLastPregErrorMessage($pcre, $subject, $message, $recursionLimit = 0): void
     {
         if ($recursionLimit > 0) {
             $prevRecursionLimit = ini_get('pcre.recursion_limit');
@@ -165,7 +167,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @dataProvider patternForPcreProvider
      */
-    public function testPrepareXsdPatternForPcre($pattern, $expected)
+    public function testPrepareXsdPatternForPcre($pattern, $expected): void
     {
         $this->assertEquals($expected, OperatorsUtils::prepareXsdPatternForPcre($pattern));
     }
@@ -173,7 +175,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function pregAddDelimiterProvider()
+    public function pregAddDelimiterProvider(): array
     {
         return [
             ['', '//'],
@@ -193,7 +195,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function escapeSymbolsProvider()
+    public function escapeSymbolsProvider(): array
     {
         return [
             ['10$ are 10$', ['$', '^'], '10\\$ are 10\\$'],
@@ -207,7 +209,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function getPrecedingBackslashesCountProvider()
+    public function getPrecedingBackslashesCountProvider(): array
     {
         return [
             ['', 0, 0],
@@ -224,7 +226,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function gcdProvider()
+    public function gcdProvider(): array
     {
         return [
             [60, 330, 30],
@@ -239,7 +241,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function lcmProvider()
+    public function lcmProvider(): array
     {
         return [
             [4, 3, 12],
@@ -253,7 +255,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function meanProvider()
+    public function meanProvider(): array
     {
         return [
             [[], false],
@@ -273,7 +275,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function varianceProvider()
+    public function varianceProvider(): array
     {
         return [
             // [0] = sample; [1] = Bessel's correction, [2] = expected result
@@ -292,7 +294,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function standardDeviationProvider()
+    public function standardDeviationProvider(): array
     {
         // The equality test will be done with 2 significant figures.
         return [
@@ -310,7 +312,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validCustomOperatorClassToPhpClassProvider()
+    public function validCustomOperatorClassToPhpClassProvider(): array
     {
         return [
             ['com.taotesting.operators.custom.explode', "com\\taotesting\\operators\\custom\\Explode"],
@@ -322,7 +324,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function invalidCustomOperatorClassToPhpClassProvider()
+    public function invalidCustomOperatorClassToPhpClassProvider(): array
     {
         return [
             ['taotesting'],
@@ -336,7 +338,7 @@ class OperatorsUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function lastPregErrorMessageProvider()
+    public function lastPregErrorMessageProvider(): array
     {
         return [
             ['', 'foobar', 'PCRE Engine internal error'],

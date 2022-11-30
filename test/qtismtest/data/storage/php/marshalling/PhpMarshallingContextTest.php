@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\php\marshalling;
 
 use InvalidArgumentException;
@@ -27,7 +29,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
     /**
      * @param PhpStreamAccess $streamAccess
      */
-    protected function setStreamAccess(PhpStreamAccess $streamAccess)
+    protected function setStreamAccess(PhpStreamAccess $streamAccess): void
     {
         $this->streamAccess = $streamAccess;
     }
@@ -35,7 +37,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
     /**
      * @return mixed
      */
-    protected function getStreamAccess()
+    protected function getStreamAccess(): mixed
     {
         return $this->streamAccess;
     }
@@ -57,7 +59,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
         unset($streamAccess);
     }
 
-    public function testPhpMarshallingContext()
+    public function testPhpMarshallingContext(): void
     {
         $ctx = new PhpMarshallingContext($this->getStreamAccess());
         $this::assertFalse($ctx->mustFormatOutput());
@@ -74,7 +76,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
         $this::assertInstanceOf(PhpStreamAccess::class, $ctx->getStreamAccess());
     }
 
-    public function testPhpMarshallingTooLargeQuantity()
+    public function testPhpMarshallingTooLargeQuantity(): void
     {
         $ctx = new PhpMarshallingContext($this->getStreamAccess());
         $ctx->pushOnVariableStack(['foo', 'bar', '2000']);
@@ -87,7 +89,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
         }
     }
 
-    public function testPhpMarshallingEmptyStack()
+    public function testPhpMarshallingEmptyStack(): void
     {
         $ctx = new PhpMarshallingContext($this->getStreamAccess());
 
@@ -99,7 +101,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
         }
     }
 
-    public function testWrongQuantity()
+    public function testWrongQuantity(): void
     {
         $ctx = new PhpMarshallingContext($this->getStreamAccess());
         $ctx->pushOnVariableStack('foo');
@@ -112,7 +114,7 @@ class PhpMarshallingContextTest extends QtiSmTestCase
         }
     }
 
-    public function testGenerateVariableName()
+    public function testGenerateVariableName(): void
     {
         $ctx = new PhpMarshallingContext($this->getStreamAccess());
 

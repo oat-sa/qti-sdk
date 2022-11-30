@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\rules;
 
 use qtism\common\enums\BaseType;
@@ -14,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class RuleEngineTest extends QtiSmTestCase
 {
-    public function testSetOutcomeValue()
+    public function testSetOutcomeValue(): void
     {
         $rule = $this->createComponentFromXml('
 			<setOutcomeValue identifier="outcome1">
@@ -32,7 +34,7 @@ class RuleEngineTest extends QtiSmTestCase
         $this::assertEquals(1337, $context['outcome1']->getValue());
     }
 
-    public function testLookupOutcomeValue()
+    public function testLookupOutcomeValue(): void
     {
         $rule = $this->createComponentFromXml('
 			<lookupOutcomeValue identifier="outcome1">

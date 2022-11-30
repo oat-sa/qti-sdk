@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data;
 
 use InvalidArgumentException;
@@ -12,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TestFeedbackTest extends QtiSmTestCase
 {
-    public function testSetAccessWrongType()
+    public function testSetAccessWrongType(): void
     {
         $testFeedback = new TestFeedback('IDENTIFIER', 'OUTCOMEIDENTIFIER', new FlowStaticCollection());
 
@@ -22,7 +24,7 @@ class TestFeedbackTest extends QtiSmTestCase
         $testFeedback->setAccess(true);
     }
 
-    public function testSetOutcomeIdentifierWrongType()
+    public function testSetOutcomeIdentifierWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
@@ -30,7 +32,7 @@ class TestFeedbackTest extends QtiSmTestCase
         $testFeedback = new TestFeedback('IDENTIFIER', 999, new FlowStaticCollection());
     }
 
-    public function testSetShowHideWrongType()
+    public function testSetShowHideWrongType(): void
     {
         $testFeedback = new TestFeedback('IDENTIFIER', 'OUTCOMEIDENTIFIER', new FlowStaticCollection());
 
@@ -40,7 +42,7 @@ class TestFeedbackTest extends QtiSmTestCase
         $testFeedback->setShowHide(true);
     }
 
-    public function testSetIdentifierWrongType()
+    public function testSetIdentifierWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
@@ -48,7 +50,7 @@ class TestFeedbackTest extends QtiSmTestCase
         $testFeedback = new TestFeedback(999, 'OUTCOMEIDENTIFIER', new FlowStaticCollection());
     }
 
-    public function testSetTitleWrongType()
+    public function testSetTitleWrongType(): void
     {
         $testFeedback = new TestFeedback('IDENTIFIER', 'OUTCOMEIDENTIFIER', new FlowStaticCollection());
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiDuration;
@@ -19,7 +21,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class IntegerModulusProcessorTest extends QtiSmTestCase
 {
-    public function testIntegerModulus()
+    public function testIntegerModulus(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(5)]);
@@ -41,7 +43,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $this::assertEquals(1, $result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([null, new QtiInteger(5)]);
@@ -50,7 +52,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testModulusByZero()
+    public function testModulusByZero(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(50), new QtiInteger(0)]);
@@ -59,7 +61,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]), new QtiInteger(5)]);
@@ -68,7 +70,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeOne()
+    public function testWrongBaseTypeOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('ping!'), new QtiInteger(5)]);
@@ -77,7 +79,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeTwo()
+    public function testWrongBaseTypeTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(5), new QtiDuration('P1D')]);
@@ -86,7 +88,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(5)]);
@@ -94,7 +96,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
         $processor = new IntegerModulusProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(5), new QtiInteger(5), new QtiInteger(5)]);
@@ -106,7 +108,7 @@ class IntegerModulusProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<integerModulus>

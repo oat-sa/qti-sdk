@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\storage\binary;
 
 use qtism\common\collections\IdentifierCollection;
@@ -78,7 +80,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
      * @throws MemoryStreamException
      * @throws StreamAccessException
      */
-    public function testReadVariableValue(Variable $variable, $binary, $expectedValue, $valueType = QtiBinaryStreamAccess::RW_VALUE)
+    public function testReadVariableValue(Variable $variable, $binary, $expectedValue, $valueType = QtiBinaryStreamAccess::RW_VALUE): void
     {
         $stream = new MemoryStream($binary);
         $stream->open();
@@ -122,7 +124,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     /**
      * @return array
      */
-    public function readVariableValueProvider()
+    public function readVariableValueProvider(): array
     {
         $returnValue = [];
 
@@ -475,7 +477,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         return $returnValue;
     }
 
-    public function testReadVariableValueEmptyStream()
+    public function testReadVariableValueEmptyStream(): void
     {
         // Empty stream.
         $stream = new MemoryStream('');
@@ -491,7 +493,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         );
     }
 
-    public function testReadVariableValueTypeMismatch()
+    public function testReadVariableValueTypeMismatch(): void
     {
         // 'XYZ' is not a valid duration datatype.
         $bin = "\x00" . "\x01" . pack('S', 3) . 'XYZ';
@@ -519,7 +521,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
      * @throws MemoryStreamException
      * @throws StreamAccessException
      */
-    public function testWriteVariableValue(Variable $variable, $valueType = QtiBinaryStreamAccess::RW_VALUE)
+    public function testWriteVariableValue(Variable $variable, $valueType = QtiBinaryStreamAccess::RW_VALUE): void
     {
         $stream = new MemoryStream();
         $stream->open();
@@ -581,7 +583,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     /**
      * @return array
      */
-    public function writeVariableValueProvider()
+    public function writeVariableValueProvider(): array
     {
         $rw_value = QtiBinaryStreamAccess::RW_VALUE;
         $rw_defaultValue = QtiBinaryStreamAccess::RW_DEFAULTVALUE;
@@ -895,7 +897,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         return $data;
     }
 
-    public function testWriteVariableValueClosedStream()
+    public function testWriteVariableValueClosedStream(): void
     {
         $stream = new MemoryStream();
         $stream->open();
@@ -910,7 +912,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeVariableValue($var, $type);
     }
 
-    public function testReadAssessmentItemSession1()
+    public function testReadAssessmentItemSession1(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -972,7 +974,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     /**
      * @depends testReadAssessmentItemSession1
      */
-    public function testReadAssessmentItemSession2()
+    public function testReadAssessmentItemSession2(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/templatevariables_in_items.xml');
@@ -1047,7 +1049,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     /**
      * @depends testReadAssessmentItemSession1
      */
-    public function testReadAssessmentItemSession3()
+    public function testReadAssessmentItemSession3(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/templatevariables_in_items.xml');
@@ -1144,7 +1146,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertSame(10, $session['TPL']->getValue());
     }
 
-    public function testReadAssessmentItemSession4()
+    public function testReadAssessmentItemSession4(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -1192,7 +1194,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals('ChoiceA', $session['RESPONSE']->getValue());
     }
 
-    public function testWriteAssessmentItemSession1()
+    public function testWriteAssessmentItemSession1(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -1223,7 +1225,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertFalse($session->hasTimeReference());
     }
 
-    public function testWriteAssessmentItemSession2()
+    public function testWriteAssessmentItemSession2(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/templatevariables_in_items.xml');
@@ -1255,7 +1257,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertFalse($session->hasTimeReference());
     }
 
-    public function testWriteAssessmentItemSession()
+    public function testWriteAssessmentItemSession(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -1289,7 +1291,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     /**
      * @depends testWriteAssessmentItemSession
      */
-    public function testWriteAssessmentItemSessionNotDefaultItemSessionControl()
+    public function testWriteAssessmentItemSessionNotDefaultItemSessionControl(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -1321,7 +1323,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     /**
      * @depends testWriteAssessmentItemSession
      */
-    public function testWriteAssessmentItemSessionCorrectResponseChanged()
+    public function testWriteAssessmentItemSessionCorrectResponseChanged(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -1356,7 +1358,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     /**
      * @depends testWriteAssessmentItemSession
      */
-    public function testWriteAssessmentItemSessionWithShufflingState()
+    public function testWriteAssessmentItemSessionWithShufflingState(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -1388,7 +1390,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     /**
      * @depends testWriteAssessmentItemSession
      */
-    public function testWriteAssessmentItemSessionWrongSeeker()
+    public function testWriteAssessmentItemSessionWrongSeeker(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -1410,7 +1412,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($wrongSeeker, $session);
     }
 
-    public function testWriteAssessmentItemSessionClosedStream()
+    public function testWriteAssessmentItemSessionClosedStream(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -1431,7 +1433,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeAssessmentItemSession($seeker, $session);
     }
 
-    public function testReadRouteItem()
+    public function testReadRouteItem(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -1460,7 +1462,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertCount(0, $routeItem->getPreConditions());
     }
 
-    public function testWriteRouteItem()
+    public function testWriteRouteItem(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -1490,7 +1492,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertCount(0, $routeItem->getPreConditions());
     }
 
-    public function testReadPendingResponses()
+    public function testReadPendingResponses(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
@@ -1520,7 +1522,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertIsInt($pendingResponses->getOccurence());
     }
 
-    public function testWritePendingResponses()
+    public function testWritePendingResponses(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
@@ -1551,7 +1553,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertIsInt($pendingResponses->getOccurence());
     }
 
-    public function testReadShufflingGroup()
+    public function testReadShufflingGroup(): void
     {
         $bin = '';
         $bin .= "\x03"; // identifier-count = 3
@@ -1570,7 +1572,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals(['id2'], $shufflingGroup->getFixedIdentifiers()->getArrayCopy());
     }
 
-    public function testReadShufflingGroupEmptyStream()
+    public function testReadShufflingGroupEmptyStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1582,7 +1584,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $shufflingGroup = $access->readShufflingGroup();
     }
 
-    public function testWriteShufflingGroup()
+    public function testWriteShufflingGroup(): void
     {
         $shufflingGroup = new ShufflingGroup(new IdentifierCollection(['id1', 'id2', 'id3']));
         $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(['id2']));
@@ -1599,7 +1601,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals(['id2'], $shufflingGroup->getFixedIdentifiers()->getArrayCopy());
     }
 
-    public function testWriteShufflingGroupClosedStream()
+    public function testWriteShufflingGroupClosedStream(): void
     {
         $shufflingGroup = new ShufflingGroup(new IdentifierCollection(['id1', 'id2', 'id3']));
         $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(['id2']));
@@ -1615,7 +1617,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $shufflingGroup = $access->writeShufflingGroup($shufflingGroup);
     }
 
-    public function testReadShufflingState()
+    public function testReadShufflingState(): void
     {
         $bin = '';
 
@@ -1643,7 +1645,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals(['id2'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
 
-    public function testReadShufflingStateEmptyStream()
+    public function testReadShufflingStateEmptyStream(): void
     {
         $stream = new MemoryStream();
         $stream->open();
@@ -1655,7 +1657,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $shufflingGroup = $access->readShufflingState();
     }
 
-    public function testWriteShufflingState()
+    public function testWriteShufflingState(): void
     {
         $shufflingGroup = new ShufflingGroup(new IdentifierCollection(['id1', 'id2', 'id3']));
         $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(['id2']));
@@ -1677,7 +1679,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals(['id2'], $shufflingGroups[0]->getFixedIdentifiers()->getArrayCopy());
     }
 
-    public function testWriteShufflingStateClosedStream()
+    public function testWriteShufflingStateClosedStream(): void
     {
         $shufflingGroup = new ShufflingGroup(new IdentifierCollection(['id1', 'id2', 'id3']));
         $shufflingGroup->setFixedIdentifiers(new IdentifierCollection(['id2']));
@@ -1696,7 +1698,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $shufflingGroup = $access->writeShufflingState($shuffling);
     }
 
-    public function testReadRecordFieldEmptyStream()
+    public function testReadRecordFieldEmptyStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1708,7 +1710,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->readRecordField();
     }
 
-    public function testWriteRecordFieldClosedStream()
+    public function testWriteRecordFieldClosedStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1721,7 +1723,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeRecordField(['key', new QtiString('string')]);
     }
 
-    public function testReadIdentifierEmptyStream()
+    public function testReadIdentifierEmptyStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1733,7 +1735,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->readIdentifier();
     }
 
-    public function testWriteIdentifierClosedStream()
+    public function testWriteIdentifierClosedStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1746,7 +1748,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeIdentifier('identifier');
     }
 
-    public function testReadPointEmptyStream()
+    public function testReadPointEmptyStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1758,7 +1760,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->readPoint();
     }
 
-    public function testWritePointClosedStream()
+    public function testWritePointClosedStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1771,7 +1773,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writePoint(new QtiPoint(0, 0));
     }
 
-    public function testReadPairEmptyStream()
+    public function testReadPairEmptyStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1783,7 +1785,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->readPair();
     }
 
-    public function testWritePairClosedStream()
+    public function testWritePairClosedStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1796,7 +1798,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writePair(new QtiPair('A', 'B'));
     }
 
-    public function testReadDirectedPairEmptyStream()
+    public function testReadDirectedPairEmptyStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1808,7 +1810,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->readDirectedPair();
     }
 
-    public function testWriteDirectedPairClosedStream()
+    public function testWriteDirectedPairClosedStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1821,7 +1823,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeDirectedPair(new QtiDirectedPair('A', 'B'));
     }
 
-    public function testReadDurationEmptyStream()
+    public function testReadDurationEmptyStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1833,7 +1835,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->readDuration();
     }
 
-    public function testWriteDurationClosedStream()
+    public function testWriteDurationClosedStream(): void
     {
         $stream = new MemoryStream();
         $stream->open();
@@ -1846,7 +1848,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeDuration(new QtiDuration('PT0S'));
     }
 
-    public function testReadUriEmptyStream()
+    public function testReadUriEmptyStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1858,7 +1860,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->readUri();
     }
 
-    public function testWriteUriClosedStream()
+    public function testWriteUriClosedStream(): void
     {
         $stream = new MemoryStream();
         $stream->open();
@@ -1871,7 +1873,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeUri(new QtiUri('http://www.taotesting.com'));
     }
 
-    public function testReadIntOrIdentifierEmptyStream()
+    public function testReadIntOrIdentifierEmptyStream(): void
     {
         $stream = new MemoryStream('');
         $stream->open();
@@ -1883,7 +1885,7 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->readIntOrIdentifier();
     }
 
-    public function testWriteIntOrIdentifierClosedStream()
+    public function testWriteIntOrIdentifierClosedStream(): void
     {
         $stream = new MemoryStream();
         $stream->open();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -22,7 +24,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class GapMatchInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $gapText = new GapText('gapText1', 1);
         $gapText->setContent(new TextOrVariableCollection([new TextRun('This is gapText1')]));
@@ -50,7 +52,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
             <gapMatchInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>
@@ -75,7 +77,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('G2', $gaps[1]->getIdentifier());
     }
 
-    public function testUnmarshallNoGapChoice()
+    public function testUnmarshallNoGapChoice(): void
     {
         $element = $this->createDOMElement('
             <gapMatchInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome"><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>
@@ -89,7 +91,7 @@ class GapMatchInteractionMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNoResponseIdentifier()
+    public function testUnmarshallNoResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <gapMatchInteraction xml:base="/home/jerome"><gapText identifier="gapText1" matchMax="1">This is gapText1</gapText><gapImg identifier="gapImg1" matchMax="1"><object data="./myimg.png" type="image/png"/></gapImg><p>A text... <gap identifier="G1"/> and an image... <gap identifier="G2"/></p></gapMatchInteraction>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\common\datatypes\files;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
@@ -11,7 +13,7 @@ use qtism\common\datatypes\files\FileManagerException;
  */
 class FileSystemFileManagerTest extends QtiSmTestCase
 {
-    public function testCreateFromFile()
+    public function testCreateFromFile(): void
     {
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
@@ -26,7 +28,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         unlink($mFile->getPath());
     }
 
-    public function testCreateFromData()
+    public function testCreateFromData(): void
     {
         $manager = new FileSystemFileManager();
         $file = $manager->createFromData('Some <em>text</em>...', 'text/html');
@@ -40,7 +42,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
     /**
      * @depends testCreateFromFile
      */
-    public function testCreateFromFileError()
+    public function testCreateFromFileError(): void
     {
         $manager = new FileSystemFileManager('/root');
 
@@ -50,7 +52,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
     }
 
-    public function testCreateFromDataError()
+    public function testCreateFromDataError(): void
     {
         $manager = new FileSystemFileManager('/root');
 
@@ -60,7 +62,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
         $manager->createFromData('Some <em>text</em>...', 'text/html');
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
@@ -74,7 +76,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
      * @depends testDelete
      * @depends testCreateFromFile
      */
-    public function testRetrieve()
+    public function testRetrieve(): void
     {
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
@@ -88,7 +90,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
     /**
      * @depends testRetrieve
      */
-    public function testRetrieveError()
+    public function testRetrieveError(): void
     {
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
@@ -103,7 +105,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
     /**
      * @depends testDelete
      */
-    public function testDeleteError()
+    public function testDeleteError(): void
     {
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');

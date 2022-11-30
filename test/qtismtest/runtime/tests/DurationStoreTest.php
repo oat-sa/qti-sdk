@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use InvalidArgumentException;
@@ -18,7 +20,7 @@ use qtismtest\QtiSmTestCase;
  */
 class DurationStoreTest extends QtiSmTestCase
 {
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $data = [];
         $data[] = new OutcomeVariable('duration1', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S'));
@@ -34,7 +36,7 @@ class DurationStoreTest extends QtiSmTestCase
         $this::assertTrue(isset($durations['duration1']));
     }
 
-    public function testInstantiationWrongBaseType()
+    public function testInstantiationWrongBaseType(): void
     {
         $data = [];
         $data[] = new OutcomeVariable('duration1', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S'));
@@ -46,7 +48,7 @@ class DurationStoreTest extends QtiSmTestCase
         $durations = new DurationStore($data);
     }
 
-    public function testInstantiationWrongCardinality()
+    public function testInstantiationWrongCardinality(): void
     {
         $data = [];
         $data[] = new OutcomeVariable('duration1', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S'));
@@ -58,7 +60,7 @@ class DurationStoreTest extends QtiSmTestCase
         $durations = new DurationStore($data);
     }
 
-    public function testWrongVariableTypeInstantiation()
+    public function testWrongVariableTypeInstantiation(): void
     {
         $data = [];
         $data[] = new OutcomeVariable('duration1', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S'));
@@ -70,7 +72,7 @@ class DurationStoreTest extends QtiSmTestCase
         $durations = new DurationStore($data);
     }
 
-    public function testSetVariable()
+    public function testSetVariable(): void
     {
         $durations = new DurationStore();
         $durations->setVariable(new OutcomeVariable('duration1', Cardinality::SINGLE, BaseType::DURATION, new QtiDuration('PT0S')));
@@ -78,7 +80,7 @@ class DurationStoreTest extends QtiSmTestCase
         $this::assertTrue($durations['duration1']->equals(new QtiDuration('PT0S')));
     }
 
-    public function testSetVariableWrongBaseType()
+    public function testSetVariableWrongBaseType(): void
     {
         $durations = new DurationStore();
 
@@ -87,7 +89,7 @@ class DurationStoreTest extends QtiSmTestCase
         $durations->setVariable(new OutcomeVariable('duration1', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('identifier')));
     }
 
-    public function testSetVariableWrongCardinality()
+    public function testSetVariableWrongCardinality(): void
     {
         $durations = new DurationStore();
 
@@ -96,7 +98,7 @@ class DurationStoreTest extends QtiSmTestCase
         $durations->setVariable(new OutcomeVariable('duration1', Cardinality::MULTIPLE, BaseType::DURATION, new MultipleContainer(BaseType::DURATION, [new QtiDuration('PT0S')])));
     }
 
-    public function testSetVariableWrongVariableType()
+    public function testSetVariableWrongVariableType(): void
     {
         $durations = new DurationStore();
         $this->expectException(InvalidArgumentException::class);

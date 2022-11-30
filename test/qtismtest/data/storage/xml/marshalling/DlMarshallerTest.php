@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -17,7 +19,7 @@ use qtismtest\QtiSmTestCase;
  */
 class DlMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dl = $this->createComponentFromXml('
             <dl id="my-description-list">
@@ -60,7 +62,7 @@ class DlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Hot water with something.', $dd2Content[0]->getContent());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $dt1 = new Dt();
         $dt1->setContent(new InlineCollection([new TextRun('Cola')]));

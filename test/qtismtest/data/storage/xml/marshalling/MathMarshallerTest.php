@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -13,7 +15,7 @@ use RuntimeException;
  */
 class MathMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $math = new Math('<m:math xmlns:m="http://www.w3.org/1998/Math/MathML"><m:mrow><m:mi>E</m:mi><m:mo>=</m:mo><m:mi>m</m:mi><m:msup><m:mi>c</m:mi><m:mn>2</m:mn></m:msup></m:mrow></m:math>');
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($math)->marshall($math);
@@ -23,7 +25,7 @@ class MathMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<m:math xmlns:m="http://www.w3.org/1998/Math/MathML"><m:mrow><m:mi>E</m:mi><m:mo>=</m:mo><m:mi>m</m:mi><m:msup><m:mi>c</m:mi><m:mn>2</m:mn></m:msup></m:mrow></m:math>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <m:math xmlns:m="http://www.w3.org/1998/Math/MathML">
@@ -48,7 +50,7 @@ class MathMarshallerTest extends QtiSmTestCase
         $this::assertEquals('http://www.w3.org/1998/Math/MathML', $mathElement->namespaceURI);
     }
 
-    public function testGetXmlWrongNamespace()
+    public function testGetXmlWrongNamespace(): void
     {
         $element = $this->createDOMElement('
 	        <m:math xmlns:m="http://www.fruits.org/1998/Math/MathYoghourt">

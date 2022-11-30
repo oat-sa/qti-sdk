@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -18,7 +20,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $simpleChoice = new SimpleAssociableChoice('choice_1', 1);
         $simpleChoice->setClass('qti-simpleAssociableChoice');
@@ -38,7 +40,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshallMatchMin21()
+    public function testMarshallMatchMin21(): void
     {
         $simpleChoice = new SimpleAssociableChoice('choice_1', 3);
         $simpleChoice->setMatchMin(2);
@@ -56,7 +58,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshallMatchGroup21()
+    public function testMarshallMatchGroup21(): void
     {
         // Aims at testing that matchGroup attribute is not
         // in the output in a QTI 2.1 context.
@@ -73,7 +75,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<simpleAssociableChoice identifier="choice_1" matchMax="0">Choice #1</simpleAssociableChoice>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
 	        <simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1" matchMin="1" matchMax="2" showHide="hide" templateIdentifier="templateIdentifier">This is ... <strong>strong</strong>!</simpleAssociableChoice>
@@ -98,7 +100,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshallMatchGroup21()
+    public function testUnmarshallMatchGroup21(): void
     {
         // Aims at testing that matchGroup attribute
         // as no influence at unmarshalling time in a QTI 2.1 context.
@@ -116,7 +118,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21NoMatchMax()
+    public function testUnmarshall21NoMatchMax(): void
     {
         $element = $this->createDOMElement('
 	        <simpleAssociableChoice class="qti-simpleAssociableChoice" identifier="choice_1">Choice #1</simpleAssociableChoice>
@@ -133,7 +135,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21NoIdentifier()
+    public function testUnmarshall21NoIdentifier(): void
     {
         $element = $this->createDOMElement('
 	        <simpleAssociableChoice matchMax="2">This is ... <strong>strong</strong>!</simpleAssociableChoice>
@@ -147,7 +149,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         $simpleChoice = new SimpleAssociableChoice('choice_1', 1);
         $simpleChoice->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
@@ -163,7 +165,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall20
      */
-    public function testMarshallNoTemplateIdentifierNoShowHideNoMatchMin20()
+    public function testMarshallNoTemplateIdentifierNoShowHideNoMatchMin20(): void
     {
         // Aims at testing that attributes templateIdentifier, showHide, matchMin
         // are never in the output in a QTI 2.0 context.
@@ -184,7 +186,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall20
      */
-    public function testMarshallMatchGroup20()
+    public function testMarshallMatchGroup20(): void
     {
         // Aims at testing that matchGroup is in the output
         // in a QTI 2.0 context.
@@ -200,7 +202,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<simpleAssociableChoice identifier="choice_1" matchMax="0" matchGroup="identifier1 identifier2">Choice #1</simpleAssociableChoice>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         $element = $this->createDOMElement('
 	        <simpleAssociableChoice identifier="choice_1" matchMax="2">Choice #1</simpleAssociableChoice>
@@ -222,7 +224,7 @@ class SimpleAssociableChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallNoTemplateIdentifierShowHideMatchMinInfluence20()
+    public function testUnmarshallNoTemplateIdentifierShowHideMatchMinInfluence20(): void
     {
         // Aims at testing that matchMin, showHide and templateIdentifier attributes
         // have no influence in a QTI 2.0 context.

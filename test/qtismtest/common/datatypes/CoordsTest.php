@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\common\datatypes;
 
 use qtism\common\datatypes\QtiCoords;
@@ -14,14 +16,14 @@ use qtismtest\QtiSmTestCase;
  */
 class CoordsTest extends QtiSmTestCase
 {
-    public function testInstantiate()
+    public function testInstantiate(): void
     {
         $coords = new QtiCoords(QtiShape::POLY, [0, 0, 0, 3, 3, 0]);
         $this::assertEquals(BaseType::COORDS, $coords->getBaseType());
         $this::assertEquals(Cardinality::SINGLE, $coords->getCardinality());
     }
 
-    public function testInsideCircle()
+    public function testInsideCircle(): void
     {
         $coords = new QtiCoords(QtiShape::CIRCLE, [5, 5, 5]);
 
@@ -38,7 +40,7 @@ class CoordsTest extends QtiSmTestCase
         $this::assertFalse($coords->inside($point));
     }
 
-    public function testInsideEllipse()
+    public function testInsideEllipse(): void
     {
         $coords = new QtiCoords(QtiShape::ELLIPSE, [10, 10, 3, 2]);
 
@@ -55,7 +57,7 @@ class CoordsTest extends QtiSmTestCase
         $this::assertTrue($coords->inside($point));
     }
 
-    public function testInsideRectangle()
+    public function testInsideRectangle(): void
     {
         // Do not forget (x1, y1) -> left top corner, (x2, y2) -> right bottom corner.
         $coords = new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]);
@@ -76,7 +78,7 @@ class CoordsTest extends QtiSmTestCase
         $this::assertFalse($coords->inside($point));
     }
 
-    public function testInsidePolygon()
+    public function testInsidePolygon(): void
     {
         $coords = new QtiCoords(QtiShape::POLY, [0, 8, 7, 4, 2, 2, 8, -4, -2, 1]);
 
@@ -102,14 +104,14 @@ class CoordsTest extends QtiSmTestCase
         $this::assertFalse($coords->inside($point));
     }
 
-    public function testOnEdgePolygon()
+    public function testOnEdgePolygon(): void
     {
         $coords = new QtiCoords(QtiShape::POLY, [0, 0, 0, 3, 3, 0]);
         $point = new QtiPoint(0, 2);
         $this::assertTrue($coords->inside($point));
     }
 
-    public function testInsideDefault()
+    public function testInsideDefault(): void
     {
         // always true.
         $coords = new QtiCoords(QtiShape::DEF);

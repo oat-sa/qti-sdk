@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -16,7 +18,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class InlineChoiceMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $choice = new InlineChoice('choice1', 'my-choice1');
         $choice->setContent(new TextOrVariableCollection([new TextRun('var: '), new PrintedVariable('pr1')]));
@@ -31,7 +33,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide">var: <printedVariable identifier="pr1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></inlineChoice>', $dom->saveXML($element));
     }
 
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         $choice = new InlineChoice('choice1');
         $choice->setContent(new TextOrVariableCollection([new TextRun('var: '), new PrintedVariable('pr1')]));
@@ -47,7 +49,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<inlineChoice identifier="choice1">var: </inlineChoice>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('<inlineChoice id="my-choice1" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide"><printedVariable identifier="pr1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></inlineChoice>');
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
@@ -64,7 +66,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(PrintedVariable::class, $content[0]);
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         // Make sure no values for templateIdentifier and showHide are
         // retrieved in a QTI 2.0 context.
@@ -87,7 +89,7 @@ class InlineChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallErrorIfPrintedVariable20()
+    public function testUnmarshallErrorIfPrintedVariable20(): void
     {
         $expectedMsg = "An 'inlineChoice' element must only contain text. Children elements found.";
         $this->expectException(UnmarshallingException::class);

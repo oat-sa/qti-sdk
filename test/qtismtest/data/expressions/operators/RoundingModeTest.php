@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\expressions\operators;
 
 use qtism\data\expressions\operators\RoundingMode;
@@ -13,7 +15,7 @@ class RoundingModeTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return RoundingMode::class;
     }
@@ -21,7 +23,7 @@ class RoundingModeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'significantFigures',
@@ -32,7 +34,7 @@ class RoundingModeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'SIGNIFICANT_FIGURES',
@@ -43,7 +45,7 @@ class RoundingModeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             RoundingMode::SIGNIFICANT_FIGURES,

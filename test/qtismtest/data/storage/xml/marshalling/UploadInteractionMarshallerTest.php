@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -15,7 +17,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class UploadInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $uploadInteraction = new UploadInteraction('RESPONSE', 'my-upload');
         $uploadInteraction->setType('image/png');
@@ -31,7 +33,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<uploadInteraction id="my-upload" responseIdentifier="RESPONSE" type="image/png" xml:base="/home/jerome"><prompt>Prompt...</prompt></uploadInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement(
             '<uploadInteraction id="my-upload" responseIdentifier="RESPONSE" xml:base="/home/jerome">
@@ -50,7 +52,7 @@ class UploadInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Prompt...', $promptContent[0]->getContent());
     }
 
-    public function testUnmarshallNoResponseIdentifier()
+    public function testUnmarshallNoResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <uploadInteraction id="my-upload" xml:base="/home/jerome"><prompt>Prompt...</prompt></uploadInteraction>    

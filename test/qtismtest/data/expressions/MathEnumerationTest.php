@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\expressions;
 
 use qtism\data\expressions\MathEnumeration;
@@ -13,7 +15,7 @@ class MathEnumerationTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return MathEnumeration::class;
     }
@@ -21,7 +23,7 @@ class MathEnumerationTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'pi',
@@ -32,7 +34,7 @@ class MathEnumerationTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'PI',
@@ -43,7 +45,7 @@ class MathEnumerationTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             MathEnumeration::PI,

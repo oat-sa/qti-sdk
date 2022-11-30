@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 $array_0 = [];
 $testfeedbackrefcollection_0 = new qtism\data\TestFeedbackRefCollection($array_0);
 $string_0 = '';

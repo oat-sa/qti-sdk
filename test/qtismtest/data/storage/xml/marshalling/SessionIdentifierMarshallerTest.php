@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,7 +37,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SessionIdentifierMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         /** @var SessionIdentifier $sessionIdentifier */
         $sessionIdentifier = $this->createComponentFromXml(
@@ -53,7 +55,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this::assertEquals('fixture-id', $sessionIdentifier->getIdentifier());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $sourceID = 'fixture-sourceID';
         $id = 'fixture-id';
@@ -68,7 +70,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this::assertEquals($id, $element->getAttribute('identifier'));
     }
 
-    public function testGetExpectedQtiClassName()
+    public function testGetExpectedQtiClassName(): void
     {
         $sourceID = 'fixture-sourceID';
         $id = 'fixture-id';
@@ -78,7 +80,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this::assertEquals($component->getQtiClassName(), $marshaller->getExpectedQtiClassName());
     }
 
-    public function testWrongSessionIdentifierIdentifier()
+    public function testWrongSessionIdentifierIdentifier(): void
     {
         $this->expectException(UnmarshallingException::class);
 
@@ -87,7 +89,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testWrongSessionIdentifierSourceID()
+    public function testWrongSessionIdentifierSourceID(): void
     {
         $this->expectException(UnmarshallingException::class);
 
@@ -96,7 +98,7 @@ class SessionIdentifierMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory()->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testEmptySessionIdentifier()
+    public function testEmptySessionIdentifier(): void
     {
         $this->expectException(UnmarshallingException::class);
 

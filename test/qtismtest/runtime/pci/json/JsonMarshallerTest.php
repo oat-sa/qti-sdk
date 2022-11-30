@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\pci\json;
 
 use qtism\common\datatypes\files\FileHash;
@@ -41,7 +43,7 @@ class JsonMarshallerTest extends QtiSmTestCase
      * @param string $expectedJson
      * @throws MarshallingException
      */
-    public function testMarshallScalar($scalar, $expectedJson)
+    public function testMarshallScalar($scalar, $expectedJson): void
     {
         $marshaller = new Marshaller();
         $this::assertEquals($expectedJson, $marshaller->marshall($scalar));
@@ -54,7 +56,7 @@ class JsonMarshallerTest extends QtiSmTestCase
      * @param string $expectedJson
      * @throws MarshallingException
      */
-    public function testMarshallComplex(QtiDatatype $complex, $expectedJson)
+    public function testMarshallComplex(QtiDatatype $complex, $expectedJson): void
     {
         $marshaller = new Marshaller();
         $this::assertEquals($expectedJson, $marshaller->marshall($complex));
@@ -67,7 +69,7 @@ class JsonMarshallerTest extends QtiSmTestCase
      * @param string $expectedJson
      * @throws MarshallingException
      */
-    public function testMarshallMultiple(MultipleContainer $multiple, $expectedJson)
+    public function testMarshallMultiple(MultipleContainer $multiple, $expectedJson): void
     {
         $marshaller = new Marshaller();
         $this::assertEquals($expectedJson, $marshaller->marshall($multiple));
@@ -80,7 +82,7 @@ class JsonMarshallerTest extends QtiSmTestCase
      * @param string $expectedJson
      * @throws MarshallingException
      */
-    public function testMarshallOrdered(OrderedContainer $ordered, $expectedJson)
+    public function testMarshallOrdered(OrderedContainer $ordered, $expectedJson): void
     {
         $marshaller = new Marshaller();
         $this::assertEquals($expectedJson, $marshaller->marshall($ordered));
@@ -93,7 +95,7 @@ class JsonMarshallerTest extends QtiSmTestCase
      * @param string $expectedJson
      * @throws MarshallingException
      */
-    public function testMarshallRecord(RecordContainer $record, $expectedJson)
+    public function testMarshallRecord(RecordContainer $record, $expectedJson): void
     {
         $marshaller = new Marshaller();
         $this::assertEquals($expectedJson, $marshaller->marshall($record));
@@ -106,7 +108,7 @@ class JsonMarshallerTest extends QtiSmTestCase
      * @param string $expectedJson
      * @throws MarshallingException
      */
-    public function testMarshallState(State $state, $expectedJson)
+    public function testMarshallState(State $state, $expectedJson): void
     {
         $marshaller = new Marshaller();
         $this::assertEquals($expectedJson, $marshaller->marshall($state));
@@ -118,7 +120,7 @@ class JsonMarshallerTest extends QtiSmTestCase
      * @param mixed $input
      * @throws MarshallingException
      */
-    public function testMarshallInvalidInput($input)
+    public function testMarshallInvalidInput($input): void
     {
         $this->expectException(MarshallingException::class);
         $this->expectExceptionMessage("The '" . Marshaller::class . "::marshall' method only takes State, QtiDatatype and null values as arguments");
@@ -127,7 +129,7 @@ class JsonMarshallerTest extends QtiSmTestCase
         $marshaller->marshall($input);
     }
 
-    public function testMarshallAsArray()
+    public function testMarshallAsArray(): void
     {
         $marshaller = new Marshaller();
         $data = $marshaller->marshall(new QtiInteger(12), Marshaller::MARSHALL_ARRAY);
@@ -137,7 +139,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function marshallScalarProvider()
+    public function marshallScalarProvider(): array
     {
         return [
             [new QtiBoolean(true), json_encode(['base' => ['boolean' => true]])],
@@ -157,7 +159,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function marshallComplexProvider()
+    public function marshallComplexProvider(): array
     {
         $samples = self::samplesDir();
 
@@ -189,7 +191,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function marshallMultipleProvider()
+    public function marshallMultipleProvider(): array
     {
         $returnValue = [];
 
@@ -269,7 +271,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function marshallOrderedProvider()
+    public function marshallOrderedProvider(): array
     {
         $returnValue = [];
 
@@ -299,7 +301,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function marshallRecordProvider()
+    public function marshallRecordProvider(): array
     {
         $returnValue = [];
 
@@ -334,7 +336,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function marshallStateProvider()
+    public function marshallStateProvider(): array
     {
         $returnValue = [];
 
@@ -369,7 +371,7 @@ class JsonMarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function marshallInvalidInputProvider()
+    public function marshallInvalidInputProvider(): array
     {
         return [
             [10],

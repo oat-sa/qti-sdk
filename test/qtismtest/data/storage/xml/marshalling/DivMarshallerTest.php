@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -20,7 +22,7 @@ use qtismtest\QtiSmTestCase;
  */
 class DivMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $div = $this->createComponentFromXml('
             <div id="main-container" class="ui-pane">
@@ -115,7 +117,7 @@ class DivMarshallerTest extends QtiSmTestCase
         $this::assertEquals('incredible', $strongContent[0]->getContent());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $li1 = new Li();
         $li1->setContent(new FlowCollection([new TextRun('Start the Game')]));

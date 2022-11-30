@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\expressions;
 
 use qtism\data\expressions\OutcomeMinimum;
@@ -10,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeMinimumTest extends QtiSmTestCase
 {
-    public function testOutcomeMaximum()
+    public function testOutcomeMaximum(): void
     {
         $outcomeMinimum = new OutcomeMinimum('SCORE', 'WEIGHT');
         $this::assertInstanceOf(OutcomeMinimum::class, $outcomeMinimum);

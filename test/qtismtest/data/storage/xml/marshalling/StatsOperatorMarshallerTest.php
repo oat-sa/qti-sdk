@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -16,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class StatsOperatorMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $subExpr = new ExpressionCollection([new BaseValue(BaseType::FLOAT, 12.5468)]);
         $name = Statistics::POP_VARIANCE;
@@ -34,7 +36,7 @@ class StatsOperatorMarshallerTest extends QtiSmTestCase
         $this::assertEquals('12.5468', $subExprElts->item(0)->nodeValue);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

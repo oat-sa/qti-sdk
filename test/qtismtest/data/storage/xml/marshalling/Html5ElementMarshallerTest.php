@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -243,14 +245,15 @@ class FakeHtml5ElementMarshaller extends Html5ElementMarshaller
      * @return QtiComponent
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): QtiComponent
     {
         $component = new FakeHtml5Element();
         $this->fillBodyElement($component, $element);
         return $component;
     }
 
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
+        return '';
     }
 }

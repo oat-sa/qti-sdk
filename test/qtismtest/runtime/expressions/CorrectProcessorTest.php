@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiDirectedPair;
@@ -18,7 +20,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class CorrectProcessorTest extends QtiSmTestCase
 {
-    public function testMultipleCardinality()
+    public function testMultipleCardinality(): void
     {
         $responseDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="directedPair" cardinality="multiple">
@@ -44,7 +46,7 @@ class CorrectProcessorTest extends QtiSmTestCase
         $this::assertTrue($comparable->equals($result));
     }
 
-    public function testSingleCardinality()
+    public function testSingleCardinality(): void
     {
         $responseDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="integer" cardinality="single">
@@ -64,7 +66,7 @@ class CorrectProcessorTest extends QtiSmTestCase
         $this::assertEquals(20, $result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $responseDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="integer" cardinality="single"/>
@@ -82,7 +84,7 @@ class CorrectProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testException()
+    public function testException(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<outcomeDeclaration identifier="outcome1" baseType="integer" cardinality="single"/>

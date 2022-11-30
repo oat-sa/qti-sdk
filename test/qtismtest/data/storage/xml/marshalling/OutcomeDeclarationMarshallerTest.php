@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -27,7 +29,7 @@ use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
  */
 class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         // Initialize a minimal outcomeDeclaration.
         $identifier = 'outcome1';
@@ -51,7 +53,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('0.5', $element->getAttribute('masteryValue'));
     }
 
-    public function testUnmarshallExternalScoredWithIllegalValue()
+    public function testUnmarshallExternalScoredWithIllegalValue(): void
     {
         $this->expectException(UnmarshallingException::class);
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -63,7 +65,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallExternalScored()
+    public function testUnmarshallExternalScored(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -85,7 +87,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    public function testMarshallExternalScored($qtiVersion, $externalScored, $expectedExternalScored)
+    public function testMarshallExternalScored($qtiVersion, $externalScored, $expectedExternalScored): void
     {
         // Initialize a minimal outcomeDeclaration.
         $identifier = 'outcome1';
@@ -107,7 +109,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function qtiVersionsToTestForExternalScored()
+    public function qtiVersionsToTestForExternalScored(): array
     {
         return [
             ['2.0', ExternalScored::HUMAN, ''],
@@ -124,7 +126,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshallNoOutputViewsNormalMinimumMasteryValueView20()
+    public function testMarshallNoOutputViewsNormalMinimumMasteryValueView20(): void
     {
         $identifier = 'outcome1';
         $cardinality = Cardinality::SINGLE;
@@ -146,7 +148,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertSame(0, $lookupTableElts->length);
     }
 
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         // Initialize a minimal outcomeDeclaration.
         $identifier = 'outcome1';
@@ -164,7 +166,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('outcome1', $element->getAttribute('identifier'));
     }
 
-    public function testMarshallDefaultValue21()
+    public function testMarshallDefaultValue21(): void
     {
         $identifier = 'outcome2';
         $cardinality = Cardinality::MULTIPLE;
@@ -205,7 +207,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('', $value->getAttribute('baseType'));
     }
 
-    public function testMarshallMatchTable21()
+    public function testMarshallMatchTable21(): void
     {
         $identifier = 'outcome3';
         $cardinality = Cardinality::SINGLE;
@@ -250,7 +252,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshallMatchTable21
      */
-    public function testMarshallMatchTable20()
+    public function testMarshallMatchTable20(): void
     {
         // This should fail because no marshaller is known for lookupTable sub classes
         // in a QTI 2.0 context.
@@ -272,7 +274,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $element = $marshaller->marshall($component);
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<outcomeDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="outcomeDeclaration1" cardinality="single" baseType="integer" longInterpretation="http://my.long.com/interpretation"/>');
@@ -288,7 +290,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('http://my.long.com/interpretation', $component->getLongInterpretation());
     }
 
-    public function testUnmarshallDefaultValue21()
+    public function testUnmarshallDefaultValue21(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -325,7 +327,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(QtiDuration::class, $values[1]->getValue());
     }
 
-    public function testUnmarshallRecord21()
+    public function testUnmarshallRecord21(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -379,7 +381,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1.11, $values[2]->getValue());
     }
 
-    public function testUnmarshallMatchTable21()
+    public function testUnmarshallMatchTable21(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -417,7 +419,7 @@ class OutcomeDeclarationMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshallMatchTable21
      */
-    public function testUnmarshallMatchTable20()
+    public function testUnmarshallMatchTable20(): void
     {
         // Make sure match table is not take into account
         // in a QTI 2.0 context.

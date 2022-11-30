@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiInteger;
@@ -19,7 +21,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class FieldValueProcessorTest extends QtiSmTestCase
 {
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -27,7 +29,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $processor = new FieldValueProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -37,7 +39,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $processor = new FieldValueProcessor($expression, $operands);
     }
 
-    public function testNullOne()
+    public function testNullOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -49,7 +51,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testNullTwo()
+    public function testNullTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -60,7 +62,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityOne()
+    public function testWrongCardinalityOne(): void
     {
         // primitive PHP.
         $expression = $this->createFakeExpression();
@@ -71,7 +73,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityTwo()
+    public function testWrongCardinalityTwo(): void
     {
         // primitive QTI (Point, Duration, ...)
         $expression = $this->createFakeExpression();
@@ -82,7 +84,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityThree()
+    public function testWrongCardinalityThree(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -94,7 +96,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testFieldValue()
+    public function testFieldValue(): void
     {
         $expression = $this->createFakeExpression('B');
 
@@ -116,7 +118,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression($identifier = '')
+    public function createFakeExpression($identifier = ''): QtiComponent
     {
         // The following XML Component creation
         // underlines the need of a <record> operator... :)

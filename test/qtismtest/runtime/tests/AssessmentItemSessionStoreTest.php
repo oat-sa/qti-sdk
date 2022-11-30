@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use qtism\data\ExtendedAssessmentItemRef;
@@ -12,7 +14,7 @@ use qtismtest\QtiSmAssessmentItemTestCase;
  */
 class AssessmentItemSessionStoreTest extends QtiSmAssessmentItemTestCase
 {
-    public function testHasMultipleOccurences()
+    public function testHasMultipleOccurences(): void
     {
         $itemRef1 = new ExtendedAssessmentItemRef('Q01', './Q01.xml');
         $store = new AssessmentItemSessionStore();
@@ -34,7 +36,7 @@ class AssessmentItemSessionStoreTest extends QtiSmAssessmentItemTestCase
         $this::assertFalse($store->hasAssessmentItemSession(new ExtendedAssessmentItemRef('Q02', './Q02.xml')));
     }
 
-    public function testGetAllAssessmentItemSessions()
+    public function testGetAllAssessmentItemSessions(): void
     {
         $itemRef1 = new ExtendedAssessmentItemRef('Q01', './Q01.xml');
         $itemRef2 = new ExtendedAssessmentItemRef('Q02', './Q02.xml');

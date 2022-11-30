@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
@@ -21,7 +23,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class MaxProcessorTest extends QtiSmTestCase
 {
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         // As per QTI spec,
         // If any of the sub-expressions is NULL, the result is NULL.
@@ -35,7 +37,7 @@ class MaxProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -51,7 +53,7 @@ class MaxProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -68,7 +70,7 @@ class MaxProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testAllIntegers()
+    public function testAllIntegers(): void
     {
         // As per QTI spec,
         // if all sub-expressions are of integer type, a single integer (ndlr: is returned).
@@ -89,7 +91,7 @@ class MaxProcessorTest extends QtiSmTestCase
         $this::assertEquals(100002, $result->getValue());
     }
 
-    public function testMixed()
+    public function testMixed(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(26.4), new QtiInteger(-4), new QtiFloat(25.3)]);
@@ -111,7 +113,7 @@ class MaxProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<max>
