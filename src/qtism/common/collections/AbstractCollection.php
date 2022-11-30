@@ -412,7 +412,8 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
         $this->setDataPlaceHolder($newData);
     }
 
-    public function __clone(): void
+
+    public function __clone()
     {
         foreach ($this->dataPlaceHolder as $key => $value) {
             if (is_object($value)) {

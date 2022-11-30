@@ -223,7 +223,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
         $this->replace($subject, $subject);
     }
 
-    public function __clone(): void
+    public function __clone()
     {
         $oldPlaceHolder = $this->getDataPlaceHolder();
         $newPlaceHolder = [];
