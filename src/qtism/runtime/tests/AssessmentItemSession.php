@@ -1407,7 +1407,7 @@ class AssessmentItemSession extends State
     /**
      * @see \qtism\common\collections\AbstractCollection::__clone()
      */
-    public function __clone(): void
+    public function __clone()
     {
         $newData = [];
         $oldData = $this->getDataPlaceHolder();
