@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2022 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -93,12 +93,13 @@ class FileSystemFileManager implements FileManager
      * @param string $data The binary data of the FileSystemFile object to be created.
      * @param string $mimeType A mime-type.
      * @param string $filename A file name e.g. "myfile.txt".
+     * @param string|null $path A path for file provided externally
      * @return FileSystemFile
      * @throws FileManagerException
      */
-    public function createFromData($data, $mimeType, $filename = '')
+    public function createFromData($data, $mimeType, $filename = '', $path = null)
     {
-        $destination = $this->buildDestination();
+        $destination = $path ?: $this->buildDestination();
 
         try {
             return FileSystemFile::createFromData($data, $destination, $mimeType, $filename);
@@ -111,11 +112,12 @@ class FileSystemFileManager implements FileManager
     /**
      * Retrieve a FileSystemFile object from its unique identifier.
      *
-     * @param string identifier
+     * @param string $identifier
+     * @param string|null $filename
      * @return FileSystemFile
      * @throws FileManagerException
      */
-    public function retrieve($identifier)
+    public function retrieve($identifier, $filename = null)
     {
         try {
             return FileSystemFile::retrieveFile($identifier);

@@ -378,6 +378,7 @@ class Marshaller
                 'file' => [
                     'mime' => $file->getMimeType(),
                     'data' => base64_encode($file->getData()),
+                    'path' => $file->getIdentifier()
                 ],
             ],
         ];

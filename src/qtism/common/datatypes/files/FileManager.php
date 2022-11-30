@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2014-2022 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -57,18 +57,20 @@ interface FileManager
      * @param string $data A binary string representing the data.
      * @param string $mimeType The MIME type of the resulting File object.
      * @param string $filename The filename of the resulting File object.
+     * @param string|null $path A path for file provided externally of the resulting File object
      * @return QtiFile
      * @throws FileManagerException
      */
-    public function createFromData($data, $mimeType, $filename = '');
+    public function createFromData($data, $mimeType, $filename = '', $path = null);
 
     /**
      * Retrieve a previously created instance by $identifier.
      *
      * @param string $identifier
+     * @param string|null $filename
      * @throws FileManagerException
      */
-    public function retrieve($identifier);
+    public function retrieve($identifier, $filename = null);
 
     /**
      * Delete a given QtiFile from its storage.

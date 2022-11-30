@@ -168,10 +168,10 @@ class JsonMarshallerTest extends QtiSmTestCase
         $returnValue[] = [new QtiDuration('P3DT4H'), json_encode(['base' => ['duration' => 'P3DT4H']])];
 
         $file = new FileSystemFile($samples . 'datatypes/file/text-plain_text_data.txt');
-        $returnValue[] = [$file, json_encode(['base' => ['file' => ['mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()), 'name' => 'text.txt']]])];
+        $returnValue[] = [$file, json_encode(['base' => ['file' => ['mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()),  'path' => $file->getIdentifier(), 'name' => 'text.txt']]])];
 
         $file = new FileSystemFile($samples . 'datatypes/file/image-png_noname_data.png');
-        $returnValue[] = [$file, json_encode(['base' => ['file' => ['mime' => $file->getMimeType(), 'data' => base64_encode($file->getData())]]])];
+        $returnValue[] = [$file, json_encode(['base' => ['file' => ['mime' => $file->getMimeType(), 'data' => base64_encode($file->getData()), 'path' => $file->getIdentifier()]]])];
 
         $id = 'http://some.cloud.storage/path/to/stored-file.txt';
         $mimeType = 'text/plain';
