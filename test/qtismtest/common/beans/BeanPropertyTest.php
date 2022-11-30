@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\common\beans;
 
 use qtism\common\beans\BeanException;
@@ -13,7 +15,7 @@ use stdClass;
  */
 class BeanPropertyTest extends QtiSmTestCase
 {
-    public function testNoProperty()
+    public function testNoProperty(): void
     {
         $this->expectException(BeanException::class);
         $this->expectExceptionMessage("The class property with name 'prop' does not exist in class 'stdClass'.");
@@ -22,7 +24,7 @@ class BeanPropertyTest extends QtiSmTestCase
         $beanProperty = new BeanProperty(stdClass::class, 'prop');
     }
 
-    public function testPropertyNotAnnotated()
+    public function testPropertyNotAnnotated(): void
     {
         $this->expectException(BeanException::class);
         $this->expectExceptionMessage("The property with name 'anotherUselessProperty' for class '" . SimpleBean::class . "' is not annotated.");

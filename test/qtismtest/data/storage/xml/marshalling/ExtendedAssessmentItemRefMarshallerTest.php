@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -36,7 +38,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
@@ -52,7 +54,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertFalse($element->hasAttribute('label'));
     }
 
-    public function testMarshallMinimalWithTitle()
+    public function testMarshallMinimalWithTitle(): void
     {
         $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
@@ -67,7 +69,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertFalse($element->hasAttribute('label'));
     }
 
-    public function testMarshallMinimalWithLabel()
+    public function testMarshallMinimalWithLabel(): void
     {
         $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
@@ -81,7 +83,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals('A label', $element->getAttribute('label'));
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -102,7 +104,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertFalse($component->hasLabel());
     }
 
-    public function testUnmarshallMinimalWithTitle()
+    public function testUnmarshallMinimalWithTitle(): void
     {
         $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -116,7 +118,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals('A title', $component->getTitle());
     }
 
-    public function testUnmarshallMinimalWithLabel()
+    public function testUnmarshallMinimalWithLabel(): void
     {
         $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -133,7 +135,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshallMinimal
      */
-    public function testMarshallModerate()
+    public function testMarshallModerate(): void
     {
         $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
@@ -198,7 +200,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshallMinimal
      */
-    public function testMarshallTemplateDeclarations()
+    public function testMarshallTemplateDeclarations(): void
     {
         $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
@@ -223,7 +225,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshallMinimal
      */
-    public function testUnmarshallModerate()
+    public function testUnmarshallModerate(): void
     {
         $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -283,7 +285,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshallMinimal
      */
-    public function testUnmarshallTemplateDeclarations()
+    public function testUnmarshallTemplateDeclarations(): void
     {
         $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -302,7 +304,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals('T02', $templateDeclarations['T02']->getIdentifier());
     }
 
-    public function testMarshallMultipleEndAttemptIdentifiers()
+    public function testMarshallMultipleEndAttemptIdentifiers(): void
     {
         $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
@@ -317,7 +319,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals('HINT1 HINT2 HINT3', $element->getAttribute('endAttemptIdentifiers'));
     }
 
-    public function testMarshallSingleEndAttemptIdentifiers()
+    public function testMarshallSingleEndAttemptIdentifiers(): void
     {
         $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
@@ -332,7 +334,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals('HINT1', $element->getAttribute('endAttemptIdentifiers'));
     }
 
-    public function testMarshallNoEndAttemptIdentifiers()
+    public function testMarshallNoEndAttemptIdentifiers(): void
     {
         $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
@@ -347,7 +349,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals('', $element->getAttribute('endAttemptIdentifiers'));
     }
 
-    public function testUnmarshallMultipleEndAttemptIdentifiers()
+    public function testUnmarshallMultipleEndAttemptIdentifiers(): void
     {
         $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -371,7 +373,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshallMultipleEndAttemptIdentifiers
      */
-    public function testUnmarshallSingleEndAttemptIdentifier()
+    public function testUnmarshallSingleEndAttemptIdentifier(): void
     {
         $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -388,7 +390,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshallMultipleEndAttemptIdentifiers
      */
-    public function testUnmarshallNoEndAttemptIdentifier()
+    public function testUnmarshallNoEndAttemptIdentifier(): void
     {
         $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -404,7 +406,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshallMinimal
      */
-    public function testMarshallShufflingGroups()
+    public function testMarshallShufflingGroups(): void
     {
         $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
@@ -436,7 +438,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshallMinimal
      */
-    public function testUnmarshallShufflingGroups()
+    public function testUnmarshallShufflingGroups(): void
     {
         $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -465,7 +467,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshallMinimal
      */
-    public function testMarshallResponseValidityConstraints()
+    public function testMarshallResponseValidityConstraints(): void
     {
         $factory = new Compact21MarshallerFactory();
         $component = new ExtendedAssessmentItemRef('Q01', './q01.xml');
@@ -502,7 +504,7 @@ class ExtendedAssessmentItemRefMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshallMinimal
      */
-    public function testUnmarshallResponseValidityConstraints()
+    public function testUnmarshallResponseValidityConstraints(): void
     {
         $factory = new Compact21MarshallerFactory();
         $dom = new DOMDocument('1.0', 'UTF-8');

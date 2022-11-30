@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data;
 
 use qtism\common\enums\BaseType;
@@ -14,7 +16,7 @@ class BaseTypeTest extends QtiSmTestCase
      * @dataProvider validBaseTypeProvider
      * @param string $baseType
      */
-    public function testGetConstantByNameValidBaseType($baseType)
+    public function testGetConstantByNameValidBaseType($baseType): void
     {
         $this::assertIsInt(BaseType::getConstantByName($baseType));
     }
@@ -23,7 +25,7 @@ class BaseTypeTest extends QtiSmTestCase
      * @dataProvider invalidBaseTypeProvider
      * @param string $baseType
      */
-    public function testGetConstantByNameInvalidBaseType($baseType)
+    public function testGetConstantByNameInvalidBaseType($baseType): void
     {
         $this::assertFalse(BaseType::getConstantByName($baseType));
     }
@@ -33,7 +35,7 @@ class BaseTypeTest extends QtiSmTestCase
      * @param int $constant
      * @param string $expected
      */
-    public function testGetNameByConstantValidBaseType($constant, $expected)
+    public function testGetNameByConstantValidBaseType($constant, $expected): void
     {
         $this::assertEquals($expected, BaseType::getNameByConstant($constant));
     }
@@ -42,7 +44,7 @@ class BaseTypeTest extends QtiSmTestCase
      * @dataProvider invalidBaseTypeConstantProvider
      * @param int $constant
      */
-    public function testGetNameByConstantInvalidBaseType($constant)
+    public function testGetNameByConstantInvalidBaseType($constant): void
     {
         $this::assertFalse(BaseType::getNameByConstant($constant));
     }
@@ -50,7 +52,7 @@ class BaseTypeTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validBaseTypeConstantProvider()
+    public function validBaseTypeConstantProvider(): array
     {
         return [
             [BaseType::IDENTIFIER, 'identifier'],
@@ -71,7 +73,7 @@ class BaseTypeTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function invalidBaseTypeConstantProvider()
+    public function invalidBaseTypeConstantProvider(): array
     {
         return [
             [-1],
@@ -81,7 +83,7 @@ class BaseTypeTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validBaseTypeProvider()
+    public function validBaseTypeProvider(): array
     {
         return [
             ['identifier'],
@@ -102,7 +104,7 @@ class BaseTypeTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function invalidBaseTypeProvider()
+    public function invalidBaseTypeProvider(): array
     {
         return [
             [10],

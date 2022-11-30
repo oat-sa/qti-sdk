@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -19,7 +21,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class MatchInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $choice1A = new SimpleAssociableChoice('choice1A', 1);
         $choice1A->setContent(new FlowStaticCollection([new TextRun('choice1A')]));
@@ -55,7 +57,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
             <matchInteraction responseIdentifier="RESPONSE" shuffle="true" xml:base="/home/jerome">
@@ -92,7 +94,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('choice2B', $associableChoices[1]->getIdentifier());
     }
 
-    public function testUnmarshall21NoResponseIdentifier()
+    public function testUnmarshall21NoResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <matchInteraction shuffle="true" xml:base="/home/jerome">
@@ -116,7 +118,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshall21SingleMatchSet()
+    public function testUnmarshall21SingleMatchSet(): void
     {
         $element = $this->createDOMElement('
             <matchInteraction responseIdentifier="RESPONSE" shuffle="true" xml:base="/home/jerome">
@@ -136,7 +138,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         $choice1A = new SimpleAssociableChoice('choice1A', 1);
         $choice1A->setContent(new FlowStaticCollection([new TextRun('choice1A')]));
@@ -165,7 +167,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall20
      */
-    public function testMarshallMaxAssociationsShuffleInOutput20()
+    public function testMarshallMaxAssociationsShuffleInOutput20(): void
     {
         // Aims at testing that maxAssociations and shuffle attributes
         // are always in the output while in a QTI 2.0 context.
@@ -195,7 +197,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall20
      */
-    public function testMarshallNoMinAssociations()
+    public function testMarshallNoMinAssociations(): void
     {
         // Aims at testing that minAssociations is never in the output
         // in a QTI 2.0 context.
@@ -223,7 +225,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         $element = $this->createDOMElement('
             <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="2">
@@ -262,7 +264,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallMandatoryShuffle20()
+    public function testUnmarshallMandatoryShuffle20(): void
     {
         // This test aims at testing that shuffle
         // is a mandatory attribute in a QTI 2.0 context.
@@ -287,7 +289,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallMandatoryMaxAssociations20()
+    public function testUnmarshallMandatoryMaxAssociations20(): void
     {
         // Aims at testing that the maxAssociations attribute is
         // mandatory in a QTI 2.0 context.
@@ -312,7 +314,7 @@ class MatchInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallNoMinAssociationsInfluence20()
+    public function testUnmarshallNoMinAssociationsInfluence20(): void
     {
         // Aims at testing that the maxAssociations attribute is
         // mandatory in a QTI 2.0 context.

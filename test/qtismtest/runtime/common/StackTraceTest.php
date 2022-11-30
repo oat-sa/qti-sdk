@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\common;
 
 use InvalidArgumentException;
@@ -14,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class StackTraceTest extends QtiSmTestCase
 {
-    public function testPop()
+    public function testPop(): void
     {
         $stackTrace = new StackTrace();
         $stackTraceItem = new StackTraceItem(new BaseValue(BaseType::INTEGER, 0), 'pouet');
@@ -25,7 +27,7 @@ class StackTraceTest extends QtiSmTestCase
         $this::assertCount(0, $stackTrace);
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $stackTrace = new StackTrace();
         $stackTraceItem = new StackTraceItem(new BaseValue(BaseType::INTEGER, 0), 'pouet');
@@ -35,7 +37,7 @@ class StackTraceTest extends QtiSmTestCase
         $this::assertEquals("pouet\npouet\n", $stackTrace . '');
     }
 
-    public function testAddInvalidDataType()
+    public function testAddInvalidDataType(): void
     {
         $stackTrace = new StackTrace();
         $stackTraceItem = new BaseValue(BaseType::INTEGER, 0);

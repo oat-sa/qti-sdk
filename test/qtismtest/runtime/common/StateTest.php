@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\common;
 
 use InvalidArgumentException;
@@ -24,7 +26,7 @@ use qtism\runtime\common\VariableCollection;
  */
 class StateTest extends QtiSmTestCase
 {
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $state = new State();
         $this::assertInstanceOf(State::class, $state);
@@ -51,13 +53,13 @@ class StateTest extends QtiSmTestCase
         $this::assertNull($state['RESPONSE']);
     }
 
-    public function testInstantiationInvalid()
+    public function testInstantiationInvalid(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $state = new State([15, 'string', new stdClass()]);
     }
 
-    public function testAddressing()
+    public function testAddressing(): void
     {
         $state = new State();
         $response = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::INTEGER);
@@ -73,21 +75,21 @@ class StateTest extends QtiSmTestCase
         $this::assertFalse(isset($state['SCOREX']));
     }
 
-    public function testAddressingInvalidOne()
+    public function testAddressingInvalidOne(): void
     {
         $this->expectException(OutOfBoundsException::class);
         $state = new State();
         $state['var'] = new ResponseDeclaration('var', BaseType::POINT, Cardinality::ORDERED);
     }
 
-    public function testAdressingInvalidTwo()
+    public function testAdressingInvalidTwo(): void
     {
         $this->expectException(OutOfRangeException::class);
         $state = new State();
         $var = $state[3];
     }
 
-    public function testGetAllVariables()
+    public function testGetAllVariables(): void
     {
         $state = new State();
         $this::assertCount(0, $state->getAllVariables());
@@ -110,7 +112,7 @@ class StateTest extends QtiSmTestCase
      * @param bool $expected
      * @param State $state
      */
-    public function testContainsNullOnly($expected, State $state)
+    public function testContainsNullOnly($expected, State $state): void
     {
         $this::assertEquals($expected, $state->containsNullOnly());
     }
@@ -118,7 +120,7 @@ class StateTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function containsNullOnlyProvider()
+    public function containsNullOnlyProvider(): array
     {
         return [
             [true, new State()],
@@ -147,7 +149,7 @@ class StateTest extends QtiSmTestCase
      * @param bool $expected
      * @param State $state
      */
-    public function testContainsValuesEqualToVariableDefaultOnly($expected, State $state)
+    public function testContainsValuesEqualToVariableDefaultOnly($expected, State $state): void
     {
         $this::assertEquals($expected, $state->containsValuesEqualToVariableDefaultOnly());
     }
@@ -155,7 +157,7 @@ class StateTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function containsValuesEqualToVariableDefaultOnlyProvider()
+    public function containsValuesEqualToVariableDefaultOnlyProvider(): array
     {
         $booleanNotDefault = new ResponseVariable('BOOLEAN_NOT_DEFAULT', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));
         $booleanNotDefault->setDefaultValue(new QtiBoolean(false));
@@ -198,7 +200,7 @@ class StateTest extends QtiSmTestCase
         ];
     }
 
-    public function testUnsetVariableByString()
+    public function testUnsetVariableByString(): void
     {
         $state = new State(
             [
@@ -211,7 +213,7 @@ class StateTest extends QtiSmTestCase
         $this::assertCount(0, $state);
     }
 
-    public function testUnsetVariableByVariableObject()
+    public function testUnsetVariableByVariableObject(): void
     {
         $variable = new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::BOOLEAN, new QtiBoolean(true));
         $state = new State([$variable]);
@@ -221,7 +223,7 @@ class StateTest extends QtiSmTestCase
         $this::assertCount(0, $state);
     }
 
-    public function testUnsetUnexistingVariable()
+    public function testUnsetUnexistingVariable(): void
     {
         $state = new State();
 
@@ -231,7 +233,7 @@ class StateTest extends QtiSmTestCase
         $state->unsetVariable('X');
     }
 
-    public function testUnsetVariableWrongType()
+    public function testUnsetVariableWrongType(): void
     {
         $state = new State();
 
@@ -241,7 +243,7 @@ class StateTest extends QtiSmTestCase
         $state->unsetVariable(true);
     }
 
-    public function testOffsetSetWrongOffsetType()
+    public function testOffsetSetWrongOffsetType(): void
     {
         $state = new State();
 

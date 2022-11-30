@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
@@ -20,7 +22,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class IntegerToFloatProcessorTest extends QtiSmTestCase
 {
-    public function testIntegerToFloat()
+    public function testIntegerToFloat(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -50,7 +52,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $this::assertEquals(-0.0, $result->getValue());
     }
 
-    public function testNullOne()
+    public function testNullOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -61,7 +63,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testNullTwo()
+    public function testNullTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -72,7 +74,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -83,7 +85,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeOne()
+    public function testWrongBaseTypeOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -94,7 +96,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeTwo()
+    public function testWrongBaseTypeTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -105,7 +107,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -113,7 +115,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
         $processor = new IntegerToFloatProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -127,7 +129,7 @@ class IntegerToFloatProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<integerToFloat>

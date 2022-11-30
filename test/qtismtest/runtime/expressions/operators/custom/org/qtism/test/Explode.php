@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace org\qtism\test;
 
 use qtism\common\datatypes\QtiString;
@@ -17,7 +19,7 @@ class Explode extends CustomOperatorProcessor
     /**
      * @param OperandsCollection $operands
      */
-    public function setOperands(OperandsCollection $operands)
+    public function setOperands(OperandsCollection $operands): void
     {
         $count = count($operands);
 

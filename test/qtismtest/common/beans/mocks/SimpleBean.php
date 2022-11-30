@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\common\beans\mocks;
 
 /**
@@ -63,7 +65,7 @@ class SimpleBean
     /**
      * @param $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -71,7 +73,7 @@ class SimpleBean
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -79,7 +81,7 @@ class SimpleBean
     /**
      * @param $car
      */
-    public function setCar($car)
+    public function setCar($car): void
     {
         $this->car = $car;
     }
@@ -87,7 +89,7 @@ class SimpleBean
     /**
      * @return string
      */
-    public function getCar()
+    public function getCar(): string
     {
         return $this->car;
     }
@@ -95,7 +97,7 @@ class SimpleBean
     /**
      * @param $uselessProperty
      */
-    public function setUselessProperty($uselessProperty)
+    public function setUselessProperty($uselessProperty): void
     {
         $this->uselessProperty = $uselessProperty;
     }
@@ -103,7 +105,7 @@ class SimpleBean
     /**
      * @return string
      */
-    public function getUselessProperty()
+    public function getUselessProperty(): string
     {
         return $this->uselessProperty;
     }
@@ -111,7 +113,7 @@ class SimpleBean
     /**
      * @param $anotherUselessProperty
      */
-    private function setAnotherUselessProperty($anotherUselessProperty)
+    private function setAnotherUselessProperty($anotherUselessProperty): void
     {
         $this->anotherUselessProperty = $anotherUselessProperty;
     }
@@ -119,7 +121,7 @@ class SimpleBean
     /**
      * @return string
      */
-    public function getAnotherUselessProperty()
+    public function getAnotherUselessProperty(): string
     {
         return $this->anotherUselessProperty;
     }

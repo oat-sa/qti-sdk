@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -18,7 +20,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssociableHotspotMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $shape = QtiShape::RECT;
         $coords = new QtiCoords($shape, [92, 19, 261, 66]);
@@ -42,7 +44,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshallNoOutputForDefaultMatchMinFixedShowHide21()
+    public function testMarshallNoOutputForDefaultMatchMinFixedShowHide21(): void
     {
         // Aims at testing that fixed, matchMin, showHide attributes are not
         // in the output if default values are set.
@@ -61,7 +63,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshallNoOutputForMatchGroup21()
+    public function testMarshallNoOutputForMatchGroup21(): void
     {
         // Aims that testing that matchGroup is never in the output
         // in a QTI 2.1 context.
@@ -79,7 +81,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" matchMax="0"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
 	        <associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" showHide="hide" matchMax="2" matchMin="1" id="my-hot"/>
@@ -101,7 +103,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
         $this::assertFalse($component->hasHotspotLabel());
     }
 
-    public function testUnmarshall21NoMatchMax()
+    public function testUnmarshall21NoMatchMax(): void
     {
         $element = $this->createDOMElement('
 	        <associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" showHide="hide" matchMin="1" id="my-hot"/>
@@ -113,7 +115,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         $shape = QtiShape::RECT;
         $coords = new QtiCoords($shape, [92, 19, 261, 66]);
@@ -134,7 +136,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall20
      */
-    public function testMarshallMatchGroup20()
+    public function testMarshallMatchGroup20(): void
     {
         $shape = QtiShape::RECT;
         $coords = new QtiCoords($shape, [92, 19, 261, 66]);
@@ -155,7 +157,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" matchGroup="identifier1 identifier2" matchMax="2"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         $element = $this->createDOMElement('
 	        <associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" fixed="true" matchMax="0" id="my-hot" hotspotLabel="yeah"/>
@@ -176,7 +178,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallMatchMinNoInfluenceMatchMinTemplateIdentifierShowHide20()
+    public function testUnmarshallMatchMinNoInfluenceMatchMinTemplateIdentifierShowHide20(): void
     {
         // Aims at testing that matchMin, templateIdentifier and showHide attributes have no influence
         // in a QTI 2.0 context.
@@ -195,7 +197,7 @@ class AssociableHotspotMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallMatchGroup20()
+    public function testUnmarshallMatchGroup20(): void
     {
         $element = $this->createDOMElement('
 	        <associableHotspot identifier="hotspot1" shape="rect" coords="92,19,261,66" matchMax="2" matchGroup="identifier1 identifier2 identifier3"/>

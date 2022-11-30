@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -17,7 +19,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AtomicBlockMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallP()
+    public function testMarshallP(): void
     {
         $p = new P('my-p');
         $em = new Em();
@@ -32,7 +34,7 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<p id="my-p">This text is a <em>simple</em> test.</p>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallP()
+    public function testUnmarshallP(): void
     {
         $p = $this->createComponentFromXml('
 	        <p id="my-p">
@@ -54,7 +56,7 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase
         $this::assertEquals(" test.\n            ", $content[2]->getContent());
     }
 
-    public function testUnmarshallP30()
+    public function testUnmarshallP30(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
@@ -86,7 +88,7 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase
         $this::assertEquals('lessons once a week. Her house on Maple Dr. is a 2 kilometre walk to her teacher\'s house on Chestnut St.', trim($component->getContent()[4]->getContent()));
     }
 
-    public function testUnmarshallP30SsmlSub()
+    public function testUnmarshallP30SsmlSub(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
@@ -133,7 +135,7 @@ class AtomicBlockMarshallerTest extends QtiSmTestCase
         $this::assertEquals('', trim($component->getContent()[9]->getContent()));
     }
 
-    public function testMarshallP30SsmlSub()
+    public function testMarshallP30SsmlSub(): void
     {
         $span1 = new Span();
         $span1->setContent(new InlineCollection([new TextRun('Grace')]));

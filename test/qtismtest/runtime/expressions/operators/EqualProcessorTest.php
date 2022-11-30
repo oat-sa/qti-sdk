@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
@@ -24,7 +26,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class EqualProcessorTest extends QtiSmTestCase
 {
-    public function testExact()
+    public function testExact(): void
     {
         $expression = $this->createFakeExpression(ToleranceMode::EXACT);
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10)]);
@@ -52,7 +54,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testRelative()
+    public function testRelative(): void
     {
         // Only one tolerance attribute.
         $expression = $this->createFakeExpression(ToleranceMode::RELATIVE, [90]);
@@ -114,7 +116,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testAbsolute()
+    public function testAbsolute(): void
     {
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, [0.1, 0.2]);
         $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(9.9)]);
@@ -142,7 +144,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testWithVariableRef()
+    public function testWithVariableRef(): void
     {
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, ['t0', 't1']);
         $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(9.9)]);
@@ -181,7 +183,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, [0.1, 0.2]);
         $operands = new OperandsCollection([new QtiInteger(10), null]);
@@ -190,7 +192,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testNoVariableRef()
+    public function testNoVariableRef(): void
     {
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, ['t0']);
         $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(9.9)]);
@@ -202,7 +204,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testNoSecondVariableRef()
+    public function testNoSecondVariableRef(): void
     {
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, ['t0', 't1']);
         $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(9.9)]);
@@ -220,7 +222,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, [0.1, 0.2]);
         $operands = new OperandsCollection([new QtiInteger(10), new QtiString('String!')]);
@@ -229,7 +231,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, [0.1, 0.2]);
         $operands = new OperandsCollection([new RecordContainer(['A' => new QtiInteger(1)]), new QtiInteger(10)]);
@@ -238,7 +240,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, [0.1, 0.2]);
         $operands = new OperandsCollection([new QtiInteger(10)]);
@@ -246,7 +248,7 @@ class EqualProcessorTest extends QtiSmTestCase
         $processor = new EqualProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression(ToleranceMode::ABSOLUTE, [0.1, 0.2]);
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10), new QtiInteger(10)]);
@@ -262,7 +264,7 @@ class EqualProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression($toleranceMode, array $tolerance = [], $includeLowerBound = true, $includeUpperBound = true)
+    public function createFakeExpression($toleranceMode, array $tolerance = [], $includeLowerBound = true, $includeUpperBound = true): QtiComponent
     {
         $tm = ($toleranceMode != ToleranceMode::EXACT) ? ('tolerance="' . implode(' ', $tolerance) . '"') : '';
         $toleranceMode = ToleranceMode::getNameByConstant($toleranceMode);

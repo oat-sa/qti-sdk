@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\expressions\operators;
 
 use PHPUnit\Framework\TestCase;
@@ -18,7 +20,7 @@ use qtism\data\expressions\operators\MatchOperator;
  */
 class MatchTest extends TestCase
 {
-    public function testClassCreation()
+    public function testClassCreation(): void
     {
         if (version_compare(PHP_VERSION, '8.0.0', '<')) {
             $expression = $this->createMock(ExpressionCollection::class);

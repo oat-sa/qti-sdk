@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiDuration;
@@ -19,7 +21,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class IntegerDivideProcessorTest extends QtiSmTestCase
 {
-    public function testIntegerDivide()
+    public function testIntegerDivide(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(5)]);
@@ -35,7 +37,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $this::assertEquals(-10, $result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([null, new QtiInteger(5)]);
@@ -44,7 +46,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testDivisionByZero()
+    public function testDivisionByZero(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(50), new QtiInteger(0)]);
@@ -53,7 +55,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]), new QtiInteger(5)]);
@@ -62,7 +64,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeOne()
+    public function testWrongBaseTypeOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('ping!'), new QtiInteger(5)]);
@@ -71,7 +73,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeTwo()
+    public function testWrongBaseTypeTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(5), new QtiDuration('P1D')]);
@@ -80,7 +82,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(5)]);
@@ -88,7 +90,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
         $processor = new IntegerDivideProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(5), new QtiInteger(5), new QtiInteger(5)]);
@@ -100,7 +102,7 @@ class IntegerDivideProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<integerDivide>

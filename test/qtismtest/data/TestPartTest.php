@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data;
 
 use InvalidArgumentException;
@@ -15,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TestPartTest extends QtiSmTestCase
 {
-    public function testCreateInvalidIdentifier()
+    public function testCreateInvalidIdentifier(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
@@ -26,7 +28,7 @@ class TestPartTest extends QtiSmTestCase
         );
     }
 
-    public function testCreateNotEnoughAssessmentSections()
+    public function testCreateNotEnoughAssessmentSections(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('A TestPart must contain at least one AssessmentSection.');
@@ -37,7 +39,7 @@ class TestPartTest extends QtiSmTestCase
         );
     }
 
-    public function testCreateWrongSectionTypes()
+    public function testCreateWrongSectionTypes(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -13,7 +15,7 @@ use RuntimeException;
  */
 class XIncludeMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $xinclude = new XInclude('<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="path/to/file"/>');
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($xinclude)->marshall($xinclude);
@@ -23,7 +25,7 @@ class XIncludeMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="path/to/file"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="path/to/file"/>');
 
@@ -38,7 +40,7 @@ class XIncludeMarshallerTest extends QtiSmTestCase
         $this::assertEquals('http://www.w3.org/2001/XInclude', $includeElement->namespaceURI);
     }
 
-    public function testGetXmlWrongNamespace()
+    public function testGetXmlWrongNamespace(): void
     {
         $element = $this->createDOMElement('<xi:include xmlns:xi="http://www.fruits.org/1998/Include/IncludeYoghourt" href="path/to/file"/>');
 

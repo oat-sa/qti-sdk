@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\rules;
 
 use qtism\runtime\rules\RuleProcessingException;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TemplateConstraintProcessorTest extends QtiSmTestCase
 {
-    public function testTemplateConstraintNullResult()
+    public function testTemplateConstraintNullResult(): void
     {
         $rule = $this->createComponentFromXml('
 		    <templateConstraint>
@@ -26,7 +28,7 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testTemplateConstraintFalseResult()
+    public function testTemplateConstraintFalseResult(): void
     {
         $rule = $this->createComponentFromXml('
 	        <templateConstraint>
@@ -42,7 +44,7 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testTemplateConstraintEmptyStringResult()
+    public function testTemplateConstraintEmptyStringResult(): void
     {
         $rule = $this->createComponentFromXml('
 	        <templateConstraint>
@@ -58,7 +60,7 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testTemplateConstraintEmptyContainerResult()
+    public function testTemplateConstraintEmptyContainerResult(): void
     {
         $rule = $this->createComponentFromXml('
 	        <templateConstraint>
@@ -74,7 +76,7 @@ class TemplateConstraintProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testTemplateConstraintSatisfied()
+    public function testTemplateConstraintSatisfied(): void
     {
         $rule = $this->createComponentFromXml('
 	        <templateConstraint>

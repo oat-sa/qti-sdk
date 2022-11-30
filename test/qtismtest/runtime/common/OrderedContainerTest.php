@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\common;
 
 use qtism\common\datatypes\QtiDirectedPair;
@@ -21,7 +23,7 @@ class OrderedContainerTest extends QtiSmTestCase
      * @param OrderedContainer $containerA
      * @param OrderedContainer $containerB
      */
-    public function testEqualsValid(OrderedContainer $containerA, OrderedContainer $containerB)
+    public function testEqualsValid(OrderedContainer $containerA, OrderedContainer $containerB): void
     {
         $this::assertTrue($containerA->equals($containerB));
         $this::assertTrue($containerB->equals($containerA));
@@ -32,13 +34,13 @@ class OrderedContainerTest extends QtiSmTestCase
      * @param OrderedContainer $containerA
      * @param OrderedContainer $containerB
      */
-    public function testEqualsInvalid(OrderedContainer $containerA, OrderedContainer $containerB)
+    public function testEqualsInvalid(OrderedContainer $containerA, OrderedContainer $containerB): void
     {
         $this::assertFalse($containerA->equals($containerB));
         $this::assertFalse($containerB->equals($containerA));
     }
 
-    public function testCreationEmpty()
+    public function testCreationEmpty(): void
     {
         $container = new OrderedContainer(BaseType::INTEGER);
         $this::assertCount(0, $container);
@@ -49,7 +51,7 @@ class OrderedContainerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function equalsValidProvider()
+    public function equalsValidProvider(): array
     {
         return [
             [new OrderedContainer(BaseType::INTEGER), new OrderedContainer(BaseType::INTEGER)],
@@ -62,7 +64,7 @@ class OrderedContainerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function equalsInvalidProvider()
+    public function equalsInvalidProvider(): array
     {
         return [
             [new OrderedContainer(BaseType::INTEGER, [new QtiInteger(20)]), new OrderedContainer(BaseType::INTEGER, [new QtiInteger(30)])],
@@ -71,7 +73,7 @@ class OrderedContainerTest extends QtiSmTestCase
         ];
     }
 
-    public function testEqualsNull()
+    public function testEqualsNull(): void
     {
         $container = new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]);
         $this::assertFalse($container->equals(null));

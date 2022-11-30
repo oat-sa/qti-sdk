@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\php;
 
 use InvalidArgumentException;
@@ -13,7 +15,7 @@ use stdClass;
  */
 class PhpArgumentTest extends QtiSmTestCase
 {
-    public function testPhpArgument()
+    public function testPhpArgument(): void
     {
         // Test a variable reference.
         $arg = new PhpArgument(new PhpVariable('test'));
@@ -59,7 +61,7 @@ class PhpArgumentTest extends QtiSmTestCase
         $this::assertTrue($arg->isScalar());
     }
 
-    public function testObject()
+    public function testObject(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $arg = new PhpArgument(new stdClass());

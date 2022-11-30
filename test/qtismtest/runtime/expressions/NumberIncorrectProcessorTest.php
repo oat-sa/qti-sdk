@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use qtism\common\collections\IdentifierCollection;
@@ -21,7 +23,7 @@ use qtismtest\QtiSmItemSubsetTestCase;
  */
 class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase
 {
-    public function testNumberIncorrect()
+    public function testNumberIncorrect(): void
     {
         $session = $this->getTestSession();
 
@@ -126,7 +128,7 @@ class NumberIncorrectProcessorTest extends QtiSmItemSubsetTestCase
      * @param IdentifierCollection|null $excludeCategories
      * @return NumberIncorrect
      */
-    protected static function getNumberIncorrect($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
+    protected static function getNumberIncorrect($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null): NumberIncorrect
     {
         $numberIncorrect = new NumberIncorrect();
         $numberIncorrect->setSectionIdentifier($sectionIdentifier);

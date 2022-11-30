@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
  */
 class AssessmentResultBuilderTest extends QtiSmAssessmentTestSessionTestCase
 {
-    public function testBasic()
+    public function testBasic(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
         $session->beginTestSession();

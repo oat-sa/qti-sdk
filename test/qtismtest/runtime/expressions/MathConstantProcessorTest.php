@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiFloat;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MathConstantProcessorTest extends QtiSmTestCase
 {
-    public function testSimple()
+    public function testSimple(): void
     {
         $mathConstantExpr = $this->createComponentFromXml('<mathConstant name="e"/>');
         $mathConstantProcessor = new MathConstantProcessor($mathConstantExpr);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\storage\common;
 
 use OutOfBoundsException;
@@ -14,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssessmentTestSeekerTest extends QtiSmTestCase
 {
-    public function testSeekComponent()
+    public function testSeekComponent(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -52,7 +54,7 @@ class AssessmentTestSeekerTest extends QtiSmTestCase
         }
     }
 
-    public function testSeekPosition()
+    public function testSeekPosition(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');

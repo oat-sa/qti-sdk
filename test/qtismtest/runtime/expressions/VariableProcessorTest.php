@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
@@ -33,7 +35,7 @@ use qtismtest\QtiSmTestCase;
  */
 class VariableProcessorTest extends QtiSmTestCase
 {
-    public function testSimple()
+    public function testSimple(): void
     {
         $variableExpr = $this->createComponentFromXml('<variable identifier="var1"/>');
 
@@ -62,7 +64,7 @@ class VariableProcessorTest extends QtiSmTestCase
         $this::assertEquals(12, $result[1]->getValue());
     }
 
-    public function testWeighted()
+    public function testWeighted(): void
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', './Q01.xml');
         $weights = new WeightCollection([new Weight('weight1', 1.1)]);
@@ -114,7 +116,7 @@ class VariableProcessorTest extends QtiSmTestCase
         $this::assertEquals(12.1, round($stateVal[1]->getValue(), 2));
     }
 
-    public function testMultipleOccurences()
+    public function testMultipleOccurences(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/scenario_basic_nonadaptive_linear_singlesection_withreplacement.xml');

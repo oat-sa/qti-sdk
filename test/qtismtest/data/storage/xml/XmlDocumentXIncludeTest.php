@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml;
 
 use qtism\data\storage\xml\XmlDocument;
@@ -12,7 +14,7 @@ use ReflectionException;
  */
 class XmlDocumentXIncludeTest extends QtiSmTestCase
 {
-    public function testLoadAndSaveXIncludeNsInTag()
+    public function testLoadAndSaveXIncludeNsInTag(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml', true);
@@ -42,7 +44,7 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws ReflectionException
      */
-    public function testLoadAndResolveXIncludeSameBase($file, $filesystem)
+    public function testLoadAndResolveXIncludeSameBase($file, $filesystem): void
     {
         $doc = new XmlDocument();
 
@@ -78,7 +80,7 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function loadAndResolveXIncludeSameBaseProvider()
+    public function loadAndResolveXIncludeSameBaseProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag.xml', false],
@@ -89,7 +91,7 @@ class XmlDocumentXIncludeTest extends QtiSmTestCase
     /**
      * @depends testLoadAndResolveXIncludeSameBase
      */
-    public function testLoadAndResolveXIncludeDifferentBase()
+    public function testLoadAndResolveXIncludeDifferentBase(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/xinclude/xinclude_ns_in_tag_subfolder.xml', true);

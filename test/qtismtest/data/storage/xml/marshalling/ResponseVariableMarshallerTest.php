@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ResponseVariableMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         /** @var ResultResponseVariable $resultResponseVariable */
         $resultResponseVariable = $this->createComponentFromXml('
@@ -77,7 +79,7 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         $this::assertEquals('value-id-1', $resultResponseVariable->getChoiceSequence()->getValue());
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         /** @var ResultResponseVariable $resultResponseVariable */
         $resultResponseVariable = $this->createComponentFromXml('
@@ -110,7 +112,7 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         $this::assertNull($resultResponseVariable->getChoiceSequence());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new ResultResponseVariable(
             new QtiIdentifier('fixture-identifier'),
@@ -147,7 +149,7 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         $this::assertEquals(3, $element->getElementsByTagName('correctResponse')->item(0)->getElementsByTagName('value')->length);
     }
 
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $component = new ResultResponseVariable(
             new QtiIdentifier('fixture-identifier'),
@@ -177,7 +179,7 @@ class ResponseVariableMarshallerTest extends QtiSmTestCase
         $this::assertEquals(0, $element->getElementsByTagName('correctResponse')->length);
     }
 
-    public function testGetExpectedQtiClassName()
+    public function testGetExpectedQtiClassName(): void
     {
         $component = new ResultResponseVariable(
             new QtiIdentifier('fixture-identifier'),

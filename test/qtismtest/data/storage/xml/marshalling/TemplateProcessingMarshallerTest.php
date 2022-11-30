@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -19,7 +21,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TemplateProcessingMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $templateConstraint = new TemplateConstraint(new BaseValue(BaseType::BOOLEAN, true));
         $templateIf = new TemplateIf(new BaseValue(BaseType::BOOLEAN, true), new TemplateRuleCollection([new SetCorrectResponse('RESPONSE', new BaseValue(BaseType::IDENTIFIER, 'jerome'))]));
@@ -37,7 +39,7 @@ class TemplateProcessingMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <templateProcessing>

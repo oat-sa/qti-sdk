@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ use qtismtest\QtiSmTestCase;
  */
 class CsvToMultipleTest extends QtiSmTestCase {
 	
-    public function testSimple() {
+    public function testSimple(): void {
         $baseValue = new BaseValue(BaseType::STRING, 'Boba,Fett');
         $customOperator = new CustomOperator(
             new ExpressionCollection(array($baseValue)),
@@ -63,7 +65,7 @@ class CsvToMultipleTest extends QtiSmTestCase {
     /**
      * @depends testSimple
      */
-    public function testSingleStringValue() {
+    public function testSingleStringValue(): void {
         $baseValue = new BaseValue(BaseType::STRING, 'Boba');
         $customOperator = new CustomOperator(
             new ExpressionCollection(array($baseValue)),
@@ -86,7 +88,7 @@ class CsvToMultipleTest extends QtiSmTestCase {
     /**
      * @depends testSimple
      */
-    public function testReturnsNull() {
+    public function testReturnsNull(): void {
         $baseValue = new BaseValue(BaseType::BOOLEAN, false);
         $customOperator = new CustomOperator(
             new ExpressionCollection(array($baseValue)),
@@ -102,7 +104,7 @@ class CsvToMultipleTest extends QtiSmTestCase {
     /**
      * @depends testSimple
      */
-    public function testEmptyStringValue() {
+    public function testEmptyStringValue(): void {
         $baseValue = new BaseValue(BaseType::STRING, '');
         $customOperator = new CustomOperator(
             new ExpressionCollection(array($baseValue)),

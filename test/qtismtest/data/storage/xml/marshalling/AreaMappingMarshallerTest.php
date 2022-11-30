@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -16,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AreaMappingMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $defaultValue = 6.66;
         $areaMapEntries = new AreaMapEntryCollection();
@@ -35,7 +37,7 @@ class AreaMappingMarshallerTest extends QtiSmTestCase
         $this::assertEquals('areaMapping', $element->nodeName);
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

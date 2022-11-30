@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\processing;
 
 use qtism\data\processing\TemplateProcessing;
@@ -18,7 +20,7 @@ class ProcessingUtilsTest extends QtiSmTestCase
      * @param TemplateProcessing $templateProcessing
      * @param array $expectedIdentifiers
      */
-    public function testImpactedVariables(TemplateProcessing $templateProcessing, array $expectedIdentifiers)
+    public function testImpactedVariables(TemplateProcessing $templateProcessing, array $expectedIdentifiers): void
     {
         $this::assertEquals(
             $expectedIdentifiers,
@@ -30,7 +32,7 @@ class ProcessingUtilsTest extends QtiSmTestCase
      * @return array
      * @throws MarshallerNotFoundException
      */
-    public function impactedVariablesProvider()
+    public function impactedVariablesProvider(): array
     {
         $data = [];
 

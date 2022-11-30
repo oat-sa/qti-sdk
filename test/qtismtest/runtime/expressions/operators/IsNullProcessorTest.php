@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
@@ -23,7 +25,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class IsNullProcessorTest extends QtiSmTestCase
 {
-    public function testWithEmptyString()
+    public function testWithEmptyString(): void
     {
         $operands = new OperandsCollection();
         $operands[] = new QtiString('');
@@ -33,7 +35,7 @@ class IsNullProcessorTest extends QtiSmTestCase
         $this::assertTrue($processor->process()->getValue());
     }
 
-    public function testWithNull()
+    public function testWithNull(): void
     {
         $operands = new OperandsCollection();
         $operands[] = null;
@@ -43,7 +45,7 @@ class IsNullProcessorTest extends QtiSmTestCase
         $this::assertTrue($processor->process()->getValue());
     }
 
-    public function testEmptyContainers()
+    public function testEmptyContainers(): void
     {
         $operands = new OperandsCollection();
         $operands[] = new MultipleContainer(BaseType::POINT);
@@ -61,7 +63,7 @@ class IsNullProcessorTest extends QtiSmTestCase
         $this::assertTrue($processor->process()->getValue());
     }
 
-    public function testNotEmpty()
+    public function testNotEmpty(): void
     {
         $expression = $this->getFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(0)]);
@@ -94,7 +96,7 @@ class IsNullProcessorTest extends QtiSmTestCase
         $this::assertFalse($processor->process()->getValue());
     }
 
-    public function testLessThanNeededOperands()
+    public function testLessThanNeededOperands(): void
     {
         $this->expectException(ExpressionProcessingException::class);
 
@@ -104,7 +106,7 @@ class IsNullProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testMoreThanNeededOperands()
+    public function testMoreThanNeededOperands(): void
     {
         $this->expectException(ExpressionProcessingException::class);
 
@@ -118,7 +120,7 @@ class IsNullProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    private function getFakeExpression()
+    private function getFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<isNull>

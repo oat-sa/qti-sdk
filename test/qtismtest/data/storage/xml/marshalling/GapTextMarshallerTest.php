@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -17,7 +19,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class GapTextMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $gapText = new GapText('gapText1', 1);
         $gapText->setContent(new TextOrVariableCollection([new TextRun('My var is '), new PrintedVariable('var1')]));
@@ -33,7 +35,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<gapText identifier="gapText1" matchMax="1">My var is <printedVariable identifier="var1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></gapText>', $dom->saveXML($element));
     }
 
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         $gapText = new GapText('gapText1', 3);
 
@@ -56,7 +58,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<gapText identifier="gapText1" matchMax="3" matchGroup="identifier1 id2">Some text...</gapText>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
 	        <gapText identifier="gapText1" matchMax="1">My var is <printedVariable identifier="var1" base="10" powerForm="false" delimiter=";" mappingIndicator="="/></gapText>
@@ -81,7 +83,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $this::assertEquals('var1', $content[1]->getIdentifier());
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         $element = $this->createDOMElement('
 	        <gapText identifier="gapText1" matchMax="3" matchMin="1" showHide="hide" templateIdentifier="XTEMPLATE" matchGroup="id1 id2">Some text...</gapText>
@@ -103,7 +105,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshall20NotOnlyTextContent()
+    public function testUnmarshall20NotOnlyTextContent(): void
     {
         // Aims at testing that an error is thrown when trying
         // to unmarshall a gapText containing other stuff than plain/text
@@ -119,7 +121,7 @@ class GapTextMarshallerTest extends QtiSmTestCase
         $gapText = $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallInvalid21()
+    public function testUnmarshallInvalid21(): void
     {
         // Only textRun and/or printedVariable.
         $this->expectException(UnmarshallingException::class);

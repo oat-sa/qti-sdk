@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -13,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class GapMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         $gap = new Gap('gap1', true, 'my-gap', 'gaps');
         $gap->setFixed(true);
@@ -29,7 +31,7 @@ class GapMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall20
      */
-    public function testMarshallNoTemplateIdentifierShowHideRequiredNoOutput20()
+    public function testMarshallNoTemplateIdentifierShowHideRequiredNoOutput20(): void
     {
         $gap = new Gap('gap1');
         $gap->setTemplateIdentifier('XTEMPLATE');
@@ -47,7 +49,7 @@ class GapMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall20
      */
-    public function testMarshallMatchGroup20()
+    public function testMarshallMatchGroup20(): void
     {
         $gap = new Gap('gap1');
         $gap->setMatchGroup(new IdentifierCollection(['identifier1', 'identifier2']));
@@ -60,7 +62,7 @@ class GapMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<gap identifier="gap1" matchGroup="identifier1 identifier2"/>', $dom->saveXML($element));
     }
 
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $gap = new Gap('gap1', true, 'my-gap', 'gaps');
         $gap->setFixed(false);
@@ -81,7 +83,7 @@ class GapMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshallNoMatchGroup21()
+    public function testMarshallNoMatchGroup21(): void
     {
         // Aims at testing that no matchGroup attribute is in
         // the output in a QTI 2.1 context.
@@ -96,7 +98,7 @@ class GapMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<gap identifier="gap1"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
 	        <gap identifier="gap1" templateIdentifier="tpl-gap" required="true" id="my-gap" class="gaps" showHide="hide"/>
@@ -117,7 +119,7 @@ class GapMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshallMatchGroupNoInfluence21()
+    public function testUnmarshallMatchGroupNoInfluence21(): void
     {
         // Aims at testing that no matchGroup is in output in a QTI 2.1 context.
         $element = $this->createDOMElement('
@@ -129,7 +131,7 @@ class GapMarshallerTest extends QtiSmTestCase
         $this::assertSame(0, count($gap->getMatchGroup()));
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         $element = $this->createDOMElement('
 	        <gap identifier="gap1" fixed="true" id="my-gap" matchGroup="identifier1 identifier2" class="gaps"/>
@@ -152,7 +154,7 @@ class GapMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallNoNoInfluenceRequiredTemplateIdentifierShowHide20()
+    public function testUnmarshallNoNoInfluenceRequiredTemplateIdentifierShowHide20(): void
     {
         // Aims at testing that required, templateIdentifier, showHide
         // attributes are not in output in a QTI 2.0 context.

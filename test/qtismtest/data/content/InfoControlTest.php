@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\content;
 
 use InvalidArgumentException;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class InfoControlTest extends QtiSmTestCase
 {
-    public function testSetTitleWrongType()
+    public function testSetTitleWrongType(): void
     {
         $infoControl = new InfoControl();
 

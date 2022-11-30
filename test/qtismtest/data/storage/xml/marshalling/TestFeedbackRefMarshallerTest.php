@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -15,7 +17,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class TestFeedbackRefMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<testFeedbackRef identifier="showme" outcomeIdentifier="SHOW_FEEDBACK" access="during" showHide="show" href="./TF01.xml"/>');
@@ -30,7 +32,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals('./TF01.xml', $ref->getHref());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $ref = new TestFeedbackRef('showme', 'SHOW_FEEDBACK', TestFeedbackAccess::DURING, ShowHide::SHOW, './TF01.xml');
         $factory = new Compact21MarshallerFactory();
@@ -44,7 +46,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals('./TF01.xml', $elt->getAttribute('href'));
     }
 
-    public function testUnmarshallMissingIdentifier()
+    public function testUnmarshallMissingIdentifier(): void
     {
         $this->expectException(UnmarshallingException::class);
         $this->expectExceptionMessage("The mandatory 'identifier' attribute is missing from element 'testFeedbackRef'");
@@ -56,7 +58,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $ref = $factory->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallMissingOutcomeIdentifier()
+    public function testUnmarshallMissingOutcomeIdentifier(): void
     {
         $this->expectException(UnmarshallingException::class);
         $this->expectExceptionMessage("The mandatory 'outcomeIdentifier' attribute is missing from element 'testFeedbackRef'");
@@ -68,7 +70,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $ref = $factory->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallMissingAccess()
+    public function testUnmarshallMissingAccess(): void
     {
         $this->expectException(UnmarshallingException::class);
         $this->expectExceptionMessage("The mandatory 'access' attribute is missing from element 'testFeedbackRef'");
@@ -80,7 +82,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $ref = $factory->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallMissingShowHide()
+    public function testUnmarshallMissingShowHide(): void
     {
         $this->expectException(UnmarshallingException::class);
         $this->expectExceptionMessage("The mandatory 'showHide' attribute is missing from element 'testFeedbackRef'");
@@ -92,7 +94,7 @@ class TestFeedbackRefMarshallerTest extends QtiSmTestCase
         $ref = $factory->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallMissingHref()
+    public function testUnmarshallMissingHref(): void
     {
         $this->expectException(UnmarshallingException::class);
         $this->expectExceptionMessage("The mandatory 'href' attribute is missing from element 'testFeedbackRef'");

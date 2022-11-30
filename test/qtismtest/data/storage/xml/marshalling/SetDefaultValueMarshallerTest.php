@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -16,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SetDefaultValueMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $variableExpr = new Variable('var1');
         $boolExpr = new BaseValue(BaseType::BOOLEAN, true);
@@ -31,7 +33,7 @@ class SetDefaultValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<setDefaultValue identifier="tpl1"><match><variable identifier="var1"/><baseValue baseType="boolean">true</baseValue></match></setDefaultValue>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <setDefaultValue identifier="tpl1">

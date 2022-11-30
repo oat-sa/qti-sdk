@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use qtism\common\datatypes\QtiDuration;
@@ -14,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TimeConstraintTest extends QtiSmTestCase
 {
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT20S'));
@@ -23,7 +25,7 @@ class TimeConstraintTest extends QtiSmTestCase
         $this::assertInstanceOf(QtiDuration::class, $timeConstraint->getDuration());
     }
 
-    public function testNoConstraints()
+    public function testNoConstraints(): void
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT20S'));
@@ -35,7 +37,7 @@ class TimeConstraintTest extends QtiSmTestCase
         $this::assertFalse($timeConstraint->maxTimeInForce());
     }
 
-    public function testNegativeTime()
+    public function testNegativeTime(): void
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeLimits = new TimeLimits(null, new QtiDuration('PT10S'));
@@ -49,7 +51,7 @@ class TimeConstraintTest extends QtiSmTestCase
         $this::assertFalse($minRemaining);
     }
 
-    public function testDoesAllowLateSubmission()
+    public function testDoesAllowLateSubmission(): void
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeLimits = new TimeLimits(null, new QtiDuration('PT10S'), true);
@@ -67,7 +69,7 @@ class TimeConstraintTest extends QtiSmTestCase
         $this::assertTrue($timeConstraint->allowLateSubmission());
     }
 
-    public function testRemainingTime()
+    public function testRemainingTime(): void
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeConstraint = new TimeConstraint($assessmentItemRef, new QtiDuration('PT20S'));
@@ -91,7 +93,7 @@ class TimeConstraintTest extends QtiSmTestCase
         $this::assertEquals('PT30S', $timeConstraint->getMaximumRemainingTime()->__toString());
     }
 
-    public function testNonLinearNavigationMode()
+    public function testNonLinearNavigationMode(): void
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeLimits = new TimeLimits(new QtiDuration('PT1S'), new QtiDuration('PT2S'), false);
@@ -104,7 +106,7 @@ class TimeConstraintTest extends QtiSmTestCase
         $this::assertFalse($timeConstraint->getMinimumRemainingTime());
     }
 
-    public function testLinearNavigationMode()
+    public function testLinearNavigationMode(): void
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $timeLimits = new TimeLimits(new QtiDuration('PT1S'), new QtiDuration('PT2S'), false);

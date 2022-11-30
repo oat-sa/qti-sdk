@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -15,7 +17,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class ShufflingGroupMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new ShufflingGroup(new IdentifierCollection(['id1', 'id2', 'id3']));
         $component->setFixedIdentifiers(new IdentifierCollection(['id2']));
@@ -28,7 +30,7 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
         $this::assertEquals('id2', $element->getAttribute('fixedIdentifiers'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<shufflingGroup identifiers="id1 id2 id3" fixedIdentifiers="id2"/>');
@@ -43,7 +45,7 @@ class ShufflingGroupMarshallerTest extends QtiSmTestCase
         $this::assertEquals(['id2'], $component->getFixedIdentifiers()->getArrayCopy());
     }
 
-    public function testUnmarshallMissingIdentifiersAttribute()
+    public function testUnmarshallMissingIdentifiersAttribute(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<shufflingGroup fixedIdentifiers="id2"/>');

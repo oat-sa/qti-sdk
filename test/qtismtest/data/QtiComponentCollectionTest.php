@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data;
 
 use InvalidArgumentException;
@@ -16,7 +18,7 @@ use stdClass;
  */
 class QtiComponentCollectionTest extends QtiSmTestCase
 {
-    public function testInsertWrongType()
+    public function testInsertWrongType(): void
     {
         $collection = new QtiComponentCollection();
 
@@ -26,7 +28,7 @@ class QtiComponentCollectionTest extends QtiSmTestCase
         $collection[] = new stdClass();
     }
 
-    public function testInsertWrongCall()
+    public function testInsertWrongCall(): void
     {
         $collection = new QtiComponentCollection();
 
@@ -36,7 +38,7 @@ class QtiComponentCollectionTest extends QtiSmTestCase
         $collection['index'] = new stdClass();
     }
 
-    public function testExclusivelyContainsComponentsWithClassNameNotFoundRecursive()
+    public function testExclusivelyContainsComponentsWithClassNameNotFoundRecursive(): void
     {
         $collection = new QtiComponentCollection();
         $component = new P();

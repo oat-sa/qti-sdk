@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
@@ -21,7 +23,7 @@ use RuntimeException;
  */
 class SumProcessorTest extends QtiSmTestCase
 {
-    public function testSimple()
+    public function testSimple(): void
     {
         $sum = $this->createFakeSumComponent();
 
@@ -34,7 +36,7 @@ class SumProcessorTest extends QtiSmTestCase
         $this::assertEquals(2, $result->getValue());
     }
 
-    public function testNary()
+    public function testNary(): void
     {
         $sum = $this->createFakeSumComponent();
 
@@ -46,7 +48,7 @@ class SumProcessorTest extends QtiSmTestCase
         $this::assertEquals(20, $result->getValue());
     }
 
-    public function testComplex()
+    public function testComplex(): void
     {
         $sum = $this->createFakeSumComponent();
 
@@ -60,7 +62,7 @@ class SumProcessorTest extends QtiSmTestCase
         $this::assertEquals(31.4, $result->getValue());
     }
 
-    public function testZero()
+    public function testZero(): void
     {
         $sum = $this->createFakeSumComponent();
 
@@ -72,7 +74,7 @@ class SumProcessorTest extends QtiSmTestCase
         $this::assertEquals(6.0, $result->getValue());
     }
 
-    public function testInvalidOperandsOne()
+    public function testInvalidOperandsOne(): void
     {
         $sum = $this->createFakeSumComponent();
 
@@ -83,7 +85,7 @@ class SumProcessorTest extends QtiSmTestCase
         $result = $sumProcessor->process();
     }
 
-    public function testInvalidOperandsTwo()
+    public function testInvalidOperandsTwo(): void
     {
         $sum = $this->createFakeSumComponent();
         $operands = new OperandsCollection();
@@ -94,7 +96,7 @@ class SumProcessorTest extends QtiSmTestCase
         $result = $sumProcessor->process();
     }
 
-    public function testNullInvolved()
+    public function testNullInvolved(): void
     {
         $sum = $this->createFakeSumComponent();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10), null]);
@@ -107,7 +109,7 @@ class SumProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    private function createFakeSumComponent()
+    private function createFakeSumComponent(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<sum xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">

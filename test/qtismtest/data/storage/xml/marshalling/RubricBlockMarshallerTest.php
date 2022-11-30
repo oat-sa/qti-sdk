@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -21,7 +23,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class RubricBlockMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $rubricBlock = $this->createComponentFromXml('
             <rubricBlock class="warning" view="candidate tutor" xml:base="/home/jerome">
@@ -53,7 +55,7 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoViewsAttribute()
+    public function testUnmarshallNoViewsAttribute(): void
     {
         $this->expectException(UnmarshallingException::class);
         $this->expectExceptionMessage("The mandatory attribute 'views' is missing.");
@@ -69,7 +71,7 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallInvalidContent()
+    public function testUnmarshallInvalidContent(): void
     {
         $this->expectException(UnmarshallingException::class);
         $this->expectExceptionMessage("The 'rubricBlock' cannot contain 'choiceInteraction' elements.");
@@ -86,7 +88,7 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallApipAccessibilityInRubricBlock()
+    public function testUnmarshallApipAccessibilityInRubricBlock(): void
     {
         $rubricBlock = $this->createComponentFromXml('
             <rubricBlock class="warning" view="candidate tutor" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
@@ -100,7 +102,7 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(RubricBlock::class, $rubricBlock);
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $stylesheet = new Stylesheet('./stylesheet.css');
 

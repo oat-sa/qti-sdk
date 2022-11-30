@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data;
 
 use InvalidArgumentException;
@@ -16,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssessmentItemTest extends QtiSmTestCase
 {
-    public function testModalFeedbackRules()
+    public function testModalFeedbackRules(): void
     {
         $assessmentItem = new AssessmentItem('Q01', 'Question 1', false);
 
@@ -43,7 +45,7 @@ class AssessmentItemTest extends QtiSmTestCase
      * @param array $expected
      * @throws XmlStorageException
      */
-    public function testGetResponseValidityConstraints($path, array $expected)
+    public function testGetResponseValidityConstraints($path, array $expected): void
     {
         $doc = new XmlDocument();
         $doc->load($path);
@@ -78,7 +80,7 @@ class AssessmentItemTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function getResponseValidityConstraintsProvider()
+    public function getResponseValidityConstraintsProvider(): array
     {
         return [
             // # 0
@@ -765,7 +767,7 @@ class AssessmentItemTest extends QtiSmTestCase
         ];
     }
 
-    public function testCreateAssessmentItemWrongIdentifier()
+    public function testCreateAssessmentItemWrongIdentifier(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The identifier argument must be a valid QTI Identifier, '999' given.");
@@ -773,7 +775,7 @@ class AssessmentItemTest extends QtiSmTestCase
         $assessmentItem = new AssessmentItem('999', 'Nine Nine Nine', false);
     }
 
-    public function testCreateAssessmentItemWrongTitle()
+    public function testCreateAssessmentItemWrongTitle(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The title argument must be a string, 'integer' given.");
@@ -781,7 +783,7 @@ class AssessmentItemTest extends QtiSmTestCase
         $assessmentItem = new AssessmentItem('ABC', 9, false);
     }
 
-    public function testCreateAssessmentItemWrongLanguage()
+    public function testCreateAssessmentItemWrongLanguage(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The lang argument must be a string, 'integer' given.");
@@ -789,7 +791,7 @@ class AssessmentItemTest extends QtiSmTestCase
         $assessmentItem = new AssessmentItem('ABC', 'ABC', false, 1337);
     }
 
-    public function testSetLabelWrongType()
+    public function testSetLabelWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The label argument must be a string with at most 256 characters.');
@@ -798,7 +800,7 @@ class AssessmentItemTest extends QtiSmTestCase
         $assessmentItem->setLabel(str_repeat('1337', 65));
     }
 
-    public function testSetAdaptiveWrongType()
+    public function testSetAdaptiveWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The adaptive argument must be a boolean, 'integer' given.");
@@ -807,7 +809,7 @@ class AssessmentItemTest extends QtiSmTestCase
         $assessmentItem->setAdaptive(9999);
     }
 
-    public function testSetTimeDependentWrongType()
+    public function testSetTimeDependentWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The timeDependent argument must be a boolean, 'integer' given.");
@@ -816,7 +818,7 @@ class AssessmentItemTest extends QtiSmTestCase
         $assessmentItem->setTimeDependent(9999);
     }
 
-    public function testSetToolNameWrongType()
+    public function testSetToolNameWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The toolName argument must be a string with at most 256 characters.');
@@ -825,7 +827,7 @@ class AssessmentItemTest extends QtiSmTestCase
         $assessmentItem->setToolName(str_repeat('tool', 65));
     }
 
-    public function testSetToolVersionWrongType()
+    public function testSetToolVersionWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The toolVersion argument must be a string with at most 256 characters.');

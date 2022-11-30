@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\rules;
 
 use qtism\runtime\rules\ExitTemplateProcessor;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExitTemplateProcessorTest extends QtiSmTestCase
 {
-    public function testExitTest()
+    public function testExitTest(): void
     {
         $rule = $this->createComponentFromXml('<exitTemplate/>');
         $processor = new ExitTemplateProcessor($rule);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\php\marshalling;
 
 use InvalidArgumentException;
@@ -19,7 +21,7 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
      * @param mixed $scalar
      * @throws PhpMarshallingException
      */
-    public function testMarshall($expectedInStream, $scalar)
+    public function testMarshall($expectedInStream, $scalar): void
     {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpScalarMarshaller($ctx, $scalar);
@@ -28,7 +30,7 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
         $this::assertEquals($expectedInStream, $this->getStream()->getBinary());
     }
 
-    public function testMarshallWrongDataType()
+    public function testMarshallWrongDataType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $ctx = $this->createMarshallingContext();
@@ -38,7 +40,7 @@ class PhpScalarMarshallerTest extends QtiSmPhpMarshallerTestCase
     /**
      * @return array
      */
-    public function marshallDataProvider()
+    public function marshallDataProvider(): array
     {
         return [
             ["\$scalarnullvalue_0 = null;\n", null],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -13,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class BaseValueMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $baseType = BaseType::FLOAT;
         $value = 27.11;
@@ -28,7 +30,7 @@ class BaseValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals($value . '', $element->nodeValue);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<baseValue xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" baseType="float">27.11</baseValue>');
@@ -43,7 +45,7 @@ class BaseValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals(27.11, $component->getValue());
     }
 
-    public function testUnmarshallCDATA()
+    public function testUnmarshallCDATA(): void
     {
         $element = $this->createDOMElement('<baseValue baseType="string"><![CDATA[A string...]]></baseValue>');
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);

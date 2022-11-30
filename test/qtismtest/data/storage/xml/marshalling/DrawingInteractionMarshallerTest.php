@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -16,7 +18,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class DrawingInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $object = new ObjectElement('my-canvas.png', 'image/png');
         $drawingInteraction = new DrawingInteraction('RESPONSE', $object, 'my-drawings', 'draw-it');
@@ -32,7 +34,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<drawingInteraction id="my-drawings" class="draw-it" responseIdentifier="RESPONSE" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-canvas.png" type="image/png"/></drawingInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
             <drawingInteraction id="my-drawings" class="draw-it" responseIdentifier="RESPONSE" xml:base="/home/jerome">
@@ -59,7 +61,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoObject()
+    public function testUnmarshallNoObject(): void
     {
         $element = $this->createDOMElement('
             <drawingInteraction id="my-drawings" class="draw-it" responseIdentifier="RESPONSE" xml:base="/home/jerome">
@@ -73,7 +75,7 @@ class DrawingInteractionMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallMissingResponseIdentifier()
+    public function testUnmarshallMissingResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <drawingInteraction id="my-drawings" class="draw-it" xml:base="/home/jerome">

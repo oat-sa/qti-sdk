@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\content\interactions;
 
 use qtism\data\content\interactions\Orientation;
@@ -13,7 +15,7 @@ class OrientationTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return Orientation::class;
     }
@@ -21,7 +23,7 @@ class OrientationTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'vertical',
@@ -32,7 +34,7 @@ class OrientationTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'VERTICAL',
@@ -43,7 +45,7 @@ class OrientationTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             Orientation::VERTICAL,

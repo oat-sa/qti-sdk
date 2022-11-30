@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\rules;
 
 use qtism\runtime\rules\RuleProcessorFactory;
@@ -12,7 +14,7 @@ use RuntimeException;
  */
 class RuleProcessorFactoryTest extends QtiSmTestCase
 {
-    public function testCreateProcessor()
+    public function testCreateProcessor(): void
     {
         $rule = $this->createComponentFromXml('
 			<setOutcomeValue identifier="outcomeX">
@@ -26,7 +28,7 @@ class RuleProcessorFactoryTest extends QtiSmTestCase
         $this::assertEquals('setOutcomeValue', $processor->getRule()->getQtiClassName());
     }
 
-    public function testCreateProcessorNoProcessor()
+    public function testCreateProcessorNoProcessor(): void
     {
         $rule = $this->createComponentFromXml('
 			<product>

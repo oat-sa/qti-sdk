@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\rendering\markup\goldilocks;
 
 use qtism\data\storage\xml\XmlDocument;
@@ -24,7 +26,7 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws RenderingException
      */
-    public function testRendering($file, $expectedFile, $renderingMode, $xmlBasePolicy, $stylesheetPolicy, $cssClassPolicy)
+    public function testRendering($file, $expectedFile, $renderingMode, $xmlBasePolicy, $stylesheetPolicy, $cssClassPolicy): void
     {
         $engine = new GoldilocksRenderingEngine();
         $engine->setChoiceShowHidePolicy($renderingMode);
@@ -47,7 +49,7 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function renderingProvider()
+    public function renderingProvider(): array
     {
         return [
             // choiceInteraction-0

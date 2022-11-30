@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\content\interactions;
 
 use InvalidArgumentException;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TextInteractionTest extends QtiSmTestCase
 {
-    public function testSetBaseWrongType()
+    public function testSetBaseWrongType(): void
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
@@ -21,7 +23,7 @@ class TextInteractionTest extends QtiSmTestCase
         $textEntryInteraction->setBase(true);
     }
 
-    public function testSetStringIdentifierWrongType()
+    public function testSetStringIdentifierWrongType(): void
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
@@ -31,7 +33,7 @@ class TextInteractionTest extends QtiSmTestCase
         $textEntryInteraction->setStringIdentifier(true);
     }
 
-    public function testSetExpectedLengthWrongType()
+    public function testSetExpectedLengthWrongType(): void
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
@@ -45,7 +47,7 @@ class TextInteractionTest extends QtiSmTestCase
      * @dataProvider nonNegativeIntegersForExpectedLength
      * @param integer $expectedLength
      */
-    public function testSetExpectedLengthToNonNegativeInteger($expectedLength)
+    public function testSetExpectedLengthToNonNegativeInteger($expectedLength): void
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
@@ -65,7 +67,7 @@ class TextInteractionTest extends QtiSmTestCase
         ];
     }
 
-    public function testSetExpectedLengthToNegativeIntegerThrowsException()
+    public function testSetExpectedLengthToNegativeIntegerThrowsException(): void
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
@@ -75,17 +77,17 @@ class TextInteractionTest extends QtiSmTestCase
         $textEntryInteraction->setExpectedLength(-1);
     }
 
-    public function testUnsetExpectedLengthWithNull()
+    public function testUnsetExpectedLengthWithNull(): void
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
         $textEntryInteraction->setExpectedLength(null);
 
         $this::assertFalse($textEntryInteraction->hasExpectedLength());
-        $this::assertNull($textEntryInteraction->getExpectedLength());
+        $this::assertTrue($textEntryInteraction->getExpectedLength() === -1);
     }
 
-    public function testSetPatternMaskWrongType()
+    public function testSetPatternMaskWrongType(): void
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 
@@ -95,7 +97,7 @@ class TextInteractionTest extends QtiSmTestCase
         $textEntryInteraction->setPatternMask(true);
     }
 
-    public function testSetPlaceholderTextWrongType()
+    public function testSetPlaceholderTextWrongType(): void
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
 

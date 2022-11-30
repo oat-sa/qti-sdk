@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml;
 
 use qtism\data\storage\xml\XmlDocument;
@@ -16,7 +18,7 @@ use qtism\data\processing\ResponseProcessing;
  */
 class XmlResponseProcessingDocumentTest extends QtiSmTestCase
 {
-    public function testLoadMatchCorrect()
+    public function testLoadMatchCorrect(): void
     {
         $xml = new XmlDocument('2.1');
         $xml->load(self::getTemplatesPath() . '2_1/match_correct.xml');
@@ -51,7 +53,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
      * @param string $url
      * @throws XmlStorageException
      */
-    public function testLoad($url)
+    public function testLoad($url): void
     {
         $xml = new XmlDocument();
         $xml->load($url, true);
@@ -64,7 +66,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
      *
      * @return string
      */
-    public static function getTemplatesPath()
+    public static function getTemplatesPath(): string
     {
         return __DIR__ . '/../../../../../src/qtism/runtime/processing/templates/';
     }
@@ -72,7 +74,7 @@ class XmlResponseProcessingDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function loadProvider()
+    public function loadProvider(): array
     {
         return [
             [self::getTemplatesPath() . '2_1/match_correct.xml'],

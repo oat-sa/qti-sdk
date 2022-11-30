@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -20,7 +22,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class HottextInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $hottext = new Hottext('hottext1');
         $hottext->setContent(new InlineStaticCollection([new TextRun('hot')]));
@@ -55,7 +57,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshallNoOutputMinStrings20()
+    public function testMarshallNoOutputMinStrings20(): void
     {
         // Make sure no output for minStrings in a QTI 2.0 context.
         $hottext = new Hottext('hottext1');
@@ -74,7 +76,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<hottextInteraction responseIdentifier="RESPONSE"><div>This is a <hottext identifier="hot1"/> text...</div></hottextInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
             <hottextInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome">
@@ -109,7 +111,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals(' text...', $divContent[2]->getContent());
     }
 
-    public function testUnmarshall21InvalidContent()
+    public function testUnmarshall21InvalidContent(): void
     {
         $element = $this->createDOMElement('
             <hottextInteraction responseIdentifier="RESPONSE">
@@ -126,7 +128,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshall21InvalidResponseIdentifier()
+    public function testUnmarshall21InvalidResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <hottextInteraction responseIdentifier="999-RESPONSE">
@@ -144,7 +146,7 @@ class HottextInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testNoInfluenceMinStrings20()
+    public function testNoInfluenceMinStrings20(): void
     {
         $element = $this->createDOMElement('
             <hottextInteraction responseIdentifier="RESPONSE">

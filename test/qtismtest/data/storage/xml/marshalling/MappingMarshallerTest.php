@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -15,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MappingMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $defaultValue = 6.66;
         $mapEntries = new MapEntryCollection();
@@ -40,7 +42,7 @@ class MappingMarshallerTest extends QtiSmTestCase
         $this::assertEquals('false', $mapEntryElt->getAttribute('caseSensitive'));
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

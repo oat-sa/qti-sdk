@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -12,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ParamMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshallSimple()
+    public function testUnmarshallSimple(): void
     {
         $param = $this->createComponentFromXml('
             <param name="movie" value="movie.swf" valuetype="REF" type="application/x-shockwave-flash"/>            
@@ -25,7 +27,7 @@ class ParamMarshallerTest extends QtiSmTestCase
         $this::assertEquals('application/x-shockwave-flash', $param->getType());
     }
 
-    public function testMarshallSimple()
+    public function testMarshallSimple(): void
     {
         $param = new Param('movie', 'movie.swf', ParamType::REF, 'application/x-shockwave-flash');
 

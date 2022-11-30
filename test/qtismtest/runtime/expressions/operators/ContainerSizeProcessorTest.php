@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
@@ -21,7 +23,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class ContainerSizeProcessorTest extends QtiSmTestCase
 {
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -29,7 +31,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $processor = new ContainerSizeProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -39,7 +41,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $processor = new ContainerSizeProcessor($expression, $operands);
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([null]);
@@ -55,7 +57,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $this::assertSame(0, $result->getValue());
     }
 
-    public function testWrongCardinalityOne()
+    public function testWrongCardinalityOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(25)]);
@@ -64,7 +66,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityTwo()
+    public function testWrongCardinalityTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new RecordContainer(['1' => new QtiFloat(1.0), '2' => new QtiInteger(2)])]);
@@ -73,7 +75,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testSize()
+    public function testSize(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -93,7 +95,7 @@ class ContainerSizeProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<containerSize>

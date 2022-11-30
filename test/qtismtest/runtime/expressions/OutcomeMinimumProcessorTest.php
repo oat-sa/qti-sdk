@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use qtism\common\collections\IdentifierCollection;
@@ -21,7 +23,7 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
      * @param OutcomeMinimum $expression
      * @param int $expectedResult
      */
-    public function testOutcomeMaximum(OutcomeMinimum $expression, $expectedResult)
+    public function testOutcomeMaximum(OutcomeMinimum $expression, $expectedResult): void
     {
         $session = $this->getTestSession();
 
@@ -41,7 +43,7 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
     /**
      * @return array
      */
-    public function outcomeMinimumProvider()
+    public function outcomeMinimumProvider(): array
     {
         return [
             [self::getOutcomeMinimum('SCORE'), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(-2.0), new QtiFloat(0.5), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0), new QtiFloat(1.0)])],
@@ -61,7 +63,7 @@ class OutcomeMinimumProcessorTest extends QtiSmItemSubsetTestCase
      * @param IdentifierCollection|null $excludeCategories
      * @return OutcomeMinimum
      */
-    protected static function getOutcomeMinimum($outcomeIdentifier, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
+    protected static function getOutcomeMinimum($outcomeIdentifier, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null): OutcomeMinimum
     {
         $outcomeMinimum = new OutcomeMinimum($outcomeIdentifier);
         $outcomeMinimum->setSectionIdentifier($sectionIdentifier);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use qtism\runtime\expressions\ExpressionProcessorFactory;
@@ -12,7 +14,7 @@ use RuntimeException;
  */
 class ExpressionProcessorFactoryTest extends QtiSmTestCase
 {
-    public function testCreateProcessor()
+    public function testCreateProcessor(): void
     {
         $expression = $this->createComponentFromXml('<baseValue baseType="integer">1337</baseValue>');
 
@@ -22,7 +24,7 @@ class ExpressionProcessorFactoryTest extends QtiSmTestCase
         $this::assertEquals('baseValue', $processor->getExpression()->getQtiClassName());
     }
 
-    public function testCreateProcessorNoProcessor()
+    public function testCreateProcessorNoProcessor(): void
     {
         $expression = $this->createComponentFromXml('
 			<sum>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,7 +34,7 @@ use qtismtest\QtiSmTestCase;
  */
 class UtilsTest extends QtiSmTestCase
 {
-    public function testGetFirstItem()
+    public function testGetFirstItem(): void
     {
         // Simple cases
 
@@ -74,7 +76,7 @@ class UtilsTest extends QtiSmTestCase
         $this::assertNull(DataUtils::getFirstItem($test, $test, $sections));
     }
 
-    public function testgetFirstItem2()
+    public function testgetFirstItem2(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingtestparts.xml');
@@ -118,7 +120,7 @@ class UtilsTest extends QtiSmTestCase
         );
     }
 
-    public function testGetLastItem()
+    public function testGetLastItem(): void
     {
         // Simple cases
 
@@ -160,7 +162,7 @@ class UtilsTest extends QtiSmTestCase
         $this::assertNull(DataUtils::getLastItem($test, $test, $sections));
     }
 
-    public function testgetLastItem2()
+    public function testgetLastItem2(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingtestparts.xml');

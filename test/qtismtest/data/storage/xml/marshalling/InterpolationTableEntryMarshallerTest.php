@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -13,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class InterpolationTableEntryMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $sourceValue = 23.445;
         $baseType = BaseType::INTEGER; // fake baseType of a container variableDeclaration element.
@@ -31,7 +33,7 @@ class InterpolationTableEntryMarshallerTest extends QtiSmTestCase
         $this::assertEquals('true', $element->getAttribute('includeBoundary'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<interpolationTableEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sourceValue="243.3" targetValue="1"/>');

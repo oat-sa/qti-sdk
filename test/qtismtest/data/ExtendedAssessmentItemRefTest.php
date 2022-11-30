@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data;
 
 use InvalidArgumentException;
@@ -26,7 +28,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExtendedAssessmentItemRefTest extends QtiSmTestCase
 {
-    public function testCreateFromAssessmentItemRef()
+    public function testCreateFromAssessmentItemRef(): void
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $extendedAssessmentItemRef = ExtendedAssessmentItemRef::createFromAssessmentItemRef($assessmentItemRef);
@@ -39,7 +41,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
     /**
      * @depends testCreateFromAssessmentItemRef
      */
-    public function testCreateFromAssessmentItemRefWithWeights()
+    public function testCreateFromAssessmentItemRefWithWeights(): void
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $assessmentItemRef->setWeights(
@@ -58,7 +60,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this::assertEquals(2., $weights['WEIGHT']->getValue());
     }
 
-    public function testRemoveOutcomeDeclaration()
+    public function testRemoveOutcomeDeclaration(): void
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
         $outcomeDeclaration = new OutcomeDeclaration('OUTCOME', BaseType::IDENTIFIER, Cardinality::SINGLE);
@@ -69,7 +71,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this::assertCount(0, $assessmentItemRef->getOutcomeDeclarations());
     }
 
-    public function testRemoveResponseDeclaration()
+    public function testRemoveResponseDeclaration(): void
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
         $responseDeclaration = new ResponseDeclaration('RESPONSE', BaseType::IDENTIFIER, Cardinality::SINGLE);
@@ -80,7 +82,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this::assertCount(0, $assessmentItemRef->getResponseDeclarations());
     }
 
-    public function testAddTemplateDeclaration()
+    public function testAddTemplateDeclaration(): void
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
         $templateDeclaration = new TemplateDeclaration('TEMPLATE', BaseType::IDENTIFIER, Cardinality::SINGLE);
@@ -89,7 +91,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this::assertCount(1, $assessmentItemRef->getTemplateDeclarations());
     }
 
-    public function testRemoveTemplateDeclaration()
+    public function testRemoveTemplateDeclaration(): void
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
         $templateDeclaration = new TemplateDeclaration('TEMPLATE', BaseType::IDENTIFIER, Cardinality::SINGLE);
@@ -100,7 +102,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this::assertCount(0, $assessmentItemRef->getTemplateDeclarations());
     }
 
-    public function testRemoveModalFeedbackRule()
+    public function testRemoveModalFeedbackRule(): void
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
         $modalFeedbackRule = new ModalFeedbackRule('OUTCOME', ShowHide::SHOW, 'MDLF');
@@ -111,7 +113,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this::assertCount(0, $assessmentItemRef->getModalFeedbackRules());
     }
 
-    public function testRemoveShuffling()
+    public function testRemoveShuffling(): void
     {
         $shuffling = new Shuffling(
             'RESPONSE',
@@ -133,7 +135,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this::assertCount(0, $assessmentItemRef->getShufflings());
     }
 
-    public function testSetAdaptiveWrongType()
+    public function testSetAdaptiveWrongType(): void
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
 
@@ -143,7 +145,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef->setAdaptive('true');
     }
 
-    public function testSetTimeDependentWrongType()
+    public function testSetTimeDependentWrongType(): void
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
 
@@ -153,7 +155,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef->setTimeDependent('true');
     }
 
-    public function testAddResponseValidityConstraint()
+    public function testAddResponseValidityConstraint(): void
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
         $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', 0, 1);
@@ -161,7 +163,7 @@ class ExtendedAssessmentItemRefTest extends QtiSmTestCase
         $this::assertCount(1, $assessmentItemRef->getResponseValidityConstraints());
     }
 
-    public function testRemoveResponseValidityConstraint()
+    public function testRemoveResponseValidityConstraint(): void
     {
         $assessmentItemRef = new ExtendedAssessmentItemRef('Q01', 'Q01.xml');
         $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', 0, 1);

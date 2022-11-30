@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\content\interactions;
 
 use InvalidArgumentException;
@@ -12,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MediaInteractionTest extends QtiSmTestCase
 {
-    public function testCreateWrongAutostartType()
+    public function testCreateWrongAutostartType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'autostart' argument must be a boolean value, 'integer' given.");
@@ -20,7 +22,7 @@ class MediaInteractionTest extends QtiSmTestCase
         $mediaInteraction = new MediaInteraction('RESPONSE', 999, new ObjectElement('http://myobject.com/video.mpg', 'video/mpeg'));
     }
 
-    public function testSetMinPlaysWrongType()
+    public function testSetMinPlaysWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'minPlays' argument must be a positive (>= 0) integer, 'boolean' given.");
@@ -29,7 +31,7 @@ class MediaInteractionTest extends QtiSmTestCase
         $mediaInteraction->setMinPlays(true);
     }
 
-    public function testSetMaxPlaysWrongType()
+    public function testSetMaxPlaysWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'maxPlays' argument must be a positive (>= 0) integer, 'boolean' given.");
@@ -38,7 +40,7 @@ class MediaInteractionTest extends QtiSmTestCase
         $mediaInteraction->setMaxPlays(true);
     }
 
-    public function testSetLoopWrongType()
+    public function testSetLoopWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'loop' argument must be a boolean value, 'integer' given.");
@@ -47,7 +49,7 @@ class MediaInteractionTest extends QtiSmTestCase
         $mediaInteraction->setLoop(999);
     }
 
-    public function testHasMinMAxPlays()
+    public function testHasMinMAxPlays(): void
     {
         $mediaInteraction = new MediaInteraction('RESPONSE', true, new ObjectElement('http://myobject.com/video.mpg', 'video/mpeg'));
         $mediaInteraction->setMinPlays(1);

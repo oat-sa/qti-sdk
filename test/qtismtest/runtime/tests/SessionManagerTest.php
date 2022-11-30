@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
@@ -34,7 +36,7 @@ class SessionManagerTest extends QtiSmTestCase
     /**
      * @param AssessmentTest $test
      */
-    private function setTest(AssessmentTest $test)
+    private function setTest(AssessmentTest $test): void
     {
         $this->test = $test;
     }
@@ -42,12 +44,12 @@ class SessionManagerTest extends QtiSmTestCase
     /**
      * @return AssessmentTest
      */
-    private function getTest()
+    private function getTest(): AssessmentTest
     {
         return $this->test;
     }
 
-    public function testDefaultAssessmentTestSessionCreation()
+    public function testDefaultAssessmentTestSessionCreation(): void
     {
         $manager = new SessionManager(new FileSystemFileManager());
         $session = $manager->createAssessmentTestSession($this->getTest());

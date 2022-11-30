@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -17,7 +19,7 @@ use qtismtest\QtiSmTestCase;
  */
 class CorrectResponseMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $interpretation = 'It is up to you to interpret...';
         $pair = new QtiPair('id1', 'id2');
@@ -39,7 +41,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase
         $this::assertEquals('', $valueElement->getAttribute('baseType')); // no baseType attribute because not part of a record.
     }
 
-    public function testUnmarshallOne()
+    public function testUnmarshallOne(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -64,7 +66,7 @@ class CorrectResponseMarshallerTest extends QtiSmTestCase
         $this::assertFalse($values[0]->isPartOfRecord());
     }
 
-    public function testUnmarshallTwo()
+    public function testUnmarshallTwo(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

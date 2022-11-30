@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -20,7 +22,7 @@ use stdClass;
  */
 class MarshallerTest extends QtiSmTestCase
 {
-    public function testCradle()
+    public function testCradle(): void
     {
         // Set cradle method accessible
         $class = new ReflectionClass(Marshaller::class);
@@ -30,14 +32,14 @@ class MarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(DOMDocument::class, $method->invoke(null));
     }
 
-    public function testGetMarshaller()
+    public function testGetMarshaller(): void
     {
         $component = new ItemSessionControl();
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
         $this::assertInstanceOf(ItemSessionControlMarshaller::class, $marshaller);
     }
 
-    public function testGetUnmarshaller()
+    public function testGetUnmarshaller(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<itemSessionControl xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" maxAttempts="1" validateResponses="true"/>');
@@ -45,7 +47,7 @@ class MarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(ItemSessionControlMarshaller::class, $marshaller);
     }
 
-    public function testGetFirstChildElement()
+    public function testGetFirstChildElement(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<parent>some text <child/> <![CDATA[function() { alert("go!"); }]]></parent>');
@@ -56,7 +58,7 @@ class MarshallerTest extends QtiSmTestCase
         $this::assertEquals('child', $child->nodeName);
     }
 
-    public function testGetFirstChildElementNotFound()
+    public function testGetFirstChildElementNotFound(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<parent>some text <![CDATA[function() { alert("stop!"); }]]></parent>');
@@ -65,7 +67,7 @@ class MarshallerTest extends QtiSmTestCase
         $this::assertFalse(Marshaller::getFirstChildElement($element));
     }
 
-    public function testGetChildElements()
+    public function testGetChildElements(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<parent>some text <child/><anotherChild/> <![CDATA[function() { alert("go!"); }]]></parent>');
@@ -79,7 +81,7 @@ class MarshallerTest extends QtiSmTestCase
         $this::assertEquals('anotherChild', $childElements[1]->nodeName);
     }
 
-    public function testGetChildElementsByTagName()
+    public function testGetChildElementsByTagName(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
 
@@ -92,7 +94,7 @@ class MarshallerTest extends QtiSmTestCase
         $this::assertCount(2, $marshaller->getChildElementsByTagName($element, 'child'));
     }
 
-    public function testGetChildElementsByTagNameMultiple()
+    public function testGetChildElementsByTagNameMultiple(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<parent><child/><child/><grandChild/><uncle/></parent>');
@@ -102,7 +104,7 @@ class MarshallerTest extends QtiSmTestCase
         $this::assertCount(3, $marshaller->getChildElementsByTagName($element, ['child', 'grandChild']));
     }
 
-    public function testGetChildElementsByTagNameEmpty()
+    public function testGetChildElementsByTagNameEmpty(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
 
@@ -115,7 +117,7 @@ class MarshallerTest extends QtiSmTestCase
         $this::assertCount(0, $marshaller->getChildElementsByTagName($element, 'child'));
     }
 
-    public function testGetXmlBase()
+    public function testGetXmlBase(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<foo xml:base="http://forge.qtism.com"><bar>2000</bar><baz base="http://nowhere.com">fucked up beyond all recognition</baz></foo>');
@@ -132,7 +134,7 @@ class MarshallerTest extends QtiSmTestCase
     /**
      * @depends testGetXmlBase
      */
-    public function testSetXmlBase()
+    public function testSetXmlBase(): void
     {
         $dom = new DOMDocument('1.0');
         $dom->loadXML('<foo><bar>2000</bar><baz>fucked up beyond all recognition</baz></foo>');
@@ -152,7 +154,7 @@ class MarshallerTest extends QtiSmTestCase
         $this::assertFalse(Marshaller::getXmlBase($baz));
     }
 
-    public function testNoSuchMarshallerWhileUnmarshalling()
+    public function testNoSuchMarshallerWhileUnmarshalling(): void
     {
         $dom = new DOMDocument('1.0');
         $dom->loadXML('<foo><bar>2000</bar><baz>fucked up beyond all recognition</baz></foo>');
@@ -167,7 +169,7 @@ class MarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($dom->documentElement);
     }
 
-    public function testNoSuchMarshallerWhileMarshalling()
+    public function testNoSuchMarshallerWhileMarshalling(): void
     {
         $component1 = new BaseValue(BaseType::BOOLEAN, true);
         $component2 = new stdClass();
@@ -179,7 +181,7 @@ class MarshallerTest extends QtiSmTestCase
         $marshaller->marshall($component2);
     }
 
-    public function testNoSuchMagicMethod()
+    public function testNoSuchMagicMethod(): void
     {
         $component1 = new BaseValue(BaseType::BOOLEAN, true);
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component1);
@@ -196,21 +198,23 @@ class FakeMarshaller extends Marshaller
     /**
      * @inheritDoc
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
+    {
+        return new DOMElement();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function unmarshall(DOMElement $element): QtiComponent
     {
     }
 
     /**
      * @inheritDoc
      */
-    protected function unmarshall(DOMElement $element)
+    public function getExpectedQtiClassName(): string
     {
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getExpectedQtiClassName()
-    {
+        return '';
     }
 }

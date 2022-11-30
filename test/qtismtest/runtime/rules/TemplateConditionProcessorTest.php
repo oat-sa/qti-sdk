@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\rules;
 
 use qtism\common\datatypes\QtiInteger;
@@ -18,7 +20,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TemplateConditionProcessorTest extends QtiSmTestCase
 {
-    public function testTemplateConditionSimpleIf1()
+    public function testTemplateConditionSimpleIf1(): void
     {
         $rule = $this->createComponentFromXml('
 	        <templateCondition>
@@ -43,7 +45,7 @@ class TemplateConditionProcessorTest extends QtiSmTestCase
     /**
      * @depends testTemplateConditionSimpleIf1
      */
-    public function testTemplateConditionSimpleIf2()
+    public function testTemplateConditionSimpleIf2(): void
     {
         $rule = $this->createComponentFromXml('
 	        <templateCondition>
@@ -82,7 +84,7 @@ class TemplateConditionProcessorTest extends QtiSmTestCase
      * @param int $expectedTpl1Value
      * @throws MarshallerNotFoundException
      */
-    public function testTemplateConditionSimpleIfElseIfElse($controlValue, $expectedTpl1Value)
+    public function testTemplateConditionSimpleIfElseIfElse($controlValue, $expectedTpl1Value): void
     {
         $rule = $this->createComponentFromXml('
 	        <templateCondition>
@@ -127,7 +129,7 @@ class TemplateConditionProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function templateConditionSimpleIfElseIfElseProvider()
+    public function templateConditionSimpleIfElseIfElseProvider(): array
     {
         return [
             [1, 1],

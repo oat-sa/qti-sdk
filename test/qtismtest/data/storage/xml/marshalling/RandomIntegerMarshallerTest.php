@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -12,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class RandomIntegerMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $min = 3;
         $max = '{tplVariable1}';
@@ -27,7 +29,7 @@ class RandomIntegerMarshallerTest extends QtiSmTestCase
         $this::assertEquals($step . '', $element->getAttribute('step'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<randomInteger xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" min="3" max="{tplVariable1}" step="2"/>');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiFloat;
@@ -20,7 +22,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class DeleteProcessorTest extends QtiSmTestCase
 {
-    public function testMultiple()
+    public function testMultiple(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -48,7 +50,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->contains(new QtiInteger(10)));
     }
 
-    public function testMultipleNotMatch()
+    public function testMultipleNotMatch(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -59,7 +61,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $this::assertTrue($operands[1]->equals($result));
     }
 
-    public function testEverythingRemoved()
+    public function testEverythingRemoved(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -71,7 +73,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->isNull());
     }
 
-    public function testOrdered()
+    public function testOrdered(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -97,7 +99,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->contains(new QtiPoint(2, 4)));
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -114,7 +116,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testDifferentBaseType()
+    public function testDifferentBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -125,7 +127,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityOne()
+    public function testWrongCardinalityOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -136,7 +138,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityTwo()
+    public function testWrongCardinalityTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -147,7 +149,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -155,7 +157,7 @@ class DeleteProcessorTest extends QtiSmTestCase
         $processor = new DeleteProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -170,7 +172,7 @@ class DeleteProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<delete>

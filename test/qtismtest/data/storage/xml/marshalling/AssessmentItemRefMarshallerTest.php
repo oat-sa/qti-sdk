@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -28,7 +30,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssessmentItemRefMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $identifier = 'question1';
         $href = '../../question1.xml';
@@ -43,7 +45,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals($identifier, $element->getAttribute('identifier'));
     }
 
-    public function testMarshallMaximal()
+    public function testMarshallMaximal(): void
     {
         $identifier = 'question1';
         $href = '../../question1.xml';
@@ -119,7 +121,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1, $timeLimitsElts->length);
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<assessmentItemRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="question1" href="../../question1.xml"/>');
@@ -135,7 +137,7 @@ class AssessmentItemRefMarshallerTest extends QtiSmTestCase
         $this::assertFalse($component->isRequired());
     }
 
-    public function testUnmarshallMaximal()
+    public function testUnmarshallMaximal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

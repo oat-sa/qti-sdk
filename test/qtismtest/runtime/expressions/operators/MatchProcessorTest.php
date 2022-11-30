@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
@@ -24,7 +26,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class MatchProcessorTest extends QtiSmTestCase
 {
-    public function testScalar()
+    public function testScalar(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10)]);
@@ -36,7 +38,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $this::assertNotTrue($processor->process()->getValue());
     }
 
-    public function testContainer()
+    public function testContainer(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -53,7 +55,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $this::assertNotTrue($processor->process()->getValue());
     }
 
-    public function testFile()
+    public function testFile(): void
     {
         $fManager = new FileSystemFileManager();
         $expression = $this->createFakeExpression();
@@ -81,7 +83,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $fManager->delete($file2);
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -92,7 +94,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testWrongBaseTypeCompliance()
+    public function testWrongBaseTypeCompliance(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -105,7 +107,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testDifferentBaseTypesScalar()
+    public function testDifferentBaseTypesScalar(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -116,7 +118,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testDifferentBaseTypesContainer()
+    public function testDifferentBaseTypesContainer(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -127,7 +129,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testDifferentBaseTypesMixed()
+    public function testDifferentBaseTypesMixed(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -138,7 +140,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testDifferentCardinalitiesOne()
+    public function testDifferentCardinalitiesOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -149,7 +151,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testDifferentCardinalitiesTwo()
+    public function testDifferentCardinalitiesTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -160,7 +162,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testDifferentCardinalitiesThree()
+    public function testDifferentCardinalitiesThree(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -171,7 +173,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(15)]);
@@ -179,7 +181,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $processor = new MatchProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(25), new QtiInteger(25), new QtiInteger(25)]);
@@ -187,7 +189,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $processor = new MatchProcessor($expression, $operands);
     }
 
-    public function testNullScalar()
+    public function testNullScalar(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiFloat(15.0), null]);
@@ -195,7 +197,7 @@ class MatchProcessorTest extends QtiSmTestCase
         $this::assertNull($processor->process());
     }
 
-    public function testNullContainer()
+    public function testNullContainer(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -209,7 +211,7 @@ class MatchProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    private function createFakeExpression()
+    private function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<match>

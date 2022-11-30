@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\content\interactions;
 
 use InvalidArgumentException;
@@ -13,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ChoiceInteractionTest extends QtiSmTestCase
 {
-    public function testCreateEmptyChoiceList()
+    public function testCreateEmptyChoiceList(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('A ChoiceInteraction object must be composed of at lease one SimpleChoice object, none given.');
@@ -21,7 +23,7 @@ class ChoiceInteractionTest extends QtiSmTestCase
         new ChoiceInteraction('RESPONSE', new SimpleChoiceCollection());
     }
 
-    public function testSetShuffleWrongType()
+    public function testSetShuffleWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'shuffle' argument must be a boolean value, 'string' given.");
@@ -30,7 +32,7 @@ class ChoiceInteractionTest extends QtiSmTestCase
         $choiceInteraction->setShuffle('true');
     }
 
-    public function testSetMaxChoicesWrongType()
+    public function testSetMaxChoicesWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'maxChoices' argument must be a positive (>= 0) integer, 'string' given.");
@@ -39,7 +41,7 @@ class ChoiceInteractionTest extends QtiSmTestCase
         $choiceInteraction->setMaxChoices('3');
     }
 
-    public function testSetMinChoicesWrongType()
+    public function testSetMinChoicesWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'minChoices' argument must be a positive (>= 0) integer, 'string' given.");
@@ -48,7 +50,7 @@ class ChoiceInteractionTest extends QtiSmTestCase
         $choiceInteraction->setMinChoices('3');
     }
 
-    public function testSetOrientationWrongType()
+    public function testSetOrientationWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'orientation' argument must be a value from the Orientation enumeration, 'boolean' given.");

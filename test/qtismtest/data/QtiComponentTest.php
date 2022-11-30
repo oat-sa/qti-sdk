@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data;
 
 use qtism\data\AssessmentItemRef;
@@ -14,7 +16,7 @@ use qtism\data\QtiIdentifiableCollection;
  */
 class QtiComponentTest extends QtiSmTestCase
 {
-    public function testGetComponentByIdOrClassNameSimple()
+    public function testGetComponentByIdOrClassNameSimple(): void
     {
         $id = 'assessmentSection1';
         $title = 'Assessment Section Title';
@@ -45,7 +47,7 @@ class QtiComponentTest extends QtiSmTestCase
         $this::assertCount(4, $search);
     }
 
-    public function testGetComponentByIdOrClassNameComplex()
+    public function testGetComponentByIdOrClassNameComplex(): void
     {
         $id = 'assessmentSectionRoot';
         $title = 'Assessment Section Root';
@@ -133,7 +135,7 @@ class QtiComponentTest extends QtiSmTestCase
         $this::assertCount(2, $search);
     }
 
-    public function testGetIdentifiableComponentsNoCollision()
+    public function testGetIdentifiableComponentsNoCollision(): void
     {
         $assessmentSection = new AssessmentSection('S01', 'Section S01', true);
         $assessmentItemRef1a = new AssessmentItemRef('Q01', './Q01.xml');
@@ -146,7 +148,7 @@ class QtiComponentTest extends QtiSmTestCase
         $this::assertEquals(['Q01', 'Q02'], $search->getKeys());
     }
 
-    public function testGetIdentifiableComponentsCollision()
+    public function testGetIdentifiableComponentsCollision(): void
     {
         $assessmentSection = new AssessmentSection('S01', 'Section S01', true);
         $assessmentSection1a = new AssessmentSection('S01a', 'Section S01a', true);

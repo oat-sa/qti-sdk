@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TestResultMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         /** @var TestResult $testResult */
         $testResult = $this->createComponentFromXml('
@@ -65,7 +67,7 @@ class TestResultMarshallerTest extends QtiSmTestCase
         $this::assertEquals(2, $testResult->getItemVariables()->count());
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         /** @var TestResult $testResult */
         $testResult = $this->createComponentFromXml('
@@ -83,7 +85,7 @@ class TestResultMarshallerTest extends QtiSmTestCase
         $this::assertNull($testResult->getItemVariables());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new TestResult(
             new QtiIdentifier('fixture-identifier'),
@@ -116,7 +118,7 @@ class TestResultMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1, $element->getElementsByTagName('templateVariable')->length);
     }
 
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $component = new TestResult(
             new QtiIdentifier('fixture-identifier'),
@@ -139,7 +141,7 @@ class TestResultMarshallerTest extends QtiSmTestCase
         $this::assertFalse($element->hasChildNodes());
     }
 
-    public function testGetExpectedQtiClassName()
+    public function testGetExpectedQtiClassName(): void
     {
         $component = new TestResult(
             new QtiIdentifier('fixture-identifier'),

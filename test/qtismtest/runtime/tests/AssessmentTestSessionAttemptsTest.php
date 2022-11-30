@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use qtism\common\datatypes\QtiIdentifier;
@@ -25,7 +27,7 @@ class AssessmentTestSessionAttemptsTest extends QtiSmAssessmentTestSessionTestCa
         $this->session = self::instantiate(self::samplesDir() . 'custom/runtime/attempts/max_3_attempts_nonlinear.xml');
     }
 
-    public function testMultipleAttempts()
+    public function testMultipleAttempts(): void
     {
         $this->session->beginTestSession();
 
@@ -48,7 +50,7 @@ class AssessmentTestSessionAttemptsTest extends QtiSmAssessmentTestSessionTestCa
         $this::assertEquals(AssessmentItemSession::COMPLETION_STATUS_COMPLETED, $this->session['Q01.completionStatus']);
     }
 
-    public function testDoesNotTakeAnAttemptWhenInvokingBeginAttemptConsecutivelyWithoutEndingTheAttempt()
+    public function testDoesNotTakeAnAttemptWhenInvokingBeginAttemptConsecutivelyWithoutEndingTheAttempt(): void
     {
         $this->session->beginTestSession();
 
@@ -65,7 +67,7 @@ class AssessmentTestSessionAttemptsTest extends QtiSmAssessmentTestSessionTestCa
         $this::assertEquals(1, $this->session['Q01.numAttempts']->getValue());
     }
 
-    public function testThrowsWhenMaxAttemptsIsReached()
+    public function testThrowsWhenMaxAttemptsIsReached(): void
     {
         $this::expectException(AssessmentTestSessionException::class);
         $this::expectExceptionMessage('Maximum number of attempts of Item Session \'Q01.0\' reached.');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\state;
 
 use InvalidArgumentException;
@@ -13,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class InterpolationTableTest extends QtiSmTestCase
 {
-    public function testCreateNotEnoughInterpolationEntries()
+    public function testCreateNotEnoughInterpolationEntries(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('An InterpolationTable object must contain at least one InterpolationTableEntry object.');
@@ -21,7 +23,7 @@ class InterpolationTableTest extends QtiSmTestCase
         new InterpolationTable(new InterpolationTableEntryCollection());
     }
 
-    public function testGetComponents()
+    public function testGetComponents(): void
     {
         $interpolationTable = new InterpolationTable(
             new InterpolationTableEntryCollection(

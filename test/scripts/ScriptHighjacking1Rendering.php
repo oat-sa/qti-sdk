@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Because CDATA nodes is not taken into account, no problem
  * with this one.

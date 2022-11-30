@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiDuration;
@@ -22,7 +24,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class MultipleProcessorTest extends QtiSmTestCase
 {
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -69,7 +71,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testScalar()
+    public function testScalar(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -92,7 +94,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $this::assertCount(1, $result);
     }
 
-    public function testContainer()
+    public function testContainer(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -108,7 +110,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $this::assertTrue($result[2]->equals(new QtiPoint(3, 4)));
     }
 
-    public function testMixed()
+    public function testMixed(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -123,7 +125,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $this::assertTrue($result[1]->equals(new QtiPoint(3, 4)));
     }
 
-    public function testWrongBaseTypeOne()
+    public function testWrongBaseTypeOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -136,7 +138,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -149,7 +151,7 @@ class MultipleProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -168,7 +170,7 @@ class MultipleProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<multiple>

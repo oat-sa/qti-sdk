@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use qtism\runtime\tests\AssessmentTestPlace;
@@ -13,7 +15,7 @@ class AssessmentTestPlaceTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return AssessmentTestPlace::class;
     }
@@ -21,7 +23,7 @@ class AssessmentTestPlaceTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'testPart',
@@ -34,7 +36,7 @@ class AssessmentTestPlaceTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'TEST_PART',
@@ -47,7 +49,7 @@ class AssessmentTestPlaceTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             AssessmentTestPlace::TEST_PART,

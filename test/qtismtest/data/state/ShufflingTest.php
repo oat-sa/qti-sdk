@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\state;
 
 use OutOfBoundsException;
@@ -14,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ShufflingTest extends QtiSmTestCase
 {
-    public function testShufflingShuffle()
+    public function testShufflingShuffle(): void
     {
         $identifiers1 = new IdentifierCollection(['id1', 'id2', 'id3', 'id4', 'id5']);
         $identifiers2 = new IdentifierCollection(['id6', 'id7', 'id8', 'id9', 'id10']);
@@ -46,7 +48,7 @@ class ShufflingTest extends QtiSmTestCase
         }
     }
 
-    public function testGetIdentifierAtWithValidIndexes()
+    public function testGetIdentifierAtWithValidIndexes(): void
     {
         $identifiers1 = new IdentifierCollection(['id1', 'id2', 'id3']);
         $identifiers2 = new IdentifierCollection(['id4', 'id5', 'id6']);
@@ -67,7 +69,7 @@ class ShufflingTest extends QtiSmTestCase
      * @dataProvider getIdentifierAtWithInvalidIndexesProvider
      * @param mixed $index
      */
-    public function testGetIdentifierAtWithInvalidIndexes($index)
+    public function testGetIdentifierAtWithInvalidIndexes($index): void
     {
         $identifiers1 = new IdentifierCollection(['id1', 'id2', 'id3']);
         $identifiers2 = new IdentifierCollection(['id4', 'id5', 'id6']);
@@ -82,7 +84,7 @@ class ShufflingTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function getIdentifierAtWithInvalidIndexesProvider()
+    public function getIdentifierAtWithInvalidIndexesProvider(): array
     {
         return [
             [-1],

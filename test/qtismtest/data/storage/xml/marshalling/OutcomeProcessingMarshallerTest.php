@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -17,7 +19,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeProcessingMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $outcomeRules = new OutcomeRuleCollection();
         $outcomeRules[] = new LookupOutcomeValue('output1', new BaseValue(BaseType::FLOAT, 24.3));
@@ -38,7 +40,7 @@ class OutcomeProcessingMarshallerTest extends QtiSmTestCase
         $this::assertEquals('true', $element->getElementsByTagName('baseValue')->item(1)->nodeValue);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

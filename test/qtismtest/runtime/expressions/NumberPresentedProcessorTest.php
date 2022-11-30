@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use qtism\common\collections\IdentifierCollection;
@@ -25,7 +27,7 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
      * @throws AssessmentTestSessionException
      * @throws PhpStorageException
      */
-    public function testNumberPresented(NumberPresented $expression, array $expectedResults)
+    public function testNumberPresented(NumberPresented $expression, array $expectedResults): void
     {
         $session = $this->getTestSession();
         $processor = new NumberPresentedProcessor($expression);
@@ -50,7 +52,7 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
     /**
      * @return array
      */
-    public function numberPresentedProvider()
+    public function numberPresentedProvider(): array
     {
         return [
             [self::getNumberPresented(), [1, 2, 3, 4, 5, 6, 7, 8, 9]],
@@ -70,7 +72,7 @@ class NumberPresentedProcessorTest extends QtiSmItemSubsetTestCase
      * @param IdentifierCollection|null $excludeCategories
      * @return NumberPresented
      */
-    protected static function getNumberPresented($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
+    protected static function getNumberPresented($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null): NumberPresented
     {
         $numberPresented = new NumberPresented();
         $numberPresented->setSectionIdentifier($sectionIdentifier);

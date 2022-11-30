@@ -35,7 +35,7 @@ use stdClass;
  */
 class BodyElementTest extends QtiSmTestCase
 {
-    public function testRawInstantiation()
+    public function testRawInstantiation(): void
     {
         $span = new Span();
         $this::assertSame('', $span->getAriaControls());
@@ -67,7 +67,7 @@ class BodyElementTest extends QtiSmTestCase
         $this::assertFalse($span->hasAriaHidden());
     }
 
-    public function testSetId()
+    public function testSetId(): void
     {
         $span = new Span();
 
@@ -82,7 +82,7 @@ class BodyElementTest extends QtiSmTestCase
      * @param mixed $class the class to set
      * @param string|null $message the expected message or null if identical to $class to set
      */
-    public function testSetClassWithWrongClass($class, string $message = null)
+    public function testSetClassWithWrongClass($class, string $message = null): void
     {
         $span = new Span();
 
@@ -126,7 +126,7 @@ class BodyElementTest extends QtiSmTestCase
         ];
     }
 
-    public function testSetLabelWrongType()
+    public function testSetLabelWrongType(): void
     {
         $span = new Span();
 
@@ -136,7 +136,7 @@ class BodyElementTest extends QtiSmTestCase
         $span->setLabel(str_repeat('9999', 65));
     }
 
-    public function testSetDirectionWrongLabel()
+    public function testSetDirectionWrongLabel(): void
     {
         $span = new Span();
 
@@ -150,7 +150,7 @@ class BodyElementTest extends QtiSmTestCase
      * @param $value
      * @dataProvider validAriaControlsAttributesProvider
      */
-    public function testValidAriaControlsAttributes($value)
+    public function testValidAriaControlsAttributes($value): void
     {
         $span = new Span();
         $span->setAriaControls($value);
@@ -161,7 +161,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validAriaControlsAttributesProvider()
+    public function validAriaControlsAttributesProvider(): array
     {
         return [
             [''],
@@ -174,7 +174,7 @@ class BodyElementTest extends QtiSmTestCase
      * @param $value
      * @dataProvider validAriaDescribedByAttributesProvider
      */
-    public function testValidAriaDescribedByAttributes($value)
+    public function testValidAriaDescribedByAttributes($value): void
     {
         $span = new Span();
         $span->setAriaDescribedBy($value);
@@ -185,7 +185,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validAriaDescribedByAttributesProvider()
+    public function validAriaDescribedByAttributesProvider(): array
     {
         return [
             [''],
@@ -198,7 +198,7 @@ class BodyElementTest extends QtiSmTestCase
      * @param $value
      * @dataProvider validAriaFlowToAttributesProvider
      */
-    public function testValidAriaFlowToAttributes($value)
+    public function testValidAriaFlowToAttributes($value): void
     {
         $span = new Span();
         $span->setAriaFlowTo($value);
@@ -209,7 +209,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validAriaFlowToAttributesProvider()
+    public function validAriaFlowToAttributesProvider(): array
     {
         return [
             [''],
@@ -222,7 +222,7 @@ class BodyElementTest extends QtiSmTestCase
      * @param $value
      * @dataProvider validAriaLabelledByAttributesProvider
      */
-    public function testValidAriaLabelledByAttributes($value)
+    public function testValidAriaLabelledByAttributes($value): void
     {
         $span = new Span();
         $span->setAriaLabelledBy($value);
@@ -233,7 +233,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validAriaLabelledByAttributesProvider()
+    public function validAriaLabelledByAttributesProvider(): array
     {
         return [
             [''],
@@ -246,7 +246,7 @@ class BodyElementTest extends QtiSmTestCase
      * @param $value
      * @dataProvider validAriaLabelledByAttributesProvider
      */
-    public function testValidAriaOwnsAttributes($value)
+    public function testValidAriaOwnsAttributes($value): void
     {
         $span = new Span();
         $span->setAriaOwns($value);
@@ -257,7 +257,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validAriaOwnsAttributesProvider()
+    public function validAriaOwnsAttributesProvider(): array
     {
         return [
             [''],
@@ -304,7 +304,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validAriaLiveAttributesProvider()
+    public function validAriaLiveAttributesProvider(): array
     {
         return [
             [AriaLive::OFF],
@@ -317,7 +317,7 @@ class BodyElementTest extends QtiSmTestCase
      * @param $value
      * @dataProvider validAriaOrientationAttributesProvider
      */
-    public function testValidAriaOrientationAttributes($value)
+    public function testValidAriaOrientationAttributes($value): void
     {
         $span = new Span();
         $span->setAriaOrientation($value);
@@ -328,7 +328,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validAriaOrientationAttributesProvider()
+    public function validAriaOrientationAttributesProvider(): array
     {
         return [
             [AriaOrientation::HORIZONTAL],
@@ -340,7 +340,7 @@ class BodyElementTest extends QtiSmTestCase
      * @param $value
      * @dataProvider validAriaLabelAttributesProvider
      */
-    public function testValidAriaLabelAttributes($value)
+    public function testValidAriaLabelAttributes($value): void
     {
         $span = new Span();
         $span->setAriaLabel($value);
@@ -351,7 +351,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validAriaLabelAttributesProvider()
+    public function validAriaLabelAttributesProvider(): array
     {
         return [
             [''],
@@ -544,7 +544,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function invalidAriaLiveAttributesProvider()
+    public function invalidAriaLiveAttributesProvider(): array
     {
         return [
             [999999],
@@ -557,7 +557,7 @@ class BodyElementTest extends QtiSmTestCase
      * @param string $msg
      * @dataProvider invalidAriaOrientationAttributesProvider
      */
-    public function testInvalidAriaOrientationAttributes($value, $msg = null)
+    public function testInvalidAriaOrientationAttributes($value, $msg = null): void
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-orientation'.";
 
@@ -571,7 +571,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function invalidAriaOrientationAttributesProvider()
+    public function invalidAriaOrientationAttributesProvider(): array
     {
         return [
             ['ABCD 999999'],
@@ -586,7 +586,7 @@ class BodyElementTest extends QtiSmTestCase
      * @param string $msg
      * @dataProvider invalidAriaLabelAttributesProvider
      */
-    public function testInvalidAriaLabelAttributes($value, $msg = null)
+    public function testInvalidAriaLabelAttributes($value, $msg = null): void
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-label'.";
 
@@ -600,7 +600,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function invalidAriaLabelAttributesProvider()
+    public function invalidAriaLabelAttributesProvider(): array
     {
         return [
             [false],
@@ -617,7 +617,7 @@ class BodyElementTest extends QtiSmTestCase
      * @param string $msg
      * @dataProvider invalidAriaHiddenAttributesProvider
      */
-    public function testInvalidAriaHiddenAttributes($value, $msg = null)
+    public function testInvalidAriaHiddenAttributes($value, $msg = null): void
     {
         $msg = $msg ?? "'${value}' is not a valid value for attribute 'aria-hidden'.";
 
@@ -631,7 +631,7 @@ class BodyElementTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function invalidAriaHiddenAttributesProvider()
+    public function invalidAriaHiddenAttributesProvider(): array
     {
         return [
             ['false'],

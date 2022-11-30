@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions;
 
 use qtism\common\datatypes\QtiIdentifier;
@@ -24,7 +26,7 @@ use qtism\common\datatypes\QtiFloat;
  */
 class MapResponseProcessorTest extends QtiSmTestCase
 {
-    public function testSimple()
+    public function testSimple(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="integer" cardinality="single">
@@ -63,7 +65,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(3, $result->getValue());
     }
 
-    public function testMultipleComplexTyping()
+    public function testMultipleComplexTyping(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="pair" cardinality="multiple">
@@ -103,7 +105,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(4, $result->getValue()); // 2.5 taken into account only once!
     }
 
-    public function testIdentifier()
+    public function testIdentifier(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 	        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
@@ -125,7 +127,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(6.0, $result->getValue());
     }
 
-    public function testVariableNotDefined()
+    public function testVariableNotDefined(): void
     {
         $this->expectException(ExpressionProcessingException::class);
         $this->expectExceptionMessage("No variable with identifier 'INVALID' could be found while processing MapResponse.");
@@ -136,7 +138,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $mapResponseProcessor->process();
     }
 
-    public function testNoMapping()
+    public function testNoMapping(): void
     {
         // When no mapping is set. We consider a "fake" mapping with a default value of 0.
         $variableDeclaration = $this->createComponentFromXml('<responseDeclaration identifier="response1" baseType="duration" cardinality="multiple"/>');
@@ -160,7 +162,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(0.0, $result->getValue());
     }
 
-    public function testMultipleCardinalityIdentifierToFloat()
+    public function testMultipleCardinalityIdentifierToFloat(): void
     {
         $responseDeclaration = $this->createComponentFromXml('
 	        <responseDeclaration identifier="RESPONSE" baseType="identifier" cardinality="multiple">
@@ -233,7 +235,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $result = $mapResponseProcessor->process();
     }
 
-    public function testOutcomeDeclaration()
+    public function testOutcomeDeclaration(): void
     {
         $this->expectException(ExpressionProcessingException::class);
         $variableDeclaration = $this->createComponentFromXml('
@@ -251,7 +253,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $mapResponseProcessor->process();
     }
 
-    public function testEmptyMapEntryForStringSingleCardinality()
+    public function testEmptyMapEntryForStringSingleCardinality(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="string" cardinality="single">
@@ -293,7 +295,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(0, $result->getValue());
     }
 
-    public function testEmptyMapEntryForStringMultipleCardinality()
+    public function testEmptyMapEntryForStringMultipleCardinality(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="string" cardinality="multiple">
@@ -361,7 +363,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(0, $result->getValue());
     }
 
-    public function testEmptyMapEntryForStringMultipleCardinalityCaseInsensitive()
+    public function testEmptyMapEntryForStringMultipleCardinalityCaseInsensitive(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="string" cardinality="multiple">
@@ -461,7 +463,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(0, $result->getValue());
     }
 
-    public function testLowerBoundSingleCardinality()
+    public function testLowerBoundSingleCardinality(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" baseType="string" cardinality="single">
@@ -492,7 +494,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(-1.0, $result->getValue());
     }
 
-    public function testLowerBoundWithMultipleCardinality()
+    public function testLowerBoundWithMultipleCardinality(): void
     {
         // In case of using a single cardinality variable lower bound is ignored!
         $variableDeclaration = $this->createComponentFromXml('
@@ -524,7 +526,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(-1.0, $result->getValue());
     }
 
-    public function testUpperBoundSingleCardinality()
+    public function testUpperBoundSingleCardinality(): void
     {
         // In case of using a single cardinality variable lower bound is ignored!
         $variableDeclaration = $this->createComponentFromXml('
@@ -556,7 +558,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(1.0, $result->getValue());
     }
 
-    public function testUpperBoundWithMultipleCardinality()
+    public function testUpperBoundWithMultipleCardinality(): void
     {
         // In case of using a single cardinality variable lower bound is ignored!
         $variableDeclaration = $this->createComponentFromXml('
@@ -588,7 +590,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(1.0, $result->getValue());
     }
 
-    public function testOrderedContainer()
+    public function testOrderedContainer(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="pair" cardinality="ordered">
@@ -622,7 +624,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(4.0, $result->getValue());
     }
 
-    public function testDefaultValue()
+    public function testDefaultValue(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="point" cardinality="ordered">
@@ -683,7 +685,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(2.5, $result->getValue());
     }
 
-    public function testIdenticicalMapKeysSingleCardinality()
+    public function testIdenticicalMapKeysSingleCardinality(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" baseType="integer" cardinality="single">
@@ -715,7 +717,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(4.0, $result->getValue());
     }
 
-    public function testIdenticicalMapKeysMultipleCardinality()
+    public function testIdenticicalMapKeysMultipleCardinality(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" baseType="integer" cardinality="multiple">
@@ -753,7 +755,7 @@ class MapResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals(4.0, $result->getValue());
     }
 
-    public function testSingleCardinalityStringCaseSensitivity()
+    public function testSingleCardinalityStringCaseSensitivity(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="RESPONSE" baseType="string" cardinality="single">

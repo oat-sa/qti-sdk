@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -20,7 +22,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
@@ -51,7 +53,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         // make sure minChoices and maxChoices attributes
         // are not in the output in a QTI 2.0 context.
@@ -76,7 +78,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
             <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3" xml:base="/home/jerome">
@@ -111,7 +113,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('choice3', $choices[2]->getIdentifier());
     }
 
-    public function testUnmarshall21SomethingElseThanHotspotChoice()
+    public function testUnmarshall21SomethingElseThanHotspotChoice(): void
     {
         $element = $this->createDOMElement('
             <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3">
@@ -129,7 +131,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         $this::assertTrue(true);
     }
 
-    public function testUnmarshall21NoHotspotChoice()
+    public function testUnmarshall21NoHotspotChoice(): void
     {
         $element = $this->createDOMElement('
             <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3">
@@ -144,7 +146,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshall21NoObject()
+    public function testUnmarshall21NoObject(): void
     {
         $element = $this->createDOMElement('
             <graphicOrderInteraction id="my-graphicOrder" responseIdentifier="RESPONSE" minChoices="2" maxChoices="3">
@@ -160,7 +162,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshall21NoResponseIdentifier()
+    public function testUnmarshall21NoResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <graphicOrderInteraction id="my-graphicOrder" minChoices="2" maxChoices="3" xml:base="/home/jerome">
@@ -181,7 +183,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21MinChoicesIs0()
+    public function testUnmarshall21MinChoicesIs0(): void
     {
         // graphicOrderInteraction->minChoices = 0 is an endless debate:
         // The Information models says: If specfied, minChoices must be 1 or greater but ...
@@ -211,7 +213,7 @@ class GraphicOrderInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         // Make sure minChoices and maxChoices attributes are not taken into account in a QTI 2.0 context.
         $element = $this->createDOMElement('

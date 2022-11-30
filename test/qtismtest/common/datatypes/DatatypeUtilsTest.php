@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\common\datatypes;
 
 use qtism\common\datatypes\Utils;
@@ -14,7 +16,7 @@ class DatatypeUtilsTest extends QtiSmTestCase
      * @dataProvider isQtiIntegerValidProvider
      * @param int $value
      */
-    public function testIsQtiIntegerValid($value)
+    public function testIsQtiIntegerValid($value): void
     {
         $this::assertTrue(Utils::isQtiInteger($value));
     }
@@ -23,7 +25,7 @@ class DatatypeUtilsTest extends QtiSmTestCase
      * @dataProvider isQtiIntegerInvalidProvider
      * @param int $value
      */
-    public function testIsQtiIntegerInvalid($value)
+    public function testIsQtiIntegerInvalid($value): void
     {
         $this::assertFalse(Utils::isQtiInteger($value));
     }
@@ -31,7 +33,7 @@ class DatatypeUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function isQtiIntegerValidProvider()
+    public function isQtiIntegerValidProvider(): array
     {
         return [
             [0],
@@ -46,7 +48,7 @@ class DatatypeUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function isQtiIntegerInvalidProvider()
+    public function isQtiIntegerInvalidProvider(): array
     {
         return [
             [null],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\content\interactions;
 
 use qtism\data\content\FlowCollection;
@@ -14,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class PositionObjectInteractionTest extends QtiSmTestCase
 {
-    public function testSetMinChoicesValidValueWhenMaxChoicesIsZero()
+    public function testSetMinChoicesValidValueWhenMaxChoicesIsZero(): void
     {
         $div = new Div();
         $div->setContent(new FlowCollection([new TextRun('content...')]));

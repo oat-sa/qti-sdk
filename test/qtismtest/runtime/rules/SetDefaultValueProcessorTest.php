@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\rules;
 
 use qtism\common\datatypes\QtiFloat;
@@ -18,7 +20,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SetDefaultValueProcessorTest extends QtiSmTestCase
 {
-    public function testDefaultValueOnResponseSimple()
+    public function testDefaultValueOnResponseSimple(): void
     {
         $rule = $this->createComponentFromXml('
 			<setDefaultValue identifier="RESPONSE">
@@ -38,7 +40,7 @@ class SetDefaultValueProcessorTest extends QtiSmTestCase
         $this::assertEquals('there', $state->getVariable('RESPONSE')->getDefaultValue()->getValue());
     }
 
-    public function testDefaultValueOnOutcomeSimple()
+    public function testDefaultValueOnOutcomeSimple(): void
     {
         $rule = $this->createComponentFromXml('
 			<setDefaultValue identifier="SCORE">
@@ -57,7 +59,7 @@ class SetDefaultValueProcessorTest extends QtiSmTestCase
         $this::assertNull($state->getVariable('SCORE')->getDefaultValue());
     }
 
-    public function testSetDefaultValueNoVariable()
+    public function testSetDefaultValueNoVariable(): void
     {
         $rule = $this->createComponentFromXml('
 			<setDefaultValue identifier="RESPONSE">
@@ -78,7 +80,7 @@ class SetDefaultValueProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testSetDefaultValueWrongBaseType()
+    public function testSetDefaultValueWrongBaseType(): void
     {
         $rule = $this->createComponentFromXml('
 			<setDefaultValue identifier="RESPONSE">

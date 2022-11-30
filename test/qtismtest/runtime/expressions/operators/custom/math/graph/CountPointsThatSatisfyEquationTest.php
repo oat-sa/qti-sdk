@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,7 +45,7 @@ use qtismtest\QtiSmTestCase;
  */
 class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
 {
-    public function testSimpleOne()
+    public function testSimpleOne(): void
     {
         // --- Build Custom Operator PHP Expression Model.
         $points = new Multiple(
@@ -109,7 +111,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $this::assertEquals(8, $result->getValue());
     }
 
-    public function testSimpleOneWithStrings()
+    public function testSimpleOneWithStrings(): void
     {
         // --- Build Custom Operator PHP Expression Model.
         $points = new Multiple(
@@ -175,7 +177,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $this::assertEquals(8, $result->getValue());
     }
 
-    public function testSimpleTwo()
+    public function testSimpleTwo(): void
     {
         // --- Build Custom Operator PHP Expression Model.
         $points = new Multiple(
@@ -241,7 +243,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $this::assertEquals(6, $result->getValue());
     }
 
-    public function testInvalidEquation()
+    public function testInvalidEquation(): void
     {
         // --- Build Custom Operator PHP Expression Model.
         $points = new Multiple(
@@ -307,7 +309,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongEquationType()
+    public function testWrongEquationType(): void
     {
         // --- Build Custom Operator PHP Expression Model.
         $points = new Multiple(
@@ -352,7 +354,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testNullEquation()
+    public function testNullEquation(): void
     {
         // --- Build Custom Operator PHP Expression Model.
         $points = new Multiple(
@@ -397,7 +399,7 @@ class CountPointsThatSatisfyEquationTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongPointsType()
+    public function testWrongPointsType(): void
     {
         // --- Build Custom Operator PHP Expression Model.
         $points = new Multiple(

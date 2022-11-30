@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -16,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class CustomOperatorMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallNoLaxContent()
+    public function testMarshallNoLaxContent(): void
     {
         $int1 = new BaseValue(BaseType::INTEGER, 1);
         $int2 = new BaseValue(BaseType::INTEGER, 1);
@@ -29,7 +31,7 @@ class CustomOperatorMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<customOperator><equal toleranceMode="exact"><baseValue baseType="integer">1</baseValue><baseValue baseType="integer">1</baseValue></equal></customOperator>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('<customOperator><equal toleranceMode="exact"><baseValue baseType="integer">1</baseValue><baseValue baseType="integer">1</baseValue></equal></customOperator>');
 

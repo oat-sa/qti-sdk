@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ use qtismtest\QtiSmTestCase;
  */
 class NumeratorTest extends QtiSmTestCase
 {
-    public function testSimple()
+    public function testSimple(): void
     {
         $baseValue = new BaseValue(BaseType::STRING, '1/2');
         $customOperator = new CustomOperator(
@@ -52,7 +54,7 @@ class NumeratorTest extends QtiSmTestCase
         $this::assertEquals(1, $result->getValue());
     }
 
-    public function testReturnsNullOne()
+    public function testReturnsNullOne(): void
     {
         $baseValue = new BaseValue(BaseType::BOOLEAN, false);
         $customOperator = new CustomOperator(
@@ -66,7 +68,7 @@ class NumeratorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testReturnsNullTwo()
+    public function testReturnsNullTwo(): void
     {
         $baseValue = new BaseValue(BaseType::BOOLEAN, false);
         $customOperator = new CustomOperator(

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 
@@ -10,7 +12,7 @@ require_once(__DIR__ . '/../../vendor/autoload.php');
  * @param bool $validate
  * @throws XmlStorageException
  */
-function testAssessmentItems(array $files, $validate = false)
+function testAssessmentItems(array $files, $validate = false): void
 {
     $loaded = 0;
     $totalSpent = 0;
@@ -44,7 +46,7 @@ function testAssessmentItems(array $files, $validate = false)
  * @param bool $validate
  * @throws XmlStorageException
  */
-function testAssessmentTests(array $files, $validate = false)
+function testAssessmentTests(array $files, $validate = false): void
 {
     $loaded = 0;
     $totalSpent = 0;
@@ -78,7 +80,7 @@ function testAssessmentTests(array $files, $validate = false)
 /**
  * @param $msg
  */
-function outputTitle($msg)
+function outputTitle($msg): void
 {
     output('');
     output(str_repeat('+', strlen($msg)));
@@ -89,7 +91,7 @@ function outputTitle($msg)
 /**
  * @param $avg
  */
-function outputAverage($avg)
+function outputAverage($avg): void
 {
     output(sprintf('--> Average loading time is %.8f seconds.', $avg));
 }
@@ -97,7 +99,7 @@ function outputAverage($avg)
 /**
  * @param $msg
  */
-function outputDescription($msg)
+function outputDescription($msg): void
 {
     output(" + ${msg}");
 }
@@ -105,7 +107,7 @@ function outputDescription($msg)
 /**
  * @param $msg
  */
-function output($msg)
+function output($msg): void
 {
     echo "${msg}\n";
 }
@@ -115,7 +117,7 @@ function output($msg)
  * @param $end
  * @return mixed
  */
-function spentTime($start, $end)
+function spentTime($start, $end): mixed
 {
     $startTime = explode(' ', $start);
     $endTime = explode(' ', $end);

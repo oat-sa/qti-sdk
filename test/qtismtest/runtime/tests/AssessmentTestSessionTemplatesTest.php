@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\tests;
 
 use qtism\common\datatypes\QtiIdentifier;
@@ -15,7 +17,7 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
  */
 class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestCase
 {
-    public function testSimpleTemplatingLinear()
+    public function testSimpleTemplatingLinear(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_linear.xml');
         $session->beginTestSession();
@@ -47,7 +49,7 @@ class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestC
         $this::assertEquals(2.0, $session['QTPL2.SCORE']->getValue());
     }
 
-    public function testSimpleTemplatingNonLinear()
+    public function testSimpleTemplatingNonLinear(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_nonlinear.xml');
         $session->beginTestSession();
@@ -79,7 +81,7 @@ class AssessmentTestSessionTemplatesTest extends QtiSmAssessmentTestSessionTestC
         $this::assertEquals(2.0, $session['QTPL2.SCORE']->getValue());
     }
 
-    public function testSimpleTemplatingNonLinearMultipleTestParts()
+    public function testSimpleTemplatingNonLinearMultipleTestParts(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_nonlinear_multiple_testparts.xml');
         $session->beginTestSession();

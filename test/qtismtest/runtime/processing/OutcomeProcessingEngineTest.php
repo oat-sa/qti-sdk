@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\processing;
 
 use qtism\common\datatypes\QtiBoolean;
@@ -18,7 +20,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeProcessingEngineTest extends QtiSmTestCase
 {
-    public function testResponseProcessingMatchCorrect()
+    public function testResponseProcessingMatchCorrect(): void
     {
         $outcomeProcessing = $this->createComponentFromXml('
 		    <!-- I known that this outcomeProcessing is not well written but this is just
@@ -73,7 +75,7 @@ class OutcomeProcessingEngineTest extends QtiSmTestCase
         $this::assertEquals(0.0, $context['SCORE']->getValue());
     }
 
-    public function testResponseProcessingExitTest()
+    public function testResponseProcessingExitTest(): void
     {
         $outcomeProcessing = $this->createComponentFromXml('
 	        <outcomeProcessing>

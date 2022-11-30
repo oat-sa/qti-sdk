@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\php\marshalling;
 
 use qtism\common\collections\IntegerCollection;
@@ -12,7 +14,7 @@ use qtismtest\QtiSmPhpMarshallerTestCase;
  */
 class PhpCollectionMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
-    public function testEmptyCollection()
+    public function testEmptyCollection(): void
     {
         $collection = new IntegerCollection();
         $marshaller = new PhpCollectionMarshaller($this->createMarshallingContext(), $collection);
@@ -24,7 +26,7 @@ class PhpCollectionMarshallerTest extends QtiSmPhpMarshallerTestCase
         $this::assertEquals($expected, $this->getStream()->getBinary());
     }
 
-    public function testIntegerCollection()
+    public function testIntegerCollection(): void
     {
         $collection = new IntegerCollection([10, 11, 12]);
         $ctx = $this->createMarshallingContext();

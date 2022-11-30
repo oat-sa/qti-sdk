@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -20,7 +22,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class ChoiceInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $choice1 = new SimpleChoice('choice_1');
         $choice1->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
@@ -42,7 +44,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<choiceInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome"><prompt>Prompt...</prompt><simpleChoice identifier="choice_1">Choice #1</simpleChoice><simpleChoice identifier="choice_2">Choice #2</simpleChoice></choiceInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
             <choiceInteraction responseIdentifier="RESPONSE" xml:base="/home/jerome">
@@ -75,7 +77,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshallNoResponseIdentifier21()
+    public function testUnmarshallNoResponseIdentifier21(): void
     {
         $element = $this->createDOMElement('
             <choiceInteraction>
@@ -94,7 +96,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshallMaxChoicesUnlimited21()
+    public function testUnmarshallMaxChoicesUnlimited21(): void
     {
         $element = $this->createDOMElement('
             <choiceInteraction responseIdentifier="RESPONSE" maxChoices="0">
@@ -115,7 +117,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshallMinChoicesOnly21()
+    public function testUnmarshallMinChoicesOnly21(): void
     {
         $element = $this->createDOMElement('
             <choiceInteraction responseIdentifier="RESPONSE" minChoices="1">
@@ -133,7 +135,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this::assertSame(1, $component->getMinChoices());
     }
 
-    public function testMarshallMinChoicesNoOutput20()
+    public function testMarshallMinChoicesNoOutput20(): void
     {
         // Aims at testing that minChoices is not output when QTI 2.0 is in force.
         $choice1 = new SimpleChoice('choice_1');
@@ -151,7 +153,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<choiceInteraction responseIdentifier="RESPONSE" shuffle="false" maxChoices="0"><simpleChoice identifier="choice_1">Choice #1</simpleChoice></choiceInteraction>', $dom->saveXML($element));
     }
 
-    public function testMarshallOrientationNoOutput20()
+    public function testMarshallOrientationNoOutput20(): void
     {
         // Aims at testing that orientation is not output in a QTI 2.0 context.
         $choice1 = new SimpleChoice('choice_1');
@@ -170,7 +172,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<choiceInteraction responseIdentifier="RESPONSE" shuffle="false" maxChoices="0"><simpleChoice identifier="choice_1">Choice #1</simpleChoice></choiceInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallMinChoicesAvoided20()
+    public function testUnmarshallMinChoicesAvoided20(): void
     {
         // Aims at testing that minChoices is not taken into account when unmarshalling
         // in a QTI 2.0 context.
@@ -190,7 +192,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this::assertSame(0, $component->getMinChoices());
     }
 
-    public function testUnmarshallOrientationAvoided20()
+    public function testUnmarshallOrientationAvoided20(): void
     {
         // Aims at testing that orientation is not taken into account when unmarshalling
         // in a QTI 2.0 context.
@@ -212,7 +214,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this::assertSame(Orientation::VERTICAL, $component->getOrientation());
     }
 
-    public function testUnmarshallMandatoryShuffle20()
+    public function testUnmarshallMandatoryShuffle20(): void
     {
         // Aims at testing that shuffle attribute is mandatory in a QTI 2.0 context.
         // in a QTI 2.0 context.
@@ -233,7 +235,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNoMaxChoices()
+    public function testUnmarshallNoMaxChoices(): void
     {
         $element = $this->createDOMElement('
             <choiceInteraction responseIdentifier="RESPONSE" shuffle="false">
@@ -250,7 +252,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshall30()
+    public function testUnmarshall30(): void
     {
         $element = $this->createDOMElement('
             <qti-choice-interaction response-identifier="RESPONSE" xml:base="/home/jerome">
@@ -288,7 +290,7 @@ class ChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this::assertCount(2, $simpleChoices);
     }
 
-    public function testMarshall30()
+    public function testMarshall30(): void
     {
         $choice1 = new SimpleChoice('choice_1');
         $div1 = new Div('div_1');

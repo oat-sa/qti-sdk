@@ -65,7 +65,7 @@ class PhpDocumentTest extends QtiSmTestCase
      * @param string $path
      * @throws PhpStorageException
      */
-    public function testSimpleLoad($path = '')
+    public function testSimpleLoad($path = ''): void
     {
         $doc = new PhpDocument();
         if (empty($path)) {
@@ -141,7 +141,7 @@ class PhpDocumentTest extends QtiSmTestCase
         }
     }
 
-    public function testSimpleSave()
+    public function testSimpleSave(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/php/php_storage_simple.xml');
@@ -154,7 +154,7 @@ class PhpDocumentTest extends QtiSmTestCase
         unlink($file);
     }
 
-    public function testCustomOperatorOne()
+    public function testCustomOperatorOne(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/operators/custom_operator_1.xml');
@@ -180,7 +180,7 @@ class PhpDocumentTest extends QtiSmTestCase
         unlink($file);
     }
 
-    public function testCustomOperatorTwo()
+    public function testCustomOperatorTwo(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/operators/custom_operator_2.xml');
@@ -202,7 +202,7 @@ class PhpDocumentTest extends QtiSmTestCase
         unlink($file);
     }
 
-    public function testCustomSelection()
+    public function testCustomSelection(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/selection/custom_selection.xml');
@@ -251,7 +251,7 @@ class PhpDocumentTest extends QtiSmTestCase
      * @throws StreamAccessException
      * @throws PhpMarshallingException
      */
-    public function testLoadTestSamples($testUri, $rootType)
+    public function testLoadTestSamples($testUri, $rootType): void
     {
         // Basic XML -> PHP transormation + save + load
         $xmlDoc = new XmlDocument('2.1');
@@ -273,7 +273,7 @@ class PhpDocumentTest extends QtiSmTestCase
         $this::assertFileDoesNotExist($file);
     }
 
-    public function testLoadInteractionMixSaschsen()
+    public function testLoadInteractionMixSaschsen(): void
     {
         $xmlDoc = new XmlDocument('2.1');
         $xmlDoc->load(self::samplesDir() . 'ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml');
@@ -295,7 +295,7 @@ class PhpDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function loadTestSamplesDataProvider()
+    public function loadTestSamplesDataProvider(): array
     {
         return [
             [self::samplesDir() . 'ims/tests/arbitrary_collections_of_item_outcomes/arbitrary_collections_of_item_outcomes.xml', AssessmentTest::class],
@@ -357,7 +357,7 @@ class PhpDocumentTest extends QtiSmTestCase
         ];
     }
 
-    public function testSaveComponentWithArrayBeanProperty()
+    public function testSaveComponentWithArrayBeanProperty(): void
     {
         $equal = new Equal(
             new ExpressionCollection(
@@ -384,7 +384,7 @@ class PhpDocumentTest extends QtiSmTestCase
         unlink($file);
     }
 
-    public function testSaveError()
+    public function testSaveError(): void
     {
         $phpDoc = new PhpDocument();
 
@@ -394,7 +394,7 @@ class PhpDocumentTest extends QtiSmTestCase
         $phpDoc->save('/root/root.php');
     }
 
-    public function testLoadError()
+    public function testLoadError(): void
     {
         $phpDoc = new PhpDocument();
 
@@ -412,7 +412,7 @@ class PhpDocumentTest extends QtiSmTestCase
      * @throws ReflectionException
      * @throws StreamAccessException
      */
-    public function testBodyElement()
+    public function testBodyElement(): void
     {
         $span = new Span('myid', 'myclass');
         $span->setAriaControls('IDREF1 IDREF2');

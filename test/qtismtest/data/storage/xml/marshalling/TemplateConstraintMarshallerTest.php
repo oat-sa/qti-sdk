@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -14,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TemplateConstraintMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $rand1 = new RandomInteger(0, 5);
         $rand2 = new RandomInteger(0, 5);
@@ -30,7 +32,7 @@ class TemplateConstraintMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<templateConstraint><match><randomInteger min="0" max="5"/><randomInteger min="0" max="5"/></match></templateConstraint>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <templateConstraint>

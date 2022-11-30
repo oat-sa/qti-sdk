@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,7 +36,7 @@ use qtismtest\QtiSmTestCase;
  */
 class CandidateResponseMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         /** @var CandidateResponse $candidateResponse */
         $candidateResponse = $this->createComponentFromXml('
@@ -51,7 +53,7 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
         $this::assertEquals(2, $candidateResponse->getValues()->count());
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         /** @var CandidateResponse $candidateResponse */
         $candidateResponse = $this->createComponentFromXml('
@@ -64,7 +66,7 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
         $this::assertNull($candidateResponse->getValues());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new CandidateResponse(
             new ValueCollection([
@@ -87,7 +89,7 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
         }
     }
 
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $component = new CandidateResponse();
 
@@ -101,7 +103,7 @@ class CandidateResponseMarshallerTest extends QtiSmTestCase
         $this::assertFalse($element->hasChildNodes());
     }
 
-    public function testGetExpectedQtiClassName()
+    public function testGetExpectedQtiClassName(): void
     {
         $component = new CandidateResponse();
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -24,7 +26,7 @@ use ReflectionException;
  */
 class TestFeedbackMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $identifier = 'myTestFeedBack1';
         $outcomeIdentifier = 'myOutcomeIdentifier1';
@@ -57,7 +59,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1, $content->item(0)->getElementsByTagName('p')->length);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -86,7 +88,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
      * @param string $expectedContent
      * @throws ReflectionException
      */
-    public function testExtractContent($xmlData, $expectedContent)
+    public function testExtractContent($xmlData, $expectedContent): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML($xmlData);
@@ -101,14 +103,14 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function feedbackContent()
+    public function feedbackContent(): array
     {
         return [
             ['<testFeedback xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" access="during" identifier="myId1" outcomeIdentifier="myId2" showHide="show"><div><p>Hello there!</p></div></testFeedback>', '<div><p>Hello there!</p></div>'],
         ];
     }
 
-    public function testUnmarshallWrongContent()
+    public function testUnmarshallWrongContent(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
@@ -127,7 +129,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNoAccessAttribute()
+    public function testUnmarshallNoAccessAttribute(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
@@ -144,7 +146,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNoShowHideAttribute()
+    public function testUnmarshallNoShowHideAttribute(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
@@ -161,7 +163,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNoOutcomeIdentifierAttribute()
+    public function testUnmarshallNoOutcomeIdentifierAttribute(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
@@ -178,7 +180,7 @@ class TestFeedbackMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNoIdentifierAttribute()
+    public function testUnmarshallNoIdentifierAttribute(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('

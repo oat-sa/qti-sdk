@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -29,7 +31,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssessmentTestMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $identifier = 'myAssessmentTest';
         $title = 'My Assessment Test';
@@ -93,7 +95,7 @@ class AssessmentTestMarshallerTest extends QtiSmTestCase
         $this::assertSame($element, $element->getElementsByTagName('outcomeProcessing')->item(0)->parentNode);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

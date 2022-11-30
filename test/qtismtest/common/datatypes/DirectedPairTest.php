@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\common\datatypes;
 
 use qtism\common\datatypes\QtiDirectedPair;
@@ -11,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class DirectedPairTest extends QtiSmTestCase
 {
-    public function testEquality()
+    public function testEquality(): void
     {
         $p1 = new QtiDirectedPair('A', 'B');
         $p2 = new QtiDirectedPair('A', 'B');

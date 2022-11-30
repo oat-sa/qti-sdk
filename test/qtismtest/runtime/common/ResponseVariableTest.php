@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\common;
 
 use qtism\common\datatypes\files\FileSystemFileManager;
@@ -25,7 +27,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ResponseVariableTest extends QtiSmTestCase
 {
-    public function testCreateFromVariableDeclarationExtended()
+    public function testCreateFromVariableDeclarationExtended(): void
     {
         $factory = $this->getMarshallerFactory('2.1.0');
         $element = $this->createDOMElement('
@@ -113,13 +115,13 @@ class ResponseVariableTest extends QtiSmTestCase
         $this::assertFalse($responseVariable->isInitializedFromDefaultValue());
     }
 
-    public function testIsCorrectWithNullCorrectResponse()
+    public function testIsCorrectWithNullCorrectResponse(): void
     {
         $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));
         $this::assertFalse($responseVariable->isCorrect());
     }
 
-    public function testGetScalarDataModelValuesSingleCardinality()
+    public function testGetScalarDataModelValuesSingleCardinality(): void
     {
         $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(10));
         $values = $responseVariable->getDataModelValues();
@@ -134,7 +136,7 @@ class ResponseVariableTest extends QtiSmTestCase
         $this::assertSame(10.1, $values[0]->getValue());
     }
 
-    public function testGetNonScalarDataModelValuesSingleCardinality()
+    public function testGetNonScalarDataModelValuesSingleCardinality(): void
     {
         // QtiPair
         $qtiPair = new QtiPair('A', 'B');
@@ -171,7 +173,7 @@ class ResponseVariableTest extends QtiSmTestCase
         $this::assertStringEqualsFile($path, $actual->getData());
     }
 
-    public function testGetScalarDataModelValuesMultipleCardinality()
+    public function testGetScalarDataModelValuesMultipleCardinality(): void
     {
         $responseVariable = new ResponseVariable(
             'MYVAR',
@@ -189,7 +191,7 @@ class ResponseVariableTest extends QtiSmTestCase
         $this::assertEquals(12, $values[1]->getValue());
     }
 
-    public function testGetNonScalarDataModelValuesMultipleCardinality()
+    public function testGetNonScalarDataModelValuesMultipleCardinality(): void
     {
         // QtiPair
         $qtiPair1 = new QtiPair('A', 'B');
@@ -256,7 +258,7 @@ class ResponseVariableTest extends QtiSmTestCase
         $this::assertTrue($qtiPair->equals($values[3]->getValue()));
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         // value, default value and correct response must be independent after cloning.
         $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(25));

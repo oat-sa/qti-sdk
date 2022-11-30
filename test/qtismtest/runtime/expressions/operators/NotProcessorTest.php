@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\runtime\expressions\operators;
 
 use qtism\common\datatypes\QtiBoolean;
@@ -19,7 +21,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class NotProcessorTest extends QtiSmTestCase
 {
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -27,7 +29,7 @@ class NotProcessorTest extends QtiSmTestCase
         $processor = new NotProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiBoolean(false)]);
@@ -35,7 +37,7 @@ class NotProcessorTest extends QtiSmTestCase
         $processor = new NotProcessor($expression, $operands);
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2)])]);
@@ -44,7 +46,7 @@ class NotProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(25)]);
@@ -53,7 +55,7 @@ class NotProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([null]);
@@ -62,7 +64,7 @@ class NotProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testTrue()
+    public function testTrue(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiBoolean(false)]);
@@ -71,7 +73,7 @@ class NotProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testFalse()
+    public function testFalse(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiBoolean(true)]);
@@ -85,7 +87,7 @@ class NotProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<not>

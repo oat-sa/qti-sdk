@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\state;
 
 use InvalidArgumentException;
@@ -13,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MatchTableTest extends QtiSmTestCase
 {
-    public function testCreateNotEnoughMatchTableEntries()
+    public function testCreateNotEnoughMatchTableEntries(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('A MatchTable object must contain at least one MatchTableEntry object.');
@@ -21,7 +23,7 @@ class MatchTableTest extends QtiSmTestCase
         new MatchTable(new MatchTableEntryCollection());
     }
 
-    public function testGetComponents()
+    public function testGetComponents(): void
     {
         $matchTable = new MatchTable(
             new MatchTableEntryCollection(

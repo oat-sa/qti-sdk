@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\state;
 
 use qtism\common\enums\BaseType;
@@ -14,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeElseTest extends QtiSmTestCase
 {
-    public function testGetComponents()
+    public function testGetComponents(): void
     {
         $outcomeElse = new OutcomeElse(
             new OutcomeRuleCollection(

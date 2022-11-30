@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml\marshalling;
 
 use DOMDocument;
@@ -12,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class VariableMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallWeight()
+    public function testMarshallWeight(): void
     {
         $identifier = 'myVariable1';
         $weightIdentifier = 'myWeight1';
@@ -27,7 +29,7 @@ class VariableMarshallerTest extends QtiSmTestCase
         $this::assertEquals($weightIdentifier, $element->getAttribute('weightIdentifier'));
     }
 
-    public function testMarshallNoWeight()
+    public function testMarshallNoWeight(): void
     {
         $identifier = 'myVariable1';
 
@@ -41,7 +43,7 @@ class VariableMarshallerTest extends QtiSmTestCase
         $this::assertEquals('', $element->getAttribute('weightIdentifier')); // should have no weightIdentifier attr.
     }
 
-    public function testUnmarshallWeight()
+    public function testUnmarshallWeight(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<variable xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myVariable1" weightIdentifier="myWeight1"/>');
@@ -55,7 +57,7 @@ class VariableMarshallerTest extends QtiSmTestCase
         $this::assertEquals('myWeight1', $component->getWeightIdentifier());
     }
 
-    public function testUnmarshallNoWeight()
+    public function testUnmarshallNoWeight(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<variable xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myVariable1"/>');
