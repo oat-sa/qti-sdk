@@ -5,7 +5,9 @@ namespace qtism\data\storage\xml\filesystem;
 use Exception;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemException as FlysystemException;
+use League\Flysystem\Local\FallbackMimeTypeDetector;
 use League\Flysystem\Local\LocalFilesystemAdapter;
+use League\MimeTypeDetection\ExtensionMimeTypeDetector;
 
 class FlysystemV2Filesystem implements FilesystemInterface
 {
@@ -18,7 +20,17 @@ class FlysystemV2Filesystem implements FilesystemInterface
 
     public static function local(string $path = '/'): self
     {
-        return new self(new Filesystem(new LocalFilesystemAdapter($path)));
+        return new self(
+            new Filesystem(
+                new LocalFilesystemAdapter(
+                    $path,
+                    null,
+                    LOCK_EX,
+                    LocalFilesystemAdapter::DISALLOW_LINKS,
+                    new FallbackMimeTypeDetector(new ExtensionMimeTypeDetector()), // Serializable
+                )
+            )
+        );
     }
 
     public function write(string $url, string $content): bool

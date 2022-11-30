@@ -122,12 +122,15 @@ class XmlDocument extends QtiDocument
         }
 
         // Support backwards compatibility of old Flysystem v1 Filesystems being passed into this class
-        if (FilesystemFactory::isFlysystemV1Installed() && $filesystem instanceof Filesystem) {
+        if ($filesystem instanceof Filesystem && FilesystemFactory::isFlysystemV1Installed()) {
             $filesystem = new FlysystemV1Filesystem($filesystem);
-        }
-
-        if (!$filesystem instanceof FilesystemInterface) {
-            throw new RuntimeException('Invalid filesystem provided.  Instance of FilesystemInterface required');
+        } elseif (!$filesystem instanceof FilesystemInterface) {
+            throw new RuntimeException(
+                sprintf(
+                    'Invalid filesystem provided.  Instance of %s required',
+                    FilesystemInterface::class,
+                )
+            );
         }
 
         $this->filesystem = $filesystem;
