@@ -82,7 +82,5 @@ class QtiIntOrIdentifier extends QtiScalar
         } else {
             return '' . $v;
         }
-
-        return (string)$v;
     }
 }

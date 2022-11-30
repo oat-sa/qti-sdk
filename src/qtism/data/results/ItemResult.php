@@ -280,7 +280,6 @@ class ItemResult extends QtiComponent
      *
      * @return SessionStatus
      */
-    #[\ReturnTypeWillChange]
     public function getSessionStatus()
     {
         return $this->sessionStatus;
