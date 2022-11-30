@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
      * @param QtiComponent $component A OutcomeMaximum object.
      * @return DOMElement The corresponding outcomeMaximum QTI element.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
         $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
@@ -58,7 +60,8 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
      * @return QtiComponent The corresponding OutcomeMaximum object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): OutcomeMaximum
     {
         $baseComponent = parent::unmarshall($element);
 
@@ -82,7 +85,7 @@ class OutcomeMaximumMarshaller extends ItemSubsetMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'outcomeMaximum';
     }

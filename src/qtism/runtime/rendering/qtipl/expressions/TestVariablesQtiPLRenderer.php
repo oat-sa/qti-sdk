@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ class TestVariablesQtiPLRenderer extends AbstractQtiPLRenderer
      * @return mixed The rendered component into another constitution.
      * @throws RenderingException If something goes wrong while rendering the component.
      */
-    public function render($something)
+    public function render($something): string
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         $attributes = [];

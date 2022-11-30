@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -83,7 +85,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
      * @param bool $required
      * @throws InvalidArgumentException If $required is not a boolean value.
      */
-    public function setRequired($required)
+    public function setRequired($required): void
     {
         if (is_bool($required)) {
             $this->required = $required;
@@ -106,7 +108,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
     /**
      * @param IdentifierCollection $matchGroup
      */
-    public function setMatchGroup(IdentifierCollection $matchGroup)
+    public function setMatchGroup(IdentifierCollection $matchGroup): void
     {
         $this->matchGroup = $matchGroup;
     }
@@ -114,7 +116,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
     /**
      * @return IdentifierCollection
      */
-    public function getMatchGroup()
+    public function getMatchGroup(): IdentifierCollection
     {
         return $this->matchGroup;
     }
@@ -122,7 +124,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -130,7 +132,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'gap';
     }

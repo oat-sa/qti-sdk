@@ -30,7 +30,7 @@ use qtism\data\QtiComponentCollection;
 
 class Html5RpMarshaller extends Html5ContentMarshaller
 {
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return Rp::QTI_CLASS_NAME;
     }
@@ -41,7 +41,7 @@ class Html5RpMarshaller extends Html5ContentMarshaller
      * @return mixed
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         $component = parent::unmarshallChildrenKnown($element, $children);
 
@@ -61,7 +61,7 @@ class Html5RpMarshaller extends Html5ContentMarshaller
      * @param array $elements
      * @return DOMElement
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = parent::marshallChildrenKnown($component, $elements);
 

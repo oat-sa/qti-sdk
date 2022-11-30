@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +39,7 @@ class ProcessingException extends RuntimeException
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * Code to use when a runtime error occcurs.
@@ -46,14 +48,14 @@ class ProcessingException extends RuntimeException
      *
      * @var int
      */
-    const RUNTIME_ERROR = 1;
+    public const RUNTIME_ERROR = 1;
 
     /**
      * Code to use when a requested variable does not exist or is not set.
      *
      * @var int
      */
-    const NONEXISTENT_VARIABLE = 2;
+    public const NONEXISTENT_VARIABLE = 2;
 
     /**
      * Code to use when a variable has not the expected type.
@@ -63,7 +65,7 @@ class ProcessingException extends RuntimeException
      *
      * @var int
      */
-    const WRONG_VARIABLE_TYPE = 3;
+    public const WRONG_VARIABLE_TYPE = 3;
 
     /**
      * Code to use when a variable has not the expected baseType.
@@ -73,7 +75,7 @@ class ProcessingException extends RuntimeException
      *
      * @var int
      */
-    const WRONG_VARIABLE_BASETYPE = 4;
+    public const WRONG_VARIABLE_BASETYPE = 4;
 
     /**
      * Code to use when a variable is inconsistent.
@@ -83,7 +85,7 @@ class ProcessingException extends RuntimeException
      *
      * @var int
      */
-    const INCONSISTENT_VARIABLE = 5;
+    public const INCONSISTENT_VARIABLE = 5;
 
     /**
      * Code to use when a processor encounters an internal logic error.
@@ -92,14 +94,14 @@ class ProcessingException extends RuntimeException
      *
      * @var int
      */
-    const LOGIC_ERROR = 6;
+    public const LOGIC_ERROR = 6;
 
     /**
      * Code to use when a variable has not the expected cardinality.
      *
      * @var int
      */
-    const WRONG_VARIABLE_CARDINALITY = 7;
+    public const WRONG_VARIABLE_CARDINALITY = 7;
 
     private $source = null;
 
@@ -122,7 +124,7 @@ class ProcessingException extends RuntimeException
      *
      * @param Processable $source The Processable object whithin the error occurred.
      */
-    protected function setSource(Processable $source)
+    protected function setSource(Processable $source): void
     {
         $this->source = $source;
     }
@@ -132,7 +134,7 @@ class ProcessingException extends RuntimeException
      *
      * @return Processable The Processable object within the error occurred.
      */
-    public function getSource()
+    public function getSource(): Processable
     {
         return $this->source;
     }

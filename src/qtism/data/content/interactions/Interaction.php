@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -89,9 +91,9 @@ abstract class Interaction extends BodyElement
      * @param string $responseIdentifier A QTI identifier.
      * @throws InvalidArgumentException If $responseIdentifier is not a valid QTI identifier.
      */
-    public function setResponseIdentifier($responseIdentifier)
+    public function setResponseIdentifier($responseIdentifier): void
     {
-        if (Format::isIdentifier($responseIdentifier, false) === true) {
+        if (Format::isIdentifier((string)$responseIdentifier, false) === true) {
             $this->responseIdentifier = $responseIdentifier;
         } else {
             $msg = "The 'responseIdentifier' argument must be a valid QTI identifier.";
@@ -104,7 +106,7 @@ abstract class Interaction extends BodyElement
      *
      * @return string A QTI identifier.
      */
-    public function getResponseIdentifier()
+    public function getResponseIdentifier(): string
     {
         return $this->responseIdentifier;
     }
@@ -117,7 +119,7 @@ abstract class Interaction extends BodyElement
      *
      * @return ResponseValidityConstraint|null A ResponseValidityConstraint object or a null value if there is not response validity constraint bound to the interaction's response variable.
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
     {
         return null;
     }

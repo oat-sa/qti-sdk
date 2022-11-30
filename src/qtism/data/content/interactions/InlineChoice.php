@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -64,7 +66,7 @@ class InlineChoice extends Choice
      *
      * @param TextOrVariableCollection $content A collection of TextOrVariable objects.
      */
-    public function setContent(TextOrVariableCollection $content)
+    public function setContent(TextOrVariableCollection $content): void
     {
         $this->content = $content;
     }
@@ -74,7 +76,7 @@ class InlineChoice extends Choice
      *
      * @return TextOrVariableCollection A collection of TextOrVariable objects.
      */
-    public function getContent()
+    public function getContent(): TextOrVariableCollection
     {
         return $this->content;
     }
@@ -82,7 +84,7 @@ class InlineChoice extends Choice
     /**
      * @return TextOrVariableCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->content;
     }
@@ -90,7 +92,7 @@ class InlineChoice extends Choice
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'inlineChoice';
     }

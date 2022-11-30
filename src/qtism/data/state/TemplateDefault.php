@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -75,7 +77,7 @@ class TemplateDefault extends QtiComponent
      *
      * @return string A QTI identifier.
      */
-    public function getTemplateIdentifier()
+    public function getTemplateIdentifier(): string
     {
         return $this->templateIdentifier;
     }
@@ -86,7 +88,7 @@ class TemplateDefault extends QtiComponent
      * @param string $templateIdentifier A QTI identifier.
      * @throws InvalidArgumentException If $templateIdentifier is not a valid QTI Identifier.
      */
-    public function setTemplateIdentifier($templateIdentifier)
+    public function setTemplateIdentifier($templateIdentifier): void
     {
         if (Format::isIdentifier($templateIdentifier)) {
             $this->templateIdentifier = $templateIdentifier;
@@ -101,7 +103,7 @@ class TemplateDefault extends QtiComponent
      *
      * @return Expression A QTI Expression.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -111,7 +113,7 @@ class TemplateDefault extends QtiComponent
      *
      * @param Expression $expression A QTI Expression.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -119,7 +121,7 @@ class TemplateDefault extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'templateDefault';
     }
@@ -127,7 +129,7 @@ class TemplateDefault extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection([$this->getExpression()]);
     }

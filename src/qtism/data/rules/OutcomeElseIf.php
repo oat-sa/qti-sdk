@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -70,7 +72,7 @@ class OutcomeElseIf extends QtiComponent
      *
      * @return Expression An Expression object.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -80,7 +82,7 @@ class OutcomeElseIf extends QtiComponent
      *
      * @param Expression $expression An Expression object.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -91,7 +93,7 @@ class OutcomeElseIf extends QtiComponent
      *
      * @return OutcomeRuleCollection A collection of OutcomeRule objects.
      */
-    public function getOutcomeRules()
+    public function getOutcomeRules(): OutcomeRuleCollection
     {
         return $this->outcomeRules;
     }
@@ -103,7 +105,7 @@ class OutcomeElseIf extends QtiComponent
      * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
      * @throws InvalidArgumentException If $outcomeRules is an empty collection.
      */
-    public function setOutcomeRules(OutcomeRuleCollection $outcomeRules)
+    public function setOutcomeRules(OutcomeRuleCollection $outcomeRules): void
     {
         if (count($outcomeRules) > 0) {
             $this->outcomeRules = $outcomeRules;
@@ -116,7 +118,7 @@ class OutcomeElseIf extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'outcomeElseIf';
     }
@@ -124,7 +126,7 @@ class OutcomeElseIf extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge([$this->getExpression()], $this->getOutcomeRules()->getArrayCopy());
 

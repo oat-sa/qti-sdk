@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,12 +46,12 @@ class ContextMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException If an error occurs during the marshalling process.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
         if ($component->hasSourcedId()) {
-            $element->setAttribute('sourcedId', $component->getSourcedId());
+            $element->setAttribute('sourcedId', (string)$component->getSourcedId());
         }
 
         if ($component->hasSessionIdentifiers()) {
@@ -71,7 +73,8 @@ class ContextMarshaller extends Marshaller
      * @return Context A QtiComponent object.
      * @throws MarshallerNotFoundException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): Context
     {
         $sourcedId = $element->hasAttribute('sourcedId')
             ? new QtiIdentifier($element->getAttribute('sourcedId'))
@@ -102,7 +105,7 @@ class ContextMarshaller extends Marshaller
      *
      * @return string A QTI class name or an empty string.
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'context';
     }

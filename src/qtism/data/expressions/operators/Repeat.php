@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -69,7 +71,7 @@ class Repeat extends Operator
      * @param int|string $numberRepeats An integer or a QTI variable reference.
      * @throws InvalidArgumentException If $numberRepeats is not an integer nor a valid QTI variable reference.
      */
-    public function setNumberRepeats($numberRepeats)
+    public function setNumberRepeats($numberRepeats): void
     {
         if (is_int($numberRepeats) || (is_string($numberRepeats) && Format::isVariableRef($numberRepeats))) {
             $this->numberRepeats = $numberRepeats;
@@ -92,7 +94,7 @@ class Repeat extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'repeat';
     }

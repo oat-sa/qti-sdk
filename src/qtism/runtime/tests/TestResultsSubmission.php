@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -31,14 +33,14 @@ use qtism\common\enums\Enumeration;
  */
 class TestResultsSubmission implements Enumeration
 {
-    const END = 0;
+    public const END = 0;
 
-    const OUTCOME_PROCESSING = 1;
+    public const OUTCOME_PROCESSING = 1;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'END' => self::END,
@@ -52,7 +54,7 @@ class TestResultsSubmission implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'end':
                 return self::END;
                 break;

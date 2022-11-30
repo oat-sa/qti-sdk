@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,6 +44,7 @@ class FieldValueProcessor extends OperatorProcessor
      * @return mixed|null A QTI Runtime compliant value or null if there is no field with that identifier.
      * @throws OperatorProcessingException
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $operands = $this->getOperands();
@@ -59,7 +62,7 @@ class FieldValueProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return FieldValue::class;
     }

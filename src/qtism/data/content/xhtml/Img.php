@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,7 +34,7 @@ use qtism\data\content\AtomicInline;
  */
 class Img extends AtomicInline
 {
-    public const QTI_CLASS_NAME_IMG='img';
+    public const QTI_CLASS_NAME_IMG = 'img';
 
     /**
      * The img's src attribute.
@@ -122,7 +124,7 @@ class Img extends AtomicInline
      *
      * @return string A URI.
      */
-    public function getSrc()
+    public function getSrc(): string
     {
         return $this->src;
     }
@@ -133,7 +135,7 @@ class Img extends AtomicInline
      * @param string $alt A string
      * @throws InvalidArgumentException If $alt is not a string.
      */
-    public function setAlt($alt)
+    public function setAlt($alt): void
     {
         if (is_string($alt)) {
             $this->alt = $alt;
@@ -148,7 +150,7 @@ class Img extends AtomicInline
      *
      * @return string A non-empty string.
      */
-    public function getAlt()
+    public function getAlt(): string
     {
         return $this->alt;
     }
@@ -159,7 +161,7 @@ class Img extends AtomicInline
      * @param string $longdesc A valid URI.
      * @throws InvalidArgumentException If $longdesc is not a valid URI.
      */
-    public function setLongdesc(string $longdesc)
+    public function setLongdesc(string $longdesc): void
     {
         if ($longdesc === '' || Format::isUri($longdesc)) {
             $this->longdesc = $longdesc;
@@ -174,7 +176,7 @@ class Img extends AtomicInline
      *
      * @return string A URI.
      */
-    public function getLongdesc()
+    public function getLongdesc(): string
     {
         return $this->longdesc;
     }
@@ -184,7 +186,7 @@ class Img extends AtomicInline
      *
      * @return bool
      */
-    public function hasLongdesc()
+    public function hasLongdesc(): bool
     {
         return $this->getLongdesc() !== '';
     }
@@ -234,7 +236,7 @@ class Img extends AtomicInline
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'img';
     }

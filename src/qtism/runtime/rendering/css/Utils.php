@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +46,7 @@ class Utils
      * @param array $map A QTI to XHTML CSS class map.
      * @return string
      */
-    public static function mapSelector($selector, array $map)
+    public static function mapSelector($selector, array $map): string
     {
         foreach ($map as $k => $v) {
             $pattern = "/(?:(^|\s|\+|,|~|>)(${k})(\$|\s|,|\+|\.|\~|>|:|\[))/u";

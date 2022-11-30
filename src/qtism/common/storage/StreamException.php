@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,55 +38,55 @@ abstract class StreamException extends Exception
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * Error while opening a data stream.
      *
      * @var int
      */
-    const OPEN = 1;
+    public const OPEN = 1;
 
     /**
      * Error while writing a data stream.
      *
      * @var int
      */
-    const WRITE = 2;
+    public const WRITE = 2;
 
     /**
      * Error while closing a data stream.
      *
      * @var int
      */
-    const CLOSE = 3;
+    public const CLOSE = 3;
 
     /**
      * Error while reading a data stream.
      *
      * @var int
      */
-    const READ = 4;
+    public const READ = 4;
 
     /**
      * Error while reading, writing, eof, or closing
      * but the stream is not open.
      */
-    const NOT_OPEN = 5;
+    public const NOT_OPEN = 5;
 
     /**
      * Error while opening the stream but it is already opened.
      *
      * @var int
      */
-    const ALREADY_OPEN = 6;
+    public const ALREADY_OPEN = 6;
 
     /**
      * Error during a rewind call.
      *
      * @var int
      */
-    const REWIND = 7;
+    public const REWIND = 7;
 
     /**
      * The IStream object where in the error occurred.
@@ -112,7 +114,7 @@ abstract class StreamException extends Exception
      *
      * @return IStream An IStream object.
      */
-    public function getSource()
+    public function getSource(): IStream
     {
         return $this->source;
     }
@@ -122,7 +124,7 @@ abstract class StreamException extends Exception
      *
      * @param IStream $source An IStream object.
      */
-    protected function setSource(IStream $source)
+    protected function setSource(IStream $source): void
     {
         $this->source = $source;
     }

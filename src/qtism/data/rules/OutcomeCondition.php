@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -83,7 +85,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
      *
      * @return OutcomeIf An OutcomeIf object.
      */
-    public function getOutcomeIf()
+    public function getOutcomeIf(): OutcomeIf
     {
         return $this->outcomeIf;
     }
@@ -93,7 +95,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
      *
      * @param OutcomeIf $outcomeIf An OutcomeIf object.
      */
-    public function setOutcomeIf(OutcomeIf $outcomeIf)
+    public function setOutcomeIf(OutcomeIf $outcomeIf): void
     {
         $this->outcomeIf = $outcomeIf;
     }
@@ -103,7 +105,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
      *
      * @return OutcomeElseIfCollection An OutcomeElseIfCollection object.
      */
-    public function getOutcomeElseIfs()
+    public function getOutcomeElseIfs(): OutcomeElseIfCollection
     {
         return $this->outcomeElseIfs;
     }
@@ -113,7 +115,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
      *
      * @param OutcomeElseIfCollection $outcomeElseIfs An OutcomeElseIfCollection object.
      */
-    public function setOutcomeElseIfs(OutcomeElseIfCollection $outcomeElseIfs)
+    public function setOutcomeElseIfs(OutcomeElseIfCollection $outcomeElseIfs): void
     {
         $this->outcomeElseIfs = $outcomeElseIfs;
     }
@@ -121,9 +123,9 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
     /**
      * Get the optional OutcomeElse object. Returns null if not specified.
      *
-     * @return OutcomeElse An OutcomeElse object.
+     * @return OutcomeElse|null An OutcomeElse object.
      */
-    public function getOutcomeElse()
+    public function getOutcomeElse(): ?OutcomeElse
     {
         return $this->outcomeElse;
     }
@@ -133,7 +135,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
      *
      * @param OutcomeElse $outcomeElse An OutcomeElse object.
      */
-    public function setOutcomeElse(OutcomeElse $outcomeElse = null)
+    public function setOutcomeElse(OutcomeElse $outcomeElse = null): void
     {
         $this->outcomeElse = $outcomeElse;
     }
@@ -143,7 +145,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
      *
      * @return bool
      */
-    public function hasOutcomeElse()
+    public function hasOutcomeElse(): bool
     {
         return $this->getOutcomeElse() !== null;
     }
@@ -151,7 +153,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'outcomeCondition';
     }
@@ -159,7 +161,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
             [$this->getOutcomeIf()],

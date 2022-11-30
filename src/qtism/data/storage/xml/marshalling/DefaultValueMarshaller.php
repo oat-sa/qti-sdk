@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +42,7 @@ class DefaultValueMarshaller extends Marshaller
     /**
      * @param int $baseType
      */
-    public function setBaseType($baseType = -1)
+    public function setBaseType($baseType = -1): void
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
@@ -53,7 +55,7 @@ class DefaultValueMarshaller extends Marshaller
     /**
      * @return int
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -78,7 +80,7 @@ class DefaultValueMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -105,7 +107,8 @@ class DefaultValueMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid DefaultValue object.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): DefaultValue
     {
         $interpretation = $this->getDOMElementAttributeAs($element, 'interpretation', 'string');
         $interpretation = (empty($interpretation)) ? '' : $interpretation;
@@ -130,7 +133,7 @@ class DefaultValueMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'defaultValue';
     }

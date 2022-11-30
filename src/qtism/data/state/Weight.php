@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -79,7 +81,7 @@ class Weight extends QtiComponent implements QtiIdentifiable
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -90,7 +92,7 @@ class Weight extends QtiComponent implements QtiIdentifiable
      * @param string $identifier A QTI Identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
@@ -117,7 +119,7 @@ class Weight extends QtiComponent implements QtiIdentifiable
      * @param int|float $value A in integer/float value.
      * @throws InvalidArgumentException If $value is not an integer nor a float.
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         if (is_int($value) || is_float($value)) {
             $this->value = $value;
@@ -130,7 +132,7 @@ class Weight extends QtiComponent implements QtiIdentifiable
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'weight';
     }
@@ -138,7 +140,7 @@ class Weight extends QtiComponent implements QtiIdentifiable
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

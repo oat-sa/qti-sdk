@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ class ResponseProcessingMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -69,8 +71,11 @@ class ResponseProcessingMarshaller extends Marshaller
      * @return QtiComponent A ResponseProcessing object.
      * @throws MarshallerNotFoundException
      */
-    protected function unmarshall(DOMElement $element, ResponseProcessing $responseProcessing = null)
-    {
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(
+        DOMElement $element,
+        ResponseProcessing $responseProcessing = null
+    ): ResponseProcessing {
         $responseRuleElts = self::getChildElements($element);
 
         $responseRules = new ResponseRuleCollection();
@@ -100,7 +105,7 @@ class ResponseProcessingMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'responseProcessing';
     }

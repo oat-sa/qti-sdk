@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -91,7 +93,7 @@ class Selection extends QtiComponent implements IExternal
      *
      * @return int An integer.
      */
-    public function getSelect()
+    public function getSelect(): int
     {
         return $this->select;
     }
@@ -102,7 +104,7 @@ class Selection extends QtiComponent implements IExternal
      * @param int $select An integer.
      * @throws InvalidArgumentException If $select is not an integer.
      */
-    public function setSelect($select)
+    public function setSelect($select): void
     {
         if (is_int($select)) {
             $this->select = $select;
@@ -117,7 +119,7 @@ class Selection extends QtiComponent implements IExternal
      *
      * @return bool true if it must be with replacements, false otherwise.
      */
-    public function isWithReplacement()
+    public function isWithReplacement(): bool
     {
         return $this->withReplacement;
     }
@@ -128,7 +130,7 @@ class Selection extends QtiComponent implements IExternal
      * @param bool $withReplacement true if it must be with replacements, false otherwise.
      * @throws InvalidArgumentException If $withReplacement is not a boolean.
      */
-    public function setWithReplacement($withReplacement)
+    public function setWithReplacement($withReplacement): void
     {
         if (is_bool($withReplacement)) {
             $this->withReplacement = $withReplacement;
@@ -143,7 +145,7 @@ class Selection extends QtiComponent implements IExternal
      *
      * @param string $xmlString
      */
-    public function setXmlString($xmlString)
+    public function setXmlString($xmlString): void
     {
         $this->xmlString = $xmlString;
 
@@ -157,7 +159,7 @@ class Selection extends QtiComponent implements IExternal
      *
      * @return string
      */
-    public function getXmlString()
+    public function getXmlString(): string
     {
         return $this->xmlString;
     }
@@ -167,7 +169,7 @@ class Selection extends QtiComponent implements IExternal
      *
      * @param ExternalQtiComponent $externalComponent
      */
-    private function setExternalComponent(ExternalQtiComponent $externalComponent)
+    private function setExternalComponent(ExternalQtiComponent $externalComponent): void
     {
         $this->externalComponent = $externalComponent;
     }
@@ -175,9 +177,9 @@ class Selection extends QtiComponent implements IExternal
     /**
      * Get the encapsulated external component.
      *
-     * @return ExternalQtiComponent
+     * @return ExternalQtiComponent|null
      */
-    private function getExternalComponent()
+    private function getExternalComponent(): ?ExternalQtiComponent
     {
         return $this->externalComponent;
     }
@@ -192,15 +194,15 @@ class Selection extends QtiComponent implements IExternal
     {
         if (($externalComponent = $this->getExternalComponent()) !== null) {
             return $this->getExternalComponent()->getXml();
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'selection';
     }
@@ -208,7 +210,7 @@ class Selection extends QtiComponent implements IExternal
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

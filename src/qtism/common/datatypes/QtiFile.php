@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +46,7 @@ interface QtiFile extends QtiDatatype
      *
      * @return string
      */
-    public function getData();
+    public function getData(): string;
 
     /**
      * Get the MIME type of the file. This MIME type is one of the MIME
@@ -57,7 +59,7 @@ interface QtiFile extends QtiDatatype
      *
      * @return bool
      */
-    public function hasFilename();
+    public function hasFilename(): bool;
 
     /**
      * Get the file name of this file. If no file name is defined,
@@ -65,7 +67,7 @@ interface QtiFile extends QtiDatatype
      *
      * @return string
      */
-    public function getFilename();
+    public function getFilename(): string;
 
     /**
      * Get a brand new stream resource on the file. It is the responsibility of the
@@ -83,5 +85,5 @@ interface QtiFile extends QtiDatatype
      * @return string A unique identifier.
      * @throws RuntimeException If an error occurs while retrieving the file.
      */
-    public function getIdentifier();
+    public function getIdentifier(): string;
 }

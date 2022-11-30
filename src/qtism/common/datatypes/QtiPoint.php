@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -72,7 +74,7 @@ class QtiPoint implements QtiDatatype
      * @param int $x A position on the x-axis.
      * @throws InvalidArgumentException If $x is nto an integer value.
      */
-    public function setX($x)
+    public function setX($x): void
     {
         if (is_int($x)) {
             $this->x = $x;
@@ -87,7 +89,7 @@ class QtiPoint implements QtiDatatype
      *
      * @return int A position on the x-axis.
      */
-    public function getX()
+    public function getX(): int
     {
         return $this->x;
     }
@@ -98,7 +100,7 @@ class QtiPoint implements QtiDatatype
      * @param int $y A position on the y-axis.
      * @throws InvalidArgumentException If $y is not an integer value.
      */
-    public function setY($y)
+    public function setY($y): void
     {
         if (is_int($y)) {
             $this->y = $y;
@@ -113,7 +115,7 @@ class QtiPoint implements QtiDatatype
      *
      * @return int A position on the y-axis.
      */
-    public function getY()
+    public function getY(): int
     {
         return $this->y;
     }
@@ -125,7 +127,7 @@ class QtiPoint implements QtiDatatype
      * @param mixed $obj An object.
      * @return bool Whether or not the equality is established.
      */
-    public function equals($obj)
+    public function equals($obj): bool
     {
         return (is_object($obj) &&
             $obj instanceof self &&
@@ -140,7 +142,7 @@ class QtiPoint implements QtiDatatype
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getX() . ' ' . $this->getY();
     }
@@ -151,7 +153,7 @@ class QtiPoint implements QtiDatatype
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return BaseType::POINT;
     }
@@ -162,7 +164,7 @@ class QtiPoint implements QtiDatatype
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::SINGLE;
     }

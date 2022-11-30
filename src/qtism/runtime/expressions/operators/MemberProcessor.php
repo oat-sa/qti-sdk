@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,7 +52,7 @@ class MemberProcessor extends OperatorProcessor
      * @return QtiBoolean Whether the first operand is contained by the second one as a boolean value, or NULL if any of the sub-expressions are NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -88,7 +90,7 @@ class MemberProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Member::class;
     }

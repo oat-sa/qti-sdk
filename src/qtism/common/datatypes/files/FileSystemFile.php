@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,7 +63,7 @@ class FileSystemFile implements QtiFile
      *
      * @var int
      */
-    const CHUNK_SIZE = 2048;
+    public const CHUNK_SIZE = 2048;
 
     /**
      * Create a new PersistentFile object.
@@ -78,7 +80,7 @@ class FileSystemFile implements QtiFile
     /**
      * @param $path
      */
-    private function readInfo($path)
+    private function readInfo($path): void
     {
         // Retrieve filename and mime type.
         $fp = @fopen($path, 'r');
@@ -107,7 +109,7 @@ class FileSystemFile implements QtiFile
      *
      * @param string $path
      */
-    protected function setPath($path)
+    protected function setPath($path): void
     {
         $this->path = $path;
     }
@@ -117,7 +119,7 @@ class FileSystemFile implements QtiFile
      *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -127,7 +129,7 @@ class FileSystemFile implements QtiFile
      *
      * @param string $mimeType
      */
-    protected function setMimeType($mimeType)
+    protected function setMimeType($mimeType): void
     {
         $this->mimeType = $mimeType;
     }
@@ -137,7 +139,7 @@ class FileSystemFile implements QtiFile
      *
      * @return string
      */
-    public function getMimeType()
+    public function getMimeType(): string
     {
         return $this->mimeType;
     }
@@ -147,7 +149,7 @@ class FileSystemFile implements QtiFile
      *
      * @return string
      */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->filename;
     }
@@ -157,7 +159,7 @@ class FileSystemFile implements QtiFile
      *
      * @param string $filename
      */
-    protected function setFilename($filename)
+    protected function setFilename($filename): void
     {
         $this->filename = $filename;
     }
@@ -167,7 +169,7 @@ class FileSystemFile implements QtiFile
      *
      * @throws RuntimeException If the data cannot be retrieved.
      */
-    public function getData()
+    public function getData(): string
     {
         $fp = $this->getStream();
         $data = '';
@@ -215,7 +217,7 @@ class FileSystemFile implements QtiFile
      * @return FileSystemFile
      * @throws RuntimeException If something wrong happens.
      */
-    public static function createFromExistingFile($source, $destination, $mimeType, $withFilename = true)
+    public static function createFromExistingFile($source, $destination, $mimeType, $withFilename = true): FileSystemFile
     {
         if (is_file($source)) {
             if (is_readable($source)) {
@@ -226,7 +228,10 @@ class FileSystemFile implements QtiFile
                     throw new RuntimeException($msg);
                 }
 
-                if ((is_dir($pathinfo['dirname']) === false) && ($mkdir = @mkdir($pathinfo['dirname'], '0770', true)) === false) {
+                if (
+                    is_dir($pathinfo['dirname']) === false
+                    && ($mkdir = @mkdir($pathinfo['dirname'], 0770, true)) === false
+                ) {
                     $msg = "Unable to create destination directory at '" . $pathinfo['dirname'] . "'.";
                     throw new RuntimeException($msg);
                 }
@@ -289,7 +294,7 @@ class FileSystemFile implements QtiFile
      * @param string $filename
      * @return FileSystemFile
      */
-    public static function createFromData($data, $destination, $mimeType, $filename = '')
+    public static function createFromData($data, $destination, $mimeType, $filename = ''): FileSystemFile
     {
         $tmp = tempnam('/tmp', 'qtism');
         file_put_contents($tmp, $data);
@@ -307,7 +312,7 @@ class FileSystemFile implements QtiFile
      * @return FileSystemFile
      * @throws RuntimeException If something wrong occurs while retrieving the file.
      */
-    public static function retrieveFile($path)
+    public static function retrieveFile($path): FileSystemFile
     {
         return new static($path);
     }
@@ -317,7 +322,7 @@ class FileSystemFile implements QtiFile
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::SINGLE;
     }
@@ -327,7 +332,7 @@ class FileSystemFile implements QtiFile
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return BaseType::FILE;
     }
@@ -337,7 +342,7 @@ class FileSystemFile implements QtiFile
      *
      * @return bool
      */
-    public function hasFilename()
+    public function hasFilename(): bool
     {
         return $this->getFilename() !== '';
     }
@@ -350,7 +355,7 @@ class FileSystemFile implements QtiFile
      * @param mixed $obj
      * @return bool
      */
-    public function equals($obj)
+    public function equals($obj): bool
     {
         if ($obj instanceof QtiFile) {
             if ($this->getFilename() !== $obj->getFilename()) {
@@ -389,7 +394,7 @@ class FileSystemFile implements QtiFile
      *
      * @return string
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->getPath();
     }
@@ -401,7 +406,7 @@ class FileSystemFile implements QtiFile
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getFilename();
     }

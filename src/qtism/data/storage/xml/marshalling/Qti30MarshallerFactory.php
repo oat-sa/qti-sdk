@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -128,7 +130,7 @@ class Qti30MarshallerFactory extends MarshallerFactory
      * @param array $args
      * @return Marshaller
      */
-    protected function instantiateMarshaller(ReflectionClass $class, array $args)
+    protected function instantiateMarshaller(ReflectionClass $class, array $args): Marshaller
     {
         array_unshift($args, '3.0.0');
         return Reflection::newInstance($class, $args);

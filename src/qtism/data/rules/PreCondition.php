@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -62,7 +64,7 @@ class PreCondition extends QtiComponent
      *
      * @return Expression A QTI Expression.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -72,7 +74,7 @@ class PreCondition extends QtiComponent
      *
      * @param Expression $expression A QTI Expression.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -80,7 +82,7 @@ class PreCondition extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'preCondition';
     }
@@ -88,7 +90,7 @@ class PreCondition extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection([$this->getExpression()]);
     }

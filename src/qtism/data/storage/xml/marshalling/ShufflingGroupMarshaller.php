@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class ShufflingGroupMarshaller extends Marshaller
      * @param QtiComponent $component A ShufflingGroup object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'identifiers', implode("\x20", $component->getIdentifiers()->getArrayCopy()));
@@ -59,7 +61,8 @@ class ShufflingGroupMarshaller extends Marshaller
      * @return QtiComponent A ShufflingGroup object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): ShufflingGroup
     {
         if (($identifiers = $this->getDOMElementAttributeAs($element, 'identifiers')) !== null) {
             $identifiers = explode("\x20", $identifiers);
@@ -80,7 +83,7 @@ class ShufflingGroupMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'shufflingGroup';
     }

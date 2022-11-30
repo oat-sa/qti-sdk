@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -87,7 +89,7 @@ class MarkupPostRenderer implements Renderable
      *
      * @param bool $formatOutput
      */
-    public function formatOutput($formatOutput)
+    public function formatOutput($formatOutput): void
     {
         $this->formatOutput = $formatOutput;
     }
@@ -97,7 +99,7 @@ class MarkupPostRenderer implements Renderable
      *
      * @return bool
      */
-    public function mustFormatOutput()
+    public function mustFormatOutput(): bool
     {
         return $this->formatOutput;
     }
@@ -108,7 +110,7 @@ class MarkupPostRenderer implements Renderable
      *
      * @param bool $cleanUpXmlDeclaration
      */
-    public function cleanUpXmlDeclaration($cleanUpXmlDeclaration)
+    public function cleanUpXmlDeclaration($cleanUpXmlDeclaration): void
     {
         $this->cleanUpXmlDeclaration = $cleanUpXmlDeclaration;
     }
@@ -118,7 +120,7 @@ class MarkupPostRenderer implements Renderable
      *
      * @return bool
      */
-    public function mustCleanUpXmlDeclaration()
+    public function mustCleanUpXmlDeclaration(): bool
     {
         return $this->cleanUpXmlDeclaration;
     }
@@ -129,7 +131,7 @@ class MarkupPostRenderer implements Renderable
      *
      * @param bool $templateOriented
      */
-    public function templateOriented($templateOriented)
+    public function templateOriented($templateOriented): void
     {
         $this->templateOriented = $templateOriented;
     }
@@ -140,7 +142,7 @@ class MarkupPostRenderer implements Renderable
      *
      * @return bool
      */
-    public function isTemplateOriented()
+    public function isTemplateOriented(): bool
     {
         return $this->templateOriented;
     }
@@ -155,7 +157,7 @@ class MarkupPostRenderer implements Renderable
      *
      * @return array
      */
-    public function getFragments()
+    public function getFragments(): array
     {
         return $this->fragments;
     }
@@ -165,7 +167,7 @@ class MarkupPostRenderer implements Renderable
      *
      * @param array $fragments
      */
-    protected function setFragments(array $fragments)
+    protected function setFragments(array $fragments): void
     {
         $this->fragments = $fragments;
     }
@@ -175,7 +177,7 @@ class MarkupPostRenderer implements Renderable
      *
      * @param string $fragmentPrefix .
      */
-    public function setFragmentPrefix($fragmentPrefix)
+    public function setFragmentPrefix($fragmentPrefix): void
     {
         $this->fragmentPrefix = $fragmentPrefix;
     }
@@ -193,6 +195,7 @@ class MarkupPostRenderer implements Renderable
      * @return mixed|string|string[]|null
      * @throws RenderingException
      */
+    #[\ReturnTypeWillChange]
     public function render($document)
     {
         if ($document->documentElement === null) {

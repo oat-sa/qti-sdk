@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,5 +35,6 @@ interface Processable
      *
      * @throws ProcessingException If an error occurs while processing something.
      */
+    #[\ReturnTypeWillChange]
     public function process();
 }

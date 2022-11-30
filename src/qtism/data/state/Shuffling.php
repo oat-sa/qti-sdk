@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -73,7 +75,7 @@ class Shuffling extends QtiComponent
      *
      * @param string $responseIdentifier
      */
-    public function setResponseIdentifier($responseIdentifier)
+    public function setResponseIdentifier($responseIdentifier): void
     {
         $this->responseIdentifier = $responseIdentifier;
     }
@@ -83,7 +85,7 @@ class Shuffling extends QtiComponent
      *
      * @return string
      */
-    public function getResponseIdentifier()
+    public function getResponseIdentifier(): string
     {
         return $this->responseIdentifier;
     }
@@ -94,7 +96,7 @@ class Shuffling extends QtiComponent
      * @param ShufflingGroupCollection $shufflingGroups
      * @throws InvalidArgumentException If $shufflingGroups does not contain 1 to 2 ShufflingGroup objects.
      */
-    public function setShufflingGroups(ShufflingGroupCollection $shufflingGroups)
+    public function setShufflingGroups(ShufflingGroupCollection $shufflingGroups): void
     {
         if (count($shufflingGroups) === 0) {
             $msg = 'A Shuffling object must be composed of at least 1 ShufflingGroup object. None given';
@@ -112,7 +114,7 @@ class Shuffling extends QtiComponent
      *
      * @return ShufflingGroupCollection
      */
-    public function getShufflingGroups()
+    public function getShufflingGroups(): ShufflingGroupCollection
     {
         return $this->shufflingGroups;
     }
@@ -125,7 +127,7 @@ class Shuffling extends QtiComponent
      *
      * @return Shuffling
      */
-    public function shuffle()
+    public function shuffle(): self
     {
         $shuffling = clone $this;
         $groups = $shuffling->getShufflingGroups();
@@ -170,7 +172,7 @@ class Shuffling extends QtiComponent
      * @return string
      * @throws OutOfBoundsException
      */
-    public function getIdentifierAt($index)
+    public function getIdentifierAt($index): string
     {
         $i = 0;
 
@@ -204,7 +206,7 @@ class Shuffling extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'shuffling';
     }
@@ -212,7 +214,7 @@ class Shuffling extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection($this->getShufflingGroups()->getArrayCopy());
     }

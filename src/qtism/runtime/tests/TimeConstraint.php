@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -78,7 +80,7 @@ class TimeConstraint
      *
      * @param QtiComponent $source A TestPart or SectionPart object.
      */
-    protected function setSource(QtiComponent $source)
+    protected function setSource(QtiComponent $source): void
     {
         $this->source = $source;
     }
@@ -88,7 +90,7 @@ class TimeConstraint
      *
      * @return QtiComponent A TestPart or SectionPart object.
      */
-    public function getSource()
+    public function getSource(): QtiComponent
     {
         return $this->source;
     }
@@ -99,7 +101,7 @@ class TimeConstraint
      *
      * @param QtiDuration $duration A Duration object.
      */
-    protected function setDuration(QtiDuration $duration)
+    protected function setDuration(QtiDuration $duration): void
     {
         $this->duration = $duration;
     }
@@ -110,7 +112,7 @@ class TimeConstraint
      *
      * @return QtiDuration A Duration object.
      */
-    public function getDuration()
+    public function getDuration(): QtiDuration
     {
         return $this->duration;
     }
@@ -120,7 +122,7 @@ class TimeConstraint
      *
      * @param int $navigationMode A value from the NavigationMode enumeration.
      */
-    protected function setNavigationMode($navigationMode)
+    protected function setNavigationMode($navigationMode): void
     {
         $this->navigationMode = $navigationMode;
     }
@@ -130,7 +132,7 @@ class TimeConstraint
      *
      * @return int A value from the NavigationMode enumeration.
      */
-    public function getNavigationMode()
+    public function getNavigationMode(): int
     {
         return $this->navigationMode;
     }
@@ -178,7 +180,7 @@ class TimeConstraint
      *
      * @return bool
      */
-    public function maxTimeInForce()
+    public function maxTimeInForce(): bool
     {
         return ($timeLimits = $this->getSource()->getTimeLimits()) !== null && $timeLimits->hasMaxTime() === true;
     }
@@ -194,7 +196,7 @@ class TimeConstraint
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 QTI timeLimits
      * @return bool
      */
-    public function minTimeInForce()
+    public function minTimeInForce(): bool
     {
         if (($source = $this->getSource()) instanceof SectionPart && $this->getNavigationMode() === NavigationMode::NONLINEAR) {
             return false;
@@ -210,7 +212,7 @@ class TimeConstraint
      *
      * @return bool
      */
-    public function allowLateSubmission()
+    public function allowLateSubmission(): bool
     {
         if (($timeLimits = $this->getSource()->getTimeLimits()) !== null && $timeLimits->hasMaxTime() === false) {
             return true;

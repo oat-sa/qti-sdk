@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -84,7 +86,7 @@ class PrintedVariableEngine extends AbstractEngine
      * @param QtiComponent $printedVariable A PrintedVariable object.
      * @throws InvalidArgumentException If $printedVariable is not a PrintedVariable object.
      */
-    public function setComponent(QtiComponent $printedVariable)
+    public function setComponent(QtiComponent $printedVariable): void
     {
         if ($printedVariable instanceof PrintedVariable) {
             parent::setComponent($printedVariable);
@@ -104,7 +106,7 @@ class PrintedVariableEngine extends AbstractEngine
      * @return string A processed PrintedVariable as a string or the NULL value if the variable's value is NULL.
      * @throws PrintedVariableProcessingException If an error occurs while processing the PrintedVariable object into a TextRun object.
      */
-    public function process()
+    public function process(): string
     {
         /** @var PrintedVariable $printedVariable */
         $printedVariable = $this->getComponent();
@@ -173,7 +175,7 @@ class PrintedVariableEngine extends AbstractEngine
      * @param Variable $variable The ordered/multiple container Variable to process.
      * @return string All the values delimited by printedVariable->delimiter.
      */
-    private function processOrderedMultiple(Variable $variable)
+    private function processOrderedMultiple(Variable $variable): string
     {
         $processedValues = [];
         $baseType = $variable->getBaseType();
@@ -192,7 +194,7 @@ class PrintedVariableEngine extends AbstractEngine
      * @param Variable $variable The record to process.
      * @return string All the key/values delimited by printedVariable->delimiter. Indicator between keys and values is defined by printedVariable->mappingIndicator.
      */
-    private function processRecord(Variable $variable)
+    private function processRecord(Variable $variable): string
     {
         $processedValues = [];
         $baseType = $variable->getBaseType();
@@ -213,7 +215,7 @@ class PrintedVariableEngine extends AbstractEngine
      * @return string
      * @throws PrintedVariableProcessingException If the baseType is unknown.
      */
-    private function processValue($baseType, $value)
+    private function processValue($baseType, $value): string
     {
         /** @var PrintedVariable $printedVariable */
         $printedVariable = $this->getComponent();
@@ -233,7 +235,7 @@ class PrintedVariableEngine extends AbstractEngine
         }
 
         if ($baseType === BaseType::STRING) {
-            return $value->getValue();
+            return (string)$value->getValue();
         } elseif ($baseType === BaseType::INTEGER || $baseType === BaseType::FLOAT) {
             $format = $printedVariable->getFormat();
 
@@ -245,10 +247,10 @@ class PrintedVariableEngine extends AbstractEngine
                 return sprintf('%e', $value->getValue());
             } else {
                 // integer to string
-                return '' . $value->getValue();
+                return (string)$value->getValue();
             }
         } elseif ($baseType === BaseType::DURATION) {
-            return '' . $value->getSeconds(true);
+            return (string)$value->getSeconds(true);
         } elseif ($baseType === BaseType::BOOLEAN) {
             return ($value->getValue() === true) ? 'true' : 'false';
         } elseif ($baseType === BaseType::POINT || $baseType === BaseType::PAIR || $baseType === BaseType::DIRECTED_PAIR) {

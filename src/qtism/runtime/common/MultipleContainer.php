@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -66,7 +68,7 @@ class MultipleContainer extends Container implements QtiDatatype
      * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
      */
-    protected function setBaseType($baseType)
+    protected function setBaseType($baseType): void
     {
         if (in_array($baseType, BaseType::asArray(), true)) {
             $this->baseType = $baseType;
@@ -81,7 +83,7 @@ class MultipleContainer extends Container implements QtiDatatype
      *
      * @return int A value from the BaseType enumeration or -1.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -89,7 +91,7 @@ class MultipleContainer extends Container implements QtiDatatype
     /**
      * @param mixed $value
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         parent::checkType($value);
 
@@ -106,7 +108,7 @@ class MultipleContainer extends Container implements QtiDatatype
      * @return MultipleContainer A MultipleContainer object populated with the values found in $valueCollection.
      * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
      */
-    public static function createFromDataModel(ValueCollection $valueCollection, $baseType = BaseType::INTEGER)
+    public static function createFromDataModel(ValueCollection $valueCollection, $baseType = BaseType::INTEGER): MultipleContainer
     {
         $container = new static($baseType);
         foreach ($valueCollection as $value) {
@@ -119,7 +121,7 @@ class MultipleContainer extends Container implements QtiDatatype
     /**
      * @return array
      */
-    protected function getToStringBounds()
+    protected function getToStringBounds(): array
     {
         return ['[', ']'];
     }
@@ -127,7 +129,7 @@ class MultipleContainer extends Container implements QtiDatatype
     /**
      * @return int
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::MULTIPLE;
     }

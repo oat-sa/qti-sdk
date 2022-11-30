@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +62,7 @@ class ExtendedTestPart extends TestPart
      *
      * @param TestFeedbackRefCollection $testFeedbackRefs
      */
-    public function setTestFeedbackRefs(TestFeedbackRefCollection $testFeedbackRefs)
+    public function setTestFeedbackRefs(TestFeedbackRefCollection $testFeedbackRefs): void
     {
         $this->testFeedbackRefs = $testFeedbackRefs;
     }
@@ -70,7 +72,7 @@ class ExtendedTestPart extends TestPart
      *
      * @return TestFeedbackRefCollection
      */
-    public function getTestFeedbackRefs()
+    public function getTestFeedbackRefs(): TestFeedbackRefCollection
     {
         return $this->testFeedbackRefs;
     }
@@ -80,7 +82,7 @@ class ExtendedTestPart extends TestPart
      *
      * @param TestFeedbackRef $testFeedbackRef
      */
-    public function addTestFeedbackRef(TestFeedbackRef $testFeedbackRef)
+    public function addTestFeedbackRef(TestFeedbackRef $testFeedbackRef): void
     {
         $this->getTestFeedbackRefs()->attach($testFeedbackRef);
     }
@@ -90,7 +92,7 @@ class ExtendedTestPart extends TestPart
      *
      * @param TestFeedbackRef $testFeedbackRef
      */
-    public function removeTestFeedbackRef(TestFeedbackRef $testFeedbackRef)
+    public function removeTestFeedbackRef(TestFeedbackRef $testFeedbackRef): void
     {
         $this->getTestFeedbackRefs()->detach($testFeedbackRef);
     }
@@ -101,9 +103,9 @@ class ExtendedTestPart extends TestPart
      * @param TestPart $testPart
      * @return ExtendedTestPart
      */
-    public static function createFromTestPart(TestPart $testPart)
+    public static function createFromTestPart(TestPart $testPart): ExtendedTestPart
     {
-        $ref = new ExtendedTestPart(
+        $ref = new self(
             $testPart->getIdentifier(),
             $testPart->getAssessmentSections(),
             $testPart->getNavigationMode(),
@@ -123,7 +125,7 @@ class ExtendedTestPart extends TestPart
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $components = array_merge(
             parent::getComponents()->getArrayCopy(),

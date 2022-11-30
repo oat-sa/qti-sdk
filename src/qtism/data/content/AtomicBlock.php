@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -57,7 +59,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @param InlineCollection $content A collection of Inline objects.
      */
-    public function setContent(InlineCollection $content)
+    public function setContent(InlineCollection $content): void
     {
         $this->content = $content;
     }
@@ -67,7 +69,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @return InlineCollection
      */
-    public function getContent()
+    public function getContent(): InlineCollection
     {
         return $this->content;
     }
@@ -77,7 +79,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @return InlineCollection A collection of Inline objects.
      */
-    public function getComponents()
+    public function getComponents(): InlineCollection
     {
         return $this->getContent();
     }

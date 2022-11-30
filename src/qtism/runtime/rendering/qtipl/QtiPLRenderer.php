@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -136,6 +138,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
      * @return mixed The rendered component into another constitution.
      * @throws RenderingException
      */
+    #[\ReturnTypeWillChange]
     public function render($something)
     {
         if (array_key_exists($something->getQtiClassName(), $this->registry)) {
@@ -154,7 +157,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
      * @return string The default QtiPL rendering for an Operator
      * @throws RenderingException
      */
-    public function getDefaultRendering($something)
+    public function getDefaultRendering($something): string
     {
         return $something->getQtiClassName() . $this->writeChildElements();
     }
@@ -162,7 +165,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
     /**
      * @return string The element opening to where the child elements are written.
      */
-    public function getOpenChildElement()
+    public function getOpenChildElement(): string
     {
         return $this->openChildElement;
     }
@@ -170,7 +173,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
     /**
      * @return string The element closing to where the child elements are written.
      */
-    public function getCloseChildElement()
+    public function getCloseChildElement(): string
     {
         return $this->closeChildElement;
     }
@@ -178,7 +181,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
     /**
      * @return string The element opening to where the attributes are written.
      */
-    public function getOpenAttributes()
+    public function getOpenAttributes(): string
     {
         return $this->openAttribute;
     }
@@ -186,7 +189,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
     /**
      * @return string The element closing to where the attributes are written.
      */
-    public function getCloseAttributes()
+    public function getCloseAttributes(): string
     {
         return $this->closeAttribute;
     }
@@ -196,7 +199,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
      * @return string The child Element in the open and close child elements
      * @throws RenderingException
      */
-    public function writeChildElement($childElement)
+    public function writeChildElement($childElement): string
     {
         return $this->getOpenChildElement() . $this->render($childElement) . $this->getCloseChildElement();
     }
@@ -206,7 +209,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
      * @return string The child Elements in the open and close child elements
      * @throws RenderingException
      */
-    public function writeChildElements($childElements = [])
+    public function writeChildElements($childElements = []): string
     {
         $childPL = [];
 
@@ -221,7 +224,7 @@ class QtiPLRenderer extends AbstractQtiPLRenderer
      * @param array of string $childElements The child elements of the element to render.
      * @return string The child Elements in the open and close child elements
      */
-    public function writeAttributes($attributes = [])
+    public function writeAttributes($attributes = []): string
     {
         if (count($attributes) > 0) {
             $attribPL = [];

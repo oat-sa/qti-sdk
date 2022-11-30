@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,7 +47,7 @@ class Render extends Cli
     /**
      * @return Arguments
      */
-    protected function setupArguments()
+    protected function setupArguments(): Arguments
     {
         $arguments = new Arguments(['strict' => false]);
 
@@ -104,7 +106,7 @@ class Render extends Cli
         return $arguments;
     }
 
-    protected function checkArguments()
+    protected function checkArguments(): void
     {
         $arguments = $this->getArguments();
 
@@ -159,7 +161,7 @@ class Render extends Cli
      * This implementations considers that all necessary checks about
      * arguments and their values were performed in \qtism\cli\Render::checkArguments().
      */
-    protected function run()
+    protected function run(): void
     {
         $engine = $this->instantiateEngine();
         $arguments = $this->getArguments();
@@ -227,7 +229,7 @@ class Render extends Cli
      * @return string The rendered data as a string.
      * @throws RenderingException
      */
-    private function runGoldilocks(XmlDocument $doc, GoldilocksRenderingEngine $renderer)
+    private function runGoldilocks(XmlDocument $doc, GoldilocksRenderingEngine $renderer): string
     {
         $arguments = $this->getArguments();
         $profile = $arguments['flavour'];
@@ -315,7 +317,7 @@ class Render extends Cli
      * @return string The raw rendering data.
      * @throws RenderingException
      */
-    private function runXhtml(XmlDocument $doc, XhtmlRenderingEngine $renderer)
+    private function runXhtml(XmlDocument $doc, XhtmlRenderingEngine $renderer): string
     {
         $arguments = $this->getArguments();
         $profile = $arguments['flavour'];
@@ -385,7 +387,7 @@ class Render extends Cli
      *
      * @return AbstractMarkupRenderingEngine
      */
-    private function instantiateEngine()
+    private function instantiateEngine(): AbstractMarkupRenderingEngine
     {
         $arguments = $this->getArguments();
         $engine = null;

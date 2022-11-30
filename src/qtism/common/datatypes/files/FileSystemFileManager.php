@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,7 +51,7 @@ class FileSystemFileManager implements FileManager
      *
      * @param string $storageDirectory A canonical path.
      */
-    protected function setStorageDirectory($storageDirectory)
+    protected function setStorageDirectory($storageDirectory): void
     {
         $this->storageDirectory = $storageDirectory;
     }
@@ -60,7 +62,7 @@ class FileSystemFileManager implements FileManager
      *
      * @return string A canonical path.
      */
-    protected function getStorageDirectory()
+    protected function getStorageDirectory(): string
     {
         return $this->storageDirectory;
     }
@@ -75,7 +77,7 @@ class FileSystemFileManager implements FileManager
      * @return FileSystemFile
      * @throws FileManagerException
      */
-    public function createFromFile($path, $mimeType, $filename = '')
+    public function createFromFile($path, $mimeType, $filename = ''): FileSystemFile
     {
         $destination = $this->buildDestination();
 
@@ -96,7 +98,7 @@ class FileSystemFileManager implements FileManager
      * @return FileSystemFile
      * @throws FileManagerException
      */
-    public function createFromData($data, $mimeType, $filename = '')
+    public function createFromData($data, $mimeType, $filename = ''): FileSystemFile
     {
         $destination = $this->buildDestination();
 
@@ -115,7 +117,7 @@ class FileSystemFileManager implements FileManager
      * @return FileSystemFile
      * @throws FileManagerException
      */
-    public function retrieve($identifier)
+    public function retrieve($identifier): FileSystemFile
     {
         try {
             return FileSystemFile::retrieveFile($identifier);
@@ -131,7 +133,7 @@ class FileSystemFileManager implements FileManager
      * @param QtiFile $file
      * @throws FileManagerException
      */
-    public function delete(QtiFile $file)
+    public function delete(QtiFile $file): void
     {
         $deletion = @unlink($file->getPath());
         if ($deletion === false) {
@@ -145,7 +147,7 @@ class FileSystemFileManager implements FileManager
      *
      * @return string
      */
-    protected function buildDestination()
+    protected function buildDestination(): string
     {
         return rtrim($this->getStorageDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . uniqid('qtism', true);
     }

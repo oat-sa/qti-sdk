@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +62,7 @@ class TemplateConstraintProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException with code = RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED.
      */
-    public function process()
+    public function process(): void
     {
         $state = $this->getState();
         $rule = $this->getRule();
@@ -78,7 +80,7 @@ class TemplateConstraintProcessor extends RuleProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return TemplateConstraint::class;
     }

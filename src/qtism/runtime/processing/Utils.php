@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,7 +45,7 @@ class Utils
      * @param TemplateProcessing $templateProcessing
      * @return array A list of QTI identifiers.
      */
-    public static function templateProcessingImpactedVariables(TemplateProcessing $templateProcessing)
+    public static function templateProcessingImpactedVariables(TemplateProcessing $templateProcessing): array
     {
         $identifiers = [];
         $classNames = [

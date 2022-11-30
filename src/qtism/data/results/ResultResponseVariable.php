@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -95,7 +97,7 @@ class ResultResponseVariable extends ItemVariable
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'responseVariable';
     }
@@ -105,7 +107,7 @@ class ResultResponseVariable extends ItemVariable
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $components = [$this->getCandidateResponse()];
         if ($this->hasCorrectResponse()) {
@@ -119,7 +121,7 @@ class ResultResponseVariable extends ItemVariable
      *
      * @return CandidateResponse
      */
-    public function getCandidateResponse()
+    public function getCandidateResponse(): CandidateResponse
     {
         return $this->candidateResponse;
     }
@@ -139,9 +141,9 @@ class ResultResponseVariable extends ItemVariable
     /**
      * Get the correct response
      *
-     * @return CorrectResponse
+     * @return CorrectResponse|null
      */
-    public function getCorrectResponse()
+    public function getCorrectResponse(): ?CorrectResponse
     {
         return $this->correctResponse;
     }
@@ -163,7 +165,7 @@ class ResultResponseVariable extends ItemVariable
      *
      * @return bool
      */
-    public function hasCorrectResponse()
+    public function hasCorrectResponse(): bool
     {
         return $this->correctResponse !== null;
     }
@@ -171,9 +173,9 @@ class ResultResponseVariable extends ItemVariable
     /**
      * Get the choice sequence
      *
-     * @return QtiIdentifier
+     * @return QtiIdentifier|null
      */
-    public function getChoiceSequence()
+    public function getChoiceSequence(): ?QtiIdentifier
     {
         return $this->choiceSequence;
     }
@@ -195,7 +197,7 @@ class ResultResponseVariable extends ItemVariable
      *
      * @return bool
      */
-    public function hasChoiceSequence()
+    public function hasChoiceSequence(): bool
     {
         return $this->choiceSequence !== null;
     }

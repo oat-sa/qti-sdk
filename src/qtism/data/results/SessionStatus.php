@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,20 +36,20 @@ class SessionStatus implements Enumeration
      * The value to use when the item variables represent the values at the end of an attempt after response processing has taken place.
      * In other words, after the outcome values have been updated to reflect the values of the response variables.
      */
-    const STATUS_FINAL = 0;
+    public const STATUS_FINAL = 0;
 
     /**
      * The value to use for sessions in the initial state, as described above. This value can only be used to describe sessions
      * for which the response variable numAttempts is 0. The values of the variables are set according to the rules
      * defined in the appropriate declarations (see responseDeclaration, outcomeDeclaration and templateDeclaration).
      */
-    const STATUS_INITIAL = 1;
+    public const STATUS_INITIAL = 1;
 
     /**
      * The value to use when the item variables represent the values of the response variables after submission but before response processing has taken place.
      * Again, the outcomes are those assigned at the end of the previous attempt as they are awaiting response processing.
      */
-    const STATUS_PENDING_RESPONSE_PROCESSING = 2;
+    public const STATUS_PENDING_RESPONSE_PROCESSING = 2;
 
     /**
      * The value to use when the item variables represent a snapshot of the current values during an attempt
@@ -56,14 +58,14 @@ class SessionStatus implements Enumeration
      * The values of the outcome variables represent the values assigned during response processing at the end of the previous attempt or,
      * in the case of the first attempt, the default values given in the variable declarations.
      */
-    const STATUS_PENDING_SUBMISSION = 3;
+    public const STATUS_PENDING_SUBMISSION = 3;
 
     /**
      * Get the array representation of SessionStatuses
      *
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'STATUS_FINAL' => self::STATUS_FINAL,
@@ -82,7 +84,7 @@ class SessionStatus implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'final':
                 return self::STATUS_FINAL;
                 break;

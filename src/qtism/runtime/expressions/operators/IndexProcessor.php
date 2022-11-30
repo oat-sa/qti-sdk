@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,6 +50,7 @@ class IndexProcessor extends OperatorProcessor
      * @return mixed|null A QTIRuntime compliant scalar value. NULL is returned if expression->n exceeds the number of values in the container or the sub-expression is NULL.
      * @throws OperatorProcessingException
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $operands = $this->getOperands();
@@ -96,7 +99,7 @@ class IndexProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Index::class;
     }

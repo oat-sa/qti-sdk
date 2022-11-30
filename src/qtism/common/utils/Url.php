@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,7 +37,7 @@ class Url
      * @param string $urlComponent
      * @return string The trimmed URL or URL component.
      */
-    public static function trim($urlComponent)
+    public static function trim($urlComponent): string
     {
         // Trim is UTF-8 safe if the second argument does not
         // contain multi-byte chars.
@@ -49,7 +51,7 @@ class Url
      * @param string $urlComponent
      * @return string The trimmed URL or URL component.
      */
-    public static function ltrim($urlComponent)
+    public static function ltrim($urlComponent): string
     {
         return ltrim($urlComponent, "/\t\n\r\0\x0B");
     }
@@ -61,7 +63,7 @@ class Url
      * @param string $urlComponent
      * @return string The trimmed URL or URL component.
      */
-    public static function rtrim($urlComponent)
+    public static function rtrim($urlComponent): string
     {
         return rtrim($urlComponent, "/\t\n\r\0\x0B");
     }
@@ -72,7 +74,7 @@ class Url
      * @param string $url
      * @return bool
      */
-    public static function isRelative($url)
+    public static function isRelative($url): bool
     {
         return (preg_match("/^[a-z][a-z0-9+\-\.]+:(\/\/){0,1}|^\//i", $url) === 0) ? true : false;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,7 +51,7 @@ class RuleProcessorFactory implements ProcessorFactory
      * @return Processable The related RuleProcessor object.
      * @throws RuntimeException If no RuleProcessor can be found for the given $rule.
      */
-    public function createProcessor(QtiComponent $rule)
+    public function createProcessor(QtiComponent $rule): Processable
     {
         $qtiClassName = ucfirst($rule->getQtiClassName());
         $nsPackage = 'qtism\\runtime\\rules\\';

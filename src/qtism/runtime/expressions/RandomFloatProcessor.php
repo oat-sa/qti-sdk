@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,7 +45,7 @@ class RandomFloatProcessor extends ExpressionProcessor
      * @return QtiFloat A Random float value.
      * @throws ExpressionProcessingException
      */
-    public function process()
+    public function process(): QtiFloat
     {
         $expr = $this->getExpression();
         $min = $expr->getMin();
@@ -70,7 +72,7 @@ class RandomFloatProcessor extends ExpressionProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return RandomFloat::class;
     }

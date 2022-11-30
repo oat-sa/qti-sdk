@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -68,21 +70,21 @@ use UnexpectedValueException;
  */
 class AssessmentTestSession extends State
 {
-    const ROUTECOUNT_ALL = 0;
+    public const ROUTECOUNT_ALL = 0;
 
-    const ROUTECOUNT_EXCLUDENORESPONSE = 1;
+    public const ROUTECOUNT_EXCLUDENORESPONSE = 1;
 
-    const ROUTECOUNT_FLOW = 2;
+    public const ROUTECOUNT_FLOW = 2;
 
-    const FORCE_BRANCHING = 1;
+    public const FORCE_BRANCHING = 1;
 
-    const FORCE_PRECONDITIONS = 2;
+    public const FORCE_PRECONDITIONS = 2;
 
-    const PATH_TRACKING = 4;
+    public const PATH_TRACKING = 4;
 
-    const ALWAYS_ALLOW_JUMPS = 8;
+    public const ALWAYS_ALLOW_JUMPS = 8;
 
-    const INITIALIZE_ALL_ITEMS = 16;
+    public const INITIALIZE_ALL_ITEMS = 16;
 
     /**
      * A unique ID for this AssessmentTestSession.
@@ -257,7 +259,7 @@ class AssessmentTestSession extends State
      * @throws AssessmentItemSessionException
      * @throws PhpStorageException
      */
-    public function setTime(DateTime $time)
+    public function setTime(DateTime $time): void
     {
         // Force $time to be UTC.
         $time = Time::toUtc($time);
@@ -338,7 +340,7 @@ class AssessmentTestSession extends State
      *
      * @return DateTime
      */
-    public function getTimeReference()
+    public function getTimeReference(): ?DateTime
     {
         return $this->timeReference;
     }
@@ -348,7 +350,7 @@ class AssessmentTestSession extends State
      *
      * @param DateTime $timeReference
      */
-    public function setTimeReference(DateTime $timeReference = null)
+    public function setTimeReference(DateTime $timeReference = null): void
     {
         $this->timeReference = $timeReference;
     }
@@ -359,7 +361,7 @@ class AssessmentTestSession extends State
      *
      * @return bool
      */
-    public function hasTimeReference()
+    public function hasTimeReference(): bool
     {
         return $this->timeReference !== null;
     }
@@ -370,7 +372,7 @@ class AssessmentTestSession extends State
      * @param string $sessionId A unique ID.
      * @throws InvalidArgumentException If $sessionId is not a string or is empty.
      */
-    public function setSessionId($sessionId)
+    public function setSessionId($sessionId): void
     {
         if (is_string($sessionId)) {
             if (empty($sessionId) === false) {
@@ -390,7 +392,7 @@ class AssessmentTestSession extends State
      *
      * @return string A unique ID.
      */
-    public function getSessionId()
+    public function getSessionId(): string
     {
         return $this->sessionId;
     }
@@ -400,7 +402,7 @@ class AssessmentTestSession extends State
      *
      * @return AssessmentTest An AssessmentTest object.
      */
-    public function getAssessmentTest()
+    public function getAssessmentTest(): AssessmentTest
     {
         return $this->assessmentTest;
     }
@@ -410,7 +412,7 @@ class AssessmentTestSession extends State
      *
      * @param AssessmentTest $assessmentTest
      */
-    protected function setAssessmentTest(AssessmentTest $assessmentTest)
+    protected function setAssessmentTest(AssessmentTest $assessmentTest): void
     {
         $this->assessmentTest = $assessmentTest;
     }
@@ -420,7 +422,7 @@ class AssessmentTestSession extends State
      *
      * @return AssessmentItemRefCollection A Collection of AssessmentItemRef objects.
      */
-    protected function getAssessmentItemRefs()
+    protected function getAssessmentItemRefs(): AssessmentItemRefCollection
     {
         return $this->getRoute()->getAssessmentItemRefs();
     }
@@ -430,7 +432,7 @@ class AssessmentTestSession extends State
      *
      * @return Route A Route object.
      */
-    public function getRoute()
+    public function getRoute(): Route
     {
         return $this->route;
     }
@@ -440,7 +442,7 @@ class AssessmentTestSession extends State
      *
      * @param Route $route A route object.
      */
-    public function setRoute(Route $route)
+    public function setRoute(Route $route): void
     {
         $this->route = $route;
     }
@@ -450,7 +452,7 @@ class AssessmentTestSession extends State
      *
      * @return int A value from the AssessmentTestSessionState enumeration.
      */
-    public function getState()
+    public function getState(): int
     {
         return $this->state;
     }
@@ -460,7 +462,7 @@ class AssessmentTestSession extends State
      *
      * @param int $state A value from the AssessmentTestSessionState enumeration.
      */
-    public function setState($state)
+    public function setState($state): void
     {
         if (in_array($state, AssessmentTestSessionState::asArray(), true)) {
             $this->state = $state;
@@ -475,7 +477,7 @@ class AssessmentTestSession extends State
      *
      * @return AssessmentItemSessionStore
      */
-    public function getAssessmentItemSessionStore()
+    public function getAssessmentItemSessionStore(): AssessmentItemSessionStore
     {
         return $this->assessmentItemSessionStore;
     }
@@ -485,7 +487,7 @@ class AssessmentTestSession extends State
      *
      * @param AssessmentItemSessionStore $assessmentItemSessionStore
      */
-    public function setAssessmentItemSessionStore(AssessmentItemSessionStore $assessmentItemSessionStore)
+    public function setAssessmentItemSessionStore(AssessmentItemSessionStore $assessmentItemSessionStore): void
     {
         $this->assessmentItemSessionStore = $assessmentItemSessionStore;
     }
@@ -496,7 +498,7 @@ class AssessmentTestSession extends State
      *
      * @return PendingResponsesCollection A collection of PendingResponses objects.
      */
-    public function getPendingResponses()
+    public function getPendingResponses(): PendingResponsesCollection
     {
         return $this->getPendingResponseStore()->getAllPendingResponses();
     }
@@ -507,7 +509,7 @@ class AssessmentTestSession extends State
      *
      * @return PendingResponseStore A PendingResponseStore object.
      */
-    public function getPendingResponseStore()
+    public function getPendingResponseStore(): PendingResponseStore
     {
         return $this->pendingResponseStore;
     }
@@ -518,7 +520,7 @@ class AssessmentTestSession extends State
      *
      * @param PendingResponseStore $pendingResponseStore
      */
-    public function setPendingResponseStore(PendingResponseStore $pendingResponseStore)
+    public function setPendingResponseStore(PendingResponseStore $pendingResponseStore): void
     {
         $this->pendingResponseStore = $pendingResponseStore;
     }
@@ -529,7 +531,7 @@ class AssessmentTestSession extends State
      * @param PendingResponses $pendingResponses
      * @throws AssessmentTestSessionException If the current submission mode is not simultaneous.
      */
-    protected function addPendingResponses(PendingResponses $pendingResponses)
+    protected function addPendingResponses(PendingResponses $pendingResponses): void
     {
         if ($this->getCurrentSubmissionMode() === SubmissionMode::SIMULTANEOUS) {
             $this->getPendingResponseStore()->addPendingResponses($pendingResponses);
@@ -545,7 +547,7 @@ class AssessmentTestSession extends State
      * @param int $testResultsSubmission
      * @see TestResultsSubmission The TestResultsSubmission enumeration.
      */
-    public function setTestResultsSubmission($testResultsSubmission)
+    public function setTestResultsSubmission($testResultsSubmission): void
     {
         $this->testResultsSubmission = $testResultsSubmission;
     }
@@ -556,7 +558,7 @@ class AssessmentTestSession extends State
      * @return int
      * @see TestResultsSubmission The TestResultsSubmission enumeration.
      */
-    public function getTestResultsSubmission()
+    public function getTestResultsSubmission(): int
     {
         return $this->testResultsSubmission;
     }
@@ -566,7 +568,7 @@ class AssessmentTestSession extends State
      *
      * @param DurationStore $durationStore
      */
-    public function setDurationStore(DurationStore $durationStore)
+    public function setDurationStore(DurationStore $durationStore): void
     {
         $this->durationStore = $durationStore;
     }
@@ -576,7 +578,7 @@ class AssessmentTestSession extends State
      *
      * @return DurationStore
      */
-    public function getDurationStore()
+    public function getDurationStore(): DurationStore
     {
         return $this->durationStore;
     }
@@ -586,7 +588,7 @@ class AssessmentTestSession extends State
      *
      * @param AbstractSessionManager $sessionManager
      */
-    public function setSessionManager(AbstractSessionManager $sessionManager)
+    public function setSessionManager(AbstractSessionManager $sessionManager): void
     {
         $this->sessionManager = $sessionManager;
     }
@@ -596,7 +598,7 @@ class AssessmentTestSession extends State
      *
      * @return AbstractSessionManager
      */
-    protected function getSessionManager()
+    protected function getSessionManager(): AbstractSessionManager
     {
         return $this->sessionManager;
     }
@@ -606,7 +608,7 @@ class AssessmentTestSession extends State
      *
      * @param array $adaptivity
      */
-    protected function setAdaptivity(array $adaptivity)
+    protected function setAdaptivity(array $adaptivity): void
     {
         $this->adaptivity = $adaptivity;
     }
@@ -617,7 +619,7 @@ class AssessmentTestSession extends State
      * @param string $testPartIdentifier
      * @return bool
      */
-    private function isAdaptive($testPartIdentifier = '')
+    private function isAdaptive($testPartIdentifier = ''): bool
     {
         return (empty($testPartIdentifier)) ? in_array(true, $this->adaptivity, true) : $this->adaptivity[$testPartIdentifier];
     }
@@ -627,7 +629,7 @@ class AssessmentTestSession extends State
      *
      * @param array $visitedTestPartIdentifiers An array of strings.
      */
-    public function setVisitedTestPartIdentifiers(array $visitedTestPartIdentifiers)
+    public function setVisitedTestPartIdentifiers(array $visitedTestPartIdentifiers): void
     {
         $this->visitedTestPartIdentifiers = $visitedTestPartIdentifiers;
     }
@@ -637,7 +639,7 @@ class AssessmentTestSession extends State
      *
      * @return array An array of strings.
      */
-    public function getVisitedTestPartIdentifiers()
+    public function getVisitedTestPartIdentifiers(): array
     {
         return $this->visitedTestPartIdentifiers;
     }
@@ -649,7 +651,7 @@ class AssessmentTestSession extends State
      *
      * @return bool
      */
-    public function mustForceBranching()
+    public function mustForceBranching(): bool
     {
         return (bool)($this->getConfig() & self::FORCE_BRANCHING);
     }
@@ -661,7 +663,7 @@ class AssessmentTestSession extends State
      *
      * @return bool
      */
-    public function mustForcePreconditions()
+    public function mustForcePreconditions(): bool
     {
         return (bool)($this->getConfig() & self::FORCE_PRECONDITIONS);
     }
@@ -672,7 +674,7 @@ class AssessmentTestSession extends State
      *
      * @return bool
      */
-    public function mustTrackPath()
+    public function mustTrackPath(): bool
     {
         return (bool)($this->getConfig() & self::PATH_TRACKING);
     }
@@ -684,7 +686,7 @@ class AssessmentTestSession extends State
      *
      * @param bool $alwaysAllowJumps
      */
-    public function setAlwaysAllowJumps($alwaysAllowJumps)
+    public function setAlwaysAllowJumps($alwaysAllowJumps): void
     {
         $this->alwaysAllowJumps = $alwaysAllowJumps;
     }
@@ -696,7 +698,7 @@ class AssessmentTestSession extends State
      *
      * @return bool
      */
-    public function mustAlwaysAllowJumps()
+    public function mustAlwaysAllowJumps(): bool
     {
         return $this->alwaysAllowJumps || (bool)($this->getConfig() & self::ALWAYS_ALLOW_JUMPS);
     }
@@ -708,7 +710,7 @@ class AssessmentTestSession extends State
      *
      * @return bool
      */
-    public function mustInitializeAllItems()
+    public function mustInitializeAllItems(): bool
     {
         return (bool)($this->getConfig() & self::INITIALIZE_ALL_ITEMS);
     }
@@ -721,7 +723,7 @@ class AssessmentTestSession extends State
      *
      * @param array $path
      */
-    public function setPath(array $path)
+    public function setPath(array $path): void
     {
         $this->path = $path;
     }
@@ -734,7 +736,7 @@ class AssessmentTestSession extends State
      *
      * @return array
      */
-    public function getPath()
+    public function getPath(): array
     {
         return $this->path;
     }
@@ -744,7 +746,7 @@ class AssessmentTestSession extends State
      *
      * @param int $config
      */
-    public function setConfig($config)
+    public function setConfig($config): void
     {
         $this->config = $config;
     }
@@ -754,7 +756,7 @@ class AssessmentTestSession extends State
      *
      * @return int
      */
-    public function getConfig()
+    public function getConfig(): int
     {
         return $this->config;
     }
@@ -763,7 +765,7 @@ class AssessmentTestSession extends State
      * Begins the test session. Calling this method will make the state
      * change into AssessmentTestSessionState::INTERACTING.
      */
-    public function beginTestSession()
+    public function beginTestSession(): void
     {
         // Initialize test-level durations.
         $this->initializeTestDurations();
@@ -785,7 +787,7 @@ class AssessmentTestSession extends State
      * @throws AssessmentItemSessionException
      * @throws PhpStorageException
      */
-    public function endTestSession()
+    public function endTestSession(): void
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot end the test session while the state of the test session is INITIAL or CLOSED.';
@@ -821,7 +823,7 @@ class AssessmentTestSession extends State
      *
      * @throws AssessmentTestSessionException
      */
-    public function beginAttempt($allowLateSubmission = false)
+    public function beginAttempt($allowLateSubmission = false): void
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot begin an attempt for the current item while the state of the test session is INITIAL or CLOSED.';
@@ -870,7 +872,7 @@ class AssessmentTestSession extends State
      * @param bool $allowLateSubmission If set to true, maximum time limits will not be taken into account.
      * @throws AssessmentTestSessionException
      */
-    public function endAttempt(State $responses, $allowLateSubmission = false)
+    public function endAttempt(State $responses, $allowLateSubmission = false): void
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot end an attempt for the current item while the state of the test session is INITIAL or CLOSED.';
@@ -929,7 +931,7 @@ class AssessmentTestSession extends State
      * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition e.g. branching, preConditions, ...
      * @throws PhpStorageException
      */
-    public function moveNext()
+    public function moveNext(): void
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot move to the next item while the test session state is INITIAL or CLOSED.';
@@ -973,7 +975,7 @@ class AssessmentTestSession extends State
      * @throws AssessmentTestSessionException If the test session is not running or an issue occurs during the transition e.g. branching, preConditions, ...
      * @throws PhpStorageException
      */
-    public function moveBack()
+    public function moveBack(): void
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot move to the previous item while the test session state is INITIAL or CLOSED.';
@@ -1010,7 +1012,7 @@ class AssessmentTestSession extends State
      * @throws AssessmentTestSessionException If $position is out of the Route bounds or the jump is not allowed because of time constraints.
      * @throws PhpStorageException
      */
-    public function jumpTo($position)
+    public function jumpTo($position): void
     {
         // Can we jump?
         $navigationMode = $this->getCurrentNavigationMode();
@@ -1067,6 +1069,7 @@ class AssessmentTestSession extends State
      *
      * @return int the occurence number of the current AssessmentItemRef in the route or false if the test session is not running.
      */
+    #[\ReturnTypeWillChange]
     public function getCurrentAssessmentItemRefOccurence()
     {
         if ($this->isRunning() === true) {
@@ -1095,6 +1098,7 @@ class AssessmentTestSession extends State
      *
      * @return TestPart A TestPart object or false if the test session is not running.
      */
+    #[\ReturnTypeWillChange]
     public function getCurrentTestPart()
     {
         if ($this->isRunning() === true) {
@@ -1109,6 +1113,7 @@ class AssessmentTestSession extends State
      *
      * @return AssessmentItemRef|false An AssessmentItemRef object or false if the test session is not running.
      */
+    #[\ReturnTypeWillChange]
     public function getCurrentAssessmentItemRef()
     {
         if ($this->isRunning() === true) {
@@ -1169,7 +1174,7 @@ class AssessmentTestSession extends State
      * @return bool
      * @throws AssessmentTestSessionException If the test session is not running.
      */
-    public function isCurrentAssessmentItemAdaptive()
+    public function isCurrentAssessmentItemAdaptive(): bool
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot know if the current item is adaptive while the state of the test session is INITIAL or CLOSED.';
@@ -1185,7 +1190,7 @@ class AssessmentTestSession extends State
      *
      * @return bool Whether the test session is running.
      */
-    public function isRunning()
+    public function isRunning(): bool
     {
         return $this->getState() !== AssessmentTestSessionState::INITIAL && $this->getState() !== AssessmentTestSessionState::CLOSED;
     }
@@ -1250,7 +1255,7 @@ class AssessmentTestSession extends State
      * @param IdentifierCollection $excludeCategories The optional item categories to be excluded from the subset.
      * @return AssessmentItemRefCollection A collection of AssessmentItemRef objects that match all the given criteria.
      */
-    public function getItemSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
+    public function getItemSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null): AssessmentItemRefCollection
     {
         return $this->getRoute()->getAssessmentItemRefsSubset($sectionIdentifier, $includeCategories, $excludeCategories);
     }
@@ -1268,7 +1273,7 @@ class AssessmentTestSession extends State
      * @param int $mode AssessmentTestSession::ROUTECOUNT_ALL | AssessmentTestSession::ROUTECOUNT_EXCLUDENORESPONSE | AssessmentTestSession::ROUTECOUNT_FLOW
      * @return int
      */
-    public function getRouteCount($mode = self::ROUTECOUNT_ALL)
+    public function getRouteCount($mode = self::ROUTECOUNT_ALL): int
     {
         if ($mode === self::ROUTECOUNT_ALL) {
             return $this->getRoute()->count();
@@ -1300,7 +1305,7 @@ class AssessmentTestSession extends State
      *
      * @param SplObjectStorage $lastOccurenceUpdate A map.
      */
-    public function setLastOccurenceUpdate(SplObjectStorage $lastOccurenceUpdate)
+    public function setLastOccurenceUpdate(SplObjectStorage $lastOccurenceUpdate): void
     {
         $this->lastOccurenceUpdate = $lastOccurenceUpdate;
     }
@@ -1312,7 +1317,7 @@ class AssessmentTestSession extends State
      * @param int $occurence An occurence number
      * @return bool
      */
-    public function isLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence)
+    public function isLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence): bool
     {
         if (($lastUpdate = $this->whichLastOccurenceUpdate($assessmentItemRef)) !== false) {
             if ($occurence === $lastUpdate) {
@@ -1359,7 +1364,7 @@ class AssessmentTestSession extends State
      * @return bool
      * @throws AssessmentTestSessionException
      */
-    public function canMoveBackward()
+    public function canMoveBackward(): bool
     {
         if ($this->getRoute()->getPosition() === 0) {
             return false;
@@ -1386,7 +1391,7 @@ class AssessmentTestSession extends State
      * @param string $identifier
      * @return JumpCollection A collection of Jump objects.
      */
-    public function getPossibleJumps($place = AssessmentTestPlace::ASSESSMENT_TEST, $identifier = '')
+    public function getPossibleJumps($place = AssessmentTestPlace::ASSESSMENT_TEST, $identifier = ''): JumpCollection
     {
         $jumps = new JumpCollection();
 
@@ -1438,7 +1443,7 @@ class AssessmentTestSession extends State
      * @param int $places A composition of values (use | operator) from the AssessmentTestPlace enumeration. If the null value is given, all places will be taken into account.
      * @return TimeConstraintCollection A collection of TimeConstraint objects.
      */
-    public function getTimeConstraints($places = null)
+    public function getTimeConstraints($places = null): TimeConstraintCollection
     {
         if ($places === null) {
             // Get the constraints from all places in the Assessment Test.
@@ -1554,7 +1559,7 @@ class AssessmentTestSession extends State
      * @param string $identifier An optional assessmentSection identifier.
      * @return int
      */
-    public function numberResponded($identifier = '')
+    public function numberResponded($identifier = ''): int
     {
         $numberResponded = 0;
 
@@ -1579,7 +1584,7 @@ class AssessmentTestSession extends State
      * @param string $identifier An optional assessmentSection identifier.
      * @return int
      */
-    public function numberCorrect($identifier = '')
+    public function numberCorrect($identifier = ''): int
     {
         $numberCorrect = 0;
 
@@ -1604,7 +1609,7 @@ class AssessmentTestSession extends State
      * @param string $identifier An optional assessmentSection identifier.
      * @return int
      */
-    public function numberIncorrect($identifier = '')
+    public function numberIncorrect($identifier = ''): int
     {
         $numberIncorrect = 0;
 
@@ -1629,7 +1634,7 @@ class AssessmentTestSession extends State
      * @param string $identifier An optional assessmentSection identifier.
      * @return int
      */
-    public function numberPresented($identifier = '')
+    public function numberPresented($identifier = ''): int
     {
         $numberPresented = 0;
 
@@ -1654,7 +1659,7 @@ class AssessmentTestSession extends State
      * @param string $identifier An optional assessmentSection identifier.
      * @return int
      */
-    public function numberSelected($identifier = '')
+    public function numberSelected($identifier = ''): int
     {
         $numberSelected = 0;
 
@@ -1683,7 +1688,7 @@ class AssessmentTestSession extends State
      *
      * @return int The number of completed items.
      */
-    public function numberCompleted()
+    public function numberCompleted(): int
     {
         $numberCompleted = 0;
         $route = $this->getRoute();
@@ -1779,7 +1784,7 @@ class AssessmentTestSession extends State
      * @param Variable $variable A Variable object to add to the current context.
      * @throws OutOfRangeException If the identifier of the given $variable is not a simple variable identifier (no prefix, no sequence number).
      */
-    public function setVariable(Variable $variable)
+    public function setVariable(Variable $variable): void
     {
         try {
             $v = new VariableIdentifier($variable->getIdentifier());
@@ -1805,7 +1810,7 @@ class AssessmentTestSession extends State
      * @param string $variableIdentifier
      * @return Variable A Variable object or null if no Variable object could be found for $variableIdentifier.
      */
-    public function getVariable($variableIdentifier)
+    public function getVariable($variableIdentifier): ?Variable
     {
         $v = new VariableIdentifier($variableIdentifier);
 
@@ -1844,6 +1849,7 @@ class AssessmentTestSession extends State
      * @return mixed A QTI Runtime compliant value or NULL if no such value can be retrieved for $offset.
      * @throws OutOfRangeException If $offset is not a string or $offset is not a valid variable identifier.
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         try {
@@ -1925,7 +1931,7 @@ class AssessmentTestSession extends State
      * @throws OutOfRangeException If $offset is not a string or an invalid variable identifier.
      * @throws OutOfBoundsException If the variable with identifier $offset cannot be found.
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (gettype($offset) !== 'string') {
             $msg = 'An AssessmentTestSession object must be addressed by string.';
@@ -1985,7 +1991,7 @@ class AssessmentTestSession extends State
      * @throws OutOfRangeException If $offset is not a simple variable identifier.
      * @throws OutOfBoundsException If $offset does not refer to an existing variable in the global scope.
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         $data = &$this->getDataPlaceHolder();
 
@@ -2018,7 +2024,7 @@ class AssessmentTestSession extends State
      * @return bool Whether the variable identified by $offset exists in the current context.
      * @throws OutOfRangeException If $offset is not a simple variable identifier (no prefix, no sequence number).
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         try {
             $v = new VariableIdentifier($offset);
@@ -2078,7 +2084,7 @@ class AssessmentTestSession extends State
      * @param int $submissionMode
      * @return AssessmentItemSession
      */
-    protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
+    protected function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode): AssessmentItemSession
     {
         return $this->getSessionManager()->createAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode, false);
     }
@@ -2089,7 +2095,7 @@ class AssessmentTestSession extends State
      * @param AssessmentItemSession $session
      * @throws ExpressionProcessingException|OperatorProcessingException If something wrong happens when initializing templateDefaults.
      */
-    protected function applyTemplateDefaults(AssessmentItemSession $session)
+    protected function applyTemplateDefaults(AssessmentItemSession $session): void
     {
         $templateDefaults = $session->getAssessmentItem()->getTemplateDefaults();
 
@@ -2117,7 +2123,7 @@ class AssessmentTestSession extends State
     /**
      * Initialize test-level durations.
      */
-    protected function initializeTestDurations()
+    protected function initializeTestDurations(): void
     {
         $route = $this->getRoute();
         $oldPosition = $route->getPosition();
@@ -2150,7 +2156,7 @@ class AssessmentTestSession extends State
      * * The test is adaptive: an AssessmentItemSession will be instantiated for the current route item only.
      * * The test is not adaptive: all route items are scanned. If an AssessmentItemSession does not exist for a route item, it is instantiated.
      */
-    protected function selectEligibleItems()
+    protected function selectEligibleItems(): void
     {
         $route = $this->getRoute();
 
@@ -2214,7 +2220,7 @@ class AssessmentTestSession extends State
      * @param int $occurence
      * @throws LogicException If the AssessmentItemRef object bound to $session is unknown by the AssessmentTestSession.
      */
-    protected function addItemSession(AssessmentItemSession $session, $occurence = 0)
+    protected function addItemSession(AssessmentItemSession $session, $occurence = 0): void
     {
         $assessmentItemRefs = $this->getAssessmentItemRefs();
         $sessionAssessmentItemRefIdentifier = $session->getAssessmentItem()->getIdentifier();
@@ -2270,7 +2276,7 @@ class AssessmentTestSession extends State
      * @throws OutOfBoundsException If the current position in the route is 0.
      * @throws AssessmentTestSessionException If the AssessmentTestSession is not running.
      */
-    protected function getPreviousRouteItem()
+    protected function getPreviousRouteItem(): RouteItem
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot know what is the previous route item while the state of the test session is INITIAL or CLOSED';
@@ -2295,7 +2301,7 @@ class AssessmentTestSession extends State
      * @param AssessmentItemSession $assessmentItemSession The lastly updated AssessmentItemSession.
      * @param int $occurence The occurence number of the item bound to $assessmentItemSession.
      */
-    protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0)
+    protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0): void
     {
         return;
     }
@@ -2307,7 +2313,7 @@ class AssessmentTestSession extends State
      * This method is triggered once at the end of the AssessmentTestSession.
      *
      */
-    protected function submitTestResults()
+    protected function submitTestResults(): void
     {
         return;
     }
@@ -2320,7 +2326,7 @@ class AssessmentTestSession extends State
      * @throws AssessmentTestSessionException If an error occurs while processing the pending responses or sending results.
      * @throws PhpStorageException
      */
-    protected function defferedResponseSubmission()
+    protected function defferedResponseSubmission(): PendingResponsesCollection
     {
         $itemSessionStore = $this->getAssessmentItemSessionStore();
         $pendingResponses = $this->getPendingResponses();
@@ -2367,7 +2373,7 @@ class AssessmentTestSession extends State
      * @param AssessmentItemSession $assessmentItemSession
      * @return ResponseProcessingEngine
      */
-    protected function createResponseProcessingEngine(ResponseProcessing $responseProcessing, AssessmentItemSession $assessmentItemSession)
+    protected function createResponseProcessingEngine(ResponseProcessing $responseProcessing, AssessmentItemSession $assessmentItemSession): ResponseProcessingEngine
     {
         return new ResponseProcessingEngine($responseProcessing, $assessmentItemSession);
     }
@@ -2384,7 +2390,7 @@ class AssessmentTestSession extends State
      * @throws AssessmentItemSessionException
      * @throws PhpStorageException
      */
-    protected function nextRouteItem($ignoreBranchings = false, $ignorePreConditions = false)
+    protected function nextRouteItem($ignoreBranchings = false, $ignorePreConditions = false): void
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot move to the next position while the state of the test session is INITIAL or CLOSED.';
@@ -2470,7 +2476,7 @@ class AssessmentTestSession extends State
      * @throws AssessmentItemSessionException
      * @throws PhpStorageException
      */
-    public function moveNextTestPart()
+    public function moveNextTestPart(): void
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot move to the next testPart while the state of the test session is INITIAL or CLOSED.';
@@ -2497,7 +2503,7 @@ class AssessmentTestSession extends State
      *
      * @throws AssessmentTestSessionException If the test is not running.
      */
-    public function moveNextAssessmentSection()
+    public function moveNextAssessmentSection(): void
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot move to the next assessmentSection while the state of the test session is INITIAL or CLOSED.';
@@ -2521,7 +2527,7 @@ class AssessmentTestSession extends State
      *
      * @throws AssessmentTestSessionException If the test is not running or if trying to go to the previous route item in LINEAR navigation mode or if the current route item is the very first one in the route sequence.
      */
-    protected function previousRouteItem()
+    protected function previousRouteItem(): void
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot move backward in the route item sequence while the state of the test session is INITIAL or CLOSED.';
@@ -2545,7 +2551,7 @@ class AssessmentTestSession extends State
      *
      * @throws AssessmentTestSessionException If an error occurs at OutcomeProcessing time or at result submission time.
      */
-    protected function outcomeProcessing()
+    protected function outcomeProcessing(): void
     {
         if ($this->getAssessmentTest()->hasOutcomeProcessing() === true) {
             // As per QTI Spec:
@@ -2574,7 +2580,7 @@ class AssessmentTestSession extends State
      *
      * @return SplObjectStorage A map.
      */
-    protected function getLastOccurenceUpdate()
+    protected function getLastOccurenceUpdate(): SplObjectStorage
     {
         return $this->lastOccurenceUpdate;
     }
@@ -2585,7 +2591,7 @@ class AssessmentTestSession extends State
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @param int $occurence An occurence number for $assessmentItemRef.
      */
-    protected function notifyLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence)
+    protected function notifyLastOccurenceUpdate(AssessmentItemRef $assessmentItemRef, $occurence): void
     {
         $lastOccurenceUpdate = $this->getLastOccurenceUpdate();
         $lastOccurenceUpdate[$assessmentItemRef] = $occurence;
@@ -2611,7 +2617,7 @@ class AssessmentTestSession extends State
      * @throws AssessmentTestSessionException If one or more time limits in force are not respected.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 IMS QTI about TimeLimits.
      */
-    protected function checkTimeLimits($includeMinTime = false, $includeAssessmentItem = false)
+    protected function checkTimeLimits($includeMinTime = false, $includeAssessmentItem = false): void
     {
         $places = AssessmentTestPlace::TEST_PART | AssessmentTestPlace::ASSESSMENT_TEST | AssessmentTestPlace::ASSESSMENT_SECTION;
         // Include assessmentItem only if formally asked by client-code.
@@ -2684,7 +2690,7 @@ class AssessmentTestSession extends State
      * @throws UnexpectedValueException If the current item session cannot be retrieved.
      * @throws PhpStorageException
      */
-    public function suspend()
+    public function suspend(): void
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot suspend the item session if the test session is not running.';
@@ -2709,7 +2715,7 @@ class AssessmentTestSession extends State
      * @throws AssessmentTestSessionException With code STATE_VIOLATION if the test session is not running.
      * @throws UnexpectedValueException If the current item session cannot be retrieved.
      */
-    protected function interactWithItemSession()
+    protected function interactWithItemSession(): void
     {
         if ($this->isRunning() === false) {
             $msg = 'Cannot set the item session in interacting state if test session is not running.';
@@ -2737,7 +2743,7 @@ class AssessmentTestSession extends State
      * @param Exception $e
      * @return AssessmentTestSessionException
      */
-    protected function transformException(Exception $e)
+    protected function transformException(Exception $e): AssessmentTestSessionException
     {
         if ($e instanceof AssessmentItemSessionException) {
             switch ($e->getCode()) {
@@ -2803,7 +2809,7 @@ class AssessmentTestSession extends State
      *
      * @return string
      */
-    protected function buildCurrentItemSessionIdentifier()
+    protected function buildCurrentItemSessionIdentifier(): string
     {
         $itemIdentifier = $this->getCurrentAssessmentItemRef()->getIdentifier();
         $itemOccurence = $this->getCurrentAssessmentItemRefOccurence();
@@ -2817,7 +2823,7 @@ class AssessmentTestSession extends State
      * @param bool $excludeItem Whether or not include item time limits.
      * @return bool
      */
-    protected function timeLimitsInForce($excludeItem = false)
+    protected function timeLimitsInForce($excludeItem = false): bool
     {
         return count($this->getCurrentRouteItem()->getTimeLimits($excludeItem)) !== 0;
     }
@@ -2827,7 +2833,7 @@ class AssessmentTestSession extends State
      *
      * @return bool
      */
-    protected function mustShowTestFeedback()
+    protected function mustShowTestFeedback(): bool
     {
         $mustShowTestFeedback = false;
         $feedbackRefs = new TestFeedbackRefCollection();
@@ -2900,7 +2906,7 @@ class AssessmentTestSession extends State
      * visited by the candidate. In addition, if the navigation mode is nonLinear, templateDefaults
      * and templateProcessing will be applied if necessary to the item sessions that belong to the testPart.
      */
-    protected function testPartVisit()
+    protected function testPartVisit(): void
     {
         $route = $this->getRoute();
         $initialRoutePosition = $route->getPosition();
@@ -2967,7 +2973,7 @@ class AssessmentTestSession extends State
      * @param TestPart|string A TestPart object or a testPart identifier.
      * @return bool
      */
-    public function isTestPartVisited($testPart)
+    public function isTestPartVisited($testPart): bool
     {
         $visited = false;
         $visitedTestPartIdentifiers = $this->getVisitedTestPartIdentifiers();
@@ -2991,7 +2997,7 @@ class AssessmentTestSession extends State
      *
      * @return array An array of QtiFile objects.
      */
-    public function getFiles()
+    public function getFiles(): array
     {
         $values = [];
 
@@ -3031,7 +3037,7 @@ class AssessmentTestSession extends State
      *
      * @return bool
      */
-    public function isNextRouteItemPredictible()
+    public function isNextRouteItemPredictible(): bool
     {
         // Case 1. The session is not running.
         if ($this->isRunning() === false) {
@@ -3060,7 +3066,7 @@ class AssessmentTestSession extends State
     /**
      * @param RouteItem $routeItem
      */
-    protected function initializeAssessmentItemSession(RouteItem $routeItem)
+    protected function initializeAssessmentItemSession(RouteItem $routeItem): void
     {
         $itemRef = $routeItem->getAssessmentItemRef();
         $occurence = $routeItem->getOccurence();
@@ -3104,7 +3110,7 @@ class AssessmentTestSession extends State
      *
      * @return bool
      */
-    protected function mustApplyBranchRules()
+    protected function mustApplyBranchRules(): bool
     {
         return ($this->getCurrentNavigationMode() === NavigationMode::LINEAR || $this->mustForceBranching() === true);
     }
@@ -3117,7 +3123,7 @@ class AssessmentTestSession extends State
      * @param bool $nextRouteItem To be set to true in order to know whether or not to apply PreConditions for the next route item.
      * @return bool
      */
-    protected function mustApplyPreConditions($nextRouteItem = false)
+    protected function mustApplyPreConditions($nextRouteItem = false): bool
     {
         $routeItem = ($nextRouteItem === false) ? $this->getCurrentRouteItem() : $this->getRoute()->getNext();
         return ($routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR || $this->mustForcePreconditions() === true);

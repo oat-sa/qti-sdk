@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -95,7 +97,7 @@ class Stylesheet extends QtiComponent
      *
      * @return string
      */
-    public function getHref()
+    public function getHref(): string
     {
         return $this->href;
     }
@@ -106,7 +108,7 @@ class Stylesheet extends QtiComponent
      * @param string $href An hypertext reference (as a URI).
      * @throws InvalidArgumentException If $href is not a string.
      */
-    public function setHref($href)
+    public function setHref($href): void
     {
         if (is_string($href)) {
             $this->href = $href;
@@ -121,7 +123,7 @@ class Stylesheet extends QtiComponent
      *
      * @return string A mime-type.
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -132,7 +134,7 @@ class Stylesheet extends QtiComponent
      * @param string $type A mime-type.
      * @throws InvalidArgumentException If $type is not a string.
      */
-    public function setType($type)
+    public function setType($type): void
     {
         if (is_string($type)) {
             $this->type = $type;
@@ -147,7 +149,7 @@ class Stylesheet extends QtiComponent
      *
      * @return string A media.
      */
-    public function getMedia()
+    public function getMedia(): string
     {
         return $this->media;
     }
@@ -158,7 +160,7 @@ class Stylesheet extends QtiComponent
      * @param string $media A media.
      * @throws InvalidArgumentException If $media is not a string.
      */
-    public function setMedia($media)
+    public function setMedia($media): void
     {
         if (is_string($media)) {
             $this->media = $media;
@@ -173,7 +175,7 @@ class Stylesheet extends QtiComponent
      *
      * @return bool
      */
-    public function hasMedia()
+    public function hasMedia(): bool
     {
         return $this->getMedia() !== '';
     }
@@ -183,7 +185,7 @@ class Stylesheet extends QtiComponent
      *
      * @return string A title or an empty string if not specified.
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -194,7 +196,7 @@ class Stylesheet extends QtiComponent
      * @param string $title A title.
      * @throws InvalidArgumentException If $title is not a string.
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         if (is_string($title)) {
             $this->title = $title;
@@ -209,7 +211,7 @@ class Stylesheet extends QtiComponent
      *
      * @return bool
      */
-    public function hasTitle()
+    public function hasTitle(): bool
     {
         return $this->getTitle() !== '';
     }
@@ -217,7 +219,7 @@ class Stylesheet extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'stylesheet';
     }
@@ -225,7 +227,7 @@ class Stylesheet extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class ExitTemplateProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException with code = RuleProcessingException::EXIT_TEMPLATE In any case.
      */
-    public function process()
+    public function process(): void
     {
         $msg = 'Termination of Template Processing.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_TEMPLATE);
@@ -48,7 +50,7 @@ class ExitTemplateProcessor extends RuleProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return ExitTemplate::class;
     }

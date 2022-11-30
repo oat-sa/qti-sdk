@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,7 +48,7 @@ class HotspotMarshaller extends Marshaller
      * @param QtiComponent $component A HotspotChoice/AssociableHotspot object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $version = $this->getVersion();
         $element = $this->createElement($component);
@@ -99,7 +101,8 @@ class HotspotMarshaller extends Marshaller
      * @return QtiComponent A HotspotChoice/AssociableHotspot object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): QtiComponent
     {
         $version = $this->getVersion();
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
@@ -181,7 +184,7 @@ class HotspotMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return '';
     }

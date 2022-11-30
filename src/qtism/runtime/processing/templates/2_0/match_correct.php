@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $string_0 = '';
 $string_1 = '';
 $string_2 = 'RESPONSE';

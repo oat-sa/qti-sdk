@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -66,7 +68,7 @@ class StackTraceItem
      *
      * @param QtiComponent $component A traced QtiComponent object.
      */
-    public function setComponent(QtiComponent $component)
+    public function setComponent(QtiComponent $component): void
     {
         $this->component = $component;
     }
@@ -76,7 +78,7 @@ class StackTraceItem
      *
      * @return QtiComponent A traced QtiComponent object.
      */
-    public function getComponent()
+    public function getComponent(): QtiComponent
     {
         return $this->component;
     }
@@ -86,7 +88,7 @@ class StackTraceItem
      *
      * @return string A human-readable message.
      */
-    public function getTraceMessage()
+    public function getTraceMessage(): string
     {
         return $this->traceMessage;
     }
@@ -97,7 +99,7 @@ class StackTraceItem
      * @param string $traceMessage A human-readable message.
      * @throws InvalidArgumentException If $traceMessage is not a string.
      */
-    public function setTraceMessage($traceMessage)
+    public function setTraceMessage($traceMessage): void
     {
         if (is_string($traceMessage)) {
             $this->traceMessage = $traceMessage;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -70,7 +72,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
      *
      * @param string $path
      */
-    public function setPath($path)
+    public function setPath($path): void
     {
         $this->path = $path;
     }
@@ -80,7 +82,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
      *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -93,7 +95,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
      * @param MemoryStream $stream The MemoryStream to be stored in the temporary directory of the host file system.
      * @throws RuntimeException If the binary stream cannot be persisted.
      */
-    protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream)
+    protected function persistStream(AssessmentTestSession $assessmentTestSession, MemoryStream $stream): void
     {
         $sessionId = $assessmentTestSession->getSessionId();
 
@@ -114,7 +116,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
      * @return MemoryStream A MemoryStream object.
      * @throws RuntimeException If the binary stream cannot be persisted.
      */
-    protected function getRetrievalStream($sessionId)
+    protected function getRetrievalStream($sessionId): MemoryStream
     {
         $path = $this->getPath() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
 
@@ -133,7 +135,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
      * @return BinaryStreamAccess|QtiBinaryStreamAccess
      * @throws StreamAccessException
      */
-    protected function createBinaryStreamAccess(IStream $stream)
+    protected function createBinaryStreamAccess(IStream $stream): BinaryStreamAccess
     {
         return new QtiBinaryStreamAccess($stream, new FileSystemFileManager(), new VariableFactory());
     }
@@ -142,7 +144,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
      * @param string $sessionId
      * @return bool
      */
-    public function exists($sessionId)
+    public function exists($sessionId): bool
     {
         $path = $this->getPath() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
         return @is_readable($path);
@@ -153,7 +155,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
      * @return bool
      * @throws StorageException
      */
-    public function delete(AssessmentTestSession $assessmentTestSession)
+    public function delete(AssessmentTestSession $assessmentTestSession): bool
     {
         $fileManager = $this->getManager()->getFileManager();
         foreach ($assessmentTestSession->getFiles() as $file) {

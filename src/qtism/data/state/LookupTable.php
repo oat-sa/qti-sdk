@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -65,6 +67,7 @@ abstract class LookupTable extends QtiComponent
      *
      * @return mixed A value.
      */
+    #[\ReturnTypeWillChange]
     public function getDefaultValue()
     {
         return $this->defaultValue;
@@ -75,7 +78,7 @@ abstract class LookupTable extends QtiComponent
      *
      * @param mixed $defaultValue A value.
      */
-    public function setDefaultValue($defaultValue)
+    public function setDefaultValue($defaultValue): void
     {
         $this->defaultValue = $defaultValue;
     }
@@ -83,7 +86,7 @@ abstract class LookupTable extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'lookupTable';
     }
@@ -91,7 +94,7 @@ abstract class LookupTable extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

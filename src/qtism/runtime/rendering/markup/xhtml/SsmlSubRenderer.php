@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -51,7 +53,7 @@ class SsmlSubRenderer extends ExternalQtiComponentRenderer
      * @param string $base
      * @throws RenderingException
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         try {
             $dom = $component->getXml();

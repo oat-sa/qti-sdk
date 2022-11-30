@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -76,7 +78,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
      *
      * @return string A QTI Identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -87,7 +89,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
      * @param string $identifier A QTI Identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
@@ -102,7 +104,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
      *
      * @return Expression A QTI Expression object.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -112,7 +114,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
      *
      * @param Expression $expression A QTI Expression object.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -120,7 +122,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'lookupOutcomeValue';
     }
@@ -128,7 +130,7 @@ class LookupOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRu
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = [$this->getExpression()];
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +39,7 @@ class StylesheetCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a Stylesheet object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Stylesheet) {
             $msg = "StylesheetCollection class only accept Stylesheet objects, '" . gettype($value) . "' given.";

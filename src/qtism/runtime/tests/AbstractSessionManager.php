@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,7 +63,7 @@ abstract class AbstractSessionManager
      *
      * @param FileManager $fileManager
      */
-    public function setFileManager(FileManager $fileManager)
+    public function setFileManager(FileManager $fileManager): void
     {
         $this->fileManager = $fileManager;
     }
@@ -71,7 +73,7 @@ abstract class AbstractSessionManager
      *
      * @return FileManager
      */
-    public function getFileManager()
+    public function getFileManager(): FileManager
     {
         return $this->fileManager;
     }
@@ -85,7 +87,7 @@ abstract class AbstractSessionManager
      *
      * @return AssessmentTestSession An AssessmentTestSession object.
      */
-    public function createAssessmentTestSession(AssessmentTest $test, Route $route = null, $config = 0)
+    public function createAssessmentTestSession(AssessmentTest $test, Route $route = null, $config = 0): AssessmentTestSession
     {
         return $this->instantiateAssessmentTestSession($test, $this->getRoute($test, $route), $config);
     }
@@ -99,7 +101,7 @@ abstract class AbstractSessionManager
      *
      * @return AssessmentItemSession
      */
-    public function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL)
+    public function createAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode = NavigationMode::LINEAR, $submissionMode = SubmissionMode::INDIVIDUAL): AssessmentItemSession
     {
         return $this->instantiateAssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
     }
@@ -112,7 +114,7 @@ abstract class AbstractSessionManager
      * @param int $config (optional) The configuration of the AssessmentTestSession object.
      * @return AssessmentTestSession A freshly instantiated AssessmentTestSession.
      */
-    abstract protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route, $config = 0);
+    abstract protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route, $config = 0): AssessmentTestSession;
 
     /**
      * Contains the logic of instantiating the appropriate AssessmentItemSession implementation.
@@ -122,7 +124,7 @@ abstract class AbstractSessionManager
      * @param int $submissionMode A value from the SubmissionMode enumeration.
      * @return AssessmentItemSession A freshly instantiated AssessmentItemSession.
      */
-    abstract protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode);
+    abstract protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode): AssessmentItemSession;
 
     /**
      * Contains the Route create logic depending on whether or not
@@ -132,7 +134,7 @@ abstract class AbstractSessionManager
      * @param Route $route
      * @return Route
      */
-    protected function getRoute(AssessmentTest $test, Route $route = null)
+    protected function getRoute(AssessmentTest $test, Route $route = null): Route
     {
         return $route ?? $this->createRoute($test);
     }
@@ -144,7 +146,7 @@ abstract class AbstractSessionManager
      * @param AssessmentTest $test
      * @return Route A newly instantiated Route object.
      */
-    protected function createRoute(AssessmentTest $test)
+    protected function createRoute(AssessmentTest $test): Route
     {
         $routeStack = [];
 

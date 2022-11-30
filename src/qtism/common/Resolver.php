@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,5 +37,5 @@ interface Resolver
      * @return string A resolved URL.
      * @throws ResolutionException If an error occurs during the resolution of $url.
      */
-    public function resolve($url);
+    public function resolve($url): string;
 }

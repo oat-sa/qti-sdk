@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +38,7 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * Code to use when a state violation occurs e.g. while trying
@@ -44,7 +46,7 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const STATE_VIOLATION = 1;
+    public const STATE_VIOLATION = 1;
 
     /**
      * Code to use when a navigation mode violation occurs e.g. while
@@ -52,7 +54,7 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const NAVIGATION_MODE_VIOLATION = 2;
+    public const NAVIGATION_MODE_VIOLATION = 2;
 
     /**
      * Code to use when an error occurs while running the outcome processing
@@ -60,7 +62,7 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const OUTCOME_PROCESSING_ERROR = 3;
+    public const OUTCOME_PROCESSING_ERROR = 3;
 
     /**
      * Code to use when an error occurs while running the response processing
@@ -68,21 +70,21 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const RESPONSE_PROCESSING_ERROR = 4;
+    public const RESPONSE_PROCESSING_ERROR = 4;
 
     /**
      * Code to use when an error occurs while transmitting item/test results.
      *
      * @var int
      */
-    const RESULT_SUBMISSION_ERROR = 5;
+    public const RESULT_SUBMISSION_ERROR = 5;
 
     /**
      * Error code to use when a logic error is done.
      *
      * @var int
      */
-    const LOGIC_ERROR = 6;
+    public const LOGIC_ERROR = 6;
 
     /**
      * Error code to use when a jump is performed outside the current
@@ -90,7 +92,7 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const FORBIDDEN_JUMP = 7;
+    public const FORBIDDEN_JUMP = 7;
 
     /**
      * Error code to use when the maximum duration of a testPart
@@ -98,7 +100,7 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const TEST_PART_DURATION_OVERFLOW = 8;
+    public const TEST_PART_DURATION_OVERFLOW = 8;
 
     /**
      * Error code to use when the maximum duration of an assessmentSection
@@ -106,7 +108,7 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const ASSESSMENT_SECTION_DURATION_OVERFLOW = 9;
+    public const ASSESSMENT_SECTION_DURATION_OVERFLOW = 9;
 
     /**
      * Error code to use when the minimum duration of a testPart is not
@@ -114,7 +116,7 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const TEST_PART_DURATION_UNDERFLOW = 10;
+    public const TEST_PART_DURATION_UNDERFLOW = 10;
 
     /**
      * Error code to use when the minimum duration of an assessmentSection is not
@@ -122,35 +124,35 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const ASSESSMENT_SECTION_DURATION_UNDERFLOW = 11;
+    public const ASSESSMENT_SECTION_DURATION_UNDERFLOW = 11;
 
     /**
      * Error code to use when the maximum duration of an assessmentItem is reached.
      *
      * @var int
      */
-    const ASSESSMENT_ITEM_DURATION_OVERFLOW = 12;
+    public const ASSESSMENT_ITEM_DURATION_OVERFLOW = 12;
 
     /**
      * Error code to use when the minimum duration of an assessmentItem is not reached.
      *
      * @var int
      */
-    const ASSESSMENT_ITEM_DURATION_UNDERFLOW = 13;
+    public const ASSESSMENT_ITEM_DURATION_UNDERFLOW = 13;
 
     /**
      * Error code to use when the maximum duration of an assessmentTest is reached.
      *
      * @var int
      */
-    const ASSESSMENT_TEST_DURATION_OVERFLOW = 14;
+    public const ASSESSMENT_TEST_DURATION_OVERFLOW = 14;
 
     /**
      * Error code to use when the minimum duration of an assessmentTest is not reached.
      *
      * @var int
      */
-    const ASSESSMENT_TEST_DURATION_UNDERFLOW = 15;
+    public const ASSESSMENT_TEST_DURATION_UNDERFLOW = 15;
 
     /**
      * Error code to use when the maximum number of attempts on the current assessment item
@@ -158,7 +160,7 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const ASSESSMENT_ITEM_ATTEMPTS_OVERFLOW = 16;
+    public const ASSESSMENT_ITEM_ATTEMPTS_OVERFLOW = 16;
 
     /**
      * Error code to use when an invalid response is submitted for the current
@@ -166,7 +168,7 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const ASSESSMENT_ITEM_INVALID_RESPONSE = 17;
+    public const ASSESSMENT_ITEM_INVALID_RESPONSE = 17;
 
     /**
      * Error code to use when trying to skip the current item while
@@ -174,7 +176,7 @@ class AssessmentTestSessionException extends Exception
      *
      * @var int
      */
-    const ASSESSMENT_ITEM_SKIPPING_FORBIDDEN = 18;
+    public const ASSESSMENT_ITEM_SKIPPING_FORBIDDEN = 18;
 
     /**
      * Create a nex AssessmentTestSessionException.

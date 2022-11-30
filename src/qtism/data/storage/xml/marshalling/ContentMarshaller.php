@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -196,7 +198,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      * @param DOMNode $element
      * @return bool
      */
-    protected function isElementFinal(DOMNode $element)
+    protected function isElementFinal(DOMNode $element): bool
     {
         return $element instanceof DOMText || ($element instanceof DOMElement && in_array($element->localName, self::$finals));
     }
@@ -205,7 +207,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return bool
      */
-    protected function isComponentFinal(QtiComponent $component)
+    protected function isComponentFinal(QtiComponent $component): bool
     {
         return in_array($component->getQtiClassName(), self::$finals) || $component instanceof ExternalQtiComponent;
     }
@@ -214,7 +216,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      * @param DOMElement $currentNode
      * @return QtiComponentCollection
      */
-    protected function createCollection(DOMElement $currentNode)
+    protected function createCollection(DOMElement $currentNode): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -223,7 +225,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return array
      */
-    protected function getChildrenComponents(QtiComponent $component)
+    protected function getChildrenComponents(QtiComponent $component): array
     {
         if ($component instanceof SimpleInline) {
             return $component->getContent()->getArrayCopy();
@@ -320,7 +322,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      * @param DOMElement $element
      * @return array
      */
-    protected function getChildrenElements(DOMElement $element)
+    protected function getChildrenElements(DOMElement $element): array
     {
         $simpleComposites = self::$simpleComposites;
         $localName = $element->localName;
@@ -380,7 +382,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return '';
     }
@@ -395,7 +397,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      *
      * @return array
      */
-    protected function getLookupClasses()
+    protected function getLookupClasses(): array
     {
         return $this->lookupClasses;
     }
@@ -407,7 +409,7 @@ abstract class ContentMarshaller extends RecursiveMarshaller
      * @return string A fully qualified class name.
      * @throws UnmarshallingException If no class can be found for $element.
      */
-    protected function lookupClass(DOMElement $element)
+    protected function lookupClass(DOMElement $element): string
     {
         $localName = $element->localName;
         if ($this->isWebComponentFriendly() === true && preg_match('/^qti-/', $localName) === 1) {

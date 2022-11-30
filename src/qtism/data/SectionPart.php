@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -141,7 +143,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @return string A QTI Identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -152,7 +154,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      * @param string $identifier A QTI Identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
@@ -168,7 +170,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @return bool true if must appear at least one, false if not.
      */
-    public function isRequired()
+    public function isRequired(): bool
     {
         return $this->required;
     }
@@ -179,7 +181,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      * @param bool $required true if it must appear at least one, otherwise false.
      * @throws InvalidArgumentException If $required is not a boolean.
      */
-    public function setRequired($required)
+    public function setRequired($required): void
     {
         if (is_bool($required)) {
             $this->required = $required;
@@ -194,7 +196,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @return bool true if subject to shuffling, false if not.
      */
-    public function isFixed()
+    public function isFixed(): bool
     {
         return $this->fixed;
     }
@@ -205,7 +207,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      * @param bool $fixed true if subject to shuffling, false if not.
      * @throws InvalidArgumentException If $fixed is not a boolean.
      */
-    public function setFixed($fixed)
+    public function setFixed($fixed): void
     {
         if (is_bool($fixed)) {
             $this->fixed = $fixed;
@@ -220,7 +222,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @return PreConditionCollection A collection of PreCondition objects.
      */
-    public function getPreConditions()
+    public function getPreConditions(): PreConditionCollection
     {
         return $this->preConditions;
     }
@@ -230,7 +232,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @param PreConditionCollection $preConditions A collection of PreCondition objects.
      */
-    public function setPreConditions(PreConditionCollection $preConditions)
+    public function setPreConditions(PreConditionCollection $preConditions): void
     {
         $this->preConditions = $preConditions;
     }
@@ -240,7 +242,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @return BranchRuleCollection A collection of BranchRule objects.
      */
-    public function getBranchRules()
+    public function getBranchRules(): BranchRuleCollection
     {
         return $this->branchRules;
     }
@@ -250,7 +252,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @param BranchRuleCollection $branchRules A collection of BranchRule objects.
      */
-    public function setBranchRules(BranchRuleCollection $branchRules)
+    public function setBranchRules(BranchRuleCollection $branchRules): void
     {
         $this->branchRules = $branchRules;
     }
@@ -261,7 +263,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @return ItemSessionControl
      */
-    public function getItemSessionControl()
+    public function getItemSessionControl(): ?ItemSessionControl
     {
         return $this->itemSessionControl;
     }
@@ -271,7 +273,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @param ItemSessionControl $itemSessionControl An ItemSessionControl object.
      */
-    public function setItemSessionControl(ItemSessionControl $itemSessionControl = null)
+    public function setItemSessionControl(ItemSessionControl $itemSessionControl = null): void
     {
         $this->itemSessionControl = $itemSessionControl;
     }
@@ -281,7 +283,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @return bool
      */
-    public function hasItemSessionControl()
+    public function hasItemSessionControl(): bool
     {
         return $this->getItemSessionControl() !== null;
     }
@@ -292,7 +294,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @return TimeLimits A TimeLimits object.
      */
-    public function getTimeLimits()
+    public function getTimeLimits(): ?TimeLimits
     {
         return $this->timeLimits;
     }
@@ -302,7 +304,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @return bool
      */
-    public function hasTimeLimits()
+    public function hasTimeLimits(): bool
     {
         return $this->getTimeLimits() !== null;
     }
@@ -313,7 +315,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      *
      * @param TimeLimits $timeLimits A TimeLimits object.
      */
-    public function setTimeLimits(TimeLimits $timeLimits = null)
+    public function setTimeLimits(TimeLimits $timeLimits = null): void
     {
         $this->timeLimits = $timeLimits;
     }
@@ -321,7 +323,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'sectionPart';
     }
@@ -329,7 +331,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
             $this->getBranchRules()->getArrayCopy(),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class SsmlSubMarshaller extends Marshaller
      * @param QtiComponent $component An SSML sub object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         return self::getDOMCradle()->importNode($component->getXml()->documentElement, true);
     }
@@ -49,7 +51,7 @@ class SsmlSubMarshaller extends Marshaller
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An SSML sub object.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): QtiComponent
     {
         $node = $element->cloneNode(true);
 
@@ -59,7 +61,7 @@ class SsmlSubMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'sub';
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -73,7 +75,7 @@ class TemplateIf extends QtiComponent
      *
      * @param Expression $expression An Expression object.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -83,7 +85,7 @@ class TemplateIf extends QtiComponent
      *
      * @return Expression An Expression object.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -94,7 +96,7 @@ class TemplateIf extends QtiComponent
      *
      * @param TemplateRuleCollection $templateRules A collection of TemplateRule objects.
      */
-    public function setTemplateRules(TemplateRuleCollection $templateRules)
+    public function setTemplateRules(TemplateRuleCollection $templateRules): void
     {
         $this->templateRules = $templateRules;
     }
@@ -105,7 +107,7 @@ class TemplateIf extends QtiComponent
      *
      * @return TemplateRuleCollection A collection of TemplateRule objects.
      */
-    public function getTemplateRules()
+    public function getTemplateRules(): TemplateRuleCollection
     {
         return $this->templateRules;
     }
@@ -113,7 +115,7 @@ class TemplateIf extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection(array_merge([$this->getExpression()], $this->getTemplateRules()->getArrayCopy()));
     }
@@ -121,7 +123,7 @@ class TemplateIf extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'templateIf';
     }

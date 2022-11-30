@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller
      * @param QtiComponent $component A NumberSelected object.
      * @return DOMElement The corresponding numberSelected QTI element.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         return parent::marshall($component);
     }
@@ -49,7 +51,8 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent The corresponding NumberSelected object.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): NumberSelected
     {
         $baseComponent = parent::unmarshall($element);
         $object = new NumberSelected();
@@ -63,7 +66,7 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'numberSelected';
     }

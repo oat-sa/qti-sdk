@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,7 +44,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
         $version = $this->getVersion();
@@ -70,7 +72,8 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      * @throws UnmarshallingException
      * @throws MarshallerNotFoundException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): TemplateDeclaration
     {
         try {
             $baseComponent = parent::unmarshall($element);
@@ -105,7 +108,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'templateDeclaration';
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -52,7 +54,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
     /**
      * @param mixed $value
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof QtiIdentifiable) {
             $msg = 'The QtiIdentifiable class only accepts to store QtiIdentifiable objects.';
@@ -68,7 +70,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      * @return bool
      * @throws OutOfRangeException If the request $offset is not a string or is empty.
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         if (!is_string($offset) && empty($offset) === false) {
             $msg = 'The requested offset must be a string.';
@@ -87,7 +89,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      * @return QtiIdentifiable|null The requested QtiIdentifiable object or null if no object with 'identifier' = $offset is found.
      * @throws OutOfRangeException If the request $offset is not a string or is empty.
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): ?QtiIdentifiable
     {
         if (!is_string($offset)) {
             $msg = 'The requested offset must be a non-empty string.';
@@ -114,7 +116,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      * @throws InvalidArgumentException If $value is not a QtiIdentifiable object.
      * @throws OutOfRangeException If the offset is not null.
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->checkType($value);
 
@@ -141,7 +143,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      * @param QtiIdentifiable $object A QtiIdentifiable object.
      * @throws InvalidArgumentException If $object is not a QtiIdentifiable object.
      */
-    public function attach($object)
+    public function attach($object): void
     {
         $this->offsetSet(null, $object);
     }
@@ -153,7 +155,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      * @param mixed $offset
      * @throws OutOfRangeException If $offset is not a string.
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         if (is_string($offset)) {
             $data = &$this->getDataPlaceHolder();
@@ -175,7 +177,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      * @throws InvalidArgumentException If $object or $replacement are not compliant with the current collection typing.
      * @throws UnexpectedValueException If $object is not contained in the collection.
      */
-    public function replace($object, $replacement)
+    public function replace($object, $replacement): void
     {
         $this->checkType($object);
         $this->checkType($replacement);
@@ -214,14 +216,14 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
      *
      * @param SplSubject $subject
      */
-    public function update(SplSubject $subject)
+    public function update(SplSubject $subject): void
     {
         // -- case 1 (QtiIdentifiable)
         // If it is a QtiIdentifiable, it has changed its identifier.
         $this->replace($subject, $subject);
     }
 
-    public function __clone()
+    public function __clone(): void
     {
         $oldPlaceHolder = $this->getDataPlaceHolder();
         $newPlaceHolder = [];

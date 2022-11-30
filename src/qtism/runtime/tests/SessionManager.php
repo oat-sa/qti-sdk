@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +42,7 @@ class SessionManager extends AbstractSessionManager
      * @param int $config (optional) The configuration of the AssessmentTestSession object.
      * @return AssessmentTestSession
      */
-    protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route, $config = 0)
+    protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route, $config = 0): AssessmentTestSession
     {
         return new AssessmentTestSession($test, $this, $route, $config);
     }
@@ -53,7 +55,7 @@ class SessionManager extends AbstractSessionManager
      * @param int $submissionMode A value from the SubmissionMode enumeration.
      * @return AssessmentItemSession
      */
-    protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
+    protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode): AssessmentItemSession
     {
         // When instantiating an AssessmentItemSession for a test, template processing must not occur automatically.
         // is always false.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +42,7 @@ class TestFeedbackRefMarshaller extends Marshaller
      * @param QtiComponent $component
      * @return DOMElement
      */
-    public function marshall(QtiComponent $component)
+    public function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -60,7 +62,7 @@ class TestFeedbackRefMarshaller extends Marshaller
      * @return QtiComponent A TestFeedbackRef object.
      * @throws UnmarshallingException If the element cannot be unmarshalled.
      */
-    public function unmarshall(DOMElement $element)
+    public function unmarshall(DOMElement $element): QtiComponent
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($href = $this->getDOMElementAttributeAs($element, 'href')) !== null) {
@@ -96,7 +98,7 @@ class TestFeedbackRefMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'testFeedbackRef';
     }

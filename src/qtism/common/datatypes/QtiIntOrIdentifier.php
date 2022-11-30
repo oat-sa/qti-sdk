@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class QtiIntOrIdentifier extends QtiScalar
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not compliant with the QTI IntOrIdentifier datatype.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (is_int($value) !== true && is_string($value) !== true) {
             $msg = 'The IntOrIdentifier Datatype only accepts to store identifier and integer values.';
@@ -53,7 +55,7 @@ class QtiIntOrIdentifier extends QtiScalar
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return BaseType::INT_OR_IDENTIFIER;
     }
@@ -64,7 +66,7 @@ class QtiIntOrIdentifier extends QtiScalar
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::SINGLE;
     }
@@ -72,7 +74,7 @@ class QtiIntOrIdentifier extends QtiScalar
     /**
      * @return mixed|string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $v = $this->getValue();
         if (is_string($v)) {
@@ -80,5 +82,7 @@ class QtiIntOrIdentifier extends QtiScalar
         } else {
             return '' . $v;
         }
+
+        return (string)$v;
     }
 }

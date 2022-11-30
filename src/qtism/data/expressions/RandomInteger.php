@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -78,7 +80,7 @@ class RandomInteger extends Expression
      *
      * @return int
      */
-    public function getMin()
+    public function getMin(): int
     {
         return $this->min;
     }
@@ -89,7 +91,7 @@ class RandomInteger extends Expression
      * @param int $min
      * @throws InvalidArgumentException
      */
-    public function setMin($min)
+    public function setMin($min): void
     {
         if (is_int($min) || Format::isVariableRef($min)) {
             $this->min = $min;
@@ -104,6 +106,7 @@ class RandomInteger extends Expression
      *
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function getMax()
     {
         return $this->max;
@@ -115,7 +118,7 @@ class RandomInteger extends Expression
      * @param int $max
      * @throws InvalidArgumentException
      */
-    public function setMax($max)
+    public function setMax($max): void
     {
         if (is_int($max) || Format::isVariableRef($max)) {
             $this->max = $max;
@@ -130,7 +133,7 @@ class RandomInteger extends Expression
      *
      * @return int
      */
-    public function getStep()
+    public function getStep(): int
     {
         return $this->step;
     }
@@ -141,7 +144,7 @@ class RandomInteger extends Expression
      * @param int $step
      * @throws InvalidArgumentException
      */
-    public function setStep($step)
+    public function setStep($step): void
     {
         if (is_int($step)) {
             $this->step = $step;
@@ -154,7 +157,7 @@ class RandomInteger extends Expression
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'randomInteger';
     }
@@ -164,7 +167,7 @@ class RandomInteger extends Expression
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return false; // random --> false
     }

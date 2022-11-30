@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -73,7 +75,7 @@ class UnmarshallingException extends Exception
      *
      * @return DOMElement A DOMElement object.
      */
-    public function getDOMElement()
+    public function getDOMElement(): DOMElement
     {
         return $this->DOMElement;
     }
@@ -83,7 +85,7 @@ class UnmarshallingException extends Exception
      *
      * @param DOMElement $element A DOMElement object.
      */
-    protected function setDOMElement(DOMElement $element)
+    protected function setDOMElement(DOMElement $element): void
     {
         $this->DOMElement = $element;
     }

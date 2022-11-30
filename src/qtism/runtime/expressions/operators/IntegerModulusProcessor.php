@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,7 +48,7 @@ class IntegerModulusProcessor extends OperatorProcessor
      * @return QtiInteger|null An integer value that corresponds to the remainder of the Integer Division or NULL if the second expression is 0 or if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiInteger
     {
         $operands = $this->getOperands();
 
@@ -78,7 +80,7 @@ class IntegerModulusProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return IntegerModulus::class;
     }

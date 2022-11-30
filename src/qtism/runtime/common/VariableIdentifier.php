@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -117,7 +119,7 @@ class VariableIdentifier
      * @param string $identifier A prefixed identifier.
      * @throws InvalidArgumentException If $identifier is not a valid prefixed identifier.
      */
-    protected function setIdentifier($identifier)
+    protected function setIdentifier($identifier): void
     {
         if (Utils::isValidVariableIdentifier($identifier)) {
             $this->identifier = $identifier;
@@ -132,7 +134,7 @@ class VariableIdentifier
      *
      * @return string A prefixed identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -142,7 +144,7 @@ class VariableIdentifier
      *
      * @param int $sequenceNumber A integer sequence number.
      */
-    protected function setSequenceNumber($sequenceNumber)
+    protected function setSequenceNumber($sequenceNumber): void
     {
         $this->sequenceNumber = $sequenceNumber;
     }
@@ -153,7 +155,7 @@ class VariableIdentifier
      *
      * @return int A strictly positive sequence number if there is a sequence number in the identifier, otherwise zero.
      */
-    public function getSequenceNumber()
+    public function getSequenceNumber(): int
     {
         return $this->sequenceNumber;
     }
@@ -163,7 +165,7 @@ class VariableIdentifier
      *
      * @return bool
      */
-    public function hasSequenceNumber()
+    public function hasSequenceNumber(): bool
     {
         return $this->getSequenceNumber() > 0;
     }
@@ -173,7 +175,7 @@ class VariableIdentifier
      *
      * @param string $variableName A variable name.
      */
-    protected function setVariableName($variableName)
+    protected function setVariableName($variableName): void
     {
         $this->variableName = $variableName;
     }
@@ -183,7 +185,7 @@ class VariableIdentifier
      *
      * @return string
      */
-    public function getVariableName()
+    public function getVariableName(): string
     {
         return $this->variableName;
     }
@@ -193,7 +195,7 @@ class VariableIdentifier
      *
      * @param string $prefix The prefix of the variable identifier.
      */
-    protected function setPrefix($prefix)
+    protected function setPrefix($prefix): void
     {
         $this->prefix = $prefix;
     }
@@ -206,7 +208,7 @@ class VariableIdentifier
      *
      * @return string The detected variable identifier prefix or an empty string if there is no prefix in the identifier.
      */
-    public function getPrefix()
+    public function getPrefix(): string
     {
         return $this->prefix;
     }
@@ -216,7 +218,7 @@ class VariableIdentifier
      *
      * @return bool
      */
-    public function hasPrefix()
+    public function hasPrefix(): bool
     {
         return $this->getPrefix() !== '';
     }
@@ -232,7 +234,7 @@ class VariableIdentifier
      *
      * @return string The stringified VariableIdentifier object.
      */
-    public function __toString()
+    public function __toString(): string
     {
         if ($this->hasSequenceNumber() === true) {
             return $this->getPrefix() . '.' . $this->getSequenceNumber() . '.' . $this->getVariableName();

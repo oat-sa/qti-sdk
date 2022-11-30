@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -87,7 +89,7 @@ class TestResult extends QtiComponent
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'testResult';
     }
@@ -97,7 +99,7 @@ class TestResult extends QtiComponent
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         if ($this->hasItemVariables()) {
             $components = $this->getItemVariables()->toArray();
@@ -112,7 +114,7 @@ class TestResult extends QtiComponent
      *
      * @return QtiIdentifier
      */
-    public function getIdentifier()
+    public function getIdentifier(): QtiIdentifier
     {
         return $this->identifier;
     }
@@ -134,7 +136,7 @@ class TestResult extends QtiComponent
      *
      * @return DateTime
      */
-    public function getDatestamp()
+    public function getDatestamp(): DateTime
     {
         return $this->datestamp;
     }
@@ -154,9 +156,9 @@ class TestResult extends QtiComponent
     /**
      * Get all test variables. Can be outcome, response, candidate or tempalte variable
      *
-     * @return ItemVariableCollection
+     * @return ItemVariableCollection|null
      */
-    public function getItemVariables()
+    public function getItemVariables(): ?ItemVariableCollection
     {
         return $this->itemVariables;
     }
@@ -178,7 +180,7 @@ class TestResult extends QtiComponent
      *
      * @return bool
      */
-    public function hasItemVariables()
+    public function hasItemVariables(): bool
     {
         return $this->itemVariables !== null;
     }

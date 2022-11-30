@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,6 +32,8 @@ use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiIntOrIdentifier;
+use qtism\common\datatypes\QtiPair;
+use qtism\common\datatypes\QtiPoint;
 use qtism\common\datatypes\QtiScalar;
 use qtism\common\datatypes\QtiString;
 use qtism\common\datatypes\QtiUri;
@@ -47,7 +51,7 @@ class Utils
      * @param mixed $value A value you want to check the compatibility with the QTI runtime model.
      * @return bool
      */
-    public static function isRuntimeCompliant($value)
+    public static function isRuntimeCompliant($value): bool
     {
         return $value === null || $value instanceof QtiDatatype;
     }
@@ -59,7 +63,7 @@ class Utils
      * @param mixed $value A value.
      * @return bool
      */
-    public static function isBaseTypeCompliant($baseType, $value)
+    public static function isBaseTypeCompliant($baseType, $value): bool
     {
         return $value === null
             || (
@@ -75,7 +79,7 @@ class Utils
      * @param mixed $value
      * @return bool
      */
-    public static function isCardinalityCompliant($cardinality, $value)
+    public static function isCardinalityCompliant($cardinality, $value): bool
     {
         return $value === null
             || (
@@ -90,7 +94,7 @@ class Utils
      * @param mixed $value A given PHP primitive value.
      * @throws InvalidArgumentException In any case.
      */
-    public static function throwTypingError($value)
+    public static function throwTypingError($value): void
     {
         $acceptedTypes = [
             'Null',
@@ -124,7 +128,7 @@ class Utils
      * @param mixed $value A given PHP primitive value.
      * @throws InvalidArgumentException In any case.
      */
-    public static function throwBaseTypeTypingError($baseType, $value)
+    public static function throwBaseTypeTypingError($baseType, $value): void
     {
         $givenValue = (is_object($value)) ? get_class($value) : gettype($value) . ':' . $value;
         $acceptedTypes = BaseType::getNameByConstant($baseType);
@@ -176,7 +180,7 @@ class Utils
      * @param string $string A string value.
      * @return bool Whether the given $string is a valid variable identifier.
      */
-    public static function isValidVariableIdentifier($string)
+    public static function isValidVariableIdentifier($string): bool
     {
         if (!is_string($string) || empty($string)) {
             return false;
@@ -193,7 +197,7 @@ class Utils
      * @param array $floatArray An array containing float values.
      * @return array An array containing integer values.
      */
-    public static function floatArrayToInteger($floatArray)
+    public static function floatArrayToInteger($floatArray): array
     {
         $integerArray = [];
         foreach ($floatArray as $f) {
@@ -209,7 +213,7 @@ class Utils
      * @param array $integerArray An array containing integer values.
      * @return array An array containing float values.
      */
-    public static function integerArrayToFloat($integerArray)
+    public static function integerArrayToFloat($integerArray): array
     {
         $floatArray = [];
         foreach ($integerArray as $i) {
@@ -224,8 +228,10 @@ class Utils
      *
      * @param mixed|null $v
      * @param int $baseType A value from the BaseType enumeration.
-     * @return QtiScalar
+     *
+     * @return QtiScalar|QtiPoint|QtiPair
      */
+    #[\ReturnTypeWillChange]
     public static function valueToRuntime($v, $baseType)
     {
         if ($v !== null) {
@@ -265,7 +271,7 @@ class Utils
      * @param QtiDatatype $value
      * @return bool
      */
-    public static function isNull(QtiDatatype $value = null)
+    public static function isNull(QtiDatatype $value = null): bool
     {
         return $value === null
             || ($value instanceof QtiString && $value->getValue() === '')
@@ -284,7 +290,7 @@ class Utils
      * @param QtiDatatype $b
      * @return bool
      */
-    public static function equals(QtiDatatype $a = null, QtiDatatype $b = null)
+    public static function equals(QtiDatatype $a = null, QtiDatatype $b = null): bool
     {
         return ($a === null ? $b === null : $a->equals($b));
     }

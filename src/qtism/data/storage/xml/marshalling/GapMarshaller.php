@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ class GapMarshaller extends Marshaller
      * @param QtiComponent $component A Gap object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $version = $this->getVersion();
         $element = $this->createElement($component);
@@ -82,7 +84,8 @@ class GapMarshaller extends Marshaller
      * @return QtiComponent A Gap object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): Gap
     {
         $version = $this->getVersion();
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
@@ -120,7 +123,7 @@ class GapMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'gap';
     }

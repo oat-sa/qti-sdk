@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +39,7 @@ class ResponseRuleCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of ResponseRule.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof ResponseRule) {
             $msg = "ResponseRuleCollection only accepts to store ResponseRule objects, '" . gettype($value) . "' given.";

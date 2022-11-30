@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,14 +32,14 @@ use qtism\common\enums\Enumeration;
  */
 class Orientation implements Enumeration
 {
-    const VERTICAL = 0;
+    public const VERTICAL = 0;
 
-    const HORIZONTAL = 1;
+    public const HORIZONTAL = 1;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'VERTICAL' => 0,
@@ -51,7 +53,7 @@ class Orientation implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'vertical':
                 return self::VERTICAL;
                 break;

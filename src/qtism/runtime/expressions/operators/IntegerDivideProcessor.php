@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +46,7 @@ class IntegerDivideProcessor extends OperatorProcessor
      *
      * @return QtiInteger|null An integer value that corresponds to the first expression divided by the second rounded down to the greatest integer i such that i <= x / y. If the second expression is 0 or if either of the sub-expressions is NULL, the result is NULL.
      */
-    public function process()
+    public function process(): ?QtiInteger
     {
         $operands = $this->getOperands();
 
@@ -76,7 +78,7 @@ class IntegerDivideProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return IntegerDivide::class;
     }

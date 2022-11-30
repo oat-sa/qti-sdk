@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -51,7 +53,7 @@ class MatchTableEntryMarshaller extends Marshaller
      *
      * @return int A value from the BaseType enumeration.
      */
-    protected function getBaseType()
+    protected function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -62,7 +64,7 @@ class MatchTableEntryMarshaller extends Marshaller
      * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
      */
-    protected function setBaseType($baseType)
+    protected function setBaseType($baseType): void
     {
         if (in_array($baseType, BaseType::asArray())) {
             $this->baseType = $baseType;
@@ -93,7 +95,7 @@ class MatchTableEntryMarshaller extends Marshaller
      * @param QtiComponent $component A MatchTableEntry object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -110,7 +112,8 @@ class MatchTableEntryMarshaller extends Marshaller
      * @return QtiComponent A MatchTableEntry object.
      * @throws UnmarshallingException If the mandatory attributes 'sourceValue' or 'targetValue' are missing from $element.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): MatchTableEntry
     {
         if (($sourceValue = $this->getDOMElementAttributeAs($element, 'sourceValue', 'integer')) !== null) {
             if (($targetValue = $this->getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
@@ -128,7 +131,7 @@ class MatchTableEntryMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'matchTableEntry';
     }

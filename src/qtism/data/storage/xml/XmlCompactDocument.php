@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -101,7 +103,7 @@ class XmlCompactDocument extends XmlDocument
      * @param string $versionNumber A QTI Compact version number e.g. '2.1.0'.
      * @throws QtiVersionException when version is not supported for QTI Compact.
      */
-    public function setVersion(string $versionNumber)
+    public function setVersion(string $versionNumber): void
     {
         $this->version = CompactVersion::create($versionNumber);
     }
@@ -121,7 +123,7 @@ class XmlCompactDocument extends XmlDocument
      *
      * @param bool $explodeRubricBlocks Whether rubrickBlock components must be exploded into multiple documents and replaced by rubricBlockRef components.
      */
-    public function setExplodeRubricBlocks($explodeRubricBlocks)
+    public function setExplodeRubricBlocks($explodeRubricBlocks): void
     {
         $this->explodeRubricBlocks = $explodeRubricBlocks;
     }
@@ -131,7 +133,7 @@ class XmlCompactDocument extends XmlDocument
      *
      * @return bool
      */
-    public function mustExplodeRubricBlocks()
+    public function mustExplodeRubricBlocks(): bool
     {
         return $this->explodeRubricBlocks;
     }
@@ -147,7 +149,7 @@ class XmlCompactDocument extends XmlDocument
      *
      * @param bool $explodeTestFeedbacks
      */
-    public function setExplodeTestFeedbacks($explodeTestFeedbacks)
+    public function setExplodeTestFeedbacks($explodeTestFeedbacks): void
     {
         $this->explodeTestFeedbacks = $explodeTestFeedbacks;
     }
@@ -157,7 +159,7 @@ class XmlCompactDocument extends XmlDocument
      *
      * @return bool
      */
-    public function mustExplodeTestFeedbacks()
+    public function mustExplodeTestFeedbacks(): bool
     {
         return $this->explodeTestFeedbacks;
     }
@@ -172,7 +174,7 @@ class XmlCompactDocument extends XmlDocument
      * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
      * @throws ReflectionException
      */
-    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null, $version = '2.1')
+    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null, $version = '2.1'): XmlCompactDocument
     {
         $compactAssessmentTest = new XmlCompactDocument($version);
         $compactAssessmentTest->setFilesystem($xmlAssessmentTestDocument->getFilesystem());
@@ -301,8 +303,11 @@ class XmlCompactDocument extends XmlDocument
      * @param FileResolver $resolver The Resolver to be used to resolver AssessmentItemRef's href attribute.
      * @throws XmlStorageException If an error occurs (e.g. file not found at URI or unmarshalling issue) during the dereferencing.
      */
-    protected static function resolveAssessmentItemRef(XmlDocument $sourceDocument, ExtendedAssessmentItemRef $compactAssessmentItemRef, FileResolver $resolver)
-    {
+    protected static function resolveAssessmentItemRef(
+        XmlDocument $sourceDocument,
+        ExtendedAssessmentItemRef $compactAssessmentItemRef,
+        FileResolver $resolver
+    ): void {
         try {
             $href = $resolver->resolve($compactAssessmentItemRef->getHref());
 
@@ -366,8 +371,11 @@ class XmlCompactDocument extends XmlDocument
      * @throws XmlStorageException If an error occurs while dereferencing the referenced file.
      * @throws ReflectionException
      */
-    protected static function resolveAssessmentSectionRef(XmlDocument $sourceDocument, AssessmentSectionRef $assessmentSectionRef, FileResolver $resolver)
-    {
+    protected static function resolveAssessmentSectionRef(
+        XmlDocument $sourceDocument,
+        AssessmentSectionRef $assessmentSectionRef,
+        FileResolver $resolver
+    ): XmlDocument {
         try {
             $href = $resolver->resolve($assessmentSectionRef->getHref());
 
@@ -389,7 +397,7 @@ class XmlCompactDocument extends XmlDocument
      * @throws XmlStorageException
      * @throws marshalling\MarshallingException
      */
-    public function beforeSave(QtiComponent $documentComponent, $uri)
+    public function beforeSave(QtiComponent $documentComponent, $uri): void
     {
         // Take care of rubricBlock explosion. Transform actual rubricBlocks in rubricBlockRefs.
         if ($this->mustExplodeRubricBlocks() === true) {
@@ -464,7 +472,7 @@ class XmlCompactDocument extends XmlDocument
      *
      * @return array where keys are RubricBlockRefs href and values are RubricBlocs as QtiComponent objets.
      */
-    public function explodeRubricBlocks()
+    public function explodeRubricBlocks(): array
     {
         // Get all rubricBlock elements...
         $iterator = new QtiComponentIterator($this->getDocumentComponent(), ['rubricBlock']);

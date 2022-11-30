@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -54,13 +56,13 @@ abstract class GapChoiceRenderer extends ChoiceRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-gapChoice');
 
-        $fragment->firstChild->setAttribute('data-match-max', $component->getMatchMax());
-        $fragment->firstChild->setAttribute('data-match-min', $component->getMatchMin());
+        $fragment->firstChild->setAttribute('data-match-max', (string)$component->getMatchMax());
+        $fragment->firstChild->setAttribute('data-match-min', (string)$component->getMatchMin());
 
         if (count($component->getMatchGroup()) > 0) {
             $fragment->firstChild->setAttribute('data-match-group', implode(' ', $component->getMatchGroup()->getArrayCopy()));

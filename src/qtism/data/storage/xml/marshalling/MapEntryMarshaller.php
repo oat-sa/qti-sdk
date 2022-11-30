@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -52,7 +54,7 @@ class MapEntryMarshaller extends Marshaller
      * @param int $baseType A baseType from the BaseType enumeration.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
      */
-    protected function setBaseType($baseType)
+    protected function setBaseType($baseType): void
     {
         if (in_array($baseType, BaseType::asArray())) {
             $this->baseType = $baseType;
@@ -68,7 +70,7 @@ class MapEntryMarshaller extends Marshaller
      *
      * @return int A baseType from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -92,7 +94,7 @@ class MapEntryMarshaller extends Marshaller
      * @param QtiComponent $component A MapEntry object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -113,7 +115,8 @@ class MapEntryMarshaller extends Marshaller
      * @return QtiComponent A MapEntry object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): MapEntry
     {
         try {
             $mapKey = $this->getDOMElementAttributeAs($element, 'mapKey');
@@ -140,7 +143,7 @@ class MapEntryMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'mapEntry';
     }

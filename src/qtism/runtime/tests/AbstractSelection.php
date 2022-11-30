@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -72,7 +74,7 @@ abstract class AbstractSelection
      *
      * @return AssessmentSection An AssessmentSection object.
      */
-    public function getAssessmentSection()
+    public function getAssessmentSection(): AssessmentSection
     {
         return $this->assessmentSection;
     }
@@ -82,7 +84,7 @@ abstract class AbstractSelection
      *
      * @param AssessmentSection $assessmentSection An AssessmentSection object.
      */
-    public function setAssessmentSection(AssessmentSection $assessmentSection)
+    public function setAssessmentSection(AssessmentSection $assessmentSection): void
     {
         $this->assessmentSection = $assessmentSection;
     }
@@ -92,7 +94,7 @@ abstract class AbstractSelection
      *
      * @return SelectableRouteCollection A collection of Route objects.
      */
-    public function getSelectableRoutes()
+    public function getSelectableRoutes(): SelectableRouteCollection
     {
         return $this->selectableRoutes;
     }
@@ -102,7 +104,7 @@ abstract class AbstractSelection
      *
      * @param SelectableRouteCollection $selectableRoutes
      */
-    public function setSelectableRoutes(SelectableRouteCollection $selectableRoutes)
+    public function setSelectableRoutes(SelectableRouteCollection $selectableRoutes): void
     {
         $this->selectableRoutes = $selectableRoutes;
     }
@@ -113,5 +115,5 @@ abstract class AbstractSelection
      * @return SelectableRouteCollection A collection of selected SelectableRoute object describing the selection.
      * @throws SelectionException
      */
-    abstract public function select();
+    abstract public function select(): SelectableRouteCollection;
 }

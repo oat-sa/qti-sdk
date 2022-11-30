@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -51,7 +53,7 @@ class LocalFileResolver extends FileResolver
      * @return string href
      * @throws ResolutionException If $url cannot be resolved.
      */
-    public function resolve($url)
+    public function resolve($url): string
     {
         $baseUrl = Utils::sanitizeUri($this->getBasePath());
         $baseDir = pathinfo($baseUrl, PATHINFO_DIRNAME);

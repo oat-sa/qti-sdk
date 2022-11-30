@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,7 +63,7 @@ class Col extends BodyElement
      * @param int $span A strictly positive integer.
      * @throws InvalidArgumentException If $span is not a positive integer.
      */
-    public function setSpan($span)
+    public function setSpan($span): void
     {
         if (is_int($span) && $span > 0) {
             $this->span = $span;
@@ -76,7 +78,7 @@ class Col extends BodyElement
      *
      * @return int A strictly positive integer.
      */
-    public function getSpan()
+    public function getSpan(): int
     {
         return $this->span;
     }
@@ -84,7 +86,7 @@ class Col extends BodyElement
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -92,7 +94,7 @@ class Col extends BodyElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'col';
     }

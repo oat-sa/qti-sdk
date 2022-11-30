@@ -67,7 +67,7 @@ class QtiBinaryVersion
      * @param QtiBinaryStreamAccess $access
      * @throws BinaryStreamAccessException
      */
-    public function persist(QtiBinaryStreamAccess $access)
+    public function persist(QtiBinaryStreamAccess $access): void
     {
         $access->writeTinyInt(self::CURRENT_VERSION);
         $access->writeString(self::CURRENT_BRANCH);
@@ -79,7 +79,7 @@ class QtiBinaryVersion
      * @param QtiBinaryStreamAccess $access
      * @throws BinaryStreamAccessException
      */
-    public function retrieve(QtiBinaryStreamAccess $access)
+    public function retrieve(QtiBinaryStreamAccess $access): void
     {
         $this->version = $access->readTinyInt();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class Statistics implements Enumeration
      *
      * @var int
      */
-    const MEAN = 0;
+    public const MEAN = 0;
 
     /**
      * From IMS QTI:
@@ -48,7 +50,7 @@ class Statistics implements Enumeration
      *
      * @var int
      */
-    const SAMPLE_VARIANCE = 1;
+    public const SAMPLE_VARIANCE = 1;
 
     /**
      * From IMS QTI:
@@ -58,7 +60,7 @@ class Statistics implements Enumeration
      *
      * @var int
      */
-    const SAMPLE_SD = 2;
+    public const SAMPLE_SD = 2;
 
     /**
      * From IMS QTI:
@@ -68,7 +70,7 @@ class Statistics implements Enumeration
      *
      * @var int
      */
-    const POP_VARIANCE = 3;
+    public const POP_VARIANCE = 3;
 
     /**
      * From IMS QTI:
@@ -78,12 +80,12 @@ class Statistics implements Enumeration
      *
      * @var int
      */
-    const POP_SD = 4;
+    public const POP_SD = 4;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'MEAN' => self::MEAN,
@@ -100,7 +102,7 @@ class Statistics implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'mean':
                 return self::MEAN;
                 break;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -118,7 +120,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -129,7 +131,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * @param string $identifier A QTI identifier.
      * @throws InvalidArgumentException If the given $identifier is not valid.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
@@ -145,7 +147,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * @param bool $fixed
      * @throws InvalidArgumentException If $fixed is not a boolean value.
      */
-    public function setFixed($fixed)
+    public function setFixed($fixed): void
     {
         if (is_bool($fixed)) {
             $this->fixed = $fixed;
@@ -160,7 +162,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      *
      * @return bool
      */
-    public function isFixed()
+    public function isFixed(): bool
     {
         return $this->fixed;
     }
@@ -171,9 +173,9 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * @param string $templateIdentifier An empty string if no identifier is provided or a QTI identifier.
      * @throws InvalidArgumentException If the given $templateIdentifier is not a valid QTI identifier.
      */
-    public function setTemplateIdentifier($templateIdentifier)
+    public function setTemplateIdentifier($templateIdentifier): void
     {
-        if (is_string($templateIdentifier) && (empty($templateIdentifier)) || Format::isIdentifier($templateIdentifier, false) === true) {
+        if (is_string($templateIdentifier) && (empty($templateIdentifier)) || Format::isIdentifier((string)$templateIdentifier, false) === true) {
             $this->templateIdentifier = $templateIdentifier;
         } else {
             $msg = "The 'templateIdentifier' must be an empty string or a valid QTI identifier, '" . gettype($templateIdentifier) . "' given.";
@@ -186,7 +188,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      *
      * @return string A QTI identifier or an empty string if no identifier provided.
      */
-    public function getTemplateIdentifier()
+    public function getTemplateIdentifier(): string
     {
         return $this->templateIdentifier;
     }
@@ -196,7 +198,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      *
      * @return bool
      */
-    public function hasTemplateIdentifier()
+    public function hasTemplateIdentifier(): bool
     {
         return $this->getTemplateIdentifier() !== '';
     }
@@ -207,7 +209,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
-    public function setShowHide($showHide)
+    public function setShowHide($showHide): void
     {
         if (in_array($showHide, ShowHide::asArray())) {
             $this->showHide = $showHide;
@@ -222,7 +224,7 @@ abstract class Choice extends BodyElement implements QtiIdentifiable, Shufflable
      *
      * @return int A value from the ShowHide enumeration.
      */
-    public function getShowHide()
+    public function getShowHide(): int
     {
         return $this->showHide;
     }

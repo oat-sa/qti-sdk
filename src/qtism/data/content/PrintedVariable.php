@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -190,7 +192,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @param string $identifier A valid QTI identifier.
      * @throws InvalidArgumentException If the given $identifier is invalid.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
@@ -205,7 +207,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      *
      * @return string A valid QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -218,7 +220,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @throws InvalidArgumentException If $format is not a string with at most 256 characters.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#section10074
      */
-    public function setFormat($format)
+    public function setFormat($format): void
     {
         if (Format::isString256($format) === true) {
             $this->format = $format;
@@ -235,7 +237,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @return string A string with at most 256 characters.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#section10074
      */
-    public function getFormat()
+    public function getFormat(): string
     {
         return $this->format;
     }
@@ -245,7 +247,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      *
      * @return bool
      */
-    public function hasFormat()
+    public function hasFormat(): bool
     {
         return $this->getFormat() !== '';
     }
@@ -257,7 +259,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @param bool $powerForm
      * @throws InvalidArgumentException If $powerForm is not a boolean value.
      */
-    public function setPowerForm($powerForm)
+    public function setPowerForm($powerForm): void
     {
         if (is_bool($powerForm)) {
             $this->powerForm = $powerForm;
@@ -273,7 +275,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      *
      * @return bool
      */
-    public function mustPowerForm()
+    public function mustPowerForm(): bool
     {
         return $this->powerForm;
     }
@@ -284,9 +286,9 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @param int|string $base A base to use for conversion as an integer or a variable reference.
      * @throws InvalidArgumentException If $base is not an integer nor a variable reference.
      */
-    public function setBase($base)
+    public function setBase($base): void
     {
-        if (is_int($base) || Format::isVariableRef($base) === true) {
+        if (is_int($base) || Format::isVariableRef((string)$base) === true) {
             $this->base = $base;
         } else {
             $msg = "The 'base' argument must be an integer or a variable reference, '" . $base . "' given.";
@@ -311,9 +313,9 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      * @param int|string $index An integer or variable reference.
      * @throws InvalidArgumentException If $index is not an integer nor a variable reference.
      */
-    public function setIndex($index)
+    public function setIndex($index): void
     {
-        if (is_int($index) || Format::isVariableRef($index) === true) {
+        if (is_int($index) || Format::isVariableRef((string)$index) === true) {
             $this->index = $index;
         } else {
             $msg = "The 'index' argument must be an integer or a variable reference, '" . $index . "' given.";
@@ -337,7 +339,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      *
      * @return bool
      */
-    public function hasIndex()
+    public function hasIndex(): bool
     {
         return is_string($this->index) || $this->index >= 0;
     }
@@ -365,7 +367,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      *
      * @return string A non-empty string with at least 256 characters.
      */
-    public function getDelimiter()
+    public function getDelimiter(): string
     {
         return $this->delimiter;
     }
@@ -393,7 +395,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      *
      * @return string A string with at most 256 characters.
      */
-    public function getField()
+    public function getField(): string
     {
         return $this->field;
     }
@@ -403,7 +405,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      *
      * @return bool
      */
-    public function hasField()
+    public function hasField(): bool
     {
         $field = $this->getField();
 
@@ -433,7 +435,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
      *
      * @return string A non-empty string with at most 256 characters.
      */
-    public function getMappingIndicator()
+    public function getMappingIndicator(): string
     {
         return $this->mappingIndicator;
     }
@@ -441,7 +443,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -449,7 +451,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'printedVariable';
     }

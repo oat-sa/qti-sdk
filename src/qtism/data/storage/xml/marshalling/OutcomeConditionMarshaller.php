@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,7 +47,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
      * @return OutcomeCondition
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): OutcomeCondition
     {
         if (count($children) > 0) {
             // The first element of $children must be an outcomeIf.
@@ -83,7 +85,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
      * @param array $elements
      * @return DOMElement
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -98,7 +100,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
      * @param DOMNode $element
      * @return bool
      */
-    protected function isElementFinal(DOMNode $element)
+    protected function isElementFinal(DOMNode $element): bool
     {
         $exclusion = ['outcomeIf', 'outcomeElseIf', 'outcomeElse', 'outcomeCondition'];
 
@@ -109,7 +111,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return bool
      */
-    protected function isComponentFinal(QtiComponent $component)
+    protected function isComponentFinal(QtiComponent $component): bool
     {
         return (!$component instanceof OutcomeIf &&
             !$component instanceof OutcomeElseIf &&
@@ -121,7 +123,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
      * @param DOMElement $element
      * @return array
      */
-    protected function getChildrenElements(DOMElement $element)
+    protected function getChildrenElements(DOMElement $element): array
     {
         return $this->getChildElementsByTagName($element, [
             'outcomeIf',
@@ -138,7 +140,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return array
      */
-    protected function getChildrenComponents(QtiComponent $component)
+    protected function getChildrenComponents(QtiComponent $component): array
     {
         if ($component instanceof OutcomeIf || $component instanceof OutcomeElseIf || $component instanceof OutcomeElse) {
             // OutcomeControl
@@ -175,7 +177,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return '';
     }

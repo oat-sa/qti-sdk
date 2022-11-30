@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,10 +52,10 @@ class OutcomeVariableMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
-        $element->setAttribute('identifier', $component->getIdentifier());
+        $element->setAttribute('identifier', (string)$component->getIdentifier());
         $element->setAttribute('cardinality', Cardinality::getNameByConstant($component->getCardinality()));
         $element->setAttribute('baseType', BaseType::getNameByConstant($component->getBaseType()));
 
@@ -62,23 +64,23 @@ class OutcomeVariableMarshaller extends Marshaller
         }
 
         if ($component->hasInterpretation()) {
-            $element->setAttribute('interpretation', $component->getInterpretation());
+            $element->setAttribute('interpretation', (string)$component->getInterpretation());
         }
 
         if ($component->hasLongInterpretation()) {
-            $element->setAttribute('longInterpretation', $component->getLongInterpretation());
+            $element->setAttribute('longInterpretation', (string)$component->getLongInterpretation());
         }
 
         if ($component->hasNormalMinimum()) {
-            $element->setAttribute('normalMinimum', $component->getNormalMinimum());
+            $element->setAttribute('normalMinimum', (string)$component->getNormalMinimum());
         }
 
         if ($component->hasNormalMaximum()) {
-            $element->setAttribute('normalMaximum', $component->getNormalMaximum());
+            $element->setAttribute('normalMaximum', (string)$component->getNormalMaximum());
         }
 
         if ($component->hasMasteryValue()) {
-            $element->setAttribute('masteryValue', $component->getMasteryValue());
+            $element->setAttribute('masteryValue', (string)$component->getMasteryValue());
         }
 
         if ($component->hasValues()) {
@@ -99,7 +101,7 @@ class OutcomeVariableMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): QtiComponent
     {
         if (!$element->hasAttribute('identifier')) {
             throw new UnmarshallingException('OutcomeVariable element must have identifier attribute', $element);
@@ -164,7 +166,7 @@ class OutcomeVariableMarshaller extends Marshaller
      *
      * @return string A QTI class name or an empty string.
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'outcomeVariable';
     }

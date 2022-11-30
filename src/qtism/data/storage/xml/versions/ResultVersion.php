@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,7 +32,7 @@ use DOMDocument;
  */
 class ResultVersion extends QtiVersion
 {
-    const SUPPORTED_VERSIONS = [
+    public const SUPPORTED_VERSIONS = [
         '2.1.0' => ResultVersion21::class,
         '2.1.1' => ResultVersion21::class,
         '2.2.0' => ResultVersion22::class,
@@ -40,9 +42,9 @@ class ResultVersion extends QtiVersion
         '2.2.4' => ResultVersion22::class,
     ];
 
-    const UNSUPPORTED_VERSION_MESSAGE = 'QTI Result Report is not supported for version "%s".';
+    public const UNSUPPORTED_VERSION_MESSAGE = 'QTI Result Report is not supported for version "%s".';
 
-    const INFERRED_VERSIONS = [
+    public const INFERRED_VERSIONS = [
         ResultVersion21::XMLNS => '2.1.0',
         ResultVersion22::XMLNS => '2.2.0',
     ];

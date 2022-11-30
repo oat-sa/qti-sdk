@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,7 +48,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
      * @return TemplateCondition
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): TemplateCondition
     {
         if (count($children) > 0) {
             // The first element of $children must be a templateIf.
@@ -84,7 +86,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
      * @param array $elements
      * @return DOMElement
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -99,7 +101,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
      * @param DOMNode $element
      * @return bool
      */
-    protected function isElementFinal(DOMNode $element)
+    protected function isElementFinal(DOMNode $element): bool
     {
         return !in_array($element->localName, ['templateIf', 'templateElseIf', 'templateElse', 'templateCondition']);
     }
@@ -108,7 +110,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return bool
      */
-    protected function isComponentFinal(QtiComponent $component)
+    protected function isComponentFinal(QtiComponent $component): bool
     {
         return (!$component instanceof TemplateIf &&
             !$component instanceof TemplateElseIf &&
@@ -120,7 +122,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
      * @param DOMElement $element
      * @return array
      */
-    protected function getChildrenElements(DOMElement $element)
+    protected function getChildrenElements(DOMElement $element): array
     {
         return $this->getChildElementsByTagName($element, [
             'templateIf',
@@ -139,7 +141,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return array
      */
-    protected function getChildrenComponents(QtiComponent $component)
+    protected function getChildrenComponents(QtiComponent $component): array
     {
         if ($component instanceof TemplateIf || $component instanceof TemplateElseIf || $component instanceof TemplateElse) {
             // TemplateControl
@@ -164,6 +166,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
      * @param DOMElement $currentNode
      * @return QtiComponentCollection|TemplateRuleCollection
      */
+    #[\ReturnTypeWillChange]
     protected function createCollection(DOMElement $currentNode)
     {
         if ($currentNode->localName != 'templateCondition') {
@@ -176,7 +179,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return '';
     }

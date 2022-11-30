@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -118,7 +120,7 @@ abstract class TableCell extends BodyElement
      *
      * @param IdentifierCollection $headers A collection of QTI identifiers.
      */
-    public function setHeaders(IdentifierCollection $headers)
+    public function setHeaders(IdentifierCollection $headers): void
     {
         $this->headers = $headers;
     }
@@ -128,7 +130,7 @@ abstract class TableCell extends BodyElement
      *
      * @return IdentifierCollection A collection of QTI identifiers.
      */
-    public function getHeaders()
+    public function getHeaders(): IdentifierCollection
     {
         return $this->headers;
     }
@@ -138,7 +140,7 @@ abstract class TableCell extends BodyElement
      *
      * @return bool
      */
-    public function hasHeaders()
+    public function hasHeaders(): bool
     {
         return count($this->getHeaders()) > 0;
     }
@@ -149,7 +151,7 @@ abstract class TableCell extends BodyElement
      * @param int $scope A value from the TableCellScope enumeration or -1 if no scope is defined.
      * @throws InvalidArgumentException If $scope is not a value from the TableCellScope enumeration nor -1.
      */
-    public function setScope($scope)
+    public function setScope($scope): void
     {
         if (in_array($scope, TableCellScope::asArray(), true) || $scope === -1) {
             $this->scope = $scope;
@@ -164,7 +166,7 @@ abstract class TableCell extends BodyElement
      *
      * @return int A value from the TableCellScope enumeration or -1 if no scope is defined.
      */
-    public function getScope()
+    public function getScope(): int
     {
         return $this->scope;
     }
@@ -174,7 +176,7 @@ abstract class TableCell extends BodyElement
      *
      * @return bool
      */
-    public function hasScope()
+    public function hasScope(): bool
     {
         return $this->getScope() !== -1;
     }
@@ -185,7 +187,7 @@ abstract class TableCell extends BodyElement
      * @param string $abbr A string or an empty string if no abbr is defined.
      * @throws InvalidArgumentException If $bbr is not a string.
      */
-    public function setAbbr($abbr)
+    public function setAbbr($abbr): void
     {
         if (is_string($abbr)) {
             $this->abbr = $abbr;
@@ -200,7 +202,7 @@ abstract class TableCell extends BodyElement
      *
      * @return string A string or an empty string if no abbr is defined.
      */
-    public function getAbbr()
+    public function getAbbr(): string
     {
         return $this->abbr;
     }
@@ -210,7 +212,7 @@ abstract class TableCell extends BodyElement
      *
      * @return bool
      */
-    public function hasAbbr()
+    public function hasAbbr(): bool
     {
         return $this->getAbbr() !== '';
     }
@@ -221,7 +223,7 @@ abstract class TableCell extends BodyElement
      * @param string $axis A string. Give an empty string if no axis is indicated.
      * @throws InvalidArgumentException If $axis is not a string.
      */
-    public function setAxis($axis)
+    public function setAxis($axis): void
     {
         if (is_string($axis)) {
             $this->axis = $axis;
@@ -236,7 +238,7 @@ abstract class TableCell extends BodyElement
      *
      * @return string A string. The string is empty if no axis is defined.
      */
-    public function getAxis()
+    public function getAxis(): string
     {
         return $this->axis;
     }
@@ -246,7 +248,7 @@ abstract class TableCell extends BodyElement
      *
      * @return bool
      */
-    public function hasAxis()
+    public function hasAxis(): bool
     {
         return $this->getAxis() !== '';
     }
@@ -258,7 +260,7 @@ abstract class TableCell extends BodyElement
      * @param int $rowspan
      * @throws InvalidArgumentException If $rowspan is not an integer.
      */
-    public function setRowspan($rowspan)
+    public function setRowspan($rowspan): void
     {
         if (is_int($rowspan)) {
             $this->rowspan = $rowspan;
@@ -274,7 +276,7 @@ abstract class TableCell extends BodyElement
      *
      * @return int
      */
-    public function getRowspan()
+    public function getRowspan(): int
     {
         return $this->rowspan;
     }
@@ -284,7 +286,7 @@ abstract class TableCell extends BodyElement
      *
      * @return bool
      */
-    public function hasRowspan()
+    public function hasRowspan(): bool
     {
         return $this->getRowspan() >= 0;
     }
@@ -296,7 +298,7 @@ abstract class TableCell extends BodyElement
      * @param int $colspan An integer.
      * @throws InvalidArgumentException If $colspan is not an integer.
      */
-    public function setColspan($colspan)
+    public function setColspan($colspan): void
     {
         if (is_int($colspan)) {
             $this->colspan = $colspan;
@@ -312,7 +314,7 @@ abstract class TableCell extends BodyElement
      *
      * @return int
      */
-    public function getColspan()
+    public function getColspan(): int
     {
         return $this->colspan;
     }
@@ -322,7 +324,7 @@ abstract class TableCell extends BodyElement
      *
      * @return bool
      */
-    public function hasColspan()
+    public function hasColspan(): bool
     {
         return $this->getColspan() >= 0;
     }
@@ -332,7 +334,7 @@ abstract class TableCell extends BodyElement
      *
      * @param FlowCollection $content A collection of Flow objects.
      */
-    public function setContent(FlowCollection $content)
+    public function setContent(FlowCollection $content): void
     {
         $this->content = $content;
     }
@@ -342,7 +344,7 @@ abstract class TableCell extends BodyElement
      *
      * @return FlowCollection
      */
-    public function getContent()
+    public function getContent(): FlowCollection
     {
         return $this->content;
     }
@@ -350,7 +352,7 @@ abstract class TableCell extends BodyElement
     /**
      * @return FlowCollection
      */
-    public function getComponents()
+    public function getComponents(): FlowCollection
     {
         return $this->getContent();
     }

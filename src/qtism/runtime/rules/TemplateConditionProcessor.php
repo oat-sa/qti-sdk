@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ class TemplateConditionProcessor extends AbstractConditionProcessor
     /**
      * @return string
      */
-    public function getQtiNature()
+    public function getQtiNature(): string
     {
         return 'template';
     }
@@ -49,7 +51,7 @@ class TemplateConditionProcessor extends AbstractConditionProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return TemplateCondition::class;
     }

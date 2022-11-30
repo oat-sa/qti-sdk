@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qti\customOperators\math\graph;
 
 use Exception;
@@ -14,7 +16,11 @@ use qtism\runtime\expressions\operators\CustomOperatorProcessor;
 
 class CountPointsThatSatisfyEquation extends CustomOperatorProcessor
 {
-    public function process() 
+    /**
+     * @return QtismInteger|void|null
+     */
+    #[\ReturnTypeWillChange]
+    public function process()
     {
         $returnValue = new QtismInteger(0);
         $operands = $this->getOperands();

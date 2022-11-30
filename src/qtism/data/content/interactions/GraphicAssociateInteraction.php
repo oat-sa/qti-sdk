@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -106,7 +108,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * @param AssociableHotspotCollection $associableHotspots A collection of at least 1 AssociableHotspot object.
      * @throws InvalidArgumentException If $associableHotspots is empty.
      */
-    public function setAssociableHotspots(AssociableHotspotCollection $associableHotspots)
+    public function setAssociableHotspots(AssociableHotspotCollection $associableHotspots): void
     {
         if (count($associableHotspots) > 0) {
             $this->associableHotspots = $associableHotspots;
@@ -121,7 +123,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      *
      * @return AssociableHotspotCollection A collection of AssociableHotspot objects.
      */
-    public function getAssociableHotspots()
+    public function getAssociableHotspots(): AssociableHotspotCollection
     {
         return $this->associableHotspots;
     }
@@ -133,7 +135,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * @param int $maxAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
      */
-    public function setMaxAssociations($maxAssociations)
+    public function setMaxAssociations($maxAssociations): void
     {
         if (is_int($maxAssociations) && $maxAssociations >= 0) {
             $this->maxAssociations = $maxAssociations;
@@ -149,7 +151,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      *
      * @return int $maxAssociations A positive (>= 0) integer.
      */
-    public function getMaxAssociations()
+    public function getMaxAssociations(): int
     {
         return $this->maxAssociations;
     }
@@ -161,7 +163,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      * @param int $minAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by maxAssociations.
      */
-    public function setMinAssociations($minAssociations)
+    public function setMinAssociations($minAssociations): void
     {
         if (is_int($minAssociations) && $minAssociations >= 0) {
             if ($minAssociations > $this->getMaxAssociations()) {
@@ -182,7 +184,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMinAssociations()
+    public function getMinAssociations(): int
     {
         return $this->minAssociations;
     }
@@ -190,7 +192,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
     /**
      * @return ResponseValidityConstraint|null
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -214,7 +216,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getAssociableHotspots()->getArrayCopy()));
     }
@@ -222,7 +224,7 @@ class GraphicAssociateInteraction extends GraphicInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'graphicAssociateInteraction';
     }

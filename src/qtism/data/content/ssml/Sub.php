@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -52,12 +54,12 @@ class Sub extends ExternalQtiComponent implements FlowStatic, InlineStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'sub';
     }
 
-    protected function buildTargetNamespace()
+    protected function buildTargetNamespace(): void
     {
         $this->setTargetNamespace('http://www.w3.org/2010/10/synthesis');
     }

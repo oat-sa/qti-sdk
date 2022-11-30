@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,6 +27,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
+use qtism\common\datatypes\QtiShape;
 
 /**
  * From IMS QTI:
@@ -45,8 +48,9 @@ interface Hotspot
     /**
      * Get the shape of the hotspot.
      *
-     * @return int A Shape object.
+     * @return QtiShape|null A Shape object.
      */
+    #[\ReturnTypeWillChange]
     public function getShape();
 
     /**
@@ -61,7 +65,7 @@ interface Hotspot
      *
      * @return QtiCoords A Coords object.
      */
-    public function getCoords();
+    public function getCoords(): QtiCoords;
 
     /**
      * Set the alternative text for this hotspot.
@@ -76,7 +80,7 @@ interface Hotspot
      *
      * @return string A string with a maximum of 256 characters.
      */
-    public function getHotspotLabel();
+    public function getHotspotLabel(): string;
 
     /**
      * Whether or not a value is defined for the hotspotLabel
@@ -84,5 +88,5 @@ interface Hotspot
      *
      * @return bool
      */
-    public function hasHotspotLabel();
+    public function hasHotspotLabel(): bool;
 }

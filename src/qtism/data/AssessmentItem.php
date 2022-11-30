@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -226,7 +228,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      * @param string $identifier A QTI Identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
@@ -242,7 +244,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -253,7 +255,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      * @param string $title A title.
      * @throws InvalidArgumentException If $title is not a string value.
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         if (is_string($title)) {
             $this->title = $title;
@@ -268,7 +270,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return string A title.
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -279,7 +281,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      * @param string $lang A language code.
      * @throws InvalidArgumentException If $lang is not a string.
      */
-    public function setLang($lang = '')
+    public function setLang($lang = ''): void
     {
         if (is_string($lang)) {
             $this->lang = $lang;
@@ -295,7 +297,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      * @param string $label A string with at most 256 characters.
      * @throws InvalidArgumentException If $label is not a string with at most 256 characters.
      */
-    public function setLabel($label)
+    public function setLabel($label): void
     {
         if (Format::isString256($label) === true) {
             $this->label = $label;
@@ -310,7 +312,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return bool
      */
-    public function hasLabel()
+    public function hasLabel(): bool
     {
         return $this->getLabel() !== '';
     }
@@ -320,7 +322,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return string A string with at most 256 characters.
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
@@ -330,7 +332,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return string A language code.
      */
-    public function getLang()
+    public function getLang(): string
     {
         return $this->lang;
     }
@@ -340,7 +342,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return bool
      */
-    public function hasLang()
+    public function hasLang(): bool
     {
         $lang = $this->getLang();
 
@@ -353,7 +355,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      * @param bool $adaptive Adaptive or not.
      * @throws InvalidArgumentException If $adaptive is not a boolean value.
      */
-    public function setAdaptive($adaptive)
+    public function setAdaptive($adaptive): void
     {
         if (is_bool($adaptive)) {
             $this->adaptive = $adaptive;
@@ -368,7 +370,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return bool
      */
-    public function isAdaptive()
+    public function isAdaptive(): bool
     {
         return $this->adaptive;
     }
@@ -379,7 +381,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      * @param bool $timeDependent Time dependent or not.
      * @throws InvalidArgumentException If $timeDependent is not a boolean value.
      */
-    public function setTimeDependent($timeDependent)
+    public function setTimeDependent($timeDependent): void
     {
         if (is_bool($timeDependent)) {
             $this->timeDependent = $timeDependent;
@@ -394,7 +396,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return bool
      */
-    public function isTimeDependent()
+    public function isTimeDependent(): bool
     {
         return $this->timeDependent;
     }
@@ -405,7 +407,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      * @param string $toolName A tool name with at most 256 characters.
      * @throws InvalidArgumentException If $toolName is not a string value with at most 256 characters.
      */
-    public function setToolName($toolName)
+    public function setToolName($toolName): void
     {
         if (Format::isString256($toolName) === true) {
             $this->toolName = $toolName;
@@ -420,7 +422,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return string
      */
-    public function getToolName()
+    public function getToolName(): string
     {
         return $this->toolName;
     }
@@ -430,7 +432,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return bool
      */
-    public function hasToolName()
+    public function hasToolName(): bool
     {
         return $this->getToolName() !== '';
     }
@@ -441,7 +443,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      * @param string $toolVersion A tool version with at most 256 characters.
      * @throws InvalidArgumentException If $toolVersion is not a string value with at most 256 characters.
      */
-    public function setToolVersion($toolVersion)
+    public function setToolVersion($toolVersion): void
     {
         if (Format::isString256($toolVersion) === true) {
             $this->toolVersion = $toolVersion;
@@ -456,7 +458,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return string A tool version with at most 256 characters.
      */
-    public function getToolVersion()
+    public function getToolVersion(): string
     {
         return $this->toolVersion;
     }
@@ -466,7 +468,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return bool
      */
-    public function hasToolVersion()
+    public function hasToolVersion(): bool
     {
         return $this->getToolVersion() !== '';
     }
@@ -476,7 +478,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects
      */
-    public function setResponseDeclarations(ResponseDeclarationCollection $responseDeclarations)
+    public function setResponseDeclarations(ResponseDeclarationCollection $responseDeclarations): void
     {
         $this->responseDeclarations = $responseDeclarations;
     }
@@ -486,7 +488,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return ResponseDeclarationCollection A collection of ResponseDeclaration objects.
      */
-    public function getResponseDeclarations()
+    public function getResponseDeclarations(): ResponseDeclarationCollection
     {
         return $this->responseDeclarations;
     }
@@ -496,7 +498,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
      */
-    public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations)
+    public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations): void
     {
         $this->outcomeDeclarations = $outcomeDeclarations;
     }
@@ -506,7 +508,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
      */
-    public function getOutcomeDeclarations()
+    public function getOutcomeDeclarations(): OutcomeDeclarationCollection
     {
         return $this->outcomeDeclarations;
     }
@@ -516,7 +518,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
      */
-    public function setTemplateDeclarations(TemplateDeclarationCollection $templateDeclarations)
+    public function setTemplateDeclarations(TemplateDeclarationCollection $templateDeclarations): void
     {
         $this->templateDeclarations = $templateDeclarations;
     }
@@ -526,7 +528,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return TemplateDeclarationCollection A collection of TemplateDeclaration objects.
      */
-    public function getTemplateDeclarations()
+    public function getTemplateDeclarations(): TemplateDeclarationCollection
     {
         return $this->templateDeclarations;
     }
@@ -538,7 +540,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param TemplateProcessing $templateProcessing A TemplateProcessing object or null.
      */
-    public function setTemplateProcessing(TemplateProcessing $templateProcessing = null)
+    public function setTemplateProcessing(TemplateProcessing $templateProcessing = null): void
     {
         $this->templateProcessing = $templateProcessing;
     }
@@ -549,7 +551,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return TemplateProcessing A TemplateProcessing object or null.
      */
-    public function getTemplateProcessing()
+    public function getTemplateProcessing(): ?TemplateProcessing
     {
         return $this->templateProcessing;
     }
@@ -559,7 +561,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return bool
      */
-    public function hasTemplateProcessing()
+    public function hasTemplateProcessing(): bool
     {
         return $this->getTemplateProcessing() !== null;
     }
@@ -569,7 +571,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param StylesheetCollection $stylesheets A collection of Stylesheet objects.
      */
-    public function setStylesheets(StylesheetCollection $stylesheets)
+    public function setStylesheets(StylesheetCollection $stylesheets): void
     {
         $this->stylesheets = $stylesheets;
     }
@@ -579,7 +581,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return StylesheetCollection A collection of Stylesheet objects.
      */
-    public function getStylesheets()
+    public function getStylesheets(): StylesheetCollection
     {
         return $this->stylesheets;
     }
@@ -589,7 +591,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param ItemBody $itemBody An ItemBody object or the NULL value to state that the item has no content.
      */
-    public function setItemBody(ItemBody $itemBody = null)
+    public function setItemBody(ItemBody $itemBody = null): void
     {
         $this->itemBody = $itemBody;
     }
@@ -597,9 +599,9 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Get the ItemBody object representing the content body of the item.
      *
-     * @return ItemBody An ItemBody object or the NULL value if the item has no content.
+     * @return ItemBody|null An ItemBody object or the NULL value if the item has no content.
      */
-    public function getItemBody()
+    public function getItemBody(): ?ItemBody
     {
         return $this->itemBody;
     }
@@ -609,7 +611,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return bool
      */
-    public function hasItemBody()
+    public function hasItemBody(): bool
     {
         return $this->getItemBody() !== null;
     }
@@ -617,9 +619,9 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * Get the associated ResponseProcessing object.
      *
-     * @return ResponseProcessing A ResponseProcessing object or null if no associated response processing.
+     * @return ResponseProcessing|null A ResponseProcessing object or null if no associated response processing.
      */
-    public function getResponseProcessing()
+    public function getResponseProcessing(): ?ResponseProcessing
     {
         return $this->responseProcessing;
     }
@@ -629,7 +631,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
      */
-    public function setResponseProcessing(ResponseProcessing $responseProcessing = null)
+    public function setResponseProcessing(ResponseProcessing $responseProcessing = null): void
     {
         $this->responseProcessing = $responseProcessing;
     }
@@ -639,7 +641,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return bool
      */
-    public function hasResponseProcessing()
+    public function hasResponseProcessing(): bool
     {
         return $this->getResponseProcessing() !== null;
     }
@@ -649,7 +651,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param ModalFeedbackCollection $modalFeedbacks A collection of ModalFeedback objects.
      */
-    public function setModalFeedbacks(ModalFeedbackCollection $modalFeedbacks)
+    public function setModalFeedbacks(ModalFeedbackCollection $modalFeedbacks): void
     {
         $this->modalFeedbacks = $modalFeedbacks;
     }
@@ -659,7 +661,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return ModalFeedbackCollection A collection of ModalFeedback objects.
      */
-    public function getModalFeedbacks()
+    public function getModalFeedbacks(): ModalFeedbackCollection
     {
         return $this->modalFeedbacks;
     }
@@ -667,7 +669,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * @return array|ModalFeedbackRuleCollection
      */
-    public function getModalFeedbackRules()
+    public function getModalFeedbackRules(): ModalFeedbackRuleCollection
     {
         $modalFeedbackRules = new ModalFeedbackRuleCollection();
 
@@ -688,7 +690,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @return IdentifierCollection
      */
-    public function getEndAttemptIdentifiers()
+    public function getEndAttemptIdentifiers(): IdentifierCollection
     {
         $endAttemptIdentifiers = new IdentifierCollection();
 
@@ -702,7 +704,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * @return array|ShufflingCollection
      */
-    public function getShufflings()
+    public function getShufflings(): ShufflingCollection
     {
         $classNames = [
             'choiceInteraction',
@@ -728,7 +730,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * @return array|ResponseValidityConstraintCollection
      */
-    public function getResponseValidityConstraints()
+    public function getResponseValidityConstraints(): ResponseValidityConstraintCollection
     {
         $classNames = [
             'choiceInteraction',
@@ -759,7 +761,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'assessmentItem';
     }
@@ -767,7 +769,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
             $this->getResponseDeclarations()->getArrayCopy(),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,7 +45,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -101,7 +103,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null)
+    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null): QtiComponent
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
@@ -188,7 +190,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'assessmentTest';
     }

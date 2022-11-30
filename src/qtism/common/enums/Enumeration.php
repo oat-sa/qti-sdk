@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,7 +35,7 @@ interface Enumeration
      *
      * @return array An associative array where keys are constant names (as they appear in the code) and values are constant values.
      */
-    public static function asArray();
+    public static function asArray(): array;
 
     /**
      * Get a constant value by its name. If $name does not match any of the value
@@ -42,6 +44,7 @@ interface Enumeration
      * @param string $name The name of a constant of the enumeration.
      * @return int|false The value relevant to $name or false if not found.
      */
+    #[\ReturnTypeWillChange]
     public static function getConstantByName($name);
 
     /**
@@ -51,5 +54,6 @@ interface Enumeration
      * @param int $constant A constant from the enumeration.
      * @return string|false The relevant name or false if not found.
      */
+    #[\ReturnTypeWillChange]
     public static function getNameByConstant($constant);
 }

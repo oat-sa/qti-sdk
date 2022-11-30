@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class DefaultValMarshaller extends Marshaller
      * @param QtiComponent $component A DefaultVal object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -54,7 +56,8 @@ class DefaultValMarshaller extends Marshaller
      * @return QtiComponent A DefaultVal object.
      * @throws UnmarshallingException If the mandatory attributes 'identifier' is missing.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): DefaultVal
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
             return new DefaultVal($identifier);
@@ -67,7 +70,7 @@ class DefaultValMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'default';
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,7 +63,7 @@ class Q extends SimpleInline
      *
      * @return string A URI.
      */
-    public function getCite()
+    public function getCite(): string
     {
         return $this->cite;
     }
@@ -72,7 +74,7 @@ class Q extends SimpleInline
      * @param string $cite
      * @throws InvalidArgumentException If $cite is not a valid URI.
      */
-    public function setCite($cite)
+    public function setCite($cite): void
     {
         if ($cite !== '' && !Format::isUri($cite)) {
             $msg = "The 'cite' argument must be a valid URI, '" . $cite . "' given.";
@@ -87,7 +89,7 @@ class Q extends SimpleInline
      *
      * @return string
      */
-    public function hasCite()
+    public function hasCite(): string
     {
         return $this->getCite() !== '';
     }
@@ -95,7 +97,7 @@ class Q extends SimpleInline
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'q';
     }

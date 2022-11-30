@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -80,7 +82,7 @@ class Utils
      *
      * @return DOMElement
      */
-    public static function changeElementName(DOMElement $element, $name)
+    public static function changeElementName(DOMElement $element, $name): DOMElement
     {
         $newElement = $element->ownerDocument->createElement($name);
 
@@ -112,7 +114,7 @@ class Utils
      * @param DOMElement $element The DOMElement to be anonimized.
      * @return DOMElement The anonimized DOMElement copy of $element.
      */
-    public static function anonimizeElement(DOMElement $element)
+    public static function anonimizeElement(DOMElement $element): DOMElement
     {
         $stack = new SplStack();
         $traversed = [];
@@ -160,7 +162,7 @@ class Utils
      * @param DOMElement $into The target DOMElement.
      * @param bool $deep Whether or not to import the whole node hierarchy.
      */
-    public static function importChildNodes(DOMElement $from, DOMElement $into, $deep = true)
+    public static function importChildNodes(DOMElement $from, DOMElement $into, $deep = true): void
     {
         for ($i = 0; $i < $from->childNodes->length; $i++) {
             $node = $into->ownerDocument->importNode($from->childNodes->item($i), $deep);
@@ -175,7 +177,7 @@ class Utils
      * @param DOMElement $from The source DOMElement.
      * @param DOMElement $into The target DOMElement.
      */
-    public static function importAttributes(DOMElement $from, DOMElement $into)
+    public static function importAttributes(DOMElement $from, DOMElement $into): void
     {
         for ($i = 0; $i < $from->attributes->length; $i++) {
             $attr = $from->attributes->item($i);
@@ -205,7 +207,7 @@ class Utils
      * @param bool $isAttribute Whether or not to escape ', >, < which do not have to be escaped in attributes.
      * @return string An escaped string.
      */
-    public static function escapeXmlSpecialChars($string, $isAttribute = false)
+    public static function escapeXmlSpecialChars($string, $isAttribute = false): string
     {
         if ($isAttribute !== false) {
             return str_replace(['&', '"'], ['&amp;', '&quot;'], $string);
@@ -227,7 +229,7 @@ class Utils
      * @param string $qtiName
      * @return string
      */
-    public static function webComponentFriendlyAttributeName($qtiName)
+    public static function webComponentFriendlyAttributeName($qtiName): string
     {
         return strtolower(preg_replace('/([A-Z])/', '-$1', $qtiName));
     }
@@ -242,7 +244,7 @@ class Utils
      * @param string $qtiName
      * @return string
      */
-    public static function webComponentFriendlyClassName($qtiName)
+    public static function webComponentFriendlyClassName($qtiName): string
     {
         return 'qti-' . self::webComponentFriendlyAttributeName($qtiName);
     }
@@ -257,7 +259,7 @@ class Utils
      * @param string $wcName
      * @return string
      */
-    public static function qtiFriendlyName($wcName)
+    public static function qtiFriendlyName($wcName): string
     {
         $qtiName = strtolower($wcName);
         $qtiName = preg_replace('/^qti-/', '', $qtiName);
@@ -274,6 +276,7 @@ class Utils
      * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
      * @throws InvalidArgumentException If $datatype is not in the range of possible values.
      */
+    #[\ReturnTypeWillChange]
     public static function getDOMElementAttributeAs(DOMElement $element, string $attribute, $datatype = 'string')
     {
         $attr = $element->getAttribute($attribute);
@@ -321,7 +324,7 @@ class Utils
      * @param string $attribute An XML attribute name.
      * @param mixed $value A given value.
      */
-    public static function setDOMElementAttribute(DOMElement $element, string $attribute, $value)
+    public static function setDOMElementAttribute(DOMElement $element, string $attribute, $value): void
     {
         $element->setAttribute($attribute, self::valueAsString($value, false));
     }
@@ -332,7 +335,7 @@ class Utils
      * @param DOMElement $element A DOMElement object.
      * @param mixed $value A given value.
      */
-    public static function setDOMElementValue(DOMElement $element, $value)
+    public static function setDOMElementValue(DOMElement $element, $value): void
     {
         $element->nodeValue = self::valueAsString($value);
     }
@@ -346,13 +349,13 @@ class Utils
      * @param bool $encode
      * @return string
      */
-    public static function valueAsString($value, $encode = true)
+    public static function valueAsString($value, $encode = true): string
     {
         if (is_bool($value)) {
             return $value === true ? 'true' : 'false';
         }
         if ($encode) {
-            return htmlspecialchars($value, ENT_XML1, 'UTF-8');
+            return htmlspecialchars((string)$value, ENT_XML1, 'UTF-8');
         }
         return (string)$value;
     }
@@ -368,7 +371,7 @@ class Utils
      * @param bool $withText (optional) Whether text nodes must be returned or not.
      * @return array An array of DOMElement objects.
      */
-    public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
+    public static function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false): array
     {
         if (!is_array($tagName)) {
             $tagName = [$tagName];
@@ -393,7 +396,7 @@ class Utils
      * @param bool $withText Whether text nodes must be returned or not.
      * @return array An array of DOMNode objects.
      */
-    public static function getChildElements($element, $withText = false)
+    public static function getChildElements($element, $withText = false): array
     {
         $children = $element->childNodes;
         $returnValue = [];

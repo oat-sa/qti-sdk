@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class AssociationValidityConstraintMarshaller extends Marshaller
      * @param QtiComponent $component
      * @return DOMElement
      */
-    public function marshall(QtiComponent $component)
+    public function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
@@ -56,7 +58,7 @@ class AssociationValidityConstraintMarshaller extends Marshaller
      * @return QtiComponent An AssociationValidityConstraint object.
      * @throws UnmarshallingException
      */
-    public function unmarshall(DOMElement $element)
+    public function unmarshall(DOMElement $element): QtiComponent
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($minConstraint = $this->getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {
@@ -93,7 +95,7 @@ class AssociationValidityConstraintMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'associationValidityConstraint';
     }

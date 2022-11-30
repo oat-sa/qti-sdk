@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -51,7 +53,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a QTI Runtime compliant value.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!RuntimeUtils::isRuntimeCompliant($value)) {
             $value = (is_object($value)) ? get_class($value) : $value;
@@ -70,7 +72,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function containsNull()
+    public function containsNull(): bool
     {
         foreach (array_keys($this->getDataPlaceHolder()) as $key) {
             $v = $this[$key];
@@ -124,7 +126,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function exclusivelyBoolean()
+    public function exclusivelyBoolean(): bool
     {
         if (count($this) === 0) {
             return false;
@@ -148,7 +150,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function exclusivelySingle()
+    public function exclusivelySingle(): bool
     {
         if (count($this) === 0) {
             return false;
@@ -176,7 +178,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function exclusivelyString()
+    public function exclusivelyString(): bool
     {
         if (count($this) === 0) {
             return false;
@@ -199,7 +201,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function exclusivelyMultipleOrOrdered()
+    public function exclusivelyMultipleOrOrdered(): bool
     {
         if (count($this) === 0) {
             return false;
@@ -225,7 +227,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool.
      */
-    public function exclusivelyInteger()
+    public function exclusivelyInteger(): bool
     {
         if (count($this) === 0) {
             return false;
@@ -253,7 +255,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function exclusivelySingleOrMultiple()
+    public function exclusivelySingleOrMultiple(): bool
     {
         if (count($this) === 0) {
             return false;
@@ -280,7 +282,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function exclusivelySingleOrOrdered()
+    public function exclusivelySingleOrOrdered(): bool
     {
         if (count($this) === 0) {
             return false;
@@ -306,7 +308,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function exclusivelyRecord()
+    public function exclusivelyRecord(): bool
     {
         if (count($this) === 0) {
             return false;
@@ -331,7 +333,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function exclusivelyOrdered()
+    public function exclusivelyOrdered(): bool
     {
         if (count($this) === 0) {
             return false;
@@ -352,7 +354,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function anythingButRecord()
+    public function anythingButRecord(): bool
     {
         foreach (array_keys($this->getDataPlaceHolder()) as $key) {
             $v = $this[$key];
@@ -374,7 +376,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function sameBaseType()
+    public function sameBaseType(): bool
     {
         $operandsCount = count($this);
         if ($operandsCount > 0 && !$this->containsNull()) {
@@ -407,7 +409,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function sameCardinality()
+    public function sameCardinality(): bool
     {
         $operandsCount = count($this);
         if ($operandsCount > 0 && !$this->containsNull()) {
@@ -434,7 +436,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function exclusivelyPoint()
+    public function exclusivelyPoint(): bool
     {
         if (count($this) === 0) {
             return false;
@@ -461,7 +463,7 @@ class OperandsCollection extends AbstractCollection implements Stack
      *
      * @return bool
      */
-    public function exclusivelyDuration()
+    public function exclusivelyDuration(): bool
     {
         if (count($this) === 0) {
             return false;
@@ -482,7 +484,7 @@ class OperandsCollection extends AbstractCollection implements Stack
     /**
      * @param mixed $value
      */
-    public function push($value)
+    public function push($value): void
     {
         $this->checkType($value);
 

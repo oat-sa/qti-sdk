@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +46,7 @@ class ConditionRenderingOptions
      * @return ConditionRenderingOptions The format by default for the
      * ConditionRenderingOptions.
      */
-    public static function getDefault()
+    public static function getDefault(): ConditionRenderingOptions
     {
         return new ConditionRenderingOptions(self::$defaultIdentation);
     }
@@ -70,7 +72,7 @@ class ConditionRenderingOptions
      * @return int
      */
 
-    public function getIndentation()
+    public function getIndentation(): int
     {
         return $this->indentation;
     }

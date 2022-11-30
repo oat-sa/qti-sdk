@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -62,7 +64,7 @@ class RouteItemSessionControl
      *
      * @return QtiComponent A QtiComponent object.
      */
-    public function getOwner()
+    public function getOwner(): QtiComponent
     {
         return $this->owner;
     }
@@ -72,7 +74,7 @@ class RouteItemSessionControl
      *
      * @param QtiComponent $owner A QtiComponent object.
      */
-    public function setOwner(QtiComponent $owner)
+    public function setOwner(QtiComponent $owner): void
     {
         $this->owner = $owner;
     }
@@ -82,7 +84,7 @@ class RouteItemSessionControl
      *
      * @return ItemSessionControl
      */
-    public function getItemSessionControl()
+    public function getItemSessionControl(): ItemSessionControl
     {
         return $this->itemSessionControl;
     }
@@ -92,7 +94,7 @@ class RouteItemSessionControl
      *
      * @param ItemSessionControl $itemSessionControl
      */
-    public function setItemSessionControl(ItemSessionControl $itemSessionControl)
+    public function setItemSessionControl(ItemSessionControl $itemSessionControl): void
     {
         $this->itemSessionControl = $itemSessionControl;
     }
@@ -105,7 +107,7 @@ class RouteItemSessionControl
      * @param QtiComponent $owner The owner of the ItemSessionControl object.
      * @return RouteItemSessionControl A new RouteItemSessionControl object.
      */
-    public static function createFromItemSessionControl(ItemSessionControl $itemSessionControl, QtiComponent $owner)
+    public static function createFromItemSessionControl(ItemSessionControl $itemSessionControl, QtiComponent $owner): RouteItemSessionControl
     {
         return new static($itemSessionControl, $owner);
     }

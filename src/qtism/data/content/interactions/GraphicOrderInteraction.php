@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -114,7 +116,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * @param HotspotChoiceCollection $hotspotChoices A collection of HotspotChoice objects.
      * @throws InvalidArgumentException If the given $hotspotChoices collection is empty.
      */
-    public function setHotspotChoices(HotspotChoiceCollection $hotspotChoices)
+    public function setHotspotChoices(HotspotChoiceCollection $hotspotChoices): void
     {
         if (count($hotspotChoices) > 0) {
             $this->hotspotChoices = $hotspotChoices;
@@ -129,7 +131,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      *
      * @return HotspotChoiceCollection A collection of HotspotChoice objects.
      */
-    public function getHotspotChoices()
+    public function getHotspotChoices(): HotspotChoiceCollection
     {
         return $this->hotspotChoices;
     }
@@ -141,7 +143,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * @param int $minChoices A strictly negative or positive integer.
      * @throws InvalidArgumentException If $minChoice is not a strictly negative or positive integer.
      */
-    public function setMinChoices($minChoices)
+    public function setMinChoices($minChoices): void
     {
         if (is_int($minChoices) && $minChoices !== 0) {
             if ($minChoices > count($this->getHotspotChoices())) {
@@ -162,7 +164,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      *
      * @return int A strictly negative or positive integer.
      */
-    public function getMinChoices()
+    public function getMinChoices(): int
     {
         return $this->minChoices;
     }
@@ -172,7 +174,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      *
      * @return bool
      */
-    public function hasMinChoices()
+    public function hasMinChoices(): bool
     {
         return $this->getMinChoices() > -1;
     }
@@ -184,7 +186,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      * @param int $maxChoices A strictly negative or positive integer.
      * @throws InvalidArgumentException If $maxChoices is not a strictly negative or positive integer.
      */
-    public function setMaxChoices($maxChoices)
+    public function setMaxChoices($maxChoices): void
     {
         if (is_int($maxChoices) && $maxChoices !== 0) {
             if ($this->getMinChoices() > 0 && $maxChoices < $this->getMinChoices()) {
@@ -205,7 +207,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      *
      * @return int A strictly negative or positive integer.
      */
-    public function getMaxChoices()
+    public function getMaxChoices(): int
     {
         return $this->maxChoices;
     }
@@ -215,7 +217,7 @@ class GraphicOrderInteraction extends GraphicInteraction
      *
      * @return bool
      */
-    public function hasMaxChoices()
+    public function hasMaxChoices(): bool
     {
         return $this->getMaxChoices() > -1;
     }
@@ -223,7 +225,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     /**
      * @return ResponseValidityConstraint
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
     {
         return new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -235,7 +237,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getHotspotChoices()->getArrayCopy()));
     }
@@ -243,7 +245,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'graphicOrderInteraction';
     }

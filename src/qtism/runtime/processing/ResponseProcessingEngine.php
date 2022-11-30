@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,6 +28,7 @@ namespace qtism\runtime\processing;
 use InvalidArgumentException;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\QtiComponent;
+use qtism\data\rules\ResponseRuleCollection;
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\runtime\common\AbstractEngine;
@@ -83,7 +86,7 @@ class ResponseProcessingEngine extends AbstractEngine
      * @param QtiComponent $responseProcessing A ResponseProcessing object.
      * @throws InvalidArgumentException If $responseProcessing is not a ResponseProcessing object.
      */
-    public function setComponent(QtiComponent $responseProcessing)
+    public function setComponent(QtiComponent $responseProcessing): void
     {
         if ($responseProcessing instanceof ResponseProcessing) {
             parent::setComponent($responseProcessing);
@@ -100,7 +103,7 @@ class ResponseProcessingEngine extends AbstractEngine
      * @param string $url The actual template URL, i.e. where to find the file containing the template markup.
      * @throws InvalidArgumentException If $uri or $url are not strings.
      */
-    public function addTemplateMapping($uri, $url)
+    public function addTemplateMapping($uri, $url): void
     {
         if (!is_string($uri)) {
             $msg = "The uri argument must be a string, '" . gettype($uri) . "' given.";
@@ -123,7 +126,7 @@ class ResponseProcessingEngine extends AbstractEngine
      * @param string $uri The $uri you want to remove the mapping.
      * @throws InvalidArgumentException If $uri is not a string.
      */
-    public function removeTemplateMapping($uri)
+    public function removeTemplateMapping($uri): void
     {
         if (!is_string($uri)) {
             $msg = "The uri argument must be a string, '" . gettype($uri) . "' given.";
@@ -142,7 +145,7 @@ class ResponseProcessingEngine extends AbstractEngine
      *
      * @return array An array where keys are template URIs and values template URL (their location).
      */
-    protected function &getTemplateMapping()
+    protected function &getTemplateMapping(): array
     {
         return $this->templateMapping;
     }
@@ -158,7 +161,7 @@ class ResponseProcessingEngine extends AbstractEngine
      *
      * @throws PhpStorageException
      */
-    public function process()
+    public function process(): void
     {
         $rules = $this->getResponseProcessingRules();
         $processingCollectionException = null;
@@ -193,7 +196,7 @@ class ResponseProcessingEngine extends AbstractEngine
      * @return mixed
      * @throws PhpStorageException
      */
-    public function getResponseProcessingRules()
+    public function getResponseProcessingRules(): ResponseRuleCollection
     {
         // @todo Figure out how to provide a way to the ResponseProcessingEngine to know the folder where to seek for templateLocation, which is a relative URI.
         $responseProcessing = $this->getComponent();

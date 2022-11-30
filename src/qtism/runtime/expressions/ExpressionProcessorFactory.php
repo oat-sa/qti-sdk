@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,7 +52,7 @@ class ExpressionProcessorFactory implements ProcessorFactory
      * @return Processable The related ExpressionProcessor object.
      * @throws RuntimeException If no ExpressionProcessor can be found for the given $expression.
      */
-    public function createProcessor(QtiComponent $expression)
+    public function createProcessor(QtiComponent $expression): Processable
     {
         $qtiClassName = ucfirst($expression->getQtiClassName());
         $nsPackage = 'qtism\\runtime\\expressions\\';

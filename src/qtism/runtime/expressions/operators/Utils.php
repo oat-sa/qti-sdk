@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +42,7 @@ class Utils
      * @param int $b A positive integer
      * @return int The GCD of $a and $b.
      */
-    public static function gcd($a, $b)
+    public static function gcd($a, $b): int
     {
         $a = abs($a);
         $b = abs($b);
@@ -64,7 +66,7 @@ class Utils
      * @param int $b
      * @return int the LCM of $a and $b.
      */
-    public static function lcm($a, $b)
+    public static function lcm($a, $b): int
     {
         $a = abs($a);
         $b = abs($b);
@@ -201,7 +203,7 @@ class Utils
      * @param int    $offset
      * @return int
      */
-    public static function getPrecedingBackslashesCount($string, $offset)
+    public static function getPrecedingBackslashesCount($string, $offset): int
     {
         $count = 0;
 
@@ -297,7 +299,7 @@ class Utils
      *
      * @return string
      */
-    public static function lastPregErrorMessage()
+    public static function lastPregErrorMessage(): string
     {
         $error = preg_last_error();
         $errorType = 'PCRE Engine error';

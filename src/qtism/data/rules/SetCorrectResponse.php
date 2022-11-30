@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -71,7 +73,7 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule
      * @param string $identifier A valid QTI identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
@@ -86,7 +88,7 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -97,7 +99,7 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule
      *
      * @param Expression $expression An Expression object.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -108,7 +110,7 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule
      *
      * @return Expression An Expression object.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -116,7 +118,7 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'setCorrectResponse';
     }
@@ -124,7 +126,7 @@ class SetCorrectResponse extends QtiComponent implements TemplateRule
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection([$this->getExpression()]);
     }

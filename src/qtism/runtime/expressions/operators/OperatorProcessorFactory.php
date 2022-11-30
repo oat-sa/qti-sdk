@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -54,7 +56,7 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
      * @throws InvalidArgumentException If $expression is not an Operator object.
      * @throws RuntimeException If no relevant OperatorProcessor is found for the given $expression.
      */
-    public function createProcessor(QtiComponent $expression, OperandsCollection $operands = null)
+    public function createProcessor(QtiComponent $expression, OperandsCollection $operands = null): OperatorProcessor
     {
         if (!($expression instanceof Operator)) {
             $msg = 'The OperatorProcessorFactory only accepts to create processors for Operator objects.';

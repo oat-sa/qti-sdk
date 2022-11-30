@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -83,7 +85,7 @@ class ItemSubset extends Expression
      * @param string $sectionIdentifier A QTI Identifier.
      * @throws InvalidArgumentException If $sectionIdentifier is not a valid QTI Identifier.
      */
-    public function setSectionIdentifier($sectionIdentifier)
+    public function setSectionIdentifier($sectionIdentifier): void
     {
         if (Format::isIdentifier($sectionIdentifier) || empty($sectionIdentifier)) {
             $this->sectionIdentifier = $sectionIdentifier;
@@ -98,7 +100,7 @@ class ItemSubset extends Expression
      *
      * @return string
      */
-    public function getSectionIdentifier()
+    public function getSectionIdentifier(): string
     {
         return $this->sectionIdentifier;
     }
@@ -108,7 +110,7 @@ class ItemSubset extends Expression
      *
      * @param IdentifierCollection $includeCategories A collection of QTI Identifiers.
      */
-    public function setIncludeCategories(IdentifierCollection $includeCategories)
+    public function setIncludeCategories(IdentifierCollection $includeCategories): void
     {
         $this->includeCategories = $includeCategories;
     }
@@ -118,7 +120,7 @@ class ItemSubset extends Expression
      *
      * @return IdentifierCollection
      */
-    public function getIncludeCategories()
+    public function getIncludeCategories(): IdentifierCollection
     {
         return $this->includeCategories;
     }
@@ -128,7 +130,7 @@ class ItemSubset extends Expression
      *
      * @param IdentifierCollection $excludeCategories A collection of QTI Identifiers.
      */
-    public function setExcludeCategories(IdentifierCollection $excludeCategories)
+    public function setExcludeCategories(IdentifierCollection $excludeCategories): void
     {
         $this->excludeCategories = $excludeCategories;
     }
@@ -138,7 +140,7 @@ class ItemSubset extends Expression
      *
      * @return IdentifierCollection
      */
-    public function getExcludeCategories()
+    public function getExcludeCategories(): IdentifierCollection
     {
         return $this->excludeCategories;
     }
@@ -146,7 +148,7 @@ class ItemSubset extends Expression
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'itemSubset';
     }
@@ -156,7 +158,7 @@ class ItemSubset extends Expression
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return false; // Dependant on the items of the test
     }

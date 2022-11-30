@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -125,7 +127,7 @@ class ResponseDeclaration extends VariableDeclaration
      *
      * @param CorrectResponse $correctResponse A CorrectResponse object or null.
      */
-    public function setCorrectResponse(CorrectResponse $correctResponse = null)
+    public function setCorrectResponse(CorrectResponse $correctResponse = null): void
     {
         $this->correctResponse = $correctResponse;
     }
@@ -135,7 +137,7 @@ class ResponseDeclaration extends VariableDeclaration
      *
      * @return CorrectResponse A CorrectResponse object or null if no correct response is specified.
      */
-    public function getCorrectResponse()
+    public function getCorrectResponse(): ?CorrectResponse
     {
         return $this->correctResponse;
     }
@@ -145,7 +147,7 @@ class ResponseDeclaration extends VariableDeclaration
      *
      * @param Mapping $mapping A Mapping object or null if no mapping is specified.
      */
-    public function setMapping(Mapping $mapping = null)
+    public function setMapping(Mapping $mapping = null): void
     {
         $this->mapping = $mapping;
     }
@@ -155,7 +157,7 @@ class ResponseDeclaration extends VariableDeclaration
      *
      * @return Mapping A Mapping object or null if no mapping specified.
      */
-    public function getMapping()
+    public function getMapping(): ?Mapping
     {
         return $this->mapping;
     }
@@ -165,7 +167,7 @@ class ResponseDeclaration extends VariableDeclaration
      *
      * @param AreaMapping $areaMapping An AreaMapping object or null if no area mapping was specified.
      */
-    public function setAreaMapping(AreaMapping $areaMapping = null)
+    public function setAreaMapping(AreaMapping $areaMapping = null): void
     {
         $this->areaMapping = $areaMapping;
     }
@@ -173,9 +175,9 @@ class ResponseDeclaration extends VariableDeclaration
     /**
      * Get the area mapping
      *
-     * @return AreaMapping An AreaMapping object or null if not area mapping is specified.
+     * @return AreaMapping|null An AreaMapping object or null if not area mapping is specified.
      */
-    public function getAreaMapping()
+    public function getAreaMapping(): ?AreaMapping
     {
         return $this->areaMapping;
     }
@@ -183,7 +185,7 @@ class ResponseDeclaration extends VariableDeclaration
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'responseDeclaration';
     }
@@ -191,7 +193,7 @@ class ResponseDeclaration extends VariableDeclaration
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = parent::getComponents()->getArrayCopy();
 

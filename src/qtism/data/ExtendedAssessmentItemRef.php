@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -181,7 +183,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
      */
-    public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations)
+    public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations): void
     {
         $this->outcomeDeclarations = $outcomeDeclarations;
     }
@@ -191,7 +193,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
      */
-    public function getOutcomeDeclarations()
+    public function getOutcomeDeclarations(): OutcomeDeclarationCollection
     {
         return $this->outcomeDeclarations;
     }
@@ -201,7 +203,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no response processing described.
      */
-    public function setResponseProcessing(ResponseProcessing $responseProcessing = null)
+    public function setResponseProcessing(ResponseProcessing $responseProcessing = null): void
     {
         $this->responseProcessing = $responseProcessing;
     }
@@ -211,7 +213,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return ResponseProcessing A ResponseProcessing object or null if no response processing described.
      */
-    public function getResponseProcessing()
+    public function getResponseProcessing(): ?ResponseProcessing
     {
         return $this->responseProcessing;
     }
@@ -221,7 +223,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return bool
      */
-    public function hasResponseProcessing()
+    public function hasResponseProcessing(): bool
     {
         return $this->getResponseProcessing() !== null;
     }
@@ -231,7 +233,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param TemplateProcessing $templateProcessing
      */
-    public function setTemplateProcessing(TemplateProcessing $templateProcessing = null)
+    public function setTemplateProcessing(TemplateProcessing $templateProcessing = null): void
     {
         $this->templateProcessing = $templateProcessing;
     }
@@ -241,7 +243,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return TemplateProcessing
      */
-    public function getTemplateProcessing()
+    public function getTemplateProcessing(): ?TemplateProcessing
     {
         return $this->templateProcessing;
     }
@@ -251,7 +253,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return bool
      */
-    public function hasTemplateProcessing()
+    public function hasTemplateProcessing(): bool
     {
         return $this->getTemplateProcessing() !== null;
     }
@@ -261,7 +263,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param OutcomeDeclaration $outcomeDeclaration An OutcomeDeclaration object.
      */
-    public function addOutcomeDeclaration(OutcomeDeclaration $outcomeDeclaration)
+    public function addOutcomeDeclaration(OutcomeDeclaration $outcomeDeclaration): void
     {
         $this->getOutcomeDeclarations()->attach($outcomeDeclaration);
     }
@@ -271,7 +273,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param OutcomeDeclaration $outcomeDeclaration An OutcomeDeclaration object.
      */
-    public function removeOutcomeDeclaration(OutcomeDeclaration $outcomeDeclaration)
+    public function removeOutcomeDeclaration(OutcomeDeclaration $outcomeDeclaration): void
     {
         $this->getOutcomeDeclarations()->detach($outcomeDeclaration);
     }
@@ -281,7 +283,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ResponseDeclarationCollection $responseDeclarations A collection of ResponseDeclaration objects.
      */
-    public function setResponseDeclarations(ResponseDeclarationCollection $responseDeclarations)
+    public function setResponseDeclarations(ResponseDeclarationCollection $responseDeclarations): void
     {
         $this->responseDeclarations = $responseDeclarations;
     }
@@ -291,7 +293,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return ResponseDeclarationCollection A collection of ResponseDeclaration objects.
      */
-    public function getResponseDeclarations()
+    public function getResponseDeclarations(): ResponseDeclarationCollection
     {
         return $this->responseDeclarations;
     }
@@ -301,7 +303,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ResponseDeclaration $responseDeclaration A ResponseDeclaration object.
      */
-    public function addResponseDeclaration(ResponseDeclaration $responseDeclaration)
+    public function addResponseDeclaration(ResponseDeclaration $responseDeclaration): void
     {
         $this->getResponseDeclarations()->attach($responseDeclaration);
     }
@@ -311,7 +313,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ResponseDeclaration $responseDeclaration A ResponseDeclaration object.
      */
-    public function removeResponseDeclaration(ResponseDeclaration $responseDeclaration)
+    public function removeResponseDeclaration(ResponseDeclaration $responseDeclaration): void
     {
         $this->getResponseDeclarations()->detach($responseDeclaration);
     }
@@ -321,7 +323,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param TemplateDeclarationCollection $templateDeclarations A collection of TemplateDeclaration objects.
      */
-    public function setTemplateDeclarations(TemplateDeclarationCollection $templateDeclarations)
+    public function setTemplateDeclarations(TemplateDeclarationCollection $templateDeclarations): void
     {
         $this->templateDeclarations = $templateDeclarations;
     }
@@ -331,7 +333,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return TemplateDeclarationCollection
      */
-    public function getTemplateDeclarations()
+    public function getTemplateDeclarations(): TemplateDeclarationCollection
     {
         return $this->templateDeclarations;
     }
@@ -341,7 +343,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param TemplateDeclaration $templateDeclaration
      */
-    public function addTemplateDeclaration(TemplateDeclaration $templateDeclaration)
+    public function addTemplateDeclaration(TemplateDeclaration $templateDeclaration): void
     {
         $this->templateDeclarations->attach($templateDeclaration);
     }
@@ -351,7 +353,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param TemplateDeclaration $templateDeclaration
      */
-    public function removeTemplateDeclaration(TemplateDeclaration $templateDeclaration)
+    public function removeTemplateDeclaration(TemplateDeclaration $templateDeclaration): void
     {
         $this->templateDeclarations->detach($templateDeclaration);
     }
@@ -361,7 +363,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ModalFeedbackRuleCollection $modalFeedbackRules
      */
-    public function setModalFeedbackRules(ModalFeedbackRuleCollection $modalFeedbackRules)
+    public function setModalFeedbackRules(ModalFeedbackRuleCollection $modalFeedbackRules): void
     {
         $this->modalFeedbackRules = $modalFeedbackRules;
     }
@@ -371,7 +373,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return ModalFeedbackRuleCollection
      */
-    public function getModalFeedbackRules()
+    public function getModalFeedbackRules(): ModalFeedbackRuleCollection
     {
         return $this->modalFeedbackRules;
     }
@@ -381,7 +383,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ModalFeedbackRule $modalFeedbackRule
      */
-    public function addModalFeedbackRule(ModalFeedbackRule $modalFeedbackRule)
+    public function addModalFeedbackRule(ModalFeedbackRule $modalFeedbackRule): void
     {
         $this->getModalFeedbackRules()->attach($modalFeedbackRule);
     }
@@ -391,7 +393,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ModalFeedbackRule $modalFeedbackRule
      */
-    public function removeModalFeedbackRule(ModalFeedbackRule $modalFeedbackRule)
+    public function removeModalFeedbackRule(ModalFeedbackRule $modalFeedbackRule): void
     {
         $this->getModalFeedbackRules()->detach($modalFeedbackRule);
     }
@@ -401,7 +403,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ShufflingCollection $shufflings
      */
-    public function setShufflings(ShufflingCollection $shufflings)
+    public function setShufflings(ShufflingCollection $shufflings): void
     {
         $this->shufflings = $shufflings;
     }
@@ -411,7 +413,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return ShufflingCollection
      */
-    public function getShufflings()
+    public function getShufflings(): ShufflingCollection
     {
         return $this->shufflings;
     }
@@ -421,7 +423,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param Shuffling $shuffling
      */
-    public function addShuffling(Shuffling $shuffling)
+    public function addShuffling(Shuffling $shuffling): void
     {
         $this->getShufflings()->attach($shuffling);
     }
@@ -431,7 +433,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param Shuffling $shuffling
      */
-    public function removeShuffling(Shuffling $shuffling)
+    public function removeShuffling(Shuffling $shuffling): void
     {
         $this->getShufflings()->detach($shuffling);
     }
@@ -441,7 +443,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return bool
      */
-    public function isAdaptive()
+    public function isAdaptive(): bool
     {
         return $this->adaptive;
     }
@@ -452,7 +454,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * @param bool $adaptive Whether the referenced Item is adaptive.
      * @throws InvalidArgumentException If $adaptive is not a boolean value.
      */
-    public function setAdaptive($adaptive)
+    public function setAdaptive($adaptive): void
     {
         if (is_bool($adaptive)) {
             $this->adaptive = $adaptive;
@@ -468,7 +470,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * @param bool $timeDependent Whether the referenced item is time dependent.
      * @throws InvalidArgumentException If $timeDependent is not a boolean value.
      */
-    public function setTimeDependent($timeDependent)
+    public function setTimeDependent($timeDependent): void
     {
         if (is_bool($timeDependent)) {
             $this->timeDependent = $timeDependent;
@@ -483,7 +485,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return bool
      */
-    public function isTimeDependent()
+    public function isTimeDependent(): bool
     {
         return $this->timeDependent;
     }
@@ -493,7 +495,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param IdentifierCollection $endAttemptIdentifiers
      */
-    public function setEndAttemptIdentifiers(IdentifierCollection $endAttemptIdentifiers)
+    public function setEndAttemptIdentifiers(IdentifierCollection $endAttemptIdentifiers): void
     {
         $this->endAttemptIdentifiers = $endAttemptIdentifiers;
     }
@@ -503,7 +505,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return IdentifierCollection
      */
-    public function getEndAttemptIdentifiers()
+    public function getEndAttemptIdentifiers(): IdentifierCollection
     {
         return $this->endAttemptIdentifiers;
     }
@@ -513,7 +515,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ResponseValidityConstraintCollection $responseValidityConstraints
      */
-    public function setResponseValidityConstraints(ResponseValidityConstraintCollection $responseValidityConstraints)
+    public function setResponseValidityConstraints(ResponseValidityConstraintCollection $responseValidityConstraints): void
     {
         $this->responseValidityConstraints = $responseValidityConstraints;
     }
@@ -523,7 +525,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return ResponseValidityConstraintCollection
      */
-    public function getResponseValidityConstraints()
+    public function getResponseValidityConstraints(): ResponseValidityConstraintCollection
     {
         return $this->responseValidityConstraints;
     }
@@ -533,7 +535,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ResponseValidityConstraint $responseValidityConstraint
      */
-    public function addResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint)
+    public function addResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint): void
     {
         $this->getResponseValidityConstraints()->attach($responseValidityConstraint);
     }
@@ -543,7 +545,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ResponseValidityConstraint $responseValidityConstraint
      */
-    public function removeResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint)
+    public function removeResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint): void
     {
         $this->getResponseValidityConstraints()->detach($responseValidityConstraint);
     }
@@ -554,7 +556,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @return ExtendedAssessmentItemRef An ExtendedAssessmentItemRef object.
      */
-    public static function createFromAssessmentItemRef(AssessmentItemRef $assessmentItemRef)
+    public static function createFromAssessmentItemRef(AssessmentItemRef $assessmentItemRef): ExtendedAssessmentItemRef
     {
         $identifier = $assessmentItemRef->getIdentifier();
         $href = $assessmentItemRef->getHref();
@@ -575,7 +577,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $components = array_merge(
             parent::getComponents()->getArrayCopy(),
@@ -610,7 +612,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * @param $title
      * @throws InvalidArgumentException
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         if (is_string($title)) {
             $this->title = $title;
@@ -626,7 +628,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -638,7 +640,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return bool
      */
-    public function hasTitle()
+    public function hasTitle(): bool
     {
         return !empty($this->getTitle());
     }
@@ -651,7 +653,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * @param $label
      * @throws InvalidArgumentException
      */
-    public function setLabel($label)
+    public function setLabel($label): void
     {
         if (Format::isString256($label)) {
             $this->label = $label;
@@ -667,7 +669,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
@@ -679,7 +681,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @return bool
      */
-    public function hasLabel()
+    public function hasLabel(): bool
     {
         return !empty($this->getLabel());
     }

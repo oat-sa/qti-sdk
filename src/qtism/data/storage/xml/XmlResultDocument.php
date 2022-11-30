@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class XmlResultDocument extends XmlDocument
      * @param string $versionNumber A QTI Result version number e.g. '2.1.0'.
      * @throws QtiVersionException when version is not supported for QTI Result.
      */
-    public function setVersion(string $versionNumber)
+    public function setVersion(string $versionNumber): void
     {
         $this->version = ResultVersion::create($versionNumber);
     }

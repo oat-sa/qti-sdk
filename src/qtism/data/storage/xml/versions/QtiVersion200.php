@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,11 +32,11 @@ use qtism\data\storage\xml\marshalling\Qti20MarshallerFactory;
  */
 class QtiVersion200 extends QtiVersion
 {
-    const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_v2p0';
+    public const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_v2p0';
 
-    const XSD = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
+    public const XSD = 'http://www.imsglobal.org/xsd/imsqti_v2p0.xsd';
 
-    const LOCAL_XSD = 'imsqti_v2p0.xsd';
+    public const LOCAL_XSD = 'imsqti_v2p0.xsd';
 
-    const MARSHALLER_FACTORY = Qti20MarshallerFactory::class;
+    public const MARSHALLER_FACTORY = Qti20MarshallerFactory::class;
 }

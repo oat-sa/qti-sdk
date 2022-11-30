@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
      * @param QtiComponent $component A TestVariable object.
      * @return DOMElement The corresponding testVariable QTI element.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
 
@@ -65,7 +67,7 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
      * @return QtiComponent The corresponding TestVariable object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): TestVariables
     {
         $baseComponent = parent::unmarshall($element);
 
@@ -93,7 +95,7 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'testVariables';
     }

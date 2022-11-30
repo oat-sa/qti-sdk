@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -47,7 +49,7 @@ class PowerProcessor extends OperatorProcessor
      * @return QtiFloat|null A float value that corresponds to the first expression raised to the power of the second or NULL if the either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -103,7 +105,7 @@ class PowerProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Power::class;
     }

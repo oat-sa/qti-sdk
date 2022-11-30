@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +42,7 @@ class WeightMarshaller extends Marshaller
      * @param QtiComponent $component A Weight object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -57,7 +59,8 @@ class WeightMarshaller extends Marshaller
      * @return QtiComponent A Weight object.
      * @throws UnmarshallingException If the mandatory attributes 'identifier' or 'value' are missing from $element but also if 'value' cannot be converted to a float value or 'identifier' is not a valid QTI Identifier.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): Weight
     {
         // identifier is a mandatory value.
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
@@ -86,7 +89,7 @@ class WeightMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'weight';
     }

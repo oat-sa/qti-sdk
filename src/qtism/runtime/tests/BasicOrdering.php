@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -31,7 +33,7 @@ class BasicOrdering extends AbstractOrdering
     /**
      * @return SelectableRouteCollection
      */
-    public function order()
+    public function order(): SelectableRouteCollection
     {
         if (($ordering = $this->getAssessmentSection()->getOrdering()) !== null && $ordering->getShuffle() === true) {
             // $orderedRoutes will contain the result of the ordering algorithm.

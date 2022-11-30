@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -253,7 +255,7 @@ abstract class Marshaller
      *
      * @return DOMDocument A unique DOMDocument object.
      */
-    protected static function getDOMCradle()
+    protected static function getDOMCradle(): DOMDocument
     {
         if (empty(self::$DOMCradle)) {
             self::$DOMCradle = new DOMDocument('1.0', 'UTF-8');
@@ -294,7 +296,7 @@ abstract class Marshaller
      *
      * @param string $version A QTI version number e.g. '2.1'.
      */
-    protected function setVersion($version)
+    protected function setVersion($version): void
     {
         $this->version = $version;
     }
@@ -304,7 +306,7 @@ abstract class Marshaller
      *
      * @return string A QTI version number e.g. '2.1'.
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
@@ -336,7 +338,7 @@ abstract class Marshaller
         }
     }
 
-    protected function checkMarshallerImplementation($component)
+    protected function checkMarshallerImplementation($component): void
     {
         if (!$component instanceof QtiComponent || ($this->getExpectedQtiClassName() !== '' && $component->getQtiClassName() !== $this->getExpectedQtiClassName())) {
             $componentName = $this->getComponentName($component);
@@ -344,7 +346,7 @@ abstract class Marshaller
         }
     }
 
-    protected function checkUnmarshallerImplementation($element)
+    protected function checkUnmarshallerImplementation($element): void
     {
         if (!$element instanceof DOMElement || ($this->getExpectedQtiClassName() !== '' && $element->localName !== $this->getExpectedQtiClassName())) {
             $nodeName = $this->getElementName($element);
@@ -373,7 +375,7 @@ abstract class Marshaller
      * @param $attribute
      * @return string
      */
-    protected function getAttributeName(DOMElement $element, $attribute)
+    protected function getAttributeName(DOMElement $element, $attribute): string
     {
         if ($this->isWebComponentFriendly() === true && strpos($element->localName, "qti-") === 0) {
             $qtiFriendlyClassName = XmlUtils::qtiFriendlyName($element->localName);
@@ -395,6 +397,7 @@ abstract class Marshaller
      * @return mixed The attribute value with the provided $datatype, or null if the attribute does not exist in $element.
      * @throws InvalidArgumentException If $datatype is not in the range of possible values.
      */
+    #[\ReturnTypeWillChange]
     public function getDOMElementAttributeAs(DOMElement $element, $attribute, $datatype = 'string')
     {
         return XmlUtils::getDOMElementAttributeAs($element, $this->getAttributeName($element, $attribute), $datatype);
@@ -407,7 +410,7 @@ abstract class Marshaller
      * @param string $attribute An XML attribute name.
      * @param mixed $value A given value.
      */
-    public function setDOMElementAttribute(DOMElement $element, $attribute, $value)
+    public function setDOMElementAttribute(DOMElement $element, $attribute, $value): void
     {
         XmlUtils::setDOMElementAttribute($element, $this->getAttributeName($element, $attribute), $value);
     }
@@ -418,7 +421,7 @@ abstract class Marshaller
      * @param DOMElement $element A DOMElement object.
      * @param mixed $value A given value.
      */
-    public static function setDOMElementValue(DOMElement $element, $value)
+    public static function setDOMElementValue(DOMElement $element, $value): void
     {
         XmlUtils::setDOMElementValue($element, $value);
     }
@@ -451,7 +454,7 @@ abstract class Marshaller
      * @param bool $withText Whether text nodes must be returned or not.
      * @return array An array of DOMNode objects.
      */
-    public static function getChildElements($element, $withText = false)
+    public static function getChildElements($element, $withText = false): array
     {
         return XmlUtils::getChildElements($element, $withText);
     }
@@ -467,7 +470,7 @@ abstract class Marshaller
      * @param bool $withText (optional) Whether text nodes must be returned or not.
      * @return array An array of DOMElement objects.
      */
-    public function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false)
+    public function getChildElementsByTagName($element, $tagName, $exclude = false, $withText = false): array
     {
         if (!is_array($tagName)) {
             $tagName = [$tagName];
@@ -510,7 +513,7 @@ abstract class Marshaller
      * @param DOMElement $element The $element you want to set a value for xml:base.
      * @param string $xmlBase The value to be set to the xml:base attribute of $element.
      */
-    public static function setXmlBase(DOMElement $element, $xmlBase)
+    public static function setXmlBase(DOMElement $element, $xmlBase): void
     {
         $element->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'base', $xmlBase);
     }
@@ -519,7 +522,7 @@ abstract class Marshaller
      * @param BodyElement $bodyElement
      * @param DOMElement $element
      */
-    protected function fillBodyElementFlowTo(BodyElement $bodyElement, DOMElement $element)
+    protected function fillBodyElementFlowTo(BodyElement $bodyElement, DOMElement $element): void
     {
         $scan = ['aria-flowto'];
 
@@ -561,7 +564,7 @@ abstract class Marshaller
      * @param DOMElement $element The DOMElement object from where the attribute values must be retrieved.
      * @throws UnmarshallingException If one of the attributes of $element is not valid.
      */
-    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element)
+    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element): void
     {
         try {
             $bodyElement->setId($element->getAttribute('id'));
@@ -639,7 +642,7 @@ abstract class Marshaller
      * @param DOMElement $element
      * @param BodyElement $bodyElement
      */
-    protected function fillElementFlowto(DOMElement $element, BodyElement $bodyElement)
+    protected function fillElementFlowto(DOMElement $element, BodyElement $bodyElement): void
     {
         if (($ariaFlowTo = $bodyElement->getAriaFlowTo()) !== '') {
             if ($this->needsFlowsToFix($element->localName)) {
@@ -656,7 +659,7 @@ abstract class Marshaller
      * @param DOMElement $element The element from where the attribute values will be
      * @param BodyElement $bodyElement The bodyElement to be fill.
      */
-    protected function fillElement(DOMElement $element, BodyElement $bodyElement)
+    protected function fillElement(DOMElement $element, BodyElement $bodyElement): void
     {
         if (($id = $bodyElement->getId()) !== '') {
             $element->setAttribute('id', $id);
@@ -742,7 +745,7 @@ abstract class Marshaller
      * @param QtiComponent $component
      * @return DOMElement
      */
-    protected function createElement(QtiComponent $component)
+    protected function createElement(QtiComponent $component): DOMElement
     {
         $localName = $component->getQtiClassName();
 
@@ -760,7 +763,7 @@ abstract class Marshaller
      *
      * @return bool
      */
-    protected function isWebComponentFriendly()
+    protected function isWebComponentFriendly(): bool
     {
         return $this->getMarshallerFactory()->isWebComponentFriendly();
     }
@@ -772,6 +775,7 @@ abstract class Marshaller
      * @return DOMElement A DOMElement object.
      * @throws MarshallingException|MarshallerNotFoundException If an error occurs during the marshalling process.
      */
+    #[\ReturnTypeWillChange]
     abstract protected function marshall(QtiComponent $component);
 
     /**
@@ -781,7 +785,8 @@ abstract class Marshaller
      * @return QtiComponent A QtiComponent object.
      * @throws UnmarshallingException|MarshallerNotFoundException If an error occurs during the unmarshalling process.
      */
-    abstract protected function unmarshall(DOMElement $element);
+    #[\ReturnTypeWillChange]
+    abstract protected function unmarshall(DOMElement $element): QtiComponent;
 
     /**
      * Get the class name/tag name of the QtiComponent/DOMElement which can be handled
@@ -792,13 +797,13 @@ abstract class Marshaller
      *
      * @return string A QTI class name or an empty string.
      */
-    abstract public function getExpectedQtiClassName();
+    abstract public function getExpectedQtiClassName(): string;
 
     /**
      * @param QtiComponent|string $component
      * @return string
      */
-    private function getComponentName($component)
+    private function getComponentName($component): string
     {
         if ($component instanceof QtiComponent) {
             return $component->getQtiClassName();
@@ -810,7 +815,7 @@ abstract class Marshaller
      * @param DOMElement|string $element
      * @return string
      */
-    private function getElementName($element)
+    private function getElementName($element): string
     {
         if ($element instanceof DOMElement) {
             return $element->localName;

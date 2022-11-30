@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -31,16 +33,16 @@ use qtism\common\enums\Enumeration;
  */
 class ExternalScored implements Enumeration
 {
-    const HUMAN = 1;
+    public const HUMAN = 1;
 
-    const EXTERNAL_MACHINE = 2;
+    public const EXTERNAL_MACHINE = 2;
 
     /**
      * Return the possible values of the enumeration as an array.
      *
      * @return array An associative array where keys are constant names (as they appear in the code) and values are constant values.
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'HUMAN' => self::HUMAN,

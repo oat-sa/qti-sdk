@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -55,7 +57,7 @@ class MarshallerNotFoundException extends Exception
      *
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return $this->qtiClassName;
     }
@@ -65,7 +67,7 @@ class MarshallerNotFoundException extends Exception
      *
      * @param string $qtiClassName
      */
-    protected function setQtiClassName($qtiClassName)
+    protected function setQtiClassName($qtiClassName): void
     {
         $this->qtiClassName = $qtiClassName;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -84,7 +86,7 @@ abstract class TemplateElement extends BodyElement
      * @param string $templateIdentifier A QTI identifier.
      * @throws InvalidArgumentException If $templateIdentifier is not a valid QTI identifier.
      */
-    public function setTemplateIdentifier($templateIdentifier)
+    public function setTemplateIdentifier($templateIdentifier): void
     {
         if (Format::isIdentifier($templateIdentifier, false) === true) {
             $this->templateIdentifier = $templateIdentifier;
@@ -99,7 +101,7 @@ abstract class TemplateElement extends BodyElement
      *
      * @return string A QTI identifier.
      */
-    public function getTemplateIdentifier()
+    public function getTemplateIdentifier(): string
     {
         return $this->templateIdentifier;
     }
@@ -110,7 +112,7 @@ abstract class TemplateElement extends BodyElement
      * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
-    public function setShowHide($showHide)
+    public function setShowHide($showHide): void
     {
         if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
@@ -125,7 +127,7 @@ abstract class TemplateElement extends BodyElement
      *
      * @return int A value from the ShowHide enumeration.
      */
-    public function getShowHide()
+    public function getShowHide(): int
     {
         return $this->showHide;
     }
@@ -135,7 +137,7 @@ abstract class TemplateElement extends BodyElement
      *
      * @return bool
      */
-    public function mustShow()
+    public function mustShow(): bool
     {
         return $this->showHide === ShowHide::SHOW;
     }
@@ -145,7 +147,7 @@ abstract class TemplateElement extends BodyElement
      *
      * @return bool
      */
-    public function mustHide()
+    public function mustHide(): bool
     {
         return $this->showHide === ShowHide::HIDE;
     }
@@ -156,7 +158,7 @@ abstract class TemplateElement extends BodyElement
      * @param string $identifier A QTI identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
@@ -169,7 +171,7 @@ abstract class TemplateElement extends BodyElement
     /**
      * @return string
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }

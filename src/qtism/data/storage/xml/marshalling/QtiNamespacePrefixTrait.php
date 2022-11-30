@@ -33,7 +33,7 @@ trait QtiNamespacePrefixTrait
     /**
      * @return string
      */
-    abstract public function getVersion();
+    abstract public function getVersion(): string;
 
     /**
      * @return DOMElement|false

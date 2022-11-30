@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -62,7 +64,7 @@ class RuleEngine extends AbstractEngine
      * @param QtiComponent $rule A Rule object to be executed.
      * @throws InvalidArgumentException If $rule is not a Rule object.
      */
-    public function setComponent(QtiComponent $rule)
+    public function setComponent(QtiComponent $rule): void
     {
         if ($rule instanceof Rule) {
             parent::setComponent($rule);
@@ -77,7 +79,7 @@ class RuleEngine extends AbstractEngine
      *
      * @param RuleProcessorFactory $ruleProcessorFactory A RuleProcessorFactory object.
      */
-    protected function setRuleProcessorFactory(RuleProcessorFactory $ruleProcessorFactory)
+    protected function setRuleProcessorFactory(RuleProcessorFactory $ruleProcessorFactory): void
     {
         $this->ruleProcessorFactory = $ruleProcessorFactory;
     }
@@ -87,7 +89,7 @@ class RuleEngine extends AbstractEngine
      *
      * @return RuleProcessorFactory A RuleProcessorFactory object.
      */
-    protected function getRuleProcessorFactory()
+    protected function getRuleProcessorFactory(): RuleProcessorFactory
     {
         return $this->ruleProcessorFactory;
     }
@@ -97,7 +99,7 @@ class RuleEngine extends AbstractEngine
      *
      * @throws RuleProcessingException
      */
-    public function process()
+    public function process(): void
     {
         $rule = $this->getComponent();
         $context = $this->getContext();

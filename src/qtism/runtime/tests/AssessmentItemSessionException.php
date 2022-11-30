@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class AssessmentItemSessionException extends Exception
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * Error code to use when timelimits are in force and the
@@ -47,7 +49,7 @@ class AssessmentItemSessionException extends Exception
      *
      * @var int
      */
-    const DURATION_OVERFLOW = 1;
+    public const DURATION_OVERFLOW = 1;
 
     /**
      * Error code to use when timelimits are in force and
@@ -55,7 +57,7 @@ class AssessmentItemSessionException extends Exception
      *
      * @var int
      */
-    const DURATION_UNDERFLOW = 2;
+    public const DURATION_UNDERFLOW = 2;
 
     /**
      * Error code to use when the maximum amount attempts for a non-adaptive
@@ -63,7 +65,7 @@ class AssessmentItemSessionException extends Exception
      *
      * @var int
      */
-    const ATTEMPTS_OVERFLOW = 3;
+    public const ATTEMPTS_OVERFLOW = 3;
 
     /**
      * Error code to use when a runtime error that could not be corrected
@@ -71,7 +73,7 @@ class AssessmentItemSessionException extends Exception
      *
      * @var int
      */
-    const RUNTIME_ERROR = 4;
+    public const RUNTIME_ERROR = 4;
 
     /**
      * Error code to return when itemSessionControl.validateResponses is in force
@@ -79,7 +81,7 @@ class AssessmentItemSessionException extends Exception
      *
      * @var int
      */
-    const INVALID_RESPONSE = 5;
+    public const INVALID_RESPONSE = 5;
 
     /**
      * Error code to use when itemSessionControl.allowSkipping is not in force
@@ -87,14 +89,14 @@ class AssessmentItemSessionException extends Exception
      *
      * @var int
      */
-    const SKIPPING_FORBIDDEN = 6;
+    public const SKIPPING_FORBIDDEN = 6;
 
     /**
      * Error code to use when a sequence of states is violated.
      *
      * @var int
      */
-    const STATE_VIOLATION = 7;
+    public const STATE_VIOLATION = 7;
 
     /**
      * The AssessmentItemSession object which threw the error.
@@ -122,7 +124,7 @@ class AssessmentItemSessionException extends Exception
      *
      * @param AssessmentItemSession $source An AssessmentItemSession object.
      */
-    public function setSource(AssessmentItemSession $source)
+    public function setSource(AssessmentItemSession $source): void
     {
         $this->source = $source;
     }
@@ -132,7 +134,7 @@ class AssessmentItemSessionException extends Exception
      *
      * @return AssessmentItemSession An AssessmentItemSession object.
      */
-    public function getSource()
+    public function getSource(): AssessmentItemSession
     {
         return $this->source;
     }

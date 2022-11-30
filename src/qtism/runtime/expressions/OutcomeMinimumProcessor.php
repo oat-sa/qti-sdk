@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,7 +50,7 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor
      * @return MultipleContainer|null A MultipleContainer object with baseType float containing all the retrieved normalMinimum values or NULL if no declared minimum in the sub-set.
      * @throws ExpressionProcessingException
      */
-    public function process()
+    public function process(): ?MultipleContainer
     {
         $itemSubset = $this->getItemSubset();
         $testSession = $this->getState();
@@ -94,7 +96,7 @@ class OutcomeMinimumProcessor extends ItemSubsetProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return OutcomeMinimum::class;
     }

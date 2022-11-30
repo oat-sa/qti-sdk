@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,6 +46,7 @@ class DefaultProcessor extends ExpressionProcessor
      *
      * @return mixed A QTI Runtime compliant value.
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $expr = $this->getExpression();
@@ -57,7 +60,7 @@ class DefaultProcessor extends ExpressionProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return DefaultVal::class;
     }

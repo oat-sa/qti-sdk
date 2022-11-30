@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +62,7 @@ class Dt extends DlElement
      *
      * @param InlineCollection $content A collection of Inline objects.
      */
-    public function setContent(InlineCollection $content)
+    public function setContent(InlineCollection $content): void
     {
         $this->content = $content;
     }
@@ -70,7 +72,7 @@ class Dt extends DlElement
      *
      * @return InlineCollection
      */
-    public function getContent()
+    public function getContent(): InlineCollection
     {
         return $this->content;
     }
@@ -80,7 +82,7 @@ class Dt extends DlElement
      *
      * @return QtiComponentCollection The Inline objects composing the Dt.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -88,7 +90,7 @@ class Dt extends DlElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'dt';
     }

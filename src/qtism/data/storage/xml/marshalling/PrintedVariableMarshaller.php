@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +42,7 @@ class PrintedVariableMarshaller extends Marshaller
      * @param QtiComponent $component A PrintedVariable object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $version = $this->getVersion();
@@ -82,7 +84,8 @@ class PrintedVariableMarshaller extends Marshaller
      * @return QtiComponent A PrintedVariable object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): PrintedVariable
     {
         $version = $this->getVersion();
 
@@ -133,7 +136,7 @@ class PrintedVariableMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'printedVariable';
     }

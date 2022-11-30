@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -104,7 +106,7 @@ class InlineChoiceInteraction extends InlineInteraction
      * @param bool $shuffle
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
-    public function setShuffle($shuffle)
+    public function setShuffle($shuffle): void
     {
         if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
@@ -119,7 +121,7 @@ class InlineChoiceInteraction extends InlineInteraction
      *
      * @return bool
      */
-    public function mustShuffle()
+    public function mustShuffle(): bool
     {
         return $this->shuffle;
     }
@@ -130,7 +132,7 @@ class InlineChoiceInteraction extends InlineInteraction
      * @param bool $required
      * @throws InvalidArgumentException If $required is not a boolean value.
      */
-    public function setRequired($required)
+    public function setRequired($required): void
     {
         if (is_bool($required)) {
             $this->required = $required;
@@ -145,7 +147,7 @@ class InlineChoiceInteraction extends InlineInteraction
      *
      * @return bool
      */
-    public function isRequired()
+    public function isRequired(): bool
     {
         return $this->required;
     }
@@ -156,7 +158,7 @@ class InlineChoiceInteraction extends InlineInteraction
      * @param InlineChoiceCollection $content A collection of at least one InlineChoice object.
      * @throws InvalidArgumentException If $content is empty.
      */
-    public function setContent(InlineChoiceCollection $content)
+    public function setContent(InlineChoiceCollection $content): void
     {
         if (count($content) > 0) {
             $this->content = $content;
@@ -171,7 +173,7 @@ class InlineChoiceInteraction extends InlineInteraction
      *
      * @return InlineChoiceCollection A collection of at least one InlineChoice object.
      */
-    public function getContent()
+    public function getContent(): InlineChoiceCollection
     {
         return $this->content;
     }
@@ -179,7 +181,7 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * @return ResponseValidityConstraint|null
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
     {
         return new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -191,7 +193,7 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * @return InlineChoiceCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -199,7 +201,7 @@ class InlineChoiceInteraction extends InlineInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'inlineChoiceInteraction';
     }

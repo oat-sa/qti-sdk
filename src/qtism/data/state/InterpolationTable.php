@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -65,7 +67,7 @@ class InterpolationTable extends LookupTable
      *
      * @return InterpolationTableEntryCollection A collection of InterpolationTableEntry objects.
      */
-    public function getInterpolationTableEntries()
+    public function getInterpolationTableEntries(): InterpolationTableEntryCollection
     {
         return $this->interpolationTableEntries;
     }
@@ -76,7 +78,7 @@ class InterpolationTable extends LookupTable
      * @param InterpolationTableEntryCollection $interpolationTableEntries A collection of InterpolationTableEntry objects.
      * @throws InvalidArgumentException If $interpolationTableEntries is an empty collection.
      */
-    public function setInterpolationTableEntries(InterpolationTableEntryCollection $interpolationTableEntries)
+    public function setInterpolationTableEntries(InterpolationTableEntryCollection $interpolationTableEntries): void
     {
         if (count($interpolationTableEntries) > 0) {
             $this->interpolationTableEntries = $interpolationTableEntries;
@@ -89,7 +91,7 @@ class InterpolationTable extends LookupTable
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'interpolationTable';
     }
@@ -97,7 +99,7 @@ class InterpolationTable extends LookupTable
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
             parent::getComponents()->getArrayCopy(),

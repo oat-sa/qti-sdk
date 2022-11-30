@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +62,7 @@ class SimpleChoice extends Choice
      *
      * @return FlowStaticCollection A collection of FlowStatic objects.
      */
-    public function getComponents()
+    public function getComponents(): FlowStaticCollection
     {
         return $this->getContent();
     }
@@ -70,7 +72,7 @@ class SimpleChoice extends Choice
      *
      * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
-    public function setContent(FlowStaticCollection $content)
+    public function setContent(FlowStaticCollection $content): void
     {
         $this->content = $content;
     }
@@ -80,7 +82,7 @@ class SimpleChoice extends Choice
      *
      * @return FlowStaticCollection
      */
-    public function getContent()
+    public function getContent(): FlowStaticCollection
     {
         return $this->content;
     }
@@ -88,7 +90,7 @@ class SimpleChoice extends Choice
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'simpleChoice';
     }

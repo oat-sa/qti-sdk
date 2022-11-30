@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +39,7 @@ class Utils
      * @param mixed $value
      * @return bool
      */
-    public static function isScalar($value)
+    public static function isScalar($value): bool
     {
         return is_scalar($value) || $value === null;
     }
@@ -48,7 +50,7 @@ class Utils
      * @param string $string
      * @return bool
      */
-    public static function isVariableReference($string)
+    public static function isVariableReference($string): bool
     {
         return is_string($string) && mb_strpos($string, '$') === 0 && mb_strlen($string, 'UTF-8') > 1;
     }
@@ -59,7 +61,7 @@ class Utils
      * @param string $string The string to be quoted (e.g. blabla).
      * @return string The quoted string (e.g. "blabla").
      */
-    public static function doubleQuotedPhpString($string)
+    public static function doubleQuotedPhpString($string): string
     {
         $escapes = ["\\", '"', "\n", "\t", "\v", "\r", "\f", '$'];
         $replace = ["\\\\", '\\"', "\\n", "\\t", "\\v", "\\r", "\\f", "\\$"];

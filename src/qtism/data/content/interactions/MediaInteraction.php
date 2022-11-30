@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -121,7 +123,7 @@ class MediaInteraction extends BlockInteraction
      * @param bool $autostart
      * @throws InvalidArgumentException If $autostart is not a boolean value.
      */
-    public function setAutostart($autostart)
+    public function setAutostart($autostart): void
     {
         if (is_bool($autostart)) {
             $this->autostart = $autostart;
@@ -136,7 +138,7 @@ class MediaInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function mustAutostart()
+    public function mustAutostart(): bool
     {
         return $this->autostart;
     }
@@ -147,7 +149,7 @@ class MediaInteraction extends BlockInteraction
      * @param int $minPlays A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minPlays is not a positive integer.
      */
-    public function setMinPlays($minPlays)
+    public function setMinPlays($minPlays): void
     {
         if (is_int($minPlays) && $minPlays >= 0) {
             $this->minPlays = $minPlays;
@@ -162,7 +164,7 @@ class MediaInteraction extends BlockInteraction
      *
      * @return int A positive (> 0) integer.
      */
-    public function getMinPlays()
+    public function getMinPlays(): int
     {
         return $this->minPlays;
     }
@@ -172,7 +174,7 @@ class MediaInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function hasMinPlays()
+    public function hasMinPlays(): bool
     {
         return $this->getMinPlays() !== 0;
     }
@@ -183,7 +185,7 @@ class MediaInteraction extends BlockInteraction
      * @param int $maxPlays A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxPlays is not a positive integer.
      */
-    public function setMaxPlays($maxPlays)
+    public function setMaxPlays($maxPlays): void
     {
         if (is_int($maxPlays) && $maxPlays >= 0) {
             $this->maxPlays = $maxPlays;
@@ -198,7 +200,7 @@ class MediaInteraction extends BlockInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMaxPlays()
+    public function getMaxPlays(): int
     {
         return $this->maxPlays;
     }
@@ -208,7 +210,7 @@ class MediaInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function hasMaxPlays()
+    public function hasMaxPlays(): bool
     {
         return $this->getMaxPlays() !== 0;
     }
@@ -219,7 +221,7 @@ class MediaInteraction extends BlockInteraction
      * @param bool $loop
      * @throws InvalidArgumentException If $loop is not a boolean value.
      */
-    public function setLoop($loop)
+    public function setLoop($loop): void
     {
         if (is_bool($loop)) {
             $this->loop = $loop;
@@ -234,7 +236,7 @@ class MediaInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function mustLoop()
+    public function mustLoop(): bool
     {
         return $this->loop;
     }
@@ -244,7 +246,7 @@ class MediaInteraction extends BlockInteraction
      *
      * @param ObjectElement $object
      */
-    public function setObject(ObjectElement $object)
+    public function setObject(ObjectElement $object): void
     {
         $this->object = $object;
     }
@@ -254,7 +256,7 @@ class MediaInteraction extends BlockInteraction
      *
      * @return ObjectElement
      */
-    public function getObject()
+    public function getObject(): ObjectElement
     {
         return $this->object;
     }
@@ -262,7 +264,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $parentComponent = parent::getComponents();
 
@@ -272,7 +274,7 @@ class MediaInteraction extends BlockInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'mediaInteraction';
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,14 +44,14 @@ use qtism\common\enums\Enumeration;
  */
 class NavigationMode implements Enumeration
 {
-    const LINEAR = 0;
+    public const LINEAR = 0;
 
-    const NONLINEAR = 1;
+    public const NONLINEAR = 1;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'LINEAR' => self::LINEAR,

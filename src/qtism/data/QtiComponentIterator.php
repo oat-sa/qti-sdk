@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -136,7 +138,7 @@ class QtiComponentIterator implements Iterator
      *
      * @param QtiComponent $rootComponent
      */
-    protected function setRootComponent(QtiComponent $rootComponent)
+    protected function setRootComponent(QtiComponent $rootComponent): void
     {
         $this->rootComponent = $rootComponent;
     }
@@ -144,15 +146,15 @@ class QtiComponentIterator implements Iterator
     /**
      * @param QtiComponent|null $currentContainer
      */
-    protected function setCurrentContainer(QtiComponent $currentContainer = null)
+    protected function setCurrentContainer(QtiComponent $currentContainer = null): void
     {
         $this->currentContainer = $currentContainer;
     }
 
     /**
-     * @return QtiComponent
+     * @return QtiComponent|null
      */
-    public function getCurrentContainer()
+    public function getCurrentContainer(): ?QtiComponent
     {
         return $this->currentContainer;
     }
@@ -163,7 +165,7 @@ class QtiComponentIterator implements Iterator
      *
      * @return QtiComponent
      */
-    public function getRootComponent()
+    public function getRootComponent(): QtiComponent
     {
         return $this->rootComponent;
     }
@@ -173,7 +175,7 @@ class QtiComponentIterator implements Iterator
      *
      * @param QtiComponent $currentComponent
      */
-    protected function setCurrentComponent(QtiComponent $currentComponent = null)
+    protected function setCurrentComponent(QtiComponent $currentComponent = null): void
     {
         $this->currentComponent = $currentComponent;
     }
@@ -183,7 +185,7 @@ class QtiComponentIterator implements Iterator
      *
      * @return QtiComponent A QtiComponent object.
      */
-    protected function getCurrentComponent()
+    protected function getCurrentComponent(): ?QtiComponent
     {
         return $this->currentComponent;
     }
@@ -193,7 +195,7 @@ class QtiComponentIterator implements Iterator
      *
      * @param array $classes An array of QTI class names.
      */
-    protected function setClasses(array $classes)
+    protected function setClasses(array $classes): void
     {
         $this->classes = $classes;
     }
@@ -203,7 +205,7 @@ class QtiComponentIterator implements Iterator
      *
      * @return array An array of QTI class names.
      */
-    protected function &getClasses()
+    protected function &getClasses(): array
     {
         return $this->classes;
     }
@@ -214,7 +216,7 @@ class QtiComponentIterator implements Iterator
      * @param QtiComponent $source From where we are coming from.
      * @param QtiComponentCollection $components The next components to explore.
      */
-    protected function pushOnTrail(QtiComponent $source, QtiComponentCollection $components)
+    protected function pushOnTrail(QtiComponent $source, QtiComponentCollection $components): void
     {
         foreach (array_reverse($components->getArrayCopy()) as $c) {
             array_push($this->trail, [$source, $c]);
@@ -227,7 +229,7 @@ class QtiComponentIterator implements Iterator
      *
      * @return array
      */
-    protected function popFromTrail()
+    protected function popFromTrail(): array
     {
         $this->trailCount--;
         return array_pop($this->trail);
@@ -238,7 +240,7 @@ class QtiComponentIterator implements Iterator
      *
      * @return array An array of QtiComponent objects.
      */
-    protected function &getTrail()
+    protected function &getTrail(): array
     {
         return $this->trail;
     }
@@ -248,7 +250,7 @@ class QtiComponentIterator implements Iterator
      *
      * @param array $trail An array of QtiComponent objects.
      */
-    protected function setTrail(array &$trail)
+    protected function setTrail(array &$trail): void
     {
         $this->trail = $trail;
         $this->trailCount = count($trail);
@@ -260,7 +262,7 @@ class QtiComponentIterator implements Iterator
      *
      * @param array $traversed An array of QtiComponent objects.
      */
-    protected function setTraversed(array &$traversed)
+    protected function setTraversed(array &$traversed): void
     {
         $this->traversed = $traversed;
     }
@@ -270,7 +272,7 @@ class QtiComponentIterator implements Iterator
      *
      * @param QtiComponent $component A QTIComponent object.
      */
-    protected function markTraversed(QtiComponent $component)
+    protected function markTraversed(QtiComponent $component): void
     {
         array_push($this->traversed, $component);
     }
@@ -282,7 +284,7 @@ class QtiComponentIterator implements Iterator
      * @param QtiComponent $component
      * @return bool
      */
-    protected function isTraversed(QtiComponent $component)
+    protected function isTraversed(QtiComponent $component): bool
     {
         return in_array($component, $this->traversed, true);
     }
@@ -292,7 +294,7 @@ class QtiComponentIterator implements Iterator
      *
      * @param bool $isValid
      */
-    protected function setValid($isValid)
+    protected function setValid($isValid): void
     {
         $this->isValid = $isValid;
     }
@@ -300,7 +302,7 @@ class QtiComponentIterator implements Iterator
     /**
      * Rewind the iterator.
      */
-    public function rewind()
+    public function rewind(): void
     {
         $trail = [];
         $this->setTrail($trail);
@@ -344,7 +346,7 @@ class QtiComponentIterator implements Iterator
      *
      * @return QtiComponent A QtiComponent object.
      */
-    public function current()
+    public function current(): ?QtiComponent
     {
         return $this->getCurrentComponent();
     }
@@ -361,7 +363,7 @@ class QtiComponentIterator implements Iterator
      * @return null|QtiComponent The null value if there is no parent, otherwise a QtiComponent.
      * @see QtiComponentIterator::current()
      */
-    public function parent()
+    public function parent(): ?QtiComponent
     {
         return $this->getCurrentContainer();
     }
@@ -372,7 +374,7 @@ class QtiComponentIterator implements Iterator
      *
      * @return string A QTI class name.
      */
-    public function key()
+    public function key(): string
     {
         return $this->getCurrentComponent()->getQtiClassName();
     }
@@ -381,7 +383,7 @@ class QtiComponentIterator implements Iterator
      * Moves the current position to the next QtiComponent object to be
      * traversed.
      */
-    public function next()
+    public function next(): void
     {
         if ($this->trailCount > 0) {
             while ($this->trailCount > 0) {
@@ -416,7 +418,7 @@ class QtiComponentIterator implements Iterator
      *
      * @return bool Whether the current position is valid.
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->isValid;
     }

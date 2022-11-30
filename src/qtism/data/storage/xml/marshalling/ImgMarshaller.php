@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class ImgMarshaller extends Marshaller
      * @param QtiComponent $component An Img object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         /** @var Img $component */
         $element = $this->createElement($component);
@@ -74,7 +76,8 @@ class ImgMarshaller extends Marshaller
      * @return QtiComponent n Img object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): Img
     {
         $src = $this->getDOMElementAttributeAs($element, 'src');
         if ($src === null) {
@@ -109,7 +112,7 @@ class ImgMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'img';
     }

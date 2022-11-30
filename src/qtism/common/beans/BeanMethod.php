@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +62,7 @@ class BeanMethod
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getMethod()->getName();
     }
@@ -70,7 +72,7 @@ class BeanMethod
      *
      * @param ReflectionMethod $method A ReflectionMethod object.
      */
-    protected function setMethod(ReflectionMethod $method)
+    protected function setMethod(ReflectionMethod $method): void
     {
         $this->method = $method;
     }
@@ -80,7 +82,7 @@ class BeanMethod
      *
      * @return ReflectionMethod A ReflectionMethod object.
      */
-    public function getMethod()
+    public function getMethod(): ReflectionMethod
     {
         return $this->method;
     }

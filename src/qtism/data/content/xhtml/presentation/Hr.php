@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -63,7 +65,7 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic
      * @param string $xmlBase A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '')
+    public function setXmlBase($xmlBase = ''): void
     {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
@@ -78,7 +80,7 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase()
+    public function getXmlBase(): string
     {
         return $this->xmlBase;
     }
@@ -86,7 +88,7 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return bool
      */
-    public function hasXmlBase()
+    public function hasXmlBase(): bool
     {
         return $this->getXmlBase() !== '';
     }
@@ -94,7 +96,7 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -102,7 +104,7 @@ class Hr extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'hr';
     }

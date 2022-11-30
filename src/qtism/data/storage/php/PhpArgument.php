@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,7 +63,7 @@ class PhpArgument
      * @param mixed $value A PHP scalar value or a PhpVariable object or null or a PhpVariable object.
      * @throws InvalidArgumentException If $value is not a PHP scalar value nor a PhpVariable object nor null.
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         if ($value instanceof PhpVariable || Utils::isScalar($value)) {
             $this->value = $value;
@@ -77,6 +79,7 @@ class PhpArgument
      *
      * @return mixed A PhpVariable object or a PHP scalar value or null.
      */
+    #[\ReturnTypeWillChange]
     public function getValue()
     {
         return $this->value;
@@ -88,7 +91,7 @@ class PhpArgument
      *
      * @return bool
      */
-    public function isVariableReference()
+    public function isVariableReference(): bool
     {
         return $this->getValue() instanceof PhpVariable;
     }
@@ -98,7 +101,7 @@ class PhpArgument
      *
      * @return bool
      */
-    public function isScalar()
+    public function isScalar(): bool
     {
         return Utils::isScalar($this->getValue());
     }

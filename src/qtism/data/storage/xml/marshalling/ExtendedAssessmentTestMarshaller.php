@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +42,8 @@ class ExtendedAssessmentTestMarshaller extends AssessmentTestMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    #[\ReturnTypeWillChange]
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
 
@@ -60,7 +63,7 @@ class ExtendedAssessmentTestMarshaller extends AssessmentTestMarshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null)
+    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null): QtiComponent
     {
         $baseComponent = parent::unmarshall($element);
         $component = ExtendedAssessmentTest::createFromAssessmentTest($baseComponent);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +46,7 @@ class ContainerSizeProcessor extends OperatorProcessor
      * @return QtiInteger The size of the container or null if it contains NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): QtiInteger
     {
         $operands = $this->getOperands();
 
@@ -63,7 +65,7 @@ class ContainerSizeProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return ContainerSize::class;
     }

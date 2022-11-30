@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -47,7 +49,7 @@ class TextRunRenderer extends AbstractXhtmlRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         $fragment->appendChild($this->getRenderingEngine()->getDocument()->createTextNode($component->getContent()));
     }
@@ -57,7 +59,7 @@ class TextRunRenderer extends AbstractXhtmlRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         return;
     }

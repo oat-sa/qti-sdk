@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,5 +39,5 @@ interface ProcessorFactory
      * @param QtiComponent $component A QtiComponent object that the returned Processable object is able to process.
      * @return Processable A Processable object able to process $component.
      */
-    public function createProcessor(QtiComponent $component);
+    public function createProcessor(QtiComponent $component): Processable;
 }
