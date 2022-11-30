@@ -3,6 +3,7 @@
 namespace qtism\data\storage\filesystem;
 
 use RuntimeException;
+use Error;
 
 class FilesystemFactory
 {
@@ -10,12 +11,12 @@ class FilesystemFactory
     {
         try {
             return FlysystemV2Filesystem::local($path);
-        } catch (\Error) {
+        } catch (Error $ex1) {
         }
 
         try {
             return FlysystemV1Filesystem::local($path);
-        } catch (\Error) {
+        } catch (Error $ex) {
             throw new RuntimeException('Local filesystem could not be initialized.  Please install Flysystem or provide your own FilesystemInterface');
         }
     }
