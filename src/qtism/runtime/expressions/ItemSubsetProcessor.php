@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -62,7 +64,7 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor
      *
      * @return string A section identifier. If no sectionIdentifier attribute was specified, an empty string ('') is returned.
      */
-    protected function getSectionIdentifier()
+    protected function getSectionIdentifier(): string
     {
         return $this->getExpression()->getSectionIdentifier();
     }
@@ -73,7 +75,7 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor
      *
      * @return IdentifierCollection A collection of category identifiers or NULL if no categories to be included were specified.
      */
-    protected function getIncludeCategories()
+    protected function getIncludeCategories(): ?IdentifierCollection
     {
         $categories = $this->getExpression()->getIncludeCategories();
 
@@ -86,7 +88,7 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor
      *
      * @return IdentifierCollection A collection of category identifiers or NULL if no categories to be excluded were specified.
      */
-    protected function getExcludeCategories()
+    protected function getExcludeCategories(): ?IdentifierCollection
     {
         $categories = $this->getExpression()->getExcludeCategories();
 
@@ -123,7 +125,7 @@ abstract class ItemSubsetProcessor extends ExpressionProcessor
      *
      * @return AssessmentItemRefCollection A collection of AssessmentItemRef object that match the criteria expressed by the ItemSubset expression to be processed.
      */
-    protected function getItemSubset()
+    protected function getItemSubset(): AssessmentItemRefCollection
     {
         $sectionIdentifier = $this->getSectionIdentifier();
         $includeCategories = $this->getIncludeCategories();

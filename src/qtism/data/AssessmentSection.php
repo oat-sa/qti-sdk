@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -114,7 +116,7 @@ class AssessmentSection extends SectionPart
      *
      * @return string A title.
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -125,7 +127,7 @@ class AssessmentSection extends SectionPart
      * @param string $title A title.
      * @throws InvalidArgumentException If $title is not a string.
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         if (is_string($title)) {
             $this->title = $title;
@@ -140,7 +142,7 @@ class AssessmentSection extends SectionPart
      *
      * @return bool true if the section is visible, false if not.
      */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return $this->visible;
     }
@@ -151,7 +153,7 @@ class AssessmentSection extends SectionPart
      * @param bool $visible true if it must be visible, false otherwise.
      * @throws InvalidArgumentException If $visible is not a boolean.
      */
-    public function setVisible($visible)
+    public function setVisible($visible): void
     {
         if (is_bool($visible)) {
             $this->visible = $visible;
@@ -166,7 +168,7 @@ class AssessmentSection extends SectionPart
      *
      * @return bool
      */
-    public function mustKeepTogether()
+    public function mustKeepTogether(): bool
     {
         return $this->keepTogether;
     }
@@ -177,7 +179,7 @@ class AssessmentSection extends SectionPart
      * @param bool $keepTogether true if the items must be kept together, false otherwise.
      * @throws InvalidArgumentException If $keepTogether is not a boolean.
      */
-    public function setKeepTogether($keepTogether)
+    public function setKeepTogether($keepTogether): void
     {
         if (is_bool($keepTogether)) {
             $this->keepTogether = $keepTogether;
@@ -193,7 +195,7 @@ class AssessmentSection extends SectionPart
      *
      * @return Selection A selection rule.
      */
-    public function getSelection()
+    public function getSelection(): ?Selection
     {
         return $this->selection;
     }
@@ -203,7 +205,7 @@ class AssessmentSection extends SectionPart
      *
      * @param Selection $selection A selection rule.
      */
-    public function setSelection(Selection $selection = null)
+    public function setSelection(Selection $selection = null): void
     {
         $this->selection = $selection;
     }
@@ -213,7 +215,7 @@ class AssessmentSection extends SectionPart
      *
      * @return bool
      */
-    public function hasSelection()
+    public function hasSelection(): bool
     {
         return $this->getSelection() !== null;
     }
@@ -224,7 +226,7 @@ class AssessmentSection extends SectionPart
      *
      * @return Ordering An Ordering object.
      */
-    public function getOrdering()
+    public function getOrdering(): ?Ordering
     {
         return $this->ordering;
     }
@@ -234,7 +236,7 @@ class AssessmentSection extends SectionPart
      *
      * @param Ordering $ordering An Ordering object.
      */
-    public function setOrdering(Ordering $ordering = null)
+    public function setOrdering(Ordering $ordering = null): void
     {
         $this->ordering = $ordering;
     }
@@ -244,7 +246,7 @@ class AssessmentSection extends SectionPart
      *
      * @return bool
      */
-    public function hasOrdering()
+    public function hasOrdering(): bool
     {
         return $this->getOrdering() !== null;
     }
@@ -255,7 +257,7 @@ class AssessmentSection extends SectionPart
      *
      * @return RubricBlockCollection A collection of RubricBlock objects.
      */
-    public function getRubricBlocks()
+    public function getRubricBlocks(): RubricBlockCollection
     {
         return $this->rubricBlocks;
     }
@@ -266,7 +268,7 @@ class AssessmentSection extends SectionPart
      *
      * @param RubricBlockCollection $rubricBlocks A collection of RubricBlock objects.
      */
-    public function setRubricBlocks(RubricBlockCollection $rubricBlocks)
+    public function setRubricBlocks(RubricBlockCollection $rubricBlocks): void
     {
         $this->rubricBlocks = $rubricBlocks;
     }
@@ -276,7 +278,7 @@ class AssessmentSection extends SectionPart
      *
      * @return SectionPartCollection A collection of SectionPart objects.
      */
-    public function getSectionParts()
+    public function getSectionParts(): SectionPartCollection
     {
         return $this->sectionParts;
     }
@@ -286,7 +288,7 @@ class AssessmentSection extends SectionPart
      *
      * @param SectionPartCollection $sectionParts A collection of SectionPart objects.
      */
-    public function setSectionParts(SectionPartCollection $sectionParts)
+    public function setSectionParts(SectionPartCollection $sectionParts): void
     {
         $this->sectionParts = $sectionParts;
     }
@@ -294,7 +296,7 @@ class AssessmentSection extends SectionPart
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'assessmentSection';
     }
@@ -302,7 +304,7 @@ class AssessmentSection extends SectionPart
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
             parent::getComponents()->getArrayCopy(),

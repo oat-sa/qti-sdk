@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -148,7 +150,7 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'outcomeVariable';
     }
@@ -158,7 +160,7 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $components = [];
         if ($this->hasValues()) {
@@ -170,9 +172,9 @@ class ResultOutcomeVariable extends ItemVariable
     /**
      * Get the outcome values
      *
-     * @return ValueCollection
+     * @return ValueCollection|null
      */
-    public function getValues()
+    public function getValues(): ?ValueCollection
     {
         return $this->values;
     }
@@ -183,7 +185,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param ValueCollection $values
      * @return $this
      */
-    public function setValues(ValueCollection $values = null)
+    public function setValues(ValueCollection $values = null): self
     {
         $this->values = $values;
         return $this;
@@ -194,7 +196,7 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * @return bool
      */
-    public function hasValues()
+    public function hasValues(): bool
     {
         return $this->values !== null;
     }
@@ -202,9 +204,9 @@ class ResultOutcomeVariable extends ItemVariable
     /**
      * Get the view
      *
-     * @return int
+     * @return int|null
      */
-    public function getView()
+    public function getView(): ?int
     {
         return $this->view;
     }
@@ -216,7 +218,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @return $this
      * @throws InvalidArgumentException
      */
-    public function setView($view = null)
+    public function setView($view = null): self
     {
         if ($view !== null && !in_array($view, View::asArray())) {
             $msg = sprintf('Invalid View. Should be one of "%s"', implode('", "', View::asArray()));
@@ -231,7 +233,7 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * @return bool
      */
-    public function hasView()
+    public function hasView(): bool
     {
         return $this->view !== null;
     }
@@ -239,9 +241,9 @@ class ResultOutcomeVariable extends ItemVariable
     /**
      * Set the interpretation
      *
-     * @return QtiString
+     * @return QtiString|null
      */
-    public function getInterpretation()
+    public function getInterpretation(): ?QtiString
     {
         return $this->interpretation;
     }
@@ -252,7 +254,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiString $interpretation
      * @return $this
      */
-    public function setInterpretation(QtiString $interpretation = null)
+    public function setInterpretation(QtiString $interpretation = null): self
     {
         $this->interpretation = $interpretation;
         return $this;
@@ -263,7 +265,7 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * @return bool
      */
-    public function hasInterpretation()
+    public function hasInterpretation(): bool
     {
         return $this->interpretation !== null;
     }
@@ -271,9 +273,9 @@ class ResultOutcomeVariable extends ItemVariable
     /**
      * Get the long interpretation
      *
-     * @return QtiUri
+     * @return QtiUri|null
      */
-    public function getLongInterpretation()
+    public function getLongInterpretation(): ?QtiUri
     {
         return $this->longInterpretation;
     }
@@ -284,7 +286,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiUri $longInterpretation
      * @return $this
      */
-    public function setLongInterpretation(QtiUri $longInterpretation = null)
+    public function setLongInterpretation(QtiUri $longInterpretation = null): self
     {
         $this->longInterpretation = $longInterpretation;
         return $this;
@@ -295,7 +297,7 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * @return bool
      */
-    public function hasLongInterpretation()
+    public function hasLongInterpretation(): bool
     {
         return $this->longInterpretation !== null;
     }
@@ -303,9 +305,9 @@ class ResultOutcomeVariable extends ItemVariable
     /**
      * Get the normal maximum
      *
-     * @return QtiFloat
+     * @return QtiFloat|null
      */
-    public function getNormalMaximum()
+    public function getNormalMaximum(): ?QtiFloat
     {
         return $this->normalMaximum;
     }
@@ -316,7 +318,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiFloat $normalMaximum
      * @return $this
      */
-    public function setNormalMaximum(QtiFloat $normalMaximum = null)
+    public function setNormalMaximum(QtiFloat $normalMaximum = null): self
     {
         $this->normalMaximum = $normalMaximum;
         return $this;
@@ -327,7 +329,7 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * @return bool
      */
-    public function hasNormalMaximum()
+    public function hasNormalMaximum(): bool
     {
         return $this->normalMaximum !== null;
     }
@@ -335,9 +337,9 @@ class ResultOutcomeVariable extends ItemVariable
     /**
      * Get the normal minimum
      *
-     * @return QtiFloat
+     * @return QtiFloat|null
      */
-    public function getNormalMinimum()
+    public function getNormalMinimum(): ?QtiFloat
     {
         return $this->normalMinimum;
     }
@@ -348,7 +350,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiFloat $normalMinimum
      * @return $this
      */
-    public function setNormalMinimum(QtiFloat $normalMinimum = null)
+    public function setNormalMinimum(QtiFloat $normalMinimum = null): self
     {
         $this->normalMinimum = $normalMinimum;
         return $this;
@@ -359,7 +361,7 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * @return bool
      */
-    public function hasNormalMinimum()
+    public function hasNormalMinimum(): bool
     {
         return $this->normalMinimum !== null;
     }
@@ -367,9 +369,9 @@ class ResultOutcomeVariable extends ItemVariable
     /**
      * Get the mastery value
      *
-     * @return QtiFloat
+     * @return QtiFloat|null
      */
-    public function getMasteryValue()
+    public function getMasteryValue(): ?QtiFloat
     {
         return $this->masteryValue;
     }
@@ -380,7 +382,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiFloat $masteryValue
      * @return $this
      */
-    public function setMasteryValue(QtiFloat $masteryValue = null)
+    public function setMasteryValue(QtiFloat $masteryValue = null): self
     {
         $this->masteryValue = $masteryValue;
         return $this;
@@ -391,7 +393,7 @@ class ResultOutcomeVariable extends ItemVariable
      *
      * @return bool
      */
-    public function hasMasteryValue()
+    public function hasMasteryValue(): bool
     {
         return $this->masteryValue !== null;
     }

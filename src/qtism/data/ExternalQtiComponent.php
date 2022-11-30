@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -92,7 +94,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal, QtiNamespa
      *
      * @param SerializableDomDocument $xml An XML Document
      */
-    protected function setXml(SerializableDomDocument $xml)
+    protected function setXml(SerializableDomDocument $xml): void
     {
         $this->xml = $xml;
     }
@@ -102,7 +104,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal, QtiNamespa
      *
      * @return string
      */
-    public function getXmlString()
+    public function getXmlString(): string
     {
         return $this->xmlString;
     }
@@ -112,7 +114,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal, QtiNamespa
      *
      * @param string $xmlString
      */
-    public function setXmlString($xmlString)
+    public function setXmlString($xmlString): void
     {
         $this->xmlString = $xmlString;
 
@@ -125,7 +127,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal, QtiNamespa
      *
      * @return bool
      */
-    public function hasTargetNamespace()
+    public function hasTargetNamespace(): bool
     {
         return $this->getTargetNamespace() !== '';
     }
@@ -146,7 +148,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal, QtiNamespa
      *
      * @param string $targetNamespace A URI (Uniform Resource Locator).
      */
-    public function setTargetNamespace($targetNamespace)
+    public function setTargetNamespace($targetNamespace): void
     {
         $this->targetNamespace = $targetNamespace;
     }
@@ -155,14 +157,14 @@ class ExternalQtiComponent extends QtiComponent implements IExternal, QtiNamespa
      * Method to be overloaded by subclasses to setup a default
      * target namespace.
      */
-    protected function buildTargetNamespace()
+    protected function buildTargetNamespace(): void
     {
     }
 
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -170,7 +172,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal, QtiNamespa
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'external';
     }

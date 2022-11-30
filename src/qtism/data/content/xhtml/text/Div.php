@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -71,7 +73,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return FlowCollection A collection of Flow objects.
      */
-    public function getComponents()
+    public function getComponents(): FlowCollection
     {
         return $this->getContent();
     }
@@ -81,7 +83,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param FlowCollection $content A collection of Flow objects.
      */
-    public function setContent(FlowCollection $content)
+    public function setContent(FlowCollection $content): void
     {
         $this->content = $content;
     }
@@ -91,7 +93,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return FlowCollection
      */
-    public function getContent()
+    public function getContent(): FlowCollection
     {
         return $this->content;
     }
@@ -102,7 +104,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
      * @param string $xmlBase A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '')
+    public function setXmlBase($xmlBase = ''): void
     {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
@@ -115,7 +117,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return string
      */
-    public function getXmlBase()
+    public function getXmlBase(): string
     {
         return $this->xmlBase;
     }
@@ -123,7 +125,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return bool
      */
-    public function hasXmlBase()
+    public function hasXmlBase(): bool
     {
         return $this->getXmlBase() !== '';
     }
@@ -131,7 +133,7 @@ class Div extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'div';
     }

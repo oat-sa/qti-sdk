@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,5 +40,5 @@ interface Comparable
      * @return bool Whether the object to compare is equal to this one.
      * @link http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#equals(java.lang.Object)
      */
-    public function equals($obj);
+    public function equals($obj): bool;
 }

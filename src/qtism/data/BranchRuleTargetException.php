@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,21 +39,21 @@ class BranchRuleTargetException extends Exception implements QtiSdkPackageConten
      *
      * @var int
      */
-    const UNKNOWN_TARGET = 0;
+    public const UNKNOWN_TARGET = 0;
 
     /**
      * The target may or will cause a recursive loop in the test.
      *
      * @var int
      */
-    const RECURSIVE_BRANCHING = 1;
+    public const RECURSIVE_BRANCHING = 1;
 
     /**
      * The target may or will go to an item already passed.
      *
      * @var int
      */
-    const BACKWARD_BRANCHING = 2;
+    public const BACKWARD_BRANCHING = 2;
 
     /**
      * @var QtiComponent The AssessmentTest, AssessmentSection or Assessment ItemRef whose BranchRule caused

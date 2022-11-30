@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ class QtiComponentCollection extends AbstractCollection
      *
      * @throws InvalidArgumentException If $value is not a QtiComponent object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof QtiComponent) {
             $msg = "QtiComponentCollection class only accept QtiComponent objects, '" . get_class($value) . "' given.";
@@ -53,7 +55,7 @@ class QtiComponentCollection extends AbstractCollection
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (empty($offset)) {
             parent::offsetSet($offset, $value);
@@ -66,7 +68,7 @@ class QtiComponentCollection extends AbstractCollection
     /**
      * @param mixed $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         if (empty($offset)) {
             parent::offsetUnset($offset);

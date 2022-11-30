@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ class AreaMappingMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -71,7 +73,7 @@ class AreaMappingMarshaller extends Marshaller
      * @return QtiComponent An AreaMapping object.
      * @throws MarshallerNotFoundException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): QtiComponent
     {
         $areaMapEntries = new AreaMapEntryCollection();
         $areaMapEntryElts = $this->getChildElementsByTagName($element, 'areaMapEntry');
@@ -101,7 +103,7 @@ class AreaMappingMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'areaMapping';
     }

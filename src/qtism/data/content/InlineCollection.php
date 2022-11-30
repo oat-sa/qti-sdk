@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class InlineCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an Inline object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Inline) {
             $msg = 'InlineCollection objects only accept to store Inline objects.';

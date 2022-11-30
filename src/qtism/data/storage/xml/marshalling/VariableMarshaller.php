@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class VariableMarshaller extends Marshaller
      * @param QtiComponent $component A Variable object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -59,7 +61,8 @@ class VariableMarshaller extends Marshaller
      * @return QtiComponent A Variable object.
      * @throws UnmarshallingException If the mandatory attribute 'identifier' is not set in $element.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): Variable
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $object = new Variable($identifier);
@@ -78,7 +81,7 @@ class VariableMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'variable';
     }

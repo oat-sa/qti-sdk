@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class Utils
      * @param string $variableRef
      * @return string A sanitized variableRef.
      */
-    public static function sanitizeVariableRef($variableRef)
+    public static function sanitizeVariableRef($variableRef): string
     {
         if (is_string($variableRef)) {
             return trim($variableRef, '{}');
@@ -57,7 +59,7 @@ class Utils
      * @param string $message A formatted error reporting message.
      * @return string
      */
-    public static function errorReporting(Expression $expression, $message)
+    public static function errorReporting(Expression $expression, $message): string
     {
         $shortClassName = Reflection::shortClassName($expression);
 

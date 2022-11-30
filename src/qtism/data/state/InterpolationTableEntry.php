@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -84,7 +86,7 @@ class InterpolationTableEntry extends QtiComponent
      *
      * @return float A float value.
      */
-    public function getSourceValue()
+    public function getSourceValue(): float
     {
         return $this->sourceValue;
     }
@@ -95,7 +97,7 @@ class InterpolationTableEntry extends QtiComponent
      * @param float $sourceValue A float value.
      * @throws InvalidArgumentException If $sourceValue is not a float.
      */
-    public function setSourceValue($sourceValue)
+    public function setSourceValue($sourceValue): void
     {
         if (is_float($sourceValue)) {
             $this->sourceValue = $sourceValue;
@@ -110,6 +112,7 @@ class InterpolationTableEntry extends QtiComponent
      *
      * @return mixed A value that satisfies the QTI baseType datatype.
      */
+    #[\ReturnTypeWillChange]
     public function getTargetValue()
     {
         return $this->targetValue;
@@ -120,7 +123,7 @@ class InterpolationTableEntry extends QtiComponent
      *
      * @param mixed $targetValue A value that satisfies the QTI baseType datatype.
      */
-    public function setTargetValue($targetValue)
+    public function setTargetValue($targetValue): void
     {
         $this->targetValue = $targetValue;
     }
@@ -131,7 +134,7 @@ class InterpolationTableEntry extends QtiComponent
      * @param bool $includeBoundary A boolean value.
      * @throws InvalidArgumentException If $includeBoundary is not a boolean.
      */
-    public function setIncludeBoundary($includeBoundary)
+    public function setIncludeBoundary($includeBoundary): void
     {
         if (is_bool($includeBoundary)) {
             $this->includeBoundary = $includeBoundary;
@@ -146,7 +149,7 @@ class InterpolationTableEntry extends QtiComponent
      *
      * @return bool A boolean value.
      */
-    public function doesIncludeBoundary()
+    public function doesIncludeBoundary(): bool
     {
         return $this->includeBoundary;
     }
@@ -154,7 +157,7 @@ class InterpolationTableEntry extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'interpolationTableEntry';
     }
@@ -162,7 +165,7 @@ class InterpolationTableEntry extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

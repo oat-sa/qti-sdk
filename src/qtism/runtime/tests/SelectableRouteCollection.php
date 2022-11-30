@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class SelectableRouteCollection extends AbstractCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a Route object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof SelectableRoute) {
             $msg = "SelectableRouteCollection class only accept SelectableRoute objects, '" . gettype($value) . "' given.";
@@ -54,7 +56,7 @@ class SelectableRouteCollection extends AbstractCollection
      * @param int $position2 A RouteItem position.
      * @throws OutOfBoundsException If $position1 or $position2 are not poiting to any Route.
      */
-    public function swap($position1, $position2)
+    public function swap($position1, $position2): void
     {
         $routes = &$this->getDataPlaceHolder();
 
@@ -79,7 +81,7 @@ class SelectableRouteCollection extends AbstractCollection
      * @param SelectableRoute $route A SelectableRoute object.
      * @param int $position An integer index where $route must be placed.
      */
-    public function insertAt(SelectableRoute $route, $position)
+    public function insertAt(SelectableRoute $route, $position): void
     {
         $data = &$this->getDataPlaceHolder();
         if ($position === 0) {

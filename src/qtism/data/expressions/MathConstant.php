@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -55,7 +57,7 @@ class MathConstant extends Expression
      *
      * @return int A value from the MathEnumeration enumeration.
      */
-    public function getName()
+    public function getName(): int
     {
         return $this->name;
     }
@@ -66,7 +68,7 @@ class MathConstant extends Expression
      * @param string $name The name of the math constant.
      * @throws InvalidArgumentException If $name is not a valid QTI math constant name.
      */
-    public function setName($name)
+    public function setName($name): void
     {
         if (in_array($name, MathEnumeration::asArray())) {
             $this->name = $name;
@@ -79,7 +81,7 @@ class MathConstant extends Expression
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'mathConstant';
     }
@@ -89,7 +91,7 @@ class MathConstant extends Expression
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return true;
     }

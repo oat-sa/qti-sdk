@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,16 +31,16 @@ namespace qtism\runtime\tests;
  */
 class AssessmentItemSessionState extends AssessmentTestSessionState
 {
-    const NOT_SELECTED = 255;
+    public const NOT_SELECTED = 255;
 
-    const SOLUTION = 5;
+    public const SOLUTION = 5;
 
-    const REVIEW = 6;
+    public const REVIEW = 6;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return array_merge(
             AssessmentTestSessionState::asArray(),
@@ -56,7 +58,7 @@ class AssessmentItemSessionState extends AssessmentTestSessionState
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'notselected':
                 return self::NOT_SELECTED;
                 break;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +62,7 @@ class FieldValue extends Operator
      * @param string $fieldIdentifier A QTI Identifier.
      * @throws InvalidArgumentException If $fieldIdentifier is not a valid QTI Identifier.
      */
-    public function setFieldIdentifier($fieldIdentifier)
+    public function setFieldIdentifier($fieldIdentifier): void
     {
         if (Format::isIdentifier($fieldIdentifier)) {
             $this->fieldIdentifier = $fieldIdentifier;
@@ -75,7 +77,7 @@ class FieldValue extends Operator
      *
      * @return string A QTI Identifier.
      */
-    public function getFieldIdentifier()
+    public function getFieldIdentifier(): string
     {
         return $this->fieldIdentifier;
     }
@@ -83,7 +85,7 @@ class FieldValue extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'fieldValue';
     }

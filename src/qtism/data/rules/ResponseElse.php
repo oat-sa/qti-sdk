@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -56,7 +58,7 @@ class ResponseElse extends QtiComponent
      *
      * @return ResponseRuleCollection A collection of ResponseRule objects.
      */
-    public function getResponseRules()
+    public function getResponseRules(): ResponseRuleCollection
     {
         return $this->responseRules;
     }
@@ -67,7 +69,7 @@ class ResponseElse extends QtiComponent
      * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
      * @throws InvalidArgumentException If $responseRules is an empty collection.
      */
-    public function setOutcomeRules(ResponseRuleCollection $responseRules)
+    public function setOutcomeRules(ResponseRuleCollection $responseRules): void
     {
         if (count($responseRules) > 0) {
             $this->responseRules = $responseRules;
@@ -80,7 +82,7 @@ class ResponseElse extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'responseElse';
     }
@@ -88,7 +90,7 @@ class ResponseElse extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = $this->getResponseRules()->getArrayCopy();
 

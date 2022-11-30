@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +39,7 @@ class SelectionException extends Exception
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * Error code to use when the error comes
@@ -45,7 +47,7 @@ class SelectionException extends Exception
      *
      * @var int
      */
-    const LOGIC_ERROR = 1;
+    public const LOGIC_ERROR = 1;
 
     /**
      * Create a new SelectionException exception object.

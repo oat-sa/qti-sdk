@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class PrintedVariableProcessingException extends ProcessingException
      * @param Processable $source The source of the error.
      * @throws InvalidArgumentException If $source is not a PrintedVariableEngine object.
      */
-    public function setSource(Processable $source)
+    public function setSource(Processable $source): void
     {
         if ($source instanceof PrintedVariableEngine) {
             parent::setSource($source);

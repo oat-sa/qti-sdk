@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,12 +52,12 @@ interface QtiDatatype extends Comparable
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType();
+    public function getBaseType(): int;
 
     /**
      * Get the QTI cardinality of the datatype instance.
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality();
+    public function getCardinality(): int;
 }

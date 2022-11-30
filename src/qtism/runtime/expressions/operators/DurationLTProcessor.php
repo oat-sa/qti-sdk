@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -54,7 +56,7 @@ class DurationLTProcessor extends OperatorProcessor
      * @return QtiBoolean|null A boolean value of true if the first duration is shorter than the second or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -78,7 +80,7 @@ class DurationLTProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return DurationLT::class;
     }

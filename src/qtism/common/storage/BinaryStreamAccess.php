@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @param IStream $stream An IStream object.
      * @throws StreamAccessException If the $stream is not open yet.
      */
-    protected function setStream(IStream $stream)
+    protected function setStream(IStream $stream): void
     {
         if ($stream->isOpen() === false) {
             $msg = 'A BinaryStreamAccess do not accept closed streams to be read.';
@@ -54,7 +56,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @return int
      * @throws BinaryStreamAccessException
      */
-    public function readTinyInt()
+    public function readTinyInt(): int
     {
         try {
             $bin = $this->getStream()->read(1);
@@ -63,6 +65,8 @@ class BinaryStreamAccess extends AbstractStreamAccess
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::TINYINT);
         }
+
+        return -1;
     }
 
     /**
@@ -71,7 +75,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @param int $tinyInt
      * @throws BinaryStreamAccessException
      */
-    public function writeTinyInt($tinyInt)
+    public function writeTinyInt($tinyInt): void
     {
         try {
             $this->getStream()->write(chr($tinyInt));
@@ -86,7 +90,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @return int
      * @throws BinaryStreamAccessException
      */
-    public function readShort()
+    public function readShort(): int
     {
         try {
             $bin = $this->getStream()->read(2);
@@ -95,6 +99,8 @@ class BinaryStreamAccess extends AbstractStreamAccess
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::SHORT);
         }
+
+        return -1;
     }
 
     /**
@@ -103,7 +109,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @param int $short
      * @throws BinaryStreamAccessException
      */
-    public function writeShort($short)
+    public function writeShort($short): void
     {
         try {
             $this->getStream()->write(pack('S', $short));
@@ -118,15 +124,17 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @return int
      * @throws BinaryStreamAccessException
      */
-    public function readInteger()
+    public function readInteger(): int
     {
         try {
             $bin = $this->getStream()->read(4);
 
-            return current(unpack('l', $bin));
+            return (int)current(unpack('l', $bin));
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::INT);
         }
+
+        return -1;
     }
 
     /**
@@ -135,7 +143,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @param int $int
      * @throws BinaryStreamAccessException
      */
-    public function writeInteger($int)
+    public function writeInteger($int): void
     {
         try {
             $this->getStream()->write(pack('l', $int));
@@ -147,10 +155,10 @@ class BinaryStreamAccess extends AbstractStreamAccess
     /**
      * Read a double precision float from the current binary stream.
      *
-     * @return int
+     * @return float
      * @throws BinaryStreamAccessException
      */
-    public function readFloat()
+    public function readFloat(): float
     {
         try {
             $bin = $this->getStream()->read(8);
@@ -159,6 +167,8 @@ class BinaryStreamAccess extends AbstractStreamAccess
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT);
         }
+
+        return 0.00;
     }
 
     /**
@@ -167,7 +177,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @param float $float
      * @throws BinaryStreamAccessException
      */
-    public function writeFloat($float)
+    public function writeFloat($float): void
     {
         try {
             $this->getStream()->write(pack('d', $float));
@@ -182,7 +192,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @return bool
      * @throws BinaryStreamAccessException
      */
-    public function readBoolean()
+    public function readBoolean(): bool
     {
         try {
             $int = ord($this->getStream()->read(1));
@@ -191,6 +201,8 @@ class BinaryStreamAccess extends AbstractStreamAccess
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::BOOLEAN);
         }
+
+        return false;
     }
 
     /**
@@ -199,7 +211,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @param bool $boolean
      * @throws BinaryStreamAccessException
      */
-    public function writeBoolean($boolean)
+    public function writeBoolean($boolean): void
     {
         try {
             $val = ($boolean === true) ? 1 : 0;
@@ -215,7 +227,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @return string
      * @throws BinaryStreamAccessException
      */
-    public function readString()
+    public function readString(): string
     {
         try {
             $binLength = $this->getStream()->read(2);
@@ -225,6 +237,8 @@ class BinaryStreamAccess extends AbstractStreamAccess
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::STRING);
         }
+
+        return '';
     }
 
     /**
@@ -233,11 +247,11 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @param string $string
      * @throws BinaryStreamAccessException
      */
-    public function writeString($string)
+    public function writeString($string): void
     {
         // $maxLen = 2^16 -1 = max val of unsigned short integer.
         $maxLen = 65535;
-        $len = strlen($string);
+        $len = strlen((string)$string);
 
         if ($len > $maxLen) {
             $len = $maxLen;
@@ -257,7 +271,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @return string A binary string.
      * @throws BinaryStreamAccessException
      */
-    public function readBinary()
+    public function readBinary(): string
     {
         return $this->readString();
     }
@@ -268,7 +282,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @param string $binary
      * @throws BinaryStreamAccessException
      */
-    public function writeBinary($binary)
+    public function writeBinary($binary): void
     {
         $this->writeString($binary);
     }
@@ -276,10 +290,10 @@ class BinaryStreamAccess extends AbstractStreamAccess
     /**
      * Read a DateTime from the current binary stream.
      *
-     * @return DateTime A DateTime object.
+     * @return DateTime|null A DateTime object.
      * @throws BinaryStreamAccessException
      */
-    public function readDateTime()
+    public function readDateTime(): ?DateTime
     {
         try {
             $timeStamp = current(unpack('l', $this->getStream()->read(4)));
@@ -289,6 +303,8 @@ class BinaryStreamAccess extends AbstractStreamAccess
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::DATETIME);
         }
+
+        return null;
     }
 
     /**
@@ -297,7 +313,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @param DateTime $dateTime A DateTime object.
      * @throws BinaryStreamAccessException
      */
-    public function writeDateTime(DateTime $dateTime)
+    public function writeDateTime(DateTime $dateTime): void
     {
         try {
             $timeStamp = $dateTime->getTimestamp();
@@ -315,7 +331,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      * @param bool $read Whether or not the error occurred in a reading/writing context.
      * @throws BinaryStreamAccessException The resulting BinaryStreamAccessException.
      */
-    protected function handleBinaryStreamException(StreamException $e, $typeError, $read = true)
+    protected function handleBinaryStreamException(StreamException $e, $typeError, $read = true): void
     {
         $strType = 'unknown datatype';
 

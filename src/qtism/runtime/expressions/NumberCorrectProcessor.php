@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,7 +47,7 @@ class NumberCorrectProcessor extends ItemSubsetProcessor
      * @return QtiInteger The number of items of the given sub-set for which all the response variables match their associated correct response.
      * @throws ExpressionProcessingException
      */
-    public function process()
+    public function process(): QtiInteger
     {
         $testSession = $this->getState();
         $itemSubset = $this->getItemSubset();
@@ -69,7 +71,7 @@ class NumberCorrectProcessor extends ItemSubsetProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return NumberCorrect::class;
     }

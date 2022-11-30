@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -51,7 +53,7 @@ class PhpScalarMarshaller extends PhpMarshaller
      * @param mixed $toMarshall
      * @return bool
      */
-    protected function isMarshallable($toMarshall)
+    protected function isMarshallable($toMarshall): bool
     {
         return PhpUtils::isScalar($toMarshall);
     }
@@ -61,7 +63,7 @@ class PhpScalarMarshaller extends PhpMarshaller
      *
      * @throws PhpMarshallingException If an error occurs while marshalling.
      */
-    public function marshall()
+    public function marshall(): void
     {
         $ctx = $this->getContext();
         $streamAccess = $ctx->getStreamAccess();

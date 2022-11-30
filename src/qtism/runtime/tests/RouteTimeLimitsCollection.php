@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +39,7 @@ class RouteTimeLimitsCollection extends AbstractCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of RouteTimeLimit.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof RouteTimeLimits) {
             $msg = 'A RouteTimeLimitsCollection only accepts RouteTimeLimits objects to be stored.';

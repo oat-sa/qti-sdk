@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -71,7 +73,7 @@ class DrawingInteraction extends BlockInteraction
      *
      * @param ObjectElement $object An ObjectElement object representing an image.
      */
-    public function setObject(ObjectElement $object)
+    public function setObject(ObjectElement $object): void
     {
         $this->object = $object;
     }
@@ -81,7 +83,7 @@ class DrawingInteraction extends BlockInteraction
      *
      * @return ObjectElement An ObjectElement object representing an image.
      */
-    public function getObject()
+    public function getObject(): ObjectElement
     {
         return $this->object;
     }
@@ -89,7 +91,7 @@ class DrawingInteraction extends BlockInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $parentComponents = parent::getComponents();
 
@@ -99,7 +101,7 @@ class DrawingInteraction extends BlockInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'drawingInteraction';
     }

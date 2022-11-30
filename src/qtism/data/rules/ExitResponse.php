@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +42,7 @@ class ExitResponse extends QtiComponent implements ResponseRule
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'exitResponse';
     }
@@ -55,7 +57,7 @@ class ExitResponse extends QtiComponent implements ResponseRule
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

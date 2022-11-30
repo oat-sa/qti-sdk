@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -74,7 +76,7 @@ class A extends SimpleInline
      * @param string $href A URI (Uniform Resource Identifier).
      * @throws InvalidArgumentException If $href is not a URI.
      */
-    public function setHref($href)
+    public function setHref($href): void
     {
         if (Format::isUri($href) === true) {
             $this->href = $href;
@@ -89,7 +91,7 @@ class A extends SimpleInline
      *
      * @return string A URI (Uniform Resource Identifier).
      */
-    public function getHref()
+    public function getHref(): string
     {
         return $this->href;
     }
@@ -101,7 +103,7 @@ class A extends SimpleInline
      * @param string $type A mime-type.
      * @throws InvalidArgumentException If $type is not a string value.
      */
-    public function setType($type)
+    public function setType($type): void
     {
         if (is_string($type)) {
             $this->type = $type;
@@ -117,7 +119,7 @@ class A extends SimpleInline
      *
      * @return string A mime-type.
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -127,7 +129,7 @@ class A extends SimpleInline
      *
      * @return bool
      */
-    public function hasType()
+    public function hasType(): bool
     {
         return $this->getType() !== '';
     }
@@ -135,7 +137,7 @@ class A extends SimpleInline
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'a';
     }

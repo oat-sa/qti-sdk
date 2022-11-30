@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,7 +47,7 @@ class AssessmentResultMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -74,7 +76,8 @@ class AssessmentResultMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): AssessmentResult
     {
         try {
             /** @var Context $context */
@@ -121,7 +124,7 @@ class AssessmentResultMarshaller extends Marshaller
      *
      * @return string A QTI class name or an empty string.
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'assessmentResult';
     }

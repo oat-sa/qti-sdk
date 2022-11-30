@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ class FieldValueMarshaller extends OperatorMarshaller
      * @param array An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI fieldValue element.
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'fieldIdentifier', $component->getFieldIdentifier());
@@ -61,7 +63,7 @@ class FieldValueMarshaller extends OperatorMarshaller
      * @return QtiComponent An FieldValue object.
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         if (($fieldIdentifier = $this->getDOMElementAttributeAs($element, 'fieldIdentifier')) !== null) {
             return new FieldValue($children, $fieldIdentifier);

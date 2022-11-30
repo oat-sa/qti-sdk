@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class ParamMarshaller extends Marshaller
      * @param QtiComponent $component A Param object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'name', $component->getName());
@@ -60,7 +62,8 @@ class ParamMarshaller extends Marshaller
      * @return QtiComponent A Param object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): Param
     {
         if (($name = $this->getDOMElementAttributeAs($element, 'name')) === null) {
             // XSD use="required" but can be empty.
@@ -89,7 +92,7 @@ class ParamMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'param';
     }

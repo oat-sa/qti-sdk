@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -131,7 +133,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * @return string A URI.
      */
-    public function getData()
+    public function getData(): string
     {
         return $this->data;
     }
@@ -142,7 +144,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      * @param string $type A mime-type.
      * @throws InvalidArgumentException If $type is not a valid mime-type.
      */
-    public function setType($type)
+    public function setType($type): void
     {
         if (is_string($type) && empty($type) === false) {
             $this->type = $type;
@@ -157,7 +159,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * @return string A mime-type.
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -209,7 +211,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * @return ObjectFlowCollection|QtiComponentCollection A collection of ObjectFlow objects.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -219,7 +221,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * @param ObjectFlowCollection $content
      */
-    public function setContent(ObjectFlowCollection $content)
+    public function setContent(ObjectFlowCollection $content): void
     {
         $this->content = $content;
     }
@@ -229,7 +231,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
      *
      * @return ObjectFlowCollection
      */
-    public function getContent()
+    public function getContent(): ObjectFlowCollection
     {
         return $this->content;
     }
@@ -237,7 +239,7 @@ class ObjectElement extends BodyElement implements FlowStatic, InlineStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'object';
     }

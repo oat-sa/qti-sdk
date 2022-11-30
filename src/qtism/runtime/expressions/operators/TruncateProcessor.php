@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,6 +51,7 @@ class TruncateProcessor extends OperatorProcessor
      * @return QtiInteger|null The truncated value or NULL if the sub-expression is NaN or if the sub-expression is NULL.
      * @throws OperatorProcessingException
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $operands = $this->getOperands();
@@ -81,7 +84,7 @@ class TruncateProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Truncate::class;
     }

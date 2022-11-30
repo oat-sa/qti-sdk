@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +46,7 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = parent::marshallChildrenKnown($component, $elements);
 
@@ -66,8 +68,11 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children, AssessmentSection $assessmentSection = null)
-    {
+    protected function unmarshallChildrenKnown(
+        DOMElement $element,
+        QtiComponentCollection $children,
+        AssessmentSection $assessmentSection = null
+    ): QtiComponent {
         $baseComponent = parent::unmarshallChildrenKnown($element, $children);
         $component = ExtendedAssessmentSection::createFromAssessmentSection($baseComponent);
 

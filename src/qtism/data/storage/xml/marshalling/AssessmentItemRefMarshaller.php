@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +46,7 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
 
@@ -88,7 +90,8 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory attribute 'href' is missing.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): AssessmentItemRef
     {
         $baseComponent = parent::unmarshall($element);
 
@@ -143,7 +146,7 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'assessmentItemRef';
     }

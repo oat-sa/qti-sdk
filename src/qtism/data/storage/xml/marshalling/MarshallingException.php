@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -58,7 +60,7 @@ class MarshallingException extends Exception implements QtiSdkPackageContentExce
      *
      * @return QtiComponent A QtiComponent object.
      */
-    public function getComponent()
+    public function getComponent(): QtiComponent
     {
         return $this->component;
     }
@@ -68,7 +70,7 @@ class MarshallingException extends Exception implements QtiSdkPackageContentExce
      *
      * @param QtiComponent $component A QTI Component object.
      */
-    protected function setComponent(QtiComponent $component)
+    protected function setComponent(QtiComponent $component): void
     {
         $this->component = $component;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -53,7 +55,7 @@ class PatternMatchProcessor extends OperatorProcessor
      * @return QtiBoolean|null A single boolean with a value of true if the sub-expression matches the pattern and false if it does not. If the sub-expression is NULL, the the operator results in NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -92,7 +94,7 @@ class PatternMatchProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return PatternMatch::class;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qti\customOperators\math\fraction;
 
 use qtism\common\datatypes\QtiString;

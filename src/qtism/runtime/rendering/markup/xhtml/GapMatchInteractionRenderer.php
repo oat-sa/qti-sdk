@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -55,7 +57,7 @@ class GapMatchInteractionRenderer extends InteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
@@ -69,7 +71,7 @@ class GapMatchInteractionRenderer extends InteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendChildren($fragment, $component, $base);
 

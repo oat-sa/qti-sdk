@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ abstract class Html5ContentMarshaller extends ContentMarshaller
     use QtiNamespacePrefixTrait;
     use QtiHtml5AttributeTrait;
 
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return Version::compare($this->getVersion(), '2.2', '>=') ? static::getExpectedQtiClassName() : 'not_existing';
     }
@@ -51,7 +53,7 @@ abstract class Html5ContentMarshaller extends ContentMarshaller
      * @return mixed
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         $fqClass = $this->lookupClass($element);
         $component = new $fqClass();
@@ -75,7 +77,7 @@ abstract class Html5ContentMarshaller extends ContentMarshaller
      * @param array $elements
      * @return DOMElement
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         /** @var Html5Element $component */
         $element = $this->getNamespacedElement($component);
@@ -93,7 +95,7 @@ abstract class Html5ContentMarshaller extends ContentMarshaller
         return $element;
     }
 
-    protected function setLookupClasses()
+    protected function setLookupClasses(): void
     {
         $this->lookupClasses = [
             "qtism\\data\\content\\xhtml",

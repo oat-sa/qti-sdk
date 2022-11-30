@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -66,7 +68,7 @@ class TemplateProcessingEngine extends AbstractEngine
      * @param QtiComponent $templateProcessing A TemplateProcessing object.
      * @throws InvalidArgumentException If $templateProcessing is not A TemplateProcessing object.
      */
-    public function setComponent(QtiComponent $templateProcessing)
+    public function setComponent(QtiComponent $templateProcessing): void
     {
         if ($templateProcessing instanceof TemplateProcessing) {
             parent::setComponent($templateProcessing);
@@ -81,7 +83,7 @@ class TemplateProcessingEngine extends AbstractEngine
      *
      * @param RuleProcessorFactory $ruleProcessorFactory A RuleProcessorFactory object.
      */
-    public function setRuleProcessorFactory(RuleProcessorFactory $ruleProcessorFactory)
+    public function setRuleProcessorFactory(RuleProcessorFactory $ruleProcessorFactory): void
     {
         $this->ruleProcessorFactory = $ruleProcessorFactory;
     }
@@ -91,7 +93,7 @@ class TemplateProcessingEngine extends AbstractEngine
      *
      * @return RuleProcessorFactory A RuleProcessorFactory object.
      */
-    public function getRuleProcessorFactory()
+    public function getRuleProcessorFactory(): RuleProcessorFactory
     {
         return $this->ruleProcessorFactory;
     }
@@ -101,7 +103,7 @@ class TemplateProcessingEngine extends AbstractEngine
      *
      * @throws ProcessingException If an error occurs while executing the TemplateProcessing.
      */
-    public function process()
+    public function process(): void
     {
         $context = $this->getContext();
         /** @var TemplateProcessing $templateProcessing */

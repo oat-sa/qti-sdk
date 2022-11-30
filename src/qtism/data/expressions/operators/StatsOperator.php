@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -65,7 +67,7 @@ class StatsOperator extends Operator
      * @param int $name A value from the Statistics enumeration.
      * @throws InvalidArgumentException If $name is not a value from the Statistics enumeration.
      */
-    public function setName($name)
+    public function setName($name): void
     {
         if (in_array($name, Statistics::asArray())) {
             $this->name = $name;
@@ -80,7 +82,7 @@ class StatsOperator extends Operator
      *
      * @return int A value from the Statistics enumeration.
      */
-    public function getName()
+    public function getName(): int
     {
         return $this->name;
     }
@@ -88,7 +90,7 @@ class StatsOperator extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'statsOperator';
     }

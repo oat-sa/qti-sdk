@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,17 +32,17 @@ use qtism\data\storage\xml\marshalling\Qti22MarshallerFactory;
  */
 class QtiVersion220 extends QtiVersion
 {
-    const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_v2p2';
+    public const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_v2p2';
 
-    const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
+    public const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd';
 
-    const LOCAL_XSD = 'qtiv2p2/imsqti_v2p2.xsd';
+    public const LOCAL_XSD = 'qtiv2p2/imsqti_v2p2.xsd';
 
-    const QH5_NS = 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
+    public const QH5_NS = 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0';
 
-    const QH5_XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqtiv2p2p2_html5_v1p0.xsd';
+    public const QH5_XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqtiv2p2p2_html5_v1p0.xsd';
 
-    const MARSHALLER_FACTORY = Qti22MarshallerFactory::class;
+    public const MARSHALLER_FACTORY = Qti22MarshallerFactory::class;
 
     public function getExternalSchemaLocation(string $prefix): string
     {

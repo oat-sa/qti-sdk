@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -87,7 +89,7 @@ class AssessmentResult extends QtiComponent
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'assessmentResult';
     }
@@ -97,7 +99,7 @@ class AssessmentResult extends QtiComponent
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $components = [
             $this->getContext(),
@@ -121,7 +123,7 @@ class AssessmentResult extends QtiComponent
      *
      * @return Context
      */
-    public function getContext()
+    public function getContext(): Context
     {
         return $this->context;
     }
@@ -141,9 +143,9 @@ class AssessmentResult extends QtiComponent
     /**
      * Get the test result
      *
-     * @return TestResult
+     * @return TestResult|null
      */
-    public function getTestResult()
+    public function getTestResult(): ?TestResult
     {
         return $this->testResult;
     }
@@ -165,7 +167,7 @@ class AssessmentResult extends QtiComponent
      *
      * @return bool
      */
-    public function hasTestResult()
+    public function hasTestResult(): bool
     {
         return $this->testResult !== null;
     }
@@ -173,9 +175,9 @@ class AssessmentResult extends QtiComponent
     /**
      * Get the item results
      *
-     * @return ItemResultCollection
+     * @return ItemResultCollection|null
      */
-    public function getItemResults()
+    public function getItemResults(): ?ItemResultCollection
     {
         return $this->itemResults;
     }
@@ -197,7 +199,7 @@ class AssessmentResult extends QtiComponent
      *
      * @return bool
      */
-    public function hasItemResults()
+    public function hasItemResults(): bool
     {
         return $this->itemResults !== null;
     }

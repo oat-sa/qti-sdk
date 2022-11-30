@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ class MathConstantProcessor extends ExpressionProcessor
      *
      * @return QtiFloat A float value (e or pi).
      */
-    public function process()
+    public function process(): QtiFloat
     {
         $expr = $this->getExpression();
         if ($expr->getName() === MathEnumeration::E) {
@@ -54,7 +56,7 @@ class MathConstantProcessor extends ExpressionProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return MathConstant::class;
     }

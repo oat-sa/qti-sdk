@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -75,7 +77,7 @@ class SessionIdentifier extends QtiComponent
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'sessionIdentifier';
     }
@@ -85,7 +87,7 @@ class SessionIdentifier extends QtiComponent
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -95,7 +97,7 @@ class SessionIdentifier extends QtiComponent
      *
      * @return QtiUri
      */
-    public function getSourceID()
+    public function getSourceID(): QtiUri
     {
         return $this->sourceID;
     }
@@ -117,7 +119,7 @@ class SessionIdentifier extends QtiComponent
      *
      * @return QtiIdentifier
      */
-    public function getIdentifier()
+    public function getIdentifier(): QtiIdentifier
     {
         return $this->identifier;
     }

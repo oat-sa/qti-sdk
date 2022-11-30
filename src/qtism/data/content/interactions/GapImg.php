@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -79,7 +81,7 @@ class GapImg extends GapChoice
      * @param string $objectLabel A label for the image.
      * @throws InvalidArgumentException If $objectLabel is not a string value.
      */
-    public function setObjectLabel($objectLabel)
+    public function setObjectLabel($objectLabel): void
     {
         if (is_string($objectLabel)) {
             $this->objectLabel = $objectLabel;
@@ -95,7 +97,7 @@ class GapImg extends GapChoice
      *
      * @return string A label for the image.
      */
-    public function getObjectLabel()
+    public function getObjectLabel(): string
     {
         return $this->objectLabel;
     }
@@ -105,7 +107,7 @@ class GapImg extends GapChoice
      *
      * @return bool
      */
-    public function hasObjectLabel()
+    public function hasObjectLabel(): bool
     {
         return $this->getObjectLabel() !== '';
     }
@@ -115,7 +117,7 @@ class GapImg extends GapChoice
      *
      * @param ObjectElement $object An ObjectElement object.
      */
-    public function setObject(ObjectElement $object)
+    public function setObject(ObjectElement $object): void
     {
         $this->object = $object;
     }
@@ -125,7 +127,7 @@ class GapImg extends GapChoice
      *
      * @return ObjectElement An ObjectElement object.
      */
-    public function getObject()
+    public function getObject(): ObjectElement
     {
         return $this->object;
     }
@@ -133,7 +135,7 @@ class GapImg extends GapChoice
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection([$this->getObject()]);
     }
@@ -141,7 +143,7 @@ class GapImg extends GapChoice
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'gapImg';
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -69,7 +71,7 @@ class Substring extends Operator
      * @param bool $caseSensitive A boolean value.
      * @throws InvalidArgumentException If $caseSensitive is not a boolean value.
      */
-    public function setCaseSensitive($caseSensitive)
+    public function setCaseSensitive($caseSensitive): void
     {
         if (is_bool($caseSensitive)) {
             $this->caseSensitive = $caseSensitive;
@@ -84,7 +86,7 @@ class Substring extends Operator
      *
      * @return bool
      */
-    public function isCaseSensitive()
+    public function isCaseSensitive(): bool
     {
         return $this->caseSensitive;
     }
@@ -92,7 +94,7 @@ class Substring extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'substring';
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,7 +36,7 @@ class NullValue extends Expression
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'null';
     }
@@ -44,7 +46,7 @@ class NullValue extends Expression
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return true;
     }

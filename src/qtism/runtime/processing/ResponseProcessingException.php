@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class ResponseProcessingException extends ProcessingException
      *
      * @var int
      */
-    const TEMPLATE_NOT_FOUND = 11;
+    public const TEMPLATE_NOT_FOUND = 11;
 
     /**
      * Error code to use when a response processing
@@ -46,7 +48,7 @@ class ResponseProcessingException extends ProcessingException
      *
      * @var int
      */
-    const TEMPLATE_ERROR = 12;
+    public const TEMPLATE_ERROR = 12;
 
     /**
      * Set the source of the error.
@@ -54,7 +56,7 @@ class ResponseProcessingException extends ProcessingException
      * @param Processable $source The source of the error.
      * @throws InvalidArgumentException If $source is not a ResponseProcessingEngine object.
      */
-    public function setSource(Processable $source)
+    public function setSource(Processable $source): void
     {
         if ($source instanceof ResponseProcessingEngine) {
             parent::setSource($source);

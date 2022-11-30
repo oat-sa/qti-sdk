@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +38,7 @@ class IntegerCollection extends AbstractCollection
      * @param mixed $value A given value.
      * @throws InvalidArgumentException If $value is not a valid integer.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!is_int($value)) {
             $msg = "IntegerCollection class only accept integer values, '" . gettype($value) . "' given.";

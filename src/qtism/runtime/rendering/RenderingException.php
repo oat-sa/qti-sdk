@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +42,7 @@ class RenderingException extends Exception implements QtiSdkPackageContentExcept
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * Error code to use when no renderer is found
@@ -48,14 +50,14 @@ class RenderingException extends Exception implements QtiSdkPackageContentExcept
      *
      * @var int
      */
-    const NO_RENDERER = 1;
+    public const NO_RENDERER = 1;
 
     /**
      * Error code to use for exception only occuring/detectable at runtime.
      *
      * @var int
      */
-    const RUNTIME = 2;
+    public const RUNTIME = 2;
 
     /**
      * Create a new RenderingException object.

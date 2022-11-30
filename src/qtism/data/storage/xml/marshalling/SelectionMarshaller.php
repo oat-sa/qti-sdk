@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class SelectionMarshaller extends Marshaller
      * @param QtiComponent $component A Selection object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -63,7 +65,8 @@ class SelectionMarshaller extends Marshaller
      * @return QtiComponent A Selection object.
      * @throws UnmarshallingException If the mandatory 'select' attribute is missing from $element.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): Selection
     {
         // Retrieve XML content as a string.
         $frag = $element->ownerDocument->createDocumentFragment();
@@ -91,7 +94,7 @@ class SelectionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'selection';
     }

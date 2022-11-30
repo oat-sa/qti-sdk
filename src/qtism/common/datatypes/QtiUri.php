@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class QtiUri extends QtiString
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a valid string.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (is_string($value) !== true) {
             $msg = 'The Uri Datatype only accepts to store URI values.';
@@ -52,7 +54,7 @@ class QtiUri extends QtiString
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return BaseType::URI;
     }
@@ -63,7 +65,7 @@ class QtiUri extends QtiString
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::SINGLE;
     }
@@ -75,7 +77,7 @@ class QtiUri extends QtiString
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getValue();
     }

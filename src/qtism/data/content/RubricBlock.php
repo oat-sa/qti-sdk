@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -95,7 +97,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return ViewCollection A collection of values that belong to the View enumeration.
      */
-    public function getViews()
+    public function getViews(): ViewCollection
     {
         return $this->views;
     }
@@ -106,7 +108,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
      * @param ViewCollection $views A collection of values that belong to the View enumeration.
      * @throws InvalidArgumentException If $views is an empty collection.
      */
-    public function setViews(ViewCollection $views)
+    public function setViews(ViewCollection $views): void
     {
         if (count($views) > 0) {
             $this->views = $views;
@@ -122,7 +124,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return string The use or an empty string ('').
      */
-    public function getUse()
+    public function getUse(): string
     {
         return $this->use;
     }
@@ -134,7 +136,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
      * @param string $use A use.
      * @throws InvalidArgumentException If $use is not a string.
      */
-    public function setUse($use)
+    public function setUse($use): void
     {
         if (is_string($use)) {
             $this->use = $use;
@@ -149,7 +151,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return StylesheetCollection A collection of stylesheet references.
      */
-    public function getStylesheets()
+    public function getStylesheets(): StylesheetCollection
     {
         return $this->stylesheets;
     }
@@ -159,7 +161,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param StylesheetCollection $stylesheets A collection of stylesheet references.
      */
-    public function setStylesheets(StylesheetCollection $stylesheets)
+    public function setStylesheets(StylesheetCollection $stylesheets): void
     {
         $this->stylesheets = $stylesheets;
     }
@@ -167,7 +169,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'rubricBlock';
     }
@@ -175,7 +177,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $components = $this->getContent();
 
@@ -187,7 +189,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
-    public function setContent(FlowStaticCollection $content)
+    public function setContent(FlowStaticCollection $content): void
     {
         $this->content = $content;
     }
@@ -197,7 +199,7 @@ class RubricBlock extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return FlowStaticCollection
      */
-    public function getContent()
+    public function getContent(): FlowStaticCollection
     {
         return $this->content;
     }

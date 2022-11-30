@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,14 +32,14 @@ use qtism\common\enums\Enumeration;
  */
 class SubmissionMode implements Enumeration
 {
-    const INDIVIDUAL = 0;
+    public const INDIVIDUAL = 0;
 
-    const SIMULTANEOUS = 1;
+    public const SIMULTANEOUS = 1;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'INDIVIDUAL' => self::INDIVIDUAL,
@@ -51,7 +53,7 @@ class SubmissionMode implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'individual':
                 return self::INDIVIDUAL;
                 break;

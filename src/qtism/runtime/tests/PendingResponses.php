@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -73,7 +75,7 @@ class PendingResponses
      *
      * @param State $state A State object.
      */
-    public function setState(State $state)
+    public function setState(State $state): void
     {
         $this->state = $state;
     }
@@ -83,7 +85,7 @@ class PendingResponses
      *
      * @return State A State object.
      */
-    public function getState()
+    public function getState(): State
     {
         return $this->state;
     }
@@ -93,7 +95,7 @@ class PendingResponses
      *
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      */
-    public function setAssessmentItemRef(AssessmentItemRef $assessmentItemRef)
+    public function setAssessmentItemRef(AssessmentItemRef $assessmentItemRef): void
     {
         $this->assessmentItemRef = $assessmentItemRef;
     }
@@ -103,7 +105,7 @@ class PendingResponses
      *
      * @return AssessmentItemRef An AssessmentItemRef object.
      */
-    public function getAssessmentItemRef()
+    public function getAssessmentItemRef(): AssessmentItemRef
     {
         return $this->assessmentItemRef;
     }
@@ -114,7 +116,7 @@ class PendingResponses
      * @param int $occurence An occurence number as a positive integer.
      * @throws InvalidArgumentException If $occurence is not a postive integer.
      */
-    public function setOccurence($occurence)
+    public function setOccurence($occurence): void
     {
         if (!is_int($occurence)) {
             $msg = "The 'occurence' argument must be an integer value, '" . gettype($occurence) . "' given.";
@@ -129,7 +131,7 @@ class PendingResponses
      *
      * @return int A postivie integer value.
      */
-    public function getOccurence()
+    public function getOccurence(): int
     {
         return $this->occurence;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,7 +48,7 @@ class Exception
      * @param true $withClassName Whether to show the Exception class name.
      * @return string
      */
-    public static function formatMessage(\Exception $e, $withClassName = true)
+    public static function formatMessage(\Exception $e, $withClassName = true): string
     {
         $returnValue = '';
 

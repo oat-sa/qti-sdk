@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class Utils
      * @param AssessmentSectionCollection $sections The collection of all sections in this AssessmentTest.
      * @return AssessmentSection|null The parent of the AssessmentSection set as parameter, if any.
      */
-    private static function checkRecursion($component, $sections)
+    private static function checkRecursion($component, $sections): ?AssessmentSection
     {
         $sectparent = null;
 
@@ -71,6 +73,7 @@ class Utils
      * QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the end of the test
      * has been reached.
      */
+    #[\ReturnTypeWillChange]
     public static function getFirstItem($test, $component, $sections)
     {
         $currentCmp = $component;
@@ -189,6 +192,7 @@ class Utils
      * in the QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the begin of the
      * test has been reached.
      */
+    #[\ReturnTypeWillChange]
     public static function getLastItem($test, $component, $sections)
     {
         $currentCmp = $component;

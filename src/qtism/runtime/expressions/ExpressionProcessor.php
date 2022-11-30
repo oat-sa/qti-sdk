@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -66,7 +68,7 @@ abstract class ExpressionProcessor implements Processable
      * @param Expression $expression A QTI Data Model Expression object.
      * @throws InvalidArgumentException If $expression is not a subclass nor implements the Expression type returned by the getExpressionType method.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $expectedType = $this->getExpressionType();
 
@@ -88,7 +90,7 @@ abstract class ExpressionProcessor implements Processable
      *
      * @return Expression A QTI Data Model Expression object.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -98,7 +100,7 @@ abstract class ExpressionProcessor implements Processable
      *
      * @param State $state A State object.
      */
-    public function setState(State $state)
+    public function setState(State $state): void
     {
         $this->state = $state;
     }
@@ -108,7 +110,7 @@ abstract class ExpressionProcessor implements Processable
      *
      * @return State
      */
-    public function getState()
+    public function getState(): State
     {
         return $this->state;
     }
@@ -119,5 +121,5 @@ abstract class ExpressionProcessor implements Processable
      *
      * @return string A Fully Qualified PHP Class Name (FQCN).
      */
-    abstract protected function getExpressionType();
+    abstract protected function getExpressionType(): string;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -54,7 +56,7 @@ class PhpVariable
      * @param string $name The name of the variable without the leading dollar sign ('$').
      * @throws InvalidArgumentException If $name is not a string value.
      */
-    public function setName($name)
+    public function setName($name): void
     {
         if (is_string($name) === false) {
             $msg = "The 'name' argument must be a string value, '" . gettype($name) . "' given.";
@@ -69,7 +71,7 @@ class PhpVariable
      *
      * @return string A variable name without the leading dollar sign ('$').
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

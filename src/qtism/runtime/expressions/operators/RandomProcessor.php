@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,6 +45,7 @@ class RandomProcessor extends OperatorProcessor
      * @return mixed|null A single cardinality QTI runtime compliant value or NULL if the operand is considered to be NULL.
      * @throws OperatorProcessingException
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $operands = $this->getOperands();
@@ -65,7 +68,7 @@ class RandomProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Random::class;
     }

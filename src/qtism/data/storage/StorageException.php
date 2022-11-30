@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,28 +39,28 @@ class StorageException extends Exception implements QtiSdkPackageContentExceptio
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * The error occurred while reading.
      *
      * @var int
      */
-    const READ = 1;
+    public const READ = 1;
 
     /**
      * The error occurred while writing.
      *
      * @var int
      */
-    const WRITE = 2;
+    public const WRITE = 2;
 
     /**
      * The error is related to a version issue.
      *
      * @var int
      */
-    const VERSION = 3;
+    public const VERSION = 3;
 
     /**
      * Create a new StorageException object.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -110,7 +112,7 @@ class AssessmentItemRef extends SectionPart
      *
      * @return string A URI.
      */
-    public function getHref()
+    public function getHref(): string
     {
         return $this->href;
     }
@@ -121,7 +123,7 @@ class AssessmentItemRef extends SectionPart
      * @param string $href A URI.
      * @throws InvalidArgumentException If $href is not a string.
      */
-    public function setHref($href)
+    public function setHref($href): void
     {
         if (is_string($href)) {
             $this->href = $href;
@@ -136,7 +138,7 @@ class AssessmentItemRef extends SectionPart
      *
      * @return IdentifierCollection A collection of QTI Identifiers.
      */
-    public function getCategories()
+    public function getCategories(): IdentifierCollection
     {
         return $this->categories;
     }
@@ -146,7 +148,7 @@ class AssessmentItemRef extends SectionPart
      *
      * @param IdentifierCollection $categories A collection of QTI Identifiers.
      */
-    public function setCategories(IdentifierCollection $categories)
+    public function setCategories(IdentifierCollection $categories): void
     {
         $this->categories = $categories;
     }
@@ -156,7 +158,7 @@ class AssessmentItemRef extends SectionPart
      *
      * @return VariableMappingCollection A collection of VariableMapping objects.
      */
-    public function getVariableMappings()
+    public function getVariableMappings(): VariableMappingCollection
     {
         return $this->variableMappings;
     }
@@ -166,7 +168,7 @@ class AssessmentItemRef extends SectionPart
      *
      * @param VariableMappingCollection $variableMappings A collection of VariableMapping objects.
      */
-    public function setVariableMappings(VariableMappingCollection $variableMappings)
+    public function setVariableMappings(VariableMappingCollection $variableMappings): void
     {
         $this->variableMappings = $variableMappings;
     }
@@ -176,7 +178,7 @@ class AssessmentItemRef extends SectionPart
      *
      * @return WeightCollection A collection of Weight objects.
      */
-    public function getWeights()
+    public function getWeights(): WeightCollection
     {
         return $this->weights;
     }
@@ -186,7 +188,7 @@ class AssessmentItemRef extends SectionPart
      *
      * @param WeightCollection $weights A collection of Weight objects.
      */
-    public function setWeights(WeightCollection $weights)
+    public function setWeights(WeightCollection $weights): void
     {
         $this->weights = $weights;
     }
@@ -197,7 +199,7 @@ class AssessmentItemRef extends SectionPart
      *
      * @return TemplateDefaultCollection A collection of TemplateDefault objects.
      */
-    public function getTemplateDefaults()
+    public function getTemplateDefaults(): TemplateDefaultCollection
     {
         return $this->templateDefaults;
     }
@@ -208,7 +210,7 @@ class AssessmentItemRef extends SectionPart
      *
      * @param TemplateDefaultCollection $templateDefaults A collection of TemplateDefault objects.
      */
-    public function setTemplateDefaults(TemplateDefaultCollection $templateDefaults)
+    public function setTemplateDefaults(TemplateDefaultCollection $templateDefaults): void
     {
         $this->templateDefaults = $templateDefaults;
     }
@@ -216,7 +218,7 @@ class AssessmentItemRef extends SectionPart
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'assessmentItemRef';
     }
@@ -224,7 +226,7 @@ class AssessmentItemRef extends SectionPart
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
             parent::getComponents()->getArrayCopy(),
@@ -239,7 +241,7 @@ class AssessmentItemRef extends SectionPart
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getIdentifier();
     }

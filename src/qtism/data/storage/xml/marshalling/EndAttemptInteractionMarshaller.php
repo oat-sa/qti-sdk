@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class EndAttemptInteractionMarshaller extends Marshaller
      * @param QtiComponent $component An EndAttemptInteraction object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
@@ -59,7 +61,8 @@ class EndAttemptInteractionMarshaller extends Marshaller
      * @return QtiComponent An EndAttemptInteraction object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): EndAttemptInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             if (($title = $this->getDOMElementAttributeAs($element, 'title')) === null) {
@@ -86,7 +89,7 @@ class EndAttemptInteractionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'endAttemptInteraction';
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ class OperatorBaseType extends BaseType
      *
      * @var int
      */
-    const ANY = 13;
+    public const ANY = 13;
 
     /**
      * Express that all the operands must have the same
@@ -49,12 +51,12 @@ class OperatorBaseType extends BaseType
      *
      * @var int
      */
-    const SAME = 14;
+    public const SAME = 14;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         $values = BaseType::asArray();
         $values['ANY'] = self::ANY;

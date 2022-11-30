@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -81,7 +83,7 @@ class EqualRounded extends Operator
      * @param int $roundingMode A value from the RoundingMode enumeration.
      * @throws InvalidArgumentException If $roundingMode is not a value from the RoundingMode enumeration.
      */
-    public function setRoundingMode($roundingMode)
+    public function setRoundingMode($roundingMode): void
     {
         if (in_array($roundingMode, RoundingMode::asArray())) {
             $this->roundingMode = $roundingMode;
@@ -96,7 +98,7 @@ class EqualRounded extends Operator
      *
      * @return int A value from the RoundingMode enumeration.
      */
-    public function getRoundingMode()
+    public function getRoundingMode(): int
     {
         return $this->roundingMode;
     }
@@ -107,7 +109,7 @@ class EqualRounded extends Operator
      * @param int|string $figures An integer value or a variable reference.
      * @throws InvalidArgumentException If $figures is not an integer nor a variable reference.
      */
-    public function setFigures($figures)
+    public function setFigures($figures): void
     {
         if (is_int($figures) || (is_string($figures) && Format::isVariableRef($figures))) {
             $this->figures = $figures;
@@ -130,7 +132,7 @@ class EqualRounded extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'equalRounded';
     }

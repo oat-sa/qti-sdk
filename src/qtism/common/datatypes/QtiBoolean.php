@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class QtiBoolean extends QtiScalar
      * @param mixed $value A given value.
      * @throws InvalidArgumentException
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (is_bool($value) !== true) {
             $msg = 'The Boolean Datatype only accepts to store boolean values.';
@@ -52,7 +54,7 @@ class QtiBoolean extends QtiScalar
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return BaseType::BOOLEAN;
     }
@@ -63,7 +65,7 @@ class QtiBoolean extends QtiScalar
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::SINGLE;
     }
@@ -74,7 +76,7 @@ class QtiBoolean extends QtiScalar
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return ($this->getValue() === true) ? 'true' : 'false';
     }

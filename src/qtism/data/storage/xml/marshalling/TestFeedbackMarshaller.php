@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,7 +48,7 @@ class TestFeedbackMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $access = ($component->getAccess() == TestFeedbackAccess::AT_END) ? 'atEnd' : 'during';
@@ -78,7 +80,8 @@ class TestFeedbackMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): TestFeedback
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
             if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier', 'string')) !== null) {
@@ -132,7 +135,7 @@ class TestFeedbackMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'testFeedback';
     }
@@ -144,7 +147,7 @@ class TestFeedbackMarshaller extends Marshaller
      * @return string The content of the feedback element as a string. If there is no extractable content, an empty string is returned.
      * @throws InvalidArgumentException If $element is not a testFeedback element.
      */
-    protected static function extractContent(DOMElement $element)
+    protected static function extractContent(DOMElement $element): string
     {
         if ($element->localName == 'testFeedback') {
             return preg_replace('#</{0,1}testFeedback.*?>#iu', '', $element->ownerDocument->saveXML($element));

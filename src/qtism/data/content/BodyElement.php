@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -175,7 +177,7 @@ abstract class BodyElement extends QtiComponent
      *
      * @return string A QTI identifier.
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -186,7 +188,7 @@ abstract class BodyElement extends QtiComponent
      * @param string $id A QTI Identifier.
      * @throws InvalidArgumentException If $id is not a valid QTI identifier.
      */
-    public function setId($id = '')
+    public function setId($id = ''): void
     {
         if (is_string($id) && (empty($id) || Format::isIdentifier($id, false) === true)) {
             $this->id = $id;
@@ -201,7 +203,7 @@ abstract class BodyElement extends QtiComponent
      *
      * @return bool
      */
-    public function hasId()
+    public function hasId(): bool
     {
         return $this->getId() !== '';
     }
@@ -211,7 +213,7 @@ abstract class BodyElement extends QtiComponent
      *
      * @return string One or more class names separated by spaces.
      */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
@@ -222,7 +224,7 @@ abstract class BodyElement extends QtiComponent
      * @param string $class One or more class names separated by spaces.
      * @throws InvalidArgumentException If $class does not represent valid class name(s).
      */
-    public function setClass($class = '')
+    public function setClass($class = ''): void
     {
         if (!is_string($class)) {
             $msg = 'The "class" argument must be a valid class name, "' . gettype($class) . '" given';
@@ -244,7 +246,7 @@ abstract class BodyElement extends QtiComponent
      *
      * @return bool
      */
-    public function hasClass()
+    public function hasClass(): bool
     {
         return $this->getClass() !== '';
     }
@@ -254,7 +256,7 @@ abstract class BodyElement extends QtiComponent
      *
      * @return string An RFC3066 language.
      */
-    public function getLang()
+    public function getLang(): string
     {
         return $this->lang;
     }
@@ -264,7 +266,7 @@ abstract class BodyElement extends QtiComponent
      *
      * @param string $lang An RFC3066 language.
      */
-    public function setLang($lang = '')
+    public function setLang($lang = ''): void
     {
         $this->lang = $lang;
     }
@@ -274,7 +276,7 @@ abstract class BodyElement extends QtiComponent
      *
      * @return bool
      */
-    public function hasLang()
+    public function hasLang(): bool
     {
         return $this->getLang() !== '';
     }
@@ -284,7 +286,7 @@ abstract class BodyElement extends QtiComponent
      *
      * @return string A string of 256 characters maximum.
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
@@ -295,7 +297,7 @@ abstract class BodyElement extends QtiComponent
      * @param string $label A string of 256 characters maximum.
      * @throws InvalidArgumentException If $label is not or a string or contains more than 256 characters.
      */
-    public function setLabel($label = '')
+    public function setLabel($label = ''): void
     {
         if (Format::isString256($label) === true) {
             $this->label = $label;
@@ -310,7 +312,7 @@ abstract class BodyElement extends QtiComponent
      *
      * @return bool
      */
-    public function hasLabel()
+    public function hasLabel(): bool
     {
         return $this->getLabel() !== '';
     }
@@ -321,7 +323,7 @@ abstract class BodyElement extends QtiComponent
      * @param int $dir A value from the Direction enumeration.
      * @throws InvalidArgumentException If $dir is not a value from the Direction enumeration.
      */
-    public function setDir($dir)
+    public function setDir($dir): void
     {
         if (in_array($dir, Direction::asArray(), true)) {
             $this->dir = $dir;
@@ -336,7 +338,7 @@ abstract class BodyElement extends QtiComponent
      *
      * @return int A value from the Direction enumeration.
      */
-    public function getDir()
+    public function getDir(): int
     {
         return $this->dir;
     }
@@ -345,7 +347,7 @@ abstract class BodyElement extends QtiComponent
      * @param string $ariaControls
      * @throws InvalidArgumentException
      */
-    public function setAriaControls(string $ariaControls)
+    public function setAriaControls(string $ariaControls): void
     {
         if ($ariaControls !== '' && !Format::isAriaIdRefs($ariaControls)) {
             $msg = "'${ariaControls}' is not a valid value for attribute 'aria-controls'.";
@@ -358,7 +360,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return string
      */
-    public function getAriaControls()
+    public function getAriaControls(): string
     {
         return $this->ariaControls;
     }
@@ -366,7 +368,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return bool
      */
-    public function hasAriaControls()
+    public function hasAriaControls(): bool
     {
         return $this->ariaControls !== '';
     }
@@ -388,7 +390,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return string
      */
-    public function getAriaDescribedBy()
+    public function getAriaDescribedBy(): string
     {
         return $this->ariaDescribedBy;
     }
@@ -396,7 +398,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return bool
      */
-    public function hasAriaDescribedBy()
+    public function hasAriaDescribedBy(): bool
     {
         return $this->ariaDescribedBy !== '';
     }
@@ -418,7 +420,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return string
      */
-    public function getAriaFlowTo()
+    public function getAriaFlowTo(): string
     {
         return $this->ariaFlowTo;
     }
@@ -426,7 +428,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return bool
      */
-    public function hasAriaFlowTo()
+    public function hasAriaFlowTo(): bool
     {
         return $this->ariaFlowTo !== '';
     }
@@ -448,7 +450,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return string
      */
-    public function getAriaLabelledBy()
+    public function getAriaLabelledBy(): string
     {
         return $this->ariaLabelledBy;
     }
@@ -456,7 +458,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return bool
      */
-    public function hasAriaLabelledBy()
+    public function hasAriaLabelledBy(): bool
     {
         return $this->ariaLabelledBy !== '';
     }
@@ -478,7 +480,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return string
      */
-    public function getAriaOwns()
+    public function getAriaOwns(): string
     {
         return $this->ariaOwns;
     }
@@ -486,7 +488,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return bool
      */
-    public function hasAriaOwns()
+    public function hasAriaOwns(): bool
     {
         return $this->ariaOwns !== '';
     }
@@ -495,7 +497,7 @@ abstract class BodyElement extends QtiComponent
      * @param string $ariaLevel
      * @throws InvalidArgumentException
      */
-    public function setAriaLevel(string $ariaLevel)
+    public function setAriaLevel(string $ariaLevel): void
     {
         if ($ariaLevel !== '' && !Format::isAriaLevel($ariaLevel)) {
             $msg = "'${ariaLevel}' is not a valid value for attribute 'aria-level'.";
@@ -508,7 +510,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return string
      */
-    public function getAriaLevel()
+    public function getAriaLevel(): string
     {
         return $this->ariaLevel;
     }
@@ -516,7 +518,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return bool
      */
-    public function hasAriaLevel()
+    public function hasAriaLevel(): bool
     {
         return $this->ariaLevel !== '';
     }
@@ -538,6 +540,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function getAriaLive()
     {
         return $this->ariaLive;
@@ -546,7 +549,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return bool
      */
-    public function hasAriaLive()
+    public function hasAriaLive(): bool
     {
         return $this->ariaLive !== false;
     }
@@ -555,7 +558,7 @@ abstract class BodyElement extends QtiComponent
      * @param int $ariaOrientation A value from the AriaOrientation enumeration or false for no orientation.
      * @throws InvalidArgumentException
      */
-    public function setAriaOrientation($ariaOrientation)
+    public function setAriaOrientation($ariaOrientation): void
     {
         if ($ariaOrientation === false || in_array($ariaOrientation, AriaOrientation::asArray(), true)) {
             $this->ariaOrientation = $ariaOrientation;
@@ -577,7 +580,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return bool
      */
-    public function hasAriaOrientation()
+    public function hasAriaOrientation(): bool
     {
         return $this->ariaOrientation !== false;
     }
@@ -586,7 +589,7 @@ abstract class BodyElement extends QtiComponent
      * @param $ariaLabel
      * @throws InvalidArgumentException
      */
-    public function setAriaLabel($ariaLabel)
+    public function setAriaLabel($ariaLabel): void
     {
         if (!is_string($ariaLabel)) {
             $val = (is_object($ariaLabel)) ? ('instance of ' . get_class($ariaLabel)) : $ariaLabel;
@@ -601,7 +604,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return string
      */
-    public function getAriaLabel()
+    public function getAriaLabel(): string
     {
         return $this->ariaLabel;
     }
@@ -609,7 +612,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return bool
      */
-    public function hasAriaLabel()
+    public function hasAriaLabel(): bool
     {
         return $this->ariaLabel !== '';
     }
@@ -618,7 +621,7 @@ abstract class BodyElement extends QtiComponent
      * @param bool $ariaHidden
      * @throws InvalidArgumentException
      */
-    public function setAriaHidden($ariaHidden)
+    public function setAriaHidden($ariaHidden): void
     {
         if (!is_bool($ariaHidden)) {
             $val = (is_object($ariaHidden)) ? ('instance of ' . get_class($ariaHidden)) : $ariaHidden;
@@ -633,7 +636,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return bool
      */
-    public function getAriaHidden()
+    public function getAriaHidden(): bool
     {
         return $this->ariaHidden;
     }
@@ -641,7 +644,7 @@ abstract class BodyElement extends QtiComponent
     /**
      * @return bool
      */
-    public function hasAriaHidden()
+    public function hasAriaHidden(): bool
     {
         return $this->ariaHidden !== false;
     }

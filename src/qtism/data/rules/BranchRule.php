@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -88,7 +90,7 @@ class BranchRule extends QtiComponent implements Rule
      *
      * @return Expression A QTI Expression.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -98,7 +100,7 @@ class BranchRule extends QtiComponent implements Rule
      *
      * @param Expression $expression A QTI Expression.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -108,7 +110,7 @@ class BranchRule extends QtiComponent implements Rule
      *
      * @return string A QTI Identifier.
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         return $this->target;
     }
@@ -119,7 +121,7 @@ class BranchRule extends QtiComponent implements Rule
      * @param string $target A QTI Identifier.
      * @throws InvalidArgumentException If $target is not a valid QTI Identifier.
      */
-    public function setTarget($target)
+    public function setTarget($target): void
     {
         if (Format::isIdentifier($target)) {
             $this->target = $target;
@@ -132,7 +134,7 @@ class BranchRule extends QtiComponent implements Rule
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'branchRule';
     }
@@ -140,7 +142,7 @@ class BranchRule extends QtiComponent implements Rule
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = [$this->getExpression()];
 

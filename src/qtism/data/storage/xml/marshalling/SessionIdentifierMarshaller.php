@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,11 +44,11 @@ class SessionIdentifierMarshaller extends Marshaller
      * @param QtiComponent|SessionIdentifier $component A QtiComponent object to marshall.
      * @return DOMElement A DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
-        $element->setAttribute('sourceID', $component->getSourceID());
-        $element->setAttribute('identifier', $component->getIdentifier());
+        $element->setAttribute('sourceID', (string)$component->getSourceID());
+        $element->setAttribute('identifier', (string)$component->getIdentifier());
 
         return $element;
     }
@@ -58,7 +60,7 @@ class SessionIdentifierMarshaller extends Marshaller
      * @return QtiComponent A QtiComponent object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): QtiComponent
     {
         if (!$element->hasAttribute('sourceID')) {
             throw new UnmarshallingException('SessionIdentifier element must have sourceID attribute', $element);
@@ -81,7 +83,7 @@ class SessionIdentifierMarshaller extends Marshaller
      *
      * @return string A QTI class name or an empty string.
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'sessionIdentifier';
     }

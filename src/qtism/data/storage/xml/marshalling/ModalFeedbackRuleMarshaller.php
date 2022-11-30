@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class ModalFeedbackRuleMarshaller extends Marshaller
      * @param QtiComponent $component
      * @return DOMElement
      */
-    public function marshall(QtiComponent $component)
+    public function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'outcomeIdentifier', $component->getOutcomeIdentifier());
@@ -60,7 +62,7 @@ class ModalFeedbackRuleMarshaller extends Marshaller
      * @return QtiComponent A ModalFeedbackRule object.
      * @throws UnmarshallingException If the 'identifier', 'outcomeIdentifier', 'showHide', or attribute is missing from the XML definition.
      */
-    public function unmarshall(DOMElement $element)
+    public function unmarshall(DOMElement $element): QtiComponent
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {
@@ -90,7 +92,7 @@ class ModalFeedbackRuleMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'modalFeedbackRule';
     }

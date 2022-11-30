@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -68,7 +70,7 @@ class ResponseElseIf extends QtiComponent
      *
      * @return Expression An Expression object.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -78,7 +80,7 @@ class ResponseElseIf extends QtiComponent
      *
      * @param Expression $expression An Expression object.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -89,7 +91,7 @@ class ResponseElseIf extends QtiComponent
      *
      * @return ResponseRuleCollection A collection of OutcomeRule objects.
      */
-    public function getResponseRules()
+    public function getResponseRules(): ResponseRuleCollection
     {
         return $this->responseRules;
     }
@@ -100,7 +102,7 @@ class ResponseElseIf extends QtiComponent
      *
      * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
      */
-    public function setResponseRules(ResponseRuleCollection $responseRules)
+    public function setResponseRules(ResponseRuleCollection $responseRules): void
     {
         $this->responseRules = $responseRules;
     }
@@ -108,7 +110,7 @@ class ResponseElseIf extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'responseElseIf';
     }
@@ -116,7 +118,7 @@ class ResponseElseIf extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
             [$this->getExpression()],

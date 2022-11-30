@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,20 +51,20 @@ class ItemResultMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
-        $element->setAttribute('identifier', $component->getIdentifier());
+        $element->setAttribute('identifier', (string)$component->getIdentifier());
         $element->setAttribute('datestamp', $component->getDatestamp()->format('c')); // ISO 8601
         $element->setAttribute('sessionStatus', SessionStatus::getNameByConstant($component->getSessionStatus()));
 
         if ($component->hasSequenceIndex()) {
-            $element->setAttribute('sequenceIndex', $component->getSequenceIndex());
+            $element->setAttribute('sequenceIndex', (string)$component->getSequenceIndex());
         }
 
         if ($component->hasCandidateComment()) {
             $candidateCommentElement = self::getDOMCradle()->createElement('candidateComment');
-            $candidateCommentElement->textContent = $component->getCandidateComment();
+            $candidateCommentElement->textContent = (string)$component->getCandidateComment();
             $element->appendChild($candidateCommentElement);
         }
 
@@ -83,7 +85,8 @@ class ItemResultMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): QtiComponent
     {
         if (!$element->hasAttribute('identifier')) {
             throw new UnmarshallingException('ItemResult element must have identifier attribute', $element);
@@ -143,7 +146,7 @@ class ItemResultMarshaller extends Marshaller
      *
      * @return string A QTI class name or an empty string.
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'itemResult';
     }

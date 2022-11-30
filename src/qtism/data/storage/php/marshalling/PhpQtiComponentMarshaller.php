@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -68,7 +70,7 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
      *
      * @param string $asInstanceOf
      */
-    public function setAsInstanceOf($asInstanceOf)
+    public function setAsInstanceOf($asInstanceOf): void
     {
         $this->asInstanceOf = $asInstanceOf;
     }
@@ -78,7 +80,7 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
      *
      * @return string
      */
-    public function getAsInstanceOf()
+    public function getAsInstanceOf(): string
     {
         return $this->asInstanceOf;
     }
@@ -88,7 +90,7 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
      *
      * @param string $variableName
      */
-    public function setVariableName($variableName)
+    public function setVariableName($variableName): void
     {
         $this->variableName = $variableName;
     }
@@ -98,12 +100,12 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
      *
      * @return string
      */
-    public function getVariableName()
+    public function getVariableName(): string
     {
         return $this->variableName;
     }
 
-    public function marshall()
+    public function marshall(): void
     {
         $ctx = $this->getContext();
         $access = $ctx->getStreamAccess();
@@ -161,7 +163,7 @@ class PhpQtiComponentMarshaller extends PhpMarshaller
      * @param mixed $toMarshall
      * @return bool
      */
-    protected function isMarshallable($toMarshall)
+    protected function isMarshallable($toMarshall): bool
     {
         return $toMarshall instanceof QtiComponent;
     }

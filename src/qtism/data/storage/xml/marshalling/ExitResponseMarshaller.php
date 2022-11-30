@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class ExitResponseMarshaller extends Marshaller
      * @param QtiComponent $component An ExitResponse object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         return $this->createElement($component);
     }
@@ -49,7 +51,8 @@ class ExitResponseMarshaller extends Marshaller
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent An ExitResponse object.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): ExitResponse
     {
         return new ExitResponse();
     }
@@ -57,7 +60,7 @@ class ExitResponseMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'exitResponse';
     }

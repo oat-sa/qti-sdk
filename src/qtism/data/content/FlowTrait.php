@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,7 +52,7 @@ trait FlowTrait
      * @param string $xmlBase A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '')
+    public function setXmlBase($xmlBase = ''): void
     {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
@@ -65,7 +67,7 @@ trait FlowTrait
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase()
+    public function getXmlBase(): string
     {
         return $this->xmlBase;
     }
@@ -74,7 +76,7 @@ trait FlowTrait
      * Does the element have a XmlBase?
      * @return bool
      */
-    public function hasXmlBase()
+    public function hasXmlBase(): bool
     {
         return $this->getXmlBase() !== '';
     }

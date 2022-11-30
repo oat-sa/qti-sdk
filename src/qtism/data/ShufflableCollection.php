@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +39,7 @@ class ShufflableCollection extends AbstractCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a Shufflable object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Shufflable) {
             $msg = "ShufflableCollection class only accept Shufflable objects, '" . gettype($value) . "' given.";

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -65,7 +67,7 @@ class TemplateProcessing extends QtiComponent
      * @param TemplateRuleCollection $templateRules A collection of at least one TemplateRule object.
      * @throws InvalidArgumentException If $templateRules is an empty collection.
      */
-    public function setTemplateRules(TemplateRuleCollection $templateRules)
+    public function setTemplateRules(TemplateRuleCollection $templateRules): void
     {
         if (count($templateRules) > 0) {
             $this->templateRules = $templateRules;
@@ -81,7 +83,7 @@ class TemplateProcessing extends QtiComponent
      *
      * @return TemplateRuleCollection A collection of at least one TemplateRule object.
      */
-    public function getTemplateRules()
+    public function getTemplateRules(): TemplateRuleCollection
     {
         return $this->templateRules;
     }
@@ -89,7 +91,8 @@ class TemplateProcessing extends QtiComponent
     /**
      * @return QtiComponentCollection|TemplateRuleCollection
      */
-    public function getComponents()
+    #[\ReturnTypeWillChange]
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getTemplateRules();
     }
@@ -97,7 +100,7 @@ class TemplateProcessing extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'templateProcessing';
     }

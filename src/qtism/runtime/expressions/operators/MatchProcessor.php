@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,7 +51,7 @@ class MatchProcessor extends OperatorProcessor
      * @return QtiBoolean|null Whether the two expressions represent the same value or NULL if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
         $expression = $this->getExpression();
@@ -82,7 +84,7 @@ class MatchProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return MatchOperator::class;
     }

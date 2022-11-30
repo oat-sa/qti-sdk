@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -93,7 +95,7 @@ class AreaMapping extends QtiComponent
      * @param bool|float $lowerBound A lower bound.
      * @throws InvalidArgumentException If $lowerBound is not a float value nor false.
      */
-    public function setLowerBound($lowerBound)
+    public function setLowerBound($lowerBound): void
     {
         if (is_float($lowerBound) || (is_bool($lowerBound) && $lowerBound === false)) {
             $this->lowerBound = $lowerBound;
@@ -108,6 +110,7 @@ class AreaMapping extends QtiComponent
      *
      * @return float A lower bound.
      */
+    #[\ReturnTypeWillChange]
     public function getLowerBound()
     {
         return $this->lowerBound;
@@ -119,7 +122,7 @@ class AreaMapping extends QtiComponent
      * @param bool|float $upperBound An upper bound.
      * @throws InvalidArgumentException If $upperBound is not a float value nor false.
      */
-    public function setUpperBound($upperBound)
+    public function setUpperBound($upperBound): void
     {
         if (is_float($upperBound) || (is_bool($upperBound) && $upperBound === false)) {
             $this->upperBound = $upperBound;
@@ -134,6 +137,7 @@ class AreaMapping extends QtiComponent
      *
      * @return float An upper bound.
      */
+    #[\ReturnTypeWillChange]
     public function getUpperBound()
     {
         return $this->upperBound;
@@ -145,7 +149,7 @@ class AreaMapping extends QtiComponent
      * @param float $defaultValue A default value.
      * @throws InvalidArgumentException If $defaultValue is not a float value.
      */
-    public function setDefaultValue($defaultValue)
+    public function setDefaultValue($defaultValue): void
     {
         if (is_float($defaultValue)) {
             $this->defaultValue = $defaultValue;
@@ -160,7 +164,7 @@ class AreaMapping extends QtiComponent
      *
      * @return float A default value.
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): float
     {
         return $this->defaultValue;
     }
@@ -170,7 +174,7 @@ class AreaMapping extends QtiComponent
      *
      * @param AreaMapEntryCollection $areaMapEntries A collection of AreaMapEntry objects.
      */
-    public function setAreaMapEntries(AreaMapEntryCollection $areaMapEntries)
+    public function setAreaMapEntries(AreaMapEntryCollection $areaMapEntries): void
     {
         if (count($areaMapEntries) >= 1) {
             $this->areaMapEntries = $areaMapEntries;
@@ -185,7 +189,7 @@ class AreaMapping extends QtiComponent
      *
      * @return AreaMapEntryCollection A collection of AreaMapEntry objects.
      */
-    public function getAreaMapEntries()
+    public function getAreaMapEntries(): AreaMapEntryCollection
     {
         return $this->areaMapEntries;
     }
@@ -195,7 +199,7 @@ class AreaMapping extends QtiComponent
      *
      * @return bool
      */
-    public function hasLowerBound()
+    public function hasLowerBound(): bool
     {
         return $this->getLowerBound() !== false;
     }
@@ -205,7 +209,7 @@ class AreaMapping extends QtiComponent
      *
      * @return bool
      */
-    public function hasUpperBound()
+    public function hasUpperBound(): bool
     {
         return $this->getUpperBound() !== false;
     }
@@ -213,7 +217,7 @@ class AreaMapping extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'areaMapping';
     }
@@ -221,7 +225,7 @@ class AreaMapping extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = $this->getAreaMapEntries()->getArrayCopy();
 

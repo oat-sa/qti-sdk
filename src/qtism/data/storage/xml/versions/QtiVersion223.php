@@ -32,9 +32,9 @@ use qtism\data\storage\xml\marshalling\Qti223MarshallerFactory;
  */
 class QtiVersion223 extends QtiVersion220
 {
-    const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p3.xsd';
+    public const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p3.xsd';
 
-    const LOCAL_XSD = 'qtiv2p2p3/imsqti_v2p2p3.xsd';
+    public const LOCAL_XSD = 'qtiv2p2p3/imsqti_v2p2p3.xsd';
 
-    const MARSHALLER_FACTORY = Qti223MarshallerFactory::class;
+    public const MARSHALLER_FACTORY = Qti223MarshallerFactory::class;
 }

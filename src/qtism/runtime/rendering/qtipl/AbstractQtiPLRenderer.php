@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ abstract class AbstractQtiPLRenderer implements Renderable
      *
      * @return ConditionRenderingOptions
      */
-    public function getCRO()
+    public function getCRO(): ConditionRenderingOptions
     {
         return $this->cro;
     }
@@ -51,7 +53,7 @@ abstract class AbstractQtiPLRenderer implements Renderable
      *
      * @param ConditionRenderingOptions $cro
      */
-    public function setCRO($cro)
+    public function setCRO($cro): void
     {
         $this->cro = $cro;
     }

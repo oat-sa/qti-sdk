@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class MathConstantMarshaller extends Marshaller
      * @param QtiComponent $component A MathConstant object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -55,7 +57,8 @@ class MathConstantMarshaller extends Marshaller
      * @return QtiComponent A MathConstant object.
      * @throws UnmarshallingException If the mandatory attribute 'name' is missing.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): MathConstant
     {
         if (($name = $this->getDOMElementAttributeAs($element, 'name')) !== null) {
             if (($cst = MathEnumeration::getConstantByName($name)) !== false) {
@@ -73,7 +76,7 @@ class MathConstantMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'mathConstant';
     }

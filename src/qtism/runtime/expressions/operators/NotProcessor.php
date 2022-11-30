@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +46,7 @@ class NotProcessor extends OperatorProcessor
      * @return QtiBoolean
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -70,7 +72,7 @@ class NotProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return NotOperator::class;
     }

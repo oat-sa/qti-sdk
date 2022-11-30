@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class RandomFloatMarshaller extends Marshaller
      * @param QtiComponent $component A RandomFloat object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -56,7 +58,8 @@ class RandomFloatMarshaller extends Marshaller
      * @return QtiComponent A RandomFloat object.
      * @throws UnmarshallingException If the mandatory attributes min or max ar missing.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): RandomFloat
     {
         // max attribute is mandatory.
         if (($max = $this->getDOMElementAttributeAs($element, 'max')) !== null) {
@@ -79,7 +82,7 @@ class RandomFloatMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'randomFloat';
     }

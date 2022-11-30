@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,7 +50,7 @@ interface FileManager
      * @return QtiFile
      * @throws FileManagerException
      */
-    public function createFromFile($path, $mimeType, $filename = '');
+    public function createFromFile($path, $mimeType, $filename = ''): QtiFile;
 
     /**
      * Instantiate an implementation of File which focuses
@@ -61,7 +63,7 @@ interface FileManager
      * @return QtiFile
      * @throws FileManagerException
      */
-    public function createFromData($data, $mimeType, $filename = '', $path = null);
+    public function createFromData($data, $mimeType, $filename = '', $path = null): QtiFile;;
 
     /**
      * Retrieve a previously created instance by $identifier.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,7 +63,7 @@ class Correct extends Expression
      * @param string $identifier A QTI Identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
@@ -76,7 +78,7 @@ class Correct extends Expression
      *
      * @return string A QTI Identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -84,7 +86,7 @@ class Correct extends Expression
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'correct';
     }
@@ -94,7 +96,7 @@ class Correct extends Expression
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return false;
     }

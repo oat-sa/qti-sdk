@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,11 +32,11 @@ use qtism\data\storage\xml\marshalling\Qti21MarshallerFactory;
  */
 class ResultVersion21 extends ResultVersion
 {
-    const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_result_v2p1';
+    public const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_result_v2p1';
 
-    const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd';
+    public const XSD = 'http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_result_v2p1.xsd';
 
-    const LOCAL_XSD = 'qtiv2p1/imsqti_result_v2p1.xsd';
+    public const LOCAL_XSD = 'qtiv2p1/imsqti_result_v2p1.xsd';
 
-    const MARSHALLER_FACTORY = Qti21MarshallerFactory::class;
+    public const MARSHALLER_FACTORY = Qti21MarshallerFactory::class;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class StylesheetMarshaller extends Marshaller
      * @param QtiComponent $component A Stylesheet object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -60,7 +62,8 @@ class StylesheetMarshaller extends Marshaller
      * @return QtiComponent A Stylesheet object.
      * @throws UnmarshallingException If the mandatory attribute 'href' is missing from $element.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): Stylesheet
     {
         // href is a mandatory value, retrieve it first.
         if (($value = $this->getDOMElementAttributeAs($element, 'href', 'string')) !== null) {
@@ -88,7 +91,7 @@ class StylesheetMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'stylesheet';
     }

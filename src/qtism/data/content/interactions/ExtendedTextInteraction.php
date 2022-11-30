@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -184,7 +186,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * @param int $base A positive (>= 0) integer.
      * @throws InvalidArgumentException If $base is not a positive integer.
      */
-    public function setBase($base)
+    public function setBase($base): void
     {
         if (is_int($base) && $base >= 0) {
             $this->base = $base;
@@ -200,7 +202,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getBase()
+    public function getBase(): int
     {
         return $this->base;
     }
@@ -213,7 +215,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * @param string $stringIdentifier A QTI Identifier or an empty string.
      * @throws InvalidArgumentException If $stringIdentifier is not a valid QTIIdentifier nor an empty string.
      */
-    public function setStringIdentifier($stringIdentifier)
+    public function setStringIdentifier($stringIdentifier): void
     {
         if (Format::isIdentifier($stringIdentifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier))) {
             $this->stringIdentifier = $stringIdentifier;
@@ -230,7 +232,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return string A QTI identifier or an empty string.
      */
-    public function getStringIdentifier()
+    public function getStringIdentifier(): string
     {
         return $this->stringIdentifier;
     }
@@ -240,7 +242,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return bool
      */
-    public function hasStringIdentifier()
+    public function hasStringIdentifier(): bool
     {
         return $this->getStringIdentifier() !== '';
     }
@@ -252,7 +254,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * @param int|null $expectedLength A non-negative integer (>= 0) or null to unset expectedLength.
      * @throws InvalidArgumentException If $expectedLength is not a non-negative integer nor null.
      */
-    public function setExpectedLength($expectedLength)
+    public function setExpectedLength($expectedLength): void
     {
         if ($expectedLength !== null && (!is_int($expectedLength) || $expectedLength < 0)) {
             $given = is_int($expectedLength)
@@ -272,9 +274,9 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return int|null A non-negative integer (>= 0) or null if undefined.
      */
-    public function getExpectedLength()
+    public function getExpectedLength(): int
     {
-        return $this->expectedLength;
+        return $this->expectedLength ?? -1;
     }
 
     /**
@@ -282,9 +284,9 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return bool
      */
-    public function hasExpectedLength()
+    public function hasExpectedLength(): bool
     {
-        return $this->getExpectedLength() !== null;
+        return $this->getExpectedLength() !== null && $this->getExpectedLength() >= 0;
     }
 
     /**
@@ -294,7 +296,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * @param string $patternMask An XML Schema 2 regular expression or an empty string.
      * @throws InvalidArgumentException If $patternMask is not a string value.
      */
-    public function setPatternMask($patternMask)
+    public function setPatternMask($patternMask): void
     {
         if (is_string($patternMask)) {
             $this->patternMask = $patternMask;
@@ -311,7 +313,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return string An XML Schema 2 regular expression or an empty string.
      */
-    public function getPatternMask()
+    public function getPatternMask(): string
     {
         return $this->patternMask;
     }
@@ -321,7 +323,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return bool
      */
-    public function hasPatternMask()
+    public function hasPatternMask(): bool
     {
         return $this->getPatternMask() !== '';
     }
@@ -333,7 +335,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * @param string $placeholderText A placeholder text or an empty string.
      * @throws InvalidArgumentException If $placeholderText is not a string value.
      */
-    public function setPlaceholderText($placeholderText)
+    public function setPlaceholderText($placeholderText): void
     {
         if (is_string($placeholderText)) {
             $this->placeholderText = $placeholderText;
@@ -349,7 +351,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return string A placeholder text or an empty string.
      */
-    public function getPlaceholderText()
+    public function getPlaceholderText(): string
     {
         return $this->placeholderText;
     }
@@ -359,7 +361,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return bool
      */
-    public function hasPlaceholderText()
+    public function hasPlaceholderText(): bool
     {
         return $this->getPlaceholderText() !== '';
     }
@@ -371,7 +373,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * @param int $maxStrings A strictly positive (> 0) integer or -1.
      * @throws InvalidArgumentException If $maxStrings is not a strictly positive integer nor -1.
      */
-    public function setMaxStrings($maxStrings)
+    public function setMaxStrings($maxStrings): void
     {
         if (is_int($maxStrings) && ($maxStrings > 0 || $maxStrings === -1)) {
             $this->maxStrings = $maxStrings;
@@ -387,7 +389,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return int A strictly positive (> 0) integer or -1.
      */
-    public function getMaxStrings()
+    public function getMaxStrings(): int
     {
         return $this->maxStrings;
     }
@@ -397,7 +399,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return bool
      */
-    public function hasMaxStrings()
+    public function hasMaxStrings(): bool
     {
         return $this->getMaxStrings() !== -1;
     }
@@ -408,7 +410,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * @param string $minStrings A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minStrings is not a positive integer.
      */
-    public function setMinStrings($minStrings)
+    public function setMinStrings($minStrings): void
     {
         if (is_int($minStrings) && $minStrings >= 0) {
             $this->minStrings = $minStrings;
@@ -423,7 +425,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMinStrings()
+    public function getMinStrings(): int
     {
         return $this->minStrings;
     }
@@ -435,7 +437,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * @param int|null $expectedLines A non-negative integer (>= 0) or null.
      * @throws InvalidArgumentException If $expectedLines is not a non-negative integer nor null.
      */
-    public function setExpectedLines($expectedLines)
+    public function setExpectedLines($expectedLines): void
     {
         if ($expectedLines !== null && (!is_int($expectedLines) || $expectedLines < 0)) {
             $given = is_int($expectedLines)
@@ -455,7 +457,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return int|null A non-negative integer (>= 0) or null if undefined.
      */
-    public function getExpectedLines()
+    public function getExpectedLines(): ?int
     {
         return $this->expectedLines;
     }
@@ -465,7 +467,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return bool
      */
-    public function hasExpectedLines()
+    public function hasExpectedLines(): bool
     {
         return $this->getExpectedLines() !== null;
     }
@@ -476,7 +478,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * @param int $format A value from the TextFormat enumeration.
      * @throws InvalidArgumentException If $format is not a value from the TextFormat enumeration.
      */
-    public function setFormat($format)
+    public function setFormat($format): void
     {
         if (in_array($format, TextFormat::asArray())) {
             $this->format = $format;
@@ -491,7 +493,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      *
      * @return int A value from the TextFormat enumeration.
      */
-    public function getFormat()
+    public function getFormat(): int
     {
         return $this->format;
     }
@@ -499,7 +501,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * @return ResponseValidityConstraint
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
     {
         return new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -512,7 +514,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return parent::getComponents();
     }
@@ -520,7 +522,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'extendedTextInteraction';
     }

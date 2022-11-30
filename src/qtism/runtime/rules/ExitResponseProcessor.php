@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +42,7 @@ class ExitResponseProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException with code = RuleProcessingException::EXIT_RESPONSE In any case.
      */
-    public function process()
+    public function process(): void
     {
         $msg = 'Termination of Response Processing.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_RESPONSE);
@@ -49,7 +51,7 @@ class ExitResponseProcessor extends RuleProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return ExitResponse::class;
     }

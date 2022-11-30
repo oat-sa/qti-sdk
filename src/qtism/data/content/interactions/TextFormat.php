@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ class TextFormat implements Enumeration
      *
      * @var int
      */
-    const PLAIN = 0;
+    public const PLAIN = 0;
 
     /**
      * From IMS QTI:
@@ -54,7 +56,7 @@ class TextFormat implements Enumeration
      *
      * @var int
      */
-    const PRE_FORMATTED = 1;
+    public const PRE_FORMATTED = 1;
 
     /**
      * From IMS QTI:
@@ -68,12 +70,12 @@ class TextFormat implements Enumeration
      *
      * @var int
      */
-    const XHTML = 2;
+    public const XHTML = 2;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'PLAIN' => self::PLAIN,
@@ -88,7 +90,7 @@ class TextFormat implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'plain':
                 return self::PLAIN;
                 break;

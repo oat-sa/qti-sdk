@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +38,7 @@ class AssessmentSectionCollection extends SectionPartCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a AssessmentSection object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof AssessmentSection) {
             $msg = "AssessmentSectionCollection class only accept AssessmentSection objects, '" . gettype($value) . "' given.";

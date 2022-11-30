@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -113,7 +115,7 @@ abstract class Expression extends QtiComponent
      *
      * @return array An array of string values.
      */
-    public static function getExpressionClassNames()
+    public static function getExpressionClassNames(): array
     {
         return self::$expressionClassNames;
     }
@@ -121,7 +123,7 @@ abstract class Expression extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -133,5 +135,5 @@ abstract class Expression extends QtiComponent
      *
      * @return bool True if the expression is pure, false otherwise
      */
-    abstract public function isPure();
+    abstract public function isPure(): bool;
 }

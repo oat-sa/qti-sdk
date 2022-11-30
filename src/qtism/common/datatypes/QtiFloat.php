@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class QtiFloat extends QtiScalar
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of Float.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!is_float($value)) {
             $msg = 'The Float Datatype only accepts to store float values.';
@@ -52,7 +54,7 @@ class QtiFloat extends QtiScalar
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return BaseType::FLOAT;
     }
@@ -63,7 +65,7 @@ class QtiFloat extends QtiScalar
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::SINGLE;
     }
@@ -71,8 +73,8 @@ class QtiFloat extends QtiScalar
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return '' . $this->getValue();
+        return (string)$this->getValue();
     }
 }

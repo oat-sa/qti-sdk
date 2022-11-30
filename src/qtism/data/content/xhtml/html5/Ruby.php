@@ -28,6 +28,7 @@ use qtism\data\content\FlowTrait;
 use qtism\data\content\Inline;
 use qtism\data\content\InlineStatic;
 use qtism\data\content\TextOrVariable;
+use qtism\data\QtiComponentCollection;
 
 class Ruby extends Html5Element implements FlowStatic, Inline, TextOrVariable, InlineStatic
 {
@@ -52,12 +53,12 @@ class Ruby extends Html5Element implements FlowStatic, Inline, TextOrVariable, I
         $this->setContent(new FlowCollection());
     }
 
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return self::QTI_CLASS_NAME;
     }
 
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -67,7 +68,7 @@ class Ruby extends Html5Element implements FlowStatic, Inline, TextOrVariable, I
      *
      * @param FlowCollection $content A collection of Flow objects.
      */
-    public function setContent(FlowCollection $content)
+    public function setContent(FlowCollection $content): void
     {
         $this->content = $content;
     }
@@ -77,7 +78,7 @@ class Ruby extends Html5Element implements FlowStatic, Inline, TextOrVariable, I
      *
      * @return FlowCollection
      */
-    public function getContent()
+    public function getContent(): FlowCollection
     {
         return $this->content;
     }

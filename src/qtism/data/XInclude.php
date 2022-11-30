@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtism\data;
 
 use qtism\data\content\BlockStatic;
@@ -46,7 +48,7 @@ class XInclude extends ExternalQtiComponent implements BlockStatic, FlowStatic, 
      *
      * @return string
      */
-    public function getHref()
+    public function getHref(): string
     {
         $xml = $this->getXml();
         return $xml->documentElement->getAttribute('href');
@@ -55,12 +57,12 @@ class XInclude extends ExternalQtiComponent implements BlockStatic, FlowStatic, 
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'include';
     }
 
-    protected function buildTargetNamespace()
+    protected function buildTargetNamespace(): void
     {
         $this->setTargetNamespace('http://www.w3.org/2001/XInclude');
     }

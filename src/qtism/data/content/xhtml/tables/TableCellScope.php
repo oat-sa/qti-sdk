@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,27 +35,27 @@ class TableCellScope implements Enumeration
     /**
      * @var int
      */
-    const ROW = 0;
+    public const ROW = 0;
 
     /**
      * @var int
      */
-    const COL = 1;
+    public const COL = 1;
 
     /**
      * @var int
      */
-    const ROWGROUP = 2;
+    public const ROWGROUP = 2;
 
     /**
      * @var int
      */
-    const COLGROUP = 3;
+    public const COLGROUP = 3;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'ROW' => self::ROW,
@@ -69,7 +71,7 @@ class TableCellScope implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'row':
                 return self::ROW;
                 break;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,14 +32,14 @@ use qtism\common\enums\Enumeration;
  */
 class RoundingMode implements Enumeration
 {
-    const SIGNIFICANT_FIGURES = 0;
+    public const SIGNIFICANT_FIGURES = 0;
 
-    const DECIMAL_PLACES = 1;
+    public const DECIMAL_PLACES = 1;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'SIGNIFICANT_FIGURES' => self::SIGNIFICANT_FIGURES,
@@ -51,7 +53,7 @@ class RoundingMode implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'significantfigures':
                 return self::SIGNIFICANT_FIGURES;
                 break;

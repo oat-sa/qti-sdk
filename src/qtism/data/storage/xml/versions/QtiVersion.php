@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +38,7 @@ use qtism\data\storage\xml\XmlStorageException;
  */
 class QtiVersion extends Version
 {
-    const SUPPORTED_VERSIONS = [
+    public const SUPPORTED_VERSIONS = [
         '2.0.0' => QtiVersion200::class,
         '2.1.0' => QtiVersion210::class,
         '2.1.1' => QtiVersion211::class,
@@ -48,7 +50,7 @@ class QtiVersion extends Version
         '3.0.0' => QtiVersion300::class,
     ];
 
-    const UNSUPPORTED_VERSION_MESSAGE = 'QTI version "%s" is not supported.';
+    public const UNSUPPORTED_VERSION_MESSAGE = 'QTI version "%s" is not supported.';
 
     /** @var string */
     private $versionNumber;
@@ -90,7 +92,7 @@ class QtiVersion extends Version
      * @param string $version a semantic version
      * @throws InvalidArgumentException when the version is not supported.
      */
-    protected static function checkVersion(string $version)
+    protected static function checkVersion(string $version): void
     {
         if (!isset(static::SUPPORTED_VERSIONS[$version])) {
             throw QtiVersionException::unsupportedVersion(static::UNSUPPORTED_VERSION_MESSAGE, $version, static::SUPPORTED_VERSIONS);

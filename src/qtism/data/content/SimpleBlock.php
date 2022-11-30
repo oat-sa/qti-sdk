@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -57,7 +59,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @return BlockCollection A collection of Block objects.
      */
-    public function getComponents()
+    public function getComponents(): BlockCollection
     {
         return $this->getContent();
     }
@@ -67,7 +69,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @param BlockCollection $content A collection of Block objects.
      */
-    public function setContent(BlockCollection $content)
+    public function setContent(BlockCollection $content): void
     {
         $this->content = $content;
     }
@@ -77,7 +79,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @return BlockCollection
      */
-    public function getContent()
+    public function getContent(): BlockCollection
     {
         return $this->content;
     }

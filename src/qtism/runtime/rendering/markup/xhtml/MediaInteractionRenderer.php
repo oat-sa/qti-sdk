@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -71,7 +73,7 @@ class MediaInteractionRenderer extends InteractionRenderer
      *
      * @param array $audioTypes An array of strings representing mime-types.
      */
-    protected function setAudioTypes(array $audioTypes)
+    protected function setAudioTypes(array $audioTypes): void
     {
         $this->audioTypes = $audioTypes;
     }
@@ -81,7 +83,7 @@ class MediaInteractionRenderer extends InteractionRenderer
      *
      * @return array An array of strings representing mime-types.
      */
-    protected function getAudioTypes()
+    protected function getAudioTypes(): array
     {
         return $this->audioTypes;
     }
@@ -91,7 +93,7 @@ class MediaInteractionRenderer extends InteractionRenderer
      *
      * @param array $videoTypes An array of strings representing mime-types.
      */
-    protected function setVideoTypes(array $videoTypes)
+    protected function setVideoTypes(array $videoTypes): void
     {
         $this->videoTypes = $videoTypes;
     }
@@ -101,7 +103,7 @@ class MediaInteractionRenderer extends InteractionRenderer
      *
      * @return array An array of strings representing mime-types.
      */
-    protected function getVideoTypes()
+    protected function getVideoTypes(): array
     {
         return $this->videoTypes;
     }
@@ -111,7 +113,7 @@ class MediaInteractionRenderer extends InteractionRenderer
      *
      * @param array $imageTypes An array of strings representing mime-types.
      */
-    protected function setImageTypes(array $imageTypes)
+    protected function setImageTypes(array $imageTypes): void
     {
         $this->imageTypes = $imageTypes;
     }
@@ -121,7 +123,7 @@ class MediaInteractionRenderer extends InteractionRenderer
      *
      * @return array An array of strings representing mime-types.
      */
-    protected function getImageTypes()
+    protected function getImageTypes(): array
     {
         return $this->imageTypes;
     }
@@ -145,15 +147,18 @@ class MediaInteractionRenderer extends InteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-mediaInteraction');
 
-        $fragment->firstChild->setAttribute('data-autostart', ($component->mustAutostart() === true) ? 'true' : 'false');
-        $fragment->firstChild->setAttribute('data-min-plays', $component->getMinPlays());
-        $fragment->firstChild->setAttribute('data-max-plays', $component->getMaxPlays());
+        $fragment->firstChild->setAttribute(
+            'data-autostart',
+            ($component->mustAutostart() === true) ? 'true' : 'false'
+        );
+        $fragment->firstChild->setAttribute('data-min-plays', (string)$component->getMinPlays());
+        $fragment->firstChild->setAttribute('data-max-plays', (string)$component->getMaxPlays());
         $fragment->firstChild->setAttribute('data-loop', ($component->mustLoop() === true) ? 'true' : 'false');
     }
 
@@ -162,7 +167,7 @@ class MediaInteractionRenderer extends InteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendChildren($fragment, $component, $base);
 

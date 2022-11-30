@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -109,7 +111,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      * @param string $outcomeIdentifier A QTI identifier.
      * @throws InvalidArgumentException If $outcomeIdentifier is an invalid identifier.
      */
-    public function setOutcomeIdentifier($outcomeIdentifier)
+    public function setOutcomeIdentifier($outcomeIdentifier): void
     {
         if (Format::isIdentifier($outcomeIdentifier, false) === true) {
             $this->outcomeIdentifier = $outcomeIdentifier;
@@ -124,7 +126,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      *
      * @return string a QTI identifier.
      */
-    public function getOutcomeIdentifier()
+    public function getOutcomeIdentifier(): string
     {
         return $this->outcomeIdentifier;
     }
@@ -136,7 +138,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      *
      * @param int A value from the ShowHide enumeration.
      */
-    public function setShowHide($showHide)
+    public function setShowHide($showHide): void
     {
         if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
@@ -151,7 +153,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      *
      * @return int A value from the ShowHide enumeration.
      */
-    public function getShowHide()
+    public function getShowHide(): int
     {
         return $this->showHide;
     }
@@ -162,7 +164,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      * @param string $identifier A QTI identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
@@ -177,7 +179,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -187,7 +189,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      *
      * @param FlowCollection $content A collection of FlowStatic objects.
      */
-    public function setContent(FlowCollection $content)
+    public function setContent(FlowCollection $content): void
     {
         $this->content = $content;
     }
@@ -197,7 +199,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
      *
      * @return FlowCollection
      */
-    public function getContent()
+    public function getContent(): FlowCollection
     {
         return $this->content;
     }
@@ -205,7 +207,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
     /**
      * @return FlowCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -213,7 +215,7 @@ class FeedbackBlock extends BodyElement implements FlowStatic, BlockStatic, Feed
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'feedbackBlock';
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +62,7 @@ class Li extends BodyElement
      *
      * @return FlowCollection A collection of Flow objects.
      */
-    public function getComponents()
+    public function getComponents(): FlowCollection
     {
         return $this->getContent();
     }
@@ -70,7 +72,7 @@ class Li extends BodyElement
      *
      * @param FlowCollection $content
      */
-    public function setContent(FlowCollection $content)
+    public function setContent(FlowCollection $content): void
     {
         $this->content = $content;
     }
@@ -80,7 +82,7 @@ class Li extends BodyElement
      *
      * @return FlowCollection
      */
-    public function getContent()
+    public function getContent(): FlowCollection
     {
         return $this->content;
     }
@@ -88,7 +90,7 @@ class Li extends BodyElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'li';
     }

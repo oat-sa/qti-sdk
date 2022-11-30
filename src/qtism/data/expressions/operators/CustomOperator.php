@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -99,7 +101,7 @@ class CustomOperator extends Operator implements IExternal
      * @param string $class A class name which is tool specific.
      * @throws InvalidArgumentException If $class is not a string.
      */
-    public function setClass($class)
+    public function setClass($class): void
     {
         if (is_string($class)) {
             $this->class = $class;
@@ -114,7 +116,7 @@ class CustomOperator extends Operator implements IExternal
      *
      * @return string A class name which is tool specific.
      */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
@@ -124,7 +126,7 @@ class CustomOperator extends Operator implements IExternal
      *
      * @return bool
      */
-    public function hasClass()
+    public function hasClass(): bool
     {
         return $this->getClass() !== '';
     }
@@ -136,7 +138,7 @@ class CustomOperator extends Operator implements IExternal
      * @param string $definition A URI or an empty string.
      * @throws InvalidArgumentException If $definition is not a string.
      */
-    public function setDefinition($definition)
+    public function setDefinition($definition): void
     {
         if (is_string($definition)) {
             $this->definition = $definition;
@@ -152,7 +154,7 @@ class CustomOperator extends Operator implements IExternal
      *
      * @return string A URI or an empty string.
      */
-    public function getDefinition()
+    public function getDefinition(): string
     {
         return $this->definition;
     }
@@ -162,7 +164,7 @@ class CustomOperator extends Operator implements IExternal
      *
      * @return bool
      */
-    public function hasDefinition()
+    public function hasDefinition(): bool
     {
         return $this->getDefinition() !== '';
     }
@@ -183,7 +185,7 @@ class CustomOperator extends Operator implements IExternal
      *
      * @param string $xmlString
      */
-    public function setXmlString($xmlString)
+    public function setXmlString($xmlString): void
     {
         $this->xmlString = $xmlString;
 
@@ -197,7 +199,7 @@ class CustomOperator extends Operator implements IExternal
      *
      * @return string
      */
-    public function getXmlString()
+    public function getXmlString(): string
     {
         return $this->xmlString;
     }
@@ -207,7 +209,7 @@ class CustomOperator extends Operator implements IExternal
      *
      * @param ExternalQtiComponent $externalComponent
      */
-    private function setExternalComponent(ExternalQtiComponent $externalComponent)
+    private function setExternalComponent(ExternalQtiComponent $externalComponent): void
     {
         $this->externalComponent = $externalComponent;
     }
@@ -217,7 +219,7 @@ class CustomOperator extends Operator implements IExternal
      *
      * @return ExternalQtiComponent
      */
-    private function getExternalComponent()
+    private function getExternalComponent(): ExternalQtiComponent
     {
         return $this->externalComponent;
     }
@@ -225,7 +227,7 @@ class CustomOperator extends Operator implements IExternal
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'customOperator';
     }
@@ -235,7 +237,7 @@ class CustomOperator extends Operator implements IExternal
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return false; // Too impredictable, for instance calling web service --> impure
     }

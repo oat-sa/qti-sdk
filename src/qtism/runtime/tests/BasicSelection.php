@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +38,7 @@ class BasicSelection extends AbstractSelection
      *
      * @return SelectableRouteCollection A collection of SelectableRoute object describing the performed selection.
      */
-    public function select()
+    public function select(): SelectableRouteCollection
     {
         $assessmentSection = $this->getAssessmentSection();
         $selection = $assessmentSection->getSelection();

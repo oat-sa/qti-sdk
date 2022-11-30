@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -52,7 +54,7 @@ abstract class AbstractStreamAccess
      *
      * @return IStream An IStream object.
      */
-    protected function getStream()
+    protected function getStream(): IStream
     {
         return $this->stream;
     }
@@ -63,7 +65,7 @@ abstract class AbstractStreamAccess
      * @param IStream $stream An IStream object.
      * @throws StreamAccessException If the $stream is not open yet.
      */
-    protected function setStream(IStream $stream)
+    protected function setStream(IStream $stream): void
     {
         if ($stream->isOpen() === false) {
             $msg = 'An AbstractStreamAccess do not accept closed streams to be read.';

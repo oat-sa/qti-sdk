@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -87,7 +89,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      *
      * @param BinaryAssessmentTestSeeker $seeker An AssessmentTestSeeker object.
      */
-    protected function setSeeker(BinaryAssessmentTestSeeker $seeker)
+    protected function setSeeker(BinaryAssessmentTestSeeker $seeker): void
     {
         $this->seeker = $seeker;
     }
@@ -97,7 +99,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      *
      * @return BinaryAssessmentTestSeeker An AssessmentTestSeeker object.
      */
-    protected function getSeeker()
+    protected function getSeeker(): BinaryAssessmentTestSeeker
     {
         return $this->seeker;
     }
@@ -110,7 +112,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      * @return AssessmentTestSession An AssessmentTestSession object.
      * @throws StorageException
      */
-    public function instantiate($config = 0, $sessionId = '')
+    public function instantiate($config = 0, $sessionId = ''): AssessmentTestSession
     {
         // If not provided, generate a session ID.
         if (empty($sessionId)) {
@@ -134,7 +136,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      * @param AssessmentTestSession $assessmentTestSession
      * @throws StorageException
      */
-    public function persist(AssessmentTestSession $assessmentTestSession)
+    public function persist(AssessmentTestSession $assessmentTestSession): void
     {
         try {
             $stream = new MemoryStream();
@@ -245,7 +247,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      * @return AssessmentTestSession An AssessmentTestSession object.
      * @throws StorageException If the AssessmentTestSession could not be retrieved from persistent binary storage.
      */
-    public function retrieve($sessionId)
+    public function retrieve($sessionId): AssessmentTestSession
     {
         try {
             $stream = $this->getRetrievalStream($sessionId);
@@ -359,7 +361,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      * @return MemoryStream A MemoryStream object.
      * @throws RuntimeException If an error occurs.
      */
-    abstract protected function getRetrievalStream($sessionId);
+    abstract protected function getRetrievalStream($sessionId): MemoryStream;
 
     /**
      * Persist A MemoryStream that contains the binary data representing $assessmentTestSession in an appropriate location.
@@ -377,5 +379,5 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      * @param IStream $stream
      * @return BinaryStreamAccess
      */
-    abstract protected function createBinaryStreamAccess(IStream $stream);
+    abstract protected function createBinaryStreamAccess(IStream $stream): BinaryStreamAccess;
 }

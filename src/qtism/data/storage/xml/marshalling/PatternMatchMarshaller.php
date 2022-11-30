@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +43,7 @@ class PatternMatchMarshaller extends OperatorMarshaller
      * @param array $elements An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI patternMatch element.
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'pattern', $component->getPattern());
@@ -61,7 +63,7 @@ class PatternMatchMarshaller extends OperatorMarshaller
      * @return QtiComponent A PatternMatch object.
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         if (($pattern = $this->getDOMElementAttributeAs($element, 'pattern')) !== null) {
             return new PatternMatch($children, $pattern);

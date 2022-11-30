@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,6 +48,7 @@ class SubtractProcessor extends OperatorProcessor
      * @return QtiFloat|QtiInteger|null A single float or if both sub-expressions are integers, a single integer or NULL if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $operands = $this->getOperands();
@@ -75,7 +78,7 @@ class SubtractProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Subtract::class;
     }

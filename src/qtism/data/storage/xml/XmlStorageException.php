@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,14 +39,14 @@ class XmlStorageException extends StorageException
      *
      * @var int
      */
-    const RESOLUTION = 10;
+    public const RESOLUTION = 10;
 
     /**
      * The error is related to XSD validation.
      *
      * @var int
      */
-    const XSD_VALIDATION = 11;
+    public const XSD_VALIDATION = 11;
 
     /**
      * An array containing libxml errors.
@@ -105,7 +107,7 @@ class XmlStorageException extends StorageException
      *
      * @param LibXmlErrorCollection $errors A collection of LibXMLError objects.
      */
-    protected function setErrors(LibXmlErrorCollection $errors = null)
+    protected function setErrors(LibXmlErrorCollection $errors = null): void
     {
         $this->errors = $errors;
     }
@@ -115,7 +117,7 @@ class XmlStorageException extends StorageException
      *
      * @return LibXmlErrorCollection A collection of LibXMLError objects.
      */
-    public function getErrors()
+    public function getErrors(): LibXmlErrorCollection
     {
         return $this->errors;
     }

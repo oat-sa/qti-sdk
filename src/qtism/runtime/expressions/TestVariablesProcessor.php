@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -67,7 +69,7 @@ class TestVariablesProcessor extends ItemSubsetProcessor
      * @return MultipleContainer
      * @throws ExpressionProcessingException
      */
-    public function process()
+    public function process(): MultipleContainer
     {
         $testSession = $this->getState();
         $itemSubset = $this->getItemSubset();
@@ -152,7 +154,7 @@ class TestVariablesProcessor extends ItemSubsetProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return TestVariables::class;
     }

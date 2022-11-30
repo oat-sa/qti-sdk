@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,7 +51,7 @@ abstract class SetValueProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException If one of the error described above arise.
      */
-    public function process()
+    public function process(): void
     {
         $state = $this->getState();
         $rule = $this->getRule();
@@ -105,5 +107,6 @@ abstract class SetValueProcessor extends RuleProcessor
     /**
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     abstract protected function getVariableType();
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +46,7 @@ class IntegerToFloatProcessor extends OperatorProcessor
      * @return QtiFloat|null A float value with the same numeric value as the sub-expression or NULL if the sub-expression is considered to be NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -70,7 +72,7 @@ class IntegerToFloatProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return IntegerToFloat::class;
     }

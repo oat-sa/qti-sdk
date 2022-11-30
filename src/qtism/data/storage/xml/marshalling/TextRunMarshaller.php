@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +41,7 @@ class TextRunMarshaller extends Marshaller
      * @param QtiComponent $component A TextRun object.
      * @return DOMText The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMText
     {
         return static::getDOMCradle()->createTextNode($component->getContent());
     }
@@ -50,7 +52,7 @@ class TextRunMarshaller extends Marshaller
      * @param DOMElement $element A DOMElement object.
      * @return QtiComponent A TextRun object.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): QtiComponent
     {
         return new TextRun($element->nodeValue);
     }
@@ -58,7 +60,7 @@ class TextRunMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'textRun';
     }

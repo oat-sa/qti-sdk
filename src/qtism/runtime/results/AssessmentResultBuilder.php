@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,7 +51,7 @@ class AssessmentResultBuilder extends AbstractResultBuilder
      * @return AssessmentResult
      * @throws Exception
      */
-    public function buildResult()
+    public function buildResult(): AssessmentResult
     {
         /** @var AssessmentTestSession $state */
         $state = $this->state;
@@ -90,7 +92,7 @@ class AssessmentResultBuilder extends AbstractResultBuilder
      *
      * @return VariableCollection
      */
-    protected function getAllVariables()
+    protected function getAllVariables(): VariableCollection
     {
         return $this->state->getAllVariables();
     }

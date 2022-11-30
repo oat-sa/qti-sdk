@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +46,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
      *
      * @throws PhpMarshallingException If an error occurs during marshalling.
      */
-    public function marshall()
+    public function marshall(): void
     {
         $toMarshall = $this->getToMarshall();
 
@@ -86,7 +88,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
      * @param mixed $toMarshall
      * @return bool.
      */
-    protected function isMarshallable($toMarshall)
+    protected function isMarshallable($toMarshall): bool
     {
         return $toMarshall instanceof QtiDatatype;
     }
@@ -96,7 +98,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
      *
      * @throws PhpMarshallingException
      */
-    protected function marshallCoords()
+    protected function marshallCoords(): void
     {
         // Retrieve the coordinates array.
         $coords = $this->getToMarshall();
@@ -142,7 +144,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
      *
      * @throws PhpMarshallingException
      */
-    protected function marshallPair()
+    protected function marshallPair(): void
     {
         $pair = $this->getToMarshall();
         $ctx = $this->getContext();
@@ -168,7 +170,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
      *
      * @throws PhpMarshallingException
      */
-    protected function marshallDuration()
+    protected function marshallDuration(): void
     {
         $duration = $this->getToMarshall();
         $ctx = $this->getContext();
@@ -194,7 +196,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
      *
      * @throws PhpMarshallingException
      */
-    protected function marshallIdentifier()
+    protected function marshallIdentifier(): void
     {
         $identifier = $this->getToMarshall();
         $ctx = $this->getContext();
@@ -220,7 +222,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
      *
      * @throws PhpMarshallingException
      */
-    protected function marshallPoint()
+    protected function marshallPoint(): void
     {
         $point = $this->getToMarshall();
         $ctx = $this->getContext();

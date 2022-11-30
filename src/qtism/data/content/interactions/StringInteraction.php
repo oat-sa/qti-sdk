@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -56,7 +58,7 @@ interface StringInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getBase();
+    public function getBase(): int;
 
     /**
      * Set the stringIdentifier attribute of the StringInteraction. If $stringIdentifier is
@@ -73,14 +75,14 @@ interface StringInteraction
      *
      * @return string A QTI identifier or an empty string.
      */
-    public function getStringIdentifier();
+    public function getStringIdentifier(): string;
 
     /**
      * Whether a value for the stringIdentifier attribute is defined.
      *
      * @return bool
      */
-    public function hasStringIdentifier();
+    public function hasStringIdentifier(): bool;
 
     /**
      * Set the expectedLength attribute of the StringInteraction. If $expectedLength -1,
@@ -97,14 +99,14 @@ interface StringInteraction
      *
      * @return int A strictly positive (> 0) integer or -1.
      */
-    public function getExpectedLength();
+    public function getExpectedLength(): int;
 
     /**
      * Whether a value is defined for the expectedLength attribute.
      *
      * @return bool
      */
-    public function hasExpectedLength();
+    public function hasExpectedLength(): bool;
 
     /**
      * Set the patternMask attribute of the StringInteraction. If $patternMask
@@ -121,14 +123,14 @@ interface StringInteraction
      *
      * @return string An XML Schema 2 regular expression or an empty string.
      */
-    public function getPatternMask();
+    public function getPatternMask(): string;
 
     /**
      * Whether a value for the patternMask attribute is defined.
      *
      * @return bool
      */
-    public function hasPatternMask();
+    public function hasPatternMask(): bool;
 
     /**
      * Set the placeholderText attribute of the StringInteraction. If $placeholderText is
@@ -152,5 +154,5 @@ interface StringInteraction
      *
      * @return bool
      */
-    public function hasPlaceholderText();
+    public function hasPlaceholderText(): bool;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,7 +52,7 @@ class MatchTableMarshaller extends Marshaller
      *
      * @return int
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -62,7 +64,7 @@ class MatchTableMarshaller extends Marshaller
      * @param int $baseType A value from the BaseType enumeration or -1 to state there is no particular baseType.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
      */
-    public function setBaseType($baseType)
+    public function setBaseType($baseType): void
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
@@ -93,7 +95,7 @@ class MatchTableMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -117,7 +119,8 @@ class MatchTableMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the $element to unmarshall has no matchTableEntry children.
      */
-    protected function unmarshall(DOMElement $element)
+    #[\ReturnTypeWillChange]
+    protected function unmarshall(DOMElement $element): MatchTable
     {
         $matchTableEntryElements = $element->getElementsByTagName('matchTableEntry');
         if ($matchTableEntryElements->length > 0) {
@@ -151,7 +154,7 @@ class MatchTableMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'matchTable';
     }

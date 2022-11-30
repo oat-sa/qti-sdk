@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -65,7 +67,7 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
      *
      * @param FlowStaticCollection $content A collection of BlockStatic objects.
      */
-    public function setContent(FlowStaticCollection $content)
+    public function setContent(FlowStaticCollection $content): void
     {
         $this->content = $content;
     }
@@ -75,7 +77,7 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
      *
      * @return FlowStaticCollection A collection of BlockStatic objects.
      */
-    public function getContent()
+    public function getContent(): FlowStaticCollection
     {
         return $this->content;
     }
@@ -83,7 +85,7 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
     /**
      * @return FlowStaticCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -91,7 +93,7 @@ class TemplateBlock extends TemplateElement implements FlowStatic, BlockStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'templateBlock';
     }

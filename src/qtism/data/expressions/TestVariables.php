@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -106,7 +108,7 @@ class TestVariables extends ItemSubset
      * @param string $variableIdentifier A QTI Identifier.
      * @throws InvalidArgumentException If $variableIdentifier is not a valid QTI Identifier.
      */
-    public function setVariableIdentifier($variableIdentifier)
+    public function setVariableIdentifier($variableIdentifier): void
     {
         if (Format::isIdentifier($variableIdentifier)) {
             $this->variableIdentifier = $variableIdentifier;
@@ -121,7 +123,7 @@ class TestVariables extends ItemSubset
      *
      * @return string A QTI Identifier.
      */
-    public function getVariableIdentifier()
+    public function getVariableIdentifier(): string
     {
         return $this->variableIdentifier;
     }
@@ -132,7 +134,7 @@ class TestVariables extends ItemSubset
      * @param int $baseType A value from the BaseType enumeration or -1.
      * @throws InvalidArgumentException If $baseType is not a valid QTI Identifier nor -1.
      */
-    public function setBaseType($baseType)
+    public function setBaseType($baseType): void
     {
         if ($baseType == -1 || in_array($baseType, BaseType::asArray())) {
             $this->baseType = $baseType;
@@ -147,7 +149,7 @@ class TestVariables extends ItemSubset
      *
      * @return int A value from the BaseType enumeration or -1 if no baseType specified.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -158,7 +160,7 @@ class TestVariables extends ItemSubset
      * @param string $weightIdentifier A QTI Identifier.
      * @throws InvalidArgumentException If $weightIdentifier is not a valid QTI Identifier.
      */
-    public function setWeightIdentifier($weightIdentifier)
+    public function setWeightIdentifier($weightIdentifier): void
     {
         if (Format::isIdentifier($weightIdentifier) || empty($weightIdentifier)) {
             $this->weightIdentifier = $weightIdentifier;
@@ -173,7 +175,7 @@ class TestVariables extends ItemSubset
      *
      * @return string A QTI Identifier.
      */
-    public function getWeightIdentifier()
+    public function getWeightIdentifier(): string
     {
         return $this->weightIdentifier;
     }
@@ -181,7 +183,7 @@ class TestVariables extends ItemSubset
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'testVariables';
     }

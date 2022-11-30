@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,7 +47,7 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const IDENTIFIER = 0;
+    public const IDENTIFIER = 0;
 
     /**
      * From IMS QTI:
@@ -55,7 +57,7 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const BOOLEAN = 1;
+    public const BOOLEAN = 1;
 
     /**
      * From IMS QTI:
@@ -65,7 +67,7 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const INTEGER = 2;
+    public const INTEGER = 2;
 
     /**
      * From IMS QTI:
@@ -75,7 +77,7 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const FLOAT = 3;
+    public const FLOAT = 3;
 
     /**
      * From IMS QTI:
@@ -85,7 +87,7 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const STRING = 4;
+    public const STRING = 4;
 
     /**
      * From IMS QTI:
@@ -97,7 +99,7 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const POINT = 5;
+    public const POINT = 5;
 
     /**
      * From IMS QTI:
@@ -107,7 +109,7 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const PAIR = 6;
+    public const PAIR = 6;
 
     /**
      * From IMS QTI:
@@ -118,7 +120,7 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const DIRECTED_PAIR = 7;
+    public const DIRECTED_PAIR = 7;
 
     /**
      * From IMS QTI:
@@ -131,7 +133,7 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const DURATION = 8;
+    public const DURATION = 8;
 
     /**
      * From IMS QTI:
@@ -143,7 +145,7 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const FILE = 9;
+    public const FILE = 9;
 
     /**
      * From IMS QTI:
@@ -152,7 +154,7 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const URI = 10;
+    public const URI = 10;
 
     /**
      * From IMS QTI:
@@ -162,19 +164,19 @@ class BaseType implements Enumeration
      *
      * @var int
      */
-    const INT_OR_IDENTIFIER = 11;
+    public const INT_OR_IDENTIFIER = 11;
 
     /**
      * In qtism, we consider an extra 'coords' baseType.
      *
      * @var int
      */
-    const COORDS = 12;
+    public const COORDS = 12;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'IDENTIFIER' => self::IDENTIFIER,
@@ -215,7 +217,7 @@ class BaseType implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (trim(strtolower($name))) {
+        switch (trim(strtolower((string)$name))) {
             case 'identifier':
                 return self::IDENTIFIER;
                 break;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -62,7 +64,7 @@ class Tfoot extends BodyElement
      * @param TrCollection $content A collection of Tfoot object.
      * @throws InvalidArgumentException If $content is empty.
      */
-    public function setContent(TrCollection $content)
+    public function setContent(TrCollection $content): void
     {
         if (count($content) > 0) {
             $this->content = $content;
@@ -77,7 +79,7 @@ class Tfoot extends BodyElement
      *
      * @return TrCollection
      */
-    public function getContent()
+    public function getContent(): TrCollection
     {
         return $this->content;
     }
@@ -85,7 +87,7 @@ class Tfoot extends BodyElement
     /**
      * @return TrCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -93,7 +95,7 @@ class Tfoot extends BodyElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'tfoot';
     }

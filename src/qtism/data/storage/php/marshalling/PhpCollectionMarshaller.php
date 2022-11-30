@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +42,7 @@ class PhpCollectionMarshaller extends PhpMarshaller
      *
      * @throws PhpMarshallingException If something wrong happens during marshalling.
      */
-    public function marshall()
+    public function marshall(): void
     {
         $collection = $this->getToMarshall();
         $ctx = $this->getContext();
@@ -83,7 +85,7 @@ class PhpCollectionMarshaller extends PhpMarshaller
      * @param mixed $toMarshall
      * @return bool
      */
-    protected function isMarshallable($toMarshall)
+    protected function isMarshallable($toMarshall): bool
     {
         return $toMarshall instanceof AbstractCollection;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +40,7 @@ class ExternalQtiComponentRenderer extends AbstractXhtmlRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         return;
     }
@@ -49,7 +51,7 @@ class ExternalQtiComponentRenderer extends AbstractXhtmlRenderer
      * @param string $base
      * @throws RenderingException
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         try {
             $dom = $component->getXml();

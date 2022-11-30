@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -68,7 +70,7 @@ class MemoryStream implements IStream
      *
      * @param string $binary A binary string.
      */
-    protected function setBinary($binary)
+    protected function setBinary($binary): void
     {
         $this->binary = $binary;
     }
@@ -78,7 +80,7 @@ class MemoryStream implements IStream
      *
      * @return string A binary string.
      */
-    public function getBinary()
+    public function getBinary(): string
     {
         return $this->binary;
     }
@@ -88,7 +90,7 @@ class MemoryStream implements IStream
      *
      * @return int The position in the stream. Position begins at 0.
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -98,7 +100,7 @@ class MemoryStream implements IStream
      *
      * @param int $position A position in the stream to be set.
      */
-    protected function setPosition($position)
+    protected function setPosition($position): void
     {
         $this->position = $position;
     }
@@ -108,7 +110,7 @@ class MemoryStream implements IStream
      *
      * @param int $length
      */
-    protected function setLength($length)
+    protected function setLength($length): void
     {
         $this->length = $length;
     }
@@ -118,7 +120,7 @@ class MemoryStream implements IStream
      *
      * @return int
      */
-    public function getLength()
+    public function getLength(): int
     {
         return $this->length;
     }
@@ -126,7 +128,7 @@ class MemoryStream implements IStream
     /**
      * @param $i
      */
-    protected function incrementLength($i)
+    protected function incrementLength($i): void
     {
         $this->length += $i;
     }
@@ -136,7 +138,7 @@ class MemoryStream implements IStream
      *
      * @param int $i The increment to be applied on the current position in the stream.
      */
-    protected function incrementPosition($i)
+    protected function incrementPosition($i): void
     {
         $this->position += $i;
     }
@@ -146,7 +148,7 @@ class MemoryStream implements IStream
      *
      * @throws MemoryStreamException If the stream is already opened.
      */
-    public function open()
+    public function open(): void
     {
         if ($this->isOpen() === true) {
             $msg = 'The MemoryStream is already open.';
@@ -161,7 +163,7 @@ class MemoryStream implements IStream
      *
      * @throws MemoryStreamException If the stream is closed prior the call.
      */
-    public function close()
+    public function close(): void
     {
         if ($this->isOpen() === false) {
             $msg = 'Cannot call close() a closed stream.';
@@ -178,7 +180,7 @@ class MemoryStream implements IStream
      * @return string The read value or an empty string if length = 0.
      * @throws MemoryStreamException If the read is out of the bounds of the stream e.g. EOF reach.
      */
-    public function read($length)
+    public function read($length): string
     {
         if ($this->isOpen() === false) {
             $msg = 'Cannot read from a closed MemoryStream.';
@@ -216,7 +218,7 @@ class MemoryStream implements IStream
      * @return int The amount of written bytes.
      * @throws MemoryStreamException
      */
-    public function write($data)
+    public function write($data): int
     {
         if ($this->isOpen() === false) {
             $msg = 'Cannot write in a closed MemoryStream.';
@@ -236,7 +238,7 @@ class MemoryStream implements IStream
             $this->binary = ($part1 . $data . $part2);
         }
 
-        $dataLen = strlen($data);
+        $dataLen = strlen((string)$data);
         $this->incrementPosition($dataLen);
         $this->incrementLength($dataLen);
 
@@ -248,7 +250,7 @@ class MemoryStream implements IStream
      *
      * @return bool
      */
-    public function eof()
+    public function eof(): bool
     {
         return $this->isOpen() === false || $this->getPosition() >= $this->getLength();
     }
@@ -258,7 +260,7 @@ class MemoryStream implements IStream
      *
      * @return bool
      */
-    public function isOpen()
+    public function isOpen(): bool
     {
         return $this->open;
     }
@@ -268,7 +270,7 @@ class MemoryStream implements IStream
      *
      * @throws MemoryStreamException If the binary stream is not open.
      */
-    public function rewind()
+    public function rewind(): void
     {
         if ($this->isOpen() === false) {
             $msg = 'Cannot call rewind() on a closed MemoryStream.';
@@ -283,7 +285,7 @@ class MemoryStream implements IStream
      *
      * @param bool $open
      */
-    protected function setOpen($open)
+    protected function setOpen($open): void
     {
         $this->open = $open;
     }
@@ -293,7 +295,7 @@ class MemoryStream implements IStream
      *
      * @throws MemoryStreamException If the binary stream is closed.
      */
-    public function flush()
+    public function flush(): void
     {
         if ($this->isOpen() === true) {
             $this->setBinary('');

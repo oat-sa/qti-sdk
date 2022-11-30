@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +39,7 @@ class OperatorProcessingException extends ExpressionProcessingException
      *
      * @var int
      */
-    const WRONG_CARDINALITY = 100;
+    public const WRONG_CARDINALITY = 100;
 
     /**
      * The code to use when an operand with a not compliant baseType is
@@ -45,7 +47,7 @@ class OperatorProcessingException extends ExpressionProcessingException
      *
      * @var int
      */
-    const WRONG_BASETYPE = 101;
+    public const WRONG_BASETYPE = 101;
 
     /**
      * The code to use when an operand has a not compliant baseType OR
@@ -53,19 +55,19 @@ class OperatorProcessingException extends ExpressionProcessingException
      *
      * @var int
      */
-    const WRONG_BASETYPE_OR_CARDINALITY = 102;
+    public const WRONG_BASETYPE_OR_CARDINALITY = 102;
 
     /**
      * The code to use when not enough operands are given to a processor.
      *
      * @var int
      */
-    const NOT_ENOUGH_OPERANDS = 103;
+    public const NOT_ENOUGH_OPERANDS = 103;
 
     /**
      * The code to use when too much operands are given to a processor.
      *
      * @var int
      */
-    const TOO_MUCH_OPERANDS = 104;
+    public const TOO_MUCH_OPERANDS = 104;
 }

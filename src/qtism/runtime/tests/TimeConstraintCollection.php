@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +39,7 @@ class TimeConstraintCollection extends AbstractCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of TimeConstraint.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof TimeConstraint) {
             $msg = 'TimeConstraintCollection objects only accept to store TimeConstraint objects.';

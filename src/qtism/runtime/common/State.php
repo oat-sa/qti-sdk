@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,7 +63,7 @@ class State extends AbstractCollection
      *
      * @param Variable $variable
      */
-    public function setVariable(Variable $variable)
+    public function setVariable(Variable $variable): void
     {
         $this->checkType($variable);
         $data = &$this->getDataPlaceHolder();
@@ -72,9 +74,9 @@ class State extends AbstractCollection
      * Get a variable with the identifier $variableIdentifier.
      *
      * @param string $variableIdentifier A QTI identifier.
-     * @return Variable A Variable object or null if the $variableIdentifier does not match any Variable object stored in the State.
+     * @return Variable|null A Variable object or null if the $variableIdentifier does not match any Variable object stored in the State.
      */
-    public function getVariable($variableIdentifier)
+    public function getVariable($variableIdentifier): ?Variable
     {
         $data = &$this->getDataPlaceHolder();
         return $data[$variableIdentifier] ?? null;
@@ -85,7 +87,7 @@ class State extends AbstractCollection
      *
      * @return VariableCollection A collection of Variable objects.
      */
-    public function getAllVariables()
+    public function getAllVariables(): VariableCollection
     {
         return new VariableCollection($this->getDataPlaceHolder());
     }
@@ -98,7 +100,7 @@ class State extends AbstractCollection
      * @throws InvalidArgumentException If $variable is not a string nor a Variable object.
      * @throws OutOfBoundsException If no variable in the current state matches $variable.
      */
-    public function unsetVariable($variable)
+    public function unsetVariable($variable): void
     {
         $data = &$this->getDataPlaceHolder();
 
@@ -123,7 +125,7 @@ class State extends AbstractCollection
      * @param string $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_string($offset) && empty($offset) === false) {
             $placeholder = &$this->getDataPlaceHolder();
@@ -144,6 +146,7 @@ class State extends AbstractCollection
      * @param string $offset
      * @return mixed|null
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if (is_string($offset) && $offset !== '') {
@@ -164,7 +167,7 @@ class State extends AbstractCollection
      *
      * @param bool $preserveBuiltIn Whether the built-in outcome variable 'completionStatus' should be preserved.
      */
-    public function resetOutcomeVariables($preserveBuiltIn = true)
+    public function resetOutcomeVariables($preserveBuiltIn = true): void
     {
         $data = &$this->getDataPlaceHolder();
 
@@ -184,7 +187,7 @@ class State extends AbstractCollection
      *
      * @return void
      */
-    public function resetTemplateVariables()
+    public function resetTemplateVariables(): void
     {
         $data = &$this->getDataPlaceHolder();
 
@@ -204,7 +207,7 @@ class State extends AbstractCollection
      *
      * @return bool
      */
-    public function containsNullOnly()
+    public function containsNullOnly(): bool
     {
         $data = $this->getDataPlaceHolder();
 
@@ -224,7 +227,7 @@ class State extends AbstractCollection
      *
      * @return bool
      */
-    public function containsValuesEqualToVariableDefaultOnly()
+    public function containsValuesEqualToVariableDefaultOnly(): bool
     {
         $data = $this->getDataPlaceHolder();
 
@@ -247,7 +250,7 @@ class State extends AbstractCollection
     /**
      * @param mixed $value
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Variable) {
             $msg = 'A State object stores Variable objects only.';

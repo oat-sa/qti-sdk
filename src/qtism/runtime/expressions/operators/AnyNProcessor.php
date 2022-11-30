@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -54,7 +56,7 @@ class AnyNProcessor extends OperatorProcessor
      * @return QtiBoolean|null A boolean value of true if at least min of the sub-expressions are true and at most max of the sub-expressions are true. NULL is returned if the correct value for the operator cannot be determined.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -129,7 +131,7 @@ class AnyNProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return AnyN::class;
     }

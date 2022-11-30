@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,7 +45,7 @@ class InsideMarshaller extends OperatorMarshaller
      * @param array An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI inside element.
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'shape', QtiShape::getNameByConstant($component->getShape()));
@@ -64,7 +66,7 @@ class InsideMarshaller extends OperatorMarshaller
      * @return QtiComponent An Inside object.
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         if (($shape = $this->getDOMElementAttributeAs($element, 'shape')) !== null) {
             if (($coords = $this->getDOMElementAttributeAs($element, 'coords')) !== null) {

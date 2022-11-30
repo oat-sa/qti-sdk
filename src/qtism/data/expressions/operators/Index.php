@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -67,7 +69,7 @@ class Index extends Operator
      * @param int|string $n The index to lookup. It must be an integer or a variable reference.
      * @throws InvalidArgumentException If $n is not an integer nor a variable reference.
      */
-    public function setN($n)
+    public function setN($n): void
     {
         if (is_int($n) || (is_string($n) && Format::isVariableRef($n))) {
             $this->n = $n;
@@ -90,7 +92,7 @@ class Index extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'index';
     }

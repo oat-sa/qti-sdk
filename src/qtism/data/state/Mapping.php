@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -106,7 +108,7 @@ class Mapping extends QtiComponent
      * @param bool|float $lowerBound A float or false if not lower bound.
      * @throws InvalidArgumentException If $lowerBound is not a float nor false.
      */
-    public function setLowerBound($lowerBound)
+    public function setLowerBound($lowerBound): void
     {
         if (is_float($lowerBound) || (is_bool($lowerBound) && $lowerBound === false)) {
             $this->lowerBound = $lowerBound;
@@ -131,7 +133,7 @@ class Mapping extends QtiComponent
      *
      * @return bool
      */
-    public function hasLowerBound()
+    public function hasLowerBound(): bool
     {
         return $this->getLowerBound() !== false;
     }
@@ -142,7 +144,7 @@ class Mapping extends QtiComponent
      * @param bool|float $upperBound A float value or false if not specified.
      * @throws InvalidArgumentException If $upperBound is not a float nor false.
      */
-    public function setUpperBound($upperBound)
+    public function setUpperBound($upperBound): void
     {
         if (is_float($upperBound) || (is_bool($upperBound) && $upperBound === false)) {
             $this->upperBound = $upperBound;
@@ -167,7 +169,7 @@ class Mapping extends QtiComponent
      *
      * @return bool
      */
-    public function hasUpperBound()
+    public function hasUpperBound(): bool
     {
         return $this->getUpperBound() !== false;
     }
@@ -178,7 +180,7 @@ class Mapping extends QtiComponent
      * @param float $defaultValue A float value.
      * @throws InvalidArgumentException If $defaultValue is not a float value.
      */
-    public function setDefaultValue($defaultValue)
+    public function setDefaultValue($defaultValue): void
     {
         if (is_numeric($defaultValue)) {
             $this->defaultValue = $defaultValue;
@@ -193,7 +195,7 @@ class Mapping extends QtiComponent
      *
      * @return float A default value as a float.
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): float
     {
         return $this->defaultValue;
     }
@@ -204,7 +206,7 @@ class Mapping extends QtiComponent
      * @param MapEntryCollection $mapEntries A collection of MapEntry objects with at least one item.
      * @throws InvalidArgumentException If $mapEnties is an empty collection.
      */
-    public function setMapEntries(MapEntryCollection $mapEntries)
+    public function setMapEntries(MapEntryCollection $mapEntries): void
     {
         if (count($mapEntries) > 0) {
             $this->mapEntries = $mapEntries;
@@ -219,7 +221,7 @@ class Mapping extends QtiComponent
      *
      * @return MapEntryCollection A collection of MapEntry objects.
      */
-    public function getMapEntries()
+    public function getMapEntries(): MapEntryCollection
     {
         return $this->mapEntries;
     }
@@ -227,7 +229,7 @@ class Mapping extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'mapping';
     }
@@ -235,7 +237,7 @@ class Mapping extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection($this->getMapEntries()->getArrayCopy());
     }

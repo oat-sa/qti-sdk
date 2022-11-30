@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -52,7 +54,7 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @return bool
      */
-    public function isTimeDependent();
+    public function isTimeDependent(): bool;
 
     /**
      * Set whether the item is adaptive.
@@ -67,14 +69,14 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @return bool
      */
-    public function isAdaptive();
+    public function isAdaptive(): bool;
 
     /**
      * Get the response declarations.
      *
      * @return ResponseDeclarationCollection A collection of ResponseDeclaration objects.
      */
-    public function getResponseDeclarations();
+    public function getResponseDeclarations(): ResponseDeclarationCollection;
 
     /**
      * Set the response declarations.
@@ -88,7 +90,7 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @return OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
      */
-    public function getOutcomeDeclarations();
+    public function getOutcomeDeclarations(): OutcomeDeclarationCollection;
 
     /**
      * Set the outcome declarations.
@@ -102,7 +104,7 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @return TemplateDeclarationCollection $templateDeclarations
      */
-    public function getTemplateDeclarations();
+    public function getTemplateDeclarations(): TemplateDeclarationCollection;
 
     /**
      * Set the template declarations.
@@ -116,14 +118,14 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @return ModalFeedbackRuleCollection
      */
-    public function getModalFeedbackRules();
+    public function getModalFeedbackRules(): ModalFeedbackRuleCollection;
 
     /**
      * Get the associated ResponseProcessing object.
      *
      * @return ResponseProcessing A ResponseProcessing object or null if no associated response processing.
      */
-    public function getResponseProcessing();
+    public function getResponseProcessing(): ?ResponseProcessing;
 
     /**
      * Set the associated ResponseProcessing object.
@@ -137,7 +139,7 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @return TemplateProcessing A TemplateProcessing object or null if no associated template processing.
      */
-    public function getTemplateProcessing();
+    public function getTemplateProcessing(): ?TemplateProcessing;
 
     /**
      * Set the associated TemplateProcessing object.
@@ -151,14 +153,14 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @return IdentifierCollection
      */
-    public function getEndAttemptIdentifiers();
+    public function getEndAttemptIdentifiers(): IdentifierCollection;
 
     /**
      * Get the ShufflingCollection object representing how choices are shuffled in shuffled interactions.
      *
      * @return ShufflingCollection
      */
-    public function getShufflings();
+    public function getShufflings(): ShufflingCollection;
 
     /**
      * Get the ResponseValidityConstraintCollection object.
@@ -168,7 +170,7 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @return ResponseValidityConstraintCollection
      */
-    public function getResponseValidityConstraints();
+    public function getResponseValidityConstraints(): ResponseValidityConstraintCollection;
 
     /**
      * Set the title.
@@ -187,7 +189,7 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @return string
      */
-    public function getTitle();
+    public function getTitle(): string;
 
     /**
      * Set the label.
@@ -206,14 +208,14 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @return string
      */
-    public function getLabel();
+    public function getLabel(): string;
 
     /**
      * Has a label.
      *
      * Whether or not the assessmentItem has a label.
      *
-     * @return string
+     * @return bool
      */
-    public function hasLabel();
+    public function hasLabel(): bool;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +39,7 @@ class OutcomeDeclarationCollection extends QtiIdentifiableCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of OutcomeDeclaration.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof OutcomeDeclaration) {
             $msg = "OutcomeDeclarationCollection only accepts to store OutcomeDeclaration objects, '" . gettype($value) . "' given.";

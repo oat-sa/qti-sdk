@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -159,7 +161,7 @@ class SliderInteraction extends BlockInteraction
      * @param float $lowerBound A float value.
      * @throws InvalidArgumentException If $lowerBound is not a float value.
      */
-    public function setLowerBound($lowerBound)
+    public function setLowerBound($lowerBound): void
     {
         if (is_float($lowerBound)) {
             $this->lowerBound = $lowerBound;
@@ -174,7 +176,7 @@ class SliderInteraction extends BlockInteraction
      *
      * @return float A float value.
      */
-    public function getLowerBound()
+    public function getLowerBound(): float
     {
         return $this->lowerBound;
     }
@@ -185,7 +187,7 @@ class SliderInteraction extends BlockInteraction
      * @param float $upperBound A float value.
      * @throws InvalidArgumentException If $upperBound is not a float value.
      */
-    public function setUpperBound($upperBound)
+    public function setUpperBound($upperBound): void
     {
         if (is_float($upperBound)) {
             $this->upperBound = $upperBound;
@@ -200,7 +202,7 @@ class SliderInteraction extends BlockInteraction
      *
      * @return float A float value.
      */
-    public function getUpperBound()
+    public function getUpperBound(): float
     {
         return $this->upperBound;
     }
@@ -212,7 +214,7 @@ class SliderInteraction extends BlockInteraction
      * @param int $step A positive (>= 0) integer.
      * @throws InvalidArgumentException If $step is not a positive integer.
      */
-    public function setStep($step)
+    public function setStep($step): void
     {
         if (is_int($step) && $step >= 0) {
             $this->step = $step;
@@ -227,7 +229,7 @@ class SliderInteraction extends BlockInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getStep()
+    public function getStep(): int
     {
         return $this->step;
     }
@@ -237,7 +239,7 @@ class SliderInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function hasStep()
+    public function hasStep(): bool
     {
         return $this->getStep() > 0;
     }
@@ -248,7 +250,7 @@ class SliderInteraction extends BlockInteraction
      * @param bool $stepLabel
      * @throws InvalidArgumentException If $stepLabel is not a boolean value.
      */
-    public function setStepLabel($stepLabel)
+    public function setStepLabel($stepLabel): void
     {
         if (is_bool($stepLabel)) {
             $this->stepLabel = $stepLabel;
@@ -263,7 +265,7 @@ class SliderInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function mustStepLabel()
+    public function mustStepLabel(): bool
     {
         return $this->stepLabel;
     }
@@ -274,7 +276,7 @@ class SliderInteraction extends BlockInteraction
      * @param int $orientation A value from the Orientation enumeration.
      * @throws InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
      */
-    public function setOrientation($orientation)
+    public function setOrientation($orientation): void
     {
         if (in_array($orientation, Orientation::asArray(), true)) {
             $this->orientation = $orientation;
@@ -289,7 +291,7 @@ class SliderInteraction extends BlockInteraction
      *
      * @return int A value from the Orientation enumeration.
      */
-    public function getOrientation()
+    public function getOrientation(): int
     {
         return $this->orientation;
     }
@@ -300,7 +302,7 @@ class SliderInteraction extends BlockInteraction
      * @param bool $reverse
      * @throws InvalidArgumentException If $reverse is not a boolean value.
      */
-    public function setReverse($reverse)
+    public function setReverse($reverse): void
     {
         if (is_bool($reverse)) {
             $this->reverse = $reverse;
@@ -315,7 +317,7 @@ class SliderInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function mustReverse()
+    public function mustReverse(): bool
     {
         return $this->reverse;
     }
@@ -323,7 +325,7 @@ class SliderInteraction extends BlockInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return parent::getComponents();
     }
@@ -331,7 +333,7 @@ class SliderInteraction extends BlockInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'sliderInteraction';
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -68,14 +70,14 @@ abstract class AbstractConditionProcessor extends RuleProcessor
      *
      * @return string the QTI nature of the condition type to take care of.
      */
-    abstract public function getQtiNature();
+    abstract public function getQtiNature(): string;
 
     /**
      * Set the trail stack.
      *
      * @param array $trail An array of trailed QtiComponent objects.
      */
-    public function setTrail(array &$trail)
+    public function setTrail(array &$trail): void
     {
         $this->trail = $trail;
     }
@@ -85,7 +87,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor
      *
      * @return array An array of trailed Rule objects.
      */
-    public function &getTrail()
+    public function &getTrail(): array
     {
         return $this->trail;
     }
@@ -95,7 +97,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor
      *
      * @param QtiComponentCollection|QtiComponent $components A collection of Rule objects.
      */
-    public function pushTrail($components)
+    public function pushTrail($components): void
     {
         $trail = &$this->getTrail();
 
@@ -116,7 +118,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor
      *
      * @return QtiComponent A Rule object.
      */
-    public function popTrail()
+    public function popTrail(): QtiComponent
     {
         $trail = &$this->getTrail();
 
@@ -128,7 +130,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor
      *
      * @param RuleProcessorFactory $ruleProcessorFactory A RuleProcessorFactory object.
      */
-    public function setRuleProcessorFactory(RuleProcessorFactory $ruleProcessorFactory)
+    public function setRuleProcessorFactory(RuleProcessorFactory $ruleProcessorFactory): void
     {
         $this->ruleProcessorFactory = $ruleProcessorFactory;
     }
@@ -138,7 +140,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor
      *
      * @return RuleProcessorFactory A RuleProcessorFactory object.
      */
-    public function getRuleProcessorFactory()
+    public function getRuleProcessorFactory(): RuleProcessorFactory
     {
         return $this->ruleProcessorFactory;
     }
@@ -148,7 +150,7 @@ abstract class AbstractConditionProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException
      */
-    public function process()
+    public function process(): void
     {
         $state = $this->getState();
         $this->pushTrail($this->getRule());

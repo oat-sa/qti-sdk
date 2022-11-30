@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -112,7 +114,7 @@ class AssociateInteraction extends BlockInteraction
      * @param bool $shuffle
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
-    public function setShuffle($shuffle)
+    public function setShuffle($shuffle): void
     {
         if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
@@ -128,7 +130,7 @@ class AssociateInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function mustShuffle()
+    public function mustShuffle(): bool
     {
         return $this->shuffle;
     }
@@ -140,7 +142,7 @@ class AssociateInteraction extends BlockInteraction
      * @param int $maxAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
      */
-    public function setMaxAssociations($maxAssociations)
+    public function setMaxAssociations($maxAssociations): void
     {
         if (is_int($maxAssociations) && $maxAssociations >= 0) {
             $this->maxAssociations = $maxAssociations;
@@ -156,7 +158,7 @@ class AssociateInteraction extends BlockInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMaxAssociations()
+    public function getMaxAssociations(): int
     {
         return $this->maxAssociations;
     }
@@ -166,7 +168,7 @@ class AssociateInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function hasMaxAssociations()
+    public function hasMaxAssociations(): bool
     {
         return $this->maxAssociations > 0;
     }
@@ -178,7 +180,7 @@ class AssociateInteraction extends BlockInteraction
      * @param int $minAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minAssociations is not a positive integer or if $minAssociations is not less than or equal to the limit imposed by 'maxAssociations'.
      */
-    public function setMinAssociations($minAssociations)
+    public function setMinAssociations($minAssociations): void
     {
         if (is_int($minAssociations) && $minAssociations >= 0) {
             if ($this->hasMaxAssociations() === true && $minAssociations > $this->getMaxAssociations()) {
@@ -199,7 +201,7 @@ class AssociateInteraction extends BlockInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMinAssociations()
+    public function getMinAssociations(): int
     {
         return $this->minAssociations;
     }
@@ -209,7 +211,7 @@ class AssociateInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function hasMinAssociations()
+    public function hasMinAssociations(): bool
     {
         return $this->getMinAssociations() > 0;
     }
@@ -220,7 +222,7 @@ class AssociateInteraction extends BlockInteraction
      * @param SimpleAssociableChoiceCollection $simpleAssociableChoices A collection of at least one SimpleAssociableChoice object.
      * @throws InvalidArgumentException If $simpleAssociableChoices is empty.
      */
-    public function setSimpleAssociableChoices(SimpleAssociableChoiceCollection $simpleAssociableChoices)
+    public function setSimpleAssociableChoices(SimpleAssociableChoiceCollection $simpleAssociableChoices): void
     {
         if (count($simpleAssociableChoices) > 0) {
             $this->simpleAssociableChoices = $simpleAssociableChoices;
@@ -235,7 +237,7 @@ class AssociateInteraction extends BlockInteraction
      *
      * @return SimpleAssociableChoiceCollection A collection of at least one SimpleAssociableChoice.
      */
-    public function getSimpleAssociableChoices()
+    public function getSimpleAssociableChoices(): SimpleAssociableChoiceCollection
     {
         return $this->simpleAssociableChoices;
     }
@@ -243,7 +245,7 @@ class AssociateInteraction extends BlockInteraction
     /**
      * @return ResponseValidityConstraint
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -268,7 +270,7 @@ class AssociateInteraction extends BlockInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $parentComponents = parent::getComponents();
 
@@ -278,7 +280,7 @@ class AssociateInteraction extends BlockInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'associateInteraction';
     }

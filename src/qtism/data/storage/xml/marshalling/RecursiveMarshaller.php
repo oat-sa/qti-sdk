@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -70,7 +72,7 @@ abstract class RecursiveMarshaller extends Marshaller
      *
      * @param mixed $object An object value.
      */
-    protected function pushProcessed($object)
+    protected function pushProcessed($object): void
     {
         array_push($this->processed, $object);
     }
@@ -80,7 +82,7 @@ abstract class RecursiveMarshaller extends Marshaller
      *
      * @return array An array of object values.
      */
-    protected function getProcessed()
+    protected function getProcessed(): array
     {
         return $this->processed;
     }
@@ -88,7 +90,7 @@ abstract class RecursiveMarshaller extends Marshaller
     /**
      * Reset the list of objects processed so far.
      */
-    protected function resetProcessed()
+    protected function resetProcessed(): void
     {
         $this->processed = [];
     }
@@ -98,7 +100,7 @@ abstract class RecursiveMarshaller extends Marshaller
      *
      * @param mixed $object An object to push on the trail stack.
      */
-    protected function pushTrail($object)
+    protected function pushTrail($object): void
     {
         array_push($this->trail, $object);
     }
@@ -108,6 +110,7 @@ abstract class RecursiveMarshaller extends Marshaller
      *
      * @return mixed An object popped from the trail stack.
      */
+    #[\ReturnTypeWillChange]
     protected function popTrail()
     {
         return array_pop($this->trail);
@@ -116,7 +119,7 @@ abstract class RecursiveMarshaller extends Marshaller
     /**
      * Reset the trail stack.
      */
-    protected function resetTrail()
+    protected function resetTrail(): void
     {
         $this->trail = [];
     }
@@ -126,7 +129,7 @@ abstract class RecursiveMarshaller extends Marshaller
      *
      * @return int The amount of objects in the trail stack.
      */
-    protected function countTrail()
+    protected function countTrail(): int
     {
         return count($this->trail);
     }
@@ -136,7 +139,7 @@ abstract class RecursiveMarshaller extends Marshaller
      *
      * @param mixed $object
      */
-    protected function pushFinal($object)
+    protected function pushFinal($object): void
     {
         array_push($this->final, $object);
     }
@@ -147,7 +150,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @param int $count
      * @return array The content of the final stack.
      */
-    protected function emptyFinal(int $count)
+    protected function emptyFinal(int $count): array
     {
         $returnValue = [];
 
@@ -162,7 +165,7 @@ abstract class RecursiveMarshaller extends Marshaller
     /**
      * Reset the final stack.
      */
-    protected function resetFinal()
+    protected function resetFinal(): void
     {
         $this->final = [];
     }
@@ -172,7 +175,7 @@ abstract class RecursiveMarshaller extends Marshaller
      *
      * @param mixed $object A php object.
      */
-    protected function mark($object)
+    protected function mark($object): void
     {
         array_push($this->mark, $object);
     }
@@ -180,7 +183,7 @@ abstract class RecursiveMarshaller extends Marshaller
     /**
      * Reset the marking of objects.
      */
-    protected function resetMark()
+    protected function resetMark(): void
     {
         $this->mark = [];
     }
@@ -191,7 +194,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @param mixed $object The object to check;
      * @return bool Whether $object is marked.
      */
-    protected function isMarked($object)
+    protected function isMarked($object): bool
     {
         return in_array($object, $this->mark, true);
     }
@@ -204,7 +207,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException If an error occurs during the marshalling process.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         // Reset.
         $this->resetTrail();
@@ -258,7 +261,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @return QtiComponent A QtiComponent object corresponding to the DOMElement to unmarshall.
      * @throws MarshallerNotFoundException
      */
-    protected function unmarshall(DOMElement $element, QtiComponent $rootComponent = null)
+    protected function unmarshall(DOMElement $element, QtiComponent $rootComponent = null): QtiComponent
     {
         // Reset.
         $this->resetTrail();
@@ -335,7 +338,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @param QtiComponentCollection $children The already unmarshalled children QTI components.
      * @return QtiComponent $element as a QtiComponent object.
      */
-    abstract protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children);
+    abstract protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent;
 
     /**
      * Whether a given $element is final. In other words, whether the $element
@@ -351,7 +354,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @param DOMElement $element
      * @return array An array of DOMNode objects.
      */
-    abstract protected function getChildrenElements(DOMElement $element);
+    abstract protected function getChildrenElements(DOMElement $element): array;
 
     /**
      * Create a collection from DOMElement objects.
@@ -359,6 +362,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @param DOMElement $currentNode
      * @return AbstractCollection
      */
+    #[\ReturnTypeWillChange]
     abstract protected function createCollection(DOMElement $currentNode);
 
     /**
@@ -369,7 +373,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @param array $elements An array of DOMElement objectss.
      * @return DOMElement The marshalled $component.
      */
-    abstract protected function marshallChildrenKnown(QtiComponent $component, array $elements);
+    abstract protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement;
 
     /**
      * Whether or not a QtiComponent object is final. In other words, whether $component
@@ -385,5 +389,5 @@ abstract class RecursiveMarshaller extends Marshaller
      * @param QtiComponent $component
      * @return array An array of QtiComponent objects.
      */
-    abstract protected function getChildrenComponents(QtiComponent $component);
+    abstract protected function getChildrenComponents(QtiComponent $component): array;
 }

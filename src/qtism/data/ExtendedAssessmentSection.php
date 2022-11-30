@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +62,7 @@ class ExtendedAssessmentSection extends AssessmentSection
      *
      * @param RubricBlockRefCollection $rubricBlockRefs A collection of RubricBlockRef objects.
      */
-    public function setRubricBlockRefs(RubricBlockRefCollection $rubricBlockRefs)
+    public function setRubricBlockRefs(RubricBlockRefCollection $rubricBlockRefs): void
     {
         $this->rubricBlockRefs = $rubricBlockRefs;
     }
@@ -70,7 +72,7 @@ class ExtendedAssessmentSection extends AssessmentSection
      *
      * @return RubricBlockRefCollection A collection of RubricBlockRef objects.
      */
-    public function getRubricBlockRefs()
+    public function getRubricBlockRefs(): RubricBlockRefCollection
     {
         return $this->rubricBlockRefs;
     }
@@ -82,7 +84,7 @@ class ExtendedAssessmentSection extends AssessmentSection
      * @param AssessmentSection $assessmentSection An AssessmentSection object.
      * @return ExtendedAssessmentSection An ExtendedAssessmentSection object built from $assessmentSection.
      */
-    public static function createFromAssessmentSection(AssessmentSection $assessmentSection)
+    public static function createFromAssessmentSection(AssessmentSection $assessmentSection): ExtendedAssessmentSection
     {
         $extended = new static($assessmentSection->getIdentifier(), $assessmentSection->getTitle(), $assessmentSection->isVisible());
         $extended->setKeepTogether($assessmentSection->mustKeepTogether());
@@ -102,7 +104,7 @@ class ExtendedAssessmentSection extends AssessmentSection
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $parentComponents = parent::getComponents();
         $parentComponents->merge($this->getRubricBlockRefs());

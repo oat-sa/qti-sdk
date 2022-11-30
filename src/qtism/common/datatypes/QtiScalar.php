@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -63,7 +65,7 @@ abstract class QtiScalar implements QtiDatatype
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not compliant with the Scalar wrapper.
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->checkType($value);
         $this->value = $value;
@@ -74,6 +76,7 @@ abstract class QtiScalar implements QtiDatatype
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function getValue()
     {
         return $this->value;
@@ -87,7 +90,7 @@ abstract class QtiScalar implements QtiDatatype
      * @param mixed $obj
      * @return bool
      */
-    public function equals($obj)
+    public function equals($obj): bool
     {
         if ($obj instanceof self) {
             return $obj->getValue() === $this->getValue();
