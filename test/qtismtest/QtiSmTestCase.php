@@ -9,8 +9,8 @@ use DOMElement;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use qtism\data\QtiComponent;
-use qtism\data\storage\xml\filesystem\FilesystemFactory;
-use qtism\data\storage\xml\filesystem\FilesystemInterface;
+use qtism\data\storage\filesystem\FilesystemFactory;
+use qtism\data\storage\filesystem\FilesystemInterface;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\versions\QtiVersion;
@@ -55,7 +55,7 @@ abstract class QtiSmTestCase extends TestCase
      *
      * @return FilesystemInterface
      */
-    protected function getFileSystem()
+    protected function getFileSystem(): FilesystemInterface
     {
         return $this->fileSystem;
     }

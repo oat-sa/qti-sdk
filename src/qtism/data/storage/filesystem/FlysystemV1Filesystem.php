@@ -1,13 +1,13 @@
 <?php
 
-namespace qtism\data\storage\xml\filesystem;
+namespace qtism\data\storage\filesystem;
 
 use Exception;
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemException as FlysystemException;
-use League\Flysystem\Local\LocalFilesystemAdapter;
 
-class FlysystemV2Filesystem implements FilesystemInterface
+class FlysystemV1Filesystem implements FilesystemInterface
 {
     protected Filesystem $filesystem;
 
@@ -18,14 +18,13 @@ class FlysystemV2Filesystem implements FilesystemInterface
 
     public static function local(string $path = '/'): self
     {
-        return new self(new Filesystem(new LocalFilesystemAdapter($path)));
+        return new self(new Filesystem(new Local($path)));
     }
 
     public function write(string $url, string $content): bool
     {
         try {
-            $this->filesystem->write($url, $content);
-            return true;
+            return $this->filesystem->put($url, $content);
         } catch (Exception $e) {
             throw new FilesystemException("Could not write to file '${url}'", $e->getCode(), $e);
         }
@@ -35,7 +34,7 @@ class FlysystemV2Filesystem implements FilesystemInterface
     {
         try {
             return $this->filesystem->read($url);
-        } catch (FlysystemException $e) {
+        } catch (FileNotFoundException $e) {
             throw new FilesystemException("Could not read file '${url}'", $e->getCode(), $e);
         }
     }

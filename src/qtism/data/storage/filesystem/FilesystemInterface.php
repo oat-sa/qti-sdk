@@ -1,6 +1,6 @@
 <?php
 
-namespace qtism\data\storage\xml\filesystem;
+namespace qtism\data\storage\filesystem;
 
 interface FilesystemInterface
 {

@@ -40,10 +40,11 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
-use qtism\data\storage\xml\filesystem\FilesystemFactory;
-use qtism\data\storage\xml\filesystem\FilesystemInterface;
-use qtism\data\storage\xml\filesystem\FilesystemException;
-use qtism\data\storage\xml\filesystem\FlysystemV1Filesystem;
+use qtism\data\storage\filesystem\FilesystemException;
+use qtism\data\storage\filesystem\FilesystemFactory;
+use qtism\data\storage\filesystem\FilesystemInterface;
+use qtism\data\storage\filesystem\FlysystemV1Filesystem;
+use qtism\data\storage\filesystem\FlysystemV2Filesystem;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -119,11 +120,11 @@ class XmlDocument extends QtiDocument
     {
         if (!$filesystem) {
             $filesystem = FilesystemFactory::local();
-        }
-
-        // Support backwards compatibility of old Flysystem v1 Filesystems being passed into this class
-        if (FilesystemFactory::isFlysystemV1Installed() && $filesystem instanceof Filesystem) {
-            $filesystem = new FlysystemV1Filesystem($filesystem);
+        } elseif ($filesystem instanceof Filesystem) {
+            // Support backwards compatibility of old Flysystem v1 Filesystems being passed into this class
+            $filesystem =  FilesystemFactory::isFlysystemV1Installed()
+                 ? new FlysystemV1Filesystem($filesystem)
+                 : new FlysystemV2Filesystem($filesystem);
         }
 
         if (!$filesystem instanceof FilesystemInterface) {
