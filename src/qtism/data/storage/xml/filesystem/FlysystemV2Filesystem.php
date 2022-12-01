@@ -27,7 +27,7 @@ class FlysystemV2Filesystem implements FilesystemInterface
                     null,
                     LOCK_EX,
                     LocalFilesystemAdapter::DISALLOW_LINKS,
-                    new FallbackMimeTypeDetector(new ExtensionMimeTypeDetector()), // Serializable
+                    new ExtensionMimeTypeDetector() // Serializable
                 )
             )
         );
