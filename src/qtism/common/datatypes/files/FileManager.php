@@ -63,7 +63,7 @@ interface FileManager
      * @return QtiFile
      * @throws FileManagerException
      */
-    public function createFromData($data, $mimeType, $filename = '', $path = null): QtiFile;;
+    public function createFromData($data, $mimeType, $filename = '', $path = null): QtiFile;
 
     /**
      * Retrieve a previously created instance by $identifier.
