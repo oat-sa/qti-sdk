@@ -29,8 +29,6 @@ use DOMElement;
 use DOMException;
 use Exception;
 use InvalidArgumentException;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
 use LogicException;
 use qtism\common\dom\SerializableDomDocument;
@@ -42,6 +40,10 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
+use qtism\data\storage\xml\filesystem\FilesystemFactory;
+use qtism\data\storage\xml\filesystem\FilesystemInterface;
+use qtism\data\storage\xml\filesystem\FilesystemException;
+use qtism\data\storage\xml\filesystem\FlysystemV1Filesystem;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -49,6 +51,7 @@ use qtism\data\storage\xml\versions\QtiVersion;
 use qtism\data\TestPart;
 use ReflectionClass;
 use ReflectionException;
+use RuntimeException;
 
 /**
  * This class represents a QTI-XML Document.
@@ -74,7 +77,7 @@ class XmlDocument extends QtiDocument
      * The Filesystem implementation in use. Contains null
      * in case of old fashioned local file system implementation.
      *
-     * @var null|Filesystem
+     * @var null|FilesystemInterface
      */
     private $filesystem;
 
@@ -110,13 +113,26 @@ class XmlDocument extends QtiDocument
      * all subsequent creations of related XmlDocument objects will use this Filesystem
      * implementation.
      *
-     * @param Filesystem|null $filesystem
+     * @param Filesystem|FilesystemInterface|null $filesystem
      */
-    public function setFilesystem(Filesystem $filesystem = null)
+    public function setFilesystem($filesystem = null)
     {
-        if ($filesystem === null) {
-            $filesystem = new Filesystem(new Local('/'));
+        if (!$filesystem) {
+            $filesystem = FilesystemFactory::local();
         }
+
+        // Support backwards compatibility of old Flysystem v1 Filesystems being passed into this class
+        if ($filesystem instanceof Filesystem && FilesystemFactory::isFlysystemV1Installed()) {
+            $filesystem = new FlysystemV1Filesystem($filesystem);
+        } elseif (!$filesystem instanceof FilesystemInterface) {
+            throw new RuntimeException(
+                sprintf(
+                    'Invalid filesystem provided.  Instance of %s required',
+                    FilesystemInterface::class,
+                )
+            );
+        }
+
         $this->filesystem = $filesystem;
     }
 
@@ -126,9 +142,9 @@ class XmlDocument extends QtiDocument
      * Get the Filesystem implementation currently in use. Returns null
      * in case of the local file system is in use.
      *
-     * @return Filesystem
+     * @return FilesystemInterface|null
      */
-    protected function getFilesystem()
+    protected function getFilesystem(): FilesystemInterface
     {
         if ($this->filesystem === null) {
             $this->setFilesystem();
@@ -402,7 +418,7 @@ class XmlDocument extends QtiDocument
     {
         try {
             return $this->getFilesystem()->read($url);
-        } catch (FileNotFoundException $e) {
+        } catch (FilesystemException $e) {
             throw new XmlStorageException(
                 "Cannot load QTI file at path '${url}'. It does not exist or is not readable.",
                 XmlStorageException::RESOLUTION,
@@ -420,7 +436,7 @@ class XmlDocument extends QtiDocument
     protected function saveToFile(string $url, string $content): bool
     {
         try {
-            return $this->getFilesystem()->put($url, $content);
+            return $this->getFilesystem()->write($url, $content);
         } catch (Exception $e) {
             throw new XmlStorageException(
                 "An error occurred while saving QTI-XML file at '${url}'. Maybe the save location is not reachable?",
