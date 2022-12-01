@@ -1905,6 +1905,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $fileManagerMock = $this->createMock(FileManager::class);
         $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
 
+        $streamMock->method('isOpen')->willReturn(true);
+
         $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
 
         $file = new FileHash('id', 'text\css', 'main.css', md5('content'));
@@ -1921,6 +1923,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $streamMock = $this->createMock(IStream::class);
         $fileManagerMock = $this->createMock(FileManager::class);
         $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
 
         $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
 
@@ -1941,6 +1945,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $fileManagerMock = $this->createMock(FileManager::class);
         $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
 
+        $streamMock->method('isOpen')->willReturn(true);
+
         $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
 
         $file = new FileHash('id', 'text\css', 'main.css', md5('content'));
@@ -1959,6 +1965,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
     public function testFailedReadFileWithFileHash(): void
     {
         $streamMock = $this->createMock(IStream::class);
+        $streamMock->method('isOpen')->willReturn(true);
+
         $fileManagerMock = $this->createMock(FileManager::class);
         $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
 
@@ -1978,6 +1986,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $streamMock = $this->createMock(IStream::class);
         $fileManagerMock = $this->createMock(FileManager::class);
         $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
 
         $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
 
@@ -2001,11 +2011,13 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $fileManagerMock = $this->createMock(FileManager::class);
         $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
 
+        $streamMock->method('isOpen')->willReturn(true);
+
         $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
 
         $file = $this->createMock(QtiFile::class);
         $fileIdentifier = 'file/identifier/or/path';
-        $fileName = null;
+        $fileName = '';
         $file->expects(self::once())->method('getIdentifier')->willReturn($fileIdentifier);
         $file->expects(self::once())->method('getFilename')->willReturn($fileName);
         $fileString = sprintf(self::EXPECTED_FILE_IDENTIFIER_ENCODING_MASK, $fileIdentifier, $fileName);
@@ -2022,6 +2034,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $streamMock = $this->createMock(IStream::class);
         $fileManagerMock = $this->createMock(FileManager::class);
         $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
 
         $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
 
@@ -2045,6 +2059,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $streamMock = $this->createMock(IStream::class);
         $fileManagerMock = $this->createMock(FileManager::class);
         $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
 
         $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
 
@@ -2075,6 +2091,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $fileManagerMock = $this->createMock(FileManager::class);
         $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
 
+        $streamMock->method('isOpen')->willReturn(true);
+
         $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
 
         $file = $this->createMock(QtiFile::class);
@@ -2103,6 +2121,8 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $streamMock = $this->createMock(IStream::class);
         $fileManagerMock = $this->createMock(FileManager::class);
         $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
 
         $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
 
