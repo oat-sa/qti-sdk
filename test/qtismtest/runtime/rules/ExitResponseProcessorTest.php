@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qtismtest\runtime\rules;
 
 use qtism\runtime\rules\ExitResponseProcessor;

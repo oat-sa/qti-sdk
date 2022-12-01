@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qti\customOperators\text;
 
 use qtism\common\datatypes\QtiString as QtismString;

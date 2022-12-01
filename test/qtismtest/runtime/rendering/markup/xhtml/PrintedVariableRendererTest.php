@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qtismtest\runtime\rendering\markup\xhtml;
 
 use qtism\common\datatypes\QtiFloat;

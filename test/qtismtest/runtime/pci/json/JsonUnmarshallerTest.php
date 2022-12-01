@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qtismtest\runtime\pci\json;
 
 use qtism\common\datatypes\files\FileHash;

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qtismtest\data\content\enums;
 
 use qtism\data\content\enums\Role;

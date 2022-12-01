@@ -21,8 +21,6 @@
  * @license GPLv2
  */
 
-declare(strict_types=1);
-
 namespace qtism\data\storage\xml\versions;
 
 use qtism\data\storage\xml\marshalling\Qti223MarshallerFactory;

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use qtism\data\storage\xml\XmlDocument;
 use qtism\runtime\rendering\qtipl\ConditionRenderingOptions;
 use qtism\runtime\rendering\qtipl\QtiPLRenderer;

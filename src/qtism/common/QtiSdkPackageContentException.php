@@ -19,8 +19,6 @@
  *
  * @license GPLv2
  */
-declare(strict_types=1);
-
 namespace qtism\common;
 
 /**

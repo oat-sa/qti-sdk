@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qtismtest\data\state;
 
 use qtism\data\storage\xml\XmlDocument;
