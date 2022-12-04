@@ -30,7 +30,7 @@ use qtism\data\storage\xml\marshalling\MarshallingException;
 
 class Html5RpMarshallerTest extends Html5ElementMarshallerTest
 {
-    public const SUBJECT_QTI_CLASS_NAME = 'rp';
+    private const SUBJECT_QTI_CLASS_NAME = 'rp';
 
     /**
      * @throws MarshallerNotFoundException

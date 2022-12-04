@@ -34,7 +34,7 @@ use qtism\data\storage\xml\marshalling\MarshallingException;
 
 class Html5RubyMarshallerTest extends Html5ElementMarshallerTest
 {
-    public const SUBJECT_QTI_CLASS_NAME = 'ruby';
+    private const SUBJECT_QTI_CLASS_NAME = 'ruby';
 
     /**
      * @throws MarshallerNotFoundException

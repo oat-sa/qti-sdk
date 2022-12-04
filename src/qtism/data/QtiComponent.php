@@ -45,7 +45,6 @@ abstract class QtiComponent
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    #[\ReturnTypeWillChange]
     abstract public function getComponents(): QtiComponentCollection;
 
     /**
