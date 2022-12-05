@@ -106,7 +106,8 @@ class RandomInteger extends Expression
      *
      * @return int
      */
-    public function getMax(): int
+    #[\ReturnTypeWillChange]
+    public function getMax()
     {
         return $this->max;
     }
