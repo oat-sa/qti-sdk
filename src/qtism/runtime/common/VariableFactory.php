@@ -21,8 +21,6 @@
  * @license GPLv2
  */
 
-declare(strict_types=1);
-
 namespace qtism\runtime\common;
 
 use qtism\data\state\OutcomeDeclaration;

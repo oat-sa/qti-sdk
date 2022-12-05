@@ -7,12 +7,15 @@ namespace qtismtest\runtime\storage\binary;
 use qtism\common\collections\IdentifierCollection;
 use qtism\common\Comparable;
 use qtism\common\datatypes\files\FileHash;
+use qtism\common\datatypes\files\FileManager;
+use qtism\common\datatypes\files\FileManagerException;
 use qtism\common\datatypes\files\FileSystemFile;
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\common\datatypes\QtiBoolean;
 use qtism\common\datatypes\QtiDatatype;
 use qtism\common\datatypes\QtiDirectedPair;
 use qtism\common\datatypes\QtiDuration;
+use qtism\common\datatypes\QtiFile;
 use qtism\common\datatypes\QtiFloat;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiInteger;
@@ -24,9 +27,11 @@ use qtism\common\datatypes\QtiUri;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\common\storage\BinaryStreamAccessException;
+use qtism\common\storage\IStream;
 use qtism\common\storage\MemoryStream;
 use qtism\common\storage\MemoryStreamException;
 use qtism\common\storage\StreamAccessException;
+use qtism\common\storage\StreamException;
 use qtism\data\ItemSessionControl;
 use qtism\data\NavigationMode;
 use qtism\data\state\CorrectResponse;
@@ -47,6 +52,7 @@ use qtism\runtime\common\State;
 use qtism\runtime\common\TemplateVariable;
 use qtism\runtime\common\Variable;
 use qtism\runtime\common\VariableFactory;
+use qtism\runtime\common\VariableFactoryInterface;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccess;
 use qtism\runtime\storage\binary\QtiBinaryStreamAccessException;
 use qtism\runtime\storage\binary\QtiBinaryVersion;
@@ -61,6 +67,8 @@ use ReflectionProperty;
  */
 class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
 {
+    private const EXPECTED_FILE_IDENTIFIER_ENCODING_MASK = '%s : %s';
+
     /**
      * @dataProvider readVariableValueProvider
      *
@@ -1890,6 +1898,255 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $access->writeIntOrIdentifier(new QtiIntOrIdentifier('identifier'));
     }
 
+
+    public function testSuccessfulWriteFileWithFileHash(): void
+    {
+        $streamMock = $this->createMock(IStream::class);
+        $fileManagerMock = $this->createMock(FileManager::class);
+        $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
+
+        $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
+
+        $file = new FileHash('id', 'text\css', 'main.css', md5('content'));
+        $jsonFileHash = json_encode($file);
+        $streamMock->expects(self::once())
+            ->method('write')
+            ->with(pack('S', strlen($jsonFileHash)) . $jsonFileHash);
+
+        $subject->writeFile($file);
+    }
+
+    public function testFailedWriteFileWithFileHash(): void
+    {
+        $streamMock = $this->createMock(IStream::class);
+        $fileManagerMock = $this->createMock(FileManager::class);
+        $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
+
+        $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
+
+        $file = new FileHash('id', 'text\css', 'main.css', md5('content'));
+        $jsonFileHash = json_encode($file);
+        $streamMock->expects(self::once())
+            ->method('write')
+            ->with(pack('S', strlen($jsonFileHash)) . $jsonFileHash)
+            ->willThrowException($this->createStreamException('message', $streamMock));
+
+        $this->expectException(BinaryStreamAccessException::class);
+        $subject->writeFile($file);
+    }
+
+    public function testSuccessfulReadFileWithFileHash(): void
+    {
+        $streamMock = $this->createMock(IStream::class);
+        $fileManagerMock = $this->createMock(FileManager::class);
+        $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
+
+        $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
+
+        $file = new FileHash('id', 'text\css', 'main.css', md5('content'));
+        $jsonFileHash = json_encode($file);
+        $streamMock->expects(self::exactly(2))
+            ->method('read')
+            ->withConsecutive([2], [strlen($jsonFileHash)])
+            ->willReturnOnConsecutiveCalls(
+                pack('S', strlen($jsonFileHash)),
+                $jsonFileHash
+            );
+
+        self::assertInstanceOf(FileHash::class, $subject->readFile());
+    }
+
+    public function testFailedReadFileWithFileHash(): void
+    {
+        $streamMock = $this->createMock(IStream::class);
+        $streamMock->method('isOpen')->willReturn(true);
+
+        $fileManagerMock = $this->createMock(FileManager::class);
+        $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
+
+        $streamMock->expects(self::once())
+            ->method('read')
+            ->with(2)
+            ->willThrowException($this->createStreamException('message', $streamMock));
+
+        $this->expectException(BinaryStreamAccessException::class);
+        $subject->readFile();
+    }
+
+    public function testSuccessfulWriteFileWithNotFileHash(): void
+    {
+        $streamMock = $this->createMock(IStream::class);
+        $fileManagerMock = $this->createMock(FileManager::class);
+        $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
+
+        $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
+
+        $file = $this->createMock(QtiFile::class);
+        $fileIdentifier = 'file/identifier/or/path';
+        $fileName = 'fileName';
+        $file->expects(self::once())->method('getIdentifier')->willReturn($fileIdentifier);
+        $file->expects(self::once())->method('getFilename')->willReturn($fileName);
+        $fileString = sprintf(self::EXPECTED_FILE_IDENTIFIER_ENCODING_MASK, $fileIdentifier, $fileName);
+
+        $streamMock->expects(self::once())
+            ->method('write')
+            ->with(pack('S', strlen($fileString)) . $fileString);
+
+        $subject->writeFile($file);
+    }
+
+    public function testSuccessfulWriteFileWithNotFileHashWithoutFilename(): void
+    {
+        $streamMock = $this->createMock(IStream::class);
+        $fileManagerMock = $this->createMock(FileManager::class);
+        $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
+
+        $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
+
+        $file = $this->createMock(QtiFile::class);
+        $fileIdentifier = 'file/identifier/or/path';
+        $fileName = '';
+        $file->expects(self::once())->method('getIdentifier')->willReturn($fileIdentifier);
+        $file->expects(self::once())->method('getFilename')->willReturn($fileName);
+        $fileString = sprintf(self::EXPECTED_FILE_IDENTIFIER_ENCODING_MASK, $fileIdentifier, $fileName);
+
+        $streamMock->expects(self::once())
+            ->method('write')
+            ->with(pack('S', strlen($fileString)) . $fileString);
+
+        $subject->writeFile($file);
+    }
+
+    public function testFailedWriteFileWithNotFileHash(): void
+    {
+        $streamMock = $this->createMock(IStream::class);
+        $fileManagerMock = $this->createMock(FileManager::class);
+        $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
+
+        $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
+
+        $file = $this->createMock(QtiFile::class);
+        $fileIdentifier = 'file/identifier/or/path';
+        $fileName = 'fileName';
+        $file->expects(self::once())->method('getIdentifier')->willReturn($fileIdentifier);
+        $file->expects(self::once())->method('getFilename')->willReturn($fileName);
+        $fileString = sprintf(self::EXPECTED_FILE_IDENTIFIER_ENCODING_MASK, $fileIdentifier, $fileName);
+        $streamMock->expects(self::once())
+            ->method('write')
+            ->with(pack('S', strlen($fileString)) . $fileString)
+            ->willThrowException($this->createStreamException('message', $streamMock));
+
+        $this->expectException(BinaryStreamAccessException::class);
+        $subject->writeFile($file);
+    }
+
+    public function testSuccessfulReadFileWithNotFileHash(): void
+    {
+        $streamMock = $this->createMock(IStream::class);
+        $fileManagerMock = $this->createMock(FileManager::class);
+        $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
+
+        $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
+
+        $file = $this->createMock(QtiFile::class);
+        $fileIdentifier = 'file/identifier/or/path';
+        $fileName = 'fileName';
+        $fileString = sprintf(self::EXPECTED_FILE_IDENTIFIER_ENCODING_MASK, $fileIdentifier, $fileName);
+
+        $streamMock->expects(self::exactly(2))
+            ->method('read')
+            ->withConsecutive([2], [strlen($fileString)])
+            ->willReturnOnConsecutiveCalls(
+                pack('S', strlen($fileString)),
+                $fileString
+            );
+
+        $fileManagerMock->expects(self::once())
+            ->method('retrieve')
+            ->with($fileIdentifier, $fileName)
+            ->willReturn($file);
+
+        self::assertInstanceOf(get_class($file), $subject->readFile());
+    }
+
+    public function testSuccessfulReadFileWithNotFileHashWithoutFileName(): void
+    {
+        $streamMock = $this->createMock(IStream::class);
+        $fileManagerMock = $this->createMock(FileManager::class);
+        $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
+
+        $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
+
+        $file = $this->createMock(QtiFile::class);
+        $fileIdentifier = 'file/identifier/or/path';
+        $fileName = null;
+        $fileString = sprintf(self::EXPECTED_FILE_IDENTIFIER_ENCODING_MASK, $fileIdentifier, $fileName);
+
+        $streamMock->expects(self::exactly(2))
+            ->method('read')
+            ->withConsecutive([2], [strlen($fileString)])
+            ->willReturnOnConsecutiveCalls(
+                pack('S', strlen($fileString)),
+                $fileString
+            );
+
+        $fileManagerMock->expects(self::once())
+            ->method('retrieve')
+            ->with($fileIdentifier, $fileName)
+            ->willReturn($file);
+
+        self::assertInstanceOf(get_class($file), $subject->readFile());
+    }
+
+    public function testFailedRetrieveReadFileWithFileHash(): void
+    {
+        $streamMock = $this->createMock(IStream::class);
+        $fileManagerMock = $this->createMock(FileManager::class);
+        $variableFactoryMock = $this->createMock(VariableFactoryInterface::class);
+
+        $streamMock->method('isOpen')->willReturn(true);
+
+        $subject = new QtiBinaryStreamAccess($streamMock, $fileManagerMock, $variableFactoryMock);
+
+        $fileIdentifier = 'file/identifier/or/path';
+        $fileName = 'fileName';
+        $fileString = sprintf(self::EXPECTED_FILE_IDENTIFIER_ENCODING_MASK, $fileIdentifier, $fileName);
+
+        $streamMock->expects(self::exactly(2))
+            ->method('read')
+            ->withConsecutive([2], [strlen($fileString)])
+            ->willReturnOnConsecutiveCalls(
+                pack('S', strlen($fileString)),
+                $fileString
+            );
+
+        $fileManagerMock->expects(self::once())
+            ->method('retrieve')
+            ->with($fileIdentifier, $fileName)
+            ->willThrowException(new FileManagerException('message'));
+
+        $this->expectException(FileManagerException::class);
+        $subject->readFile();
+    }
+
     /**
      * @param int $versionNumber
      * @return QtiBinaryVersion
@@ -1903,5 +2160,16 @@ class QtiBinaryStreamAccessTest extends QtiSmAssessmentItemTestCase
         $property->setAccessible(false);
 
         return $version;
+    }
+
+
+    private function createStreamException(string $message, IStream $stream): StreamException
+    {
+        return new class($message, $stream) extends StreamException {
+            public function __construct($message, IStream $source, $code = 0, \Exception $previous = null)
+            {
+                parent::__construct($message, $source, $code, $previous);
+            }
+        };
     }
 }

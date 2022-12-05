@@ -98,6 +98,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
         self::ENCODED_TEMPLATE_DECLARATION => 'templateDeclaration',
     ];
 
+    private const FILE_IDENTIFIER_ENCODING_MASK = '%s : %s';
+
     /** @var FileManager */
     private $fileManager;
 
@@ -1158,7 +1160,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     {
         $toPersist = $file instanceof FileHash
             ? json_encode($file)
-            : $file->getIdentifier();
+            : sprintf(self::FILE_IDENTIFIER_ENCODING_MASK, $file->getIdentifier(), $file->getFilename());
 
         try {
             $this->writeString($toPersist);
@@ -1189,7 +1191,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             return FileHash::createFromArray($decoded);
         }
 
-        return $this->getFileManager()->retrieve($id);
+        [$id, $filename] = sscanf($id, self::FILE_IDENTIFIER_ENCODING_MASK);
+
+        return $this->getFileManager()->retrieve($id, $filename);
     }
 
     /**

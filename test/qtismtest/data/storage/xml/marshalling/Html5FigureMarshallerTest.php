@@ -18,8 +18,6 @@
  * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
-declare(strict_types=1);
-
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtism\data\content\FlowCollection;

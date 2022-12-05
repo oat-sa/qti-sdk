@@ -80,7 +80,7 @@ class FileSystemFileManagerTest extends QtiSmTestCase
     {
         $manager = new FileSystemFileManager();
         $mFile = $manager->createFromFile(self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', 'newname.txt');
-        $mFile = $manager->retrieve($mFile->getIdentifier());
+        $mFile = $manager->retrieve($mFile->getIdentifier(), $mFile->getFilename());
         $this::assertEquals('text/plain', $mFile->getMimeType());
         $this::assertEquals('newname.txt', $mFile->getFilename());
         $this::assertEquals('I contain some text...', $mFile->getData());
