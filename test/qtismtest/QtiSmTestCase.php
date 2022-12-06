@@ -1,18 +1,16 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qtismtest;
 
 use DateTime;
 use DateTimeZone;
 use DOMDocument;
 use DOMElement;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\Filesystem;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use qtism\data\QtiComponent;
+use qtism\data\storage\xml\filesystem\FilesystemFactory;
+use qtism\data\storage\xml\filesystem\FilesystemInterface;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\data\storage\xml\versions\QtiVersion;
@@ -25,12 +23,12 @@ use SebastianBergmann\RecursionContext\InvalidArgumentException;
 abstract class QtiSmTestCase extends TestCase
 {
     /**
-     * @var Filesystem
+     * @var FilesystemInterface
      */
     private $fileSystem = null;
 
     /**
-     * @var Filesystem
+     * @var FilesystemInterface
      */
     private $outputFileSystem = null;
 
@@ -39,12 +37,10 @@ abstract class QtiSmTestCase extends TestCase
         parent::setUp();
 
         // Set up File System Local adapter for testing.
-        $adapter = new Local(self::samplesDir());
-        $this->setFileSystem(new Filesystem($adapter));
+        $this->setFileSystem(FilesystemFactory::local(self::samplesDir()));
 
         // Set up File System Local adapter for output.
-        $adapter = new Local(sys_get_temp_dir() . '/qsmout');
-        $this->setOutputFileSystem(new Filesystem($adapter));
+        $this->setOutputFileSystem(FilesystemFactory::local(sys_get_temp_dir() . '/qsmout'));
     }
 
     public function tearDown(): void
@@ -57,9 +53,9 @@ abstract class QtiSmTestCase extends TestCase
      *
      * Setup the FileSystem implementation to be used for testing.
      *
-     * @return Filesystem
+     * @return FilesystemInterface
      */
-    protected function getFileSystem(): Filesystem
+    protected function getFileSystem(): FilesystemInterface
     {
         return $this->fileSystem;
     }
@@ -69,9 +65,9 @@ abstract class QtiSmTestCase extends TestCase
      *
      * Setup the FileSystem implementation to be used for testing.
      *
-     * @param Filesystem $filesystem
+     * @param FilesystemInterface $filesystem
      */
-    protected function setFileSystem(Filesystem $filesystem): void
+    protected function setFileSystem(FilesystemInterface $filesystem): void
     {
         $this->fileSystem = $filesystem;
     }
@@ -81,9 +77,9 @@ abstract class QtiSmTestCase extends TestCase
      *
      * Setup the FileSystem implementation to be used for testing.
      *
-     * @return Filesystem
+     * @return FilesystemInterface
      */
-    protected function getOutputFileSystem(): Filesystem
+    protected function getOutputFileSystem(): FilesystemInterface
     {
         return $this->outputFileSystem;
     }
@@ -93,9 +89,9 @@ abstract class QtiSmTestCase extends TestCase
      *
      * Setup the FileSystem implementation to be used for testing.
      *
-     * @param Filesystem $filesystem
+     * @param FilesystemInterface $filesystem
      */
-    protected function setOutputFileSystem(Filesystem $filesystem): void
+    protected function setOutputFileSystem(FilesystemInterface $filesystem): void
     {
         $this->outputFileSystem = $filesystem;
     }
