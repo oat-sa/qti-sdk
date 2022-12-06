@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use qtism\common\datatypes\files\FileSystemFileManager;
 use qtism\data\storage\xml\XmlCompactDocument;
 use qtism\runtime\tests\AssessmentTestSessionState;

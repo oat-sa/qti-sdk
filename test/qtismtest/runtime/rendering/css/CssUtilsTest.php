@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qtismtest\runtime\rendering\css;
 
 use qtism\runtime\rendering\css\Utils as CssUtils;

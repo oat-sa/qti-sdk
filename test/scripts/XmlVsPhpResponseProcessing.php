@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use qtism\data\storage\php\PhpDocument;
 use qtism\data\storage\xml\XmlDocument;
 

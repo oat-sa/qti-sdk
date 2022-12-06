@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qtismtest\runtime\expressions\operators\custom;
 
 use qtism\common\datatypes\QtiInteger;

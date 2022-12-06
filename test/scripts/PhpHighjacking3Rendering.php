@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * I don't even understand how it is correctly parsed...
  * But it's safe!

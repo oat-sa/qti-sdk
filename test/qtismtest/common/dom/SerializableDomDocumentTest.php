@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qtismtest\common\dom;
 
 use qtism\common\dom\SerializableDomDocument;

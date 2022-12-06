@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qtismtest\common\datatypes;
 
 use qtism\common\datatypes\Utils;

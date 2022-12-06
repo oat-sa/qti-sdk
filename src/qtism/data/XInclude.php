@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace qtism\data;
 
 use qtism\data\content\BlockStatic;
