@@ -98,7 +98,8 @@ class AssessmentItemSessionStore
      * @return AssessmentItemSession An AssessmentItemSession object.
      * @throws OutOfBoundsException If there is no AssessmentItemSession for the given $assessmentItemRef and $occurence.
      */
-    public function getAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0): AssessmentItemSession
+    #[\ReturnTypeWillChange]
+    public function getAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0)
     {
         if (isset($this->shelves[$assessmentItemRef]) && isset($this->shelves[$assessmentItemRef][$occurence]) === true) {
             return $this->shelves[$assessmentItemRef][$occurence];

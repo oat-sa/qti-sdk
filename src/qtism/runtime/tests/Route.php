@@ -1078,7 +1078,8 @@ class Route implements Iterator
      *
      * @return RouteItemCollection A collection of RouteItem objects.
      */
-    public function getAllRouteItems(): RouteItemCollection
+    #[\ReturnTypeWillChange]
+    public function getAllRouteItems()
     {
         return new RouteItemCollection($this->getRouteItems());
     }

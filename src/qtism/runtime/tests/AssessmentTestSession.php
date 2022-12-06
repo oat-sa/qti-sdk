@@ -430,7 +430,8 @@ class AssessmentTestSession extends State
      *
      * @return Route A Route object.
      */
-    public function getRoute(): Route
+    #[\ReturnTypeWillChange]
+    public function getRoute()
     {
         return $this->route;
     }
@@ -576,7 +577,8 @@ class AssessmentTestSession extends State
      *
      * @return DurationStore
      */
-    public function getDurationStore(): DurationStore
+    #[\ReturnTypeWillChange]
+    public function getDurationStore()
     {
         return $this->durationStore;
     }
