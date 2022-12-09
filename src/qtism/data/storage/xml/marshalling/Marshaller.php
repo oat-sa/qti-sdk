@@ -31,6 +31,7 @@ use qtism\data\content\BodyElement;
 use qtism\data\content\Direction;
 use qtism\data\content\enums\AriaLive;
 use qtism\data\content\enums\AriaOrientation;
+use qtism\data\content\ItemBody;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\Utils as XmlUtils;
 use qtism\data\storage\xml\versions\QtiVersion;
@@ -120,6 +121,7 @@ abstract class Marshaller
         'infoControl',
         'inlineChoice',
         'inlineChoiceInteraction',
+        ItemBody::QTI_CLASS_NAME,
         'kbd',
         'label',
         'li',
