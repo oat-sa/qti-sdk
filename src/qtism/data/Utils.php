@@ -67,12 +67,11 @@ class Utils
      * comes.
      * @param QtiComponent $component The QtiComponent targeted by a branch.
      * @param AssessmentSectionCollection $sections The collection of all sections in this AssessmentTest.
-     * @return AssessmentItem|null The first AssessmentItem that will be prompted if a branch targets the
+     * @return AssessmentItemRef|null The first AssessmentItem that will be prompted if a branch targets the
      * QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the end of the test
      * has been reached.
      */
-    #[\ReturnTypeWillChange]
-    public static function getFirstItem($test, $component, $sections)
+    public static function getFirstItem($test, $component, $sections): ?AssessmentItemRef
     {
         $currentCmp = $component;
         $visitedNodes = [];
