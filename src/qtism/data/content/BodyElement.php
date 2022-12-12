@@ -536,7 +536,7 @@ abstract class BodyElement extends QtiComponent
     }
 
     /**
-     * @return int
+     * @return int|false
      */
     #[\ReturnTypeWillChange]
     public function getAriaLive()
