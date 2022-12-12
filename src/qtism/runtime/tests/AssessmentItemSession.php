@@ -1169,8 +1169,7 @@ class AssessmentItemSession extends State
      * @param bool $builtIn Whether to include the built-in ResponseVariables ('duration' and 'numAttempts').
      * @return State A State object composed exclusively with ResponseVariable objects.
      */
-    #[\ReturnTypeWillChange]
-    public function getResponseVariables($builtIn = true)
+    public function getResponseVariables($builtIn = true): State
     {
         $state = new State();
         $data = $this->getDataPlaceHolder();
