@@ -45,7 +45,7 @@ class RandomInteger extends Expression
     /**
      * The max attribute value.
      *
-     * @var int
+     * @var int|string
      * @qtism-bean-property
      */
     private $max;
@@ -102,7 +102,7 @@ class RandomInteger extends Expression
     /**
      * Get the value of the max attribute.
      *
-     * @return int
+     * @return int|string
      */
     #[\ReturnTypeWillChange]
     public function getMax()
