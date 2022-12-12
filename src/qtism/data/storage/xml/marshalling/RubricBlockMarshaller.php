@@ -93,7 +93,6 @@ class RubricBlockMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory attribute 'href' is missing from $element.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): RubricBlock
     {
         // First we retrieve the mandatory views.

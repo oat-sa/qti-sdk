@@ -783,7 +783,6 @@ abstract class Marshaller
      * @return QtiComponent A QtiComponent object.
      * @throws UnmarshallingException|MarshallerNotFoundException If an error occurs during the unmarshalling process.
      */
-    #[\ReturnTypeWillChange]
     abstract protected function unmarshall(DOMElement $element): QtiComponent;
 
     /**

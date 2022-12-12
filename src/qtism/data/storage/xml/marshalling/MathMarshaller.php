@@ -47,9 +47,8 @@ class MathMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a math element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Math object.
+     * @return Math A Math object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Math
     {
         $node = $element->cloneNode(true);

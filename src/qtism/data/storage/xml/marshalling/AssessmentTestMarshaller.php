@@ -96,12 +96,12 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
      * instead of creating a new AssessmentTest object.
      *
      * @param DOMElement $element A DOMElement object.
-     * @param AssessmentTest $assessmentTest An AssessmentTest object to decorate.
-     * @return QtiComponent An OutcomeProcessing object.
+     * @param AssessmentTest|null $assessmentTest An AssessmentTest object to decorate.
+     * @return AssessmentTest An OutcomeProcessing object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null): QtiComponent
+    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null): AssessmentTest
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {

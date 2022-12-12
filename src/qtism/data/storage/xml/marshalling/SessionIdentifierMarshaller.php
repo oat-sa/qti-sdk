@@ -55,10 +55,10 @@ class SessionIdentifierMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI sessionIdentifier element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A QtiComponent object.
+     * @return SessionIdentifier A QtiComponent object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element): QtiComponent
+    protected function unmarshall(DOMElement $element): SessionIdentifier
     {
         if (!$element->hasAttribute('sourceID')) {
             throw new UnmarshallingException('SessionIdentifier element must have sourceID attribute', $element);

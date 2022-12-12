@@ -47,9 +47,8 @@ class ExitTestMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI exitTest element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An ExitTest object.
+     * @return ExitTest An ExitTest object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): ExitTest
     {
         return new ExitTest();

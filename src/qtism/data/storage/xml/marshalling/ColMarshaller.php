@@ -55,10 +55,9 @@ class ColMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML col element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Col object.
+     * @return Col A Col object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Col
     {
         $component = new Col();

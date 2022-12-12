@@ -56,11 +56,10 @@ class LookupOutcomeValueMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI lookupOutcomeValue element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A LookupOutcomeValue object.
+     * @return LookupOutcomeValue A LookupOutcomeValue object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): LookupOutcomeValue
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {

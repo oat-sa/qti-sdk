@@ -6,7 +6,6 @@ use DOMDocument;
 use DOMElement;
 use qtism\data\content\enums\Role;
 use qtism\data\content\xhtml\html5\Html5Element;
-use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\storage\xml\marshalling\Html5ElementMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
@@ -240,10 +239,10 @@ class FakeHtml5ElementMarshaller extends Html5ElementMarshaller
 
     /**
      * @param DOMElement $element
-     * @return QtiComponent
+     * @return FakeHtml5Element
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element): QtiComponent
+    protected function unmarshall(DOMElement $element): FakeHtml5Element
     {
         $component = new FakeHtml5Element();
         $this->fillBodyElement($component, $element);

@@ -103,11 +103,10 @@ class TableMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML table element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Table object.
+     * @return Table A Table object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Table
     {
         $tbodyElts = $this->getChildElementsByTagName($element, 'tbody');

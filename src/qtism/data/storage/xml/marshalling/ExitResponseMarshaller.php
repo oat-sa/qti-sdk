@@ -47,9 +47,8 @@ class ExitResponseMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI exitResponse element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An ExitResponse object.
+     * @return ExitResponse An ExitResponse object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): ExitResponse
     {
         return new ExitResponse();

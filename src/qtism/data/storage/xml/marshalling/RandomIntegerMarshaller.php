@@ -57,10 +57,9 @@ class RandomIntegerMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI randomInteger element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A RandomInteger object.
+     * @return RandomInteger A RandomInteger object.
      * @throws UnmarshallingException If the mandatory attributes 'min' or 'max' are missing from $element.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): RandomInteger
     {
         if (($max = $this->getDOMElementAttributeAs($element, 'max', 'string')) !== null) {

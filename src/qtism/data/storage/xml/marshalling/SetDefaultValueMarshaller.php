@@ -55,11 +55,10 @@ class SetDefaultValueMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI setDefaultValue element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A SetDefaultValue object.
+     * @return SetDefaultValue A SetDefaultValue object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): SetDefaultValue
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {

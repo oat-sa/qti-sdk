@@ -55,10 +55,10 @@ class BrMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML br element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Br object.
+     * @return Br A Br object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element): QtiComponent
+    protected function unmarshall(DOMElement $element): Br
     {
         $component = new Br();
 

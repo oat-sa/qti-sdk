@@ -76,11 +76,10 @@ class MediaInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a MediaInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A MediaInteraction object.
+     * @return MediaInteraction A MediaInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): MediaInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {

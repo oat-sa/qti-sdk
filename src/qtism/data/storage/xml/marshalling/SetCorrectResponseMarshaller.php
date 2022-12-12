@@ -55,11 +55,10 @@ class SetCorrectResponseMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI setCorrectResponse element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A SetCorrectResponse object.
+     * @return SetCorrectResponse A SetCorrectResponse object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): SetCorrectResponse
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {

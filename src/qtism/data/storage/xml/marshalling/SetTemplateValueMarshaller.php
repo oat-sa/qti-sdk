@@ -55,11 +55,10 @@ class SetTemplateValueMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI setTemplateValue element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A SetTemplateValue object.
+     * @return SetTemplateValue A SetTemplateValue object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): SetTemplateValue
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {

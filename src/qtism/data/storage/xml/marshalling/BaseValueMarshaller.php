@@ -54,10 +54,9 @@ class BaseValueMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI baseValue element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A BaseValue object.
+     * @return BaseValue A BaseValue object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): BaseValue
     {
         if (($baseType = $this->getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {

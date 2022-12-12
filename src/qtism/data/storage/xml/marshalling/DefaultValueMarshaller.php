@@ -101,11 +101,10 @@ class DefaultValueMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI defaultValue element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A DefaultValue object.
+     * @return DefaultValue A DefaultValue object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid DefaultValue object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): DefaultValue
     {
         $interpretation = $this->getDOMElementAttributeAs($element, 'interpretation', 'string');

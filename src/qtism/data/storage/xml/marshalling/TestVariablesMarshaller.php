@@ -62,7 +62,7 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
      * Marshall a testVariable QTI element in its TestVariable object equivalent.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent The corresponding TestVariable object.
+     * @return TestVariables The corresponding TestVariable object.
      * @throws UnmarshallingException
      */
     protected function unmarshall(DOMElement $element): TestVariables

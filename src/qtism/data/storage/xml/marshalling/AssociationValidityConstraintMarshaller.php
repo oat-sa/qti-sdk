@@ -53,10 +53,10 @@ class AssociationValidityConstraintMarshaller extends Marshaller
      * Unmarshall a DOMElement to its AssociationValidityConstraint data model representation.
      *
      * @param DOMElement $element
-     * @return QtiComponent An AssociationValidityConstraint object.
+     * @return AssociationValidityConstraint An AssociationValidityConstraint object.
      * @throws UnmarshallingException
      */
-    public function unmarshall(DOMElement $element): QtiComponent
+    public function unmarshall(DOMElement $element): AssociationValidityConstraint
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($minConstraint = $this->getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {

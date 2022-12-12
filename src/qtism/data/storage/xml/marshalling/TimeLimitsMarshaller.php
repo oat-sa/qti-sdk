@@ -61,9 +61,8 @@ class TimeLimitsMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI timeLimits element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A TimeLimits object.
+     * @return TimeLimits A TimeLimits object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): TimeLimits
     {
         $object = new TimeLimits();

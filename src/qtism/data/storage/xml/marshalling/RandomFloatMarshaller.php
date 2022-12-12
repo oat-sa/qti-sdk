@@ -53,10 +53,9 @@ class RandomFloatMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI randomFloat element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A RandomFloat object.
+     * @return RandomFloat A RandomFloat object.
      * @throws UnmarshallingException If the mandatory attributes min or max ar missing.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): RandomFloat
     {
         // max attribute is mandatory.

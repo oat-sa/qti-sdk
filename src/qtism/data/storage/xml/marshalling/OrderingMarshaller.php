@@ -51,9 +51,8 @@ class OrderingMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI Ordering element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An Ordering object.
+     * @return Ordering An Ordering object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Ordering
     {
         $object = new Ordering();

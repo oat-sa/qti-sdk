@@ -27,7 +27,6 @@ use DOMElement;
 use qtism\data\ExtendedTestPart;
 use qtism\data\QtiComponent;
 use qtism\data\TestFeedbackRefCollection;
-use qtism\data\TestPart;
 
 /**
  * Marshalling/Unmarshalling implementation for ExtendedTestPart.
@@ -55,11 +54,10 @@ class ExtendedTestPartMarshaller extends TestPartMarshaller
 
     /**
      * @param DOMElement $element
-     * @return ExtendedTestPart|TestPart
+     * @return ExtendedTestPart
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): ExtendedTestPart
     {
         $baseComponent = parent::unmarshall($element);

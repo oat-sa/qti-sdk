@@ -56,11 +56,10 @@ class StylesheetMarshaller extends Marshaller
     /**
      * Unmarshall a DOMElement object corresponding to a QTI stylesheet element.
      *
-     * @param DOMElement $element A DOMElement object.
+     * @param Stylesheet $element A DOMElement object.
      * @return QtiComponent A Stylesheet object.
      * @throws UnmarshallingException If the mandatory attribute 'href' is missing from $element.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Stylesheet
     {
         // href is a mandatory value, retrieve it first.

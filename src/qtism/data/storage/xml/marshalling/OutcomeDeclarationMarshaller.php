@@ -106,11 +106,10 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
      * Unmarshall a DOMElement object corresponding to a QTI outcomeDeclaration element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An OutcomeDeclaration object.
+     * @return OutcomeDeclaration An OutcomeDeclaration object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): OutcomeDeclaration
     {
         try {

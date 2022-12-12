@@ -68,11 +68,10 @@ class VariableDeclarationMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI variableDeclaration element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A VariableDeclaration object.
+     * @return VariableDeclaration A VariableDeclaration object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): VariableDeclaration
     {
         try {

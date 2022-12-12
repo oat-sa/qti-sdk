@@ -79,10 +79,9 @@ class GapMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML gap element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Gap object.
+     * @return Gap A Gap object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Gap
     {
         $version = $this->getVersion();

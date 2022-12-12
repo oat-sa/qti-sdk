@@ -57,10 +57,10 @@ class ModalFeedbackRuleMarshaller extends Marshaller
      * Unmarshall a DOMElement to its ModalFeedbackRule data model representation.
      *
      * @param DOMElement $element
-     * @return QtiComponent A ModalFeedbackRule object.
+     * @return ModalFeedbackRule A ModalFeedbackRule object.
      * @throws UnmarshallingException If the 'identifier', 'outcomeIdentifier', 'showHide', or attribute is missing from the XML definition.
      */
-    public function unmarshall(DOMElement $element): QtiComponent
+    public function unmarshall(DOMElement $element): ModalFeedbackRule
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($outcomeIdentifier = $this->getDOMElementAttributeAs($element, 'outcomeIdentifier')) !== null) {

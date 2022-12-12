@@ -65,11 +65,10 @@ class UploadInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an uploadInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An UploadInteraction object.
+     * @return UploadInteraction An UploadInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): UploadInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {

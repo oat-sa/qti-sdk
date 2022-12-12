@@ -110,10 +110,9 @@ class MapEntryMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI mapEntry element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A MapEntry object.
+     * @return MapEntry A MapEntry object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): MapEntry
     {
         try {

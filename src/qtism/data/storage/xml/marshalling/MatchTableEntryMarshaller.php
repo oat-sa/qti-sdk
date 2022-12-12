@@ -107,10 +107,9 @@ class MatchTableEntryMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI MatchTableEntry element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A MatchTableEntry object.
+     * @return MatchTableEntry A MatchTableEntry object.
      * @throws UnmarshallingException If the mandatory attributes 'sourceValue' or 'targetValue' are missing from $element.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): MatchTableEntry
     {
         if (($sourceValue = $this->getDOMElementAttributeAs($element, 'sourceValue', 'integer')) !== null) {

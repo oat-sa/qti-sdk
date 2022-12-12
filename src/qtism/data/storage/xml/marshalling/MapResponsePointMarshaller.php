@@ -51,10 +51,9 @@ class MapResponsePointMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI mapResponsePoint element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A MapResponsePoint object.
+     * @return MapResponsePoint A MapResponsePoint object.
      * @throws UnmarshallingException If the mandatory attributes 'identifier' is missing.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): MapResponsePoint
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {

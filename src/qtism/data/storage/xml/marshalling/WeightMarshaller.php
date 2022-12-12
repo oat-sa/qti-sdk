@@ -54,10 +54,9 @@ class WeightMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI weight element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Weight object.
+     * @return Weight A Weight object.
      * @throws UnmarshallingException If the mandatory attributes 'identifier' or 'value' are missing from $element but also if 'value' cannot be converted to a float value or 'identifier' is not a valid QTI Identifier.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Weight
     {
         // identifier is a mandatory value.

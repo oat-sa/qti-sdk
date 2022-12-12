@@ -84,11 +84,10 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
      * Unmarshall a DOMElement object corresponding to a QTI assessmentItemRef element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An AssessmentItemRef object.
+     * @return AssessmentItemRef An AssessmentItemRef object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory attribute 'href' is missing.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): AssessmentItemRef
     {
         $baseComponent = parent::unmarshall($element);

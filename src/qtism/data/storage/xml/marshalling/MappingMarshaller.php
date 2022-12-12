@@ -118,11 +118,10 @@ class MappingMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI mapping element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Mapping object.
+     * @return Mapping A Mapping object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Mapping
     {
         $mapEntriesElts = $this->getChildElementsByTagName($element, 'mapEntry');

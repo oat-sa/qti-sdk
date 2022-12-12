@@ -24,6 +24,7 @@
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
+use qtism\data\content\BodyElement;
 use qtism\data\content\xhtml\tables\TrCollection;
 use qtism\data\QtiComponent;
 
@@ -58,11 +59,11 @@ class TablePartMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML tbody/thead/tfoot element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Tbody/Thead/Tfoot object.
+     * @return BodyElement A Tbody/Thead/Tfoot object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element): QtiComponent
+    protected function unmarshall(DOMElement $element): BodyElement
     {
         $trs = new TrCollection();
         foreach ($this->getChildElementsByTagName($element, 'tr') as $trElt) {

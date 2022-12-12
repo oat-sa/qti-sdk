@@ -96,10 +96,9 @@ class HotspotMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a hotspotChoice/associableHotspot element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A HotspotChoice/AssociableHotspot object.
+     * @return HotspotChoice|AssociableHotspot A HotspotChoice/AssociableHotspot object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): QtiComponent
     {
         $version = $this->getVersion();

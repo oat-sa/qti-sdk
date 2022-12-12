@@ -64,7 +64,6 @@ class ItemSubsetMarshaller extends Marshaller
      * @param DOMElement $element
      * @return ItemSubset
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): ItemSubset
     {
         $object = new ItemSubset();

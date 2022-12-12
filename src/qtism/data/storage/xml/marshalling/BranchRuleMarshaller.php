@@ -54,11 +54,10 @@ class BranchRuleMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI branchRule element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A BranchRule object.
+     * @return BranchRule A BranchRule object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory expression child element is missing from $element or if the 'target' element is missing.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): BranchRule
     {
         if (($target = $this->getDOMElementAttributeAs($element, 'target')) !== null) {

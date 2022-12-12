@@ -68,11 +68,10 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
      * Unmarshall a DOMElement object corresponding to a QTI responseDeclaration element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A ResponseDeclaration object.
+     * @return ResponseDeclaration A ResponseDeclaration object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): ResponseDeclaration
     {
         try {

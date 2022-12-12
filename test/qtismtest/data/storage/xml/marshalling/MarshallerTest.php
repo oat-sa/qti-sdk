@@ -7,7 +7,6 @@ use DOMElement;
 use qtism\common\enums\BaseType;
 use qtism\data\expressions\BaseValue;
 use qtism\data\ItemSessionControl;
-use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\ItemSessionControlMarshaller;
 use qtism\data\storage\xml\marshalling\Marshaller;
 use qtismtest\QtiSmTestCase;
@@ -87,7 +86,7 @@ class MarshallerTest extends QtiSmTestCase
         // We should find only 2 direct child elements.
         $dom->loadXML('<parent><child/><child/><parent><child/></parent></parent>');
         $element = $dom->documentElement;
-        $marshaller = new FakeMarshaller('2.1.0');
+        $marshaller = $this->createMarshaller();
 
         $this::assertCount(2, $marshaller->getChildElementsByTagName($element, 'child'));
     }
@@ -97,7 +96,7 @@ class MarshallerTest extends QtiSmTestCase
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<parent><child/><child/><grandChild/><uncle/></parent>');
         $element = $dom->documentElement;
-        $marshaller = new FakeMarshaller('2.1.0');
+        $marshaller = $this->createMarshaller();
 
         $this::assertCount(3, $marshaller->getChildElementsByTagName($element, ['child', 'grandChild']));
     }
@@ -110,7 +109,7 @@ class MarshallerTest extends QtiSmTestCase
         // should be found.
         $dom->loadXML('<parent><parent><child/></parent></parent>');
         $element = $dom->documentElement;
-        $marshaller = new FakeMarshaller('2.1.0');
+        $marshaller = $this->createMarshaller();
 
         $this::assertCount(0, $marshaller->getChildElementsByTagName($element, 'child'));
     }
@@ -189,30 +188,16 @@ class MarshallerTest extends QtiSmTestCase
 
         $marshaller->hello('blah');
     }
-}
 
-class FakeMarshaller extends Marshaller
-{
-    /**
-     * @inheritDoc
-     */
-    protected function marshall(QtiComponent $component): DOMElement
+    private function createMarshaller(): Marshaller
     {
-        return new DOMElement();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function unmarshall(DOMElement $element): QtiComponent
-    {
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getExpectedQtiClassName(): string
-    {
-        return '';
+        return $this->getMockBuilder(Marshaller::class)
+            ->setConstructorArgs(['2.1.0'])
+            ->onlyMethods([
+                'marshall',
+                'unmarshall',
+                'getExpectedQtiClassName'
+            ])
+            ->getMock();
     }
 }

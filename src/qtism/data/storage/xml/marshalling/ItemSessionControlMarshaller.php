@@ -55,7 +55,6 @@ class ItemSessionControlMarshaller extends Marshaller
      * @param DOMElement $element
      * @return ItemSessionControl
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): ItemSessionControl
     {
         $object = new ItemSessionControl();

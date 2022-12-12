@@ -63,11 +63,10 @@ class DrawingInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a DrawingInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A DrawingInteraction object.
+     * @return DrawingInteraction A DrawingInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): DrawingInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {

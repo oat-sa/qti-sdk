@@ -55,11 +55,11 @@ class SetOutcomeValueMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI SetOutcomeValue element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A SetOutcomeValue object.
+     * @return SetOutcomeValue A SetOutcomeValue object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory expression child element is missing from $element or if the 'target' element is missing.
      */
-    protected function unmarshall(DOMElement $element): QtiComponent
+    protected function unmarshall(DOMElement $element): SetOutcomeValue
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $expressionElt = self::getFirstChildElement($element);

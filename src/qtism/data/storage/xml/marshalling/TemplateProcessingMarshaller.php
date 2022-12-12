@@ -57,11 +57,10 @@ class TemplateProcessingMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI templateProcessing element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A TemplateProcessing object.
+     * @return TemplateProcessing A TemplateProcessing object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): TemplateProcessing
     {
         $childrenTagNames = ['exitTemplate', 'setCorrectResponse', 'setDefaultValue', 'setTemplateValue', 'templateCondition', 'templateConstraint'];

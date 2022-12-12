@@ -58,11 +58,10 @@ class ShufflingMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI ShufflingGroup element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A ShufflingGroup object.
+     * @return Shuffling A ShufflingGroup object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Shuffling
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {

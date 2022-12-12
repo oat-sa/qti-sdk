@@ -71,10 +71,9 @@ class ImgMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML img element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent n Img object.
+     * @return Img n Img object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Img
     {
         $src = $this->getDOMElementAttributeAs($element, 'src');

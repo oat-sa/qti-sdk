@@ -74,11 +74,10 @@ class TestFeedbackMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI testFeedback element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A TestFeedback object.
+     * @return TestFeedback A TestFeedback object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): TestFeedback
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {

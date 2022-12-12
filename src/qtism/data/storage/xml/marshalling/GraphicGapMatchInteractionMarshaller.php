@@ -38,11 +38,10 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a graphicGapMatchInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A GraphicGapMatchInteraction object.
+     * @return GraphicGapMatchInteraction A GraphicGapMatchInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): GraphicGapMatchInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {

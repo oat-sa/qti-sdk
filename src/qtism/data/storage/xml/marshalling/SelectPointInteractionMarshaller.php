@@ -73,11 +73,10 @@ class SelectPointInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a selectPointInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A SelectPointInteraction object.
+     * @return SelectPointInteraction A SelectPointInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): SelectPointInteraction
     {
         $version = $this->getVersion();

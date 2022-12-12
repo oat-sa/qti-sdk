@@ -59,11 +59,10 @@ class TemplateDefaultMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI templateDefault element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A templateDefault object.
+     * @return TemplateDefault A templateDefault object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory attribute 'templateIdentifier' is missing or has an unexpected number of expressions.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): TemplateDefault
     {
         if (($tplIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {

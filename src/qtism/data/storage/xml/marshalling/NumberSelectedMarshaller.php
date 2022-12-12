@@ -47,9 +47,8 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller
      * Marshall an numberSelected QTI element in its NumberSelected object equivalent.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent The corresponding NumberSelected object.
+     * @return NumberSelected The corresponding NumberSelected object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): NumberSelected
     {
         $baseComponent = parent::unmarshall($element);

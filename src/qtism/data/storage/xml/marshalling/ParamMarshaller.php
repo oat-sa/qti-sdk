@@ -57,10 +57,9 @@ class ParamMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML param element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Param object.
+     * @return Param A Param object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Param
     {
         if (($name = $this->getDOMElementAttributeAs($element, 'name')) === null) {

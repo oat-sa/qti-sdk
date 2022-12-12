@@ -60,10 +60,9 @@ class SelectionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI Selection object.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Selection object.
+     * @return Selection A Selection object.
      * @throws UnmarshallingException If the mandatory 'select' attribute is missing from $element.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Selection
     {
         // Retrieve XML content as a string.

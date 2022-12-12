@@ -121,12 +121,11 @@ class AssessmentItemMarshaller extends Marshaller
      * a new one.
      *
      * @param DOMElement $element A DOMElement object.
-     * @param AssessmentItem $assessmentItem An optional AssessmentItem object to be decorated.
-     * @return QtiComponent An AssessmentItem object.
+     * @param AssessmentItem|null $assessmentItem An optional AssessmentItem object to be decorated.
+     * @return AssessmentItem An AssessmentItem object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element, AssessmentItem $assessmentItem = null): AssessmentItem
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {

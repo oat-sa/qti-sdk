@@ -59,10 +59,9 @@ class CandidateResponseMarshaller extends Marshaller
 
     /**
      * @param DOMElement $element
-     * @return QtiComponent|CandidateResponse
+     * @return CandidateResponse
      * @throws MarshallerNotFoundException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): CandidateResponse
     {
         $valuesElements = $this->getChildElementsByTagName($element, 'value');

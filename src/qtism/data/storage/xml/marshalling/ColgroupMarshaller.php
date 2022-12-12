@@ -60,11 +60,10 @@ class ColgroupMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML colgroup table element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Colgroup object.
+     * @return Colgroup A Colgroup object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Colgroup
     {
         $component = new Colgroup();

@@ -79,12 +79,11 @@ class ItemResultMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI sessionIdentifier element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A QtiComponent object.
+     * @return ItemResult A QtiComponent object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
-    protected function unmarshall(DOMElement $element): QtiComponent
+    protected function unmarshall(DOMElement $element): ItemResult
     {
         if (!$element->hasAttribute('identifier')) {
             throw new UnmarshallingException('ItemResult element must have identifier attribute', $element);

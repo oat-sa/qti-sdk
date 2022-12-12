@@ -51,10 +51,9 @@ class CorrectMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI correct element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Correct object.
+     * @return Correct A Correct object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Correct
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {

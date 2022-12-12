@@ -47,9 +47,8 @@ class NumberIncorrectMarshaller extends ItemSubsetMarshaller
      * Marshall an numberIncorrect QTI element in its NumberIncorrect object equivalent.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent The corresponding NumberIncorrect object.
+     * @return NumberIncorrect The corresponding NumberIncorrect object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): NumberIncorrect
     {
         $baseComponent = parent::unmarshall($element);

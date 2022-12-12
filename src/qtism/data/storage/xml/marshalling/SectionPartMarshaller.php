@@ -95,9 +95,10 @@ class SectionPartMarshaller extends Marshaller
             }
 
             $preConditionElts = $this->getChildElementsByTagName($element, 'preCondition');
-            if (count($preConditionElts) > 0) {
+            $preConditionElementCount = count($preConditionElts);
+            if ($preConditionElementCount > 0) {
                 $preConditions = new PreConditionCollection();
-                for ($i = 0; $i < count($preConditionElts); $i++) {
+                for ($i = 0; $i < $preConditionElementCount; $i++) {
                     $marshaller = $this->getMarshallerFactory()->createMarshaller($preConditionElts[$i]);
                     $preConditions[] = $marshaller->unmarshall($preConditionElts[$i]);
                 }
@@ -105,9 +106,10 @@ class SectionPartMarshaller extends Marshaller
             }
 
             $branchRuleElts = $this->getChildElementsByTagName($element, 'branchRule');
-            if (count($branchRuleElts) > 0) {
+            $branchRuleElementCount = count($branchRuleElts);
+            if ($branchRuleElementCount > 0) {
                 $branchRules = new BranchRuleCollection();
-                for ($i = 0; $i < count($branchRuleElts); $i++) {
+                for ($i = 0; $i < $branchRuleElementCount; $i++) {
                     $marshaller = $this->getMarshallerFactory()->createMarshaller($branchRuleElts[$i]);
                     $branchRules[] = $marshaller->unmarshall($branchRuleElts[$i]);
                 }

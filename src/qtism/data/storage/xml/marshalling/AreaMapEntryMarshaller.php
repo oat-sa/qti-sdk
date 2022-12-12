@@ -56,10 +56,9 @@ class AreaMapEntryMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI areaMapEntry element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An AreaMapEntry object.
+     * @return AreaMapEntry An AreaMapEntry object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): AreaMapEntry
     {
         if (($shape = $this->getDOMElementAttributeAs($element, 'shape')) !== null) {

@@ -56,10 +56,9 @@ class EndAttemptInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an endAttemptInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An EndAttemptInteraction object.
+     * @return EndAttemptInteraction An EndAttemptInteraction object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): EndAttemptInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {

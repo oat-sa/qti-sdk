@@ -60,10 +60,9 @@ class CustomInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI customInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A CustomInteraction object.
+     * @return CustomInteraction A CustomInteraction object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): CustomInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {

@@ -47,9 +47,8 @@ class NumberRespondedMarshaller extends ItemSubsetMarshaller
      * Marshall an numberResponded QTI element in its NumberResponded object equivalent.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent The corresponding NumberResponded object.
+     * @return NumberResponded The corresponding NumberResponded object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): NumberResponded
     {
         $baseComponent = parent::unmarshall($element);

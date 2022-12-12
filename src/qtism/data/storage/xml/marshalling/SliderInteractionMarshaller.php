@@ -81,11 +81,10 @@ class SliderInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a SliderInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A SliderInteraction object.
+     * @return SliderInteraction A SliderInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): SliderInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {

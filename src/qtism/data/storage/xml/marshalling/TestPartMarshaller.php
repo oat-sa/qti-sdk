@@ -93,7 +93,6 @@ class TestPartMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): TestPart
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {

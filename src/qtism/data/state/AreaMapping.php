@@ -133,7 +133,7 @@ class AreaMapping extends QtiComponent
     /**
      * Get the upper bound.
      *
-     * @return float An upper bound.
+     * @return float|false An upper bound.
      */
     #[\ReturnTypeWillChange]
     public function getUpperBound()

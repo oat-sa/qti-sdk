@@ -48,9 +48,9 @@ class TextRunMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI textRun element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A TextRun object.
+     * @return TextRun A TextRun object.
      */
-    protected function unmarshall(DOMElement $element): QtiComponent
+    protected function unmarshall(DOMElement $element): TextRun
     {
         return new TextRun($element->nodeValue);
     }

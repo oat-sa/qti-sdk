@@ -68,10 +68,10 @@ class AreaMappingMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI areaMapping element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An AreaMapping object.
+     * @return AreaMapping An AreaMapping object.
      * @throws MarshallerNotFoundException
      */
-    protected function unmarshall(DOMElement $element): QtiComponent
+    protected function unmarshall(DOMElement $element): AreaMapping
     {
         $areaMapEntries = new AreaMapEntryCollection();
         $areaMapEntryElts = $this->getChildElementsByTagName($element, 'areaMapEntry');

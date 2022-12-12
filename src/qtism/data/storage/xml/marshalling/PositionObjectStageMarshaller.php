@@ -58,11 +58,10 @@ class PositionObjectStageMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an positionObjectStage element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A PositionObjectStage object.
+     * @return PositionObjectStage A PositionObjectStage object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): PositionObjectStage
     {
         $objectElts = $this->getChildElementsByTagName($element, 'object');

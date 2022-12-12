@@ -47,9 +47,8 @@ class XIncludeMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a math element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Math object.
+     * @return XInclude A Math object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): XInclude
     {
         $node = $element->cloneNode(true);

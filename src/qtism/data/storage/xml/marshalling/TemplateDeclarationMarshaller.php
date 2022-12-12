@@ -66,11 +66,10 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      * Unmarshall a DOMElement object corresponding to a QTI templateDeclaration element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A TemplateDeclaration object.
+     * @return TemplateDeclaration A TemplateDeclaration object.
      * @throws UnmarshallingException
      * @throws MarshallerNotFoundException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): TemplateDeclaration
     {
         try {

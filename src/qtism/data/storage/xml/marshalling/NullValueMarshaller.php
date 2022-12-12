@@ -47,9 +47,8 @@ class NullValueMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI null element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A NullValue object.
+     * @return NullValue A NullValue object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): NullValue
     {
         return new NullValue();

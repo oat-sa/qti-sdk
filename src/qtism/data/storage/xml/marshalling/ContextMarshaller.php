@@ -71,7 +71,6 @@ class ContextMarshaller extends Marshaller
      * @return Context A QtiComponent object.
      * @throws MarshallerNotFoundException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Context
     {
         $sourcedId = $element->hasAttribute('sourcedId')

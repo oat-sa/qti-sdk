@@ -113,11 +113,10 @@ class MatchTableMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI MatchTable element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A MatchTable object.
+     * @return MatchTable A MatchTable object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the $element to unmarshall has no matchTableEntry children.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): MatchTable
     {
         $matchTableEntryElements = $element->getElementsByTagName('matchTableEntry');

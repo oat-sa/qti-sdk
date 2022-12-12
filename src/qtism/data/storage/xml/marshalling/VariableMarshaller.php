@@ -56,10 +56,9 @@ class VariableMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI Variable element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Variable object.
+     * @return Variable A Variable object.
      * @throws UnmarshallingException If the mandatory attribute 'identifier' is not set in $element.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): Variable
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {

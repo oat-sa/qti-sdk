@@ -47,9 +47,9 @@ class SsmlSubMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an SSML sub element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An SSML sub object.
+     * @return Sub An SSML sub object.
      */
-    protected function unmarshall(DOMElement $element): QtiComponent
+    protected function unmarshall(DOMElement $element): Sub
     {
         $node = $element->cloneNode(true);
 

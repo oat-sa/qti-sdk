@@ -121,7 +121,6 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): ExtendedAssessmentItemRef
     {
         $baseComponent = parent::unmarshall($element);

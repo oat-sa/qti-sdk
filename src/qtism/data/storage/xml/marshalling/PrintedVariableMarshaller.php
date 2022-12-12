@@ -79,10 +79,9 @@ class PrintedVariableMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a printedVariable element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A PrintedVariable object.
+     * @return PrintedVariable A PrintedVariable object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): PrintedVariable
     {
         $version = $this->getVersion();

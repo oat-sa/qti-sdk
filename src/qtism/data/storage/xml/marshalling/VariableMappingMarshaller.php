@@ -53,10 +53,9 @@ class VariableMappingMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI variableMapping element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A VariableMapping object.
+     * @return VariableMapping A VariableMapping object.
      * @throws UnmarshallingException If the mandatory attributes 'sourceIdentifier' or 'targetIdentifier' are missing from $element or are invalid.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): VariableMapping
     {
         if (($source = $this->getDOMElementAttributeAs($element, 'sourceIdentifier', 'string')) !== null) {

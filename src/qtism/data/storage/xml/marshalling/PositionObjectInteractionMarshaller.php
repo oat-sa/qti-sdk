@@ -72,11 +72,10 @@ class PositionObjectInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an positionObjectInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A PositionObjectInteraction object.
+     * @return PositionObjectInteraction A PositionObjectInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): PositionObjectInteraction
     {
         $version = $this->getVersion();

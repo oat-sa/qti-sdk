@@ -115,11 +115,10 @@ class InterpolationTableMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI InterpolationTable element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An InterpolationTable object.
+     * @return InterpolationTable An InterpolationTable object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If $element does not contain any interpolationTableEntry QTI elements.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): InterpolationTable
     {
         $interpolationTableEntryElements = $element->getElementsByTagName('interpolationTableEntry');

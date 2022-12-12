@@ -51,10 +51,9 @@ class DefaultValMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI default element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A DefaultVal object.
+     * @return DefaultVal A DefaultVal object.
      * @throws UnmarshallingException If the mandatory attributes 'identifier' is missing.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): DefaultVal
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {

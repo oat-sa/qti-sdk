@@ -95,11 +95,11 @@ class OutcomeVariableMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI sessionIdentifier element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A QtiComponent object.
+     * @return ResultOutcomeVariable A QtiComponent object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element): QtiComponent
+    protected function unmarshall(DOMElement $element): ResultOutcomeVariable
     {
         if (!$element->hasAttribute('identifier')) {
             throw new UnmarshallingException('OutcomeVariable element must have identifier attribute', $element);

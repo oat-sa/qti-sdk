@@ -47,9 +47,8 @@ class ExitTemplateMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI exitTemplate element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An ExitTemplate object.
+     * @return ExitTemplate An ExitTemplate object.
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): ExitTemplate
     {
         return new ExitTemplate();

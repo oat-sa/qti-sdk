@@ -55,10 +55,9 @@ class OutcomeMinimumMarshaller extends ItemSubsetMarshaller
      * Marshall a outcomeMinimum QTI element in its OutcomeMinimum object equivalent.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent The corresponding OutcomeMinimum object.
+     * @return OutcomeMinimum The corresponding OutcomeMinimum object.
      * @throws UnmarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function unmarshall(DOMElement $element): OutcomeMinimum
     {
         $baseComponent = parent::unmarshall($element);
