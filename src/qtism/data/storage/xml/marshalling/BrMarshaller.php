@@ -43,7 +43,7 @@ class BrMarshaller extends Marshaller
         $element = $this->createElement($component);
 
         if ($component->hasXmlBase() === true) {
-            self::setXmlBase($element, $component->setXmlBase());
+            self::setXmlBase($element, $component->getXmlBase());
         }
 
         $this->fillElement($element, $component);

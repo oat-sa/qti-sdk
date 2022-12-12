@@ -71,7 +71,7 @@ class TextInteractionMarshaller extends Marshaller
         }
 
         if ($component->hasXmlBase() === true) {
-            self::setXmlBase($element, $component->setXmlBase());
+            self::setXmlBase($element, $component->getXmlBase());
         }
 
         if ($element->localName === 'extendedTextInteraction') {
