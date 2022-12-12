@@ -64,7 +64,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * The shape of the hotspot.
      *
-     * @var QtiShape
+     * @var int
      * @qtism-bean-property
      */
     private $shape;
@@ -194,12 +194,9 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     }
 
     /**
-     * Get the shape of the associableHotspot.
-     *
-     * @return QtiShape A Shape object.
+     * @inheritDoc
      */
-    #[\ReturnTypeWillChange]
-    public function getShape()
+    public function getShape(): int
     {
         return $this->shape;
     }

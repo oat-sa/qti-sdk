@@ -101,11 +101,9 @@ class HotspotChoice extends Choice implements Hotspot
     }
 
     /**
-     * Get the shape of the associableHotspot.
-     *
-     * @return QtiShape A Shape object.
+     * @inheritDoc
      */
-    public function getShape()
+    public function getShape(): int
     {
         return $this->shape;
     }

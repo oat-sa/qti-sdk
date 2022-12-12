@@ -25,7 +25,6 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\common\datatypes\QtiCoords;
-use qtism\common\datatypes\QtiShape;
 
 /**
  * From IMS QTI:
@@ -46,10 +45,9 @@ interface Hotspot
     /**
      * Get the shape of the hotspot.
      *
-     * @return QtiShape|null A Shape object.
+     * @return int A value from the Shape enumeration.
      */
-    #[\ReturnTypeWillChange]
-    public function getShape();
+    public function getShape(): int;
 
     /**
      * Set the coords of the hotspot.
