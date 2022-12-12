@@ -106,7 +106,7 @@ class AreaMapping extends QtiComponent
     /**
      * Get the lower bound.
      *
-     * @return float A lower bound.
+     * @return float|false A lower bound.
      */
     #[\ReturnTypeWillChange]
     public function getLowerBound()
