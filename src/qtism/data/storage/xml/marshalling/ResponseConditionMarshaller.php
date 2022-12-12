@@ -164,7 +164,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
      * @param DOMElement $currentNode
      * @return QtiComponentCollection|ResponseRuleCollection
      */
-    protected function createCollection(DOMElement $currentNode)
+    protected function createCollection(DOMElement $currentNode): QtiComponentCollection
     {
         if ($currentNode->localName != 'responseCondition') {
             return new ResponseRuleCollection();

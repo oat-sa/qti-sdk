@@ -163,7 +163,7 @@ class OutcomeConditionMarshaller extends RecursiveMarshaller
      * @param DOMElement $currentNode
      * @return QtiComponentCollection|OutcomeRuleCollection
      */
-    protected function createCollection(DOMElement $currentNode)
+    protected function createCollection(DOMElement $currentNode): QtiComponentCollection
     {
         if ($currentNode->localName != 'outcomeCondition') {
             return new OutcomeRuleCollection();

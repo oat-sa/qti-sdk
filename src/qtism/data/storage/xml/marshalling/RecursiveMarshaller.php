@@ -360,8 +360,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @param DOMElement $currentNode
      * @return AbstractCollection
      */
-    #[\ReturnTypeWillChange]
-    abstract protected function createCollection(DOMElement $currentNode);
+    abstract protected function createCollection(DOMElement $currentNode): AbstractCollection;
 
     /**
      * Marshall a given QTI $component while receiving the already marshalled

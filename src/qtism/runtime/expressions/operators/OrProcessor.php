@@ -48,8 +48,7 @@ class OrProcessor extends OperatorProcessor
      * @return QtiBoolean True if the expression is true, false otherwise.
      * @throws OperatorProcessingException
      */
-    #[\ReturnTypeWillChange]
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
         $allFalse = true;

@@ -103,8 +103,7 @@ abstract class SetValueProcessor extends RuleProcessor
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    #[\ReturnTypeWillChange]
-    abstract protected function getVariableType();
+    abstract protected function getVariableType(): string;
 }

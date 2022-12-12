@@ -46,7 +46,7 @@ class TruncateProcessor extends OperatorProcessor
     /**
      * Process the Truncate operator.
      *
-     * @return QtiInteger|null The truncated value or NULL if the sub-expression is NaN or if the sub-expression is NULL.
+     * @return QtiInteger|QtiFloat|null The truncated value or NULL if the sub-expression is NaN or if the sub-expression is NULL.
      * @throws OperatorProcessingException
      */
     #[\ReturnTypeWillChange]

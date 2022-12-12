@@ -430,8 +430,7 @@ class AssessmentTestSession extends State
      *
      * @return Route A Route object.
      */
-    #[\ReturnTypeWillChange]
-    public function getRoute()
+    public function getRoute(): Route
     {
         return $this->route;
     }
@@ -577,8 +576,7 @@ class AssessmentTestSession extends State
      *
      * @return DurationStore
      */
-    #[\ReturnTypeWillChange]
-    public function getDurationStore()
+    public function getDurationStore(): DurationStore
     {
         return $this->durationStore;
     }
@@ -1067,7 +1065,7 @@ class AssessmentTestSession extends State
      *  * if the current item of the selection is Q23, the return value is 0.
      *  * if the current item of the selection is Q01.3, the return value is 2.
      *
-     * @return int the occurence number of the current AssessmentItemRef in the route or false if the test session is not running.
+     * @return int|false the occurence number of the current AssessmentItemRef in the route or false if the test session is not running.
      */
     #[\ReturnTypeWillChange]
     public function getCurrentAssessmentItemRefOccurence()
@@ -1096,7 +1094,7 @@ class AssessmentTestSession extends State
     /**
      * Get the current TestPart.
      *
-     * @return TestPart A TestPart object or false if the test session is not running.
+     * @return TestPart|false A TestPart object or false if the test session is not running.
      */
     #[\ReturnTypeWillChange]
     public function getCurrentTestPart()

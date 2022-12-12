@@ -164,8 +164,7 @@ class TemplateConditionMarshaller extends RecursiveMarshaller
      * @param DOMElement $currentNode
      * @return QtiComponentCollection|TemplateRuleCollection
      */
-    #[\ReturnTypeWillChange]
-    protected function createCollection(DOMElement $currentNode)
+    protected function createCollection(DOMElement $currentNode): QtiComponentCollection
     {
         if ($currentNode->localName != 'templateCondition') {
             return new TemplateRuleCollection();

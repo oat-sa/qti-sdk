@@ -172,6 +172,5 @@ abstract class AbstractStorage
      * @return bool
      * @throws StorageException If an error occurs while deleting the AssessmentTestSession object.
      */
-    #[\ReturnTypeWillChange]
     abstract public function delete(AssessmentTestSession $assessmentTestSession): bool;
 }

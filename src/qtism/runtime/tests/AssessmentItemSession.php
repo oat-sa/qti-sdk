@@ -40,8 +40,6 @@ use qtism\data\ItemSessionControl;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\ShowHide;
-use qtism\data\state\OutcomeDeclaration;
-use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ShufflingCollection;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
@@ -1192,8 +1190,7 @@ class AssessmentItemSession extends State
      * @param bool $builtIn Whether to include the built-in OutcomeVariable 'completionStatus'.
      * @return State A State object composed exclusively with OutcomeVariable objects.
      */
-    #[\ReturnTypeWillChange]
-    public function getOutcomeVariables($builtIn = true)
+    public function getOutcomeVariables($builtIn = true): State
     {
         $state = new State();
         $data = $this->getDataPlaceHolder();

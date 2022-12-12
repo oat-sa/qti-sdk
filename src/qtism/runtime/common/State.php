@@ -85,8 +85,7 @@ class State extends AbstractCollection
      *
      * @return VariableCollection A collection of Variable objects.
      */
-    #[\ReturnTypeWillChange]
-    public function getAllVariables()
+    public function getAllVariables(): VariableCollection
     {
         return new VariableCollection($this->getDataPlaceHolder());
     }

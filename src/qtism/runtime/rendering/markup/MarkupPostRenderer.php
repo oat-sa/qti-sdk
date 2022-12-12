@@ -25,7 +25,6 @@ namespace qtism\runtime\rendering\markup;
 
 use qtism\runtime\rendering\Renderable;
 use qtism\runtime\rendering\RenderingException;
-use qtism\runtime\rendering\markup\Utils;
 
 /**
  * Class MarkupPostRenderer
@@ -193,8 +192,7 @@ class MarkupPostRenderer implements Renderable
      * @return mixed|string|string[]|null
      * @throws RenderingException
      */
-    #[\ReturnTypeWillChange]
-    public function render($document)
+    public function render($document): string
     {
         if ($document->documentElement === null) {
             $msg = 'The XML Document to be rendered has no root element (i.e. it is empty).';
