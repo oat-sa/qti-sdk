@@ -40,7 +40,6 @@ class ExtendedAssessmentTestMarshaller extends AssessmentTestMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    #[\ReturnTypeWillChange]
     protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);

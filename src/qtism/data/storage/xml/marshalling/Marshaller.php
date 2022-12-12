@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMDocument;
 use DOMElement;
+use DOMNode;
 use InvalidArgumentException;
 use qtism\common\utils\Version;
 use qtism\data\content\BodyElement;
@@ -770,11 +771,10 @@ abstract class Marshaller
      * Marshall a QtiComponent object into its QTI-XML equivalent.
      *
      * @param QtiComponent $component A QtiComponent object to marshall.
-     * @return DOMElement A DOMElement object.
+     * @return DOMNode A DOMElement object.
      * @throws MarshallingException|MarshallerNotFoundException If an error occurs during the marshalling process.
      */
-    #[\ReturnTypeWillChange]
-    abstract protected function marshall(QtiComponent $component);
+    abstract protected function marshall(QtiComponent $component): DOMNode;
 
     /**
      * Unmarshall a DOMElement object into its QTI Data Model equivalent.
