@@ -37,7 +37,7 @@ class RandomInteger extends Expression
     /**
      * The min attribute value.
      *
-     * @var int
+     * @var int|string
      * @qtism-bean-property
      */
     private $min = 0;
@@ -76,9 +76,10 @@ class RandomInteger extends Expression
     /**
      * Get the value of the min attribute.
      *
-     * @return int
+     * @return int|string
      */
-    public function getMin(): int
+    #[\ReturnTypeWillChange]
+    public function getMin()
     {
         return $this->min;
     }
