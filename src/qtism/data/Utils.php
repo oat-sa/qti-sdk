@@ -185,12 +185,11 @@ class Utils
      * starts.
      * @param QtiComponent $component The QtiComponent with a BranchRule.
      * @param AssessmentSectionCollection $sections The collection of all sections in this AssessmentTest.
-     * @return AssessmentItem|null The last AssessmentItem that will be prompted before taking a BranchRule
+     * @return AssessmentItemRef|null The last AssessmentItem that will be prompted before taking a BranchRule
      * in the QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the begin of the
      * test has been reached.
      */
-    #[\ReturnTypeWillChange]
-    public static function getLastItem($test, $component, $sections)
+    public static function getLastItem($test, $component, $sections): ?AssessmentItemRef
     {
         $currentCmp = $component;
         // $sections = null;
