@@ -47,6 +47,8 @@ use InvalidArgumentException;
  */
 class ItemBody extends BodyElement
 {
+    public const QTI_CLASS_NAME = 'itemBody';
+
     /**
      * The blocks composing the itemBody.
      *

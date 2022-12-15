@@ -2,6 +2,7 @@
 
 namespace qtismtest\data\storage\xml;
 
+use qtism\data\content\Direction;
 use qtism\data\storage\xml\XmlDocument;
 use qtism\data\storage\xml\XmlStorageException;
 use qtismtest\QtiSmTestCase;
@@ -11,6 +12,7 @@ use qtism\data\AssessmentSectionRef;
 use qtism\data\TestPart;
 use qtism\data\AssessmentTest;
 use qtism\data\storage\xml\LibXmlErrorCollection;
+use qtism\data\content\ItemBody;
 
 /**
  * Class XmlAssessmentTestDocumentTest
@@ -232,6 +234,20 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
             ['custom/tests/mixed_assessment_section_refs/test_similar_ids.xml', true],
             ['custom/tests/mixed_assessment_section_refs/test_different_ids.xml', true],
         ];
+    }
+
+    public function testParseItemBodyWithDirAttr(): void
+    {
+        $doc = new XmlDocument();
+        $doc->load(self::samplesDir() . 'custom/items/item_body_dir_attr.xml', true);
+
+        /** @var ItemBody $itemBody */
+        $itemBody = $doc->getDocumentComponent()->getComponentsByClassName('itemBody')[0];
+
+        $this::assertTrue(isset($itemBody));
+        $this::assertNotEmpty($itemBody->getDir());
+        $this::assertEquals(Direction::RTL, $itemBody->getDir());
+
     }
 
     /**
