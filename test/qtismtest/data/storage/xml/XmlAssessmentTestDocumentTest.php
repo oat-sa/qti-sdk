@@ -162,8 +162,6 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $this::assertEquals('../sections/../sections/../items/question3.xml', $assessmentItemRefs['Q03']->getHref());
     }
 
-
-
     /**
      * @return array
      */
@@ -242,7 +240,6 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/item_body_dir_attr.xml', true);
-
 
         /** @var ItemBody $itemBody */
         $itemBody = $doc->getDocumentComponent()->getComponentsByClassName('itemBody')[0];
