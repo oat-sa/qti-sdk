@@ -48,7 +48,7 @@ class StringMatchProcessor extends OperatorProcessor
      * @return QtiBoolean Whether the two string match according to the comparison rules of the operator's attributes or NULL if either of the sub-expressions is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -79,7 +79,7 @@ class StringMatchProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return StringMatch::class;
     }

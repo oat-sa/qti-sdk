@@ -16,7 +16,7 @@ class DurationTest extends QtiSmTestCase
      * @dataProvider validDurationProvider
      * @param string $intervalSpec
      */
-    public function testValidDurationCreation($intervalSpec)
+    public function testValidDurationCreation($intervalSpec): void
     {
         $duration = new QtiDuration($intervalSpec);
         $this::assertInstanceOf(QtiDuration::class, $duration);
@@ -26,13 +26,13 @@ class DurationTest extends QtiSmTestCase
      * @dataProvider invalidDurationProvider
      * @param string $intervalSpec
      */
-    public function testInvalidDurationCreation($intervalSpec)
+    public function testInvalidDurationCreation($intervalSpec): void
     {
         $this->expectException(InvalidArgumentException::class);
         $duration = new QtiDuration($intervalSpec);
     }
 
-    public function testPositiveDuration()
+    public function testPositiveDuration(): void
     {
         $duration = new QtiDuration('P3YT6H8M'); // 2 years, 0 days, 6 hours, 8 minutes.
         $this::assertEquals(3, $duration->getYears());
@@ -43,7 +43,7 @@ class DurationTest extends QtiSmTestCase
         $this::assertEquals(0, $duration->getSeconds());
     }
 
-    public function testEquality()
+    public function testEquality(): void
     {
         $d1 = new QtiDuration('P1DT12H'); // 1 day + 12 hours.
         $d2 = new QtiDuration('P1DT12H');
@@ -56,7 +56,7 @@ class DurationTest extends QtiSmTestCase
         $this::assertTrue($d3->equals($d3));
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         $d = new QtiDuration('P1DT12H'); // 1 day + 12 hours.
         $c = clone $d;
@@ -76,12 +76,12 @@ class DurationTest extends QtiSmTestCase
      * @param QtiDuration $duration
      * @param string $expected
      */
-    public function testToString(QtiDuration $duration, $expected)
+    public function testToString(QtiDuration $duration, $expected): void
     {
         $this::assertEquals($expected, $duration->__toString());
     }
 
-    public function testAdd()
+    public function testAdd(): void
     {
         $d1 = new QtiDuration('PT1S');
         $d2 = new QtiDuration('PT1S');
@@ -99,7 +99,7 @@ class DurationTest extends QtiSmTestCase
         $this::assertEquals('PT2S', $d1->__toString());
     }
 
-    public function testSub()
+    public function testSub(): void
     {
         $d1 = new QtiDuration('PT2S');
         $d2 = new QtiDuration('PT1S');
@@ -127,7 +127,7 @@ class DurationTest extends QtiSmTestCase
         $this::assertTrue($d1->isNegative());
     }
 
-    public function testCreateFromDateInterval()
+    public function testCreateFromDateInterval(): void
     {
         $interval = new DateInterval('PT5S');
         $duration = QtiDuration::createFromDateInterval($interval);
@@ -141,7 +141,7 @@ class DurationTest extends QtiSmTestCase
      * @param QtiDuration $duration2
      * @param bool $expected
      */
-    public function testShorterThan(QtiDuration $duration1, QtiDuration $duration2, $expected)
+    public function testShorterThan(QtiDuration $duration1, QtiDuration $duration2, $expected): void
     {
         $this::assertSame($expected, $duration1->shorterThan($duration2));
     }
@@ -149,7 +149,7 @@ class DurationTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function shorterThanProvider()
+    public function shorterThanProvider(): array
     {
         $returnValue = [];
         $returnValue[] = [new QtiDuration('P1Y'), new QtiDuration('P2Y'), true];
@@ -170,7 +170,7 @@ class DurationTest extends QtiSmTestCase
      * @param QtiDuration $duration2
      * @param bool $expected
      */
-    public function testLongerThanOrEquals(QtiDuration $duration1, QtiDuration $duration2, $expected)
+    public function testLongerThanOrEquals(QtiDuration $duration1, QtiDuration $duration2, $expected): void
     {
         $this::assertSame($expected, $duration1->longerThanOrEquals($duration2));
     }
@@ -178,7 +178,7 @@ class DurationTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function longerThanOrEqualsProvider()
+    public function longerThanOrEqualsProvider(): array
     {
         $returnValue = [];
         $returnValue[] = [new QtiDuration('P1Y'), new QtiDuration('P2Y'), false];
@@ -201,7 +201,7 @@ class DurationTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function validDurationProvider()
+    public function validDurationProvider(): array
     {
         return [
             ['P2D'], // 2 days
@@ -213,7 +213,7 @@ class DurationTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function invalidDurationProvider()
+    public function invalidDurationProvider(): array
     {
         return [
             ['D2P'],
@@ -226,7 +226,7 @@ class DurationTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function toStringProvider()
+    public function toStringProvider(): array
     {
         return [
             [new QtiDuration('P2D'), 'P2D'], // 2 days

@@ -43,7 +43,7 @@ class QtiShape implements Enumeration
      *
      * @var int
      */
-    const DEF = 0;
+    public const DEF = 0;
 
     /**
      * From IMS QTI:
@@ -52,7 +52,7 @@ class QtiShape implements Enumeration
      *
      * @var int
      */
-    const RECT = 1;
+    public const RECT = 1;
 
     /**
      * From IMS QTI:
@@ -61,7 +61,7 @@ class QtiShape implements Enumeration
      *
      * @var int
      */
-    const CIRCLE = 2;
+    public const CIRCLE = 2;
 
     /**
      * From IMS QTI:
@@ -70,7 +70,7 @@ class QtiShape implements Enumeration
      *
      * @var int
      */
-    const POLY = 3;
+    public const POLY = 3;
 
     /**
      * From IMS QTI:
@@ -81,14 +81,14 @@ class QtiShape implements Enumeration
      * @var int
      * @deprecated
      */
-    const ELLIPSE = 4;
+    public const ELLIPSE = 4;
 
     /**
      * Get the enumeration as an array.
      *
      * @return array An associative array.
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'DEF' => self::DEF,

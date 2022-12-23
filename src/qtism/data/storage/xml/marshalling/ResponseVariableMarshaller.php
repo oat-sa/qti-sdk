@@ -45,10 +45,10 @@ class ResponseVariableMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
-        $element->setAttribute('identifier', $component->getIdentifier());
+        $element->setAttribute('identifier', (string)$component->getIdentifier());
         $element->setAttribute('cardinality', Cardinality::getNameByConstant($component->getCardinality()));
 
         if ($component->hasBaseType()) {
@@ -56,7 +56,7 @@ class ResponseVariableMarshaller extends Marshaller
         }
 
         if ($component->hasChoiceSequence()) {
-            $element->setAttribute('choiceSequence', $component->getChoiceSequence());
+            $element->setAttribute('choiceSequence', (string)$component->getChoiceSequence());
         }
 
         if ($component->hasCorrectResponse()) {
@@ -76,11 +76,11 @@ class ResponseVariableMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI sessionIdentifier element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A QtiComponent object.
+     * @return ResultResponseVariable A QtiComponent object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): ResultResponseVariable
     {
         if (!$element->hasAttribute('identifier')) {
             throw new UnmarshallingException('ResponseVariable element must have identifier attribute', $element);
@@ -133,7 +133,7 @@ class ResponseVariableMarshaller extends Marshaller
      *
      * @return string A QTI class name or an empty string.
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'responseVariable';
     }

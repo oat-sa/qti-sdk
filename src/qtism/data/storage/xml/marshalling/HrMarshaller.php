@@ -38,7 +38,7 @@ class HrMarshaller extends Marshaller
      * @param QtiComponent $component A Hr object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -55,10 +55,10 @@ class HrMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML hr element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Hr object.
+     * @return Hr A Hr object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Hr
     {
         $component = new Hr();
 
@@ -74,7 +74,7 @@ class HrMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'hr';
     }

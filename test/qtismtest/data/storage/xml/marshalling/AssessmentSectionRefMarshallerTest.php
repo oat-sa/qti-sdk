@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $identifier = 'mySectionRef';
         $href = 'http://www.rdfabout.com';
@@ -27,7 +27,7 @@ class AssessmentSectionRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals($href, $element->getAttribute('href'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<assessmentSectionRef xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="mySectionRef" href="http://www.rdfabout.com"/>');

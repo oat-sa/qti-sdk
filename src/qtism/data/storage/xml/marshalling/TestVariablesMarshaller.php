@@ -39,7 +39,7 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
      * @param QtiComponent $component A TestVariable object.
      * @return DOMElement The corresponding testVariable QTI element.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
 
@@ -62,10 +62,10 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
      * Marshall a testVariable QTI element in its TestVariable object equivalent.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent The corresponding TestVariable object.
+     * @return TestVariables The corresponding TestVariable object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): TestVariables
     {
         $baseComponent = parent::unmarshall($element);
 
@@ -93,7 +93,7 @@ class TestVariablesMarshaller extends ItemSubsetMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'testVariables';
     }

@@ -44,7 +44,7 @@ class IntegerToFloatProcessor extends OperatorProcessor
      * @return QtiFloat|null A float value with the same numeric value as the sub-expression or NULL if the sub-expression is considered to be NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -70,7 +70,7 @@ class IntegerToFloatProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return IntegerToFloat::class;
     }

@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TextRunRendererTest extends QtiSmTestCase
 {
-    public function testRender()
+    public function testRender(): void
     {
         $ctx = new XhtmlRenderingEngine();
         $textRun = new TextRun('test text');

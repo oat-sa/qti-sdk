@@ -57,7 +57,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @param InlineCollection $content A collection of Inline objects.
      */
-    public function setContent(InlineCollection $content)
+    public function setContent(InlineCollection $content): void
     {
         $this->content = $content;
     }
@@ -67,7 +67,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @return InlineCollection
      */
-    public function getContent()
+    public function getContent(): InlineCollection
     {
         return $this->content;
     }
@@ -77,7 +77,7 @@ abstract class AtomicBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @return InlineCollection A collection of Inline objects.
      */
-    public function getComponents()
+    public function getComponents(): InlineCollection
     {
         return $this->getContent();
     }

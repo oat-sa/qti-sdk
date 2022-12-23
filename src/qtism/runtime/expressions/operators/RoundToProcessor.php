@@ -68,7 +68,7 @@ class RoundToProcessor extends OperatorProcessor
      * @return null|QtiFloat A single float with the value nearest to that of the expression's value or NULL if the sub-expression is NaN.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $state = $this->getState();
@@ -147,7 +147,7 @@ class RoundToProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return RoundTo::class;
     }

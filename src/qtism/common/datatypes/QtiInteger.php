@@ -45,7 +45,7 @@ class QtiInteger extends QtiScalar
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an integer value compliant with the QTI Integer datatype.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (Utils::isQtiInteger($value) !== true) {
             $msg = 'The Integer Datatype only accepts to store integer values.';
@@ -59,7 +59,7 @@ class QtiInteger extends QtiScalar
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return BaseType::INTEGER;
     }
@@ -67,8 +67,10 @@ class QtiInteger extends QtiScalar
     /**
      * Get the cardinality of the value. This method systematically returns
      * the Cardinality::SINGLE value.
+     *
+     * @return int
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::SINGLE;
     }
@@ -76,8 +78,8 @@ class QtiInteger extends QtiScalar
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return '' . $this->getValue();
+        return (string)$this->getValue();
     }
 }

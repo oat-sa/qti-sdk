@@ -15,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ShufflingMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $shufflingGroup1 = new ShufflingGroup(new IdentifierCollection(['id1', 'id2', 'id3']));
         $shufflingGroup2 = new ShufflingGroup(new IdentifierCollection(['id4', 'id5', 'id6']));
@@ -30,7 +30,7 @@ class ShufflingMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<shuffling responseIdentifier="RESPONSE"><shufflingGroup identifiers="id1 id2 id3"/><shufflingGroup identifiers="id4 id5 id6"/></shuffling>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <shuffling responseIdentifier="RESPONSE"><shufflingGroup identifiers="id1 id2 id3"/><shufflingGroup identifiers="id4 id5 id6"/></shuffling>                

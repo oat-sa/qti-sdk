@@ -34,7 +34,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
      * @param string $uri The URI describing the file to load.
      * @throws XmlStorageException
      */
-    public function testLoadNoSchemaValidate($uri)
+    public function testLoadNoSchemaValidate($uri): void
     {
         $doc = new XmlDocument('2.1');
         $doc->load($uri);
@@ -48,7 +48,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
      * @param string $uri The URI describing the file to load.
      * @throws XmlStorageException
      */
-    public function testLoadFromStringNoSchemaValidate($uri)
+    public function testLoadFromStringNoSchemaValidate($uri): void
     {
         $doc = new XmlDocument('2.1');
         $doc->loadFromString(file_get_contents($uri));
@@ -63,7 +63,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws MarshallingException
      */
-    public function testLoadSaveSchemaValidate($uri)
+    public function testLoadSaveSchemaValidate($uri): void
     {
         $doc = new XmlDocument('2.1');
         $doc->load($uri);
@@ -89,7 +89,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws MarshallingException
      */
-    public function testLoadSaveToStringSchemaValidate($uri)
+    public function testLoadSaveToStringSchemaValidate($uri): void
     {
         $doc = new XmlDocument('2.1');
         $doc->load($uri);
@@ -112,7 +112,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function qtiImplementationGuideAssessmentTestFiles()
+    public function qtiImplementationGuideAssessmentTestFiles(): array
     {
         return [
             [self::decorateUri('interaction_mix_sachsen/interaction_mix_sachsen.xml')],
@@ -139,7 +139,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
      * @param null $assessmentTest
      * @throws XmlStorageException
      */
-    public function testLoadInteractionMixSachsen($assessmentTest = null)
+    public function testLoadInteractionMixSachsen($assessmentTest = null): void
     {
         if (empty($assessmentTest)) {
             $doc = new XmlDocument('2.1');
@@ -252,7 +252,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
         $this::assertEquals('SCORE', $testVariables->getVariableIdentifier());
     }
 
-    public function testWriteInteractionMixSachsen()
+    public function testWriteInteractionMixSachsen(): void
     {
         $doc = new XmlDocument('2.1');
         $doc->load(self::decorateUri('interaction_mix_sachsen/interaction_mix_sachsen.xml'), true);
@@ -285,7 +285,7 @@ class XmlAssessmentDocumentQTIGuideTest extends QtiSmTestCase
      * @param $uri
      * @return string
      */
-    private static function decorateUri($uri)
+    private static function decorateUri($uri): string
     {
         return self::samplesDir() . 'ims/tests/' . $uri;
     }

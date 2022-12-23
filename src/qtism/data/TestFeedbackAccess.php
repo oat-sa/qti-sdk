@@ -30,14 +30,14 @@ use qtism\common\enums\Enumeration;
  */
 class TestFeedbackAccess implements Enumeration
 {
-    const AT_END = 0;
+    public const AT_END = 0;
 
-    const DURING = 1;
+    public const DURING = 1;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'AT_END' => self::AT_END,
@@ -51,7 +51,7 @@ class TestFeedbackAccess implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'atend':
                 return self::AT_END;
                 break;

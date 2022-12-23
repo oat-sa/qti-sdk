@@ -80,7 +80,7 @@ class Inside extends Operator
      * @param int $shape A value from the Shape enumeration.
      * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration.
      */
-    public function setShape($shape)
+    public function setShape($shape): void
     {
         if (in_array($shape, QtiShape::asArray())) {
             $this->shape = $shape;
@@ -95,7 +95,7 @@ class Inside extends Operator
      *
      * @return int A value from the Shape enumeration.
      */
-    public function getShape()
+    public function getShape(): int
     {
         return $this->shape;
     }
@@ -105,7 +105,7 @@ class Inside extends Operator
      *
      * @param QtiCoords $coords A Coords object.
      */
-    public function setCoords(QtiCoords $coords)
+    public function setCoords(QtiCoords $coords): void
     {
         $this->coords = $coords;
     }
@@ -115,7 +115,7 @@ class Inside extends Operator
      *
      * @return QtiCoords A Coords object.
      */
-    public function getCoords()
+    public function getCoords(): QtiCoords
     {
         return $this->coords;
     }
@@ -123,7 +123,7 @@ class Inside extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'inside';
     }

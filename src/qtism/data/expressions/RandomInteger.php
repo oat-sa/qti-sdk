@@ -37,7 +37,7 @@ class RandomInteger extends Expression
     /**
      * The min attribute value.
      *
-     * @var int
+     * @var int|string
      * @qtism-bean-property
      */
     private $min = 0;
@@ -45,7 +45,7 @@ class RandomInteger extends Expression
     /**
      * The max attribute value.
      *
-     * @var int
+     * @var int|string
      * @qtism-bean-property
      */
     private $max;
@@ -76,8 +76,9 @@ class RandomInteger extends Expression
     /**
      * Get the value of the min attribute.
      *
-     * @return int
+     * @return int|string
      */
+    #[\ReturnTypeWillChange]
     public function getMin()
     {
         return $this->min;
@@ -89,7 +90,7 @@ class RandomInteger extends Expression
      * @param int $min
      * @throws InvalidArgumentException
      */
-    public function setMin($min)
+    public function setMin($min): void
     {
         if (is_int($min) || Format::isVariableRef($min)) {
             $this->min = $min;
@@ -102,8 +103,9 @@ class RandomInteger extends Expression
     /**
      * Get the value of the max attribute.
      *
-     * @return int
+     * @return int|string
      */
+    #[\ReturnTypeWillChange]
     public function getMax()
     {
         return $this->max;
@@ -115,7 +117,7 @@ class RandomInteger extends Expression
      * @param int $max
      * @throws InvalidArgumentException
      */
-    public function setMax($max)
+    public function setMax($max): void
     {
         if (is_int($max) || Format::isVariableRef($max)) {
             $this->max = $max;
@@ -130,7 +132,7 @@ class RandomInteger extends Expression
      *
      * @return int
      */
-    public function getStep()
+    public function getStep(): int
     {
         return $this->step;
     }
@@ -141,7 +143,7 @@ class RandomInteger extends Expression
      * @param int $step
      * @throws InvalidArgumentException
      */
-    public function setStep($step)
+    public function setStep($step): void
     {
         if (is_int($step)) {
             $this->step = $step;
@@ -154,7 +156,7 @@ class RandomInteger extends Expression
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'randomInteger';
     }
@@ -164,7 +166,7 @@ class RandomInteger extends Expression
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return false; // random --> false
     }

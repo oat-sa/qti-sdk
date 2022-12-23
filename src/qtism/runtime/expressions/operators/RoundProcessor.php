@@ -48,7 +48,7 @@ class RoundProcessor extends OperatorProcessor
      * @return QtiInteger|null An integer value formed by rounding the value of the sub-expression or NULL if the sub-expression is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiInteger
     {
         $operands = $this->getOperands();
 
@@ -75,7 +75,7 @@ class RoundProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Round::class;
     }

@@ -37,7 +37,7 @@ class OutcomeRuleCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of OutcomeRule.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof OutcomeRule) {
             $msg = "OutcomeRuleCollection only accepts to store OutcomeRule objects, '" . gettype($value) . "' given.";

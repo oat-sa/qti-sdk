@@ -47,7 +47,7 @@ class MultipleProcessor extends OperatorProcessor
      * @return MultipleContainer|null A MultipleContainer object or NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?MultipleContainer
     {
         $operands = $this->getOperands();
 
@@ -94,7 +94,7 @@ class MultipleProcessor extends OperatorProcessor
      * @param MultipleContainer $container A MultipleContainer object you want to append something to.
      * @param mixed $value A value to append to the $container.
      */
-    protected static function appendValue(MultipleContainer $container, $value)
+    protected static function appendValue(MultipleContainer $container, $value): void
     {
         if ($value instanceof MultipleContainer) {
             foreach ($value as $v) {
@@ -109,7 +109,7 @@ class MultipleProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Multiple::class;
     }

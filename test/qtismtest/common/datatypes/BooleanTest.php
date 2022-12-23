@@ -11,13 +11,13 @@ use qtismtest\QtiSmTestCase;
  */
 class BooleanTest extends QtiSmTestCase
 {
-    public function testWrongValue()
+    public function testWrongValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $boolean = new QtiBoolean('string');
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         $boolean = new QtiBoolean(true);
         $otherBoolean = clone $boolean;

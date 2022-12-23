@@ -49,7 +49,7 @@ class Random extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'random';
     }
@@ -61,7 +61,7 @@ class Random extends Operator
      *
      * @return bool True if the expression is pure, false otherwise
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return false;
     }

@@ -61,7 +61,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
      *
      * @return InlineCollection A collection of Inline components.
      */
-    public function getComponents()
+    public function getComponents(): InlineCollection
     {
         return $this->getContent();
     }
@@ -71,7 +71,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
      *
      * @param InlineCollection $content A collection of Inline components.
      */
-    public function setContent(InlineCollection $content)
+    public function setContent(InlineCollection $content): void
     {
         $this->content = $content;
     }
@@ -81,7 +81,7 @@ abstract class SimpleInline extends BodyElement implements FlowStatic, InlineSta
      *
      * @return InlineCollection
      */
-    public function getContent()
+    public function getContent(): InlineCollection
     {
         return $this->content;
     }

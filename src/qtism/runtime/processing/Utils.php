@@ -43,7 +43,7 @@ class Utils
      * @param TemplateProcessing $templateProcessing
      * @return array A list of QTI identifiers.
      */
-    public static function templateProcessingImpactedVariables(TemplateProcessing $templateProcessing)
+    public static function templateProcessingImpactedVariables(TemplateProcessing $templateProcessing): array
     {
         $identifiers = [];
         $classNames = [

@@ -34,5 +34,5 @@ interface Shufflable
      *
      * @return bool
      */
-    public function isFixed();
+    public function isFixed(): bool;
 }

@@ -27,7 +27,7 @@ class GcdProcessorTest extends QtiSmTestCase
      * @param int $expected
      * @throws MarshallerNotFoundException
      */
-    public function testGcd(array $operands, $expected)
+    public function testGcd(array $operands, $expected): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection($operands);
@@ -35,7 +35,7 @@ class GcdProcessorTest extends QtiSmTestCase
         $this::assertSame($expected, $processor->process()->getValue());
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -43,7 +43,7 @@ class GcdProcessorTest extends QtiSmTestCase
         $processor = new GcdProcessor($expression, $operands);
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::STRING, [new QtiString('String!')]), new QtiInteger(10)]);
@@ -52,7 +52,7 @@ class GcdProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(20), new RecordContainer(['A' => new QtiInteger(10)]), new QtiInteger(30)]);
@@ -66,7 +66,7 @@ class GcdProcessorTest extends QtiSmTestCase
      * @param array $operands
      * @throws MarshallerNotFoundException
      */
-    public function testGcdWithNullValues(array $operands)
+    public function testGcdWithNullValues(array $operands): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection($operands);
@@ -77,7 +77,7 @@ class GcdProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function gcdProvider()
+    public function gcdProvider(): array
     {
         return [
             [[new QtiInteger(45), new QtiInteger(60), new QtiInteger(330)], 15],
@@ -98,7 +98,7 @@ class GcdProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function gcdWithNullValuesProvider()
+    public function gcdWithNullValuesProvider(): array
     {
         return [
             [[new QtiInteger(45), null, new QtiInteger(330)]],
@@ -114,7 +114,7 @@ class GcdProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<gcd>

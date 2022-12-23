@@ -30,24 +30,24 @@ use qtism\common\enums\Enumeration;
  */
 class View implements Enumeration
 {
-    const AUTHOR = 0;
+    public const AUTHOR = 0;
 
-    const CANDIDATE = 1;
+    public const CANDIDATE = 1;
 
-    const PROCTOR = 2;
+    public const PROCTOR = 2;
 
-    const SCORER = 3;
+    public const SCORER = 3;
 
-    const TEST_CONSTRUCTOR = 4;
+    public const TEST_CONSTRUCTOR = 4;
 
-    const TUTOR = 5;
+    public const TUTOR = 5;
 
     /**
      * Get the possible values of the enumaration as an array.
      *
      * @return array An array of integer constants.
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'AUTHOR' => self::AUTHOR,

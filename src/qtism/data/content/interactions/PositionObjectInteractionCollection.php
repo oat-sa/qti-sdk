@@ -38,7 +38,7 @@ class PositionObjectInteractionCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a PositionObjectInteraction object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof PositionObjectInteraction) {
             $msg = 'PositionObjectInteractionCollection objects only accept to store PositionObjectInteraction objects.';

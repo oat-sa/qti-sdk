@@ -48,12 +48,12 @@ interface Flow extends ObjectFlow
      *
      * @return string A URI or an empty string if no base is set.
      */
-    public function getXmlBase();
+    public function getXmlBase(): string;
 
     /**
      * Whether or not a value is defined for the xml:base attribute.
      *
      * @return bool
      */
-    public function hasXmlBase();
+    public function hasXmlBase(): bool;
 }

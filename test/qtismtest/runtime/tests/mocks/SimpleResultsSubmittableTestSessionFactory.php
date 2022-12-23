@@ -20,7 +20,7 @@ class SimpleResultsSubmittableTestSessionFactory extends AbstractSessionManager
      * @param int $config
      * @return AssessmentTestSession|SimpleResultsSubmittableTestSession
      */
-    protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route, $config = 0)
+    protected function instantiateAssessmentTestSession(AssessmentTest $test, Route $route, $config = 0): AssessmentTestSession
     {
         return new SimpleResultsSubmittableTestSession($test, $this, $route, $config);
     }
@@ -31,7 +31,7 @@ class SimpleResultsSubmittableTestSessionFactory extends AbstractSessionManager
      * @param int $submissionMode
      * @return AssessmentItemSession
      */
-    protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode)
+    protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode): AssessmentItemSession
     {
         return new AssessmentItemSession($assessmentItem, $navigationMode, $submissionMode);
     }

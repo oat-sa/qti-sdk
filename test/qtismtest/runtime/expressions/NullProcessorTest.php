@@ -10,7 +10,7 @@ use qtismtest\QtiSmTestCase;
  */
 class NullProcessorTest extends QtiSmTestCase
 {
-    public function testNullProcessor()
+    public function testNullProcessor(): void
     {
         $nullExpression = $this->createComponentFromXml('<null/>');
         $nullProcessor = new NullProcessor($nullExpression);

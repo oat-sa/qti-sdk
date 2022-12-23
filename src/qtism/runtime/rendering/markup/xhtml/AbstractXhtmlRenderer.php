@@ -77,7 +77,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      * @param string $base
      * @return DOMDocumentFragment A DOMDocumentFragment object containing the rendered $component into another constitution with its children rendering appended.
      */
-    public function render($component, $base = '')
+    public function render($component, $base = ''): DOMDocumentFragment
     {
         $renderingEngine = $this->getRenderingEngine();
         $doc = $renderingEngine->getDocument();
@@ -106,7 +106,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      * @param QtiComponent $component
      * @param string $base An optional base path to be used for rendering.
      */
-    protected function renderingImplementation(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function renderingImplementation(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         $this->appendElement($fragment, $component, $base);
         $this->appendChildren($fragment, $component, $base);
@@ -147,7 +147,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         $tagName = ($this->hasReplacementTagName() === true) ? $this->getReplacementTagName() : $component->getQtiClassName();
         $fragment->appendChild($this->getRenderingEngine()->getDocument()->createElement($tagName));
@@ -160,7 +160,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         foreach ($this->getRenderingEngine()->getChildrenRenderings($component) as $childrenRendering) {
             $fragment->firstChild->appendChild($childrenRendering);
@@ -174,7 +174,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         $this->handleXmlBase($component, $fragment->firstChild);
     }
@@ -184,7 +184,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param string $replacementTagName
      */
-    protected function setReplacementTagName($replacementTagName)
+    protected function setReplacementTagName($replacementTagName): void
     {
         $this->replacementTagName = $replacementTagName;
     }
@@ -194,7 +194,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @return string
      */
-    protected function getReplacementTagName()
+    protected function getReplacementTagName(): string
     {
         return $this->replacementTagName;
     }
@@ -204,7 +204,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @return bool
      */
-    protected function hasReplacementTagName()
+    protected function hasReplacementTagName(): bool
     {
         return $this->getReplacementTagName() !== '';
     }
@@ -218,7 +218,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param string $tagName A tagname e.g. 'div'.
      */
-    public function transform($tagName)
+    public function transform($tagName): void
     {
         $this->setReplacementTagName($tagName);
     }
@@ -228,7 +228,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param array $additionalClasses
      */
-    protected function setAdditionalClasses(array $additionalClasses)
+    protected function setAdditionalClasses(array $additionalClasses): void
     {
         $this->additionalClasses = $additionalClasses;
     }
@@ -238,7 +238,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @return array
      */
-    protected function getAdditionalClasses()
+    protected function getAdditionalClasses(): array
     {
         return $this->additionalClasses;
     }
@@ -248,7 +248,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @return bool
      */
-    protected function hasAdditionalClasses()
+    protected function hasAdditionalClasses(): bool
     {
         return count($this->getAdditionalClasses()) > 0;
     }
@@ -258,7 +258,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param string $additionalClass A CSS class.
      */
-    public function additionalClass($additionalClass)
+    public function additionalClass($additionalClass): void
     {
         $additionalClasses = $this->getAdditionalClasses();
 
@@ -275,7 +275,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param array $additionalUserClasses
      */
-    public function setAdditionalUserClasses(array $additionalUserClasses)
+    public function setAdditionalUserClasses(array $additionalUserClasses): void
     {
         $this->additionalUserClasses = $additionalUserClasses;
     }
@@ -285,7 +285,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @return array
      */
-    public function getAdditionalUserClasses()
+    public function getAdditionalUserClasses(): array
     {
         return $this->additionalUserClasses;
     }
@@ -295,7 +295,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @return bool
      */
-    public function hasAdditionalUserClasses()
+    public function hasAdditionalUserClasses(): bool
     {
         return count($this->getAdditionalUserClasses()) > 0;
     }
@@ -305,7 +305,7 @@ abstract class AbstractXhtmlRenderer extends AbstractMarkupRenderer
      *
      * @param string $additionalUserClass
      */
-    public function additionalUserClass($additionalUserClass)
+    public function additionalUserClass($additionalUserClass): void
     {
         $additionalClasses = $this->getAdditionalUserClasses();
 

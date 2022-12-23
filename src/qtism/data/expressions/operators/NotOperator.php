@@ -48,7 +48,7 @@ class NotOperator extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'not';
     }

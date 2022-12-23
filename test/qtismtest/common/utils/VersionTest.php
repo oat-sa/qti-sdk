@@ -19,12 +19,12 @@ class VersionTest extends QtiSmTestCase
      * @param string|null $operator
      * @param mixed $expected
      */
-    public function testVersionCompareValid($version1, $version2, $operator, $expected)
+    public function testVersionCompareValid($version1, $version2, $operator, $expected): void
     {
-        $this::assertSame($expected, Version::compare($version1, $version2, $operator));
+        $this::assertSame((bool)$expected, Version::compare($version1, $version2, $operator));
     }
 
-    public function testUnknownOperator()
+    public function testUnknownOperator(): void
     {
         $msg = "Unknown operator '!=='. Known operators are '<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'.";
         $this->expectException(InvalidArgumentException::class);
@@ -75,7 +75,7 @@ class VersionTest extends QtiSmTestCase
      * @param $originalVersion
      * @param $patchedVersion
      */
-    public function testAppendPatchVersion($originalVersion, $patchedVersion)
+    public function testAppendPatchVersion($originalVersion, $patchedVersion): void
     {
         $this::assertEquals($patchedVersion, Version::appendPatchVersion($originalVersion));
     }
@@ -104,7 +104,7 @@ class VersionTest extends QtiSmTestCase
         ];
     }
 
-    public function testAppendPatchVersionWithNonSemanticVersionThrowsException()
+    public function testAppendPatchVersionWithNonSemanticVersionThrowsException(): void
     {
         $versionNumber = 'whatever';
         $this->expectException(InvalidArgumentException::class);

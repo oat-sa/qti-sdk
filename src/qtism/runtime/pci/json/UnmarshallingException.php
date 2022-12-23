@@ -31,13 +31,13 @@ use Exception;
  */
 class UnmarshallingException extends Exception
 {
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
-    const NOT_SUPPORTED = 1;
+    public const NOT_SUPPORTED = 1;
 
-    const JSON_DECODE = 2;
+    public const JSON_DECODE = 2;
 
-    const NOT_PCI = 3;
+    public const NOT_PCI = 3;
 
     /**
      * Create a new UnmarshallingException object.

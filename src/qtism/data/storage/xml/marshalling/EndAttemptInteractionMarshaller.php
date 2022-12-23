@@ -38,7 +38,7 @@ class EndAttemptInteractionMarshaller extends Marshaller
      * @param QtiComponent $component An EndAttemptInteraction object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
@@ -56,10 +56,10 @@ class EndAttemptInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an endAttemptInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An EndAttemptInteraction object.
+     * @return EndAttemptInteraction An EndAttemptInteraction object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): EndAttemptInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             if (($title = $this->getDOMElementAttributeAs($element, 'title')) === null) {
@@ -86,7 +86,7 @@ class EndAttemptInteractionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'endAttemptInteraction';
     }

@@ -38,7 +38,7 @@ class SsmlSubMarshaller extends Marshaller
      * @param QtiComponent $component An SSML sub object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         return self::getDOMCradle()->importNode($component->getXml()->documentElement, true);
     }
@@ -47,9 +47,9 @@ class SsmlSubMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an SSML sub element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An SSML sub object.
+     * @return Sub An SSML sub object.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Sub
     {
         $node = $element->cloneNode(true);
 
@@ -59,7 +59,7 @@ class SsmlSubMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'sub';
     }

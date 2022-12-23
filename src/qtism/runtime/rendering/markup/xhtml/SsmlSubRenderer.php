@@ -51,7 +51,7 @@ class SsmlSubRenderer extends ExternalQtiComponentRenderer
      * @param string $base
      * @throws RenderingException
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         try {
             $dom = $component->getXml();

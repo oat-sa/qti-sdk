@@ -43,7 +43,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -96,12 +96,12 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
      * instead of creating a new AssessmentTest object.
      *
      * @param DOMElement $element A DOMElement object.
-     * @param AssessmentTest $assessmentTest An AssessmentTest object to decorate.
-     * @return QtiComponent An OutcomeProcessing object.
+     * @param AssessmentTest|null $assessmentTest An AssessmentTest object to decorate.
+     * @return AssessmentTest An OutcomeProcessing object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null)
+    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null): AssessmentTest
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {
@@ -188,7 +188,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'assessmentTest';
     }

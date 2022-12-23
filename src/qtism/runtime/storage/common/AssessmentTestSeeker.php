@@ -76,7 +76,7 @@ class AssessmentTestSeeker
      *
      * @param array $classCounter An array where keys are QTI class names and values are the count of explored components for this class name.
      */
-    protected function setClassCounter(array $classCounter)
+    protected function setClassCounter(array $classCounter): void
     {
         $this->classCounter = $classCounter;
     }
@@ -86,7 +86,7 @@ class AssessmentTestSeeker
      *
      * @return array An array where keys are QTI class names and values are the count of explored components for this class name.
      */
-    protected function &getClassCounter()
+    protected function &getClassCounter(): array
     {
         return $this->classCounter;
     }
@@ -96,7 +96,7 @@ class AssessmentTestSeeker
      *
      * @param QtiComponentIterator $iterator
      */
-    protected function setIterator(QtiComponentIterator $iterator)
+    protected function setIterator(QtiComponentIterator $iterator): void
     {
         $this->iterator = $iterator;
     }
@@ -106,7 +106,7 @@ class AssessmentTestSeeker
      *
      * @return QtiComponentIterator
      */
-    protected function getIterator()
+    protected function getIterator(): QtiComponentIterator
     {
         return $this->iterator;
     }
@@ -118,7 +118,7 @@ class AssessmentTestSeeker
      *
      * @param array $componentStore
      */
-    protected function setComponentStore(array $componentStore)
+    protected function setComponentStore(array $componentStore): void
     {
         $this->componentStore = $componentStore;
     }
@@ -130,7 +130,7 @@ class AssessmentTestSeeker
      *
      * @return array
      */
-    protected function &getComponentStore()
+    protected function &getComponentStore(): array
     {
         return $this->componentsStore;
     }
@@ -141,7 +141,7 @@ class AssessmentTestSeeker
      * @param QtiComponent $component A QTI Component.
      * @return int The position in the AssessmentTest tree the component was found.
      */
-    protected function addToComponentStore(QtiComponent $component)
+    protected function addToComponentStore(QtiComponent $component): int
     {
         $class = $component->getQtiClassName();
 
@@ -202,7 +202,7 @@ class AssessmentTestSeeker
      * @return QtiComponent The QtiComponent object that corresponds to $class and $position.
      * @throws OutOfBoundsException If no such QtiComponent could be found in the AssessmentTest tree.
      */
-    public function seekComponent($class, $position)
+    public function seekComponent($class, $position): QtiComponent
     {
         if (($component = $this->getComponentFromComponentStore($class, $position)) !== false) {
             // Already explored!
@@ -233,7 +233,7 @@ class AssessmentTestSeeker
      * @return int The position of $component in the AssessmentTest tree.
      * @throws OutOfBoundsException If no such $component could be found in the AssessmentTest tree.
      */
-    public function seekPosition(QtiComponent $component)
+    public function seekPosition(QtiComponent $component): int
     {
         if (($position = $this->getPositionFromComponentStore($component)) !== false) {
             // Already explored.
@@ -263,7 +263,7 @@ class AssessmentTestSeeker
      *
      * @param QtiComponent $component A QtiComponent object.
      */
-    protected function incrementClassCount(QtiComponent $component)
+    protected function incrementClassCount(QtiComponent $component): void
     {
         $class = $component->getQtiClassName();
 
@@ -280,7 +280,7 @@ class AssessmentTestSeeker
      * @param string $class A QTI class name.
      * @return int The number of explored components that belong to the $class.
      */
-    protected function getClassCount($class)
+    protected function getClassCount($class): int
     {
         $count = 0;
 
@@ -297,7 +297,7 @@ class AssessmentTestSeeker
      *
      * @return AssessmentTest An AssessmentTest object.
      */
-    public function getAssessmentTest()
+    public function getAssessmentTest(): AssessmentTest
     {
         return $this->getIterator()->getRootComponent();
     }

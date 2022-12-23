@@ -19,7 +19,7 @@ use RuntimeException;
  */
 class RecordContainerTest extends QtiSmTestCase
 {
-    public function testValid()
+    public function testValid(): void
     {
         $record = new RecordContainer();
         $this::assertInstanceOf(RecordContainer::class, $record);
@@ -33,7 +33,7 @@ class RecordContainerTest extends QtiSmTestCase
         $this::assertEquals(1, $record->occurences(new QtiPoint(10, 10)));
     }
 
-    public function testEquals()
+    public function testEquals(): void
     {
         $record1 = new RecordContainer(['one' => new QtiInteger(1), 'two' => new QtiInteger(2)]);
         $record2 = new RecordContainer(['two' => new QtiInteger(2), 'one' => new QtiInteger(1)]);
@@ -45,27 +45,27 @@ class RecordContainerTest extends QtiSmTestCase
         $this::assertFalse($record3->equals($record1));
     }
 
-    public function testInvalidInstantiationOne()
+    public function testInvalidInstantiationOne(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $record = new RecordContainer([new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)]);
     }
 
-    public function testInvalidUseOne()
+    public function testInvalidUseOne(): void
     {
         $this->expectException(RuntimeException::class);
         $record = new RecordContainer();
         $record[] = new QtiString('string');
     }
 
-    public function testInvalidUseTwo()
+    public function testInvalidUseTwo(): void
     {
         $this->expectException(RuntimeException::class);
         $record = new RecordContainer();
         $record[111] = new QtiString('string');
     }
 
-    public function testInvalidUseThree()
+    public function testInvalidUseThree(): void
     {
         $this->expectException(InvalidArgumentException::class);
         // try with a datatype not supported by the QTI Runtime Model.
@@ -73,7 +73,7 @@ class RecordContainerTest extends QtiSmTestCase
         $record['document'] = new DOMDocument();
     }
 
-    public function testCreateFromDataModel()
+    public function testCreateFromDataModel(): void
     {
         $valueCollection = new ValueCollection();
 
@@ -94,7 +94,7 @@ class RecordContainerTest extends QtiSmTestCase
         $this::assertEquals('string', $record['val2']->getValue());
     }
 
-    public function testCreateFromDataModelNoFieldIdentifier()
+    public function testCreateFromDataModelNoFieldIdentifier(): void
     {
         $valueCollection = new ValueCollection();
 

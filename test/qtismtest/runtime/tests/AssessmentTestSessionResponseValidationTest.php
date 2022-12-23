@@ -20,7 +20,7 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
  */
 class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSessionTestCase
 {
-    public function testValidateResponseValidateSkippingAllowedLinearIndividual()
+    public function testValidateResponseValidateSkippingAllowedLinearIndividual(): void
     {
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/validate_response/validate_skipping_allowed_linear_individual.xml');
         $testSession->beginTestSession();
@@ -364,7 +364,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
 
-    public function testValidateResponseValidateSkippingNotAllowedLinearIndividual()
+    public function testValidateResponseValidateSkippingNotAllowedLinearIndividual(): void
     {
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/validate_response/validate_skipping_not_allowed_linear_individual.xml');
         $testSession->beginTestSession();
@@ -676,7 +676,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
 
-    public function testValidateResponseDoNotValidateSkippingAllowedLinearIndividual()
+    public function testValidateResponseDoNotValidateSkippingAllowedLinearIndividual(): void
     {
         // Here I can do what I want because responses are not validated and skipping is allowed!!!
 
@@ -768,7 +768,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
 
-    public function testValidateResponseDoNotValidateSkippingNotAllowedLinearIndividual()
+    public function testValidateResponseDoNotValidateSkippingNotAllowedLinearIndividual(): void
     {
         $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/validate_response/dont_validate_skipping_not_allowed_linear_individual.xml');
         $testSession->beginTestSession();
@@ -889,7 +889,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
 
-    public function testNonLinearSimultaneous()
+    public function testNonLinearSimultaneous(): void
     {
         // I can do what I want because I'm in simultaneous submission mode, where allowSkipping and validateResponse
         // are ignored attributes.

@@ -18,7 +18,7 @@ class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
      * @param NumberSelected $expression
      * @param int $expectedResult
      */
-    public function testNumberSelected(NumberSelected $expression, $expectedResult)
+    public function testNumberSelected(NumberSelected $expression, $expectedResult): void
     {
         $session = $this->getTestSession();
 
@@ -33,7 +33,7 @@ class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
     /**
      * @return array
      */
-    public function numberSelectedProvider()
+    public function numberSelectedProvider(): array
     {
         return [
             [self::getNumberSelected(), 9],
@@ -49,7 +49,7 @@ class NumberSelectedProcessorTest extends QtiSmItemSubsetTestCase
      * @param IdentifierCollection|null $excludeCategories
      * @return NumberSelected
      */
-    protected static function getNumberSelected($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
+    protected static function getNumberSelected($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null): NumberSelected
     {
         $numberSelected = new NumberSelected();
         $numberSelected->setSectionIdentifier($sectionIdentifier);

@@ -46,27 +46,27 @@ abstract class StringInteractionRenderer extends InteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-stringInteraction');
 
-        $fragment->firstChild->setAttribute('data-base', $component->getBase());
+        $fragment->firstChild->setAttribute('data-base', (string)$component->getBase());
 
         if ($component->hasStringIdentifier() === true) {
-            $fragment->firstChild->setAttribute('data-string-identifier', $component->getStringIdentifier());
+            $fragment->firstChild->setAttribute('data-string-identifier', (string)$component->getStringIdentifier());
         }
 
         if ($component->hasExpectedLength() === true) {
-            $fragment->firstChild->setAttribute('data-expected-length', $component->getExpectedLength());
+            $fragment->firstChild->setAttribute('data-expected-length', (string)$component->getExpectedLength());
         }
 
         if ($component->hasPatternMask() === true) {
-            $fragment->firstChild->setAttribute('data-pattern-mask', $component->getPatternMask());
+            $fragment->firstChild->setAttribute('data-pattern-mask', (string)$component->getPatternMask());
         }
 
         if ($component->hasPlaceholderText() === true) {
-            $fragment->firstChild->setAttribute('data-placeholder-text', $component->getPlaceholderText());
+            $fragment->firstChild->setAttribute('data-placeholder-text', (string)$component->getPlaceholderText());
         }
     }
 }

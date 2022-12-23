@@ -35,49 +35,49 @@ use qtism\runtime\rendering\RenderingException;
  */
 class CssScoper implements Renderable
 {
-    const RUNNING = 0;
+    public const RUNNING = 0;
 
-    const IN_ATRULE = 1;
+    public const IN_ATRULE = 1;
 
-    const IN_ATRULESTRING = 2;
+    public const IN_ATRULESTRING = 2;
 
-    const IN_MAINCOMMENT = 3;
+    public const IN_MAINCOMMENT = 3;
 
-    const IN_SELECTOR = 4;
+    public const IN_SELECTOR = 4;
 
-    const IN_CLASSBODY = 5;
+    public const IN_CLASSBODY = 5;
 
-    const IN_CLASSSTRING = 6;
+    public const IN_CLASSSTRING = 6;
 
-    const IN_CLASSCOMMENT = 7;
+    public const IN_CLASSCOMMENT = 7;
 
-    const IN_ATRULEBODY = 8;
+    public const IN_ATRULEBODY = 8;
 
-    const CHAR_AT = '@';
+    public const CHAR_AT = '@';
 
-    const CHAR_DOUBLEQUOTE = '"';
+    public const CHAR_DOUBLEQUOTE = '"';
 
-    const CHAR_TERMINATOR = ';';
+    public const CHAR_TERMINATOR = ';';
 
-    const CHAR_ESCAPE = "\\";
+    public const CHAR_ESCAPE = "\\";
 
-    const CHAR_TAB = "\t";
+    public const CHAR_TAB = "\t";
 
-    const CHAR_SPACE = ' ';
+    public const CHAR_SPACE = ' ';
 
-    const CHAR_NEWLINE = "\n";
+    public const CHAR_NEWLINE = "\n";
 
-    const CHAR_CARRIAGERETURN = "\r";
+    public const CHAR_CARRIAGERETURN = "\r";
 
-    const CHAR_VERTICALTAB = "\v";
+    public const CHAR_VERTICALTAB = "\v";
 
-    const CHAR_OPENINGBRACE = '{';
+    public const CHAR_OPENINGBRACE = '{';
 
-    const CHAR_CLOSINGBRACE = '}';
+    public const CHAR_CLOSINGBRACE = '}';
 
-    const CHAR_STAR = '*';
+    public const CHAR_STAR = '*';
 
-    const CHAR_SLASH = '/';
+    public const CHAR_SLASH = '/';
 
     /**
      * The current state.
@@ -350,7 +350,7 @@ class CssScoper implements Renderable
      *
      * @return bool
      */
-    public function doesMapQtiClasses()
+    public function doesMapQtiClasses(): bool
     {
         return $this->mapQtiClasses;
     }
@@ -360,7 +360,7 @@ class CssScoper implements Renderable
      *
      * @param bool $mapQtiClasses
      */
-    public function mapQtiClasses($mapQtiClasses)
+    public function mapQtiClasses($mapQtiClasses): void
     {
         $this->mapQtiClasses = $mapQtiClasses;
     }
@@ -370,7 +370,7 @@ class CssScoper implements Renderable
      *
      * @return bool
      */
-    public function doesMapQtiPseudoClasses()
+    public function doesMapQtiPseudoClasses(): bool
     {
         return $this->mapQtiPseudoClasses;
     }
@@ -380,7 +380,7 @@ class CssScoper implements Renderable
      *
      * @param bool $mapQtiPseudoClasses
      */
-    public function mapQtiPseudoClasses($mapQtiPseudoClasses)
+    public function mapQtiPseudoClasses($mapQtiPseudoClasses): void
     {
         $this->mapQtiPseudoClasses = $mapQtiPseudoClasses;
     }
@@ -388,7 +388,7 @@ class CssScoper implements Renderable
     /**
      * @param $webComponentFriendly
      */
-    public function setWebComponentFriendly($webComponentFriendly)
+    public function setWebComponentFriendly($webComponentFriendly): void
     {
         $this->webComponentFriendly = $webComponentFriendly;
     }
@@ -396,7 +396,7 @@ class CssScoper implements Renderable
     /**
      * @return bool
      */
-    public function isWebComponentFriendly()
+    public function isWebComponentFriendly(): bool
     {
         return $this->webComponentFriendly;
     }
@@ -410,7 +410,7 @@ class CssScoper implements Renderable
      * @throws MemoryStreamException
      * @throws RenderingException If something goes wrong while rescoping the content.
      */
-    public function render($file, $id = '')
+    public function render($file, $id = ''): string
     {
         if (empty($id)) {
             $id = uniqid();
@@ -484,7 +484,7 @@ class CssScoper implements Renderable
      * @throws MemoryStreamException
      * @throws RenderingException
      */
-    protected function init($id, $file)
+    protected function init($id, $file): void
     {
         $this->setState(self::RUNNING);
         $this->setId($id);
@@ -507,7 +507,7 @@ class CssScoper implements Renderable
      *
      * @param int $state
      */
-    protected function setState($state)
+    protected function setState($state): void
     {
         $this->state = $state;
     }
@@ -517,7 +517,7 @@ class CssScoper implements Renderable
      *
      * @return int
      */
-    protected function getState()
+    protected function getState(): int
     {
         return $this->state;
     }
@@ -527,7 +527,7 @@ class CssScoper implements Renderable
      *
      * @param string $id
      */
-    protected function setId($id)
+    protected function setId($id): void
     {
         $this->id = $id;
     }
@@ -537,7 +537,7 @@ class CssScoper implements Renderable
      *
      * @return string
      */
-    protected function getId()
+    protected function getId(): string
     {
         return $this->id;
     }
@@ -547,7 +547,7 @@ class CssScoper implements Renderable
      *
      * @param MemoryStream $stream
      */
-    protected function setStream(MemoryStream $stream)
+    protected function setStream(MemoryStream $stream): void
     {
         $this->stream = $stream;
     }
@@ -557,7 +557,7 @@ class CssScoper implements Renderable
      *
      * @return MemoryStream
      */
-    protected function getStream()
+    protected function getStream(): MemoryStream
     {
         return $this->stream;
     }
@@ -567,7 +567,7 @@ class CssScoper implements Renderable
      *
      * @param string $char
      */
-    protected function beforeCharReading($char)
+    protected function beforeCharReading($char): void
     {
         $this->setCurrentChar($char);
     }
@@ -577,7 +577,7 @@ class CssScoper implements Renderable
      *
      * @param string $char
      */
-    protected function afterCharReading($char)
+    protected function afterCharReading($char): void
     {
         $this->setPreviousChar($char);
 
@@ -591,7 +591,7 @@ class CssScoper implements Renderable
      *
      * @param string $char
      */
-    protected function setPreviousSignificantChar($char)
+    protected function setPreviousSignificantChar($char): void
     {
         $this->previousSignificantChar = $char;
     }
@@ -601,7 +601,7 @@ class CssScoper implements Renderable
      *
      * @return string
      */
-    protected function getPreviousChar()
+    protected function getPreviousChar(): string
     {
         return $this->previousChar;
     }
@@ -611,7 +611,7 @@ class CssScoper implements Renderable
      *
      * @param string $char
      */
-    protected function setPreviousChar($char)
+    protected function setPreviousChar($char): void
     {
         $this->previousChar = $char;
     }
@@ -621,7 +621,7 @@ class CssScoper implements Renderable
      *
      * @param string $char
      */
-    protected function setCurrentChar($char)
+    protected function setCurrentChar($char): void
     {
         $this->currentChar = $char;
     }
@@ -631,7 +631,7 @@ class CssScoper implements Renderable
      *
      * @return string $char A char or false if no current char is set.
      */
-    protected function getCurrentChar()
+    protected function getCurrentChar(): string
     {
         return $this->currentChar;
     }
@@ -645,7 +645,7 @@ class CssScoper implements Renderable
      *
      * @return array
      */
-    protected static function getQtiClassMapping()
+    protected static function getQtiClassMapping(): array
     {
         return self::$qtiClassMapping;
     }
@@ -659,7 +659,7 @@ class CssScoper implements Renderable
      *
      * @return array
      */
-    protected static function getQtiPseudoClassMapping()
+    protected static function getQtiPseudoClassMapping(): array
     {
         return self::$qtiPseudoClassMapping;
     }
@@ -667,7 +667,7 @@ class CssScoper implements Renderable
     /**
      * Instructions to be performed in 'running' state.
      */
-    protected function runningState()
+    protected function runningState(): void
     {
         $char = $this->getCurrentChar();
 
@@ -691,7 +691,7 @@ class CssScoper implements Renderable
     /**
      * Instructions to be performed in 'atRule' state.
      */
-    protected function inAtRuleState()
+    protected function inAtRuleState(): void
     {
         $char = $this->getCurrentChar();
 
@@ -717,7 +717,7 @@ class CssScoper implements Renderable
     /**
      * Instructions to be performed in 'atRuleString' state.
      */
-    protected function inAtRuleStringState()
+    protected function inAtRuleStringState(): void
     {
         $char = $this->getCurrentChar();
 
@@ -736,7 +736,7 @@ class CssScoper implements Renderable
     /**
      * Instructions to be performed in 'atRuleBody' state.
      */
-    protected function inAtRuleBodyState()
+    protected function inAtRuleBodyState(): void
     {
         $char = $this->getCurrentChar();
 
@@ -761,7 +761,7 @@ class CssScoper implements Renderable
     /**
      * Instructions to be performed in 'selector' state.
      */
-    protected function inSelectorState()
+    protected function inSelectorState(): void
     {
         $char = $this->getCurrentChar();
 
@@ -777,7 +777,7 @@ class CssScoper implements Renderable
     /**
      * Instructions to be performed in 'classBody' state.
      */
-    protected function inClassBodyState()
+    protected function inClassBodyState(): void
     {
         $char = $this->getCurrentChar();
 
@@ -795,7 +795,7 @@ class CssScoper implements Renderable
     /**
      * Instructions to be performed in 'mainComment' state.
      */
-    protected function inMainCommentState()
+    protected function inMainCommentState(): void
     {
         $char = $this->getCurrentChar();
 
@@ -809,7 +809,7 @@ class CssScoper implements Renderable
     /**
      * Instructions to be performed in 'classComment' state.
      */
-    protected function inClassCommentState()
+    protected function inClassCommentState(): void
     {
         $char = $this->getCurrentChar();
 
@@ -823,7 +823,7 @@ class CssScoper implements Renderable
     /**
      * Instructions to be performed in 'classString' state.
      */
-    protected function inClassStringState()
+    protected function inClassStringState(): void
     {
         $char = $this->getCurrentChar();
 
@@ -845,7 +845,7 @@ class CssScoper implements Renderable
      * @param string $char
      * @return bool
      */
-    private static function isWhiteSpace($char)
+    private static function isWhiteSpace($char): bool
     {
         return $char === self::CHAR_SPACE || $char === self::CHAR_CARRIAGERETURN || $char === self::CHAR_NEWLINE || $char === self::CHAR_TAB || $char === self::CHAR_VERTICALTAB;
     }
@@ -855,7 +855,7 @@ class CssScoper implements Renderable
      *
      * @return array
      */
-    protected function getBuffer()
+    protected function getBuffer(): array
     {
         return $this->buffer;
     }
@@ -865,7 +865,7 @@ class CssScoper implements Renderable
      *
      * @param array $buffer
      */
-    protected function setBuffer(array $buffer)
+    protected function setBuffer(array $buffer): void
     {
         $this->buffer = $buffer;
     }
@@ -873,7 +873,7 @@ class CssScoper implements Renderable
     /**
      * Clean the read buffer.
      */
-    protected function cleanBuffer()
+    protected function cleanBuffer(): void
     {
         $this->setBuffer([]);
     }
@@ -883,7 +883,7 @@ class CssScoper implements Renderable
      *
      * @param string $char
      */
-    protected function bufferize($char)
+    protected function bufferize($char): void
     {
         $buffer = $this->getBuffer();
         $buffer[] = $char;
@@ -895,7 +895,7 @@ class CssScoper implements Renderable
      *
      * @param string $output
      */
-    protected function setOutput($output)
+    protected function setOutput($output): void
     {
         $this->output = $output;
     }
@@ -905,7 +905,7 @@ class CssScoper implements Renderable
      *
      * @return string
      */
-    protected function getOutput()
+    protected function getOutput(): string
     {
         return $this->output;
     }
@@ -915,7 +915,7 @@ class CssScoper implements Renderable
      *
      * @param string $char
      */
-    protected function output($char)
+    protected function output($char): void
     {
         $output = $this->getOutput();
         $output .= $char;
@@ -927,7 +927,7 @@ class CssScoper implements Renderable
      *
      * @return bool
      */
-    protected function isEscaping()
+    protected function isEscaping(): bool
     {
         $count = count($this->getBuffer());
 
@@ -944,7 +944,7 @@ class CssScoper implements Renderable
      * Update the currently processed CSS selector by prefixing it
      * with the appropriate id.
      */
-    protected function updateSelector()
+    protected function updateSelector(): void
     {
         $buffer = implode('', $this->getBuffer());
         $qtiClassMap = ($this->isWebComponentFriendly()) ? array_merge(self::$qtiClassMapping, self::$wcFriendlyQtiClassMapping) : self::$qtiClassMapping;

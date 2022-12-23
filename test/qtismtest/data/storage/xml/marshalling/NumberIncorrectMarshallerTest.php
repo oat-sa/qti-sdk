@@ -13,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class NumberIncorrectMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $sectionIdentifier = 'mySection1';
         $includeCategory = 'cat1';
@@ -33,7 +33,7 @@ class NumberIncorrectMarshallerTest extends QtiSmTestCase
         $this::assertEquals($excludeCategory, $element->getAttribute('excludeCategory'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<numberIncorrect xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1" includeCategory="cat1" excludeCategory="cat2 cat3"/>');

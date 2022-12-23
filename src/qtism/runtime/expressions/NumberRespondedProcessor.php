@@ -46,7 +46,7 @@ class NumberRespondedProcessor extends ItemSubsetProcessor
      * @return QtiInteger The number of items in the given sub-set that been attempted (at least once) and for which a response was given.
      * @throws ExpressionProcessingException
      */
-    public function process()
+    public function process(): QtiInteger
     {
         $testSession = $this->getState();
         $itemSubset = $this->getItemSubset();
@@ -70,7 +70,7 @@ class NumberRespondedProcessor extends ItemSubsetProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return NumberResponded::class;
     }

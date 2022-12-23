@@ -33,7 +33,7 @@ class P extends AtomicBlock
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'p';
     }

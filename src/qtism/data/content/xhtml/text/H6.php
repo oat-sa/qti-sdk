@@ -33,7 +33,7 @@ class H6 extends AtomicBlock
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'h6';
     }

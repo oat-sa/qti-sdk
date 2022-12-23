@@ -11,7 +11,7 @@ use DOMDocument;
  */
 class SerializableDomDocumentTest extends QtiSmTestCase
 {
-    public function testSerialization()
+    public function testSerialization(): void
     {
         $ser = serialize($this->getSerializableDomDocument());
         $dom = unserialize($ser);
@@ -20,7 +20,7 @@ class SerializableDomDocumentTest extends QtiSmTestCase
     }
 
 
-    public function testAccessingProperty()
+    public function testAccessingProperty(): void
     {
         $xmlVersion = '1.0';
         $dom = $this->getSerializableDomDocument($xmlVersion);
@@ -29,7 +29,7 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $this->assertEquals($xmlVersion, $dom->xmlVersion);
     }
 
-    public function testAccessingInexistentProperty()
+    public function testAccessingInexistentProperty(): void
     {
         $dom = $this->getSerializableDomDocument();
         $property = 'test';
@@ -42,7 +42,7 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $dom->$property;
     }
 
-    public function testSettingVirtualPropertyToDom()
+    public function testSettingVirtualPropertyToDom(): void
     {
         $xmlVersion = '1.0';
         $dom = $this->getSerializableDomDocument($xmlVersion);
@@ -53,14 +53,14 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $this->assertEquals('1.1', $dom->xmlVersion);
     }
 
-    public function testCheckingIfPropertyExists()
+    public function testCheckingIfPropertyExists(): void
     {
         $dom = $this->getSerializableDomDocument();
 
         $this->assertTrue(isset($dom->xmlVersion));
     }
 
-    public function testCallingVirtualMethods()
+    public function testCallingVirtualMethods(): void
     {
         $dom = $this->getSerializableDomDocument();
 
@@ -68,7 +68,7 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $this->assertNotEmpty((string)$dom);
     }
 
-    public function testCallingNotExistedVirtualMethods()
+    public function testCallingNotExistedVirtualMethods(): void
     {
         $dom = $this->getSerializableDomDocument();
         $method = 'saveXML2';
@@ -81,7 +81,7 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $dom->$method();
     }
 
-    public function testCheckThatUnsetIsWorkingSimilarToRealDomObject()
+    public function testCheckThatUnsetIsWorkingSimilarToRealDomObject(): void
     {
         $serializableDOM = $this->getSerializableDomDocument();
         $coreDom = new DOMDocument($serializableDOM->xmlVersion, $serializableDOM->encoding);

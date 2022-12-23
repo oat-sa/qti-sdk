@@ -20,7 +20,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
      * @param int $maxConstraint
      * @param string $patternMask
      */
-    public function testSuccessfulInstantiationBasic($minConstraint, $maxConstraint, $patternMask = '')
+    public function testSuccessfulInstantiationBasic($minConstraint, $maxConstraint, $patternMask = ''): void
     {
         $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', $minConstraint, $maxConstraint, $patternMask);
         $this::assertEquals('RESPONSE', $responseValidityConstraint->getResponseIdentifier());
@@ -32,7 +32,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function successfulInstantiationBasicProvider()
+    public function successfulInstantiationBasicProvider(): array
     {
         return [
             [0, 1],
@@ -53,7 +53,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
      * @param string $msg
      * @param string $patternMask
      */
-    public function testUnsuccessfulInstantiation($responseIdentifier, $minConstraint, $maxConstraint, $msg, $patternMask = '')
+    public function testUnsuccessfulInstantiation($responseIdentifier, $minConstraint, $maxConstraint, $msg, $patternMask = ''): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($msg);
@@ -63,7 +63,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function unsuccessfulInstantiationProvider()
+    public function unsuccessfulInstantiationProvider(): array
     {
         return [
             ['', 0, 0, "The 'responseIdentifier' argument must be a non-empty string."],
@@ -74,7 +74,7 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
         ];
     }
 
-    public function testAssociations()
+    public function testAssociations(): void
     {
         $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', 0, 0);
         $responseValidityConstraint->addAssociationValidityConstraint(

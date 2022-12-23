@@ -38,7 +38,7 @@ class NumberIncorrectMarshaller extends ItemSubsetMarshaller
      * @param QtiComponent $component A NumberIncorrect object.
      * @return DOMElement The corresponding numberIncorrect QTI element.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         return parent::marshall($component);
     }
@@ -47,9 +47,9 @@ class NumberIncorrectMarshaller extends ItemSubsetMarshaller
      * Marshall an numberIncorrect QTI element in its NumberIncorrect object equivalent.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent The corresponding NumberIncorrect object.
+     * @return NumberIncorrect The corresponding NumberIncorrect object.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): NumberIncorrect
     {
         $baseComponent = parent::unmarshall($element);
         $object = new NumberIncorrect();
@@ -63,7 +63,7 @@ class NumberIncorrectMarshaller extends ItemSubsetMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'numberIncorrect';
     }

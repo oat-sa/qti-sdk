@@ -45,7 +45,7 @@ class NumberSelectedProcessor extends ItemSubsetProcessor
      * @return QtiInteger The number of items in the given sub-set that have been selected for presentation to the candidate.
      * @throws ExpressionProcessingException
      */
-    public function process()
+    public function process(): QtiInteger
     {
         $testSession = $this->getState();
         $itemSubset = $this->getItemSubset();
@@ -69,7 +69,7 @@ class NumberSelectedProcessor extends ItemSubsetProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return NumberSelected::class;
     }

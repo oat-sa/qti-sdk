@@ -59,7 +59,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException If one of the error described above arise.
      */
-    public function process()
+    public function process(): void
     {
         $state = $this->getState();
         $rule = $this->getRule();
@@ -146,7 +146,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return LookupOutcomeValue::class;
     }

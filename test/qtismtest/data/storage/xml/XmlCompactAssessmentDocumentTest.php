@@ -28,7 +28,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @param XmlCompactDocument|null $doc
      * @throws XmlStorageException
      */
-    public function testLoad(XmlCompactDocument $doc = null)
+    public function testLoad(XmlCompactDocument $doc = null): void
     {
         if ($doc === null) {
             $doc = new XmlCompactDocument('2.1');
@@ -74,7 +74,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @dataProvider versionsToTest
      * @param string $version
      */
-    public function testSave(string $version)
+    public function testSave(string $version): void
     {
         // Version 1.0 for XmlCompactDocuments was in use by legacy code. Let's make it BC.
         $doc = new XmlCompactDocument($version);
@@ -104,7 +104,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @dataProvider schemaValidateProvider
      * @param string $path
      */
-    public function testSchemaValidate($path)
+    public function testSchemaValidate($path): void
     {
         $doc = new DOMDocument('1.0', 'UTF-8');
         $doc->load($path, LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE);
@@ -136,7 +136,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @throws MarshallingException
      * @throws ReflectionException
      */
-    public function testCreateFromXmlAssessmentTestDocument($version, $file, $filesystem)
+    public function testCreateFromXmlAssessmentTestDocument($version, $file, $filesystem): void
     {
         $inputFilesystem = $filesystem ? $this->getFileSystem() : null;
         $outputFilesystem = $filesystem ? $this->getOutputFileSystem() : null;
@@ -194,7 +194,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws ReflectionException
      */
-    public function testCreateFromWithUnresolvableAssessmentSectionRef($file, $filesystem)
+    public function testCreateFromWithUnresolvableAssessmentSectionRef($file, $filesystem): void
     {
         $doc = new XmlDocument('2.1');
 
@@ -213,7 +213,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function createFromWithUnresolvableAssessmentSectionRefProvider()
+    public function createFromWithUnresolvableAssessmentSectionRefProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/interaction_mix_saschen_assessmentsectionref/interaction_mix_sachsen3.xml', false],
@@ -229,7 +229,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @throws MarshallingException
      * @throws ReflectionException
      */
-    public function testCreateFromExploded($version, $sectionCount)
+    public function testCreateFromExploded($version, $sectionCount): void
     {
         $doc = new XmlDocument('2.1');
         $file = self::samplesDir() . 'custom/interaction_mix_saschen_assessmentsectionref/interaction_mix_sachsen' . $version . '.xml';
@@ -307,7 +307,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws ReflectionException
      */
-    public function testCreateFromTestWithShuffledInteractions($file, $filesystem)
+    public function testCreateFromTestWithShuffledInteractions($file, $filesystem): void
     {
         $doc = new XmlDocument('2.1');
 
@@ -404,7 +404,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function createFromTestWithShuffledInteractionsProvider()
+    public function createFromTestWithShuffledInteractionsProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/tests/shufflings.xml', false],
@@ -419,7 +419,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @param XmlCompactDocument|null $doc
      * @throws XmlStorageException
      */
-    public function testLoadRubricBlockRefs($file, $filesystem, XmlCompactDocument $doc = null)
+    public function testLoadRubricBlockRefs($file, $filesystem, XmlCompactDocument $doc = null): void
     {
         if ($doc === null) {
             $src = $file;
@@ -452,7 +452,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function loadRubricBlockRefsProvider()
+    public function loadRubricBlockRefsProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/runtime/rubricblockref.xml', false],
@@ -460,7 +460,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         ];
     }
 
-    public function testSaveRubricBlockRefs()
+    public function testSaveRubricBlockRefs(): void
     {
         $src = self::samplesDir() . 'custom/runtime/rubricblockref.xml';
         $doc = new XmlCompactDocument();
@@ -476,7 +476,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this::assertFileDoesNotExist($file);
     }
 
-    public function testExplodeRubricBlocks()
+    public function testExplodeRubricBlocks(): void
     {
         $src = self::samplesDir() . 'custom/runtime/rubricblockrefs_explosion.xml';
         $doc = new XmlCompactDocument();
@@ -514,7 +514,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this::assertEquals('RB_S01_2', $rubricBlockRefs[2]->getIdentifier());
     }
 
-    public function testExplodeTestFeedbacks()
+    public function testExplodeTestFeedbacks(): void
     {
         $src = self::samplesDir() . 'custom/runtime/testfeedbackrefs_explosion.xml';
         $doc = new XmlCompactDocument();
@@ -552,7 +552,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this::assertEquals(0, $doc->getDocumentComponent()->containsComponentWithClassName('testFeedback'));
     }
 
-    public function testModalFeedbackRuleLoad()
+    public function testModalFeedbackRuleLoad(): void
     {
         $src = self::samplesDir() . 'custom/runtime/modalfeedbackrules.xml';
         $doc = new XmlCompactDocument();
@@ -579,7 +579,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     /**
      * @depends testModalFeedbackRuleLoad
      */
-    public function testModalFeedbackRuleSave()
+    public function testModalFeedbackRuleSave(): void
     {
         $src = self::samplesDir() . 'custom/runtime/modalfeedbackrules.xml';
         $doc = new XmlCompactDocument();
@@ -608,7 +608,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         unlink($file);
     }
 
-    public function testTestFeedbackRefLoad()
+    public function testTestFeedbackRefLoad(): void
     {
         $src = self::samplesDir() . 'custom/runtime/test_feedback_refs.xml';
         $doc = new XmlCompactDocument();
@@ -622,7 +622,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     /**
      * @depends testTestFeedbackRefLoad
      */
-    public function testFeedbackRefSave()
+    public function testFeedbackRefSave(): void
     {
         $src = self::samplesDir() . 'custom/runtime/test_feedback_refs.xml';
         $doc = new XmlCompactDocument();
@@ -659,7 +659,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this::assertEquals('./TFMAIN.xml', $testFeedbackRefElt3->getAttribute('href'));
     }
 
-    public function testCreateFromAssessmentTestEndAttemptIdentifiers()
+    public function testCreateFromAssessmentTestEndAttemptIdentifiers(): void
     {
         $doc = new XmlDocument('2.1');
         $file = self::samplesDir() . 'custom/test_contains_endattemptinteractions.xml';
@@ -683,7 +683,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this::assertEquals('LOST2', $endAttemptIdentifiers[1]);
     }
 
-    public function testCreateFromAssessmentTestInvalidAssessmentItemRefResolution()
+    public function testCreateFromAssessmentTestInvalidAssessmentItemRefResolution(): void
     {
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage("An error occurred while unreferencing item reference with identifier 'Q01'.");
@@ -695,7 +695,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         XmlCompactDocument::createFromXmlAssessmentTestDocument($doc, new LocalFileResolver());
     }
 
-    public function testCreateFromAssessmentTestResponseValidityConstraints()
+    public function testCreateFromAssessmentTestResponseValidityConstraints(): void
     {
         $doc = new XmlDocument('2.1');
         $file = self::samplesDir() . 'custom/tests/response_validity_constraints.xml';
@@ -710,7 +710,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this::assertEquals(1, $assessmentItemRefs[0]->getResponseValidityConstraints()[0]->getMaxConstraint());
     }
 
-    public function testLoadResponseValidityConstraints()
+    public function testLoadResponseValidityConstraints(): void
     {
         $doc = new XmlCompactDocument('2.1');
         $file = self::samplesDir() . 'custom/runtime/validate_response/nonlinear_simultaneous.xml';
@@ -742,7 +742,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     /**
      * @depends testLoadResponseValidityConstraints
      */
-    public function testLoadAssociationValidityConstraints()
+    public function testLoadAssociationValidityConstraints(): void
     {
         $doc = new XmlCompactDocument('2.1');
         $file = self::samplesDir() . 'custom/runtime/validate_response/association_constraints.xml';
@@ -763,7 +763,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this::assertEquals(1, $associationValidityConstraints[1]->getMaxConstraint());
     }
 
-    public function testLoadAssociationValidityConstraintsInvalidAgainstXsd()
+    public function testLoadAssociationValidityConstraintsInvalidAgainstXsd(): void
     {
         $this->expectException(XmlStorageException::class);
 
@@ -778,7 +778,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws ReflectionException
      */
-    public function testCreateFromAssessmentSectionRefs($file)
+    public function testCreateFromAssessmentSectionRefs($file): void
     {
         $doc = new XmlDocument();
         $doc->load($file);
@@ -822,7 +822,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function ceateFromAssessmentSectionRefsDataProvider()
+    public function ceateFromAssessmentSectionRefsDataProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_similar_ids.xml'],
@@ -830,7 +830,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         ];
     }
 
-    public function testCreateFromAssessmentTestTitleAndLabels()
+    public function testCreateFromAssessmentTestTitleAndLabels(): void
     {
         $doc = new XmlDocument('2.1');
         $file = self::samplesDir() . 'custom/extended_title_label.xml';
@@ -868,7 +868,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @param string $expectedVersion
      * @throws XmlStorageException
      */
-    public function testInferVersionAndSchemaValidate(string $testFile, string $expectedVersion)
+    public function testInferVersionAndSchemaValidate(string $testFile, string $expectedVersion): void
     {
         $doc = new XmlCompactDocument();
         $doc->load($testFile, true);
@@ -891,7 +891,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         ];
     }
 
-    public function testInferVersionWithMissingNamespaceReturnsDefaultVersion()
+    public function testInferVersionWithMissingNamespaceReturnsDefaultVersion(): void
     {
         $xmlDoc = new XmlCompactDocument();
 
@@ -900,7 +900,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         $this::assertEquals('2.1.0', $xmlDoc->getVersion());
     }
 
-    public function testInferVersionWithWrongNamespaceThrowsException()
+    public function testInferVersionWithWrongNamespaceThrowsException(): void
     {
         $xmlDoc = new XmlCompactDocument();
 
@@ -917,7 +917,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @param string $toFile
      * @throws XmlStorageException
      */
-    public function testChangeVersion($fromVersion, $fromFile, $toVersion, $toFile)
+    public function testChangeVersion($fromVersion, $fromFile, $toVersion, $toFile): void
     {
         $doc = new XmlCompactDocument($fromVersion);
         $doc->load($fromFile);
@@ -942,7 +942,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
         ];
     }
 
-    public function testChangeVersionWithUnknownVersionThrowsException()
+    public function testChangeVersionWithUnknownVersionThrowsException(): void
     {
         $wrongVersion = '36.15';
         $patchedWrongVersion = $wrongVersion . '.0';

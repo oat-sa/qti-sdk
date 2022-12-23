@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExitTestMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new ExitTest();
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
@@ -22,7 +22,7 @@ class ExitTestMarshallerTest extends QtiSmTestCase
         $this::assertEquals('exitTest', $element->nodeName);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<exitTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"/>');

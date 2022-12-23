@@ -17,7 +17,7 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
         parent::tearDown();
     }
 
-    public function testConsistency()
+    public function testConsistency(): void
     {
         $refCount = count($this->getNames());
 
@@ -25,7 +25,7 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
         $this::assertCount($refCount, $this->getKeys());
     }
 
-    public function testAsArray()
+    public function testAsArray(): void
     {
         $enumerationName = $this->getEnumerationFqcn();
         $array = $enumerationName::asArray();
@@ -39,7 +39,7 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
         }
     }
 
-    public function testGetConstantByName()
+    public function testGetConstantByName(): void
     {
         $names = $this->getNames();
         $constants = $this->getConstants();
@@ -56,7 +56,7 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
         $this::assertFalse($enumerationName::getConstantByName($this->getUnknownConstantName()));
     }
 
-    public function testGetNameByConstant()
+    public function testGetNameByConstant(): void
     {
         $names = $this->getNames();
         $constants = $this->getConstants();
@@ -76,7 +76,7 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
     /**
      * @return string
      */
-    protected function getUnknownConstantName()
+    protected function getUnknownConstantName(): string
     {
         return 'xyz';
     }
@@ -84,7 +84,7 @@ abstract class QtiSmEnumTestCase extends QtiSmTestCase
     /**
      * @return int
      */
-    protected function getUnknownConstantValue()
+    protected function getUnknownConstantValue(): int
     {
         return PHP_INT_MAX;
     }

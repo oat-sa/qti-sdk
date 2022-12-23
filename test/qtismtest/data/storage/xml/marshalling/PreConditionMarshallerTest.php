@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class PreConditionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new PreCondition(new BaseValue(BaseType::BOOLEAN, true));
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
@@ -25,7 +25,7 @@ class PreConditionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('baseValue', $element->getElementsByTagName('baseValue')->item(0)->nodeName);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

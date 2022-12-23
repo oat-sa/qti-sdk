@@ -91,7 +91,7 @@ class XmlDocument extends QtiDocument
      *
      * @param SerializableDomDocument $domDocument A SerializableDomDocument object.
      */
-    protected function setDomDocument(SerializableDomDocument $domDocument)
+    protected function setDomDocument(SerializableDomDocument $domDocument): void
     {
         $this->domDocument = $domDocument;
     }
@@ -101,7 +101,7 @@ class XmlDocument extends QtiDocument
      *
      * @return DOMDocument
      */
-    public function getDomDocument()
+    public function getDomDocument(): DOMDocument
     {
         return $this->domDocument->getDom();
     }
@@ -115,7 +115,7 @@ class XmlDocument extends QtiDocument
      *
      * @param Filesystem|FilesystemInterface|null $filesystem
      */
-    public function setFilesystem($filesystem = null)
+    public function setFilesystem(FilesystemInterface $filesystem = null): void
     {
         if (!$filesystem) {
             $filesystem = FilesystemFactory::local();
@@ -144,7 +144,7 @@ class XmlDocument extends QtiDocument
      *
      * @return FilesystemInterface|null
      */
-    protected function getFilesystem(): FilesystemInterface
+    protected function getFilesystem(): ?FilesystemInterface
     {
         if ($this->filesystem === null) {
             $this->setFilesystem();
@@ -258,7 +258,7 @@ class XmlDocument extends QtiDocument
     protected function loadXml($data): void
     {
         Utils::executeSafeXmlCommand(
-            function () use ($data) {
+            function () use ($data): void {
                 $this->domDocument->loadXML($data, self::LIB_XML_FLAGS);
             },
             'An internal error occurred while parsing QTI-XML',
@@ -275,7 +275,7 @@ class XmlDocument extends QtiDocument
     public function schemaValidate(): void
     {
         Utils::executeSafeXmlCommand(
-            function () {
+            function (): void {
                 $schema = realpath($this->version->getLocalXsd());
                 $this->domDocument->schemaValidate($schema);
             },
@@ -343,7 +343,7 @@ class XmlDocument extends QtiDocument
      * @param QtiComponent $documentComponent The root component of the model that will be saved.
      * @param string $uri The URI where the saved file is supposed to be stored.
      */
-    protected function beforeSave(QtiComponent $documentComponent, $uri)
+    protected function beforeSave(QtiComponent $documentComponent, $uri): void
     {
     }
 
@@ -354,7 +354,7 @@ class XmlDocument extends QtiDocument
      * @return string
      * @throws XmlStorageException
      */
-    protected function saveImplementation($formatOutput = true)
+    protected function saveImplementation($formatOutput = true): string
     {
         $element = $this->marshallElement($this->getDocumentComponent());
 
@@ -456,7 +456,7 @@ class XmlDocument extends QtiDocument
      * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      * @throws ReflectionException
      */
-    public function xInclude($validate = false)
+    public function xInclude($validate = false): void
     {
         if (($root = $this->getDocumentComponent()) !== null) {
             $baseUri = str_replace('\\', '/', $this->getUrl());
@@ -517,7 +517,7 @@ class XmlDocument extends QtiDocument
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
      * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
-    public function resolveTemplateLocation($validate = false)
+    public function resolveTemplateLocation($validate = false): void
     {
         if (($root = $this->getDocumentComponent()) !== null) {
             if (
@@ -564,7 +564,7 @@ class XmlDocument extends QtiDocument
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
      * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
-    public function includeAssessmentSectionRefs($validate = false)
+    public function includeAssessmentSectionRefs($validate = false): void
     {
         if (($root = $this->getDocumentComponent()) !== null) {
             $baseUri = str_replace('\\', '/', $this->getUrl());
@@ -617,7 +617,7 @@ class XmlDocument extends QtiDocument
      *
      * @param string $toVersionNumber
      */
-    public function changeVersion(string $toVersionNumber)
+    public function changeVersion(string $toVersionNumber): void
     {
         $this->setVersion($toVersionNumber);
         $this->setNamespaces($this->domDocument);

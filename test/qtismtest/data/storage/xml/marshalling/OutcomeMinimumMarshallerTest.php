@@ -13,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeMinimumMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $sectionIdentifier = 'mySection1';
         $outcomeIdentifier = 'myOutcome1';
@@ -37,7 +37,7 @@ class OutcomeMinimumMarshallerTest extends QtiSmTestCase
         $this::assertEquals($excludeCategory, $element->getAttribute('excludeCategory'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<outcomeMinimum xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1" outcomeIdentifier="myOutcome1" includeCategory="cat1" excludeCategory="cat2 cat3" weightIdentifier="myWeight1"/>');

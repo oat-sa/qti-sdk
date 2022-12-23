@@ -36,7 +36,7 @@ class BasicSelection extends AbstractSelection
      *
      * @return SelectableRouteCollection A collection of SelectableRoute object describing the performed selection.
      */
-    public function select()
+    public function select(): SelectableRouteCollection
     {
         $assessmentSection = $this->getAssessmentSection();
         $selection = $assessmentSection->getSelection();

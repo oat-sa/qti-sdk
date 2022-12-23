@@ -17,7 +17,7 @@ class CssUtilsTest extends QtiSmTestCase
      * @param string $selector
      * @param array $map
      */
-    public function testMapSelector($selector, $expected, array $map)
+    public function testMapSelector($selector, $expected, array $map): void
     {
         $this::assertEquals($expected, CssUtils::mapSelector($selector, $map));
     }
@@ -25,7 +25,7 @@ class CssUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function mapSelectorProvider()
+    public function mapSelectorProvider(): array
     {
         $map = [
             'div' => 'qtism-div',
@@ -63,7 +63,7 @@ class CssUtilsTest extends QtiSmTestCase
      * @param string $expected
      * @param array $map
      */
-    public function testMapPseudoClasses($selector, $expected, array $map)
+    public function testMapPseudoClasses($selector, $expected, array $map): void
     {
         $this::assertEquals($expected, CssUtils::mapPseudoClasses($selector, $map));
     }
@@ -71,7 +71,7 @@ class CssUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function mapPseudoClassesProvider()
+    public function mapPseudoClassesProvider(): array
     {
         $map = [
             'qti-selected' => 'qti-selected',

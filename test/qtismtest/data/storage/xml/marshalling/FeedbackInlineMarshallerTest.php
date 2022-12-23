@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class FeedbackInlineMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $content = new InlineCollection([new TextRun('This is text...')]);
         $feedback = new FeedbackInline('outcome1', 'please_hide_me', ShowHide::HIDE, 'my-feedback', 'super feedback');
@@ -27,7 +27,7 @@ class FeedbackInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<feedbackInline id="my-feedback" class="super feedback" outcomeIdentifier="outcome1" identifier="please_hide_me" showHide="hide">This is text...</feedbackInline>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <feedbackInline id="my-feedback" class="super feedback" outcomeIdentifier="outcome1" identifier="please_hide_me" showHide="hide">This is text...</feedbackInline>

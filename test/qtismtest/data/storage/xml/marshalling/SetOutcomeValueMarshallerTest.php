@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SetOutcomeValueMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $identifier = 'variable1';
 
@@ -28,7 +28,7 @@ class SetOutcomeValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals($identifier, $element->getAttribute('identifier'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

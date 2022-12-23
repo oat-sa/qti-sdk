@@ -19,7 +19,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class StringMatchProcessorTest extends QtiSmTestCase
 {
-    public function testStringMatch()
+    public function testStringMatch(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('one'), new QtiString('one')]);
@@ -54,7 +54,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString(''), null]);
@@ -63,7 +63,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!'), new MultipleContainer(BaseType::STRING, [new QtiString('String!')])]);
@@ -72,7 +72,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!'), new QtiInteger(25)]);
@@ -81,7 +81,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!')]);
@@ -89,7 +89,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
         $processor = new StringMatchProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('String!'), new QtiString('String!'), new QtiString('String!')]);
@@ -102,7 +102,7 @@ class StringMatchProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression($caseSensitive = true)
+    public function createFakeExpression($caseSensitive = true): QtiComponent
     {
         $str = ($caseSensitive === true) ? 'true' : 'false';
 

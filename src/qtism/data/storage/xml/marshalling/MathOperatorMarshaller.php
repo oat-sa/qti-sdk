@@ -42,7 +42,7 @@ class MathOperatorMarshaller extends OperatorMarshaller
      * @param array An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI mathOperator element.
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -63,7 +63,7 @@ class MathOperatorMarshaller extends OperatorMarshaller
      * @return QtiComponent A MathOperator object.
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         if (($name = $this->getDOMElementAttributeAs($element, 'name')) !== null) {
             return new MathOperator($children, MathFunctions::getConstantByName($name));

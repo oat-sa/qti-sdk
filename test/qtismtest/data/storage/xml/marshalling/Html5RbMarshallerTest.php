@@ -18,8 +18,6 @@
  * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
-declare(strict_types=1);
-
 namespace qtismtest\data\storage\xml\marshalling;
 
 use qtism\data\content\InlineCollection;
@@ -30,7 +28,7 @@ use qtism\data\storage\xml\marshalling\MarshallingException;
 
 class Html5RbMarshallerTest extends Html5ElementMarshallerTest
 {
-    const SUBJECT_QTI_CLASS_NAME = 'rb';
+    private const SUBJECT_QTI_CLASS_NAME = 'rb';
 
     /**
      * @throws MarshallerNotFoundException

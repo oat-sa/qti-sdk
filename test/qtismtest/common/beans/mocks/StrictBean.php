@@ -50,7 +50,7 @@ class StrictBean
     /**
      * @param $firstName
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName): void
     {
         $this->firstName = $firstName;
     }
@@ -58,7 +58,7 @@ class StrictBean
     /**
      * @return mixed
      */
-    public function getFirstName()
+    public function getFirstName(): mixed
     {
         return $this->girstName;
     }
@@ -67,15 +67,17 @@ class StrictBean
      * @param $lastName
      * @return string
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName): string
     {
+        $this->lastName = $lastName;
+
         return $this->lastName;
     }
 
     /**
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -83,7 +85,7 @@ class StrictBean
     /**
      * @param $hair
      */
-    public function setHair($hair)
+    public function setHair($hair): void
     {
         $this->hair = $hair;
     }
@@ -91,7 +93,7 @@ class StrictBean
     /**
      * @return string
      */
-    public function getHair()
+    public function getHair(): string
     {
         return $this->hair;
     }
@@ -99,7 +101,7 @@ class StrictBean
     /**
      * @param $cool
      */
-    public function setCool($cool)
+    public function setCool($cool): void
     {
         $this->cool = $cool;
     }
@@ -107,7 +109,7 @@ class StrictBean
     /**
      * @return bool
      */
-    public function isCool()
+    public function isCool(): bool
     {
         return $this->cool;
     }

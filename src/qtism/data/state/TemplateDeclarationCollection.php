@@ -37,7 +37,7 @@ class TemplateDeclarationCollection extends QtiIdentifiableCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of TemplateDeclaration.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof TemplateDeclaration) {
             $msg = "TemplateDeclarationCollection only accepts to store TemplateDeclaration objects, '" . gettype($value) . "' given.";

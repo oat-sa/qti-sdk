@@ -16,7 +16,7 @@ use qtism\common\datatypes\QtiIdentifier;
  */
 class SetCorrectResponseProcessorTest extends QtiSmTestCase
 {
-    public function testSetCorrectResponseSimple()
+    public function testSetCorrectResponseSimple(): void
     {
         $rule = $this->createComponentFromXml('
 			<setCorrectResponse identifier="RESPONSE">
@@ -34,7 +34,7 @@ class SetCorrectResponseProcessorTest extends QtiSmTestCase
         $this::assertEquals('ChoiceA', $state->getVariable('RESPONSE')->getCorrectResponse()->getValue());
     }
 
-    public function testSetCorrectResponseNoVariable()
+    public function testSetCorrectResponseNoVariable(): void
     {
         $rule = $this->createComponentFromXml('
 			<setCorrectResponse identifier="RESPONSEXXXX">
@@ -56,7 +56,7 @@ class SetCorrectResponseProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testSetCorrectResponseWrongBaseTypeThrowsException()
+    public function testSetCorrectResponseWrongBaseTypeThrowsException(): void
     {
         $rule = $this->createComponentFromXml('
 			<setCorrectResponse identifier="RESPONSE">
@@ -74,7 +74,7 @@ class SetCorrectResponseProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testSetCorrectResponseWrongCardinalityThrowsException()
+    public function testSetCorrectResponseWrongCardinalityThrowsException(): void
     {
         $rule = $this->createComponentFromXml('
 			<setCorrectResponse identifier="RESPONSE">

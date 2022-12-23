@@ -21,7 +21,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class OrProcessorTest extends QtiSmTestCase
 {
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -30,7 +30,7 @@ class OrProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiPoint(1, 2)]);
@@ -39,7 +39,7 @@ class OrProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityOne()
+    public function testWrongCardinalityOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new RecordContainer(['a' => new QtiString('string!')])]);
@@ -48,7 +48,7 @@ class OrProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityTwo()
+    public function testWrongCardinalityTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::FLOAT, [new QtiFloat(25.0)])]);
@@ -57,7 +57,7 @@ class OrProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNullOperands()
+    public function testNullOperands(): void
     {
         $expression = $this->createFakeExpression();
 
@@ -80,7 +80,7 @@ class OrProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testTrue()
+    public function testTrue(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiBoolean(true)]);
@@ -96,7 +96,7 @@ class OrProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testFalse()
+    public function testFalse(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiBoolean(false)]);
@@ -116,7 +116,7 @@ class OrProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<or>

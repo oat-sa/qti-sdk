@@ -41,7 +41,7 @@ class SelectPointInteractionMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $version = $this->getVersion();
         $element = $this->createElement($component);
@@ -73,11 +73,11 @@ class SelectPointInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a selectPointInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A SelectPointInteraction object.
+     * @return SelectPointInteraction A SelectPointInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): SelectPointInteraction
     {
         $version = $this->getVersion();
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) === null) {
@@ -132,7 +132,7 @@ class SelectPointInteractionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'selectPointInteraction';
     }

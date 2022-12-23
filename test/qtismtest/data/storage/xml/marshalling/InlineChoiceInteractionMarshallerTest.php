@@ -16,7 +16,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $inlineChoices = new InlineChoiceCollection();
 
@@ -48,7 +48,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         // check that suffled systematically out and no required attribute.
         $inlineChoices = new InlineChoiceCollection();
@@ -69,7 +69,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false"><inlineChoice identifier="inlineChoice1" fixed="true">Option1</inlineChoice></inlineChoiceInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
             <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true" xml:base="/home/jerome">
@@ -91,7 +91,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21NoInlineChoices()
+    public function testUnmarshall21NoInlineChoices(): void
     {
         $element = $this->createDOMElement('
             <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="true" required="true">
@@ -107,7 +107,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21InvalidResponseIdentifier()
+    public function testUnmarshall21InvalidResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <inlineChoiceInteraction responseIdentifier="9_RESPONSE" shuffle="true" required="true">
@@ -126,7 +126,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21NoResponseIdentifier()
+    public function testUnmarshall21NoResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <inlineChoiceInteraction shuffle="true" required="true">
@@ -142,7 +142,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         // Check required is not taken into account.
         // Check shuffle is always in the output.
@@ -165,7 +165,7 @@ class InlineChoiceInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallErrorIfoShuffle20()
+    public function testUnmarshallErrorIfoShuffle20(): void
     {
         $expectedMsg = "The mandatory 'shuffle' attribute is missing from the 'inlineChoiceInteraction' element.";
         $this->expectException(UnmarshallingException::class);

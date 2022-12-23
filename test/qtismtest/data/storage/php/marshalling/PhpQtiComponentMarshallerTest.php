@@ -14,7 +14,7 @@ use qtismtest\QtiSmPhpMarshallerTestCase;
  */
 class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
-    public function testEmptyComponent()
+    public function testEmptyComponent(): void
     {
         $component = new ExitTest();
         $ctx = $this->createMarshallingContext();
@@ -24,7 +24,7 @@ class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase
         $this::assertEquals('$exittest_0 = new ' . ExitTest::class . '();' . "\n", $this->getStream()->getBinary());
     }
 
-    public function testOnlyScalarPropertiesComponentAllInConstructor()
+    public function testOnlyScalarPropertiesComponentAllInConstructor(): void
     {
         $component = new Weight('weight1', 1.1);
         $ctx = $this->createMarshallingContext();
@@ -44,7 +44,7 @@ class PhpQtiComponentMarshallerTest extends QtiSmPhpMarshallerTestCase
         $this::assertEquals($expected, $this->getStream()->getBinary());
     }
 
-    public function testOnlyScalarPropertiesConstructorAndProperties()
+    public function testOnlyScalarPropertiesConstructorAndProperties(): void
     {
         $component = new ItemSessionControl();
         $ctx = $this->createMarshallingContext();

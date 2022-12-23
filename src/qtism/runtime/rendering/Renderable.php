@@ -35,5 +35,6 @@ interface Renderable
      * @return mixed The rendered component into another constitution.
      * @throws RenderingException If something goes wrong while rendering the component.
      */
+    #[\ReturnTypeWillChange]
     public function render($something);
 }

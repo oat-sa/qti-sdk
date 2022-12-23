@@ -37,7 +37,7 @@ class TableCellRenderer extends BodyElementRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
 
@@ -46,23 +46,26 @@ class TableCellRenderer extends BodyElementRenderer
         }
 
         if ($component->hasScope() === true) {
-            $fragment->firstChild->setAttribute('scope', TableCellScope::getNameByConstant($component->getScope()));
+            $fragment->firstChild->setAttribute(
+                'scope',
+                (string)TableCellScope::getNameByConstant($component->getScope())
+            );
         }
 
         if ($component->hasAbbr() === true) {
-            $fragment->firstChild->setAttribute('abbr', $component->getAbbr());
+            $fragment->firstChild->setAttribute('abbr', (string)$component->getAbbr());
         }
 
         if ($component->hasAxis() === true) {
-            $fragment->firstChild->setAttribute('axis', $component->getAxis());
+            $fragment->firstChild->setAttribute('axis', (string)$component->getAxis());
         }
 
         if ($component->hasRowspan() === true) {
-            $fragment->firstChild->setAttribute('rowspan', $component->getRowspan());
+            $fragment->firstChild->setAttribute('rowspan', (string)$component->getRowspan());
         }
 
         if ($component->hasColspan() === true) {
-            $fragment->firstChild->setAttribute('colspan', $component->getColspan());
+            $fragment->firstChild->setAttribute('colspan', (string)$component->getColspan());
         }
     }
 }

@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class DefaultProcessorTest extends QtiSmTestCase
 {
-    public function testMultipleCardinality()
+    public function testMultipleCardinality(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="duration" cardinality="ordered">
@@ -41,7 +41,7 @@ class DefaultProcessorTest extends QtiSmTestCase
         $this::assertTrue($comparable->equals($processor->process()));
     }
 
-    public function testSingleCardinality()
+    public function testSingleCardinality(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<outcomeDeclaration identifier="outcome1" baseType="boolean" cardinality="single">
@@ -60,7 +60,7 @@ class DefaultProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testNoVariable()
+    public function testNoVariable(): void
     {
         $expr = $this->createComponentFromXml('<default identifier="outcome1"/>');
         $processor = new DefaultProcessor($expr);
@@ -69,7 +69,7 @@ class DefaultProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testNoDefaultValue()
+    public function testNoDefaultValue(): void
     {
         $variableDeclaration = $this->createComponentFromXml('
 			<responseDeclaration identifier="response1" baseType="point" cardinality="multiple"/>

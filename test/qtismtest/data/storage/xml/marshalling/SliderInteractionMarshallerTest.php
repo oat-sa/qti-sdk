@@ -16,7 +16,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class SliderInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $sliderInteraction = new SliderInteraction('RESPONSE', 0.0, 100.0, 'my-slider', 'slide-it');
         $sliderInteraction->setStep(1);
@@ -39,7 +39,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
             <sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true">
@@ -66,7 +66,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallWrongOrientationValue()
+    public function testUnmarshallWrongOrientationValue(): void
     {
         $element = $this->createDOMElement('
             <sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertital" reverse="true">
@@ -83,7 +83,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoUpperBound()
+    public function testUnmarshallNoUpperBound(): void
     {
         $element = $this->createDOMElement('
             <sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" lowerBound="0" step="1" stepLabel="true" orientation="vertical" reverse="true">
@@ -100,7 +100,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoLowerBound()
+    public function testUnmarshallNoLowerBound(): void
     {
         $element = $this->createDOMElement('
             <sliderInteraction id="my-slider" class="slide-it" responseIdentifier="RESPONSE" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true">
@@ -117,7 +117,7 @@ class SliderInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoResponseIdentifier()
+    public function testUnmarshallNoResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <sliderInteraction id="my-slider" class="slide-it" lowerBound="0" upperBound="100" step="1" stepLabel="true" orientation="vertical" reverse="true">

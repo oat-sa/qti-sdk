@@ -66,7 +66,7 @@ abstract class CustomOperatorProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return CustomOperator::class;
     }

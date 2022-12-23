@@ -13,7 +13,7 @@ class ShowHideTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return ShowHide::class;
     }
@@ -21,7 +21,7 @@ class ShowHideTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'show',
@@ -32,7 +32,7 @@ class ShowHideTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'SHOW',
@@ -43,7 +43,7 @@ class ShowHideTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             ShowHide::SHOW,

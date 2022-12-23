@@ -23,7 +23,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class EqualRoundedProcessorTest extends QtiSmTestCase
 {
-    public function testSignificantFigures()
+    public function testSignificantFigures(): void
     {
         $expression = $this->createFakeExpression(RoundingMode::SIGNIFICANT_FIGURES, 3);
         $operands = new OperandsCollection([new QtiFloat(3.175), new QtiFloat(3.183)]);
@@ -37,7 +37,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testDecimalPlaces()
+    public function testDecimalPlaces(): void
     {
         $expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
         $operands = new OperandsCollection([new QtiFloat(1.68572), new QtiFloat(1.69)]);
@@ -51,7 +51,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
         $operands = new OperandsCollection([new QtiFloat(1.68572), null]);
@@ -60,7 +60,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testVariableRef()
+    public function testVariableRef(): void
     {
         $expression = $this->createFakeExpression(RoundingMode::SIGNIFICANT_FIGURES, 'var1');
         $operands = new OperandsCollection([new QtiFloat(3.175), new QtiFloat(3.183)]);
@@ -74,7 +74,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testUnknownVariableRef()
+    public function testUnknownVariableRef(): void
     {
         $expression = $this->createFakeExpression(RoundingMode::SIGNIFICANT_FIGURES, 'var1');
         $operands = new OperandsCollection([new QtiFloat(3.175), new QtiFloat(3.183)]);
@@ -89,7 +89,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
         $operands = new OperandsCollection([new QtiPair('A', 'B'), new QtiInteger(3)]);
@@ -98,7 +98,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
         $operands = new OperandsCollection([new QtiInteger(10), new RecordContainer(['A' => new QtiInteger(1337)])]);
@@ -107,7 +107,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
         $operands = new OperandsCollection([new QtiInteger(10)]);
@@ -115,7 +115,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
         $processor = new EqualRoundedProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression(RoundingMode::DECIMAL_PLACES, 2);
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10), new QtiInteger(10)]);
@@ -129,7 +129,7 @@ class EqualRoundedProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression($roundingMode, $figures)
+    public function createFakeExpression($roundingMode, $figures): QtiComponent
     {
         $roundingMode = RoundingMode::getNameByConstant($roundingMode);
 

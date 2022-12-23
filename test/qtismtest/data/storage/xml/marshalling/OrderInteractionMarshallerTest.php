@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OrderInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $choice1 = new SimpleChoice('choice_1');
         $choice1->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
@@ -43,7 +43,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshallNoMinMaxChoicesIfNotSpecified21()
+    public function testMarshallNoMinMaxChoicesIfNotSpecified21(): void
     {
         $choice1 = new SimpleChoice('choice_1');
         $choice1->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
@@ -59,7 +59,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<orderInteraction responseIdentifier="RESPONSE"><simpleChoice identifier="choice_1">Choice #1</simpleChoice></orderInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
             <orderInteraction responseIdentifier="RESPONSE" maxChoices="2">
@@ -90,7 +90,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $this::assertCount(2, $simpleChoices);
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         $element = $this->createDOMElement('
             <orderInteraction responseIdentifier="RESPONSE" shuffle="true">
@@ -124,7 +124,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshallMinMaxChoicesIgnored20()
+    public function testUnmarshallMinMaxChoicesIgnored20(): void
     {
         // Check that minChoices and maxChoices are ignored in QTI 2.0.
         $element = $this->createDOMElement('
@@ -148,7 +148,7 @@ class OrderInteractionMarshallerTest extends QtiSmTestCase
         $this::assertFalse($component->hasMaxChoices());
     }
 
-    public function testMarshal20()
+    public function testMarshal20(): void
     {
         $choice1 = new SimpleChoice('choice_1');
         $choice1->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));

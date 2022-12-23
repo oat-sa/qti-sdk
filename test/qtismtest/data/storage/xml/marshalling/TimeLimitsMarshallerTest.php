@@ -13,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TimeLimitsMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $minTime = new QtiDuration('PT50S');
         $maxTime = new QtiDuration('PT100S');
@@ -29,7 +29,7 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase
         $this::assertEquals('false', $element->getAttribute('allowLateSubmission'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<timeLimits xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" minTime="50" maxTime="100"/>');
@@ -46,7 +46,7 @@ class TimeLimitsMarshallerTest extends QtiSmTestCase
         $this::assertFalse($component->doesAllowLateSubmission());
     }
 
-    public function testUnmarshallZero()
+    public function testUnmarshallZero(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<timeLimits xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" minTime="0" maxTime="0"/>');

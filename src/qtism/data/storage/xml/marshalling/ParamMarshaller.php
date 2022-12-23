@@ -39,7 +39,7 @@ class ParamMarshaller extends Marshaller
      * @param QtiComponent $component A Param object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'name', $component->getName());
@@ -57,10 +57,10 @@ class ParamMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML param element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Param object.
+     * @return Param A Param object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Param
     {
         if (($name = $this->getDOMElementAttributeAs($element, 'name')) === null) {
             // XSD use="required" but can be empty.
@@ -89,7 +89,7 @@ class ParamMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'param';
     }

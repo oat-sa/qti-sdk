@@ -13,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MathConstantMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $name = MathEnumeration::PI;
 
@@ -26,7 +26,7 @@ class MathConstantMarshallerTest extends QtiSmTestCase
         $this::assertEquals('pi', $element->getAttribute('name'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<mathConstant xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" name="pi"/>');

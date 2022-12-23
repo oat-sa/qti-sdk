@@ -39,7 +39,7 @@ class TextRunMarshaller extends Marshaller
      * @param QtiComponent $component A TextRun object.
      * @return DOMText The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMText
     {
         return static::getDOMCradle()->createTextNode($component->getContent());
     }
@@ -48,9 +48,9 @@ class TextRunMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI textRun element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A TextRun object.
+     * @return TextRun A TextRun object.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): TextRun
     {
         return new TextRun($element->nodeValue);
     }
@@ -58,7 +58,7 @@ class TextRunMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'textRun';
     }

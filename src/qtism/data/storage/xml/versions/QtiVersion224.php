@@ -21,8 +21,6 @@
  * @license GPLv2
  */
 
-declare(strict_types=1);
-
 namespace qtism\data\storage\xml\versions;
 
 use qtism\data\storage\xml\marshalling\Qti224MarshallerFactory;
@@ -32,9 +30,9 @@ use qtism\data\storage\xml\marshalling\Qti224MarshallerFactory;
  */
 class QtiVersion224 extends QtiVersion220
 {
-    const XSD = 'https://purl.imsglobal.org/spec/qti/v2p2/schema/xsd/imsqti_v2p2p4.xsd';
+    public const XSD = 'https://purl.imsglobal.org/spec/qti/v2p2/schema/xsd/imsqti_v2p2p4.xsd';
 
-    const LOCAL_XSD = 'qtiv2p2p4/imsqti_v2p2p4.xsd';
+    public const LOCAL_XSD = 'qtiv2p2p4/imsqti_v2p2p4.xsd';
 
-    const MARSHALLER_FACTORY = Qti224MarshallerFactory::class;
+    public const MARSHALLER_FACTORY = Qti224MarshallerFactory::class;
 }

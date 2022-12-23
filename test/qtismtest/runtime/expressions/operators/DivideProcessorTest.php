@@ -20,7 +20,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class DivideProcessorTest extends QtiSmTestCase
 {
-    public function testDivide()
+    public function testDivide(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(1), new QtiInteger(1)]);
@@ -54,7 +54,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $this::assertEquals(2, $result->getValue());
     }
 
-    public function testDivisionByZero()
+    public function testDivisionByZero(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(1), new QtiInteger(0)]);
@@ -63,7 +63,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testDivisionByInfinite()
+    public function testDivisionByInfinite(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiFloat(INF)]);
@@ -79,7 +79,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $this::assertEquals(-0, $result->getValue());
     }
 
-    public function testInfiniteDividedByInfinite()
+    public function testInfiniteDividedByInfinite(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiFloat(INF), new QtiFloat(INF)]);
@@ -88,7 +88,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongBaseTypeOne()
+    public function testWrongBaseTypeOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiString('string!'), new QtiBoolean(true)]);
@@ -97,7 +97,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeTwo()
+    public function testWrongBaseTypeTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiPoint(1, 2), new QtiBoolean(true)]);
@@ -106,7 +106,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new RecordContainer(['A' => new QtiInteger(1)]), new QtiInteger(10)]);
@@ -115,7 +115,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -123,7 +123,7 @@ class DivideProcessorTest extends QtiSmTestCase
         $processor = new DivideProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(11), new QtiInteger(12)]);
@@ -135,7 +135,7 @@ class DivideProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<divide>

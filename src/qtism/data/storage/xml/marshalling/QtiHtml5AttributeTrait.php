@@ -18,8 +18,6 @@
  * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
-declare(strict_types=1);
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\common\utils\Version;
@@ -36,7 +34,7 @@ trait QtiHtml5AttributeTrait
     /**
      * @return DOMElement
      */
-    public function marshallHtml5Attributes(QtiComponent $component, DOMElement $element)
+    public function marshallHtml5Attributes(QtiComponent $component, DOMElement $element): DOMElement
     {
         if ($component->hasTitle()) {
             $this->setDOMElementAttribute($element, 'title', $component->getTitle());
@@ -49,7 +47,7 @@ trait QtiHtml5AttributeTrait
         return $element;
     }
 
-    protected function fillBodyElementAttributes(BodyElement &$bodyElement, DOMElement $element)
+    protected function fillBodyElementAttributes(BodyElement &$bodyElement, DOMElement $element): void
     {
         if (Version::compare($this->getVersion(), '2.2.0', '>=') === true) {
             $title = $this->getDOMElementAttributeAs($element, 'title');

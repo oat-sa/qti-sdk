@@ -37,7 +37,7 @@ class ObjectFlowCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an ObjectFlow object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof ObjectFlow) {
             $msg = 'ObjectFlowCollection objects only accepts ObjectFlow objects to be stored.';

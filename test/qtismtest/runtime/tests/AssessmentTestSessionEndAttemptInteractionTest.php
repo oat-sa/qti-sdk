@@ -16,7 +16,7 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
  */
 class AssessmentTestSessionEndAttemptInteractionTest extends QtiSmAssessmentTestSessionTestCase
 {
-    public function testEndAttemptInteraction()
+    public function testEndAttemptInteraction(): void
     {
         // Max Attempts = 0 -> Infinite.
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/endAttemptIdentifiers.xml');

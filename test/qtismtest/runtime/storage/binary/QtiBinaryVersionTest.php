@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class QtiBinaryVersionTest extends QtiSmTestCase
 {
-    public function testPersist()
+    public function testPersist(): void
     {
         $stream = new MemoryStream();
         $stream->open();
@@ -30,7 +30,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         $this::assertEquals(chr(QtiBinaryVersion::CURRENT_VERSION) . pack('S', 1) . 'M', $stream->getBinary());
     }
 
-    public function testRetrieveCurrentLegacy()
+    public function testRetrieveCurrentLegacy(): void
     {
         $access = $this->createAccessMock(QtiBinaryVersion::CURRENT_VERSION, 'L');
 
@@ -42,7 +42,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
         $this::assertFalse($subject->isMaster());
     }
 
-    public function testRetrieveCurrentMaster()
+    public function testRetrieveCurrentMaster(): void
     {
         $access = $this->createAccessMock(QtiBinaryVersion::CURRENT_VERSION, 'M');
 
@@ -62,7 +62,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
      * @throws MemoryStreamException
      * @throws StreamAccessException
      */
-    public function testLegacyFeatures(int $versionNumber, array $expectedFeatures)
+    public function testLegacyFeatures(int $versionNumber, array $expectedFeatures): void
     {
         $access = $this->createAccessMock($versionNumber, 'L');
 
@@ -108,7 +108,7 @@ class QtiBinaryVersionTest extends QtiSmTestCase
      * @throws MemoryStreamException
      * @throws StreamAccessException
      */
-    public function testMasterFeatures(int $versionNumber, array $expectedFeatures)
+    public function testMasterFeatures(int $versionNumber, array $expectedFeatures): void
     {
         $access = $this->createAccessMock($versionNumber, 'M');
 

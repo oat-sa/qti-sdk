@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SelectableRouteCollectionTest extends QtiSmTestCase
 {
-    public function testInsertAt()
+    public function testInsertAt(): void
     {
         $routeA = new SelectableRoute();
         $routeB = new SelectableRoute();

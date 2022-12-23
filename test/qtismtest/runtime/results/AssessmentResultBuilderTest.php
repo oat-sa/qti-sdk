@@ -38,7 +38,7 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
  */
 class AssessmentResultBuilderTest extends QtiSmAssessmentTestSessionTestCase
 {
-    public function testBasic()
+    public function testBasic(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/linear_5_items.xml');
         $session->beginTestSession();

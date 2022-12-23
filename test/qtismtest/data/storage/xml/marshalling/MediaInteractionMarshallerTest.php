@@ -16,7 +16,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class MediaInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $object = new ObjectElement('my-video.mp4', 'video/mp4');
         $object->setWidth('400');
@@ -42,7 +42,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement(
             '<mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome">
@@ -71,7 +71,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Prompt...', $promptContent[0]->getContent());
     }
 
-    public function testUnmarshallNoObject()
+    public function testUnmarshallNoObject(): void
     {
         $element = $this->createDOMElement('
             <mediaInteraction id="my-media" responseIdentifier="RESPONSE" autostart="false" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt></mediaInteraction>        
@@ -83,7 +83,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallMissingAutoStart()
+    public function testUnmarshallMissingAutoStart(): void
     {
         $element = $this->createDOMElement('
             <mediaInteraction id="my-media" responseIdentifier="RESPONSE" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>
@@ -95,7 +95,7 @@ class MediaInteractionMarshallerTest extends QtiSmTestCase
         $component = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallMissingResponseIdentifier()
+    public function testUnmarshallMissingResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <mediaInteraction id="my-media" autostart="true" minPlays="1" maxPlays="2" loop="true" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="my-video.mp4" type="video/mp4" width="400" height="300"/></mediaInteraction>

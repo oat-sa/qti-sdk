@@ -90,7 +90,7 @@ class ResponseVariable extends Variable
      * @param QtiDatatype|null $correctResponse A QtiDatatype object or null.
      * @throws InvalidArgumentException If $correctResponse does not match baseType and/or cardinality of the variable.
      */
-    public function setCorrectResponse(QtiDatatype $correctResponse = null)
+    public function setCorrectResponse(QtiDatatype $correctResponse = null): void
     {
         if ($correctResponse !== null 
             && (!Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse)
@@ -109,7 +109,7 @@ class ResponseVariable extends Variable
      *
      * @return QtiDatatype|null A QTI Runtime value (primitive or container).
      */
-    public function getCorrectResponse()
+    public function getCorrectResponse(): ?QtiDatatype
     {
         return $this->correctResponse;
     }
@@ -119,7 +119,7 @@ class ResponseVariable extends Variable
      *
      * @return bool
      */
-    public function hasCorrectResponse()
+    public function hasCorrectResponse(): bool
     {
         return $this->getCorrectResponse() !== null;
     }
@@ -129,7 +129,7 @@ class ResponseVariable extends Variable
      *
      * @param Mapping $mapping A Mapping object from the QTI Data Model.
      */
-    public function setMapping(Mapping $mapping = null)
+    public function setMapping(Mapping $mapping = null): void
     {
         $this->mapping = $mapping;
     }
@@ -139,7 +139,7 @@ class ResponseVariable extends Variable
      *
      * @return Mapping A mapping object from the QTI Data Model.
      */
-    public function getMapping()
+    public function getMapping(): ?Mapping
     {
         return $this->mapping;
     }
@@ -149,7 +149,7 @@ class ResponseVariable extends Variable
      *
      * @param AreaMapping $areaMapping An AreaMapping object from the QTI Data Model.
      */
-    public function setAreaMapping(AreaMapping $areaMapping = null)
+    public function setAreaMapping(AreaMapping $areaMapping = null): void
     {
         $this->areaMapping = $areaMapping;
     }
@@ -159,7 +159,7 @@ class ResponseVariable extends Variable
      *
      * @return AreaMapping An AreaMapping object from the QTI Data Model.
      */
-    public function getAreaMapping()
+    public function getAreaMapping(): ?AreaMapping
     {
         return $this->areaMapping;
     }
@@ -170,7 +170,7 @@ class ResponseVariable extends Variable
      *
      * @return bool
      */
-    public function isCorrect()
+    public function isCorrect(): bool
     {
         if ($this->hasCorrectResponse() === true) {
             $correctResponse = $this->getCorrectResponse();
@@ -192,7 +192,7 @@ class ResponseVariable extends Variable
      * @return ResponseVariable
      * @throws InvalidArgumentException
      */
-    public static function createFromDataModel(VariableDeclaration $variableDeclaration)
+    public static function createFromDataModel(VariableDeclaration $variableDeclaration): ResponseVariable
     {
         $variable = parent::createFromDataModel($variableDeclaration);
 

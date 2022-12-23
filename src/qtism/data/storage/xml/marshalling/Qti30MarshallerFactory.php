@@ -128,7 +128,7 @@ class Qti30MarshallerFactory extends MarshallerFactory
      * @param array $args
      * @return Marshaller
      */
-    protected function instantiateMarshaller(ReflectionClass $class, array $args)
+    protected function instantiateMarshaller(ReflectionClass $class, array $args): Marshaller
     {
         array_unshift($args, '3.0.0');
         return Reflection::newInstance($class, $args);

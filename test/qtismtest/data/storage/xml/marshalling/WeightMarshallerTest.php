@@ -13,7 +13,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class WeightMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $identifier = 'myWeight1';
         $value = 3.45;
@@ -28,7 +28,7 @@ class WeightMarshallerTest extends QtiSmTestCase
         $this::assertEquals($value . '', $element->getAttribute('value'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<weight xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myWeight1" value="3.45"/>');
@@ -42,7 +42,7 @@ class WeightMarshallerTest extends QtiSmTestCase
         $this::assertEquals(3.45, $component->getValue());
     }
 
-    public function testUnmarshallWrongIdentifier()
+    public function testUnmarshallWrongIdentifier(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<weight xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="999" value="3.45"/>');
@@ -56,7 +56,7 @@ class WeightMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNonFloatValue()
+    public function testUnmarshallNonFloatValue(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<weight xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="my-identifier" value="lll"/>');
@@ -70,7 +70,7 @@ class WeightMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNoValue()
+    public function testUnmarshallNoValue(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<weight xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="my-identifier"/>');
@@ -84,7 +84,7 @@ class WeightMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallMissingIdentifier()
+    public function testUnmarshallMissingIdentifier(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<weight xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" value="1.1"/>');

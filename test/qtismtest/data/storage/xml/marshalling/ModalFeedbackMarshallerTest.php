@@ -15,7 +15,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class ModalFeedbackMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $content = new FlowStaticCollection([new TextRun('Please show me!')]);
         $modalFeedback = new ModalFeedback('outcome1', 'hello', $content, 'Modal Feedback Example');
@@ -28,7 +28,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<modalFeedback outcomeIdentifier="outcome1" identifier="hello" showHide="show" title="Modal Feedback Example">Please show me!</modalFeedback>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <modalFeedback outcomeIdentifier="outcome1" identifier="hello" showHide="show" title="Modal Feedback Example">Please show me!</modalFeedback>
@@ -46,7 +46,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Please show me!', $content[0]->getContent());
     }
 
-    public function testUnmarshallShowHideInvalid()
+    public function testUnmarshallShowHideInvalid(): void
     {
         $element = $this->createDOMElement('
 	        <modalFeedback outcomeIdentifier="outcome1" identifier="hello" showHide="shower" title="Modal Feedback Example">Please show me!</modalFeedback>
@@ -58,7 +58,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallInvalidContent()
+    public function testUnmarshallInvalidContent(): void
     {
         $element = $this->createDOMElement('
 	        <modalFeedback outcomeIdentifier="outcome1" identifier="hello" showHide="show" title="Modal Feedback Example">
@@ -74,7 +74,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallNoShowHide()
+    public function testUnmarshallNoShowHide(): void
     {
         $element = $this->createDOMElement('
 	        <modalFeedback outcomeIdentifier="outcome1" identifier="hello" title="Modal Feedback Example">Please show me!</modalFeedback>
@@ -86,7 +86,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallNoOutcomeIdentifier()
+    public function testUnmarshallNoOutcomeIdentifier(): void
     {
         $element = $this->createDOMElement('
 	        <modalFeedback identifier="hello" showHide="show" title="Modal Feedback Example">Please show me!</modalFeedback>
@@ -98,7 +98,7 @@ class ModalFeedbackMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallNoIdentifier()
+    public function testUnmarshallNoIdentifier(): void
     {
         $element = $this->createDOMElement('
 	        <modalFeedback outcomeIdentifier="outcome1" showHide="show" title="Modal Feedback Example">Please show me!</modalFeedback>

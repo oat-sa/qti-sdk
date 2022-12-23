@@ -50,7 +50,7 @@ class Utils
      * @param string $mappingIndicator The mapping indicator to use between field name and field value when displaying record cardinality variables.
      * @return string The formatted variable or an error message.
      */
-    public static function printVariable(State $context, $identifier, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '=')
+    public static function printVariable(State $context, $identifier, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '='): string
     {
         try {
             $printedVariable = new PrintedVariable($identifier);

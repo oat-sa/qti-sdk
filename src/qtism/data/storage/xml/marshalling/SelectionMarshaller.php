@@ -39,7 +39,7 @@ class SelectionMarshaller extends Marshaller
      * @param QtiComponent $component A Selection object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -60,10 +60,10 @@ class SelectionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI Selection object.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Selection object.
+     * @return Selection A Selection object.
      * @throws UnmarshallingException If the mandatory 'select' attribute is missing from $element.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Selection
     {
         // Retrieve XML content as a string.
         $frag = $element->ownerDocument->createDocumentFragment();
@@ -91,7 +91,7 @@ class SelectionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'selection';
     }

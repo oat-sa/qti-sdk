@@ -43,7 +43,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $version = $this->getVersion();
         $element = $this->createElement($component);
@@ -72,11 +72,11 @@ class PositionObjectInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an positionObjectInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A PositionObjectInteraction object.
+     * @return PositionObjectInteraction A PositionObjectInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): PositionObjectInteraction
     {
         $version = $this->getVersion();
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
@@ -131,7 +131,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'positionObjectInteraction';
     }

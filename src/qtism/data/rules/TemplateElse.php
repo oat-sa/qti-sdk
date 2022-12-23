@@ -54,7 +54,7 @@ class TemplateElse extends QtiComponent
      *
      * @param TemplateRuleCollection $templateRules A collection of TemplateRule objects.
      */
-    public function setTemplateRules(TemplateRuleCollection $templateRules)
+    public function setTemplateRules(TemplateRuleCollection $templateRules): void
     {
         $this->templateRules = $templateRules;
     }
@@ -64,7 +64,7 @@ class TemplateElse extends QtiComponent
      *
      * @return TemplateRuleCollection A collection of TemplateRule objects.
      */
-    public function getTemplateRules()
+    public function getTemplateRules(): TemplateRuleCollection
     {
         return $this->templateRules;
     }
@@ -72,7 +72,7 @@ class TemplateElse extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection($this->getTemplateRules()->getArrayCopy());
     }
@@ -80,7 +80,7 @@ class TemplateElse extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'templateElse';
     }

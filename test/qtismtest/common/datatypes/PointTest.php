@@ -10,7 +10,7 @@ use qtismtest\QtiSmTestCase;
  */
 class PointTest extends QtiSmTestCase
 {
-    public function testEquality()
+    public function testEquality(): void
     {
         $p1 = new QtiPoint(10, 10);
         $p2 = new QtiPoint(10, 10);

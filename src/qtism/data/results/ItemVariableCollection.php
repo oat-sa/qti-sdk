@@ -37,7 +37,7 @@ class ItemVariableCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of ItemResult.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof ItemVariable) {
             throw new InvalidArgumentException(sprintf(

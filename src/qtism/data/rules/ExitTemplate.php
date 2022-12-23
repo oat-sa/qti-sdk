@@ -43,7 +43,7 @@ class ExitTemplate extends QtiComponent implements TemplateRule
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'exitTemplate';
     }
@@ -51,7 +51,7 @@ class ExitTemplate extends QtiComponent implements TemplateRule
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

@@ -18,8 +18,6 @@
  * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
-declare(strict_types=1);
-
 namespace qtismtest\data\content\xhtml\html5;
 
 use qtism\data\content\xhtml\html5\Rt;
@@ -27,7 +25,7 @@ use qtismtest\QtiSmTestCase;
 
 class RtTest extends QtiSmTestCase
 {
-    const SUBJECT_QTI_CLASS_NAME = 'rt';
+    public const SUBJECT_QTI_CLASS_NAME = 'rt';
 
     public function testCreateWithValues(): void
     {

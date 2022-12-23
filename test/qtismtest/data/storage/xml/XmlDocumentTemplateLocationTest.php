@@ -18,7 +18,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @dataProvider correctlyFormedProvider
      */
-    public function testCorrectlyFormed($file, $filesystem)
+    public function testCorrectlyFormed($file, $filesystem): void
     {
         $doc = new XmlDocument();
 
@@ -42,7 +42,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function correctlyFormedProvider()
+    public function correctlyFormedProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/items/template_location/template_location_item.xml', false],
@@ -50,7 +50,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
         ];
     }
 
-    public function testNotLoaded()
+    public function testNotLoaded(): void
     {
         $doc = new XmlDocument();
 
@@ -65,7 +65,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @dataProvider wrongTargetProvider
      */
-    public function testWrongTarget($file, $filesystem)
+    public function testWrongTarget($file, $filesystem): void
     {
         $doc = new XmlDocument();
 
@@ -82,7 +82,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function wrongTargetProvider()
+    public function wrongTargetProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/items/template_location/template_location_item_wrong_target.xml', false],
@@ -96,7 +96,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @dataProvider invalidTargetNoValidationProvider
      */
-    public function testInvalidTargetNoValidation($file, $filesystem)
+    public function testInvalidTargetNoValidation($file, $filesystem): void
     {
         $doc = new XmlDocument();
 
@@ -115,7 +115,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function invalidTargetNoValidationProvider()
+    public function invalidTargetNoValidationProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/items/template_location/template_location_item_invalid_target.xml', false],
@@ -129,7 +129,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @dataProvider invalidTargetValidationProvider
      */
-    public function testInvalidTargetValidation($file, $filesystem)
+    public function testInvalidTargetValidation($file, $filesystem): void
     {
         $doc = new XmlDocument();
 
@@ -147,7 +147,7 @@ class XmlDocumentTemplateLocationTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function invalidTargetValidationProvider()
+    public function invalidTargetValidationProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/items/template_location/template_location_item_invalid_target.xml', false],

@@ -58,7 +58,7 @@ class MarshallingException extends Exception implements QtiSdkPackageContentExce
      *
      * @return QtiComponent A QtiComponent object.
      */
-    public function getComponent()
+    public function getComponent(): QtiComponent
     {
         return $this->component;
     }
@@ -68,7 +68,7 @@ class MarshallingException extends Exception implements QtiSdkPackageContentExce
      *
      * @param QtiComponent $component A QTI Component object.
      */
-    protected function setComponent(QtiComponent $component)
+    protected function setComponent(QtiComponent $component): void
     {
         $this->component = $component;
     }

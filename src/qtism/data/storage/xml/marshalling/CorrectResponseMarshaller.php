@@ -45,7 +45,7 @@ class CorrectResponseMarshaller extends Marshaller
     /**
      * @param int $baseType
      */
-    public function setBaseType($baseType = -1)
+    public function setBaseType($baseType = -1): void
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
@@ -60,7 +60,7 @@ class CorrectResponseMarshaller extends Marshaller
      *
      * @return int
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -85,7 +85,7 @@ class CorrectResponseMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -108,11 +108,11 @@ class CorrectResponseMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI correctResponse element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A CorrectResponse object.
+     * @return CorrectResponse A CorrectResponse object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the DOMElement object cannot be unmarshalled in a valid CorrectResponse object.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): CorrectResponse
     {
         $interpretation = $this->getDOMElementAttributeAs($element, 'interpretation', 'string');
         $interpretation = (empty($interpretation)) ? '' : $interpretation;
@@ -137,7 +137,7 @@ class CorrectResponseMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'correctResponse';
     }

@@ -43,7 +43,7 @@ abstract class QtiSmItemSubsetTestCase extends QtiSmTestCase
      *
      * @param AssessmentTestSession $testSession An instantiated AssessmentTestSession object in INTERACTING state.
      */
-    protected function setTestSession(AssessmentTestSession $testSession)
+    protected function setTestSession(AssessmentTestSession $testSession): void
     {
         $this->testSession = $testSession;
     }
@@ -53,7 +53,7 @@ abstract class QtiSmItemSubsetTestCase extends QtiSmTestCase
      *
      * @return AssessmentTestSession An instantiated AssessmentTestSession object in INTERACTING state.
      */
-    protected function getTestSession()
+    protected function getTestSession(): AssessmentTestSession
     {
         return $this->testSession;
     }

@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class CorrectMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $identifier = 'myCorrect1';
 
@@ -25,7 +25,7 @@ class CorrectMarshallerTest extends QtiSmTestCase
         $this::assertEquals($identifier, $element->getAttribute('identifier'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<correct xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myCorrect1"/>');

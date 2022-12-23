@@ -36,7 +36,7 @@ class ExitTest extends QtiComponent implements OutcomeRule
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'exitTest';
     }
@@ -51,7 +51,7 @@ class ExitTest extends QtiComponent implements OutcomeRule
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

@@ -51,7 +51,7 @@ class PhpScalarMarshaller extends PhpMarshaller
      * @param mixed $toMarshall
      * @return bool
      */
-    protected function isMarshallable($toMarshall)
+    protected function isMarshallable($toMarshall): bool
     {
         return PhpUtils::isScalar($toMarshall);
     }
@@ -61,7 +61,7 @@ class PhpScalarMarshaller extends PhpMarshaller
      *
      * @throws PhpMarshallingException If an error occurs while marshalling.
      */
-    public function marshall()
+    public function marshall(): void
     {
         $ctx = $this->getContext();
         $streamAccess = $ctx->getStreamAccess();

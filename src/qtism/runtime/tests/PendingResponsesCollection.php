@@ -34,7 +34,7 @@ class PendingResponsesCollection extends AbstractCollection
     /**
      * @param mixed $value
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof PendingResponses) {
             $msg = 'PendingResponsesCollection objects only accept to store PendingResponses objects.';

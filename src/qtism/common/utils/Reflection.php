@@ -40,6 +40,7 @@ class Reflection
      * @return mixed An instance of $class
      * @see http://www.php.net/manual/en/reflectionclass.newinstanceargs.php#99517 The awful bug!
      */
+    #[\ReturnTypeWillChange]
     public static function newInstance(ReflectionClass $class, $args = [])
     {
         if (empty($args)) {
@@ -89,7 +90,7 @@ class Reflection
      * @param string $className A class name. It can be fully qualified.
      * @return bool
      */
-    public static function isInstanceOf($object, $className)
+    public static function isInstanceOf($object, $className): bool
     {
         $givenType = get_class($object);
 

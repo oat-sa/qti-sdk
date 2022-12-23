@@ -16,7 +16,7 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
      * @param int $minConstraint
      * @param int $maxConstraint
      */
-    public function testSuccessfulInstantiation($minConstraint, $maxConstraint)
+    public function testSuccessfulInstantiation($minConstraint, $maxConstraint): void
     {
         $associationValidityConstraint = new AssociationValidityConstraint('IDENTIFIER', $minConstraint, $maxConstraint);
         $this::assertEquals('IDENTIFIER', $associationValidityConstraint->getIdentifier());
@@ -27,7 +27,7 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function successfulInstantiationProvider()
+    public function successfulInstantiationProvider(): array
     {
         return [
             [0, 1],
@@ -46,7 +46,7 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
      * @param int $maxConstraint
      * @param string $msg
      */
-    public function testUnsuccessfulInstantiation($identifier, $minConstraint, $maxConstraint, $msg)
+    public function testUnsuccessfulInstantiation($identifier, $minConstraint, $maxConstraint, $msg): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($msg);
@@ -56,7 +56,7 @@ class AssociationValidityConstraintTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function unsuccessfulInstantiationProvider()
+    public function unsuccessfulInstantiationProvider(): array
     {
         return [
             ['', 0, 0, "The 'identifier' argument must be a non-empty string."],

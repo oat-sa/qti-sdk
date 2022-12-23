@@ -77,7 +77,7 @@ class OutcomeMinimum extends ItemSubset
      * @param string $outcomeIdentifier A QTI Identifier.
      * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
      */
-    public function setOutcomeIdentifier($outcomeIdentifier)
+    public function setOutcomeIdentifier($outcomeIdentifier): void
     {
         if (Format::isIdentifier($outcomeIdentifier)) {
             $this->outcomeIdentifier = $outcomeIdentifier;
@@ -92,7 +92,7 @@ class OutcomeMinimum extends ItemSubset
      *
      * @return string A QTI Identifier.
      */
-    public function getOutcomeIdentifier()
+    public function getOutcomeIdentifier(): string
     {
         return $this->outcomeIdentifier;
     }
@@ -103,7 +103,7 @@ class OutcomeMinimum extends ItemSubset
      * @param string $weightIdentifier A QTI Identifier or '' (empty string) if not specified.
      * @throws InvalidArgumentException If $weightIdentifier is not a valid QTI Identifier nor '' (empty string).
      */
-    public function setWeightIdentifier($weightIdentifier)
+    public function setWeightIdentifier($weightIdentifier): void
     {
         if (Format::isIdentifier($weightIdentifier) || $weightIdentifier == '') {
             $this->weightIdentifier = $weightIdentifier;
@@ -118,7 +118,7 @@ class OutcomeMinimum extends ItemSubset
      *
      * @return string A QTI Identifier or '' (empty string).
      */
-    public function getWeightIdentifier()
+    public function getWeightIdentifier(): string
     {
         return $this->weightIdentifier;
     }
@@ -126,7 +126,7 @@ class OutcomeMinimum extends ItemSubset
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'outcomeMinimum';
     }

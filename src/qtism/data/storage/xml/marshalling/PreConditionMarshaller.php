@@ -40,7 +40,7 @@ class PreConditionMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -54,11 +54,11 @@ class PreConditionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI preCondition element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Precondition object.
+     * @return Precondition A Precondition object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If $element does not contain any QTI expression element.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Precondition
     {
         $expressionElt = self::getFirstChildElement($element);
 
@@ -74,7 +74,7 @@ class PreConditionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'preCondition';
     }

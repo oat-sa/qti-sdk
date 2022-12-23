@@ -41,7 +41,7 @@ class MathConstantProcessor extends ExpressionProcessor
      *
      * @return QtiFloat A float value (e or pi).
      */
-    public function process()
+    public function process(): QtiFloat
     {
         $expr = $this->getExpression();
         if ($expr->getName() === MathEnumeration::E) {
@@ -54,7 +54,7 @@ class MathConstantProcessor extends ExpressionProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return MathConstant::class;
     }

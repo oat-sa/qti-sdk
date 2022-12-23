@@ -37,7 +37,7 @@ class TemplateDefaultCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of TemplateDefault.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof TemplateDefault) {
             $msg = "TemplateDefaultCollection only accepts to store TemplateDefault objects, '" . gettype($value) . "' given.";

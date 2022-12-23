@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class LookupOutcomeValueMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new LookupOutcomeValue('myVariable1', new BaseValue(BaseType::STRING, 'a value'));
 
@@ -29,7 +29,7 @@ class LookupOutcomeValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals('string', $element->getElementsByTagName('baseValue')->item(0)->getAttribute('baseType'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

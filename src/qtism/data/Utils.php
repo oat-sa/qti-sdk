@@ -39,7 +39,7 @@ class Utils
      * @param AssessmentSectionCollection $sections The collection of all sections in this AssessmentTest.
      * @return AssessmentSection|null The parent of the AssessmentSection set as parameter, if any.
      */
-    private static function checkRecursion($component, $sections)
+    private static function checkRecursion($component, $sections): ?AssessmentSection
     {
         $sectparent = null;
 
@@ -67,11 +67,11 @@ class Utils
      * comes.
      * @param QtiComponent $component The QtiComponent targeted by a branch.
      * @param AssessmentSectionCollection $sections The collection of all sections in this AssessmentTest.
-     * @return AssessmentItem|null The first AssessmentItem that will be prompted if a branch targets the
+     * @return AssessmentItemRef|null The first AssessmentItem that will be prompted if a branch targets the
      * QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the end of the test
      * has been reached.
      */
-    public static function getFirstItem($test, $component, $sections)
+    public static function getFirstItem($test, $component, $sections): ?AssessmentItemRef
     {
         $currentCmp = $component;
         $visitedNodes = [];
@@ -185,11 +185,11 @@ class Utils
      * starts.
      * @param QtiComponent $component The QtiComponent with a BranchRule.
      * @param AssessmentSectionCollection $sections The collection of all sections in this AssessmentTest.
-     * @return AssessmentItem|null The last AssessmentItem that will be prompted before taking a BranchRule
+     * @return AssessmentItemRef|null The last AssessmentItem that will be prompted before taking a BranchRule
      * in the QtiComponent set as parameter. Returns null, if there are no more AssessmentItem because the begin of the
      * test has been reached.
      */
-    public static function getLastItem($test, $component, $sections)
+    public static function getLastItem($test, $component, $sections): ?AssessmentItemRef
     {
         $currentCmp = $component;
         // $sections = null;

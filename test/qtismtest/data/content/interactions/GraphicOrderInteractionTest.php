@@ -16,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class GraphicOrderInteractionTest extends QtiSmTestCase
 {
-    public function testCreateNotEnoughHotspotChoices()
+    public function testCreateNotEnoughHotspotChoices(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('A GraphicOrderInteraction must contain at least 1 hotspotChoice object. None given.');
@@ -24,7 +24,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
         $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), new HotSpotChoiceCollection());
     }
 
-    public function testTooLargeMinChoices()
+    public function testTooLargeMinChoices(): void
     {
         $choices = new HotSpotChoiceCollection([new HotspotChoice('identifier1', QtiShape::RECT, new QtiCoords(QtiShape::RECT, [0, 0, 1, 1])), new HotspotChoice('identifier2', QtiShape::RECT, new QtiCoords(QtiShape::RECT, [0, 0, 1, 1]))]);
         $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), $choices);
@@ -35,7 +35,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
         $graphicOrderInteraction->setMinChoices(3);
     }
 
-    public function testSetMinChoicesWrongType()
+    public function testSetMinChoicesWrongType(): void
     {
         $choices = new HotSpotChoiceCollection([new HotspotChoice('identifier1', QtiShape::RECT, new QtiCoords(QtiShape::RECT, [0, 0, 1, 1])), new HotspotChoice('identifier2', QtiShape::RECT, new QtiCoords(QtiShape::RECT, [0, 0, 1, 1]))]);
         $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), $choices);
@@ -46,7 +46,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
         $graphicOrderInteraction->setMinChoices('3');
     }
 
-    public function testSetMaxChoicesWrongType()
+    public function testSetMaxChoicesWrongType(): void
     {
         $choices = new HotSpotChoiceCollection([new HotspotChoice('identifier1', QtiShape::RECT, new QtiCoords(QtiShape::RECT, [0, 0, 1, 1])), new HotspotChoice('identifier2', QtiShape::RECT, new QtiCoords(QtiShape::RECT, [0, 0, 1, 1]))]);
         $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), $choices);
@@ -57,7 +57,7 @@ class GraphicOrderInteractionTest extends QtiSmTestCase
         $graphicOrderInteraction->setMaxChoices('3');
     }
 
-    public function testSetMaxDoesNotExceedsMinChoices()
+    public function testSetMaxDoesNotExceedsMinChoices(): void
     {
         $choices = new HotSpotChoiceCollection([new HotspotChoice('identifier1', QtiShape::RECT, new QtiCoords(QtiShape::RECT, [0, 0, 1, 1])), new HotspotChoice('identifier2', QtiShape::RECT, new QtiCoords(QtiShape::RECT, [0, 0, 1, 1]))]);
         $graphicOrderInteraction = new GraphicOrderInteraction('RESPONSE', new ObjectElement('http://my-data/data.png', 'image/png'), $choices);

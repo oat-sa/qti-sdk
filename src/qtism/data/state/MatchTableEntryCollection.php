@@ -37,7 +37,7 @@ class MatchTableEntryCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of MatchTableEntry.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof MatchTableEntry) {
             $msg = "MatchTableEntryCollection only accepts to store MatchTableEntry objects, '" . gettype($value) . "' given.";

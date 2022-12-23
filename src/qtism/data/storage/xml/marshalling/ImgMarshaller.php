@@ -38,7 +38,7 @@ class ImgMarshaller extends Marshaller
      * @param QtiComponent $component An Img object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         /** @var Img $component */
         $element = $this->createElement($component);
@@ -71,10 +71,10 @@ class ImgMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML img element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent n Img object.
+     * @return Img n Img object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Img
     {
         $src = $this->getDOMElementAttributeAs($element, 'src');
         if ($src === null) {
@@ -109,7 +109,7 @@ class ImgMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'img';
     }

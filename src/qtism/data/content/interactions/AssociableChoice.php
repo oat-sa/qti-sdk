@@ -41,7 +41,7 @@ interface AssociableChoice
      *
      * @return IdentifierCollection
      */
-    public function getMatchGroup();
+    public function getMatchGroup(): IdentifierCollection;
 
     /**
      * Set the set of choices that this choice may be associated with.

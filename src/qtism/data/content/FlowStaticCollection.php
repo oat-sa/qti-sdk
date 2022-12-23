@@ -37,7 +37,7 @@ class FlowStaticCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a FlowStatic object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof FlowStatic) {
             $msg = 'FlowStaticCollection objects only accept to store FlowStatic objects.';

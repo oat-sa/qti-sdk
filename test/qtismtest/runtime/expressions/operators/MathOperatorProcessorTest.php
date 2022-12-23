@@ -27,7 +27,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testSin($operand, $expected)
+    public function testSin($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::SIN);
         $operands = new OperandsCollection([$operand]);
@@ -44,7 +44,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testCos($operand, $expected)
+    public function testCos($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::COS);
         $operands = new OperandsCollection([$operand]);
@@ -61,7 +61,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testTan($operand, $expected)
+    public function testTan($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::TAN);
         $operands = new OperandsCollection([$operand]);
@@ -78,7 +78,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testSec($operand, $expected)
+    public function testSec($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::SEC);
         $operands = new OperandsCollection([$operand]);
@@ -95,7 +95,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testCsc($operand, $expected)
+    public function testCsc($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::CSC);
         $operands = new OperandsCollection([$operand]);
@@ -112,7 +112,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testCot($operand, $expected)
+    public function testCot($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::COT);
         $operands = new OperandsCollection([$operand]);
@@ -129,7 +129,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testAsin($operand, $expected)
+    public function testAsin($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::ASIN);
         $operands = new OperandsCollection([$operand]);
@@ -147,7 +147,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testAtan2($operand1, $operand2, $expected)
+    public function testAtan2($operand1, $operand2, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::ATAN2);
         $operands = new OperandsCollection([$operand1, $operand2]);
@@ -164,7 +164,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testAsec($operand, $expected)
+    public function testAsec($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::ASEC);
         $operands = new OperandsCollection([$operand]);
@@ -181,7 +181,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testAcsc($operand, $expected)
+    public function testAcsc($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::ACSC);
         $operands = new OperandsCollection([$operand]);
@@ -198,7 +198,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testAcot($operand, $expected)
+    public function testAcot($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::ACOT);
         $operands = new OperandsCollection([$operand]);
@@ -215,7 +215,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testLog($operand, $expected)
+    public function testLog($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::LOG);
         $operands = new OperandsCollection([$operand]);
@@ -232,7 +232,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testLn($operand, $expected)
+    public function testLn($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::LN);
         $operands = new OperandsCollection([$operand]);
@@ -249,7 +249,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testSinh($operand, $expected)
+    public function testSinh($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::SINH);
         $operands = new OperandsCollection([$operand]);
@@ -266,7 +266,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testCosh($operand, $expected)
+    public function testCosh($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::COSH);
         $operands = new OperandsCollection([$operand]);
@@ -283,7 +283,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testTanh($operand, $expected)
+    public function testTanh($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::TANH);
         $operands = new OperandsCollection([$operand]);
@@ -300,7 +300,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testSech($operand, $expected)
+    public function testSech($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::SECH);
         $operands = new OperandsCollection([$operand]);
@@ -317,7 +317,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testCsch($operand, $expected)
+    public function testCsch($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::CSCH);
         $operands = new OperandsCollection([$operand]);
@@ -334,7 +334,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testCoth($operand, $expected)
+    public function testCoth($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::COTH);
         $operands = new OperandsCollection([$operand]);
@@ -351,7 +351,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testAbs($operand, $expected)
+    public function testAbs($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::ABS);
         $operands = new OperandsCollection([$operand]);
@@ -368,7 +368,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testExp($operand, $expected)
+    public function testExp($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::EXP);
         $operands = new OperandsCollection([$operand]);
@@ -385,7 +385,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testSignum($operand, $expected)
+    public function testSignum($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::SIGNUM);
         $operands = new OperandsCollection([$operand]);
@@ -402,7 +402,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testFloor($operand, $expected)
+    public function testFloor($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::FLOOR);
         $operands = new OperandsCollection([$operand]);
@@ -418,7 +418,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testCeil($operand, $expected)
+    public function testCeil($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::CEIL);
         $operands = new OperandsCollection([$operand]);
@@ -434,7 +434,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testToDegrees($operand, $expected)
+    public function testToDegrees($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::TO_DEGREES);
         $operands = new OperandsCollection([$operand]);
@@ -451,7 +451,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param number $expected
      * @throws MarshallerNotFoundException
      */
-    public function testToRadians($operand, $expected)
+    public function testToRadians($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::TO_RADIANS);
         $operands = new OperandsCollection([$operand]);
@@ -468,7 +468,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param $expected
      * @throws MarshallerNotFoundException
      */
-    public function testAcos($operand, $expected)
+    public function testAcos($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::ACOS);
         $operands = new OperandsCollection([$operand]);
@@ -485,7 +485,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param $expected
      * @throws MarshallerNotFoundException
      */
-    public function testAtan($operand, $expected)
+    public function testAtan($operand, $expected): void
     {
         $expression = $this->createFakeExpression(MathFunctions::ATAN);
         $operands = new OperandsCollection([$operand]);
@@ -499,7 +499,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @param $expected
      * @param $value
      */
-    protected function assertEqualsRounded($expected, $value)
+    protected function assertEqualsRounded($expected, $value): void
     {
         if ($expected === null) {
             $this::assertNull($value);
@@ -514,7 +514,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         }
     }
 
-    public function testNonSingleCardinalityOperand()
+    public function testNonSingleCardinalityOperand(): void
     {
         $expression = $this->createFakeExpression(MathFunctions::CEIL);
         $operands = new OperandsCollection(
@@ -530,7 +530,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNonNumericOperand()
+    public function testNonNumericOperand(): void
     {
         $expression = $this->createFakeExpression(MathFunctions::CEIL);
         $operands = new OperandsCollection(
@@ -546,7 +546,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testAtan2SingleOperator()
+    public function testAtan2SingleOperator(): void
     {
         $expression = $this->createFakeExpression(MathFunctions::ATAN2);
         $operands = new OperandsCollection(
@@ -562,7 +562,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testAtan2ThreeOperators()
+    public function testAtan2ThreeOperators(): void
     {
         $expression = $this->createFakeExpression(MathFunctions::ATAN2);
         $operands = new OperandsCollection(
@@ -583,7 +583,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function sinProvider()
+    public function sinProvider(): array
     {
         return [
             [new QtiFloat(1.5708), 1],
@@ -594,7 +594,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function cosProvider()
+    public function cosProvider(): array
     {
         return [
             [new QtiInteger(25), 0.99120281],
@@ -605,7 +605,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function tanProvider()
+    public function tanProvider(): array
     {
         return [
             [new QtiFloat(2.65), -0.53543566],
@@ -616,7 +616,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function secProvider()
+    public function secProvider(): array
     {
         return [
             [new QtiFloat(deg2rad(85)), 11.4737],
@@ -626,7 +626,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function cscProvider()
+    public function cscProvider(): array
     {
         return [
             [new QtiFloat(deg2rad(31.67)), 1.904667],
@@ -636,7 +636,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function cotProvider()
+    public function cotProvider(): array
     {
         return [
             [new QtiFloat(2.09), -0.571505],
@@ -646,7 +646,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function asinProvider()
+    public function asinProvider(): array
     {
         return [
             [new QtiInteger(2), null],
@@ -658,7 +658,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function acosProvider()
+    public function acosProvider(): array
     {
         return [
             [new QtiFloat(0.3), 1.266103673],
@@ -668,7 +668,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function atanProvider()
+    public function atanProvider(): array
     {
         return [
             [new QtiInteger(2), 1.107148718],
@@ -678,7 +678,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function atan2Provider()
+    public function atan2Provider(): array
     {
         $data = [
             [new QtiFloat(NAN), new QtiInteger(10), null],
@@ -710,7 +710,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function asecProvider()
+    public function asecProvider(): array
     {
         return [
             [new QtiInteger(-5), 1.7721],
@@ -723,7 +723,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function acscProvider()
+    public function acscProvider(): array
     {
         return [
             [new QtiInteger(-5), -0.20135],
@@ -735,7 +735,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function acotProvider()
+    public function acotProvider(): array
     {
         return [
             [new QtiInteger(-5), -0.197396],
@@ -746,7 +746,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function sinhProvider()
+    public function sinhProvider(): array
     {
         return [
             [new QtiInteger(5), 74.203210578],
@@ -760,7 +760,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function coshProvider()
+    public function coshProvider(): array
     {
         return [
             [new QtiInteger(0), 1],
@@ -775,7 +775,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function tanhProvider()
+    public function tanhProvider(): array
     {
         return [
             [new QtiInteger(0), 0],
@@ -789,7 +789,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function sechProvider()
+    public function sechProvider(): array
     {
         return [
             [new QtiFloat(NAN), null],
@@ -804,7 +804,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function cschProvider()
+    public function cschProvider(): array
     {
         return [
             [new QtiFloat(NAN), null],
@@ -819,7 +819,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function cothProvider()
+    public function cothProvider(): array
     {
         return [
             [new QtiFloat(NAN), null],
@@ -835,7 +835,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function logProvider()
+    public function logProvider(): array
     {
         return [
             [new QtiFloat(-0.5), null],
@@ -848,7 +848,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function lnProvider()
+    public function lnProvider(): array
     {
         return [
             [new QtiFloat(-0.5), null],
@@ -861,7 +861,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function expProvider()
+    public function expProvider(): array
     {
         return [
             [new QtiFloat(NAN), null],
@@ -876,7 +876,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function absProvider()
+    public function absProvider(): array
     {
         return [
             [new QtiInteger(0), 0],
@@ -895,7 +895,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function signumProvider()
+    public function signumProvider(): array
     {
         return [
             [new QtiInteger(0), 0],
@@ -912,7 +912,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function floorProvider()
+    public function floorProvider(): array
     {
         return [
             [new QtiInteger(10), 10],
@@ -930,7 +930,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function ceilProvider()
+    public function ceilProvider(): array
     {
         return [
             [new QtiInteger(10), 10],
@@ -948,7 +948,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function toDegreesProvider()
+    public function toDegreesProvider(): array
     {
         return [
             [new QtiFloat(NAN), null],
@@ -964,7 +964,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function toRadiansProvider()
+    public function toRadiansProvider(): array
     {
         return [
             [new QtiFloat(NAN), null],
@@ -984,7 +984,7 @@ class MathOperatorProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression($constant)
+    public function createFakeExpression($constant): QtiComponent
     {
         return $this->createComponentFromXml('
 			<mathOperator name="' . MathFunctions::getNameByConstant($constant) . '">

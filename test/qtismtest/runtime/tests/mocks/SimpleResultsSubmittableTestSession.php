@@ -14,7 +14,7 @@ class SimpleResultsSubmittableTestSession extends AssessmentTestSession
 
     private $submittedItemResults = [];
 
-    protected function submitTestResults()
+    protected function submitTestResults(): void
     {
         foreach ($this as $id => $var) {
             $this->addTestResult($id, $var->getValue());
@@ -25,7 +25,7 @@ class SimpleResultsSubmittableTestSession extends AssessmentTestSession
      * @param AssessmentItemSession $assessmentItemSession
      * @param int $occurence
      */
-    protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0)
+    protected function submitItemResults(AssessmentItemSession $assessmentItemSession, $occurence = 0): void
     {
         foreach ($assessmentItemSession as $id => $var) {
             $this->addItemResultResult($assessmentItemSession->getAssessmentItem()->getIdentifier() . '.' . $occurence . '.' . $id, $var->getValue());
@@ -36,7 +36,7 @@ class SimpleResultsSubmittableTestSession extends AssessmentTestSession
      * @param $identifier
      * @param $value
      */
-    protected function addTestResult($identifier, $value)
+    protected function addTestResult($identifier, $value): void
     {
         if (isset($this->submittedTestResults[$identifier]) === false) {
             $this->submittedTestResults[$identifier] = [];
@@ -49,7 +49,7 @@ class SimpleResultsSubmittableTestSession extends AssessmentTestSession
      * @param $identifier
      * @param $value
      */
-    protected function addItemResultResult($identifier, $value)
+    protected function addItemResultResult($identifier, $value): void
     {
         if (isset($this->submittedItemResults[$identifier]) === false) {
             $this->submittedItemResults[$identifier] = [];
@@ -61,7 +61,7 @@ class SimpleResultsSubmittableTestSession extends AssessmentTestSession
     /**
      * @return array
      */
-    public function getSubmittedTestResults()
+    public function getSubmittedTestResults(): array
     {
         return $this->submittedTestResults;
     }
@@ -69,7 +69,7 @@ class SimpleResultsSubmittableTestSession extends AssessmentTestSession
     /**
      * @return array
      */
-    public function getSubmittedItemResults()
+    public function getSubmittedItemResults(): array
     {
         return $this->submittedItemResults;
     }

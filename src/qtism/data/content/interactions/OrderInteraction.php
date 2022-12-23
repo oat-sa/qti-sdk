@@ -138,7 +138,7 @@ class OrderInteraction extends BlockInteraction
      * @param SimpleChoiceCollection $simpleChoices A list of at lease one SimpleChoice object.
      * @throws InvalidArgumentException If $simpleChoices is empty.
      */
-    public function setSimpleChoices(SimpleChoiceCollection $simpleChoices)
+    public function setSimpleChoices(SimpleChoiceCollection $simpleChoices): void
     {
         if (count($simpleChoices) > 0) {
             $this->simpleChoices = $simpleChoices;
@@ -153,7 +153,7 @@ class OrderInteraction extends BlockInteraction
      *
      * @return SimpleChoiceCollection A list of at lease one SimpleChoice object.
      */
-    public function getSimpleChoices()
+    public function getSimpleChoices(): SimpleChoiceCollection
     {
         return $this->simpleChoices;
     }
@@ -164,7 +164,7 @@ class OrderInteraction extends BlockInteraction
      * @param bool $shuffle A boolean value.
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
-    public function setShuffle($shuffle)
+    public function setShuffle($shuffle): void
     {
         if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
@@ -179,7 +179,7 @@ class OrderInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function mustShuffle()
+    public function mustShuffle(): bool
     {
         return $this->shuffle;
     }
@@ -190,7 +190,7 @@ class OrderInteraction extends BlockInteraction
      * @param int $minChoices A strictly (> 0) positive integer or -1 if no value is specified for the attribute.
      * @throws InvalidArgumentException If $minChoices is not a strictly positive integer nor -1.
      */
-    public function setMinChoices($minChoices)
+    public function setMinChoices($minChoices): void
     {
         if (is_int($minChoices) && ($minChoices > 0 || $minChoices === -1)) {
             if ($minChoices > count($this->getSimpleChoices())) {
@@ -210,7 +210,7 @@ class OrderInteraction extends BlockInteraction
      *
      * @return int A strictly positive (> 0) integer.
      */
-    public function getMinChoices()
+    public function getMinChoices(): int
     {
         return $this->minChoices;
     }
@@ -220,7 +220,7 @@ class OrderInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function hasMinChoices()
+    public function hasMinChoices(): bool
     {
         return $this->getMinChoices() !== -1;
     }
@@ -231,7 +231,7 @@ class OrderInteraction extends BlockInteraction
      * @param int $maxChoices A strictly positive (> 0) integer or -1 if no value is specified for the attribuite.
      * @throws InvalidArgumentException If $maxChoices is not a strictly positive integer nor -1.
      */
-    public function setMaxChoices($maxChoices)
+    public function setMaxChoices($maxChoices): void
     {
         if (is_int($maxChoices) && $maxChoices > 0 || $maxChoices === -1) {
             if ($this->hasMinChoices() === true && $maxChoices > count($this->getSimpleChoices())) {
@@ -251,7 +251,7 @@ class OrderInteraction extends BlockInteraction
      *
      * @return int A strictly positive (> 0) integer or -1 if no value is defined for the maxChoices attribute.
      */
-    public function getMaxChoices()
+    public function getMaxChoices(): int
     {
         return $this->maxChoices;
     }
@@ -261,7 +261,7 @@ class OrderInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function hasMaxChoices()
+    public function hasMaxChoices(): bool
     {
         return $this->getMaxChoices() !== -1;
     }
@@ -272,7 +272,7 @@ class OrderInteraction extends BlockInteraction
      * @param int $orientation A value from the Orientation enumeration.
      * @throws InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
      */
-    public function setOrientation($orientation)
+    public function setOrientation($orientation): void
     {
         if (in_array($orientation, Orientation::asArray(), true)) {
             $this->orientation = $orientation;
@@ -287,7 +287,7 @@ class OrderInteraction extends BlockInteraction
      *
      * @return int A value from the Orientation enumeration.
      */
-    public function getOrientation()
+    public function getOrientation(): int
     {
         return $this->orientation;
     }
@@ -295,7 +295,7 @@ class OrderInteraction extends BlockInteraction
     /**
      * @return ResponseValidityConstraint
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
     {
         return new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -307,7 +307,7 @@ class OrderInteraction extends BlockInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $parentComponents = parent::getComponents();
 
@@ -317,7 +317,7 @@ class OrderInteraction extends BlockInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'orderInteraction';
     }

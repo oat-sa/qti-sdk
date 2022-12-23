@@ -38,7 +38,7 @@ class LiCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of Li.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Li) {
             $msg = 'LiCollection objects only accept to store Li objects.';

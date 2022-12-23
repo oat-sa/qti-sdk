@@ -40,7 +40,7 @@ class TemplateDefaultMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -59,11 +59,11 @@ class TemplateDefaultMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI templateDefault element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A templateDefault object.
+     * @return TemplateDefault A templateDefault object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory attribute 'templateIdentifier' is missing or has an unexpected number of expressions.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): TemplateDefault
     {
         if (($tplIdentifier = $this->getDOMElementAttributeAs($element, 'templateIdentifier')) !== null) {
             $expressionElt = self::getFirstChildElement($element);
@@ -86,7 +86,7 @@ class TemplateDefaultMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'templateDefault';
     }

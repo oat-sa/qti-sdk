@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class NullValueMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new NullValue();
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($component);
@@ -22,7 +22,7 @@ class NullValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals('null', $element->nodeName);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<null xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"/>');

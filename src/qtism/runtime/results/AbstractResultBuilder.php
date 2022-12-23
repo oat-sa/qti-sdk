@@ -65,7 +65,7 @@ abstract class AbstractResultBuilder
      *
      * @return ItemVariableCollection
      */
-    protected function buildVariables()
+    protected function buildVariables(): ItemVariableCollection
     {
         $itemVariables = new ItemVariableCollection();
 
@@ -108,12 +108,13 @@ abstract class AbstractResultBuilder
      *
      * @return VariableCollection
      */
-    abstract protected function getAllVariables();
+    abstract protected function getAllVariables(): VariableCollection;
 
     /**
      * Trigger the build.
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     abstract public function buildResult();
 }

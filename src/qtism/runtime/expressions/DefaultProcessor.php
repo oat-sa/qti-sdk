@@ -44,6 +44,7 @@ class DefaultProcessor extends ExpressionProcessor
      *
      * @return mixed A QTI Runtime compliant value.
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $expr = $this->getExpression();
@@ -57,7 +58,7 @@ class DefaultProcessor extends ExpressionProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return DefaultVal::class;
     }

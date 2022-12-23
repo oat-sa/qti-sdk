@@ -16,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SetTemplateValueMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $variableExpr = new Variable('var1');
         $boolExpr = new BaseValue(BaseType::BOOLEAN, true);
@@ -31,7 +31,7 @@ class SetTemplateValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<setTemplateValue identifier="tpl1"><match><variable identifier="var1"/><baseValue baseType="boolean">true</baseValue></match></setTemplateValue>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <setTemplateValue identifier="tpl1">

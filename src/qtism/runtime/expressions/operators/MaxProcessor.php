@@ -52,6 +52,7 @@ class MaxProcessor extends OperatorProcessor
      * @return QtiFloat|QtiInteger|null The greatest of the operand values or NULL if any of the operand values is NULL.
      * @throws OperatorProcessingException
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $operands = $this->getOperands();
@@ -104,7 +105,7 @@ class MaxProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Max::class;
     }

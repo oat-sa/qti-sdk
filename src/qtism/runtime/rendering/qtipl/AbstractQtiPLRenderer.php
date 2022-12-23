@@ -41,7 +41,7 @@ abstract class AbstractQtiPLRenderer implements Renderable
      *
      * @return ConditionRenderingOptions
      */
-    public function getCRO()
+    public function getCRO(): ConditionRenderingOptions
     {
         return $this->cro;
     }
@@ -51,7 +51,7 @@ abstract class AbstractQtiPLRenderer implements Renderable
      *
      * @param ConditionRenderingOptions $cro
      */
-    public function setCRO($cro)
+    public function setCRO($cro): void
     {
         $this->cro = $cro;
     }

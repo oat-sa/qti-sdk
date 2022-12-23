@@ -38,7 +38,7 @@ class Bean
      *
      * @var string
      */
-    const ANNOTATION_PROPERTY = '@qtism-bean-property';
+    public const ANNOTATION_PROPERTY = '@qtism-bean-property';
 
     /**
      * The object to be wrapped as a bean as a PHP ReflectionObject.
@@ -85,7 +85,7 @@ class Bean
      *
      * @param ReflectionClass $class A ReflectionClass object.
      */
-    protected function setClass(ReflectionClass $class)
+    protected function setClass(ReflectionClass $class): void
     {
         $this->class = $class;
     }
@@ -95,7 +95,7 @@ class Bean
      *
      * @return ReflectionClass A ReflectionClass object.
      */
-    protected function getClass()
+    protected function getClass(): ReflectionClass
     {
         return $this->class;
     }
@@ -109,7 +109,7 @@ class Bean
      * @throws InvalidArgumentException If $property is not a string nor a Bean
      * @throws ReflectionException
      */
-    public function getGetter($property)
+    public function getGetter($property): BeanMethod
     {
         if (is_string($property)) {
             $propertyName = $property;
@@ -178,7 +178,7 @@ class Bean
      * @throws BeanException
      * @throws ReflectionException
      */
-    public function getGetters($excludeConstructor = false)
+    public function getGetters($excludeConstructor = false): BeanMethodCollection
     {
         $methods = new BeanMethodCollection();
 
@@ -202,7 +202,7 @@ class Bean
      * @throws InvalidArgumentException If $property is not a string nor a BeanProperty object.
      * @throws ReflectionException
      */
-    public function getSetter($property)
+    public function getSetter($property): BeanMethod
     {
         if (is_string($property)) {
             $propertyName = $property;
@@ -238,7 +238,7 @@ class Bean
      * @return bool
      * @throws ReflectionException
      */
-    public function hasSetter($property)
+    public function hasSetter($property): bool
     {
         if (is_string($property)) {
             $propertyName = $property;
@@ -267,7 +267,7 @@ class Bean
      * @throws BeanException
      * @throws ReflectionException
      */
-    public function getSetters($excludeConstructor = false)
+    public function getSetters($excludeConstructor = false): BeanMethodCollection
     {
         $methods = new BeanMethodCollection();
 
@@ -293,7 +293,7 @@ class Bean
      * @return bool
      * @throws ReflectionException
      */
-    public function hasProperty($propertyName)
+    public function hasProperty($propertyName): bool
     {
         return $this->isPropertyAnnotated($propertyName);
     }
@@ -306,7 +306,7 @@ class Bean
      * @throws BeanException
      * @throws ReflectionException
      */
-    public function getProperty($propertyName)
+    public function getProperty($propertyName): BeanProperty
     {
         $className = $this->getClass()->getName();
 
@@ -330,7 +330,7 @@ class Bean
      * @throws BeanException
      * @throws ReflectionException
      */
-    public function getProperties()
+    public function getProperties(): BeanPropertyCollection
     {
         $properties = new BeanPropertyCollection();
 
@@ -361,7 +361,7 @@ class Bean
      * @throws BeanException
      * @throws ReflectionException
      */
-    public function getConstructorGetters()
+    public function getConstructorGetters(): BeanMethodCollection
     {
         $getters = new BeanMethodCollection();
 
@@ -379,7 +379,7 @@ class Bean
      * @throws BeanException
      * @throws ReflectionException
      */
-    public function getConstructorSetters()
+    public function getConstructorSetters(): BeanMethodCollection
     {
         $setters = new BeanMethodCollection();
 
@@ -398,7 +398,7 @@ class Bean
      * @throws BeanException
      * @throws ReflectionException
      */
-    public function getConstructorParameters()
+    public function getConstructorParameters(): BeanParameterCollection
     {
         $parameters = new BeanParameterCollection();
 
@@ -421,7 +421,7 @@ class Bean
      * @return bool
      * @throws ReflectionException
      */
-    public function hasConstructorParameter($parameterName)
+    public function hasConstructorParameter($parameterName): bool
     {
         $hasConstructorParameter = false;
 
@@ -444,7 +444,7 @@ class Bean
      * @return bool
      * @throws ReflectionException
      */
-    protected function isPropertyAnnotated($propertyName)
+    protected function isPropertyAnnotated($propertyName): bool
     {
         $target = $this->getClass();
         $isAnnotated = false;
@@ -474,7 +474,7 @@ class Bean
      * @throws BeanException
      * @throws ReflectionException
      */
-    protected function validateStrictBean()
+    protected function validateStrictBean(): void
     {
         /*
          * 1st rule to respect:
@@ -532,7 +532,7 @@ class Bean
      * @param string $propertyName The name of the property.
      * @return array An array of possible getter method names for a given $propertyName.
      */
-    protected static function getPossibleGetterNames($propertyName)
+    protected static function getPossibleGetterNames($propertyName): array
     {
         $ucPropName = ucfirst($propertyName);
 

@@ -15,7 +15,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class ValueMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallBaseType()
+    public function testMarshallBaseType(): void
     {
         $fieldIdentifier = 'goodIdentifier';
         $baseType = BaseType::INTEGER;
@@ -33,7 +33,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals($value . '', $element->nodeValue);
     }
 
-    public function testMarshallBaseTypeBoolean()
+    public function testMarshallBaseTypeBoolean(): void
     {
         $fieldIdentifier = 'goodIdentifier';
         $baseType = BaseType::BOOLEAN;
@@ -47,7 +47,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertSame('false', $element->nodeValue);
     }
 
-    public function testMarshallNoBaseType()
+    public function testMarshallNoBaseType(): void
     {
         $value = new QtiPair('id1', 'id2');
 
@@ -58,7 +58,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals('id1 id2', $element->nodeValue);
     }
 
-    public function testUnmarshallNoBaseType()
+    public function testUnmarshallNoBaseType(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">A B</value>');
@@ -72,7 +72,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals('A B', $component->getValue());
     }
 
-    public function testUnmarshallNoBaseTypeButForced()
+    public function testUnmarshallNoBaseTypeButForced(): void
     {
         // Here we use the ValueMarshaller as a parametric marshaller
         // to force the Pair to be unserialized as a Pair object
@@ -89,7 +89,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals('B', $component->getValue()->getSecond());
     }
 
-    public function testUnmarshallNoBaseTypeButForcedAndEntities()
+    public function testUnmarshallNoBaseTypeButForcedAndEntities(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">Hello &lt;b&gt;bold&lt;/b&gt;</value>');
@@ -103,7 +103,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertSame('Hello <b>bold</b>', $component->getValue());
     }
 
-    public function testMarshallNoBaseTypeButForcedAndEntities()
+    public function testMarshallNoBaseTypeButForcedAndEntities(): void
     {
         $value = 'Hello <b>bold</b>';
         $baseType = BaseType::STRING;
@@ -115,7 +115,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertSame('<value>Hello &lt;b&gt;bold&lt;/b&gt;</value>', $element->ownerDocument->saveXML($element));
     }
 
-    public function testUnmarshallNoValueStringExpected()
+    public function testUnmarshallNoValueStringExpected(): void
     {
         // Just an empty <value>.
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -136,7 +136,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals('', $component->getValue());
     }
 
-    public function testUnmarshallNoValueIntegerExpected()
+    public function testUnmarshallNoValueIntegerExpected(): void
     {
         $this->expectException(UnmarshallingException::class);
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -148,7 +148,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals('', $component->getValue());
     }
 
-    public function testUnmarshallNoValue()
+    public function testUnmarshallNoValue(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"></value>');
@@ -160,7 +160,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertSame('', $component->getValue());
     }
 
-    public function testUnmarshallStringBaseTypeWithNullValue()
+    public function testUnmarshallStringBaseTypeWithNullValue(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" baseType="string"></value>');
@@ -172,7 +172,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertSame('', $component->getValue());
     }
 
-    public function testUnmarshallBaseTypePairWithFieldIdentifier()
+    public function testUnmarshallBaseTypePairWithFieldIdentifier(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<value xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" baseType="pair" fieldIdentifier="fieldIdentifier1">A B</value>');
@@ -188,7 +188,7 @@ class ValueMarshallerTest extends QtiSmTestCase
         $this::assertEquals('fieldIdentifier1', $component->getFieldIdentifier());
     }
 
-    public function testUnmarshallBaseTypeInteger()
+    public function testUnmarshallBaseTypeInteger(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         // 0 value

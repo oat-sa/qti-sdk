@@ -37,7 +37,7 @@ class SessionIdentifierCollection extends QtiComponentCollection
      * @param mixed $value The value of which we want to test the type.
      * @throws InvalidArgumentException If the given $value is not an instance of SessionIdentifier.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof SessionIdentifier) {
             throw new InvalidArgumentException(sprintf(

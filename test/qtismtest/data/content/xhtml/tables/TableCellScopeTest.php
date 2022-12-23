@@ -13,7 +13,7 @@ class TableCellScopeTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return TableCellScope::class;
     }
@@ -21,7 +21,7 @@ class TableCellScopeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'row',
@@ -34,7 +34,7 @@ class TableCellScopeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'ROW',
@@ -47,7 +47,7 @@ class TableCellScopeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             TableCellScope::ROW,

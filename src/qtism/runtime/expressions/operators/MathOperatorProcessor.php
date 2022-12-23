@@ -79,6 +79,7 @@ class MathOperatorProcessor extends OperatorProcessor
      *
      * @return QtiFloat|int|null The result of the MathOperator call or NULL if any of the sub-expressions is NULL. See the class documentation for special cases.
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $operands = $this->getOperands();
@@ -112,7 +113,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat
      */
-    protected function processSin()
+    protected function processSin(): QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -122,7 +123,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat
      */
-    protected function processCos()
+    protected function processCos(): QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -132,7 +133,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat
      */
-    protected function processTan()
+    protected function processTan(): QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -142,7 +143,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processSec()
+    protected function processSec(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $cos = cos($operands[0]->getValue());
@@ -152,7 +153,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processCsc()
+    protected function processCsc(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $sin = sin($operands[0]->getValue());
@@ -162,7 +163,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat|null
      */
-    protected function processCot()
+    protected function processCot(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $tan = tan($operands[0]->getValue());
@@ -178,7 +179,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat
      */
-    protected function processAsin()
+    protected function processAsin(): QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -188,7 +189,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat
      */
-    protected function processAcos()
+    protected function processAcos(): QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -198,7 +199,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat
      */
-    protected function processAtan()
+    protected function processAtan(): QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -209,7 +210,7 @@ class MathOperatorProcessor extends OperatorProcessor
      * @return QtiFloat
      * @throws OperatorProcessingException
      */
-    protected function processAtan2()
+    protected function processAtan2(): QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -230,7 +231,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processAsec()
+    protected function processAsec(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -245,7 +246,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processAcsc()
+    protected function processAcsc(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -260,7 +261,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat
      */
-    protected function processAcot()
+    protected function processAcot(): QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -275,7 +276,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat
      */
-    protected function processSinh()
+    protected function processSinh(): QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -285,7 +286,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat
      */
-    protected function processCosh()
+    protected function processCosh(): QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -295,7 +296,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat
      */
-    protected function processTanh()
+    protected function processTanh(): QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -305,7 +306,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processSech()
+    protected function processSech(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -320,7 +321,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processCsch()
+    protected function processCsch(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -335,7 +336,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processCoth()
+    protected function processCoth(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -352,7 +353,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processLog()
+    protected function processLog(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -369,7 +370,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processLn()
+    protected function processLn(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -386,7 +387,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processExp()
+    protected function processExp(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -405,7 +406,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processAbs()
+    protected function processAbs(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -422,6 +423,7 @@ class MathOperatorProcessor extends OperatorProcessor
      *
      * @link https://en.wikipedia.org/wiki/Sign_function
      */
+    #[\ReturnTypeWillChange]
     protected function processSignum()
     {
         $operands = $this->getOperands();
@@ -441,6 +443,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat|QtiInteger
      */
+    #[\ReturnTypeWillChange]
     protected function processFloor()
     {
         $operands = $this->getOperands();
@@ -460,6 +463,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat|QtiInteger
      */
+    #[\ReturnTypeWillChange]
     protected function processCeil()
     {
         $operands = $this->getOperands();
@@ -479,7 +483,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processToDegrees()
+    protected function processToDegrees(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -498,7 +502,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processToRadians()
+    protected function processToRadians(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -517,7 +521,7 @@ class MathOperatorProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return MathOperator::class;
     }

@@ -39,7 +39,7 @@ class VariableMappingMarshaller extends Marshaller
      * @param QtiComponent $component A VariableMapping object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -53,10 +53,10 @@ class VariableMappingMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI variableMapping element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A VariableMapping object.
+     * @return VariableMapping A VariableMapping object.
      * @throws UnmarshallingException If the mandatory attributes 'sourceIdentifier' or 'targetIdentifier' are missing from $element or are invalid.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): VariableMapping
     {
         if (($source = $this->getDOMElementAttributeAs($element, 'sourceIdentifier', 'string')) !== null) {
             if (($target = $this->getDOMElementAttributeAs($element, 'targetIdentifier', 'string')) !== null) {
@@ -79,7 +79,7 @@ class VariableMappingMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'variableMapping';
     }

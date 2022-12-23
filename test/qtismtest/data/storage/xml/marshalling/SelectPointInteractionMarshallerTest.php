@@ -16,7 +16,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class SelectPointInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $object = new ObjectElement('./myimg.png', 'image/png');
         $prompt = new Prompt();
@@ -40,7 +40,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         // Make sure minChoices is not in the output in a QTI 2.0 context.
         $object = new ObjectElement('./myimg.png', 'image/png');
@@ -55,7 +55,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<selectPointInteraction responseIdentifier="RESPONSE" maxChoices="1"><object data="./myimg.png" type="image/png"/></selectPointInteraction>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement(
             '<selectPointInteraction responseIdentifier="RESPONSE" minChoices="1" maxChoices="1" xml:base="/home/jerome">
@@ -83,7 +83,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21NoObject()
+    public function testUnmarshall21NoObject(): void
     {
         $element = $this->createDOMElement('
             <selectPointInteraction responseIdentifier="RESPONSE" minChoices="1" maxChoices="1" xml:base="/home/jerome">
@@ -100,7 +100,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall21NoResponseIdentifier()
+    public function testUnmarshall21NoResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <selectPointInteraction minChoices="1" maxChoices="1" xml:base="/home/jerome">
@@ -118,7 +118,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         // Make sure minChoices is not taken into account.
         $element = $this->createDOMElement('
@@ -134,7 +134,7 @@ class SelectPointInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshall20MissingMaxChoices()
+    public function testUnmarshall20MissingMaxChoices(): void
     {
         $element = $this->createDOMElement('
             <selectPointInteraction responseIdentifier="RESPONSE" minChoices="1">

@@ -13,7 +13,7 @@ class MathFunctionsTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return MathFunctions::class;
     }
@@ -21,7 +21,7 @@ class MathFunctionsTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'sin',
@@ -58,7 +58,7 @@ class MathFunctionsTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'SIN',
@@ -95,7 +95,7 @@ class MathFunctionsTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             MathFunctions::SIN,

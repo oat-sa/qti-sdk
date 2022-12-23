@@ -30,7 +30,7 @@ use DOMDocument;
  */
 class CompactVersion extends QtiVersion
 {
-    const SUPPORTED_VERSIONS = [
+    public const SUPPORTED_VERSIONS = [
         '2.1.0' => CompactVersion21::class,
         '2.1.1' => CompactVersion21::class,
         '2.2.0' => CompactVersion22::class,
@@ -40,9 +40,9 @@ class CompactVersion extends QtiVersion
         '2.2.4' => CompactVersion22::class,
     ];
 
-    const UNSUPPORTED_VERSION_MESSAGE = 'QTI Compact is not supported for version "%s".';
+    public const UNSUPPORTED_VERSION_MESSAGE = 'QTI Compact is not supported for version "%s".';
 
-    const INFERRED_VERSIONS = [
+    public const INFERRED_VERSIONS = [
         CompactVersion21::XMLNS => '2.1.0',
         CompactVersion22::XMLNS => '2.2.0',
     ];

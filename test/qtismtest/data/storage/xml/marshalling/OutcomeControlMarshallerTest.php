@@ -18,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeControlMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallIfMinimal()
+    public function testMarshallIfMinimal(): void
     {
         $setOutcomeValue = new SetOutcomeValue('myStringVar', new BaseValue(BaseType::STRING, 'Tested!'));
         $baseValue = new BaseValue(BaseType::BOOLEAN, true);
@@ -46,7 +46,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('string', $tested->getAttribute('baseType'));
     }
 
-    public function testMarshallElseIfMinimal()
+    public function testMarshallElseIfMinimal(): void
     {
         $setOutcomeValue = new SetOutcomeValue('myStringVar', new BaseValue(BaseType::STRING, 'Tested!'));
         $baseValue = new BaseValue(BaseType::BOOLEAN, true);
@@ -74,7 +74,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('string', $tested->getAttribute('baseType'));
     }
 
-    public function testMarshallElseMinimal()
+    public function testMarshallElseMinimal(): void
     {
         $setOutcomeValue = new SetOutcomeValue('myStringVar', new BaseValue(BaseType::STRING, 'Tested!'));
         $component = new OutcomeElse(new OutcomeRuleCollection([$setOutcomeValue]));
@@ -95,7 +95,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Tested!', $tested->nodeValue);
     }
 
-    public function testUnmarshallIfMinimal()
+    public function testUnmarshallIfMinimal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -125,7 +125,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
     }
 
-    public function testUnmarshallElseIfMinimal()
+    public function testUnmarshallElseIfMinimal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -155,7 +155,7 @@ class OutcomeControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals(BaseType::STRING, $outcomeRules[0]->getExpression()->getBaseType());
     }
 
-    public function testUnmarshallElseMinimal()
+    public function testUnmarshallElseMinimal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

@@ -40,7 +40,7 @@ class UploadInteractionMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
@@ -65,11 +65,11 @@ class UploadInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an uploadInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An UploadInteraction object.
+     * @return UploadInteraction An UploadInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): UploadInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             $component = new UploadInteraction($responseIdentifier);
@@ -101,7 +101,7 @@ class UploadInteractionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'uploadInteraction';
     }

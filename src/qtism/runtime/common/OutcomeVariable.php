@@ -94,7 +94,7 @@ class OutcomeVariable extends Variable
      *
      * @return ViewCollection
      */
-    public function getViews()
+    public function getViews(): ?ViewCollection
     {
         return $this->views;
     }
@@ -104,7 +104,7 @@ class OutcomeVariable extends Variable
      *
      * @param ViewCollection $views
      */
-    public function setViews(ViewCollection $views)
+    public function setViews(ViewCollection $views): void
     {
         $this->views = $views;
     }
@@ -115,7 +115,7 @@ class OutcomeVariable extends Variable
      * @param float|bool $normalMaximum The normal maximum or false if not defined.
      * @throws InvalidArgumentException If $normalMaximum is not false nor a floating point value.
      */
-    public function setNormalMaximum($normalMaximum)
+    public function setNormalMaximum($normalMaximum): void
     {
         if ((is_bool($normalMaximum) && $normalMaximum === false) || is_float($normalMaximum)) {
             $this->normalMaximum = $normalMaximum;
@@ -141,7 +141,7 @@ class OutcomeVariable extends Variable
      * @param float|bool $normalMinimum The normal minimum or false if not defined.
      * @throws InvalidArgumentException If $normalMinimum is not false nor a floating point value.
      */
-    public function setNormalMinimum($normalMinimum)
+    public function setNormalMinimum($normalMinimum): void
     {
         if ((is_bool($normalMinimum) && $normalMinimum === false) || is_float($normalMinimum)) {
             $this->normalMinimum = $normalMinimum;
@@ -156,6 +156,7 @@ class OutcomeVariable extends Variable
      *
      * @return bool|float|double False if not defined, otherwise a floating point value.
      */
+    #[\ReturnTypeWillChange]
     public function getNormalMinimum()
     {
         return $this->normalMinimum;
@@ -167,7 +168,7 @@ class OutcomeVariable extends Variable
      * @param float|double|bool $masteryValue A floating point value or false if not defined.
      * @throws InvalidArgumentException If $masteryValue is not a floating point value nor false.
      */
-    public function setMasteryValue($masteryValue)
+    public function setMasteryValue($masteryValue): void
     {
         if ((is_bool($masteryValue) && $masteryValue === false) || is_float($masteryValue)) {
             $this->masteryValue = $masteryValue;
@@ -182,6 +183,7 @@ class OutcomeVariable extends Variable
      *
      * @return float|double|bool False if not defined, otherwise a floating point value.
      */
+    #[\ReturnTypeWillChange]
     public function getMasteryValue()
     {
         return $this->masteryValue;
@@ -192,7 +194,7 @@ class OutcomeVariable extends Variable
      *
      * @param LookupTable $lookupTable A QTI Data Model LookupTable object or null if not specified.
      */
-    public function setLookupTable(LookupTable $lookupTable = null)
+    public function setLookupTable(LookupTable $lookupTable = null): void
     {
         $this->lookupTable = $lookupTable;
     }
@@ -202,7 +204,7 @@ class OutcomeVariable extends Variable
      *
      * @return LookupTable A QTI Data Model LookupTable object or null if not defined.
      */
-    public function getLookupTable()
+    public function getLookupTable(): ?LookupTable
     {
         return $this->lookupTable;
     }
@@ -214,7 +216,7 @@ class OutcomeVariable extends Variable
      * @return OutcomeVariable
      * @throws InvalidArgumentException
      */
-    public static function createFromDataModel(VariableDeclaration $variableDeclaration)
+    public static function createFromDataModel(VariableDeclaration $variableDeclaration): self
     {
         $variable = parent::createFromDataModel($variableDeclaration);
 
@@ -238,7 +240,7 @@ class OutcomeVariable extends Variable
      * If no default value is described, and the cardinality is single and the baseType
      * is integer or float, the value of the variable becomes 0.
      */
-    public function applyDefaultValue()
+    public function applyDefaultValue(): void
     {
         parent::applyDefaultValue();
 

@@ -132,7 +132,7 @@ class TestFeedback extends QtiComponent
      *
      * @return int A value of the TestFeedbackAccess enumeration.
      */
-    public function getAccess()
+    public function getAccess(): int
     {
         return $this->access;
     }
@@ -146,7 +146,7 @@ class TestFeedback extends QtiComponent
      * @param int $access A value of the TestFeedbackAccess enumeration.
      * @throws InvalidArgumentException If $access is not a value from the TestFeedbackAccess enumeration.
      */
-    public function setAccess($access)
+    public function setAccess($access): void
     {
         if (in_array($access, TestFeedbackAccess::asArray(), true)) {
             $this->access = $access;
@@ -161,7 +161,7 @@ class TestFeedback extends QtiComponent
      *
      * @return string A QTI Identifier.
      */
-    public function getOutcomeIdentifier()
+    public function getOutcomeIdentifier(): string
     {
         return $this->outcomeIdentifier;
     }
@@ -172,9 +172,9 @@ class TestFeedback extends QtiComponent
      * @param string $outcomeIdentifier A QTI Identifier.
      * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI Identifier.
      */
-    public function setOutcomeIdentifier($outcomeIdentifier)
+    public function setOutcomeIdentifier($outcomeIdentifier): void
     {
-        if (Format::isIdentifier($outcomeIdentifier)) {
+        if (Format::isIdentifier((string)$outcomeIdentifier)) {
             $this->outcomeIdentifier = $outcomeIdentifier;
         } else {
             $msg = "'${outcomeIdentifier}' is not a valid QTI Identifier.";
@@ -187,7 +187,7 @@ class TestFeedback extends QtiComponent
      *
      * @return int A value from the ShowHide enumeration.
      */
-    public function getShowHide()
+    public function getShowHide(): int
     {
         return $this->showHide;
     }
@@ -198,7 +198,7 @@ class TestFeedback extends QtiComponent
      * @param bool $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
-    public function setShowHide($showHide)
+    public function setShowHide($showHide): void
     {
         if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
@@ -213,7 +213,7 @@ class TestFeedback extends QtiComponent
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -224,9 +224,9 @@ class TestFeedback extends QtiComponent
      * @param string $identifier A QTI Identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
-        if (Format::isIdentifier($identifier, false)) {
+        if (Format::isIdentifier((string)$identifier, false)) {
             $this->identifier = $identifier;
         } else {
             $msg = "'${identifier}' is not a valid QTI Identifier.";
@@ -239,7 +239,7 @@ class TestFeedback extends QtiComponent
      *
      * @return string A title.
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -250,7 +250,7 @@ class TestFeedback extends QtiComponent
      * @param string $title A title.
      * @throws InvalidArgumentException If $title is not a string.
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         if (is_string($title)) {
             $this->title = $title;
@@ -265,7 +265,7 @@ class TestFeedback extends QtiComponent
      *
      * @return FlowStaticCollection The content of the TestFeedback.
      */
-    public function getContent()
+    public function getContent(): FlowStaticCollection
     {
         return $this->content;
     }
@@ -276,7 +276,7 @@ class TestFeedback extends QtiComponent
      * @param FlowStaticCollection $content XML markup binary stream as a string.
      * @throws InvalidArgumentException If $content is not a string.
      */
-    public function setContent(FlowStaticCollection $content)
+    public function setContent(FlowStaticCollection $content): void
     {
         $this->content = $content;
     }
@@ -284,7 +284,7 @@ class TestFeedback extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'testFeedback';
     }
@@ -292,7 +292,7 @@ class TestFeedback extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

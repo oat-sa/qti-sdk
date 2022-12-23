@@ -33,5 +33,6 @@ interface Processable
      *
      * @throws ProcessingException If an error occurs while processing something.
      */
+    #[\ReturnTypeWillChange]
     public function process();
 }

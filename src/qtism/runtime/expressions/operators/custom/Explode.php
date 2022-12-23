@@ -54,7 +54,7 @@ class Explode extends CustomOperatorProcessor
      * @return OrderedContainer The split value of the second sub-expression given as a parameter.
      * @throws OperatorProcessingException If something goes wrong.
      */
-    public function process()
+    public function process(): ?OrderedContainer
     {
         $operands = $this->getOperands();
 

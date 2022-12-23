@@ -47,7 +47,7 @@ class RubricBlockMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -93,7 +93,7 @@ class RubricBlockMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory attribute 'href' is missing from $element.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): RubricBlock
     {
         // First we retrieve the mandatory views.
         if (($value = $this->getDOMElementAttributeAs($element, 'view', 'string')) !== null) {
@@ -154,7 +154,7 @@ class RubricBlockMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'rubricBlock';
     }

@@ -38,7 +38,7 @@ class FlowCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a Flow object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Flow) {
             $msg = 'FlowCollection objects only accept to store Flow objects, "' . get_class($value) . '" given';

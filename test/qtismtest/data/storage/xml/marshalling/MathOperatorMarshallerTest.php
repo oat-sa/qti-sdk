@@ -16,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MathOperatorMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $subExpr = new ExpressionCollection([new BaseValue(BaseType::FLOAT, 1.57)]); // 90°
         $name = MathFunctions::SIN;
@@ -34,7 +34,7 @@ class MathOperatorMarshallerTest extends QtiSmTestCase
         $this::assertEquals('1.57', $subExprElts->item(0)->nodeValue);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

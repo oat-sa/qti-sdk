@@ -17,7 +17,7 @@ class Explode extends CustomOperatorProcessor
     /**
      * @param OperandsCollection $operands
      */
-    public function setOperands(OperandsCollection $operands)
+    public function setOperands(OperandsCollection $operands): void
     {
         $count = count($operands);
 

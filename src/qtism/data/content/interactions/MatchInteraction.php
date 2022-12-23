@@ -98,7 +98,7 @@ class MatchInteraction extends BlockInteraction
      * @param bool $shuffle A boolean value.
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
-    public function setShuffle($shuffle)
+    public function setShuffle($shuffle): void
     {
         if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
@@ -113,7 +113,7 @@ class MatchInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function mustShuffle()
+    public function mustShuffle(): bool
     {
         return $this->shuffle;
     }
@@ -125,7 +125,7 @@ class MatchInteraction extends BlockInteraction
      * @param int $maxAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxAssociations is not a positive integer.
      */
-    public function setMaxAssociations($maxAssociations)
+    public function setMaxAssociations($maxAssociations): void
     {
         if (is_int($maxAssociations) && $maxAssociations >= 0) {
             $this->maxAssociations = $maxAssociations;
@@ -141,7 +141,7 @@ class MatchInteraction extends BlockInteraction
      *
      * @return int A positive (>= 0) integer
      */
-    public function getMaxAssociations()
+    public function getMaxAssociations(): int
     {
         return $this->maxAssociations;
     }
@@ -152,7 +152,7 @@ class MatchInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function hasMaxAssociations()
+    public function hasMaxAssociations(): bool
     {
         return $this->getMaxAssociations() > 0;
     }
@@ -164,7 +164,7 @@ class MatchInteraction extends BlockInteraction
      * @param int $minAssociations A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minAssociations is not a positive integer or does not respect the limit imposed by maxAssociations.
      */
-    public function setMinAssociations($minAssociations)
+    public function setMinAssociations($minAssociations): void
     {
         if (is_int($minAssociations) && $minAssociations >= 0) {
             if ($this->hasMaxAssociations() === true && $minAssociations > $this->getMaxAssociations()) {
@@ -185,7 +185,7 @@ class MatchInteraction extends BlockInteraction
      *
      * @return int A positive (> 0) integer.
      */
-    public function getMinAssociations()
+    public function getMinAssociations(): int
     {
         return $this->minAssociations;
     }
@@ -195,7 +195,7 @@ class MatchInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function hasMinAssociations()
+    public function hasMinAssociations(): bool
     {
         return $this->getMinAssociations() > 0;
     }
@@ -207,7 +207,7 @@ class MatchInteraction extends BlockInteraction
      * @param SimpleMatchSetCollection $simpleMatchSets A collection of exactly two SimpleMatchSet objects.
      * @throws InvalidArgumentException If $simpleMatchSets does not contain exactly two SimpleMatchSet objects.
      */
-    public function setSimpleMatchSets(SimpleMatchSetCollection $simpleMatchSets)
+    public function setSimpleMatchSets(SimpleMatchSetCollection $simpleMatchSets): void
     {
         if (count($simpleMatchSets) === 2) {
             $this->simpleMatchSets = $simpleMatchSets;
@@ -223,7 +223,7 @@ class MatchInteraction extends BlockInteraction
      *
      * @return SimpleMatchSetCollection A collection of exactly two SimpleMatchSet objects.
      */
-    public function getSimpleMatchSets()
+    public function getSimpleMatchSets(): SimpleMatchSetCollection
     {
         return $this->simpleMatchSets;
     }
@@ -233,7 +233,7 @@ class MatchInteraction extends BlockInteraction
      *
      * @return SimpleMatchSet A SimpleMatchSet object.
      */
-    public function getSourceChoices()
+    public function getSourceChoices(): SimpleMatchSet
     {
         $matchSets = $this->getSimpleMatchSets();
 
@@ -245,7 +245,7 @@ class MatchInteraction extends BlockInteraction
      *
      * @return SimpleMatchSet A SimpleMatchSet object.
      */
-    public function getTargetChoices()
+    public function getTargetChoices(): SimpleMatchSet
     {
         $matchSets = $this->getSimpleMatchSets();
 
@@ -255,7 +255,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * @return ResponseValidityConstraint
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -279,7 +279,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $parentComponents = parent::getComponents();
 
@@ -289,7 +289,7 @@ class MatchInteraction extends BlockInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'matchInteraction';
     }

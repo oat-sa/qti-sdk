@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExceptionTest extends QtiSmTestCase
 {
-    public function testNoChaining()
+    public function testNoChaining(): void
     {
         $e = new Exception('This is an error message!');
         $this::assertEquals(
@@ -25,7 +25,7 @@ class ExceptionTest extends QtiSmTestCase
         );
     }
 
-    public function testChaining()
+    public function testChaining(): void
     {
         $e1 = new Exception('This is an error message!');
         $e2 = new Exception('This is a 2nd error message!', 0, $e1);

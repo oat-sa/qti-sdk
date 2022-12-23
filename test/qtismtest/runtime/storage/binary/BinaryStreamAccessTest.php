@@ -36,12 +36,12 @@ class BinaryStreamAccessTest extends QtiSmTestCase
      *
      * @return MemoryStream
      */
-    public function getEmptyStream()
+    public function getEmptyStream(): MemoryStream
     {
         return $this->emptyStream;
     }
 
-    public function testReadTinyInt()
+    public function testReadTinyInt(): void
     {
         $stream = new MemoryStream("\x00\x01\x0A");
         $stream->open();
@@ -67,7 +67,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
-    public function testWriteTinyInt()
+    public function testWriteTinyInt(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -92,7 +92,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $this::assertEquals(255, $val);
     }
 
-    public function testReadDateTime()
+    public function testReadDateTime(): void
     {
         $date = new DateTime('2013:09:04 09:37:09', new DateTimeZone('Europe/Luxembourg'));
         $stream = new MemoryStream(pack('l', $date->getTimestamp()));
@@ -111,7 +111,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
-    public function testWriteDateTime()
+    public function testWriteDateTime(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -123,7 +123,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $this::assertEquals(1378280229, $date->getTimestamp());
     }
 
-    public function testReadShort()
+    public function testReadShort(): void
     {
         $stream = new MemoryStream(pack('S', 0) . pack('S', 1) . pack('S', 65535));
         $stream->open();
@@ -161,7 +161,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
-    public function testWriteShort()
+    public function testWriteShort(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -184,7 +184,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $this::assertEquals(65535, $val);
     }
 
-    public function testReadInt()
+    public function testReadInt(): void
     {
         $stream = new MemoryStream(pack('l', 0) . pack('l', 1) . pack('l', -1) . pack('l', 2147483647) . pack('l', -2147483648));
         $stream->open();
@@ -219,7 +219,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
-    public function testWriteInt()
+    public function testWriteInt(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -252,7 +252,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $this::assertEquals(-2147483648, $val);
     }
 
-    public function testReadBool()
+    public function testReadBool(): void
     {
         $stream = new MemoryStream("\x00\x01");
         $stream->open();
@@ -274,7 +274,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
-    public function testWriteBool()
+    public function testWriteBool(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -292,7 +292,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $this::assertFalse($val);
     }
 
-    public function testReadString()
+    public function testReadString(): void
     {
         $stream = new MemoryStream(pack('S', 0) . '' . pack('S', 1) . 'A' . pack('S', 6) . 'binary');
         $stream->open();
@@ -318,7 +318,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
-    public function testWriteString()
+    public function testWriteString(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -341,7 +341,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $this::assertEquals('binary', $val);
     }
 
-    public function testReadFloat()
+    public function testReadFloat(): void
     {
         $stream = new MemoryStream(pack('d', 0.0) . pack('d', -M_PI) . pack('d', M_2_PI));
         $stream->open();
@@ -366,7 +366,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         }
     }
 
-    public function testWriteFloat()
+    public function testWriteFloat(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -389,7 +389,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $this::assertEquals(round(M_2_PI, 3), round($val, 3));
     }
 
-    public function testWriteIntegerClosedStream()
+    public function testWriteIntegerClosedStream(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -401,7 +401,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $access->writeInteger(1);
     }
 
-    public function testWriteFloatClosedStream()
+    public function testWriteFloatClosedStream(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -413,7 +413,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $access->writeFloat(1.);
     }
 
-    public function testWriteStringMaxLengthExceeded()
+    public function testWriteStringMaxLengthExceeded(): void
     {
         $string = '';
         for ($i = 0; $i < 2 ** 17; $i++) {
@@ -429,7 +429,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $this::assertEquals(2 ** 16 - 1, strlen($access->readString()));
     }
 
-    public function testReadBinary()
+    public function testReadBinary(): void
     {
         $stream = new MemoryStream(pack('S', 4) . 'test');
         $stream->open();
@@ -441,7 +441,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
     /**
      * @depends testReadBinary
      */
-    public function testWriteBinary()
+    public function testWriteBinary(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -455,7 +455,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
     /**
      * @depends testWriteBinary
      */
-    public function testWriteBinaryClosedStream()
+    public function testWriteBinaryClosedStream(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -467,7 +467,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $access->writeBinary('test');
     }
 
-    public function testWriteDurationCloseStream()
+    public function testWriteDurationCloseStream(): void
     {
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);

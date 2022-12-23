@@ -19,7 +19,7 @@ use qtism\data\content\ItemBody;
  */
 class XmlAssessmentTestDocumentTest extends QtiSmTestCase
 {
-    public function testLoad()
+    public function testLoad(): void
     {
         $uri = __DIR__ . '/../../../../samples/ims/tests/interaction_mix_sachsen/interaction_mix_sachsen.xml';
         $doc = new XmlDocument('2.1');
@@ -29,7 +29,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $this::assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
     }
 
-    public function testLoadFileDoesNotExist()
+    public function testLoadFileDoesNotExist(): void
     {
         // This file does not exist.
         $uri = __DIR__ . '/../../../../samples/invalid/abcd.xml';
@@ -38,7 +38,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $doc->load($uri);
     }
 
-    public function testLoadFileMalformed()
+    public function testLoadFileMalformed(): void
     {
         // This file contains malformed xml markup.
         $uri = __DIR__ . '/../../../../samples/invalid/malformed.xml';
@@ -54,7 +54,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         }
     }
 
-    public function testLoadSimpleItemSessionControlOnTestPart()
+    public function testLoadSimpleItemSessionControlOnTestPart(): void
     {
         $doc = new XmlDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/simple_itemsessioncontrol_testpart.xml');
@@ -64,7 +64,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $this::assertEquals(0, $testParts['testPartId']->getItemSessionControl()->getMaxAttempts());
     }
 
-    public function testSaveSimpleItemSessionControlOnTestPart()
+    public function testSaveSimpleItemSessionControlOnTestPart(): void
     {
         $doc = new XmlDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/simple_itemsessioncontrol_testpart.xml');
@@ -81,7 +81,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         unlink($file);
     }
 
-    public function testFullyQualified()
+    public function testFullyQualified(): void
     {
         $uri = __DIR__ . '/../../../../samples/custom/fully_qualified_assessmenttest.xml';
         $doc = new XmlDocument('2.1');
@@ -92,7 +92,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $this::assertInstanceOf(AssessmentTest::class, $doc->getDocumentComponent());
     }
 
-    public function testItemSessionControls()
+    public function testItemSessionControls(): void
     {
         $doc = new XmlDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/routeitem_itemsessioncontrols.xml');
@@ -108,7 +108,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
         $this::assertEquals(4, $p02->getItemSessionControl()->getMaxAttempts());
     }
 
-    public function testAssessmentSectionRefsInTestParts()
+    public function testAssessmentSectionRefsInTestParts(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', true);
@@ -127,7 +127,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
      * @param bool $filesystem
      * @throws XmlStorageException
      */
-    public function testIncludeAssessmentSectionRefsInTestParts($file, $filesystem)
+    public function testIncludeAssessmentSectionRefsInTestParts($file, $filesystem): void
     {
         $doc = new XmlDocument();
 
@@ -165,7 +165,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function includeAssessmentSectionRefsInTestPartsProvider()
+    public function includeAssessmentSectionRefsInTestPartsProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/tests/nested_assessment_section_refs/test_definition/test.xml', false],
@@ -179,7 +179,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
      * @param bool $filesystem
      * @throws XmlStorageException
      */
-    public function testIncludeAssessmentSectionRefsMixed($file, $filesystem)
+    public function testIncludeAssessmentSectionRefsMixed($file, $filesystem): void
     {
         $doc = new XmlDocument();
 
@@ -226,7 +226,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function includeAssessmentSectionRefsMixedProvider()
+    public function includeAssessmentSectionRefsMixedProvider(): array
     {
         return [
             [self::samplesDir() . 'custom/tests/mixed_assessment_section_refs/test_similar_ids.xml', false],
@@ -254,7 +254,7 @@ class XmlAssessmentTestDocumentTest extends QtiSmTestCase
      * @param $uri
      * @return string
      */
-    private static function decorateUri($uri)
+    private static function decorateUri($uri): string
     {
         return __DIR__ . '/../../../../samples/ims/tests/' . $uri;
     }

@@ -46,7 +46,7 @@ class HotspotMarshaller extends Marshaller
      * @param QtiComponent $component A HotspotChoice/AssociableHotspot object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $version = $this->getVersion();
         $element = $this->createElement($component);
@@ -96,10 +96,10 @@ class HotspotMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a hotspotChoice/associableHotspot element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A HotspotChoice/AssociableHotspot object.
+     * @return HotspotChoice|AssociableHotspot A HotspotChoice/AssociableHotspot object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): QtiComponent
     {
         $version = $this->getVersion();
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
@@ -181,7 +181,7 @@ class HotspotMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return '';
     }

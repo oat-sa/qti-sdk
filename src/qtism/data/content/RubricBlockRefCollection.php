@@ -38,7 +38,7 @@ class RubricBlockRefCollection extends QtiIdentifiableCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of RubricBlockRef.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof RubricBlockRef) {
             $msg = 'A RubricBlockRefCollection object only accepts to store RubricBlockRef objects.';

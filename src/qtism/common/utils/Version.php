@@ -54,19 +54,21 @@ class Version
      * @param string $version1 A version number.
      * @param string $version2 A version number
      * @param string $operator An operator.
-     * @return mixed
+     *
+     * @return bool
+     *
      * @throws InvalidArgumentException
      * @see http://semver.org Semantic Versioning
      */
-    public static function compare($version1, $version2, $operator = null)
+    public static function compare($version1, $version2, $operator = null): bool
     {
         $version1 = self::sanitize($version1);
         $version2 = self::sanitize($version2);
         self::checkOperator($operator);
 
         return $operator === null
-            ? version_compare($version1, $version2)
-            : version_compare($version1, $version2, $operator);
+            ? (bool)version_compare($version1, $version2)
+            : (bool)version_compare($version1, $version2, $operator);
     }
 
     /**
@@ -91,7 +93,7 @@ class Version
      * @param string $version A version with major, minor and optional patch version e.g. '2.1' or '2.1.1'.
      * @throws InvalidArgumentException when version is not supported.
      */
-    protected static function checkVersion(string $version)
+    protected static function checkVersion(string $version): void
     {
     }
 
@@ -101,7 +103,7 @@ class Version
      * @param string|null $operator
      * @throws InvalidArgumentException when the operator is not known.
      */
-    private static function checkOperator($operator)
+    private static function checkOperator($operator): void
     {
         $knownOperators = ['<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'];
         if ($operator !== null && !in_array($operator, $knownOperators, true)) {

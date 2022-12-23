@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class XhtmlRenderingEngineTest extends QtiSmTestCase
 {
-    public function testVerySimple()
+    public function testVerySimple(): void
     {
         $div = $this->createComponentFromXml('
 	        <div id="my-div" class="container">bla bla</div>
@@ -36,7 +36,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
         $this::assertEquals('bla bla', $text->wholeText);
     }
 
-    public function testIgnoreClassesOne()
+    public function testIgnoreClassesOne(): void
     {
         $renderingEngine = new XhtmlRenderingEngine();
         $renderingEngine->ignoreQtiClasses('h1');
@@ -58,7 +58,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
         $this::assertEquals(1, $ps->length);
     }
 
-    public function testSeparateStylesheetOne()
+    public function testSeparateStylesheetOne(): void
     {
         // The loaded component is a rubricBlock component
         // with a single stylesheet component within.
@@ -86,7 +86,7 @@ class XhtmlRenderingEngineTest extends QtiSmTestCase
         $this::assertEquals('My Very First Stylesheet I am Proud of', $linkElt->getAttribute('title'));
     }
 
-    public function testSeparateStylesheetTwo()
+    public function testSeparateStylesheetTwo(): void
     {
         // The loaded component is still a rubricBlock but this
         // time with two (YES, TWO!) stylesheets.

@@ -38,7 +38,7 @@ class XIncludeMarshaller extends Marshaller
      * @param QtiComponent $component An XInclude object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         return self::getDOMCradle()->importNode($component->getXml()->documentElement, true);
     }
@@ -47,9 +47,9 @@ class XIncludeMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a math element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Math object.
+     * @return XInclude A Math object.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): XInclude
     {
         $node = $element->cloneNode(true);
 
@@ -59,7 +59,7 @@ class XIncludeMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'include';
     }

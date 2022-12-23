@@ -33,7 +33,7 @@ class Strong extends SimpleInline
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'strong';
     }

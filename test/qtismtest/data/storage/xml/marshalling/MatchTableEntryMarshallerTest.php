@@ -13,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MatchTableEntryMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $sourceValue = 2;
         $targetValue = 'http://www.rdfabout.com';
@@ -28,7 +28,7 @@ class MatchTableEntryMarshallerTest extends QtiSmTestCase
         $this::assertEquals($targetValue, $element->getAttribute('targetValue'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<matchTableEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sourceValue="2" targetValue="http://www.mysite.com"/>');

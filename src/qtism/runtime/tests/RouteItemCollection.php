@@ -37,7 +37,7 @@ class RouteItemCollection extends AbstractCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of RouteItem.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof RouteItem) {
             $msg = 'RoutItemCollection objects only accept to store RouteItem objects.';

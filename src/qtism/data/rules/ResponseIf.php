@@ -73,7 +73,7 @@ class ResponseIf extends QtiComponent
      *
      * @return Expression An expression.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -83,7 +83,7 @@ class ResponseIf extends QtiComponent
      *
      * @param Expression $expression An expression.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -94,7 +94,7 @@ class ResponseIf extends QtiComponent
      *
      * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
      */
-    public function setResponseRules(ResponseRuleCollection $responseRules)
+    public function setResponseRules(ResponseRuleCollection $responseRules): void
     {
         $this->responseRules = $responseRules;
     }
@@ -105,7 +105,7 @@ class ResponseIf extends QtiComponent
      *
      * @return ResponseRuleCollection A collection of ResponseRule objects.
      */
-    public function getResponseRules()
+    public function getResponseRules(): ResponseRuleCollection
     {
         return $this->responseRules;
     }
@@ -113,7 +113,7 @@ class ResponseIf extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'responseIf';
     }
@@ -121,7 +121,7 @@ class ResponseIf extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
             [$this->getExpression()],

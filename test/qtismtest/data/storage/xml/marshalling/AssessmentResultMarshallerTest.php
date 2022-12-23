@@ -48,7 +48,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssessmentResultMarshallerTest extends QtiSmTestCase
 {
-    public function testValidMinimalXml()
+    public function testValidMinimalXml(): void
     {
         $xml = '<?xml version="1.0" encoding="UTF-8"?>
             <assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p2">
@@ -70,7 +70,7 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         $this::assertNull($assessmentResult->getItemResults());
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $xml = '<?xml version="1.0" encoding="UTF-8"?>
             <assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p2">
@@ -182,7 +182,7 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(AssessmentResult::class, $assessmentResult);
     }
 
-    public function testUnmarshallWithoutTestResult()
+    public function testUnmarshallWithoutTestResult(): void
     {
         $xml = '<?xml version="1.0" encoding="UTF-8"?>
             <assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p2">
@@ -229,7 +229,7 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(AssessmentResult::class, $assessmentResult);
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new AssessmentResult(
             new Context(
@@ -338,7 +338,7 @@ class AssessmentResultMarshallerTest extends QtiSmTestCase
         $this::assertEquals(2, $element->getElementsByTagName('itemResult')->length);
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         $component = new AssessmentResult(
             new Context()

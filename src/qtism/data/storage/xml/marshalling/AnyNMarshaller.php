@@ -42,7 +42,7 @@ class AnyNMarshaller extends OperatorMarshaller
      * @param DOMElement[] $elements An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI anyN element.
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'min', $component->getMin());
@@ -63,7 +63,7 @@ class AnyNMarshaller extends OperatorMarshaller
      * @return QtiComponent An AnyN object.
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         if (($min = $this->getDOMElementAttributeAs($element, 'min')) !== null) {
             if (Format::isInteger($min)) {

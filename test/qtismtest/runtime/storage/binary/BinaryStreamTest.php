@@ -18,7 +18,7 @@ class BinaryStreamTest extends QtiSmTestCase
     /**
      * @return MemoryStream
      */
-    public function getBasicStream()
+    public function getBasicStream(): MemoryStream
     {
         return $this->basicStream;
     }
@@ -26,7 +26,7 @@ class BinaryStreamTest extends QtiSmTestCase
     /**
      * @return MemoryStream
      */
-    public function getEmptyStream()
+    public function getEmptyStream(): MemoryStream
     {
         return $this->emptyStream;
     }
@@ -45,7 +45,7 @@ class BinaryStreamTest extends QtiSmTestCase
         unset($this->emptyStream);
     }
 
-    public function testInstantiate()
+    public function testInstantiate(): void
     {
         $stream = $this->getBasicStream();
         $this::assertInstanceOf(MemoryStream::class, $stream);
@@ -57,7 +57,7 @@ class BinaryStreamTest extends QtiSmTestCase
         $this::assertEquals(strlen('binary-data'), $stream->getLength());
     }
 
-    public function testCloseOnClosedStream()
+    public function testCloseOnClosedStream(): void
     {
         $stream = $this->getBasicStream();
 
@@ -70,7 +70,7 @@ class BinaryStreamTest extends QtiSmTestCase
         }
     }
 
-    public function testRewindOnClosedStream()
+    public function testRewindOnClosedStream(): void
     {
         $stream = $this->getBasicStream();
 
@@ -83,7 +83,7 @@ class BinaryStreamTest extends QtiSmTestCase
         }
     }
 
-    public function testOpen()
+    public function testOpen(): void
     {
         $stream = $this->getBasicStream();
         $stream->open();
@@ -91,7 +91,7 @@ class BinaryStreamTest extends QtiSmTestCase
         $this::assertTrue($stream->isOpen());
     }
 
-    public function testClose()
+    public function testClose(): void
     {
         $stream = $this->getBasicStream();
         $stream->open();
@@ -99,7 +99,7 @@ class BinaryStreamTest extends QtiSmTestCase
         $this::assertFalse($stream->isOpen());
     }
 
-    public function testRead()
+    public function testRead(): void
     {
         $stream = $this->getBasicStream();
         $stream->open();
@@ -135,7 +135,7 @@ class BinaryStreamTest extends QtiSmTestCase
         $stream->close();
     }
 
-    public function testWrite()
+    public function testWrite(): void
     {
         // test writing in an empty stream.
         $stream = $this->getEmptyStream();
@@ -180,7 +180,7 @@ class BinaryStreamTest extends QtiSmTestCase
         $stream->close();
     }
 
-    public function testOpenOnOpenStream()
+    public function testOpenOnOpenStream(): void
     {
         $stream = $this->getBasicStream();
 

@@ -89,7 +89,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * @param int $shape A value from the Shape enumeration.
      * @throws InvalidArgumentException
      */
-    protected function setShape($shape)
+    protected function setShape($shape): void
     {
         if (in_array($shape, QtiShape::asArray())) {
             $this->shape = $shape;
@@ -104,7 +104,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      *
      * @return int A value from the Shape enumeration.
      */
-    public function getShape()
+    public function getShape(): int
     {
         return $this->shape;
     }
@@ -115,7 +115,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * @param QtiPoint $point A QtiPoint object.
      * @return bool
      */
-    public function inside(QtiPoint $point)
+    public function inside(QtiPoint $point): bool
     {
         if ($this->getShape() === QtiShape::DEF) {
             return true;
@@ -185,7 +185,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return implode(',', $this->getDataPlaceHolder());
     }
@@ -197,7 +197,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      * @param mixed $obj
      * @return bool
      */
-    public function equals($obj)
+    public function equals($obj): bool
     {
         return $obj instanceof self
             && $this->getShape() === $obj->getShape()
@@ -210,7 +210,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return BaseType::COORDS;
     }
@@ -221,7 +221,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::SINGLE;
     }

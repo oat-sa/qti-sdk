@@ -16,7 +16,7 @@ use UnexpectedValueException;
  */
 class EqualTest extends QtiSmTestCase
 {
-    public function testInstantiationNoToleranceButRequired()
+    public function testInstantiationNoToleranceButRequired(): void
     {
         $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessage('The tolerance argument must be specified when ToleranceMode = ABSOLUTE or EXACT.');
@@ -27,7 +27,7 @@ class EqualTest extends QtiSmTestCase
         );
     }
 
-    public function testSetToleranceModeWrongValue()
+    public function testSetToleranceModeWrongValue(): void
     {
         $equal = new Equal(
             new ExpressionCollection([new BaseValue(BaseType::INTEGER, 10), new BaseValue(BaseType::INTEGER, 10)])
@@ -39,7 +39,7 @@ class EqualTest extends QtiSmTestCase
         $equal->setToleranceMode(true);
     }
 
-    public function testSetToleranceMissingT0()
+    public function testSetToleranceMissingT0(): void
     {
         $equal = new Equal(
             new ExpressionCollection([new BaseValue(BaseType::INTEGER, 10), new BaseValue(BaseType::INTEGER, 10)])
@@ -53,7 +53,7 @@ class EqualTest extends QtiSmTestCase
         $equal->setTolerance([]);
     }
 
-    public function testSetToleranceTooMuchTs()
+    public function testSetToleranceTooMuchTs(): void
     {
         $equal = new Equal(
             new ExpressionCollection([new BaseValue(BaseType::INTEGER, 10), new BaseValue(BaseType::INTEGER, 10)])
@@ -67,7 +67,7 @@ class EqualTest extends QtiSmTestCase
         $equal->setTolerance([1, 2, 3]);
     }
 
-    public function testSetIncludeLowerBoundWrongType()
+    public function testSetIncludeLowerBoundWrongType(): void
     {
         $equal = new Equal(
             new ExpressionCollection([new BaseValue(BaseType::INTEGER, 10), new BaseValue(BaseType::INTEGER, 10)])
@@ -79,7 +79,7 @@ class EqualTest extends QtiSmTestCase
         $equal->setIncludeLowerBound('str');
     }
 
-    public function testSetIncludeUpperBoundWrongType()
+    public function testSetIncludeUpperBoundWrongType(): void
     {
         $equal = new Equal(
             new ExpressionCollection([new BaseValue(BaseType::INTEGER, 10), new BaseValue(BaseType::INTEGER, 10)])

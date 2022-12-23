@@ -19,7 +19,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class LtProcessorTest extends QtiSmTestCase
 {
-    public function testLt()
+    public function testLt(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -45,7 +45,7 @@ class LtProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -56,7 +56,7 @@ class LtProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongBaseTypeOne()
+    public function testWrongBaseTypeOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -67,7 +67,7 @@ class LtProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeTwo()
+    public function testWrongBaseTypeTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -78,7 +78,7 @@ class LtProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -89,7 +89,7 @@ class LtProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -97,7 +97,7 @@ class LtProcessorTest extends QtiSmTestCase
         $processor = new LtProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(1), new QtiInteger(2), new QtiInteger(3)]);
@@ -109,7 +109,7 @@ class LtProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<lt>

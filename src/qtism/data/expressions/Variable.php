@@ -107,7 +107,7 @@ class Variable extends Expression
      * @param string $identifier A QTI Identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
@@ -122,7 +122,7 @@ class Variable extends Expression
      *
      * @return string A QTI Identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -134,7 +134,7 @@ class Variable extends Expression
      * @param string $weightIdentifier A QTI identifier.
      * @throws InvalidArgumentException If $weightIdentifier is not empty but is an invalid QTI Identifier.
      */
-    public function setWeightIdentifier($weightIdentifier)
+    public function setWeightIdentifier($weightIdentifier): void
     {
         if (empty($weightIdentifier) || Format::isIdentifier($weightIdentifier)) {
             $this->weightIdentifier = $weightIdentifier;
@@ -150,7 +150,7 @@ class Variable extends Expression
      *
      * @return string A QTI identifier or an empty string if no weight identifier is specified.
      */
-    public function getWeightIdentifier()
+    public function getWeightIdentifier(): string
     {
         return $this->weightIdentifier;
     }
@@ -158,7 +158,7 @@ class Variable extends Expression
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'variable';
     }
@@ -168,7 +168,7 @@ class Variable extends Expression
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return false; // variable --> impure
     }

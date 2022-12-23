@@ -37,7 +37,7 @@ class InterpolationTableEntryCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of InterpolationTableEntry.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof InterpolationTableEntry) {
             $msg = "InterpolationTableEntryCollection only accepts to store InterpolationTableEntry objects, '" . gettype($value) . "' given.";

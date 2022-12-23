@@ -39,7 +39,7 @@ class ShufflingGroupMarshaller extends Marshaller
      * @param QtiComponent $component A ShufflingGroup object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'identifiers', implode("\x20", $component->getIdentifiers()->getArrayCopy()));
@@ -56,10 +56,10 @@ class ShufflingGroupMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI ShufflingGroup element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A ShufflingGroup object.
+     * @return ShufflingGroup A ShufflingGroup object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): ShufflingGroup
     {
         if (($identifiers = $this->getDOMElementAttributeAs($element, 'identifiers')) !== null) {
             $identifiers = explode("\x20", $identifiers);
@@ -80,7 +80,7 @@ class ShufflingGroupMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'shufflingGroup';
     }

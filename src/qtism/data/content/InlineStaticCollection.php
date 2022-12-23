@@ -39,7 +39,7 @@ class InlineStaticCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof InlineStatic) {
             $msg = 'InlineStaticCollection objects only accept to store InlineStatic objects.';

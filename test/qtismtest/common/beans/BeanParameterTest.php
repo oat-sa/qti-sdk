@@ -12,7 +12,7 @@ use stdClass;
  */
 class BeanParameterTest extends QtiSmTestCase
 {
-    public function testNoParameter()
+    public function testNoParameter(): void
     {
         $this->expectException(BeanException::class);
         $this->expectExceptionMessage("No such parameter 'method' for method 'getMethod' of class 'stdClass'.");

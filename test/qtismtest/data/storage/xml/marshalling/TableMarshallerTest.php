@@ -30,7 +30,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class TableMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $th1 = new Th('firstname');
         $th1->setContent(new FlowCollection([new TextRun('First Name')]));
@@ -120,7 +120,7 @@ class TableMarshallerTest extends QtiSmTestCase
         $this::assertEquals($expected, $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $table = $this->createComponentFromXml('
 	        <table id="my-table" class="qti table" summary="Some people..." xml:base="/home/jerome">
@@ -214,7 +214,7 @@ class TableMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoTbody()
+    public function testUnmarshallNoTbody(): void
     {
         $this->expectException(UnmarshallingException::class);
         $this->expectExceptionMessage("A 'table' element must contain at lease one 'tbody' element.");

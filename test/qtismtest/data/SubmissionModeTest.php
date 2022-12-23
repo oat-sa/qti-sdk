@@ -13,7 +13,7 @@ class SubmissionModeTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return SubmissionMode::class;
     }
@@ -21,7 +21,7 @@ class SubmissionModeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'individual',
@@ -32,7 +32,7 @@ class SubmissionModeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'INDIVIDUAL',
@@ -43,7 +43,7 @@ class SubmissionModeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             SubmissionMode::INDIVIDUAL,

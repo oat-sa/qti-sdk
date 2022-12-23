@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class PrintedVariableRendererTest extends QtiSmTestCase
 {
-    public function testRenderContextStatic()
+    public function testRenderContextStatic(): void
     {
         $ctx = new XhtmlRenderingEngine();
         $pv = new PrintedVariable('OUTCOME1', 'my-id');
@@ -46,7 +46,7 @@ class PrintedVariableRendererTest extends QtiSmTestCase
         $this::assertEquals('=', $element->getAttribute('data-mapping-indicator'));
     }
 
-    public function testRenderContextAware()
+    public function testRenderContextAware(): void
     {
         $ctx = new XhtmlRenderingEngine();
         $ctx->setPrintedVariablePolicy(XhtmlRenderingEngine::CONTEXT_AWARE);

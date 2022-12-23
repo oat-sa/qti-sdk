@@ -107,7 +107,7 @@ class GapMatchInteraction extends BlockInteraction
      * @param bool $shuffle A boolean value.
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
-    public function setShuffle($shuffle)
+    public function setShuffle($shuffle): void
     {
         if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
@@ -123,7 +123,7 @@ class GapMatchInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function mustShuffle()
+    public function mustShuffle(): bool
     {
         return $this->shuffle;
     }
@@ -134,7 +134,7 @@ class GapMatchInteraction extends BlockInteraction
      * @param GapChoiceCollection $gapChoices A collection of at least one GapChoice object.
      * @throws InvalidArgumentException If $gapChoices is empty.
      */
-    public function setGapChoices(GapChoiceCollection $gapChoices)
+    public function setGapChoices(GapChoiceCollection $gapChoices): void
     {
         if (count($gapChoices) > 0) {
             $this->gapChoices = $gapChoices;
@@ -149,7 +149,7 @@ class GapMatchInteraction extends BlockInteraction
      *
      * @return GapChoiceCollection A collection of at least one GapChoice object.
      */
-    public function getGapChoices()
+    public function getGapChoices(): GapChoiceCollection
     {
         return $this->gapChoices;
     }
@@ -160,7 +160,7 @@ class GapMatchInteraction extends BlockInteraction
      * @param BlockStaticCollection $content A collection of at least one BlockStatic object.
      * @throws InvalidArgumentException If $content is empty.
      */
-    public function setContent(BlockStaticCollection $content)
+    public function setContent(BlockStaticCollection $content): void
     {
         if (count($content) > 0) {
             $this->content = $content;
@@ -175,7 +175,7 @@ class GapMatchInteraction extends BlockInteraction
      *
      * @return BlockStaticCollection A collection of at least one BlockStatic object.
      */
-    public function getContent()
+    public function getContent(): BlockStaticCollection
     {
         return $this->content;
     }
@@ -183,7 +183,7 @@ class GapMatchInteraction extends BlockInteraction
     /**
      * @return ResponseValidityConstraint|null
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -207,7 +207,7 @@ class GapMatchInteraction extends BlockInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $parentComponents = parent::getComponents();
 
@@ -217,7 +217,7 @@ class GapMatchInteraction extends BlockInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'gapMatchInteraction';
     }

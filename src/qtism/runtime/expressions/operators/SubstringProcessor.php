@@ -45,7 +45,7 @@ class SubstringProcessor extends OperatorProcessor
      * @return QtiBoolean|null Whether the first sub-expression is a substring of the second sub-expression or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -74,7 +74,7 @@ class SubstringProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Substring::class;
     }

@@ -20,7 +20,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class RoundToProcessorTest extends QtiSmTestCase
 {
-    public function testSignificantFigures()
+    public function testSignificantFigures(): void
     {
         $expr = $this->createComponentFromXml('
 			<roundTo figures="3">
@@ -66,7 +66,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $this::assertEquals(round(-12.1, 1), round($result->getValue(), 1));
     }
 
-    public function testFiguresFromRef()
+    public function testFiguresFromRef(): void
     {
         $expr = $this->createComponentFromXml('
 			<roundTo figures="nfigures">
@@ -89,7 +89,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $this::assertEquals(round(1240000), round($result->getValue()));
     }
 
-    public function testFiguresFromRefNoRef()
+    public function testFiguresFromRefNoRef(): void
     {
         $this->expectException(ExpressionProcessingException::class);
 
@@ -105,7 +105,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testFiguresFromRefNonIntegerRef()
+    public function testFiguresFromRefNonIntegerRef(): void
     {
         $this->expectException(ExpressionProcessingException::class);
 
@@ -130,7 +130,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $this::assertEquals(round(1240000), round($result->getValue()));
     }
 
-    public function testFiguresFromRefNegativeWhenSignificantFigureInUse()
+    public function testFiguresFromRefNegativeWhenSignificantFigureInUse(): void
     {
         $this->expectException(ExpressionProcessingException::class);
 
@@ -155,7 +155,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $this::assertEquals(round(1240000), round($result->getValue()));
     }
 
-    public function testDecimalPlaces()
+    public function testDecimalPlaces(): void
     {
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">
@@ -203,7 +203,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $this::assertEquals(5.06, $result->getValue());
     }
 
-    public function testNoOperands()
+    public function testNoOperands(): void
     {
         $this->expectException(ExpressionProcessingException::class);
 
@@ -217,7 +217,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testOperandsContainNull()
+    public function testOperandsContainNull(): void
     {
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">
@@ -231,7 +231,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $this->expectException(ExpressionProcessingException::class);
 
@@ -245,7 +245,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $this->expectException(ExpressionProcessingException::class);
 
@@ -259,7 +259,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $this->expectException(ExpressionProcessingException::class);
 
@@ -273,7 +273,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongFiguresOne()
+    public function testWrongFiguresOne(): void
     {
         $this->expectException(ExpressionProcessingException::class);
 
@@ -288,7 +288,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongFiguresTwo()
+    public function testWrongFiguresTwo(): void
     {
         $this->expectException(ExpressionProcessingException::class);
 
@@ -302,7 +302,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNan()
+    public function testNan(): void
     {
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">
@@ -315,7 +315,7 @@ class RoundToProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testInfinity()
+    public function testInfinity(): void
     {
         $expr = $this->createComponentFromXml('
 			<roundTo figures="0" roundingMode="decimalPlaces">

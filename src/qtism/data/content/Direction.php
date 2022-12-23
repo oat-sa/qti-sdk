@@ -37,26 +37,26 @@ class Direction implements Enumeration
      *
      * @var int
      */
-    const AUTO = 0;
+    public const AUTO = 0;
 
     /**
      * Left To Right direction.
      *
      * @var int
      */
-    const LTR = 1;
+    public const LTR = 1;
 
     /**
      * Right to Left direction.
      *
      * @var int
      */
-    const RTL = 2;
+    public const RTL = 2;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'AUTO' => self::AUTO,
@@ -71,7 +71,7 @@ class Direction implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'auto':
                 return self::AUTO;
                 break;

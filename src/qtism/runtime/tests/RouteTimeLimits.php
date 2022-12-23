@@ -63,7 +63,7 @@ class RouteTimeLimits
      *
      * @return QtiComponent A QtiComponent object.
      */
-    public function getOwner()
+    public function getOwner(): QtiComponent
     {
         return $this->owner;
     }
@@ -73,7 +73,7 @@ class RouteTimeLimits
      *
      * @param QtiComponent $owner A QtiComponent object.
      */
-    public function setOwner(QtiComponent $owner)
+    public function setOwner(QtiComponent $owner): void
     {
         $this->owner = $owner;
     }
@@ -83,7 +83,7 @@ class RouteTimeLimits
      *
      * @return TimeLimits
      */
-    public function getTimeLimits()
+    public function getTimeLimits(): TimeLimits
     {
         return $this->timeLimits;
     }
@@ -93,7 +93,7 @@ class RouteTimeLimits
      *
      * @param TimeLimits $timeLimits
      */
-    public function setTimeLimits(TimeLimits $timeLimits)
+    public function setTimeLimits(TimeLimits $timeLimits): void
     {
         $this->timeLimits = $timeLimits;
     }
@@ -106,7 +106,7 @@ class RouteTimeLimits
      * @param QtiComponent $owner The owner component of $timeLimits.
      * @return RouteTimeLimits A new RouteTimeLimits object.
      */
-    public static function createFromTimeLimits(TimeLimits $timeLimits, QtiComponent $owner)
+    public static function createFromTimeLimits(TimeLimits $timeLimits, QtiComponent $owner): self
     {
         return new static($timeLimits, $owner);
     }

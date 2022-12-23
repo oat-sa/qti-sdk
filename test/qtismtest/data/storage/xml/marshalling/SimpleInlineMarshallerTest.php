@@ -24,7 +24,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class SimpleInlineMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $strong = new Strong('john');
         $strong->setLabel('His name');
@@ -42,7 +42,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<em id="sentence" class="introduction" xml:lang="en-US" xml:base="/home/jerome">He is <strong id="john" label="His name">John Dunbar</strong>.</em>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<em id="sentence" class="introduction" xml:lang="en-US">He is <strong id="john" label="His name">John Dunbar</strong>.</em>');
@@ -72,7 +72,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('.', $sentence[2]->getContent());
     }
 
-    public function testUnmarshall21MissingHref()
+    public function testUnmarshall21MissingHref(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<a>QTI-SDK</a>');
@@ -86,7 +86,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $a = $marshaller->unmarshall($element);
     }
 
-    public function testMarshallQandA21()
+    public function testMarshallQandA21(): void
     {
         $q = new Q('albert-einstein');
 
@@ -103,7 +103,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<q id="albert-einstein">Albert Einstein is a <a href="http://en.wikipedia.org/wiki/Physicist" type="text/html">physicist</a>.</q>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallQandA21()
+    public function testUnmarshallQandA21(): void
     {
         $q = $this->createComponentFromXml('<q id="albert-einstein" cite="http://en.wikipedia.org/wiki/Physicist" xml:base="/home/jerome">Albert Einstein is a <a href="http://en.wikipedia.org/wiki/Physicist" type="text/html">physicist</a>.</q>');
         $this::assertInstanceOf(Q::class, $q);
@@ -111,7 +111,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('/home/jerome', $q->getXmlBase());
     }
 
-    public function testUnmarshall22Ltr()
+    public function testUnmarshall22Ltr(): void
     {
         $q = $this->createComponentFromXml('
 	        <q id="albert-einstein" class="albie yeah" dir="ltr">
@@ -124,7 +124,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals(Direction::LTR, $q->getDir());
     }
 
-    public function testUnmarshall22Rtl()
+    public function testUnmarshall22Rtl(): void
     {
         $q = $this->createComponentFromXml('
 	        <q dir="rtl">
@@ -135,7 +135,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals(Direction::RTL, $q->getDir());
     }
 
-    public function testUnmarshall22DirAuto()
+    public function testUnmarshall22DirAuto(): void
     {
         $q = $this->createComponentFromXml('
 	        <q>
@@ -146,7 +146,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals(Direction::AUTO, $q->getDir());
     }
 
-    public function testUnmarshall21DirAuto()
+    public function testUnmarshall21DirAuto(): void
     {
         $q = $this->createComponentFromXml('
 	        <q>
@@ -157,7 +157,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals(Direction::AUTO, $q->getDir());
     }
 
-    public function testMarshall22Rtl()
+    public function testMarshall22Rtl(): void
     {
         $q = new Q('albert');
         $q->setDir(Direction::RTL);
@@ -170,7 +170,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<q id="albert" dir="rtl"/>', $dom->saveXML($element));
     }
 
-    public function testMarshall21Rtl()
+    public function testMarshall21Rtl(): void
     {
         $q = new Q('albert');
         $q->setDir(Direction::RTL);
@@ -183,7 +183,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<q id="albert"/>', $dom->saveXML($element));
     }
 
-    public function testMarshall20Rtl()
+    public function testMarshall20Rtl(): void
     {
         $q = new Q('albert');
         $q->setDir(Direction::RTL);
@@ -196,7 +196,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<q id="albert"/>', $dom->saveXML($element));
     }
 
-    public function testMarshall22Ltr()
+    public function testMarshall22Ltr(): void
     {
         $q = new Q('albert');
         $q->setDir(Direction::LTR);
@@ -209,7 +209,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<q id="albert" dir="ltr"/>', $dom->saveXML($element));
     }
 
-    public function testMarshall22DirAuto()
+    public function testMarshall22DirAuto(): void
     {
         $q = new Q('albert');
         $q->setDir(Direction::AUTO);
@@ -222,7 +222,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<q id="albert"/>', $dom->saveXML($element));
     }
 
-    public function testMarshallBdo22()
+    public function testMarshallBdo22(): void
     {
         $bdo = new Bdo('bido');
         $bdo->setDir(Direction::RTL);
@@ -234,7 +234,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<bdo id="bido" dir="rtl"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallBdo22()
+    public function testUnmarshallBdo22(): void
     {
         $bdo = $this->createComponentFromXml('<bdo dir="rtl">I am reversed!</bdo>', '2.2.0');
         $this::assertEquals(Direction::RTL, $bdo->getDir());
@@ -248,7 +248,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
     /**
      * @throws MarshallerNotFoundException|MarshallingException
      */
-    public function testMarshallSpan21()
+    public function testMarshallSpan21(): void
     {
         $span = new Span('myspan', 'myclass');
         $span->setAriaControls('IDREF1');
@@ -271,7 +271,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<span id="myspan" class="myclass"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallSpan21()
+    public function testUnmarshallSpan21(): void
     {
         // In QTI 2.1, aria-* and dir must be ignored.
 
@@ -311,7 +311,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
     /**
      * @throws MarshallerNotFoundException|MarshallingException
      */
-    public function testMarshallSpan22()
+    public function testMarshallSpan22(): void
     {
         $span = new Span('myspan', 'myclass');
         $span->setAriaLabel('my aria label');
@@ -338,7 +338,7 @@ class SimpleInlineMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshallSpan22()
+    public function testUnmarshallSpan22(): void
     {
         /** @var Span $span */
         $span = $this->createComponentFromXml(

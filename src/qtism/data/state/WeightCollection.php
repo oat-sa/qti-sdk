@@ -37,7 +37,7 @@ class WeightCollection extends QtiIdentifiableCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of Weight.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Weight) {
             $msg = "WeightCollection only accepts to store Weight objects, '" . gettype($value) . "' given.";

@@ -16,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SimpleChoiceMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $simpleChoice = new SimpleChoice('choice_1');
         $simpleChoice->setClass('qti-simpleChoice');
@@ -32,7 +32,7 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<simpleChoice class="qti-simpleChoice" identifier="choice_1">This is ... <strong>strong</strong>!</simpleChoice>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
 	        <simpleChoice class="qti-simpleChoice" identifier="choice_1">This is ... <strong>strong</strong>!</simpleChoice>
@@ -50,7 +50,7 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $this::assertCount(3, $content);
     }
 
-    public function testMarshallSimple20()
+    public function testMarshallSimple20(): void
     {
         $simpleChoice = new SimpleChoice('choice_1');
         $simpleChoice->setContent(new FlowStaticCollection([new TextRun('Choice #1')]));
@@ -66,7 +66,7 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshallSimple20
      */
-    public function testMarshallNoTemplateIdentifierNoShowHide20()
+    public function testMarshallNoTemplateIdentifierNoShowHide20(): void
     {
         // Aims at testing that templateIdentifier and showHide attributes
         // are not taken into accoun in a QTI 2.0 context.
@@ -84,7 +84,7 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<simpleChoice identifier="choice_1" fixed="true">Choice #1</simpleChoice>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallSimple20()
+    public function testUnmarshallSimple20(): void
     {
         $element = $this->createDOMElement('
 	        <simpleChoice identifier="choice_1" fixed="true">Choice #1</simpleChoice>
@@ -106,7 +106,7 @@ class SimpleChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshallSimple20
      */
-    public function testUnmarshallNoTemplateIdentifierNoShowHide20()
+    public function testUnmarshallNoTemplateIdentifierNoShowHide20(): void
     {
         // Aims at testing that templateIdentifier and showHide attribute have
         // no effect in a QTI 2.0 context.

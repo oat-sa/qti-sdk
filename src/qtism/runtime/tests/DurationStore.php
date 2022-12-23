@@ -44,7 +44,7 @@ class DurationStore extends State
      * @param mixed $value
      * @throws InvalidArgumentException If one or more of the conditions above are not respected.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         parent::checkType($value);
 

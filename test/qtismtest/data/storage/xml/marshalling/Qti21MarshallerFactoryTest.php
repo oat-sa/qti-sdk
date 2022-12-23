@@ -17,7 +17,7 @@ use qtism\data\storage\xml\marshalling\AreaMapEntryMarshaller;
  */
 class Qti21MarshallerFactyoryTest extends QtiSmTestCase
 {
-    public function testFromDomElement()
+    public function testFromDomElement(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<areaMapEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" shape="rect" coords="0, 20, 100, 0" mappedValue="1.337"/>');
@@ -28,7 +28,7 @@ class Qti21MarshallerFactyoryTest extends QtiSmTestCase
         $this::assertInstanceOf(AreaMapEntryMarshaller::class, $marshaller);
     }
 
-    public function testFromQtiComponent()
+    public function testFromQtiComponent(): void
     {
         $shape = QtiShape::RECT;
         $coords = new QtiCoords($shape, [0, 20, 100, 0]);
@@ -39,7 +39,7 @@ class Qti21MarshallerFactyoryTest extends QtiSmTestCase
         $this::assertInstanceOf(AreaMapEntryMarshaller::class, $marshaller);
     }
 
-    public function testFromInvalidObject()
+    public function testFromInvalidObject(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $component = new stdClass();

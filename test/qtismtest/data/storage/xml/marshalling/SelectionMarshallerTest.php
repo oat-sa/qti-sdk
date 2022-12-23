@@ -13,7 +13,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class SelectionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $select = 2;
         $withReplacement = true;
@@ -32,7 +32,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $this::assertEquals(0, $element->childNodes->length);
     }
 
-    public function testMarshallWithExternalData()
+    public function testMarshallWithExternalData(): void
     {
         $select = 2;
         $withReplacement = true;
@@ -53,7 +53,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<selection select="2" withReplacement="true"><som:adaptiveItemSelection xmlns:som="http://www.my-namespace.com"/></selection>', $element->ownerDocument->saveXML($element));
     }
 
-    public function testUnmarshallValid()
+    public function testUnmarshallValid(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<selection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" select="2" withReplacement="true"/>');
@@ -67,7 +67,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $this::assertTrue($component->isWithReplacement());
     }
 
-    public function testUnmarshallValidTwo()
+    public function testUnmarshallValidTwo(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<selection xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" select="2"/>');
@@ -81,7 +81,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $this::assertFalse($component->isWithReplacement());
     }
 
-    public function testUnmarshallValidWithExtension()
+    public function testUnmarshallValidWithExtension(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('
@@ -109,7 +109,7 @@ class SelectionMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1, $component->getXml()->documentElement->getElementsByTagNameNS('http://www.taotesting.com/xsd/ais_v1p0p0', 'qtiMetadataRef')->length);
     }
 
-    public function testUnmarshallInvalid()
+    public function testUnmarshallInvalid(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         // the mandatory 'select' attribute is missing in the following test.

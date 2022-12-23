@@ -42,7 +42,7 @@ class QtiDirectedPair extends QtiPair
      * @param mixed $obj
      * @return bool
      */
-    public function equals($obj)
+    public function equals($obj): bool
     {
         if (is_object($obj) && $obj instanceof self) {
             return $obj->getFirst() === $this->getFirst() && $obj->getSecond() === $this->getSecond();
@@ -57,7 +57,7 @@ class QtiDirectedPair extends QtiPair
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return BaseType::DIRECTED_PAIR;
     }
@@ -68,7 +68,7 @@ class QtiDirectedPair extends QtiPair
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::SINGLE;
     }

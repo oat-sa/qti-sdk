@@ -60,6 +60,7 @@ class Qti22MarshallerFactory extends MarshallerFactory
      * @param array $args
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     protected function instantiateMarshaller(ReflectionClass $class, array $args)
     {
         array_unshift($args, '2.2.0');

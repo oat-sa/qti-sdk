@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ObjectTest extends QtiSmTestCase
 {
-    public function testCreateWrongType()
+    public function testCreateWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'type' argument must be a non-empty string, 'integer' given.");

@@ -37,7 +37,7 @@ class StackTrace extends AbstractCollection implements Stack
      *
      * @return StackTraceItem|null A StackTraceItem object or null if there is nothing to pop.
      */
-    public function pop()
+    public function pop(): ?StackTraceItem
     {
         $data = &$this->getDataPlaceHolder();
         return array_pop($data);
@@ -49,7 +49,7 @@ class StackTrace extends AbstractCollection implements Stack
      * @param StackTraceItem $value A StackTraceItem object.
      * @throws InvalidArgumentException If $value is not a StackTraceItem object.
      */
-    public function push($value)
+    public function push($value): void
     {
         $this->checkType($value);
         $data = &$this->getDataPlaceHolder();
@@ -59,7 +59,7 @@ class StackTrace extends AbstractCollection implements Stack
     /**
      * @param mixed $value
      */
-    public function checkType($value)
+    public function checkType($value): void
     {
         if (!$value instanceof StackTraceItem) {
             $msg = 'The StackTrace class only accepts to store StackTraceItem objects.';
@@ -72,7 +72,7 @@ class StackTrace extends AbstractCollection implements Stack
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $str = '';
         $data = &$this->getDataPlaceHolder();

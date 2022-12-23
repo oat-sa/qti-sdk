@@ -40,7 +40,7 @@ class ExitResponse extends QtiComponent implements ResponseRule
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'exitResponse';
     }
@@ -55,7 +55,7 @@ class ExitResponse extends QtiComponent implements ResponseRule
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

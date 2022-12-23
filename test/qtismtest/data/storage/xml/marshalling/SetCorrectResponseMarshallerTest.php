@@ -16,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SetCorrectResponseMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $variableExpr = new Variable('var1');
         $boolExpr = new BaseValue(BaseType::BOOLEAN, true);
@@ -31,7 +31,7 @@ class SetCorrectResponseMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<setCorrectResponse identifier="tpl1"><match><variable identifier="var1"/><baseValue baseType="boolean">true</baseValue></match></setCorrectResponse>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <setCorrectResponse identifier="tpl1">

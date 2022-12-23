@@ -38,7 +38,7 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller
      * @param QtiComponent $component A NumberSelected object.
      * @return DOMElement The corresponding numberSelected QTI element.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         return parent::marshall($component);
     }
@@ -47,9 +47,9 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller
      * Marshall an numberSelected QTI element in its NumberSelected object equivalent.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent The corresponding NumberSelected object.
+     * @return NumberSelected The corresponding NumberSelected object.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): NumberSelected
     {
         $baseComponent = parent::unmarshall($element);
         $object = new NumberSelected();
@@ -63,7 +63,7 @@ class NumberSelectedMarshaller extends ItemSubsetMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'numberSelected';
     }

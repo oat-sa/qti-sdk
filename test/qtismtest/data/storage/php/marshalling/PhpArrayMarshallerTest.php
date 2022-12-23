@@ -10,7 +10,7 @@ use qtismtest\QtiSmPhpMarshallerTestCase;
  */
 class PhpArrayMarshallerTest extends QtiSmPhpMarshallerTestCase
 {
-    public function testEmptyArray()
+    public function testEmptyArray(): void
     {
         $ctx = $this->createMarshallingContext();
         $marshaller = new PhpArrayMarshaller($ctx, []);
@@ -19,7 +19,7 @@ class PhpArrayMarshallerTest extends QtiSmPhpMarshallerTestCase
         $this::assertEquals("\$array_0 = array();\n", $this->getStream()->getBinary());
     }
 
-    public function testIntegerArray()
+    public function testIntegerArray(): void
     {
         $ctx = $this->createMarshallingContext();
         $arrayMarshaller = new PhpArrayMarshaller($ctx, [0, 1, 2]);

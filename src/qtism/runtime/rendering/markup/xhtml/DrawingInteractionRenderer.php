@@ -64,7 +64,7 @@ class DrawingInteractionRenderer extends InteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
@@ -76,7 +76,7 @@ class DrawingInteractionRenderer extends InteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendChildren($fragment, $component, $base);
 

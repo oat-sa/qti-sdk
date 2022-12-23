@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExitResponseProcessorTest extends QtiSmTestCase
 {
-    public function testExitResponse()
+    public function testExitResponse(): void
     {
         $rule = $this->createComponentFromXml('<exitResponse/>');
         $processor = new ExitResponseProcessor($rule);

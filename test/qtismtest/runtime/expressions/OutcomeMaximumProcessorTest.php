@@ -21,7 +21,7 @@ class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
      * @param OutcomeMaximum $expression
      * @param int $expectedResult
      */
-    public function testOutcomeMaximum(OutcomeMaximum $expression, $expectedResult)
+    public function testOutcomeMaximum(OutcomeMaximum $expression, $expectedResult): void
     {
         $session = $this->getTestSession();
 
@@ -41,7 +41,7 @@ class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
     /**
      * @return array
      */
-    public function outcomeMaximumProvider()
+    public function outcomeMaximumProvider(): array
     {
         return [
             [self::getOutcomeMaximum('SCORE'), null], // NULL values involved, the expression returns NULL systematically.
@@ -64,7 +64,7 @@ class OutcomeMaximumProcessorTest extends QtiSmItemSubsetTestCase
      * @param IdentifierCollection|null $excludeCategories
      * @return OutcomeMaximum
      */
-    protected static function getOutcomeMaximum($outcomeIdentifier, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
+    protected static function getOutcomeMaximum($outcomeIdentifier, $weightIdentifier = '', $sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null): OutcomeMaximum
     {
         $outcomeMaximum = new OutcomeMaximum($outcomeIdentifier);
         $outcomeMaximum->setSectionIdentifier($sectionIdentifier);

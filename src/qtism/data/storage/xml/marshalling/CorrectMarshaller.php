@@ -38,7 +38,7 @@ class CorrectMarshaller extends Marshaller
      * @param QtiComponent $component A Correct object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -51,10 +51,10 @@ class CorrectMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI correct element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Correct object.
+     * @return Correct A Correct object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Correct
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier', 'string')) !== null) {
             return new Correct($identifier);
@@ -67,7 +67,7 @@ class CorrectMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'correct';
     }

@@ -17,7 +17,7 @@ use qtismtest\QtiSmAssessmentItemTestCase;
  */
 class AssessmentItemSessionTemplateTest extends QtiSmAssessmentItemTestCase
 {
-    public function testAssigningScoresAndCorrectResponses()
+    public function testAssigningScoresAndCorrectResponses(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/template_processing.xml');

@@ -38,7 +38,7 @@ class TbodyCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException if $value is not an instance of Tbody.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Tbody) {
             $msg = 'TbodyCollection objects only accept to store Tbody objects.';

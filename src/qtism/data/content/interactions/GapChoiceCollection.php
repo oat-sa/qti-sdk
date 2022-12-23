@@ -38,7 +38,7 @@ class GapChoiceCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of GapChoice.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof GapChoice) {
             $msg = 'GapChoiceCollection objects only accept to store GapChoice objects.';

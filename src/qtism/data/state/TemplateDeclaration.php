@@ -83,7 +83,7 @@ class TemplateDeclaration extends VariableDeclaration
      * @param bool $paramVariable A boolean value.
      * @throws InvalidArgumentException If $paramVariable is not a boolean value.
      */
-    public function setParamVariable($paramVariable)
+    public function setParamVariable($paramVariable): void
     {
         if (is_bool($paramVariable)) {
             $this->paramVariable = $paramVariable;
@@ -99,7 +99,7 @@ class TemplateDeclaration extends VariableDeclaration
      *
      * @return bool
      */
-    public function isParamVariable()
+    public function isParamVariable(): bool
     {
         return $this->paramVariable;
     }
@@ -111,7 +111,7 @@ class TemplateDeclaration extends VariableDeclaration
      * @param bool $mathVariable A boolean value.
      * @throws InvalidArgumentException If $mathVariable is not a boolean value.
      */
-    public function setMathVariable($mathVariable)
+    public function setMathVariable($mathVariable): void
     {
         if (is_bool($mathVariable)) {
             $this->mathVariable = $mathVariable;
@@ -127,7 +127,7 @@ class TemplateDeclaration extends VariableDeclaration
      *
      * @return bool
      */
-    public function isMathVariable()
+    public function isMathVariable(): bool
     {
         return $this->mathVariable;
     }
@@ -135,7 +135,7 @@ class TemplateDeclaration extends VariableDeclaration
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'templateDeclaration';
     }

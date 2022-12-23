@@ -15,7 +15,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class GapImgMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $object = new ObjectElement('http://imagine.us/myimg.png', 'image/png');
         $gapImg = new GapImg('gapImg1', 1, $object, 'my-gap', 'gaps');
@@ -37,7 +37,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshallNoMatchGroup21()
+    public function testMarshallNoMatchGroup21(): void
     {
         // Aims am testing that matchGroup attribute is ignore in
         // a QTI 2.1 context.
@@ -56,7 +56,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
     /*
      * @depends testMarshall21
      */
-    public function testMarshallFixed()
+    public function testMarshallFixed(): void
     {
         $object = new ObjectElement('http://imagine.us/myimg.png', 'image/png');
         $gapImg = new GapImg('gapImg1', 0, $object);
@@ -71,7 +71,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
     /*
      * @depends testMarshall21
      */
-    public function testMarshallObjectLabel()
+    public function testMarshallObjectLabel(): void
     {
         $object = new ObjectElement('http://imagine.us/myimg.png', 'image/png');
         $gapImg = new GapImg('gapImg1', 0, $object);
@@ -83,7 +83,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $this::assertEquals('My Label', $element->getAttribute('objectLabel'));
     }
 
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         $object = new ObjectElement('http://imagine.us/myimg.png', 'image/png');
         $gapImg = new GapImg('gapImg1', 2, $object);
@@ -103,7 +103,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall20
      */
-    public function testMarshallTemplateIdentifier20()
+    public function testMarshallTemplateIdentifier20(): void
     {
         $object = new ObjectElement('http://imagine.us/myimg.png', 'image/png');
         $gapImg = new GapImg('gapImg1', 2, $object);
@@ -115,7 +115,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $this::assertFalse($element->hasAttribute('templateIdentifier'));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
 	        <gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMin="1" matchMax="1" showHide="hide" templateIdentifier="templateIdentifier1">
@@ -144,7 +144,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshallNoMatchGroup21()
+    public function testUnmarshallNoMatchGroup21(): void
     {
         $element = $this->createDOMElement('
 	        <gapImg identifier="gapImg1" matchMax="1" matchGroup="identifier1 identifier2">
@@ -157,7 +157,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $this::assertCount(0, $gapImg->getMatchGroup());
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         $element = $this->createDOMElement('
 	        <gapImg id="my-gap" class="gaps" identifier="gapImg1" matchMax="1" matchMin="1" matchGroup="identifier1 identifier2" templateIdentifier="XTEMPLATE" showHide="hide">
@@ -186,7 +186,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshalMultipleObjects()
+    public function testUnmarshalMultipleObjects(): void
     {
         $element = $this->createDOMElement('
 	        <gapImg identifier="gapImg1" matchMax="1">
@@ -206,7 +206,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshalFixed()
+    public function testUnmarshalFixed(): void
     {
         $element = $this->createDOMElement('
 	        <gapImg identifier="gapImg1" matchMax="1" fixed="true">
@@ -223,7 +223,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshallMissingMatchMax()
+    public function testUnmarshallMissingMatchMax(): void
     {
         $element = $this->createDOMElement('
 	        <gapImg identifier="gapImg1">
@@ -242,7 +242,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall21
      */
-    public function testUnmarshallMissingIdentifier()
+    public function testUnmarshallMissingIdentifier(): void
     {
         $element = $this->createDOMElement('
 	        <gapImg>
@@ -258,7 +258,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $gapImg = $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallMatchMin20()
+    public function testUnmarshallMatchMin20(): void
     {
         $element = $this->createDOMElement('
 	        <gapImg identifier="gapImg1" matchMin="2" matchMax="3">
@@ -273,7 +273,7 @@ class GapImgMarshallerTest extends QtiSmTestCase
         $this::assertEquals(0, $gapImg->getMatchMin());
     }
 
-    public function testUnmarshallTemplateIdentifier20()
+    public function testUnmarshallTemplateIdentifier20(): void
     {
         $element = $this->createDOMElement('
 	        <gapImg identifier="gapImg1" matchMax="3" templateIdentifier="TEMPLATE">

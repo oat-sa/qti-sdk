@@ -38,7 +38,7 @@ class XmlResultDocument extends XmlDocument
      * @param string $versionNumber A QTI Result version number e.g. '2.1.0'.
      * @throws QtiVersionException when version is not supported for QTI Result.
      */
-    public function setVersion(string $versionNumber)
+    public function setVersion(string $versionNumber): void
     {
         $this->version = ResultVersion::create($versionNumber);
     }

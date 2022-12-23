@@ -50,7 +50,7 @@ class PendingResponseStore
      *
      * @return SplObjectStorage
      */
-    protected function getAssessmentItemRefMap()
+    protected function getAssessmentItemRefMap(): SplObjectStorage
     {
         return $this->assessmentItemRefMap;
     }
@@ -60,7 +60,7 @@ class PendingResponseStore
      *
      * @param SplObjectStorage $assessmentItemRefMap
      */
-    protected function setAssessmentItemRefMap(SplObjectStorage $assessmentItemRefMap)
+    protected function setAssessmentItemRefMap(SplObjectStorage $assessmentItemRefMap): void
     {
         $this->assessmentItemRefMap = $assessmentItemRefMap;
     }
@@ -70,7 +70,7 @@ class PendingResponseStore
      *
      * @return PendingResponsesCollection A collection of PendingResponses objects held by the store.
      */
-    public function getAllPendingResponses()
+    public function getAllPendingResponses(): PendingResponsesCollection
     {
         $collection = new PendingResponsesCollection();
         $map = $this->getAssessmentItemRefMap();
@@ -88,7 +88,7 @@ class PendingResponseStore
      *
      * @param PendingResponses $pendingResponses
      */
-    public function addPendingResponses(PendingResponses $pendingResponses)
+    public function addPendingResponses(PendingResponses $pendingResponses): void
     {
         $map = $this->getAssessmentItemRefMap();
         $itemRef = $pendingResponses->getAssessmentItemRef();
@@ -110,7 +110,7 @@ class PendingResponseStore
      * @param int $occurence An occurence number.
      * @return bool
      */
-    public function hasPendingResponses(AssessmentItemRef $assessmentItemRef, $occurence = 0)
+    public function hasPendingResponses(AssessmentItemRef $assessmentItemRef, $occurence = 0): bool
     {
         $map = $this->getAssessmentItemRefMap();
 

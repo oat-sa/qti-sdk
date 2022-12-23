@@ -38,7 +38,7 @@ class RuleProcessingException extends ProcessingException
      *
      * @var int
      */
-    const EXIT_RESPONSE = 10;
+    public const EXIT_RESPONSE = 10;
 
     /**
      * The error code to use when the exitTest rule is invoked
@@ -46,7 +46,7 @@ class RuleProcessingException extends ProcessingException
      *
      * @var int
      */
-    const EXIT_TEST = 11;
+    public const EXIT_TEST = 11;
 
     /**
      * The error code to use when the exitTemplate rule is invoked
@@ -54,7 +54,7 @@ class RuleProcessingException extends ProcessingException
      *
      * @var int
      */
-    const EXIT_TEMPLATE = 12;
+    public const EXIT_TEMPLATE = 12;
 
     /**
      * The error code to use when a templateConstraint rule returned
@@ -62,7 +62,7 @@ class RuleProcessingException extends ProcessingException
      *
      * @var int
      */
-    const TEMPLATE_CONSTRAINT_UNSATISFIED = 13;
+    public const TEMPLATE_CONSTRAINT_UNSATISFIED = 13;
 
     /**
      * Set the source of the error.
@@ -70,7 +70,7 @@ class RuleProcessingException extends ProcessingException
      * @param Processable $source The source of the error.
      * @throws InvalidArgumentException If $source is not an ExpressionProcessor object.
      */
-    public function setSource(Processable $source)
+    public function setSource(Processable $source): void
     {
         if ($source instanceof RuleProcessor) {
             parent::setSource($source);

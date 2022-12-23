@@ -43,7 +43,7 @@ class RoundToMarshaller extends OperatorMarshaller
      * @param array $elements An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI roundTo element.
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -65,7 +65,7 @@ class RoundToMarshaller extends OperatorMarshaller
      * @return QtiComponent A RoundTo object.
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         if (($figures = $this->getDOMElementAttributeAs($element, 'figures', 'string')) !== null) {
             if (!Format::isVariableRef($figures)) {

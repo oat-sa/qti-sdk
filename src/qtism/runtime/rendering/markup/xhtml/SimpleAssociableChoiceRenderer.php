@@ -64,13 +64,13 @@ class SimpleAssociableChoiceRenderer extends ChoiceRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-simpleAssociableChoice');
 
-        $fragment->firstChild->setAttribute('data-match-max', $component->getMatchMax());
-        $fragment->firstChild->setAttribute('data-match-min', $component->getMatchMin());
+        $fragment->firstChild->setAttribute('data-match-max', (string)$component->getMatchMax());
+        $fragment->firstChild->setAttribute('data-match-min', (string)$component->getMatchMin());
 
         if (count($component->getMatchGroup()) > 0) {
             $fragment->firstChild->setAttribute('data-match-group', implode(' ', $component->getMatchGroup()->getArrayCopy()));

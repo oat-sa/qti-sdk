@@ -12,28 +12,28 @@ use qtismtest\QtiSmTestCase;
  */
 class ParamTest extends QtiSmTestCase
 {
-    public function testCreateWrongNameType()
+    public function testCreateWrongNameType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'name' argument must be a string, 'integer' given.");
         $param = new Param(999, 'value', ParamType::DATA);
     }
 
-    public function testCreateWrongValueType()
+    public function testCreateWrongValueType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'value' argument must be a string, 'integer' given.");
         $param = new Param('name', 999, ParamType::DATA);
     }
 
-    public function testCreateNotParamType()
+    public function testCreateNotParamType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'valueType' argument must be a value from the ParamType enumeration, 'boolean' given.");
         $param = new Param('name', 'value', true);
     }
 
-    public function testCreateWrongTypeType()
+    public function testCreateWrongTypeType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'type' argument must be a string, 'integer' given.");

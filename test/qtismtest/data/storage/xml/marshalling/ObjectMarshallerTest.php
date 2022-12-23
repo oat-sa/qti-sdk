@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ObjectMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshallSimple()
+    public function testUnmarshallSimple(): void
     {
         /** @var ObjectElement $object */
         $object = $this->createComponentFromXml('
@@ -48,7 +48,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
         $this::assertFalse($object->hasWidth());
     }
 
-    public function testUnmarshallNoDataAttributeValue()
+    public function testUnmarshallNoDataAttributeValue(): void
     {
         $object = $this->createComponentFromXml('
 	        <object id="flash-movie" data="" type="application/x-shockwave-flash"/>
@@ -60,7 +60,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
         $this::assertEquals('application/x-shockwave-flash', $object->getType());
     }
 
-    public function testUnmarshallWithDimensionPercentAttributesValue()
+    public function testUnmarshallWithDimensionPercentAttributesValue(): void
     {
         /** @var ObjectElement $object */
         $object = $this->createComponentFromXml('
@@ -73,7 +73,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
         $this::assertEquals('100%', $object->getWidth());
     }
 
-    public function testUnmarshallWithDimensionIntegerAttributesValue()
+    public function testUnmarshallWithDimensionIntegerAttributesValue(): void
     {
         /** @var ObjectElement $object */
         $object = $this->createComponentFromXml('
@@ -86,7 +86,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
         $this::assertEquals('1000', $object->getWidth());
     }
 
-    public function testMarshallSimple()
+    public function testMarshallSimple(): void
     {
         $param1 = new Param('movie', 'movie.swf', ParamType::REF);
         $param2 = new Param('quality', 'high', ParamType::DATA);
@@ -100,7 +100,7 @@ class ObjectMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<object data="http://mywebsite.com/movie.swf" type="application/x-shockwave-flash" id="flash-movie"><param name="movie" value="movie.swf" valuetype="REF"/><param name="quality" value="high" valuetype="DATA"/></object>', $dom->saveXml($element));
     }
 
-    public function testMarshallNoDataAttributeValue()
+    public function testMarshallNoDataAttributeValue(): void
     {
         $object = new ObjectElement('', 'application/x-shockwave-flash', 'flash-movie');
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($object)->marshall($object);

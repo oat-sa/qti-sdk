@@ -42,7 +42,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
         $version = $this->getVersion();
@@ -66,11 +66,11 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
      * Unmarshall a DOMElement object corresponding to a QTI templateDeclaration element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A TemplateDeclaration object.
+     * @return TemplateDeclaration A TemplateDeclaration object.
      * @throws UnmarshallingException
      * @throws MarshallerNotFoundException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): TemplateDeclaration
     {
         try {
             $baseComponent = parent::unmarshall($element);
@@ -105,7 +105,7 @@ class TemplateDeclarationMarshaller extends VariableDeclarationMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'templateDeclaration';
     }

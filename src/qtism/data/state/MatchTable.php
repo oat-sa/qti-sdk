@@ -60,7 +60,7 @@ class MatchTable extends LookupTable
      *
      * @return MatchTableEntryCollection A collection of MatchTableEntry objects.
      */
-    public function getMatchTableEntries()
+    public function getMatchTableEntries(): MatchTableEntryCollection
     {
         return $this->matchTableEntries;
     }
@@ -71,7 +71,7 @@ class MatchTable extends LookupTable
      * @param MatchTableEntryCollection $matchTableEntries A collection of MatchTableEntry objects.
      * @throws InvalidArgumentException If $matchTableEntries is an empty collection.
      */
-    public function setMatchTableEntries(MatchTableEntryCollection $matchTableEntries)
+    public function setMatchTableEntries(MatchTableEntryCollection $matchTableEntries): void
     {
         if (count($matchTableEntries) > 0) {
             $this->matchTableEntries = $matchTableEntries;
@@ -84,7 +84,7 @@ class MatchTable extends LookupTable
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'matchTable';
     }
@@ -92,7 +92,7 @@ class MatchTable extends LookupTable
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
             parent::getComponents()->getArrayCopy(),

@@ -81,7 +81,7 @@ class EndAttemptInteraction extends InlineInteraction
      * @param string $title A string.
      * @throws InvalidArgumentException If $title is not a string.
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         if (is_string($title)) {
             $this->title = $title;
@@ -97,7 +97,7 @@ class EndAttemptInteraction extends InlineInteraction
      *
      * @return string A non-empty string.
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -105,7 +105,7 @@ class EndAttemptInteraction extends InlineInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -113,7 +113,7 @@ class EndAttemptInteraction extends InlineInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'endAttemptInteraction';
     }

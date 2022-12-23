@@ -39,7 +39,7 @@ class Time
      * @param DateTime $time2
      * @return int a number of seconds.
      */
-    public static function timeDiffSeconds(DateTime $time1, DateTime $time2)
+    public static function timeDiffSeconds(DateTime $time1, DateTime $time2): int
     {
         $interval = $time1->diff($time2);
 
@@ -52,7 +52,7 @@ class Time
      * @param DateInterval $interval
      * @return int
      */
-    public static function totalSeconds(DateInterval $interval)
+    public static function totalSeconds(DateInterval $interval): int
     {
         $sYears = 31536000 * $interval->y;
         $sMonths = 30 * 24 * 3600 * $interval->m;
@@ -72,7 +72,7 @@ class Time
      * @param DateTime $time
      * @return DateTime
      */
-    public static function toUtc(DateTime $time)
+    public static function toUtc(DateTime $time): DateTime
     {
         $newTime = clone $time;
         $newTime->setTimezone(new DateTimeZone('UTC'));

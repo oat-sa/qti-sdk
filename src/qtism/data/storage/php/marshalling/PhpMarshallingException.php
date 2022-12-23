@@ -36,7 +36,7 @@ class PhpMarshallingException extends Exception implements QtiSdkPackageContentE
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * Error code to use when a runtime error occurs
@@ -44,7 +44,7 @@ class PhpMarshallingException extends Exception implements QtiSdkPackageContentE
      *
      * @var int
      */
-    const RUNTIME = 1;
+    public const RUNTIME = 1;
 
     /**
      * Error code to use while dealing with the stream where
@@ -52,7 +52,7 @@ class PhpMarshallingException extends Exception implements QtiSdkPackageContentE
      *
      * @var int
      */
-    const STREAM = 2;
+    public const STREAM = 2;
 
     /**
      * Create a new PhpMarshallingException object.

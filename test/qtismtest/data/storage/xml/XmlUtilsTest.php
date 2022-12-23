@@ -19,7 +19,7 @@ class XmlUtilsTest extends QtiSmTestCase
      * @param string $expectedXmlString
      * @dataProvider anonimizeElementProvider
      */
-    public function testAnonimizeElement($originalXmlString, $expectedXmlString)
+    public function testAnonimizeElement($originalXmlString, $expectedXmlString): void
     {
         $elt = $this->createDOMElement($originalXmlString);
         $newElt = Utils::anonimizeElement($elt);
@@ -30,7 +30,7 @@ class XmlUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function anonimizeElementProvider()
+    public function anonimizeElementProvider(): array
     {
         return [
             [
@@ -57,7 +57,7 @@ class XmlUtilsTest extends QtiSmTestCase
      * @param string $namespaceUri
      * @param bool|string $expectedLocation
      */
-    public function testGetXsdLocation($file, $namespaceUri, $expectedLocation)
+    public function testGetXsdLocation($file, $namespaceUri, $expectedLocation): void
     {
         $document = new DOMDocument('1.0', 'UTF-8');
         $document->load($file);
@@ -69,7 +69,7 @@ class XmlUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function getXsdLocationProvider()
+    public function getXsdLocationProvider(): array
     {
         return [
             // Valid.
@@ -133,7 +133,7 @@ class XmlUtilsTest extends QtiSmTestCase
         ];
     }
 
-    public function testChangeNamespaceElementName()
+    public function testChangeNamespaceElementName(): void
     {
         $foo = $this->createDOMElement('<foo xmlns:bar="http://baz" bar:attr="foo"/>');
         $foo = Utils::changeElementName($foo, 'bar');
@@ -147,7 +147,7 @@ class XmlUtilsTest extends QtiSmTestCase
      * @param bool $isAttribute
      * @param string $expected
      */
-    public function testEscapeXmlSpecialChars($str, $isAttribute, $expected)
+    public function testEscapeXmlSpecialChars($str, $isAttribute, $expected): void
     {
         $this::assertEquals($expected, Utils::escapeXmlSpecialChars($str, $isAttribute));
     }
@@ -155,7 +155,7 @@ class XmlUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function escapeXmlSpecialCharsProvider()
+    public function escapeXmlSpecialCharsProvider(): array
     {
         return [
             ['\'"&<>', false, '&apos;&quot;&amp;&lt;&gt;'],
@@ -171,7 +171,7 @@ class XmlUtilsTest extends QtiSmTestCase
      * @param string $qtiName
      * @param string $expected
      */
-    public function testWebComponentFriendlyAttributeName($qtiName, $expected)
+    public function testWebComponentFriendlyAttributeName($qtiName, $expected): void
     {
         $this::assertEquals($expected, Utils::webComponentFriendlyAttributeName($qtiName));
     }
@@ -179,7 +179,7 @@ class XmlUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function webComponentFriendlyAttributeNameProvider()
+    public function webComponentFriendlyAttributeNameProvider(): array
     {
         return [
             ['minChoices', 'min-choices'],
@@ -192,7 +192,7 @@ class XmlUtilsTest extends QtiSmTestCase
      * @param string $qtiName
      * @param string $expected
      */
-    public function testWebComponentFriendlyClassName($qtiName, $expected)
+    public function testWebComponentFriendlyClassName($qtiName, $expected): void
     {
         $this::assertEquals($expected, Utils::webComponentFriendlyClassName($qtiName));
     }
@@ -200,7 +200,7 @@ class XmlUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function webComponentFriendlyClassNameProvider()
+    public function webComponentFriendlyClassNameProvider(): array
     {
         return [
             ['choiceInteraction', 'qti-choice-interaction'],
@@ -214,7 +214,7 @@ class XmlUtilsTest extends QtiSmTestCase
      * @param string $wcName
      * @param string $expected
      */
-    public function testQtiFriendlyName($wcName, $expected)
+    public function testQtiFriendlyName($wcName, $expected): void
     {
         $this::assertEquals($expected, Utils::qtiFriendlyName($wcName));
     }
@@ -222,7 +222,7 @@ class XmlUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function qtiFriendlyNameProvider()
+    public function qtiFriendlyNameProvider(): array
     {
         return [
             ['qti-choice-interaction', 'choiceInteraction'],
@@ -238,7 +238,7 @@ class XmlUtilsTest extends QtiSmTestCase
      * @param string $datatype
      * @param mixed $expected
      */
-    public function testGetDOMElementAttributeAs(DOMElement $element, $attribute, $datatype, $expected)
+    public function testGetDOMElementAttributeAs(DOMElement $element, $attribute, $datatype, $expected): void
     {
         $result = Utils::getDOMElementAttributeAs($element, $attribute, $datatype);
         $this::assertSame($expected, $result);
@@ -247,7 +247,7 @@ class XmlUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function getDOMElementAttributeAsProvider()
+    public function getDOMElementAttributeAsProvider(): array
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<foo string="str&amp;str" integer="1" float="1.1" double="1.1" boolean="true" baseType="duration" wrongEnumValue="blah"/>');
@@ -272,7 +272,7 @@ class XmlUtilsTest extends QtiSmTestCase
      * @param string $value
      * @param mixed $expected
      */
-    public function testSetDOMElementAttribute($attribute, $value, $expected)
+    public function testSetDOMElementAttribute($attribute, $value, $expected): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $element = $dom->createElement('foo');
@@ -287,7 +287,7 @@ class XmlUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function setDOMElementAttributeProvider()
+    public function setDOMElementAttributeProvider(): array
     {
         return [
             ['string', 'str&str', '<foo string="str&amp;str"/>'],
@@ -299,7 +299,7 @@ class XmlUtilsTest extends QtiSmTestCase
         ];
     }
 
-    public function testGetChildElementsByTagName()
+    public function testGetChildElementsByTagName(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
 
@@ -311,7 +311,7 @@ class XmlUtilsTest extends QtiSmTestCase
         $this::assertCount(2, Utils::getChildElementsByTagName($element, 'child'));
     }
 
-    public function testGetChildElementsByTagNameMultiple()
+    public function testGetChildElementsByTagNameMultiple(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<parent><child/><child/><grandChild/><uncle/></parent>');
@@ -320,7 +320,7 @@ class XmlUtilsTest extends QtiSmTestCase
         $this::assertCount(3, Utils::getChildElementsByTagName($element, ['child', 'grandChild']));
     }
 
-    public function testGetChildElementsByTagNameEmpty()
+    public function testGetChildElementsByTagNameEmpty(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
 
@@ -332,7 +332,7 @@ class XmlUtilsTest extends QtiSmTestCase
         $this::assertCount(0, Utils::getChildElementsByTagName($element, 'child'));
     }
 
-    public function testFindCustomNamespaces()
+    public function testFindCustomNamespaces(): void
     {
         $xml = ('<?xml version="1.0" encoding="UTF-8"?>
 <assessmentItem
@@ -391,7 +391,7 @@ class XmlUtilsTest extends QtiSmTestCase
         );
     }
 
-    public function testremoveAllButFirstOccurrence()
+    public function testremoveAllButFirstOccurrence(): void
     {
         $subject = 'abc 12 abc 345abc678abc';
         $toRemove = 'abc';

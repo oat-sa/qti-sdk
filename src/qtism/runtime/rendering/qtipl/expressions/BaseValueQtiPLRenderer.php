@@ -39,6 +39,7 @@ class BaseValueQtiPLRenderer extends AbstractQtiPLRenderer
      * @param mixed $something Something to render into another consitution.
      * @return mixed The rendered component into another constitution.
      */
+    #[\ReturnTypeWillChange]
     public function render($something)
     {
         switch ($something->getBaseType()) {

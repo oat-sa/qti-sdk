@@ -39,7 +39,7 @@ class FileHash implements QtiFile, JsonSerializable
      * Key to use in json payload to trigger the storage of a file hash instead
      * of a hash.
      */
-    const FILE_HASH_KEY = 'fileHash';
+    public const FILE_HASH_KEY = 'fileHash';
 
     /**
      * The id of the file on the persistent storage.
@@ -116,7 +116,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @param string $id
      */
-    protected function setId($id)
+    protected function setId($id): void
     {
         $this->id = $id;
     }
@@ -126,7 +126,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -136,7 +136,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @param string $mimeType
      */
-    protected function setMimeType($mimeType)
+    protected function setMimeType($mimeType): void
     {
         $this->mimeType = $mimeType;
     }
@@ -146,7 +146,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @return string
      */
-    public function getMimeType()
+    public function getMimeType(): string
     {
         return $this->mimeType;
     }
@@ -156,7 +156,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @return string
      */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->filename;
     }
@@ -166,7 +166,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @param string $filename
      */
-    protected function setFilename($filename)
+    protected function setFilename($filename): void
     {
         $this->filename = $filename;
     }
@@ -174,7 +174,7 @@ class FileHash implements QtiFile, JsonSerializable
     /**
      * Get the sequence of bytes composing the hash of the file.
      */
-    public function getData()
+    public function getData(): string
     {
         return $this->getHash();
     }
@@ -183,7 +183,7 @@ class FileHash implements QtiFile, JsonSerializable
      * Returns nothing because the content of the file is stored externally
      * and thus not accessible in here.
      */
-    public function getStream()
+    public function getStream(): void
     {
     }
 
@@ -192,7 +192,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @return string
      */
-    public function getHash()
+    public function getHash(): string
     {
         return $this->hash;
     }
@@ -202,7 +202,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @param string $hash
      */
-    protected function setHash($hash)
+    protected function setHash($hash): void
     {
         $this->hash = $hash;
     }
@@ -212,7 +212,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::SINGLE;
     }
@@ -222,7 +222,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return BaseType::FILE;
     }
@@ -232,7 +232,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @return bool
      */
-    public function hasFilename()
+    public function hasFilename(): bool
     {
         return true;
     }
@@ -245,7 +245,7 @@ class FileHash implements QtiFile, JsonSerializable
      * @param mixed $obj
      * @return bool
      */
-    public function equals($obj)
+    public function equals($obj): bool
     {
         if (!$obj instanceof self) {
             return false;
@@ -262,7 +262,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @return string
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->getId();
     }
@@ -274,7 +274,7 @@ class FileHash implements QtiFile, JsonSerializable
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getFilename();
     }

@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,7 +47,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
         $this->subject = new OutcomeDeclaration('SCORE', BaseType::FLOAT, Cardinality::SINGLE);
     }
 
-    public function testSetInterpretationWrongType()
+    public function testSetInterpretationWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Interpretation must be a string, 'integer' given.");
@@ -53,7 +55,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
         $this->subject->setInterpretation(999);
     }
 
-    public function testSetLongInterpretationWrongType()
+    public function testSetLongInterpretationWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("LongInterpretation must be a string, 'integer' given.");
@@ -61,7 +63,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
         $this->subject->setLongInterpretation(999);
     }
 
-    public function testSetNormalMinimumWrongType()
+    public function testSetNormalMinimumWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("NormalMinimum must be a number or (boolean) false, 'string' given.");
@@ -69,7 +71,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
         $this->subject->setNormalMinimum('string');
     }
 
-    public function testSetNormalMaximumWrongType()
+    public function testSetNormalMaximumWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("NormalMaximum must be a number or (boolean) false, 'string' given.");
@@ -77,7 +79,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
         $this->subject->setNormalMaximum('string');
     }
 
-    public function testSetMasteryValueWrongType()
+    public function testSetMasteryValueWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("MasteryValue must be a number or (boolean) false, 'string' given.");
@@ -85,7 +87,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
         $this->subject->setMasteryValue('string');
     }
 
-    public function getComponentsWithLookupTable()
+    public function getComponentsWithLookupTable(): void
     {
         $this->subject->setLookupTable(
             new MatchTable(
@@ -100,7 +102,7 @@ class OutcomeDeclarationTest extends QtiSmTestCase
         $this::assertInstanceOf(MatchTable::class, $last);
     }
 
-    public function testExternalScoredAccessors()
+    public function testExternalScoredAccessors(): void
     {
         $this::assertFalse($this->subject->isExternallyScored());
         $this::assertFalse($this->subject->isScoredByHuman());

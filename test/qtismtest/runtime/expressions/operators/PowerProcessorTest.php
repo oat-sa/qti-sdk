@@ -19,7 +19,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class PowerProcessorTest extends QtiSmTestCase
 {
-    public function testPowerNormal()
+    public function testPowerNormal(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(0), new QtiInteger(0)]);
@@ -64,7 +64,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $this::assertEquals(26515, (int)$result->getValue());
     }
 
-    public function testOverflow()
+    public function testOverflow(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(2), new QtiInteger(100000000)]);
@@ -73,7 +73,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testUnderflow()
+    public function testUnderflow(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(-2), new QtiInteger(333333333)]);
@@ -82,7 +82,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testInfinite()
+    public function testInfinite(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiFloat(INF), new QtiFloat(INF)]);
@@ -91,7 +91,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $this::assertTrue(is_infinite($result->getValue()));
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         // exp as a float is NaN when negative base is used.
         $expression = $this->createFakeExpression();
@@ -113,7 +113,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(-20), new QtiString('String!')]);
@@ -122,7 +122,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(-20), new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)])]);
@@ -131,7 +131,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(-20)]);
@@ -139,7 +139,7 @@ class PowerProcessorTest extends QtiSmTestCase
         $processor = new PowerProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(-20), new QtiInteger(20), new QtiInteger(30)]);
@@ -151,7 +151,7 @@ class PowerProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<power>

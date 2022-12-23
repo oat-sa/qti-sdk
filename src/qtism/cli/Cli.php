@@ -59,7 +59,7 @@ abstract class Cli
      *
      * @var int
      */
-    const EXIT_SUCCESS = 0;
+    public const EXIT_SUCCESS = 0;
 
     /**
      * POSIX generic exit status (1).
@@ -69,7 +69,7 @@ abstract class Cli
      *
      * @var int
      */
-    const EXIT_FAILURE = 1;
+    public const EXIT_FAILURE = 1;
 
     /**
      * An Arguments object (from php-cli-tools) representing the input
@@ -83,7 +83,7 @@ abstract class Cli
     /**
      * Main CLI entry point.
      */
-    public static function main()
+    public static function main(): void
     {
         $cli = new static();
 
@@ -122,7 +122,7 @@ abstract class Cli
      * @return Arguments An Arguments object (from php-cli-tools).
      * @see https://github.com/wp-cli/php-cli-tools The PHP CLI Tools github repository.
      */
-    abstract protected function setupArguments();
+    abstract protected function setupArguments(): Arguments;
 
     /**
      * Check the arguments given to the CLI Module.
@@ -141,7 +141,7 @@ abstract class Cli
      *
      * @param Arguments $arguments An Arguments object from php-cli-tools.
      */
-    private function setArguments(Arguments $arguments)
+    private function setArguments(Arguments $arguments): void
     {
         $this->arguments = $arguments;
     }
@@ -151,7 +151,7 @@ abstract class Cli
      *
      * @return Arguments An Arguments object from php-cli-tools.
      */
-    protected function getArguments()
+    protected function getArguments(): Arguments
     {
         return $this->arguments;
     }
@@ -163,7 +163,7 @@ abstract class Cli
      *
      * @param string $message The error message.
      */
-    protected function error($message)
+    protected function error($message): void
     {
         $this->out("%r${message}%n", true);
     }
@@ -176,7 +176,7 @@ abstract class Cli
      *
      * @param string $message The success message.
      */
-    protected function success($message)
+    protected function success($message): void
     {
         if ($this->isVerbose() === true) {
             $this->out("%g${message}%n", true);
@@ -192,7 +192,7 @@ abstract class Cli
      *
      * @param string $message The error message.
      */
-    protected function fail($message)
+    protected function fail($message): void
     {
         $this->error($message);
         exit(self::EXIT_FAILURE);
@@ -201,7 +201,7 @@ abstract class Cli
     /**
      * @param $longName
      */
-    protected function missingArgument($longName)
+    protected function missingArgument($longName): void
     {
         $arguments = $this->getArguments();
         $options = $arguments->getOptions();
@@ -225,7 +225,7 @@ abstract class Cli
      *
      * @param string $message An information message.
      */
-    protected function info($message)
+    protected function info($message): void
     {
         if ($this->isVerbose() === true) {
             $this->out("%w${message}%n", true);
@@ -238,7 +238,7 @@ abstract class Cli
      * @param string $data The data to go in output.
      * @param bool $newLine Whether to display a new line after $data.
      */
-    protected function out($data, $newLine = true)
+    protected function out($data, $newLine = true): void
     {
         CliTools\out($data);
 
@@ -255,7 +255,7 @@ abstract class Cli
      *
      * @return bool
      */
-    protected function isVerbose()
+    protected function isVerbose(): bool
     {
         $arguments = $this->getArguments();
         return $this->arguments['verbose'] === true;

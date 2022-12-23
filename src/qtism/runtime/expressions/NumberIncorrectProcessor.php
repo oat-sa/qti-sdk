@@ -46,7 +46,7 @@ class NumberIncorrectProcessor extends ItemSubsetProcessor
      * @return QtiInteger The number of items in the given sub-set for which at least one of the defined response does not match its associated correct response.
      * @throws ExpressionProcessingException
      */
-    public function process()
+    public function process(): QtiInteger
     {
         $testSession = $this->getState();
         $itemSubset = $this->getItemSubset();
@@ -70,7 +70,7 @@ class NumberIncorrectProcessor extends ItemSubsetProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return NumberIncorrect::class;
     }

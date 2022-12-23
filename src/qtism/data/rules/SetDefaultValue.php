@@ -73,7 +73,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
      * @param string $identifier A valid QTI identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
@@ -89,7 +89,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -99,7 +99,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
      *
      * @param Expression $expression An Expression object.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -109,7 +109,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
      *
      * @return Expression An Expression object.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -117,7 +117,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'setDefaultValue';
     }
@@ -125,7 +125,7 @@ class SetDefaultValue extends QtiComponent implements TemplateRule
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection([$this->getExpression()]);
     }

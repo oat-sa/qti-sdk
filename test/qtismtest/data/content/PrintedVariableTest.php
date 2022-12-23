@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class PrintedVariableTest extends QtiSmTestCase
 {
-    public function testCreatePrintedVariableWrongIdentifier()
+    public function testCreatePrintedVariableWrongIdentifier(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'identifier' argument must be a valid QTI identifier, '999' given.");
@@ -23,7 +23,7 @@ class PrintedVariableTest extends QtiSmTestCase
      * @dataProvider tooLongStrings
      * @param string $string
      */
-    public function testSetFormatWrongType(string $string)
+    public function testSetFormatWrongType(string $string): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'format' argument must be a string with at most 256 characters, '" . $string . "' given.");
@@ -32,7 +32,7 @@ class PrintedVariableTest extends QtiSmTestCase
         $printedVariable->setFormat($string);
     }
 
-    public function testSetPowerFormWrongType()
+    public function testSetPowerFormWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'powerForm' argument must be a boolean value, 'integer' given.");
@@ -41,7 +41,7 @@ class PrintedVariableTest extends QtiSmTestCase
         $printedVariable->setPowerForm(999);
     }
 
-    public function testSetBaseWrongType()
+    public function testSetBaseWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'base' argument must be an integer or a variable reference, '999.9' given.");
@@ -50,7 +50,7 @@ class PrintedVariableTest extends QtiSmTestCase
         $printedVariable->setBase(999.9);
     }
 
-    public function testSetIndexWrongType()
+    public function testSetIndexWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'index' argument must be an integer or a variable reference, '999.9' given.");

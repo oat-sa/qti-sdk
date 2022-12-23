@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ImgTest extends QtiSmTestCase
 {
-    public function testCreateInvalidAlt()
+    public function testCreateInvalidAlt(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'alt' argument must be a string, 'integer' given.");

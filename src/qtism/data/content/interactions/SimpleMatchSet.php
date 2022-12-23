@@ -56,7 +56,7 @@ class SimpleMatchSet extends QtiComponent
      *
      * @param SimpleAssociableChoiceCollection $simpleAssociableChoices
      */
-    public function setSimpleAssociableChoices(SimpleAssociableChoiceCollection $simpleAssociableChoices)
+    public function setSimpleAssociableChoices(SimpleAssociableChoiceCollection $simpleAssociableChoices): void
     {
         $this->simpleAssociableChoices = $simpleAssociableChoices;
     }
@@ -66,7 +66,7 @@ class SimpleMatchSet extends QtiComponent
      *
      * @return SimpleAssociableChoiceCollection
      */
-    public function getSimpleAssociableChoices()
+    public function getSimpleAssociableChoices(): SimpleAssociableChoiceCollection
     {
         return $this->simpleAssociableChoices;
     }
@@ -74,7 +74,7 @@ class SimpleMatchSet extends QtiComponent
     /**
      * @return SimpleAssociableChoiceCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getSimpleAssociableChoices();
     }
@@ -82,7 +82,7 @@ class SimpleMatchSet extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'simpleMatchSet';
     }

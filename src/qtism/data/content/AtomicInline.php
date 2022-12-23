@@ -51,7 +51,7 @@ abstract class AtomicInline extends BodyElement implements FlowStatic, InlineSta
      *
      * @return QtiComponentCollection An empty QtiComponentCollection.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

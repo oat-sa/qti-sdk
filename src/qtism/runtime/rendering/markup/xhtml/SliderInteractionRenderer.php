@@ -67,21 +67,27 @@ class SliderInteractionRenderer extends InteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-sliderInteraction');
         $this->additionalUserClass(($component->getOrientation() === Orientation::HORIZONTAL) ? 'qti-horizontal' : 'qti-vertical');
 
-        $fragment->firstChild->setAttribute('data-lower-bound', $component->getLowerBound());
-        $fragment->firstChild->setAttribute('data-upper-bound', $component->getUpperBound());
-        $fragment->firstChild->setAttribute('data-step-label', ($component->mustStepLabel() === true) ? 'true' : 'false');
-        $fragment->firstChild->setAttribute('data-orientation', ($component->getOrientation() === Orientation::VERTICAL) ? 'vertical' : 'horizontal');
+        $fragment->firstChild->setAttribute('data-lower-bound', (string)$component->getLowerBound());
+        $fragment->firstChild->setAttribute('data-upper-bound', (string)$component->getUpperBound());
+        $fragment->firstChild->setAttribute(
+            'data-step-label',
+            ($component->mustStepLabel() === true) ? 'true' : 'false'
+        );
+        $fragment->firstChild->setAttribute(
+            'data-orientation',
+            ($component->getOrientation() === Orientation::VERTICAL) ? 'vertical' : 'horizontal'
+        );
         $fragment->firstChild->setAttribute('data-reverse', ($component->mustReverse() === true) ? 'true' : 'false');
 
         if ($component->hasStep() === true) {
-            $fragment->firstChild->setAttribute('data-step', $component->getStep());
+            $fragment->firstChild->setAttribute('data-step', (string)$component->getStep());
         }
     }
 
@@ -90,7 +96,7 @@ class SliderInteractionRenderer extends InteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendChildren($fragment, $component, $base);
 

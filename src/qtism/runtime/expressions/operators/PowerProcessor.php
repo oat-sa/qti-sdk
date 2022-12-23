@@ -47,7 +47,7 @@ class PowerProcessor extends OperatorProcessor
      * @return QtiFloat|null A float value that corresponds to the first expression raised to the power of the second or NULL if the either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -103,7 +103,7 @@ class PowerProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Power::class;
     }

@@ -23,8 +23,8 @@
 
 namespace qtism\runtime\rules;
 
-use qtism\runtime\common\TemplateVariable;
 use qtism\data\rules\SetTemplateValue;
+use qtism\runtime\common\TemplateVariable;
 
 /**
  * Class SetTemplateValueProcessor
@@ -34,15 +34,15 @@ class SetTemplateValueProcessor extends SetValueProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return SetTemplateValue::class;
     }
 
     /**
-     * @return mixed|string
+     * @inheritDoc
      */
-    protected function getVariableType()
+    protected function getVariableType(): string
     {
         return TemplateVariable::class;
     }

@@ -36,7 +36,7 @@ class ItemSessionControlMarshaller extends Marshaller
      * @param QtiComponent $component
      * @return DOMElement
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -55,7 +55,7 @@ class ItemSessionControlMarshaller extends Marshaller
      * @param DOMElement $element
      * @return ItemSessionControl
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): ItemSessionControl
     {
         $object = new ItemSessionControl();
 
@@ -93,7 +93,7 @@ class ItemSessionControlMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'itemSessionControl';
     }

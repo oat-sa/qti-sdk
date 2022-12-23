@@ -81,7 +81,7 @@ class Container extends AbstractCollection implements Comparable
     /**
      * @param mixed $value
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!RuntimeUtils::isRuntimeCompliant($value)) {
             RuntimeUtils::throwTypingError($value);
@@ -95,7 +95,7 @@ class Container extends AbstractCollection implements Comparable
      *
      * @return bool Whether the container has to be considered as NULL.
      */
-    public function isNull()
+    public function isNull(): bool
     {
         $data = $this->getDataPlaceHolder();
         return empty($data);
@@ -106,7 +106,7 @@ class Container extends AbstractCollection implements Comparable
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::MULTIPLE;
     }
@@ -122,7 +122,7 @@ class Container extends AbstractCollection implements Comparable
      * @param mixed $obj A value to compare to this one.
      * @return bool Whether the container is equal to $obj.
      */
-    public function equals($obj)
+    public function equals($obj): bool
     {
         if (is_object($obj) && $obj instanceof static && count($obj) === count($this)) {
             foreach (array_keys($this->getDataPlaceHolder()) as $key) {
@@ -151,7 +151,7 @@ class Container extends AbstractCollection implements Comparable
      * @param mixed $obj The object you want to find the number of occurences in the container.
      * @return int A number of occurences.
      */
-    public function occurences($obj)
+    public function occurences($obj): int
     {
         $occurences = 0;
 
@@ -183,7 +183,7 @@ class Container extends AbstractCollection implements Comparable
      * @return Container A Container object populated with the values found in $valueCollection.
      * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type.
      */
-    public static function createFromDataModel(ValueCollection $valueCollection)
+    public static function createFromDataModel(ValueCollection $valueCollection): Container
     {
         $container = new static();
         foreach ($valueCollection as $value) {
@@ -202,7 +202,7 @@ class Container extends AbstractCollection implements Comparable
      *
      * @return array An array with two entries which are respectively to character lower and upper bounds.
      */
-    protected function getToStringBounds()
+    protected function getToStringBounds(): array
     {
         return ['[', ']'];
     }
@@ -212,7 +212,7 @@ class Container extends AbstractCollection implements Comparable
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $bounds = $this->getToStringBounds();
         $data = &$this->getDataPlaceHolder();
@@ -256,7 +256,7 @@ class Container extends AbstractCollection implements Comparable
      *
      * @return Container
      */
-    public function distinct()
+    public function distinct(): Container
     {
         $container = clone $this;
         $newDataPlaceHolder = [];

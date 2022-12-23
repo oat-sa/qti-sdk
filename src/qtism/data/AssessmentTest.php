@@ -165,7 +165,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return string A QTI Identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -176,7 +176,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * @param string $identifier A QTI Identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
@@ -192,7 +192,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return string A title.
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -203,7 +203,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * @param string $title A title.
      * @throws InvalidArgumentException If $title is not a string.
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         if (is_string($title)) {
             $this->title = $title;
@@ -219,7 +219,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return string A tool name or empty string if not specified.
      */
-    public function getToolName()
+    public function getToolName(): string
     {
         return $this->toolName;
     }
@@ -230,7 +230,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * @param string $toolName A tool name.
      * @throws InvalidArgumentException If $toolName is not a string.
      */
-    public function setToolName($toolName)
+    public function setToolName($toolName): void
     {
         if (is_string($toolName)) {
             $this->toolName = $toolName;
@@ -246,7 +246,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return string A tool version.
      */
-    public function getToolVersion()
+    public function getToolVersion(): string
     {
         return $this->toolVersion;
     }
@@ -258,7 +258,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * @param string $toolVersion A tool version.
      * @throws InvalidArgumentException If $toolVersion is not a string.
      */
-    public function setToolVersion($toolVersion)
+    public function setToolVersion($toolVersion): void
     {
         if (is_string($toolVersion)) {
             $this->toolVersion = $toolVersion;
@@ -273,7 +273,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return OutcomeDeclarationCollection A collection of OutcomeDeclaration objects.
      */
-    public function getOutcomeDeclarations()
+    public function getOutcomeDeclarations(): OutcomeDeclarationCollection
     {
         return $this->outcomeDeclarations;
     }
@@ -283,7 +283,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @param OutcomeDeclarationCollection $outcomeDeclarations A collection of OutcomeDeclaration objects.
      */
-    public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations)
+    public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations): void
     {
         $this->outcomeDeclarations = $outcomeDeclarations;
     }
@@ -293,7 +293,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return TimeLimits A TimeLimits object or null value if not specified.
      */
-    public function getTimeLimits()
+    public function getTimeLimits(): ?TimeLimits
     {
         return $this->timeLimits;
     }
@@ -303,7 +303,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @param TimeLimits $timeLimits A TimeLimits object.
      */
-    public function setTimeLimits(TimeLimits $timeLimits = null)
+    public function setTimeLimits(TimeLimits $timeLimits = null): void
     {
         $this->timeLimits = $timeLimits;
     }
@@ -313,7 +313,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return TestPartCollection A collection of TestPart objects.
      */
-    public function getTestParts()
+    public function getTestParts(): TestPartCollection
     {
         return $this->testParts;
     }
@@ -323,7 +323,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @param TestPartCollection $testParts A collection of TestPart objects.
      */
-    public function setTestParts(TestPartCollection $testParts)
+    public function setTestParts(TestPartCollection $testParts): void
     {
         $this->testParts = $testParts;
     }
@@ -334,7 +334,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return OutcomeProcessing An OutcomeProcessing object or null if not specified.
      */
-    public function getOutcomeProcessing()
+    public function getOutcomeProcessing(): ?OutcomeProcessing
     {
         return $this->outcomeProcessing;
     }
@@ -344,7 +344,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @param OutcomeProcessing $outcomeProcessing An OutcomeProcessing object.
      */
-    public function setOutcomeProcessing(OutcomeProcessing $outcomeProcessing = null)
+    public function setOutcomeProcessing(OutcomeProcessing $outcomeProcessing = null): void
     {
         $this->outcomeProcessing = $outcomeProcessing;
     }
@@ -354,7 +354,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return bool
      */
-    public function hasOutcomeProcessing()
+    public function hasOutcomeProcessing(): bool
     {
         return $this->getOutcomeProcessing() !== null;
     }
@@ -364,7 +364,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return TestFeedbackCollection A collection of TestFeedback objects.
      */
-    public function getTestFeedbacks()
+    public function getTestFeedbacks(): TestFeedbackCollection
     {
         return $this->testFeedbacks;
     }
@@ -374,7 +374,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @param TestFeedbackCollection A collection of TestFeedback objects.
      */
-    public function setTestFeedbacks(TestFeedbackCollection $testFeedbacks)
+    public function setTestFeedbacks(TestFeedbackCollection $testFeedbacks): void
     {
         $this->testFeedbacks = $testFeedbacks;
     }
@@ -382,7 +382,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'assessmentTest';
     }
@@ -390,7 +390,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
             $this->getOutcomeDeclarations()->getArrayCopy(),
@@ -415,7 +415,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return bool
      */
-    public function isExclusivelyLinear()
+    public function isExclusivelyLinear(): bool
     {
         $testParts = $this->getTestParts();
         if (count($testParts) === 0) {
@@ -440,7 +440,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @return bool
      */
-    public function hasTimeLimits()
+    public function hasTimeLimits(): bool
     {
         return $this->getTimeLimits() !== null;
     }
@@ -467,7 +467,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * paths due to the new possibilities afforded by the branch.
      * @throws BranchRuleTargetException if backward or recursive branching is found.
      */
-    private function addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component)
+    private function addPathsWithBranches($paths, $prevItem, $targetItem, $itemidToIndex, $component): array
     {
         $newPaths = [];
 
@@ -622,7 +622,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * @return array of array of \qtism\data\AssessmentItemRef | array of \qtism\data\AssessmentItemRefCollection
      * @throws BranchRuleTargetException if branching is recursive of backward.
      */
-    public function getPossiblePaths($asArray)
+    public function getPossiblePaths($asArray): array
     {
         $paths = [];
 
@@ -800,7 +800,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * possibilities given by the branch.
      * @throws BranchRuleTargetException if branching is recursive of backward.
      */
-    private function branchAnalysis($branch, $component, $paths, &$succsItem, $itemidToIndex, $items, $sections, $testparts)
+    private function branchAnalysis($branch, $component, $paths, &$succsItem, $itemidToIndex, $items, $sections, $testparts): array
     {
         // Special cases
 
@@ -984,7 +984,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * for this AssessmentTest.
      * @throws BranchRuleTargetException
      */
-    public function getShortestPaths()
+    public function getShortestPaths(): array
     {
         $paths = $this->getPossiblePaths(false);
         $minCount = PHP_INT_MAX;
@@ -1015,7 +1015,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * for this AssessmentTest.
      * @throws BranchRuleTargetException
      */
-    public function getLongestPaths()
+    public function getLongestPaths(): array
     {
         $paths = $this->getPossiblePaths(false);
         $maxCount = 0;

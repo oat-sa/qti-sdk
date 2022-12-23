@@ -60,7 +60,7 @@ class TemplateConstraintProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException with code = RuleProcessingException::TEMPLATE_CONSTRAINT_UNSATISFIED.
      */
-    public function process()
+    public function process(): void
     {
         $state = $this->getState();
         $rule = $this->getRule();
@@ -78,7 +78,7 @@ class TemplateConstraintProcessor extends RuleProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return TemplateConstraint::class;
     }

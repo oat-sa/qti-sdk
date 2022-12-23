@@ -37,7 +37,7 @@ class NumberResponded extends ItemSubset
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'numberResponded';
     }

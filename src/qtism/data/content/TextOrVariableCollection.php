@@ -37,7 +37,7 @@ class TextOrVariableCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of TextOrVariable.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof TextOrVariable) {
             $msg = 'TextOrVariableCollection objects only accept to store TextOrVariable objects.';

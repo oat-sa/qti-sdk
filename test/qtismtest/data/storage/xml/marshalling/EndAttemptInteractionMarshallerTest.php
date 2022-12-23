@@ -12,7 +12,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $endAttemptInteraction = new EndAttemptInteraction('BOOL_RESP', 'End the attempt now!', 'my-end', 'ending');
         $endAttemptInteraction->setXmlBase('/home/jerome');
@@ -23,7 +23,7 @@ class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<endAttemptInteraction id="my-end" class="ending" responseIdentifier="BOOL_RESP" title="End the attempt now!" xml:base="/home/jerome"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
             <endAttemptInteraction id="my-end" class="ending" responseIdentifier="BOOL_RESP" title="End the attempt now!" xml:base="/home/jerome"/>
@@ -41,7 +41,7 @@ class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoTitle()
+    public function testUnmarshallNoTitle(): void
     {
         $element = $this->createDOMElement('
             <endAttemptInteraction id="my-end" class="ending" responseIdentifier="BOOL_RESP"/>
@@ -54,7 +54,7 @@ class EndAttemptInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoResponseIdentifier()
+    public function testUnmarshallNoResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <endAttemptInteraction id="my-end" class="ending"/>

@@ -33,7 +33,7 @@ use qtism\data\results\SessionIdentifier;
  */
 class ContextTest extends TestCase
 {
-    public function testAddSessionIdentifier()
+    public function testAddSessionIdentifier(): void
     {
         $sourceId = 'a source id';
         $identifier = "string with\n\rtabulations\tand\r\nnew lines\nto be replaced\rby spaces";
@@ -56,7 +56,7 @@ class ContextTest extends TestCase
         $this::assertEquals($normalizedIdentifier, $sessionIdentifier->getIdentifier()->getValue());
     }
 
-    public function testAddSessionIdentifierWithDuplicateSourceIdThrowsException()
+    public function testAddSessionIdentifierWithDuplicateSourceIdThrowsException(): void
     {
         $sourceId = 'a source id';
         $identifier1 = 'id1';
@@ -73,7 +73,7 @@ class ContextTest extends TestCase
         $subject->addSessionIdentifier($sourceId, $identifier2);
     }
 
-    public function testAddSessionIdentifierWithDuplicateIdentifierAdds()
+    public function testAddSessionIdentifierWithDuplicateIdentifierAdds(): void
     {
         $sourceId1 = 'sourceId1';
         $sourceId2 = 'sourceId2';

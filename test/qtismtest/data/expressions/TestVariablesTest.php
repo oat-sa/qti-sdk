@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TestVariablesTest extends QtiSmTestCase
 {
-    public function testTestVariables()
+    public function testTestVariables(): void
     {
         $testVariables = new TestVariables('SCORE', BaseType::FLOAT, 'WEIGHT');
         $this::assertInstanceOf(TestVariables::class, $testVariables);

@@ -48,7 +48,7 @@ interface FileManager
      * @return QtiFile
      * @throws FileManagerException
      */
-    public function createFromFile($path, $mimeType, $filename = '');
+    public function createFromFile($path, $mimeType, $filename = ''): QtiFile;
 
     /**
      * Instantiate an implementation of File which focuses
@@ -61,7 +61,7 @@ interface FileManager
      * @return QtiFile
      * @throws FileManagerException
      */
-    public function createFromData($data, $mimeType, $filename = '', $path = null);
+    public function createFromData($data, $mimeType, $filename = '', $path = null): QtiFile;
 
     /**
      * Retrieve a previously created instance by $identifier.

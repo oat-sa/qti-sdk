@@ -18,8 +18,6 @@
  * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
-declare(strict_types=1);
-
 namespace qtism\runtime\rendering\markup\xhtml;
 
 use qtism\data\content\xhtml\html5\Figcaption;
@@ -31,7 +29,7 @@ class FigcaptionRenderer extends Html5ElementRenderer
     /**
      * @param QtiComponent&Figcaption $component
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
 

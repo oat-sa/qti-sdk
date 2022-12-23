@@ -63,7 +63,7 @@ class ResultTemplateVariable extends ItemVariable
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'templateVariable';
     }
@@ -73,7 +73,7 @@ class ResultTemplateVariable extends ItemVariable
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $components = [];
         if ($this->hasValues()) {
@@ -85,9 +85,9 @@ class ResultTemplateVariable extends ItemVariable
     /**
      * Get the template values
      *
-     * @return ValueCollection
+     * @return ValueCollection|null
      */
-    public function getValues()
+    public function getValues(): ?ValueCollection
     {
         return $this->values;
     }
@@ -98,7 +98,7 @@ class ResultTemplateVariable extends ItemVariable
      * @param ValueCollection $values
      * @return $this
      */
-    public function setValues(ValueCollection $values = null)
+    public function setValues(ValueCollection $values = null): self
     {
         $this->values = $values;
         return $this;
@@ -109,7 +109,7 @@ class ResultTemplateVariable extends ItemVariable
      *
      * @return bool
      */
-    public function hasValues()
+    public function hasValues(): bool
     {
         return $this->values !== null;
     }

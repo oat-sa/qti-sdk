@@ -50,7 +50,7 @@ class MappingMarshaller extends Marshaller
      * @param int $baseType A baseType from the BaseType enumeration.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
      */
-    protected function setBaseType($baseType)
+    protected function setBaseType($baseType): void
     {
         if (in_array($baseType, BaseType::asArray())) {
             $this->baseType = $baseType;
@@ -66,7 +66,7 @@ class MappingMarshaller extends Marshaller
      *
      * @return int A baseType from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -92,7 +92,7 @@ class MappingMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -118,11 +118,11 @@ class MappingMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI mapping element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Mapping object.
+     * @return Mapping A Mapping object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Mapping
     {
         $mapEntriesElts = $this->getChildElementsByTagName($element, 'mapEntry');
         $mapEntries = new MapEntryCollection();
@@ -157,7 +157,7 @@ class MappingMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'mapping';
     }

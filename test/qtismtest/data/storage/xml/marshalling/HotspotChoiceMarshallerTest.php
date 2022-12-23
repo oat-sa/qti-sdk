@@ -17,7 +17,7 @@ use qtism\data\content\interactions\Hotspot;
  */
 class HotspotChoiceMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $shape = QtiShape::CIRCLE;
         $coords = new QtiCoords($shape, [0, 0, 5]);
@@ -35,7 +35,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<hotspotChoice identifier="hotspotchoice1" shape="circle" coords="0,0,5" fixed="true" templateIdentifier="mytpl1" showHide="hide" hotspotLabel="This is a circle." id="my-hotspotchoice"/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <hotspotChoice identifier="hotspotchoice1" shape="circle" coords="0,0,5" fixed="true" templateIdentifier="mytpl1" showHide="hide" hotspotLabel="This is a circle." id="my-hotspotchoice"/>
@@ -61,7 +61,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallFloatCoords()
+    public function testUnmarshallFloatCoords(): void
     {
         // Example taken from a TAO migration issue. Coordinates contain "string-float" values.
         $element = $this->createDOMElement('
@@ -79,7 +79,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallUnknownShape()
+    public function testUnmarshallUnknownShape(): void
     {
         $element = $this->createDOMElement('
 	        <hotspotChoice identifier="r_50" fixed="false" shape="unknown" coords="128,222,343"/>
@@ -94,7 +94,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallCoordsDoNotSatisfyShape()
+    public function testUnmarshallCoordsDoNotSatisfyShape(): void
     {
         $element = $this->createDOMElement('
 	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128,222,343,20,50"/>
@@ -109,7 +109,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallWrongShowHideValue()
+    public function testUnmarshallWrongShowHideValue(): void
     {
         $element = $this->createDOMElement('
 	        <hotspotChoice identifier="r_50" fixed="false" shape="circle" coords="128,222,343" showHide="bla"/>
@@ -124,7 +124,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallMissingCoords()
+    public function testUnmarshallMissingCoords(): void
     {
         $element = $this->createDOMElement('
 	        <hotspotChoice identifier="r_50" fixed="false" shape="circle"/>
@@ -139,7 +139,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallMissingShape()
+    public function testUnmarshallMissingShape(): void
     {
         $element = $this->createDOMElement('
 	        <hotspotChoice identifier="r_50" fixed="false"/>
@@ -154,7 +154,7 @@ class HotspotChoiceMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallMissingIdentifier()
+    public function testUnmarshallMissingIdentifier(): void
     {
         $element = $this->createDOMElement('
 	        <hotspotChoice/>

@@ -88,7 +88,7 @@ class MapEntry extends QtiComponent
      *
      * @param mixed $mapKey A qti:valueType value.
      */
-    public function setMapKey($mapKey)
+    public function setMapKey($mapKey): void
     {
         $this->mapKey = $mapKey;
     }
@@ -98,6 +98,7 @@ class MapEntry extends QtiComponent
      *
      * @return mixed A qti:valueType value.
      */
+    #[\ReturnTypeWillChange]
     public function getMapKey()
     {
         return $this->mapKey;
@@ -109,7 +110,7 @@ class MapEntry extends QtiComponent
      * @param float $mappedValue A mapped value.
      * @throws InvalidArgumentException If $mappedValue is not a float value.
      */
-    public function setMappedValue($mappedValue)
+    public function setMappedValue($mappedValue): void
     {
         if (is_float($mappedValue)) {
             $this->mappedValue = $mappedValue;
@@ -124,7 +125,7 @@ class MapEntry extends QtiComponent
      *
      * @return float A mapped value.
      */
-    public function getMappedValue()
+    public function getMappedValue(): float
     {
         return $this->mappedValue;
     }
@@ -135,7 +136,7 @@ class MapEntry extends QtiComponent
      * @param bool $caseSensitive
      * @throws InvalidArgumentException If $caseSensitive is not a boolean value.
      */
-    public function setCaseSensitive($caseSensitive)
+    public function setCaseSensitive($caseSensitive): void
     {
         if (is_bool($caseSensitive)) {
             $this->caseSensitive = $caseSensitive;
@@ -150,7 +151,7 @@ class MapEntry extends QtiComponent
      *
      * @return bool
      */
-    public function isCaseSensitive()
+    public function isCaseSensitive(): bool
     {
         return $this->caseSensitive;
     }
@@ -158,7 +159,7 @@ class MapEntry extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'mapEntry';
     }
@@ -166,7 +167,7 @@ class MapEntry extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

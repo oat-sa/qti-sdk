@@ -36,7 +36,7 @@ class SectionPartCollection extends QtiIdentifiableCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a SectionPart object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof SectionPart) {
             $msg = "SectionPartCollection class only accept SectionPart objects, '" . gettype($value) . "' given.";

@@ -18,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SetOutcomeValueProcessorTest extends QtiSmTestCase
 {
-    public function testSetOutcomeValueSimple()
+    public function testSetOutcomeValueSimple(): void
     {
         $rule = $this->createComponentFromXml('
 			<setOutcomeValue identifier="SCORE">
@@ -38,7 +38,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $this::assertEquals(4.3, $state['SCORE']->getValue());
     }
 
-    public function testSetOutcomeValueJugglingFromIntToFloat()
+    public function testSetOutcomeValueJugglingFromIntToFloat(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setOutcomeValue identifier="SCORE">
@@ -56,7 +56,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $this::assertEquals(4.0, $state['SCORE']->getValue());
     }
 
-    public function testSetOtucomeValueJugglingFromFloatToInt()
+    public function testSetOtucomeValueJugglingFromFloatToInt(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setOutcomeValue identifier="SCORE">
@@ -74,7 +74,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $this::assertEquals(4, $state['SCORE']->getValue());
     }
 
-    public function testSetOutcomeValueWrongJugglingScalar()
+    public function testSetOutcomeValueWrongJugglingScalar(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setOutcomeValue identifier="SCORE">
@@ -91,7 +91,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testSetOutcomeValueWrongJugglingMultipleOne()
+    public function testSetOutcomeValueWrongJugglingMultipleOne(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setOutcomeValue identifier="SCORE">
@@ -108,7 +108,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testSetOutcomeValueJugglingMultiple()
+    public function testSetOutcomeValueJugglingMultiple(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setOutcomeValue identifier="SCORE">
@@ -130,7 +130,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $this::assertEquals(1337, $state['SCORE']->getValue());
     }
 
-    public function testSetOutcomeValueJugglingOrdered()
+    public function testSetOutcomeValueJugglingOrdered(): void
     {
         $rule = $this->createComponentFromXml('
             <setOutcomeValue identifier="SCORE">
@@ -152,7 +152,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $this::assertEquals(1337, $state['SCORE']->getValue());
     }
 
-    public function testSetOutcomeValueWrongJugglingMultipleBecauseWrongBaseType()
+    public function testSetOutcomeValueWrongJugglingMultipleBecauseWrongBaseType(): void
     {
         $rule = $this->createComponentFromXml('
             <setOutcomeValue identifier="SCORE">
@@ -173,7 +173,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testSetOutcomeValueModerate()
+    public function testSetOutcomeValueModerate(): void
     {
         $rule = $this->createComponentFromXml('
 			<setOutcomeValue identifier="myBool">
@@ -199,7 +199,7 @@ class SetOutcomeValueProcessorTest extends QtiSmTestCase
         $this::assertTrue($state['myBool']->getValue());
     }
 
-    public function testSetOutcomeValueNoVariable()
+    public function testSetOutcomeValueNoVariable(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setOutcomeValue identifier="SCOREXXXX">

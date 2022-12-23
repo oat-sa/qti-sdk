@@ -90,7 +90,7 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
      * who can use their sign as an operator in QtiPL, and as value, the
      * string representation of the sign used as operator.
      */
-    public function getSignAsOperatorMap()
+    public function getSignAsOperatorMap(): array
     {
         $map = [];
         $map['and'] = '&&';
@@ -118,7 +118,7 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
      * @return mixed The rendered component into another constitution.
      * @throws RenderingException If something goes wrong while rendering the component.
      */
-    public function render($something)
+    public function render($something): string
     {
         if (
             !array_key_exists($something->getQtiClassName(), $this->getSignAsOperatorMap()) ||
@@ -137,7 +137,7 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
      * @return string The default QtiPL rendering for an Operator
      * @throws RenderingException
      */
-    public function getDefaultRendering($something)
+    public function getDefaultRendering($something): string
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         return $something->getQtiClassName() . $renderer->writeChildElements($something->getExpressions());
@@ -152,7 +152,7 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
      * 2 sub-expressions
      * @throws RenderingException
      */
-    private function renderWithSignAsOperator($something)
+    private function renderWithSignAsOperator($something): string
     {
         $qtipl = '';
         $renderer = new QtiPLRenderer($this->getCRO());
@@ -178,7 +178,7 @@ class OperatorQtiPLRenderer extends AbstractQtiPLRenderer
      *
      * @return array An array of string values.
      */
-    public static function getOperatorClassNames()
+    public static function getOperatorClassNames(): array
     {
         return self::$operatorClassNames;
     }

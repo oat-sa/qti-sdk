@@ -44,7 +44,7 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
 
@@ -84,11 +84,11 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
      * Unmarshall a DOMElement object corresponding to a QTI assessmentItemRef element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An AssessmentItemRef object.
+     * @return AssessmentItemRef An AssessmentItemRef object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory attribute 'href' is missing.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): AssessmentItemRef
     {
         $baseComponent = parent::unmarshall($element);
 
@@ -143,7 +143,7 @@ class AssessmentItemRefMarshaller extends SectionPartMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'assessmentItemRef';
     }

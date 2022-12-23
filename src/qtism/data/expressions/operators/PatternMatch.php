@@ -66,7 +66,7 @@ class PatternMatch extends Operator
      * @param string $pattern A pattern or a variable reference.
      * @throws InvalidArgumentException If $pattern is not a string value.
      */
-    public function setPattern($pattern)
+    public function setPattern($pattern): void
     {
         if (is_string($pattern)) {
             $this->pattern = $pattern;
@@ -81,7 +81,7 @@ class PatternMatch extends Operator
      *
      * @return string A pattern or a variable reference.
      */
-    public function getPattern()
+    public function getPattern(): string
     {
         return $this->pattern;
     }
@@ -89,7 +89,7 @@ class PatternMatch extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'patternMatch';
     }

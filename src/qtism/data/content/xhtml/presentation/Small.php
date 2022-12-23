@@ -48,7 +48,7 @@ class Small extends SimpleInline
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'small';
     }

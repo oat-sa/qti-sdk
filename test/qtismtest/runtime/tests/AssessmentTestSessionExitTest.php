@@ -16,7 +16,7 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
  */
 class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
 {
-    public function testExitSection()
+    public function testExitSection(): void
     {
         $url = self::samplesDir() . 'custom/runtime/exits/exitsection.xml';
         $testSession = self::instantiate($url);
@@ -34,7 +34,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertTrue($testSession->isRunning());
     }
 
-    public function testExitSectionEndOfTest()
+    public function testExitSectionEndOfTest(): void
     {
         $url = self::samplesDir() . 'custom/runtime/exits/exitsectionendoftest.xml';
         $testSession = self::instantiate($url);
@@ -63,7 +63,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertFalse($testSession->isRunning());
     }
 
-    public function testExitSectionFromEndOfSection()
+    public function testExitSectionFromEndOfSection(): void
     {
         $url = self::samplesDir() . 'custom/runtime/exits/exitsectionfromendofsection.xml';
         $testSession = self::instantiate($url);
@@ -84,7 +84,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertFalse($testSession->isRunning());
     }
 
-    public function testExitSectionPreconditionsEndOfTest()
+    public function testExitSectionPreconditionsEndOfTest(): void
     {
         $url = self::samplesDir() . 'custom/runtime/exits/exitsectionpreconditions.xml';
         $testSession = self::instantiate($url);
@@ -117,7 +117,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertFalse($testSession->isRunning());
     }
 
-    public function testExitTestPart()
+    public function testExitTestPart(): void
     {
         $url = self::samplesDir() . 'custom/runtime/exits/exittestpart.xml';
         $testSession = self::instantiate($url);
@@ -137,7 +137,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertFalse($testSession->isRunning());
     }
 
-    public function testExitTestPartEndOfTest()
+    public function testExitTestPartEndOfTest(): void
     {
         $url = self::samplesDir() . 'custom/runtime/exits/exittestpartendoftest.xml';
         $testSession = self::instantiate($url);
@@ -166,7 +166,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertFalse($testSession->isRunning());
     }
 
-    public function testExitTestPartPreconditionsEndOfTest()
+    public function testExitTestPartPreconditionsEndOfTest(): void
     {
         $url = self::samplesDir() . 'custom/runtime/exits/exittestpartpreconditions.xml';
         $testSession = self::instantiate($url);
@@ -199,7 +199,7 @@ class AssessmentTestSessionExitTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertFalse($testSession->isRunning());
     }
 
-    public function testExitTest()
+    public function testExitTest(): void
     {
         $url = self::samplesDir() . 'custom/runtime/exits/exittest.xml';
         $testSession = self::instantiate($url);

@@ -36,49 +36,49 @@ class BeanException extends Exception
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * Error code to use when a class method does not exist.
      *
      * @var int
      */
-    const NO_METHOD = 1;
+    public const NO_METHOD = 1;
 
     /**
      * Error code to use when a class property does not exist.
      *
      * @var int
      */
-    const NO_PROPERTY = 2;
+    public const NO_PROPERTY = 2;
 
     /**
      * Error code to use when a method parameter does not exist.
      *
      * @var int
      */
-    const NO_PARAMETER = 3;
+    public const NO_PARAMETER = 3;
 
     /**
      * Error code to use when an expected bean annotation cannot be found.
      *
      * @var int
      */
-    const NO_ANNOTATION = 4;
+    public const NO_ANNOTATION = 4;
 
     /**
      * Error code to use when the bean has no constructor.
      *
      * @var int
      */
-    const NO_CONSTRUCTOR = 5;
+    public const NO_CONSTRUCTOR = 5;
 
     /**
      * Error code to use when a bean is not a strict bean.
      *
      * @var int
      */
-    const NOT_STRICT = 6;
+    public const NOT_STRICT = 6;
 
     /**
      * Create a new BeanException object.

@@ -30,14 +30,14 @@ use qtism\common\enums\Enumeration;
  */
 class ShowHide implements Enumeration
 {
-    const SHOW = 0;
+    public const SHOW = 0;
 
-    const HIDE = 1;
+    public const HIDE = 1;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'SHOW' => self::SHOW,
@@ -51,7 +51,7 @@ class ShowHide implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'show':
                 return self::SHOW;
                 break;

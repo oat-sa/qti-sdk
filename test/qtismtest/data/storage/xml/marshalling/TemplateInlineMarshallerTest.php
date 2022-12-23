@@ -15,7 +15,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class TemplateInlineMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $templateInline = new TemplateInline('tpl1', 'inline1');
         $templateInline->setContent(new InlineStaticCollection([new TextRun('Inline ...')]));
@@ -27,7 +27,7 @@ class TemplateInlineMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<templateInline templateIdentifier="tpl1" identifier="inline1" showHide="show">Inline ...</templateInline>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <templateInline templateIdentifier="tpl1" identifier="inline1" showHide="show">Inline ...</templateInline>
@@ -47,7 +47,7 @@ class TemplateInlineMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallInvalidContent()
+    public function testUnmarshallInvalidContent(): void
     {
         $element = $this->createDOMElement('
 	        <templateInline templateIdentifier="tpl1" identifier="inline1" showHide="show"><div>Block Content</div></templateInline>

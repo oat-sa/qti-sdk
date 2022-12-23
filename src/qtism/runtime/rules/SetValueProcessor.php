@@ -49,7 +49,7 @@ abstract class SetValueProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException If one of the error described above arise.
      */
-    public function process()
+    public function process(): void
     {
         $state = $this->getState();
         $rule = $this->getRule();
@@ -103,7 +103,7 @@ abstract class SetValueProcessor extends RuleProcessor
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    abstract protected function getVariableType();
+    abstract protected function getVariableType(): string;
 }

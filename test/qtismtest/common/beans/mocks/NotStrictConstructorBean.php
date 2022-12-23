@@ -43,7 +43,7 @@ class NotStrictConstructorBean
     /**
      * @param $firstName
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName): void
     {
         $this->firstName = $firstName;
     }
@@ -51,7 +51,7 @@ class NotStrictConstructorBean
     /**
      * @return mixed
      */
-    public function getFirstName()
+    public function getFirstName(): mixed
     {
         return $this->girstName;
     }
@@ -60,15 +60,17 @@ class NotStrictConstructorBean
      * @param $lastName
      * @return string
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName): string
     {
+        $this->lastName = $lastName;
+
         return $this->lastName;
     }
 
     /**
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -76,7 +78,7 @@ class NotStrictConstructorBean
     /**
      * @param $hair
      */
-    public function setHair($hair)
+    public function setHair($hair): void
     {
         $this->hair = $hair;
     }
@@ -84,7 +86,7 @@ class NotStrictConstructorBean
     /**
      * @return string
      */
-    public function getHair()
+    public function getHair(): string
     {
         return $this->hair;
     }

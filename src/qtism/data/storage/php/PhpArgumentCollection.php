@@ -37,7 +37,7 @@ class PhpArgumentCollection extends AbstractCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of PhpArgumentCollection.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof PhpArgument) {
             $msg = 'A PhpArgumentCollection only accepts PhpArgument objects to be stored.';

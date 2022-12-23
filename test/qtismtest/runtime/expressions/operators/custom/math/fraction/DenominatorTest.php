@@ -38,7 +38,7 @@ use qtismtest\QtiSmTestCase;
  */
 class DenominatorTest extends QtiSmTestCase
 {
-    public function testSimple()
+    public function testSimple(): void
     {
         $baseValue = new BaseValue(BaseType::STRING, '1/2');
         $customOperator = new CustomOperator(
@@ -52,7 +52,7 @@ class DenominatorTest extends QtiSmTestCase
         $this::assertEquals(2, $result->getValue());
     }
 
-    public function testReturnsNullOne()
+    public function testReturnsNullOne(): void
     {
         $baseValue = new BaseValue(BaseType::BOOLEAN, false);
         $customOperator = new CustomOperator(
@@ -66,7 +66,7 @@ class DenominatorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testReturnsNullTwo()
+    public function testReturnsNullTwo(): void
     {
         $baseValue = new BaseValue(BaseType::BOOLEAN, false);
         $customOperator = new CustomOperator(

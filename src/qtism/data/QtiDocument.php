@@ -69,7 +69,7 @@ abstract class QtiDocument
      * @param string $versionNumber A QTI version number e.g. '2.1.1'.
      * @throws InvalidArgumentException If $version is unknown regarding existing QTI versions.
      */
-    public function setVersion(string $versionNumber)
+    public function setVersion(string $versionNumber): void
     {
         $this->version = QtiVersion::create($versionNumber);
     }
@@ -89,7 +89,7 @@ abstract class QtiDocument
      *
      * @param QtiComponent $documentComponent A QTI Component object.
      */
-    public function setDocumentComponent(QtiComponent $documentComponent = null)
+    public function setDocumentComponent(QtiComponent $documentComponent = null): void
     {
         $this->documentComponent = $documentComponent;
     }
@@ -99,7 +99,7 @@ abstract class QtiDocument
      *
      * @return QtiComponent
      */
-    public function getDocumentComponent()
+    public function getDocumentComponent(): ?QtiComponent
     {
         return $this->documentComponent;
     }
@@ -107,7 +107,7 @@ abstract class QtiDocument
     /**
      * @param $url
      */
-    protected function setUrl($url)
+    protected function setUrl($url): void
     {
         $this->url = $url;
     }
@@ -115,7 +115,7 @@ abstract class QtiDocument
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }

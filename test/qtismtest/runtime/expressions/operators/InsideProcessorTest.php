@@ -22,7 +22,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class InsideProcessorTest extends QtiSmTestCase
 {
-    public function testRect()
+    public function testRect(): void
     {
         $coords = new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]);
         $point = new QtiPoint(0, 0); // 0, 0 is inside.
@@ -44,7 +44,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testPoly()
+    public function testPoly(): void
     {
         $coords = new QtiCoords(QtiShape::POLY, [0, 8, 7, 4, 2, 2, 8, -4, -2, 1]);
         $point = new QtiPoint(0, 8); // 0, 8 is inside.
@@ -66,7 +66,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testCircle()
+    public function testCircle(): void
     {
         $coords = new QtiCoords(QtiShape::CIRCLE, [5, 5, 5]);
         $point = new QtiPoint(3, 3); // 3,3 is inside
@@ -88,7 +88,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $coords = new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]);
         $point = null;
@@ -99,7 +99,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongBaseTypeOne()
+    public function testWrongBaseTypeOne(): void
     {
         $coords = new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]);
         $point = new QtiDuration('P1D');
@@ -110,7 +110,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeTwo()
+    public function testWrongBaseTypeTwo(): void
     {
         $coords = new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]);
         $point = new QtiInteger(10);
@@ -121,7 +121,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $coords = new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]);
         $point = new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2)]);
@@ -132,7 +132,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $coords = new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]);
         $point = new QtiPoint(1, 2);
@@ -142,7 +142,7 @@ class InsideProcessorTest extends QtiSmTestCase
         $processor = new InsideProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $coords = new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]);
         $point = new QtiPoint(1, 2);
@@ -158,7 +158,7 @@ class InsideProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression($point = null, QtiCoords $coords = null)
+    public function createFakeExpression($point = null, QtiCoords $coords = null): QtiComponent
     {
         $point = ($point === null || !$point instanceof QtiPoint) ? new QtiPoint(2, 2) : $point;
         $coords = ($coords === null) ? new QtiCoords(QtiShape::RECT, [0, 0, 5, 3]) : $coords;

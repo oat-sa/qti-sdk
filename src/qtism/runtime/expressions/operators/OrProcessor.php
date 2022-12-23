@@ -48,7 +48,7 @@ class OrProcessor extends OperatorProcessor
      * @return QtiBoolean True if the expression is true, false otherwise.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
         $allFalse = true;
@@ -83,7 +83,7 @@ class OrProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return OrOperator::class;
     }

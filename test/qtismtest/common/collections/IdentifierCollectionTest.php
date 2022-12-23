@@ -30,7 +30,7 @@ class IdentifierCollectionTest extends QtiSmTestCase
         unset($this->collection);
     }
 
-    public function testAddIdentifier()
+    public function testAddIdentifier(): void
     {
         $string = 'foobar';
         $this->collection[] = $string;
@@ -41,7 +41,7 @@ class IdentifierCollectionTest extends QtiSmTestCase
     /**
      * @depends testAddIdentifier
      */
-    public function testRemoveIdentifier()
+    public function testRemoveIdentifier(): void
     {
         $string = 'foobar';
         $this->collection[] = $string;
@@ -52,7 +52,7 @@ class IdentifierCollectionTest extends QtiSmTestCase
     /**
      * @depends testAddIdentifier
      */
-    public function testModifyIdentifier()
+    public function testModifyIdentifier(): void
     {
         $string = 'foobar';
         $this->collection[] = $string;
@@ -61,21 +61,21 @@ class IdentifierCollectionTest extends QtiSmTestCase
         $this::assertNotEquals($this->collection[0], $string);
     }
 
-    public function testAddIdentifierWrongFormat()
+    public function testAddIdentifierWrongFormat(): void
     {
         $identifier = '.identifier';
         $this->expectException(InvalidArgumentException::class);
         $this->collection[] = $identifier;
     }
 
-    public function testAddIdentifierWrongType()
+    public function testAddIdentifierWrongType(): void
     {
         $identifier = 999;
         $this->expectException(InvalidArgumentException::class);
         $this->collection[] = $identifier;
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $this->collection[] = 'one';
         $this::assertEquals('one', $this->collection->__toString());

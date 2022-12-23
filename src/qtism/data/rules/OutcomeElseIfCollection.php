@@ -37,7 +37,7 @@ class OutcomeElseIfCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of OutcomeElseIf.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof OutcomeElseIf) {
             $msg = "OutcomeElseIfCollection only accepts to store OutcomeElseIf objects, '" . gettype($value) . "' given.";

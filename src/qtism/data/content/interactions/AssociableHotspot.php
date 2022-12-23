@@ -64,7 +64,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * The shape of the hotspot.
      *
-     * @var QtiShape
+     * @var int
      * @qtism-bean-property
      */
     private $shape;
@@ -132,7 +132,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      * @param int $matchMax A positive (>= 0) integer.
      * @throws InvalidArgumentException If $matchMax is not a positive integer.
      */
-    public function setMatchMax($matchMax)
+    public function setMatchMax($matchMax): void
     {
         if (is_int($matchMax) && $matchMax >= 0) {
             $this->matchMax = $matchMax;
@@ -147,7 +147,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * @return int A positive integer.
      */
-    public function getMatchMax()
+    public function getMatchMax(): int
     {
         return $this->matchMax;
     }
@@ -158,7 +158,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      * @param int $matchMin A positive (>= 0) integer.
      * @throws InvalidArgumentException If $matchMin is not a positive integer.
      */
-    public function setMatchMin($matchMin)
+    public function setMatchMin($matchMin): void
     {
         if (is_int($matchMin) && $matchMin >= 0) {
             $this->matchMin = $matchMin;
@@ -173,7 +173,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * @return int
      */
-    public function getMatchMin()
+    public function getMatchMin(): int
     {
         return $this->matchMin;
     }
@@ -183,7 +183,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * @param int $shape A value from the Shape enumeration.
      */
-    public function setShape($shape)
+    public function setShape($shape): void
     {
         if (in_array($shape, QtiShape::asArray(), true)) {
             $this->shape = $shape;
@@ -194,11 +194,9 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     }
 
     /**
-     * Get the shape of the associableHotspot.
-     *
-     * @return QtiShape A Shape object.
+     * @inheritDoc
      */
-    public function getShape()
+    public function getShape(): int
     {
         return $this->shape;
     }
@@ -208,7 +206,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * @param QtiCoords $coords A Coords object.
      */
-    public function setCoords(QtiCoords $coords)
+    public function setCoords(QtiCoords $coords): void
     {
         $this->coords = $coords;
     }
@@ -218,7 +216,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * @return QtiCoords A Coords object.
      */
-    public function getCoords()
+    public function getCoords(): QtiCoords
     {
         return $this->coords;
     }
@@ -229,7 +227,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      * @param string $hotspotLabel A string with at most 256 characters.
      * @throws InvalidArgumentException If $hotspotLabel has more than 256 characters.
      */
-    public function setHotspotLabel($hotspotLabel)
+    public function setHotspotLabel($hotspotLabel): void
     {
         if (Format::isString256($hotspotLabel) === true) {
             $this->hotspotLabel = $hotspotLabel;
@@ -244,7 +242,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * @return string A string with at most 256 characters.
      */
-    public function getHotspotLabel()
+    public function getHotspotLabel(): string
     {
         return $this->hotspotLabel;
     }
@@ -254,7 +252,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
      *
      * @return bool
      */
-    public function hasHotspotLabel()
+    public function hasHotspotLabel(): bool
     {
         return $this->getHotspotLabel() !== '';
     }
@@ -262,7 +260,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * @param IdentifierCollection $matchGroup
      */
-    public function setMatchGroup(IdentifierCollection $matchGroup)
+    public function setMatchGroup(IdentifierCollection $matchGroup): void
     {
         $this->matchGroup = $matchGroup;
     }
@@ -270,7 +268,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * @return IdentifierCollection
      */
-    public function getMatchGroup()
+    public function getMatchGroup(): IdentifierCollection
     {
         return $this->matchGroup;
     }
@@ -278,7 +276,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -286,7 +284,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'associableHotspot';
     }

@@ -40,7 +40,7 @@ class CandidateResponseMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -59,10 +59,10 @@ class CandidateResponseMarshaller extends Marshaller
 
     /**
      * @param DOMElement $element
-     * @return QtiComponent|CandidateResponse
+     * @return CandidateResponse
      * @throws MarshallerNotFoundException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): CandidateResponse
     {
         $valuesElements = $this->getChildElementsByTagName($element, 'value');
         if (!empty($valuesElements)) {
@@ -83,7 +83,7 @@ class CandidateResponseMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'candidateResponse';
     }

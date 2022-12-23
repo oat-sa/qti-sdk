@@ -33,7 +33,7 @@ use qtism\common\datatypes\QtiInteger;
  */
 class LocalQtiBinaryStorageTest extends QtiSmTestCase
 {
-    public function testLocalQtiBinaryStorage()
+    public function testLocalQtiBinaryStorage(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset.xml');
@@ -404,7 +404,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this::assertTrue($session['Q07.3.duration']->equals(new QtiDuration('PT1H')));
     }
 
-    public function testLinearNavigationSimultaneousSubmission()
+    public function testLinearNavigationSimultaneousSubmission(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/itemsubset_simultaneous.xml');
@@ -556,7 +556,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this::assertEquals(round(33.33333, 3), round($session['PERCENT_CORRECT']->getValue(), 3));
     }
 
-    public function testNonLinear()
+    public function testNonLinear(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/jumps.xml');
@@ -586,7 +586,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         }
     }
 
-    public function testFiles()
+    public function testFiles(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/files/files.xml');
@@ -691,7 +691,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this::assertFileDoesNotExist($path3);
     }
 
-    public function testTemplateProcessingBasic1()
+    public function testTemplateProcessingBasic1(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/templates/template_processing_test_simple.xml');
@@ -875,7 +875,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $QTPL2Session->getState());
     }
 
-    public function testTemplateDefault1()
+    public function testTemplateDefault1(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/templates/template_default_test_simple_linear.xml');
@@ -1029,7 +1029,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $QTPL2Session->getState());
     }
 
-    public function testVisitedTestPartsLinear1TestPart()
+    public function testVisitedTestPartsLinear1TestPart(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_1_testparts.xml');
@@ -1072,7 +1072,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this::assertTrue($session->isTestPartVisited('P01'));
     }
 
-    public function testVisitedTestPartsLinear2TestPart()
+    public function testVisitedTestPartsLinear2TestPart(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/testparts/linear_2_testparts.xml');
@@ -1137,7 +1137,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this::assertTrue($session->isTestPartVisited('P02'));
     }
 
-    public function testVisitedTestPartsNonLinear3TestPartJumpBeginningOfTestPart()
+    public function testVisitedTestPartsNonLinear3TestPartJumpBeginningOfTestPart(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
@@ -1209,7 +1209,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this::assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
     }
 
-    public function testVisitedTestPartsNonLinear3TestPartJumpMiddleOfTestPart()
+    public function testVisitedTestPartsNonLinear3TestPartJumpMiddleOfTestPart(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
@@ -1275,7 +1275,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this::assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
     }
 
-    public function testVisitedTestPartsNonLinear3TestPartJumpEndOfTestPart()
+    public function testVisitedTestPartsNonLinear3TestPartJumpEndOfTestPart(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/testparts/nonlinear_3_testparts.xml');
@@ -1347,7 +1347,7 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this::assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
     }
 
-    public function testConfigPersistence()
+    public function testConfigPersistence(): void
     {
         $doc = new XmlCompactDocument();
         $doc->load(self::samplesDir() . 'custom/runtime/linear_5_items.xml');

@@ -19,7 +19,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssessmentItemRefTest extends QtiSmTestCase
 {
-    public function testCreateAssessmentItemRefWrongIdentifier()
+    public function testCreateAssessmentItemRefWrongIdentifier(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
@@ -27,7 +27,7 @@ class AssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef = new AssessmentItemRef('999', 'Nine Nine Nine');
     }
 
-    public function testSetRequiredWrongType()
+    public function testSetRequiredWrongType(): void
     {
         $assessmentItemRef = new AssessmentItemRef('nine', 'Nine Nine Nine');
 
@@ -37,7 +37,7 @@ class AssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef->setRequired('test');
     }
 
-    public function testSetFixedWrongType()
+    public function testSetFixedWrongType(): void
     {
         $assessmentItemRef = new AssessmentItemRef('nine', 'Nine Nine Nine');
 
@@ -47,7 +47,7 @@ class AssessmentItemRefTest extends QtiSmTestCase
         $assessmentItemRef->setFixed('test');
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         $assessmentItemRef = new AssessmentItemRef('Q01', 'Q01.xml');
         $itemSessionControl = new ItemSessionControl();

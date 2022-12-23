@@ -18,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MapResponsePointProcessorTest extends QtiSmTestCase
 {
-    public function testSingleCardinality()
+    public function testSingleCardinality(): void
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $variableDeclaration = $this->createComponentFromXml('
@@ -58,7 +58,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $this::assertEquals(666.666, $result->getValue());
     }
 
-    public function testMultipleCardinality()
+    public function testMultipleCardinality(): void
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $variableDeclaration = $this->createComponentFromXml('
@@ -98,7 +98,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $this::assertEquals(666.666, $result->getValue());
     }
 
-    public function testNoVariable()
+    public function testNoVariable(): void
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $processor = new MapResponsePointProcessor($expr);
@@ -106,7 +106,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNoVariableValue()
+    public function testNoVariableValue(): void
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $variableDeclaration = $this->createComponentFromXml('
@@ -124,7 +124,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $this::assertEquals(0.0, $result->getValue());
     }
 
-    public function testDefaultValue()
+    public function testDefaultValue(): void
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $variableDeclaration = $this->createComponentFromXml('
@@ -142,7 +142,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $this::assertEquals(2.0, $result->getValue());
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $variableDeclaration = $this->createComponentFromXml('
@@ -160,7 +160,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNoAreaMapping()
+    public function testNoAreaMapping(): void
     {
         // When no areaMapping is found, we consider a default value of 0.0.
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
@@ -175,7 +175,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $this::assertEquals(0.0, $result->getValue());
     }
 
-    public function testWrongVariableType()
+    public function testWrongVariableType(): void
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $variableDeclaration = $this->createComponentFromXml('
@@ -189,7 +189,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testLowerBoundOverflow()
+    public function testLowerBoundOverflow(): void
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $variableDeclaration = $this->createComponentFromXml('
@@ -210,7 +210,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $this::assertEquals(1, $result->getValue());
     }
 
-    public function testUpperBoundOverflow()
+    public function testUpperBoundOverflow(): void
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $variableDeclaration = $this->createComponentFromXml('
@@ -231,7 +231,7 @@ class MapResponsePointProcessorTest extends QtiSmTestCase
         $this::assertEquals(5, $result->getValue());
     }
 
-    public function testWithRecord()
+    public function testWithRecord(): void
     {
         $expr = $this->createComponentFromXml('<mapResponsePoint identifier="response1"/>');
         $variableDeclaration = $this->createComponentFromXml('

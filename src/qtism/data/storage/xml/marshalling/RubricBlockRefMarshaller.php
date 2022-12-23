@@ -38,7 +38,7 @@ class RubricBlockRefMarshaller extends Marshaller
      * @param QtiComponent $component
      * @return DOMElement
      */
-    public function marshall(QtiComponent $component)
+    public function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
@@ -51,10 +51,10 @@ class RubricBlockRefMarshaller extends Marshaller
      * Unmarshall a DOMElement to its RubricBlockRef data model representation.
      *
      * @param DOMElement $element
-     * @return QtiComponent A RubricBlockRef object.
+     * @return RubricBlockRef A RubricBlockRef object.
      * @throws UnmarshallingException If the 'identifier' or 'href' attribute is missing from the XML definition.
      */
-    public function unmarshall(DOMElement $element)
+    public function unmarshall(DOMElement $element): RubricBlockRef
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($href = $this->getDOMElementAttributeAs($element, 'href')) !== null) {
@@ -72,7 +72,7 @@ class RubricBlockRefMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'rubricBlockRef';
     }

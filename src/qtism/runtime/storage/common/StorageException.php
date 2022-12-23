@@ -39,7 +39,7 @@ class StorageException extends Exception implements QtiSdkPackageContentExceptio
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * Error code to be used when an error occurs while
@@ -47,7 +47,7 @@ class StorageException extends Exception implements QtiSdkPackageContentExceptio
      *
      * @var int
      */
-    const INSTANTIATION = 1;
+    public const INSTANTIATION = 1;
 
     /**
      * Error code to use when an error occurs while
@@ -55,7 +55,7 @@ class StorageException extends Exception implements QtiSdkPackageContentExceptio
      *
      * @var int
      */
-    const PERSISTENCE = 2;
+    public const PERSISTENCE = 2;
 
     /**
      * Error code to use when an error occurs while
@@ -63,12 +63,12 @@ class StorageException extends Exception implements QtiSdkPackageContentExceptio
      *
      * @var int
      */
-    const RETRIEVAL = 3;
+    public const RETRIEVAL = 3;
 
     /**
      * Error code to use when an error occurs while deleting an AssessmentTestSession.
      *
      * @var int
      */
-    const DELETION = 4;
+    public const DELETION = 4;
 }

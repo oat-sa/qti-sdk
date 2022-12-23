@@ -122,7 +122,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      * @param string $summary
      * @throws InvalidArgumentException If $summary is not a string.
      */
-    public function setSummary($summary)
+    public function setSummary($summary): void
     {
         if (is_string($summary)) {
             $this->summary = $summary;
@@ -138,7 +138,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return string
      */
-    public function getSummary()
+    public function getSummary(): string
     {
         return $this->summary;
     }
@@ -148,7 +148,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return bool
      */
-    public function hasSummary()
+    public function hasSummary(): bool
     {
         return $this->getSummary() !== '';
     }
@@ -159,7 +159,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param Caption $caption A Caption object or null.
      */
-    public function setCaption(Caption $caption = null)
+    public function setCaption(Caption $caption = null): void
     {
         $this->caption = $caption;
     }
@@ -170,7 +170,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return Caption|null A Caption object or null.
      */
-    public function getCaption()
+    public function getCaption(): ?Caption
     {
         return $this->caption;
     }
@@ -180,7 +180,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return bool
      */
-    public function hasCaption()
+    public function hasCaption(): bool
     {
         return $this->getCaption() !== null;
     }
@@ -190,7 +190,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param ColCollection $cols A collection of Col objects.
      */
-    public function setCols(ColCollection $cols)
+    public function setCols(ColCollection $cols): void
     {
         $this->cols = $cols;
     }
@@ -200,7 +200,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return ColCollection A collection of Col objects.
      */
-    public function getCols()
+    public function getCols(): ColCollection
     {
         return $this->cols;
     }
@@ -210,7 +210,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param ColgroupCollection $colgroups A collection of Colgroup objects.
      */
-    public function setColgroups(ColgroupCollection $colgroups)
+    public function setColgroups(ColgroupCollection $colgroups): void
     {
         $this->colgroups = $colgroups;
     }
@@ -220,7 +220,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return ColgroupCollection A collection of Colgroup objects.
      */
-    public function getColgroups()
+    public function getColgroups(): ColgroupCollection
     {
         return $this->colgroups;
     }
@@ -231,7 +231,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param Thead $thead A Thead object or null.
      */
-    public function setThead(Thead $thead = null)
+    public function setThead(Thead $thead = null): void
     {
         $this->thead = $thead;
     }
@@ -239,9 +239,9 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * Get the Thead object. A null value means there is no Thead.
      *
-     * @return Thead A Thead object or null.
+     * @return Thead|null A Thead object or null.
      */
-    public function getThead()
+    public function getThead(): ?Thead
     {
         return $this->thead;
     }
@@ -251,7 +251,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return bool
      */
-    public function hasThead()
+    public function hasThead(): bool
     {
         return $this->getThead() !== null;
     }
@@ -261,7 +261,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param Tfoot $tfoot
      */
-    public function setTfoot(Tfoot $tfoot)
+    public function setTfoot(Tfoot $tfoot): void
     {
         $this->tfoot = $tfoot;
     }
@@ -270,9 +270,9 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      * Get the Tfoot object of the Table. A null value means there is no
      * Tfoot.
      *
-     * @return Tfoot A Tfoot object or null.
+     * @return Tfoot|null A Tfoot object or null.
      */
-    public function getTfoot()
+    public function getTfoot(): ?Tfoot
     {
         return $this->tfoot;
     }
@@ -282,7 +282,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return bool
      */
-    public function hasTfoot()
+    public function hasTfoot(): bool
     {
         return $this->getTfoot() !== null;
     }
@@ -292,7 +292,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param TbodyCollection $tbodies A collection of Tbody objects.
      */
-    public function setTbodies(TbodyCollection $tbodies)
+    public function setTbodies(TbodyCollection $tbodies): void
     {
         $this->tbodies = $tbodies;
     }
@@ -302,7 +302,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return TbodyCollection A collection of Tbody objects.
      */
-    public function getTbodies()
+    public function getTbodies(): TbodyCollection
     {
         return $this->tbodies;
     }
@@ -310,7 +310,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $array = [];
 
@@ -336,7 +336,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'table';
     }

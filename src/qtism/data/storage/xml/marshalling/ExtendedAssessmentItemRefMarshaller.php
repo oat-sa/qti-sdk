@@ -47,7 +47,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
 
@@ -121,7 +121,7 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): ExtendedAssessmentItemRef
     {
         $baseComponent = parent::unmarshall($element);
         $identifier = $baseComponent->getIdentifier();

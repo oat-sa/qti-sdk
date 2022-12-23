@@ -73,7 +73,7 @@ class UnmarshallingException extends Exception
      *
      * @return DOMElement A DOMElement object.
      */
-    public function getDOMElement()
+    public function getDOMElement(): DOMElement
     {
         return $this->DOMElement;
     }
@@ -83,7 +83,7 @@ class UnmarshallingException extends Exception
      *
      * @param DOMElement $element A DOMElement object.
      */
-    protected function setDOMElement(DOMElement $element)
+    protected function setDOMElement(DOMElement $element): void
     {
         $this->DOMElement = $element;
     }

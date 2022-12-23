@@ -40,7 +40,7 @@ class PhpArrayMarshaller extends PhpMarshaller
      * @throws PhpMarshallingException If something wrong happens during marshalling.
      * @throws StreamAccessException
      */
-    public function marshall()
+    public function marshall(): void
     {
         $ctx = $this->getContext();
         $access = $ctx->getStreamAccess();
@@ -73,7 +73,7 @@ class PhpArrayMarshaller extends PhpMarshaller
      *
      * @return bool
      */
-    protected function isMarshallable($toMarshall)
+    protected function isMarshallable($toMarshall): bool
     {
         return is_array($toMarshall);
     }

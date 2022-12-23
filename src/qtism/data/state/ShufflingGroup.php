@@ -66,7 +66,7 @@ class ShufflingGroup extends QtiComponent
      *
      * @param IdentifierCollection $identifiers
      */
-    public function setIdentifiers(IdentifierCollection $identifiers)
+    public function setIdentifiers(IdentifierCollection $identifiers): void
     {
         $this->identifiers = $identifiers;
     }
@@ -76,7 +76,7 @@ class ShufflingGroup extends QtiComponent
      *
      * @return IdentifierCollection
      */
-    public function getIdentifiers()
+    public function getIdentifiers(): IdentifierCollection
     {
         return $this->identifiers;
     }
@@ -86,7 +86,7 @@ class ShufflingGroup extends QtiComponent
      *
      * @param IdentifierCollection $fixedIdentifiers
      */
-    public function setFixedIdentifiers(IdentifierCollection $fixedIdentifiers)
+    public function setFixedIdentifiers(IdentifierCollection $fixedIdentifiers): void
     {
         $this->fixedIdentifiers = $fixedIdentifiers;
     }
@@ -96,7 +96,7 @@ class ShufflingGroup extends QtiComponent
      *
      * @return IdentifierCollection
      */
-    public function getFixedIdentifiers()
+    public function getFixedIdentifiers(): IdentifierCollection
     {
         return $this->fixedIdentifiers;
     }
@@ -112,7 +112,7 @@ class ShufflingGroup extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'shufflingGroup';
     }
@@ -120,7 +120,7 @@ class ShufflingGroup extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

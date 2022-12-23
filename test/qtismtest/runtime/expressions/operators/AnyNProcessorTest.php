@@ -32,7 +32,7 @@ class AnyNProcessorTest extends QtiSmTestCase
      * @param bool $expected
      * @throws MarshallerNotFoundException
      */
-    public function testAnyN($min, $max, array $booleans, $expected)
+    public function testAnyN($min, $max, array $booleans, $expected): void
     {
         $expression = $this->createFakeExpression($min, $max);
         $operands = new OperandsCollection($booleans);
@@ -46,7 +46,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         }
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression(2, 3);
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER)]);
@@ -55,7 +55,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeOne()
+    public function testWrongBaseTypeOne(): void
     {
         $expression = $this->createFakeExpression(2, 3);
         $operands = new OperandsCollection([new QtiString('String')]);
@@ -64,7 +64,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeTwo()
+    public function testWrongBaseTypeTwo(): void
     {
         $expression = $this->createFakeExpression(2, 3);
         $operands = new OperandsCollection([new QtiPoint(1, 2)]);
@@ -73,7 +73,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression(2, 3);
         $operands = new OperandsCollection();
@@ -81,7 +81,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $processor = new AnyNProcessor($expression, $operands);
     }
 
-    public function testWithMinFromVariableReference()
+    public function testWithMinFromVariableReference(): void
     {
         $expression = $this->createFakeExpression('var1', 4);
         $var1 = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(3));
@@ -94,7 +94,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $this::assertFalse($result->getValue());
     }
 
-    public function testWithMaxFromVariableReference()
+    public function testWithMaxFromVariableReference(): void
     {
         $expression = $this->createFakeExpression(3, 'var1');
         $var1 = new OutcomeVariable('var1', Cardinality::SINGLE, BaseType::INTEGER, new QtiInteger(4));
@@ -107,7 +107,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testMinCannotBeResolved()
+    public function testMinCannotBeResolved(): void
     {
         $expression = $this->createFakeExpression('min', 4);
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiBoolean(true), new QtiBoolean(true), null]);
@@ -116,7 +116,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testMaxCannotBeResolved()
+    public function testMaxCannotBeResolved(): void
     {
         $expression = $this->createFakeExpression(3, 'max');
         $operands = new OperandsCollection([new QtiBoolean(true), new QtiBoolean(true), new QtiBoolean(true), null]);
@@ -125,7 +125,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testMinReferenceWrongBaseType()
+    public function testMinReferenceWrongBaseType(): void
     {
         $expression = $this->createFakeExpression('min', 4);
         $min = new OutcomeVariable('min', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(2.3));
@@ -138,7 +138,7 @@ class AnyNProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testMaxReferenceWrongBaseType()
+    public function testMaxReferenceWrongBaseType(): void
     {
         $expression = $this->createFakeExpression(3, 'max');
         $max = new OutcomeVariable('max', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(4.5356));
@@ -157,7 +157,7 @@ class AnyNProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression($min, $max)
+    public function createFakeExpression($min, $max): QtiComponent
     {
         return $this->createComponentFromXml('
 			<anyN min="' . $min . '" max="' . $max . '">
@@ -171,7 +171,7 @@ class AnyNProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function anyNProvider()
+    public function anyNProvider(): array
     {
         $returnValue = [];
 

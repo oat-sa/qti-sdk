@@ -43,7 +43,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -55,7 +55,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
      * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
      */
-    public function setBaseType($baseType = -1)
+    public function setBaseType($baseType = -1): void
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
@@ -83,7 +83,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
      * @param QtiComponent $component An InterpolationTableEntry object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -98,10 +98,10 @@ class InterpolationTableEntryMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI InterpolationEntry element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An InterpolationTableEntry object.
+     * @return InterpolationTableEntry An InterpolationTableEntry object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): InterpolationTableEntry
     {
         if (($sourceValue = $this->getDOMElementAttributeAs($element, 'sourceValue', 'float')) !== null) {
             if (($targetValue = $this->getDOMElementAttributeAs($element, 'targetValue', 'string')) !== null) {
@@ -122,7 +122,7 @@ class InterpolationTableEntryMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'interpolationTableEntry';
     }

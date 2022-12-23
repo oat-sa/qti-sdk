@@ -119,7 +119,7 @@ class PositionObjectInteraction extends Interaction
      *
      * @param QtiPoint $centerPoint A Point object or null.
      */
-    public function setCenterPoint(QtiPoint $centerPoint = null)
+    public function setCenterPoint(QtiPoint $centerPoint = null): void
     {
         $this->centerPoint = $centerPoint;
     }
@@ -128,9 +128,9 @@ class PositionObjectInteraction extends Interaction
      * Get the centerPoint attribute. The null value is returned if there is no centerPoint
      * specified.
      *
-     * @return QtiPoint A Point object or null.
+     * @return QtiPoint|null A Point object or null.
      */
-    public function getCenterPoint()
+    public function getCenterPoint(): ?QtiPoint
     {
         return $this->centerPoint;
     }
@@ -140,7 +140,7 @@ class PositionObjectInteraction extends Interaction
      *
      * @return bool
      */
-    public function hasCenterPoint()
+    public function hasCenterPoint(): bool
     {
         return $this->getCenterPoint() !== null;
     }
@@ -151,7 +151,7 @@ class PositionObjectInteraction extends Interaction
      * @param int $maxChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
-    public function setMaxChoices($maxChoices)
+    public function setMaxChoices($maxChoices): void
     {
         if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
@@ -166,7 +166,7 @@ class PositionObjectInteraction extends Interaction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMaxChoices()
+    public function getMaxChoices(): int
     {
         return $this->maxChoices;
     }
@@ -178,7 +178,7 @@ class PositionObjectInteraction extends Interaction
      * @param int $minChoices A strictly positive (> 0) integer that respects the limits imposed by 'maxChoices' or a negative integer to specify there is no 'minChoices'.
      * @throws InvalidArgumentException If $minChoices is not a strictly positive integer of if it does not respect the limits imposed by 'maxChoices'.
      */
-    public function setMinChoices($minChoices)
+    public function setMinChoices($minChoices): void
     {
         if (is_int($minChoices) && $minChoices >= 0) {
             if ($this->maxChoices > 0 && $minChoices > $this->maxChoices) {
@@ -199,7 +199,7 @@ class PositionObjectInteraction extends Interaction
      *
      * @return int A strictly positive integer or a negative integer which specifies there is no 'minChoices'.
      */
-    public function getMinChoices()
+    public function getMinChoices(): int
     {
         return $this->minChoices;
     }
@@ -209,7 +209,7 @@ class PositionObjectInteraction extends Interaction
      *
      * @return bool
      */
-    public function hasMinChoices()
+    public function hasMinChoices(): bool
     {
         return $this->getMinChoices() > 0;
     }
@@ -219,7 +219,7 @@ class PositionObjectInteraction extends Interaction
      *
      * @param ObjectElement $object An image as an ObjectElement object.
      */
-    public function setObject(ObjectElement $object)
+    public function setObject(ObjectElement $object): void
     {
         $this->object = $object;
     }
@@ -229,7 +229,7 @@ class PositionObjectInteraction extends Interaction
      *
      * @return ObjectElement An image as an ObjectElement object.
      */
-    public function getObject()
+    public function getObject(): ObjectElement
     {
         return $this->object;
     }
@@ -237,7 +237,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * @return ResponseValidityConstraint
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
     {
         return new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -249,7 +249,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection([$this->getObject()]);
     }
@@ -257,7 +257,7 @@ class PositionObjectInteraction extends Interaction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'positionObjectInteraction';
     }

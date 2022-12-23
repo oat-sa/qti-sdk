@@ -13,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AssociableHotspotTest extends QtiSmTestCase
 {
-    public function testCreateInvalidMatchMax()
+    public function testCreateInvalidMatchMax(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'matchMax' argument must be a positive integer, 'boolean' given.");
@@ -21,7 +21,7 @@ class AssociableHotspotTest extends QtiSmTestCase
         new AssociableHotspot('identifier', true, QtiShape::RECT, new QtiCoords(QtiShape::RECT, [0, 0, 1, 1]));
     }
 
-    public function testCreateInvalidShape()
+    public function testCreateInvalidShape(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'shape' argument must be a value from the Shape enumeration, '1' given.");
@@ -29,7 +29,7 @@ class AssociableHotspotTest extends QtiSmTestCase
         new AssociableHotspot('identifier', 1, true, new QtiCoords(QtiShape::RECT, [0, 0, 1, 1]));
     }
 
-    public function testSetInvalidMatchMin()
+    public function testSetInvalidMatchMin(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'matchMin' argument must be a positive integer, 'boolean' given.");
@@ -38,7 +38,7 @@ class AssociableHotspotTest extends QtiSmTestCase
         $associableHotspot->setMatchMin(true);
     }
 
-    public function testSetInvalidHotspotLabel()
+    public function testSetInvalidHotspotLabel(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'hotspotLabel' argument must be a string value with at most 256 characters.");

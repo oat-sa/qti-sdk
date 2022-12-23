@@ -37,7 +37,7 @@ class ResponseDeclarationCollection extends QtiIdentifiableCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of ResponseDeclaration.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof ResponseDeclaration) {
             $msg = "ResponseDeclarationCollection only accepts to store ResponseDeclaration objects, '" . gettype($value) . "' given.";

@@ -79,7 +79,7 @@ class TemplateVariable extends Variable
      * @param bool $paramVariable
      * @throws InvalidArgumentException
      */
-    public function setParamVariable($paramVariable)
+    public function setParamVariable($paramVariable): void
     {
         if (is_bool($paramVariable)) {
             $this->paramVariable = $paramVariable;
@@ -95,7 +95,7 @@ class TemplateVariable extends Variable
      *
      * @return bool
      */
-    public function isParamVariable()
+    public function isParamVariable(): bool
     {
         return $this->paramVariable;
     }
@@ -107,7 +107,7 @@ class TemplateVariable extends Variable
      * @param bool $mathVariable
      * @throws InvalidArgumentException
      */
-    public function setMathVariable($mathVariable)
+    public function setMathVariable($mathVariable): void
     {
         if (is_bool($mathVariable)) {
             $this->mathVariable = $mathVariable;
@@ -123,7 +123,7 @@ class TemplateVariable extends Variable
      *
      * @return bool
      */
-    public function isMathVariable()
+    public function isMathVariable(): bool
     {
         return $this->mathVariable;
     }
@@ -135,7 +135,7 @@ class TemplateVariable extends Variable
      * @return TemplateVariable
      * @throws InvalidArgumentException
      */
-    public static function createFromDataModel(VariableDeclaration $variableDeclaration)
+    public static function createFromDataModel(VariableDeclaration $variableDeclaration): self
     {
         $variable = parent::createFromDataModel($variableDeclaration);
 

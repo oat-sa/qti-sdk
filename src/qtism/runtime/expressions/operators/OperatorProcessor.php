@@ -59,7 +59,7 @@ abstract class OperatorProcessor extends ExpressionProcessor
      * @param OperandsCollection $operands A collection of QTI Runtime compliant values.
      * @throws OperatorProcessingException If The operands are not compliant with minimum or maximum amount of operands the operator can take.
      */
-    public function setOperands(OperandsCollection $operands)
+    public function setOperands(OperandsCollection $operands): void
     {
         // Check minimal operand count.
         $min = $this->getExpression()->getMinOperands();
@@ -90,7 +90,7 @@ abstract class OperatorProcessor extends ExpressionProcessor
      *
      * @return OperandsCollection A collection of QTI Runtime compliant values.
      */
-    public function getOperands()
+    public function getOperands(): OperandsCollection
     {
         return $this->operands;
     }

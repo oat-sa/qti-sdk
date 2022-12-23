@@ -59,7 +59,7 @@ class Ordering extends QtiComponent
      *
      * @return bool true if they must be randomized, false otherwise.
      */
-    public function getShuffle()
+    public function getShuffle(): bool
     {
         return $this->shuffle;
     }
@@ -70,7 +70,7 @@ class Ordering extends QtiComponent
      * @param bool $shuffle true if they must be randomized, false otherwise.
      * @throws InvalidArgumentException If $shuffle is not a boolean.
      */
-    public function setShuffle($shuffle)
+    public function setShuffle($shuffle): void
     {
         if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
@@ -83,7 +83,7 @@ class Ordering extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'ordering';
     }
@@ -91,7 +91,7 @@ class Ordering extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

@@ -92,7 +92,7 @@ class SelectPointInteraction extends GraphicInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMaxChoices()
+    public function getMaxChoices(): int
     {
         return $this->maxChoices;
     }
@@ -103,7 +103,7 @@ class SelectPointInteraction extends GraphicInteraction
      * @param int $maxChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
-    public function setMaxChoices($maxChoices)
+    public function setMaxChoices($maxChoices): void
     {
         if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
@@ -118,7 +118,7 @@ class SelectPointInteraction extends GraphicInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMinChoices()
+    public function getMinChoices(): int
     {
         return $this->minChoices;
     }
@@ -129,7 +129,7 @@ class SelectPointInteraction extends GraphicInteraction
      * @param int $minChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minChoices is not a positive integer.
      */
-    public function setMinChoices($minChoices)
+    public function setMinChoices($minChoices): void
     {
         if (is_int($minChoices) && $minChoices >= 0) {
             $this->minChoices = $minChoices;
@@ -142,7 +142,7 @@ class SelectPointInteraction extends GraphicInteraction
     /**
      * @return ResponseValidityConstraint|null
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
     {
         return new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -154,7 +154,7 @@ class SelectPointInteraction extends GraphicInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection([$this->getObject()]);
     }
@@ -162,7 +162,7 @@ class SelectPointInteraction extends GraphicInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'selectPointInteraction';
     }

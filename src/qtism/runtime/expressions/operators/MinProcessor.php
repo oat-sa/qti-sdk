@@ -53,6 +53,7 @@ class MinProcessor extends OperatorProcessor
      * @return QtiFloat|QtiInteger|null The smallest of the operand values or NULL if any of the operand values is NULL.
      * @throws OperatorProcessingException
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $operands = $this->getOperands();
@@ -105,7 +106,7 @@ class MinProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Min::class;
     }

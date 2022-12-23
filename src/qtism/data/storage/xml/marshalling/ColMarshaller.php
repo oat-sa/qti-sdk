@@ -38,7 +38,7 @@ class ColMarshaller extends Marshaller
      * @param QtiComponent $component A Col object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -55,10 +55,10 @@ class ColMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML col element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Col object.
+     * @return Col A Col object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Col
     {
         $component = new Col();
 
@@ -74,7 +74,7 @@ class ColMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'col';
     }

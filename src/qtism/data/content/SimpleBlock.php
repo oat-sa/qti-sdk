@@ -57,7 +57,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @return BlockCollection A collection of Block objects.
      */
-    public function getComponents()
+    public function getComponents(): BlockCollection
     {
         return $this->getContent();
     }
@@ -67,7 +67,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @param BlockCollection $content A collection of Block objects.
      */
-    public function setContent(BlockCollection $content)
+    public function setContent(BlockCollection $content): void
     {
         $this->content = $content;
     }
@@ -77,7 +77,7 @@ abstract class SimpleBlock extends BodyElement implements BlockStatic, FlowStati
      *
      * @return BlockCollection
      */
-    public function getContent()
+    public function getContent(): BlockCollection
     {
         return $this->content;
     }

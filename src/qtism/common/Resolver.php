@@ -35,5 +35,5 @@ interface Resolver
      * @return string A resolved URL.
      * @throws ResolutionException If an error occurs during the resolution of $url.
      */
-    public function resolve($url);
+    public function resolve($url): string;
 }

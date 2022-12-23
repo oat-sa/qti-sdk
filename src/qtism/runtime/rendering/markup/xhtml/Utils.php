@@ -32,9 +32,9 @@ use qtism\data\ShufflableCollection;
  */
 class Utils
 {
-    const EXTRACT_IF = 0;
+    public const EXTRACT_IF = 0;
 
-    const EXTRACT_INCLUDE = 1;
+    public const EXTRACT_INCLUDE = 1;
 
     /**
      * Shuffle the elements related to $shufflables components within a given $node.
@@ -42,7 +42,7 @@ class Utils
      * @param DOMNode $node The DOM Node where corresponding $shufflables must be shuffled.
      * @param ShufflableCollection $shufflables A collection of Shufflable objects.
      */
-    public static function shuffle(DOMNode $node, ShufflableCollection $shufflables)
+    public static function shuffle(DOMNode $node, ShufflableCollection $shufflables): void
     {
         $shufflableIndexes = [];
         $elements = [];
@@ -127,7 +127,7 @@ class Utils
      * @param string|array $class A class or an array of CSS classes.
      * @return bool
      */
-    public static function hasClass(DOMElement $node, $class)
+    public static function hasClass(DOMElement $node, $class): bool
     {
         if (is_array($class) === false) {
             $class = [$class];
@@ -151,7 +151,7 @@ class Utils
      * @param int $type
      * @return array An array of DOMComment objects.
      */
-    public static function extractStatements(DOMElement $node, $type = self::EXTRACT_IF)
+    public static function extractStatements(DOMElement $node, $type = self::EXTRACT_IF): array
     {
         $statements = [];
         $extract = [

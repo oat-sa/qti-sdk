@@ -44,7 +44,7 @@ class Utils
      * @param array $map A QTI to XHTML CSS class map.
      * @return string
      */
-    public static function mapSelector($selector, array $map)
+    public static function mapSelector($selector, array $map): string
     {
         foreach ($map as $k => $v) {
             $pattern = "/(?:(^|\s|\+|,|~|>)(${k})(\$|\s|,|\+|\.|\~|>|:|\[))/u";

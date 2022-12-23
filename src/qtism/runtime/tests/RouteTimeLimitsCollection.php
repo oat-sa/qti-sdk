@@ -37,7 +37,7 @@ class RouteTimeLimitsCollection extends AbstractCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of RouteTimeLimit.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof RouteTimeLimits) {
             $msg = 'A RouteTimeLimitsCollection only accepts RouteTimeLimits objects to be stored.';

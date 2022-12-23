@@ -19,7 +19,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class SubtractProcessorTest extends QtiSmTestCase
 {
-    public function testSubtract()
+    public function testSubtract(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(256)]);
@@ -35,7 +35,7 @@ class SubtractProcessorTest extends QtiSmTestCase
         $this::assertEquals(5, $result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), null]);
@@ -49,7 +49,7 @@ class SubtractProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiPoint(1, 2)]);
@@ -58,7 +58,7 @@ class SubtractProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::INTEGER, [new QtiInteger(10)]), new QtiInteger(20)]);
@@ -67,7 +67,7 @@ class SubtractProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -75,7 +75,7 @@ class SubtractProcessorTest extends QtiSmTestCase
         $processor = new SubtractProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(20), new QtiInteger(30), new QtiInteger(40)]);
@@ -87,7 +87,7 @@ class SubtractProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<subtract>

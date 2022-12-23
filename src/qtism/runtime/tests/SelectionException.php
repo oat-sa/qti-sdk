@@ -37,7 +37,7 @@ class SelectionException extends Exception
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * Error code to use when the error comes
@@ -45,7 +45,7 @@ class SelectionException extends Exception
      *
      * @var int
      */
-    const LOGIC_ERROR = 1;
+    public const LOGIC_ERROR = 1;
 
     /**
      * Create a new SelectionException exception object.

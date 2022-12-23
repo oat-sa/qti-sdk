@@ -47,7 +47,7 @@ class TextRunRenderer extends AbstractXhtmlRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendElement(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         $fragment->appendChild($this->getRenderingEngine()->getDocument()->createTextNode($component->getContent()));
     }
@@ -57,7 +57,7 @@ class TextRunRenderer extends AbstractXhtmlRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         return;
     }

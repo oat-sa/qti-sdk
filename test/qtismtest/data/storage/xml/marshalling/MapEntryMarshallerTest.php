@@ -14,7 +14,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class MapEntryMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $component = new MapEntry(1337, 1.377, true);
 
@@ -28,7 +28,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $this::assertEquals('true', $element->getAttribute('caseSensitive'));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<mapEntry mapKey="1337" mappedValue="1.377" caseSensitive="true"/>');
@@ -46,7 +46,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $this::assertTrue($component->isCaseSensitive());
     }
 
-    public function testUnmarshall21EmptyMapKeyForString()
+    public function testUnmarshall21EmptyMapKeyForString(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<mapEntry mapKey="" mappedValue="-1.0"/>');
@@ -60,7 +60,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $this::assertEquals(-1.0, $component->getMappedValue());
     }
 
-    public function testUnmarshall21EmptyMapKeyForInteger()
+    public function testUnmarshall21EmptyMapKeyForInteger(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<mapEntry mapKey="" mappedValue="-1.0"/>');
@@ -73,7 +73,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $component = $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshall21EmptyMapKeyForIdentifier()
+    public function testUnmarshall21EmptyMapKeyForIdentifier(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<mapEntry mapKey="" mappedValue="-1.0"/>');
@@ -86,7 +86,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         // No caseSensitive attribute in QTI 2.0. Check that no caseSensitive attribute goes out.
         $component = new MapEntry(1337, 1.377, true);
@@ -103,7 +103,7 @@ class MapEntryMarshallerTest extends QtiSmTestCase
         $this::assertSame('', $element->getAttribute('caseSensitive'));
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         // Make sure the caseSensitive attribute is not taken into account.
         $dom = new DOMDocument('1.0', 'UTF-8');

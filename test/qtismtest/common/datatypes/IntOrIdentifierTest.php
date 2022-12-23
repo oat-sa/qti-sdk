@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class IntOrIdentifierTest extends QtiSmTestCase
 {
-    public function testWrongValue()
+    public function testWrongValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $intOrIdentifier = new QtiIntOrIdentifier(13.37);

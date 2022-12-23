@@ -95,7 +95,7 @@ class PhpDocument extends QtiDocument
      * @throws ReflectionException
      * @throws StreamAccessException
      */
-    protected function transformToPhp()
+    protected function transformToPhp(): MemoryStream
     {
         $stack = new SplStack();
         $stack->push($this->getDocumentComponent());
@@ -208,7 +208,7 @@ class PhpDocument extends QtiDocument
      * @param $object
      * @return string
      */
-    protected static function getBaseImplementation($object)
+    protected static function getBaseImplementation($object): string
     {
         if ($object instanceof ExtendedAssessmentTest) {
             return ExtendedAssessmentTest::class;

@@ -41,7 +41,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMaximal()
+    public function testMarshallMaximal(): void
     {
         $assessmentSection1 = new ExtendedAssessmentSection('section1', 'My Section 1', true);
         $assessmentSection2 = new ExtendedAssessmentSection('section2', 'My Section 2', true);
@@ -117,7 +117,7 @@ class ExtendedAssessmentTestMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshallMaximal()
+    public function testUnmarshallMaximal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

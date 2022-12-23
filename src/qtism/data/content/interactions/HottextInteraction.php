@@ -106,7 +106,7 @@ class HottextInteraction extends BlockInteraction
      * @param int $maxChoices A positive  integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
-    public function setMaxChoices($maxChoices)
+    public function setMaxChoices($maxChoices): void
     {
         if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
@@ -122,7 +122,7 @@ class HottextInteraction extends BlockInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMaxChoices()
+    public function getMaxChoices(): int
     {
         return $this->maxChoices;
     }
@@ -133,7 +133,7 @@ class HottextInteraction extends BlockInteraction
      * @param int $minChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minChoices is not a positive integer or does not respect the limits imposed by maxChoices.
      */
-    public function setMinChoices($minChoices)
+    public function setMinChoices($minChoices): void
     {
         if (is_int($minChoices) && $minChoices > 0) {
             if ($this->maxChoices > 0 && $minChoices > $this->maxChoices) {
@@ -155,7 +155,7 @@ class HottextInteraction extends BlockInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMinChoices()
+    public function getMinChoices(): int
     {
         return $this->minChoices;
     }
@@ -166,7 +166,7 @@ class HottextInteraction extends BlockInteraction
      * @param BlockStaticCollection $content A collection of at least one BlockStatic object.
      * @throws InvalidArgumentException If $content is empty.
      */
-    public function setContent(BlockStaticCollection $content)
+    public function setContent(BlockStaticCollection $content): void
     {
         if (count($content) > 0) {
             $this->content = $content;
@@ -181,7 +181,7 @@ class HottextInteraction extends BlockInteraction
      *
      * @return BlockStaticCollection A collection of at least one BlockStatic object.
      */
-    public function getContent()
+    public function getContent(): BlockStaticCollection
     {
         return $this->content;
     }
@@ -189,7 +189,7 @@ class HottextInteraction extends BlockInteraction
     /**
      * @return ResponseValidityConstraint|null
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
     {
         return new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -201,7 +201,7 @@ class HottextInteraction extends BlockInteraction
     /**
      * @return BlockStaticCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -209,7 +209,7 @@ class HottextInteraction extends BlockInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'hottextInteraction';
     }

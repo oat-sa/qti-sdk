@@ -80,7 +80,7 @@ class StringMatch extends Operator
      * @param bool $caseSensitive Case sensitiveness.
      * @throws InvalidArgumentException If $caseSensitive is not a boolean.
      */
-    public function setCaseSensitive($caseSensitive)
+    public function setCaseSensitive($caseSensitive): void
     {
         if (is_bool($caseSensitive)) {
             $this->caseSensitive = $caseSensitive;
@@ -95,7 +95,7 @@ class StringMatch extends Operator
      *
      * @return bool True if it has to, false otherwise.
      */
-    public function isCaseSensitive()
+    public function isCaseSensitive(): bool
     {
         return $this->caseSensitive;
     }
@@ -107,7 +107,7 @@ class StringMatch extends Operator
      * @throws InvalidArgumentException If $substring is not a boolean.
      * @deprecated
      */
-    public function setSubstring($substring)
+    public function setSubstring($substring): void
     {
         if (is_bool($substring)) {
             $this->substring = $substring;
@@ -123,7 +123,7 @@ class StringMatch extends Operator
      * @return bool
      * @deprecated
      */
-    public function mustSubstring()
+    public function mustSubstring(): bool
     {
         return $this->substring;
     }
@@ -131,7 +131,7 @@ class StringMatch extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'stringMatch';
     }

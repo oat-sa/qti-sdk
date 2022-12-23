@@ -76,7 +76,7 @@ class Jump
      *
      * @param int $position
      */
-    protected function setPosition($position)
+    protected function setPosition($position): void
     {
         $this->position = $position;
     }
@@ -87,7 +87,7 @@ class Jump
      *
      * @return int
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -97,7 +97,7 @@ class Jump
      *
      * @param RouteItem $target A RouteItem object.
      */
-    protected function setTarget(RouteItem $target)
+    protected function setTarget(RouteItem $target): void
     {
         $this->target = $target;
     }
@@ -107,7 +107,7 @@ class Jump
      *
      * @return RouteItem A RouteItem object.
      */
-    public function getTarget()
+    public function getTarget(): RouteItem
     {
         return $this->target;
     }
@@ -118,7 +118,7 @@ class Jump
      * @param AssessmentItemSession $itemSession An AssessmentItemSession object.
      * @throws InvalidArgumentException If $itemSessionState is not a value from the AssessmentItemSessionState enumeration.
      */
-    protected function setItemSession(AssessmentItemSession $itemSession)
+    protected function setItemSession(AssessmentItemSession $itemSession): void
     {
         $this->itemSession = $itemSession;
     }
@@ -128,7 +128,7 @@ class Jump
      *
      * @return AssessmentItemSession An AssessmentItemSession object.
      */
-    public function getItemSession()
+    public function getItemSession(): AssessmentItemSession
     {
         return $this->itemSession;
     }

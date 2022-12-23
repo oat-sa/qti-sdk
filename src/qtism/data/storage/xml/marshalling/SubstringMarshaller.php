@@ -41,7 +41,7 @@ class SubstringMarshaller extends OperatorMarshaller
      * @param array $elements An array of child DOMEelement objects.
      * @return DOMElement The marshalled QTI substring element.
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'caseSensitive', $component->isCaseSensitive());
@@ -60,7 +60,7 @@ class SubstringMarshaller extends OperatorMarshaller
      * @param QtiComponentCollection $children A collection containing the child Expression objects composing the Operator.
      * @return QtiComponent A Substring object.
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         $object = new Substring($children);
 

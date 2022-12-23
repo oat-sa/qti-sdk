@@ -49,7 +49,7 @@ class AssessmentResultBuilder extends AbstractResultBuilder
      * @return AssessmentResult
      * @throws Exception
      */
-    public function buildResult()
+    public function buildResult(): AssessmentResult
     {
         /** @var AssessmentTestSession $state */
         $state = $this->state;
@@ -90,7 +90,7 @@ class AssessmentResultBuilder extends AbstractResultBuilder
      *
      * @return VariableCollection
      */
-    protected function getAllVariables()
+    protected function getAllVariables(): VariableCollection
     {
         return $this->state->getAllVariables();
     }

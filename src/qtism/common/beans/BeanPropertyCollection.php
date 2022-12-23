@@ -37,7 +37,7 @@ class BeanPropertyCollection extends AbstractCollection
      * @param mixed $value A given value.
      * @throws InvalidArgumentException If $value is not an instance of BeanProperty.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof BeanProperty) {
             $msg = 'The BeanPropertyCollection class only accepts BeanProperty objects to be stored.';

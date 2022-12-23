@@ -33,7 +33,7 @@ class H3 extends AtomicBlock
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'h3';
     }

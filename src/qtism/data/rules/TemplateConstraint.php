@@ -82,7 +82,7 @@ class TemplateConstraint extends QtiComponent implements TemplateRule
      *
      * @param Expression $expression An Expression object.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -92,7 +92,7 @@ class TemplateConstraint extends QtiComponent implements TemplateRule
      *
      * @return Expression An Expression object.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -100,7 +100,7 @@ class TemplateConstraint extends QtiComponent implements TemplateRule
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'templateConstraint';
     }
@@ -108,7 +108,7 @@ class TemplateConstraint extends QtiComponent implements TemplateRule
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection([$this->getExpression()]);
     }

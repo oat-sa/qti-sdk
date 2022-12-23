@@ -38,7 +38,7 @@ class ItemSubsetMarshaller extends Marshaller
      * @param QtiComponent $component
      * @return DOMElement
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -64,7 +64,7 @@ class ItemSubsetMarshaller extends Marshaller
      * @param DOMElement $element
      * @return ItemSubset
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): ItemSubset
     {
         $object = new ItemSubset();
 
@@ -88,7 +88,7 @@ class ItemSubsetMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'itemSubset';
     }

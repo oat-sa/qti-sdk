@@ -24,7 +24,7 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase
      * @throws XmlStorageException
      * @throws RenderingException
      */
-    public function testRendering($file, $expectedFile, $renderingMode, $xmlBasePolicy, $stylesheetPolicy, $cssClassPolicy)
+    public function testRendering($file, $expectedFile, $renderingMode, $xmlBasePolicy, $stylesheetPolicy, $cssClassPolicy): void
     {
         $engine = new GoldilocksRenderingEngine();
         $engine->setChoiceShowHidePolicy($renderingMode);
@@ -47,7 +47,7 @@ class GoldilocksRenderingEngineTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function renderingProvider()
+    public function renderingProvider(): array
     {
         return [
             // choiceInteraction-0

@@ -86,7 +86,7 @@ class AnyN extends Operator
      * @param string|int $min An integer or a variable reference.
      * @throws InvalidArgumentException If $min is not an integer nor a variable reference.
      */
-    public function setMin($min)
+    public function setMin($min): void
     {
         if (is_int($min) || (is_string($min) && Format::isVariableRef($min))) {
             $this->min = $min;
@@ -112,7 +112,7 @@ class AnyN extends Operator
      * @param string|int $max An integer or a variable reference.
      * @throws InvalidArgumentException If $max is not an integer nor a variable reference.
      */
-    public function setMax($max)
+    public function setMax($max): void
     {
         if (is_int($max) || (is_string($max) && Format::isVariableRef($max))) {
             $this->max = $max;
@@ -135,7 +135,7 @@ class AnyN extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'anyN';
     }

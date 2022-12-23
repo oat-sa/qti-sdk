@@ -41,7 +41,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ItemResultMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         /** @var ItemResult $itemResult */
         $itemResult = $this->createComponentFromXml('
@@ -77,7 +77,7 @@ class ItemResultMarshallerTest extends QtiSmTestCase
         $this::assertEquals(2, $itemResult->getItemVariables()->count());
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         /** @var ItemResult $itemResult */
         $itemResult = $this->createComponentFromXml('
@@ -101,7 +101,7 @@ class ItemResultMarshallerTest extends QtiSmTestCase
         $this::assertNull($itemResult->getItemVariables());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new ItemResult(
             new QtiIdentifier('fixture-identifier'),
@@ -140,7 +140,7 @@ class ItemResultMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1, $element->getElementsByTagName('templateVariable')->length);
     }
 
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $component = new ItemResult(
             new QtiIdentifier('fixture-identifier'),
@@ -164,7 +164,7 @@ class ItemResultMarshallerTest extends QtiSmTestCase
         $this::assertFalse($element->hasChildNodes());
     }
 
-    public function testGetExpectedQtiClassName()
+    public function testGetExpectedQtiClassName(): void
     {
         $component = new ItemResult(
             new QtiIdentifier('fixture-identifier'),

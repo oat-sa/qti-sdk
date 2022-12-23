@@ -78,7 +78,7 @@ class AssessmentSectionRef extends SectionPart
      *
      * @param string $href A URI.
      */
-    public function setHref($href)
+    public function setHref($href): void
     {
         $this->href = $href;
     }
@@ -88,7 +88,7 @@ class AssessmentSectionRef extends SectionPart
      *
      * @return string A URI.
      */
-    public function getHref()
+    public function getHref(): string
     {
         return $this->href;
     }
@@ -96,7 +96,7 @@ class AssessmentSectionRef extends SectionPart
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'assessmentSectionRef';
     }

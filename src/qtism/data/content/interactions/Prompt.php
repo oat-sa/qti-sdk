@@ -63,7 +63,7 @@ class Prompt extends BodyElement
      *
      * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
-    public function setContent(FlowStaticCollection $content)
+    public function setContent(FlowStaticCollection $content): void
     {
         $this->content = $content;
     }
@@ -73,7 +73,7 @@ class Prompt extends BodyElement
      *
      * @return FlowStaticCollection A collection of FlowStatic objects.
      */
-    public function getContent()
+    public function getContent(): FlowStaticCollection
     {
         return $this->content;
     }
@@ -81,7 +81,7 @@ class Prompt extends BodyElement
     /**
      * @return FlowStaticCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -89,7 +89,7 @@ class Prompt extends BodyElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'prompt';
     }

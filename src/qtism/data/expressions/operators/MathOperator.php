@@ -96,7 +96,7 @@ class MathOperator extends Operator
      *
      * @return int A value from the MathFunctions enumeration.
      */
-    public function getName()
+    public function getName(): int
     {
         return $this->name;
     }
@@ -107,7 +107,7 @@ class MathOperator extends Operator
      * @param int $name A value from the MathFunctions enumeration.
      * @throws InvalidArgumentException If $name is not a value from the MathFunctions enumeration.
      */
-    public function setName($name)
+    public function setName($name): void
     {
         if (in_array($name, MathFunctions::asArray())) {
             $this->name = $name;
@@ -120,7 +120,7 @@ class MathOperator extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'mathOperator';
     }

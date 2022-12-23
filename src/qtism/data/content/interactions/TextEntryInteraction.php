@@ -132,7 +132,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * @param int $base A positive (>= 0) integer.
      * @throws InvalidArgumentException If $base is not a positive integer.
      */
-    public function setBase($base)
+    public function setBase($base): void
     {
         if (is_int($base) && $base >= 0) {
             $this->base = $base;
@@ -148,7 +148,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getBase()
+    public function getBase(): int
     {
         return $this->base;
     }
@@ -161,9 +161,9 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * @param string $stringIdentifier A QTI Identifier or an empty string.
      * @throws InvalidArgumentException If $stringIdentifier is not a valid QTIIdentifier nor an empty string.
      */
-    public function setStringIdentifier($stringIdentifier)
+    public function setStringIdentifier($stringIdentifier): void
     {
-        if (Format::isIdentifier($stringIdentifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier))) {
+        if (Format::isIdentifier((string)$stringIdentifier, false) === true || (is_string($stringIdentifier) && empty($stringIdentifier))) {
             $this->stringIdentifier = $stringIdentifier;
         } else {
             $msg = "The 'stringIdentifier' argument must be a valid QTI identifier or an empty string, '" . $stringIdentifier . "' given.";
@@ -178,7 +178,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      *
      * @return string A QTI identifier or an empty string.
      */
-    public function getStringIdentifier()
+    public function getStringIdentifier(): string
     {
         return $this->stringIdentifier;
     }
@@ -188,7 +188,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      *
      * @return bool
      */
-    public function hasStringIdentifier()
+    public function hasStringIdentifier(): bool
     {
         return $this->getStringIdentifier() !== '';
     }
@@ -200,7 +200,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * @param int|null $expectedLength A non-negative integer (>= 0) or null to unset expectedLength.
      * @throws InvalidArgumentException If $expectedLength is not a non-negative integer nor null.
      */
-    public function setExpectedLength($expectedLength)
+    public function setExpectedLength($expectedLength): void
     {
         if ($expectedLength !== null && (!is_int($expectedLength) || $expectedLength < 0)) {
             $given = is_int($expectedLength)
@@ -220,9 +220,9 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      *
      * @return int|null A non-negative integer (>= 0) or null if undefined.
      */
-    public function getExpectedLength()
+    public function getExpectedLength(): int
     {
-        return $this->expectedLength;
+        return $this->expectedLength ?? -1;
     }
 
     /**
@@ -230,9 +230,9 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      *
      * @return bool
      */
-    public function hasExpectedLength()
+    public function hasExpectedLength(): bool
     {
-        return $this->getExpectedLength() !== null;
+        return $this->getExpectedLength() !== -1;
     }
 
     /**
@@ -242,7 +242,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * @param string $patternMask An XML Schema 2 regular expression or an empty string.
      * @throws InvalidArgumentException If $patternMask is not a string value.
      */
-    public function setPatternMask($patternMask)
+    public function setPatternMask($patternMask): void
     {
         if (is_string($patternMask)) {
             $this->patternMask = $patternMask;
@@ -259,7 +259,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      *
      * @return string An XML Schema 2 regular expression or an empty string.
      */
-    public function getPatternMask()
+    public function getPatternMask(): string
     {
         return $this->patternMask;
     }
@@ -269,7 +269,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      *
      * @return bool
      */
-    public function hasPatternMask()
+    public function hasPatternMask(): bool
     {
         return $this->patternMask !== '';
     }
@@ -281,7 +281,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      * @param string $placeholderText A placeholder text or an empty string.
      * @throws InvalidArgumentException If $placeholderText is not a string value.
      */
-    public function setPlaceholderText($placeholderText)
+    public function setPlaceholderText($placeholderText): void
     {
         if (is_string($placeholderText)) {
             $this->placeholderText = $placeholderText;
@@ -297,7 +297,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      *
      * @return string A placeholder text or an empty string.
      */
-    public function getPlaceholderText()
+    public function getPlaceholderText(): string
     {
         return $this->placeholderText;
     }
@@ -307,7 +307,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
      *
      * @return bool
      */
-    public function hasPlaceholderText()
+    public function hasPlaceholderText(): bool
     {
         return $this->getPlaceholderText() !== '';
     }
@@ -315,7 +315,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     /**
      * @return ResponseValidityConstraint
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
     {
         return new ResponseValidityConstraint($this->getResponseIdentifier(), 0, 1, $this->getPatternMask());
     }
@@ -323,7 +323,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -331,7 +331,7 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'textEntryInteraction';
     }

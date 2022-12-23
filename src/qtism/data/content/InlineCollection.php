@@ -38,7 +38,7 @@ class InlineCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an Inline object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Inline) {
             $msg = 'InlineCollection objects only accept to store Inline objects.';

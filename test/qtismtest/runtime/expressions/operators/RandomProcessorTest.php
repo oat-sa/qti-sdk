@@ -23,7 +23,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class RandomProcessorTest extends QtiSmTestCase
 {
-    public function testPrimitiveMultiple()
+    public function testPrimitiveMultiple(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -35,7 +35,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $this::assertLessThanOrEqual(3.0, $result->getValue());
     }
 
-    public function testPrimitiveOrdered()
+    public function testPrimitiveOrdered(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -46,7 +46,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->equals(new QtiString('s1')) || $result->equals(new QtiString('s2')) || $result->equals(new QtiString('s3')));
     }
 
-    public function testComplexMultiple()
+    public function testComplexMultiple(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -58,7 +58,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $this::assertLessThanOrEqual(3, $result->getDays());
     }
 
-    public function testComplexOrdered()
+    public function testComplexOrdered(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -70,7 +70,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $this::assertLessThanOrEqual(3, $result->getY());
     }
 
-    public function testOnlyOneInContainer()
+    public function testOnlyOneInContainer(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -82,7 +82,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $this::assertEquals(33, $result->getY());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -92,7 +92,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongCardinalityOne()
+    public function testWrongCardinalityOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -102,7 +102,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinalityTwo()
+    public function testWrongCardinalityTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -112,7 +112,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -121,7 +121,7 @@ class RandomProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -136,7 +136,7 @@ class RandomProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<random>

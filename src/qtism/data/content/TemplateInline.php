@@ -72,7 +72,7 @@ class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
      *
      * @param InlineStaticCollection $content A collection of InlineStatic objects.
      */
-    public function setContent(InlineStaticCollection $content)
+    public function setContent(InlineStaticCollection $content): void
     {
         $this->content = $content;
     }
@@ -82,7 +82,7 @@ class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
      *
      * @return InlineStaticCollection A collection of InlineStatic objects.
      */
-    public function getContent()
+    public function getContent(): InlineStaticCollection
     {
         return $this->content;
     }
@@ -93,7 +93,7 @@ class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
      * @param string $xmlBase A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '')
+    public function setXmlBase($xmlBase = ''): void
     {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
@@ -108,7 +108,7 @@ class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase()
+    public function getXmlBase(): string
     {
         return $this->xmlBase;
     }
@@ -116,7 +116,7 @@ class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
     /**
      * @return bool
      */
-    public function hasXmlBase()
+    public function hasXmlBase(): bool
     {
         return $this->getXmlBase() !== '';
     }
@@ -124,7 +124,7 @@ class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
     /**
      * @return InlineStaticCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -132,7 +132,7 @@ class TemplateInline extends TemplateElement implements InlineStatic, FlowStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'templateInline';
     }

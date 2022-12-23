@@ -18,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeConditionTest extends QtiSmTestCase
 {
-    public function testHasOutcomeElseGetComponents()
+    public function testHasOutcomeElseGetComponents(): void
     {
         $outcomeIf = new OutcomeIf(
             new MatchOperator(

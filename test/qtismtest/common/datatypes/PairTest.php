@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class PairTest extends QtiSmTestCase
 {
-    public function testEquality()
+    public function testEquality(): void
     {
         $p1 = new QtiPair('A', 'B');
         $p2 = new QtiPair('A', 'B');
@@ -27,13 +27,13 @@ class PairTest extends QtiSmTestCase
         $this::assertTrue($p4->equals($p3));
     }
 
-    public function testInvalidFirstIdentifier()
+    public function testInvalidFirstIdentifier(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $pair = new QtiPair('_33', '33tt');
     }
 
-    public function testInvalidSecondIdentifier()
+    public function testInvalidSecondIdentifier(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $pair = new QtiPair('33tt', '_33');

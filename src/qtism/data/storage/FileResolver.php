@@ -55,7 +55,7 @@ abstract class FileResolver implements Resolver
      * @param string $basePath A base path.
      * @throws InvalidArgumentException If $basePath is not a string value.
      */
-    public function setBasePath($basePath = '')
+    public function setBasePath($basePath = ''): void
     {
         if (is_string($basePath)) {
             $this->basePath = $basePath;
@@ -70,7 +70,7 @@ abstract class FileResolver implements Resolver
      *
      * @return string A base path.
      */
-    public function getBasePath()
+    public function getBasePath(): string
     {
         return $this->basePath;
     }

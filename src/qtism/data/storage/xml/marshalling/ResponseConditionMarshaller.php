@@ -46,7 +46,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
      * @return ResponseCondition
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): ResponseCondition
     {
         if (count($children) > 0) {
             // The first element of $children must be a responseIf.
@@ -84,7 +84,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
      * @param array $elements
      * @return DOMElement
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -99,7 +99,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
      * @param DOMNode $element
      * @return bool
      */
-    protected function isElementFinal(DOMNode $element)
+    protected function isElementFinal(DOMNode $element): bool
     {
         $exclusion = ['responseIf', 'responseElseIf', 'responseElse', 'responseCondition'];
 
@@ -110,7 +110,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return bool
      */
-    protected function isComponentFinal(QtiComponent $component)
+    protected function isComponentFinal(QtiComponent $component): bool
     {
         return (!$component instanceof ResponseIf &&
             !$component instanceof ResponseElseIf &&
@@ -122,7 +122,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
      * @param DOMElement $element
      * @return array
      */
-    protected function getChildrenElements(DOMElement $element)
+    protected function getChildrenElements(DOMElement $element): array
     {
         return $this->getChildElementsByTagName($element, [
             'responseIf',
@@ -139,7 +139,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return array
      */
-    protected function getChildrenComponents(QtiComponent $component)
+    protected function getChildrenComponents(QtiComponent $component): array
     {
         if ($component instanceof ResponseIf || $component instanceof ResponseElseIf || $component instanceof ResponseElse) {
             // ResponseControl
@@ -164,7 +164,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
      * @param DOMElement $currentNode
      * @return QtiComponentCollection|ResponseRuleCollection
      */
-    protected function createCollection(DOMElement $currentNode)
+    protected function createCollection(DOMElement $currentNode): QtiComponentCollection
     {
         if ($currentNode->localName != 'responseCondition') {
             return new ResponseRuleCollection();
@@ -176,7 +176,7 @@ class ResponseConditionMarshaller extends RecursiveMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return '';
     }

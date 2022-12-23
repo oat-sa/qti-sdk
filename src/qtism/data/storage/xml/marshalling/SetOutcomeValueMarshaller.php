@@ -40,7 +40,7 @@ class SetOutcomeValueMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getExpression());
@@ -55,11 +55,11 @@ class SetOutcomeValueMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI SetOutcomeValue element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A SetOutcomeValue object.
+     * @return SetOutcomeValue A SetOutcomeValue object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the mandatory expression child element is missing from $element or if the 'target' element is missing.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): SetOutcomeValue
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $expressionElt = self::getFirstChildElement($element);
@@ -80,7 +80,7 @@ class SetOutcomeValueMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'setOutcomeValue';
     }

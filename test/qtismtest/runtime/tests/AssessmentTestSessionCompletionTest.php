@@ -57,7 +57,7 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
      * @throws PhpStorageException
      * @throws XmlStorageException
      */
-    public function testCompletion($testFile, $identifiers, $finalNumberCompleted)
+    public function testCompletion($testFile, $identifiers, $finalNumberCompleted): void
     {
         $session = self::instantiate($testFile);
         $session->beginTestSession();
@@ -100,7 +100,7 @@ class AssessmentTestSessionCompletionTest extends QtiSmAssessmentTestSessionTest
     /**
      * @return array
      */
-    public function completionPureLinearProvider()
+    public function completionPureLinearProvider(): array
     {
         return [
             [self::samplesDir() . '/custom/runtime/linear_5_items.xml', ['skip', 'skip', 'skip', 'skip', 'skip'], 5],

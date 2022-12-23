@@ -108,7 +108,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
      * @param int $matchMax A positive (>= 0) integer.
      * @throws InvalidArgumentException If $matchMax is not a positive integer.
      */
-    public function setMatchMax($matchMax)
+    public function setMatchMax($matchMax): void
     {
         if (is_int($matchMax) && $matchMax >= 0) {
             $this->matchMax = $matchMax;
@@ -123,7 +123,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMatchMax()
+    public function getMatchMax(): int
     {
         return $this->matchMax;
     }
@@ -134,7 +134,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
      * @param int $matchMin A positive (>= 0) integer.
      * @throws InvalidArgumentException If $matchMin is not a positive integer.
      */
-    public function setMatchMin($matchMin)
+    public function setMatchMin($matchMin): void
     {
         if (is_int($matchMin) && $matchMin >= 0) {
             $this->matchMin = $matchMin;
@@ -147,7 +147,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
     /**
      * @return FlowStaticCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -157,7 +157,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
      *
      * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
-    public function setContent(FlowStaticCollection $content)
+    public function setContent(FlowStaticCollection $content): void
     {
         $this->content = $content;
     }
@@ -167,7 +167,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
      *
      * @return FlowStaticCollection A collection of FlowStatic objects.
      */
-    public function getContent()
+    public function getContent(): FlowStaticCollection
     {
         return $this->content;
     }
@@ -177,7 +177,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMatchMin()
+    public function getMatchMin(): int
     {
         return $this->matchMin;
     }
@@ -185,7 +185,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
     /**
      * @param IdentifierCollection $matchGroup
      */
-    public function setMatchGroup(IdentifierCollection $matchGroup)
+    public function setMatchGroup(IdentifierCollection $matchGroup): void
     {
         $this->matchGroup = $matchGroup;
     }
@@ -193,7 +193,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
     /**
      * @return IdentifierCollection
      */
-    public function getMatchGroup()
+    public function getMatchGroup(): IdentifierCollection
     {
         return $this->matchGroup;
     }
@@ -201,7 +201,7 @@ class SimpleAssociableChoice extends Choice implements AssociableChoice
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'simpleAssociableChoice';
     }

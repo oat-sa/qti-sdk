@@ -46,7 +46,7 @@ class RandomIntegerProcessor extends ExpressionProcessor
      * @return QtiInteger A random integer value.
      * @throws ExpressionProcessingException
      */
-    public function process()
+    public function process(): QtiInteger
     {
         $expr = $this->getExpression();
         $min = $expr->getMin();
@@ -80,7 +80,7 @@ class RandomIntegerProcessor extends ExpressionProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return RandomInteger::class;
     }

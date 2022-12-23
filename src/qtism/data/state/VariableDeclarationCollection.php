@@ -37,7 +37,7 @@ class VariableDeclarationCollection extends QtiIdentifiableCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of VariableDeclaration.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof VariableDeclaration) {
             $msg = "InterpolationTableEntryCollection only accepts to store VariableDeclaration objects, '" . gettype($value) . "' given.";

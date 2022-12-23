@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class InfoControlTest extends QtiSmTestCase
 {
-    public function testSetTitleWrongType()
+    public function testSetTitleWrongType(): void
     {
         $infoControl = new InfoControl();
 

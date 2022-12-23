@@ -19,7 +19,7 @@ use qtism\data\expressions\operators\Equal;
  */
 class TestPartMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $section1 = new AssessmentSection('section1', 'My Section 1', true);
         $section2 = new AssessmentSection('section2', 'My Section 2', false);
@@ -43,7 +43,7 @@ class TestPartMarshallerTest extends QtiSmTestCase
         $this::assertEquals('section2', $element->getElementsByTagName('assessmentSection')->item(1)->getAttribute('identifier'));
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -71,7 +71,7 @@ class TestPartMarshallerTest extends QtiSmTestCase
         $this::assertEquals('section2', $assessmentSections['section2']->getIdentifier());
     }
 
-    public function testUnmarshallMorderate()
+    public function testUnmarshallMorderate(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -141,7 +141,7 @@ class TestPartMarshallerTest extends QtiSmTestCase
         $this::assertTrue($component->hasTimeLimits());
     }
 
-    public function testUnmarshallNoSections()
+    public function testUnmarshallNoSections(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -160,7 +160,7 @@ class TestPartMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNoSubmissionMode()
+    public function testUnmarshallNoSubmissionMode(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -181,7 +181,7 @@ class TestPartMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNoNavigationMode()
+    public function testUnmarshallNoNavigationMode(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -202,7 +202,7 @@ class TestPartMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallNoIdentifier()
+    public function testUnmarshallNoIdentifier(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

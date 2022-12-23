@@ -107,7 +107,7 @@ class HotspotInteraction extends GraphicInteraction
      * @param int $maxChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
-    public function setMaxChoices($maxChoices)
+    public function setMaxChoices($maxChoices): void
     {
         if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
@@ -123,7 +123,7 @@ class HotspotInteraction extends GraphicInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMaxChoices()
+    public function getMaxChoices(): int
     {
         return $this->maxChoices;
     }
@@ -135,7 +135,7 @@ class HotspotInteraction extends GraphicInteraction
      * @param int $minChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minChoices is not a positive integer.
      */
-    public function setMinChoices($minChoices)
+    public function setMinChoices($minChoices): void
     {
         if (is_int($minChoices) && $minChoices >= 0) {
             $this->minChoices = $minChoices;
@@ -151,7 +151,7 @@ class HotspotInteraction extends GraphicInteraction
      *
      * @return int A positive (>= 0) integer.
      */
-    public function getMinChoices()
+    public function getMinChoices(): int
     {
         return $this->minChoices;
     }
@@ -162,7 +162,7 @@ class HotspotInteraction extends GraphicInteraction
      * @param HotspotChoiceCollection $hotspotChoices A collection of HotspotChoice objects.
      * @throws InvalidArgumentException If the given collection is empty.
      */
-    public function setHotspotChoices(HotspotChoiceCollection $hotspotChoices)
+    public function setHotspotChoices(HotspotChoiceCollection $hotspotChoices): void
     {
         if (count($hotspotChoices) > 0) {
             $this->hotspotChoices = $hotspotChoices;
@@ -177,7 +177,7 @@ class HotspotInteraction extends GraphicInteraction
      *
      * @return HotspotChoiceCollection A collection of HotspotChoice objects.
      */
-    public function getHotspotChoices()
+    public function getHotspotChoices(): HotspotChoiceCollection
     {
         return $this->hotspotChoices;
     }
@@ -185,7 +185,7 @@ class HotspotInteraction extends GraphicInteraction
     /**
      * @return ResponseValidityConstraint|null
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
     {
         return new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -197,7 +197,7 @@ class HotspotInteraction extends GraphicInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $array = [];
         if ($this->hasPrompt() === true) {
@@ -212,7 +212,7 @@ class HotspotInteraction extends GraphicInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'hotspotInteraction';
     }

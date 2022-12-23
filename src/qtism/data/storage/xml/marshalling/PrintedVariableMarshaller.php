@@ -40,7 +40,7 @@ class PrintedVariableMarshaller extends Marshaller
      * @param QtiComponent $component A PrintedVariable object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $version = $this->getVersion();
@@ -79,10 +79,10 @@ class PrintedVariableMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a printedVariable element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A PrintedVariable object.
+     * @return PrintedVariable A PrintedVariable object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): PrintedVariable
     {
         $version = $this->getVersion();
 
@@ -133,7 +133,7 @@ class PrintedVariableMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'printedVariable';
     }

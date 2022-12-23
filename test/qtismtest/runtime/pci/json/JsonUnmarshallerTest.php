@@ -35,7 +35,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     /**
      * @return Unmarshaller
      */
-    protected static function createUnmarshaller()
+    protected static function createUnmarshaller(): Unmarshaller
     {
         return new Unmarshaller(new FileSystemFileManager());
     }
@@ -48,7 +48,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @throws UnmarshallingException
      * @throws FileManagerException
      */
-    public function testUnmarshallScalar(QtiScalar $expectedScalar = null, $json)
+    public function testUnmarshallScalar(QtiScalar $expectedScalar = null, $json): void
     {
         $unmarshaller = self::createUnmarshaller();
         if ($expectedScalar !== null) {
@@ -66,7 +66,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @throws UnmarshallingException
      * @throws FileManagerException
      */
-    public function testUnmarshallComplex(QtiDatatype $expectedComplex, $json)
+    public function testUnmarshallComplex(QtiDatatype $expectedComplex, $json): void
     {
         $unmarshaller = self::createUnmarshaller();
         $value = $unmarshaller->unmarshall($json);
@@ -81,7 +81,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @throws UnmarshallingException
      * @throws FileManagerException
      */
-    public function testUnmarshallFile(FileSystemFile $expectedFile, $json)
+    public function testUnmarshallFile(FileSystemFile $expectedFile, $json): void
     {
         $unmarshaller = self::createUnmarshaller();
         $value = $unmarshaller->unmarshall($json);
@@ -92,7 +92,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $fileManager->delete($value);
     }
 
-    public function testUnmarshallFileHash()
+    public function testUnmarshallFileHash(): void
     {
         $id = 'http://some.cloud.storage/path/to/file.txt';
         $mimeType = 'text/plain';
@@ -127,13 +127,13 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @throws UnmarshallingException
      * @throws FileManagerException
      */
-    public function testUnmarshallList(MultipleContainer $expectedContainer, $json)
+    public function testUnmarshallList(MultipleContainer $expectedContainer, $json): void
     {
         $unmarshaller = self::createUnmarshaller();
         $this::assertTrue($expectedContainer->equals($unmarshaller->unmarshall($json)));
     }
 
-    public function testUnmarshallListException()
+    public function testUnmarshallListException(): void
     {
         $this->expectException(UnmarshallingException::class);
 
@@ -150,7 +150,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @throws UnmarshallingException
      * @throws FileManagerException
      */
-    public function testUnmarshallRecord(RecordContainer $expectedRecord, $json)
+    public function testUnmarshallRecord(RecordContainer $expectedRecord, $json): void
     {
         $unmarshaller = self::createUnmarshaller();
         $this::assertTrue($expectedRecord->equals($unmarshaller->unmarshall($json)));
@@ -163,14 +163,14 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @throws UnmarshallingException
      * @throws FileManagerException
      */
-    public function testUnmarshallInvalid($input)
+    public function testUnmarshallInvalid($input): void
     {
         $unmarshaller = self::createUnmarshaller();
         $this->expectException(UnmarshallingException::class);
         $unmarshaller->unmarshall($input);
     }
 
-    public function testUnmarshallNoAssociative()
+    public function testUnmarshallNoAssociative(): void
     {
         $unmarshaller = self::createUnmarshaller();
         $this->expectException(UnmarshallingException::class);
@@ -178,7 +178,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $unmarshaller->unmarshall(true);
     }
 
-    public function testUnmarshallListUnknownBaseType()
+    public function testUnmarshallListUnknownBaseType(): void
     {
         $unmarshaller = self::createUnmarshaller();
 
@@ -188,7 +188,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $unmarshaller->unmarshall('{ "list" : { "unknownbasetype" : ["_id1", "id2", "ID3"] } }');
     }
 
-    public function testUnmarshallListNonBaseTypeCompliantValue()
+    public function testUnmarshallListNonBaseTypeCompliantValue(): void
     {
         $unmarshaller = self::createUnmarshaller();
 
@@ -198,7 +198,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $unmarshaller->unmarshall('{ "list" : { "identifier" : [true, "id2", "ID3"] } }');
     }
 
-    public function testUnmarshallState()
+    public function testUnmarshallState(): void
     {
         $json = '
             {
@@ -228,7 +228,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function unmarshallScalarProvider()
+    public function unmarshallScalarProvider(): array
     {
         return [
             [new QtiBoolean(true), '{ "base" : {"boolean" : true } }'],
@@ -248,7 +248,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function unmarshallComplexProvider()
+    public function unmarshallComplexProvider(): array
     {
         $returnValue = [];
 
@@ -264,7 +264,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @return array
      * @throws FileManagerException
      */
-    public function unmarshallFileProvider()
+    public function unmarshallFileProvider(): array
     {
         $returnValue = [];
         $samples = self::samplesDir();
@@ -291,7 +291,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function unmarshallListProvider()
+    public function unmarshallListProvider(): array
     {
         $returnValue = [];
 
@@ -337,7 +337,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function unmarshallRecordProvider()
+    public function unmarshallRecordProvider(): array
     {
         $returnValue = [];
 
@@ -363,7 +363,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function unmarshallInvalidProvider()
+    public function unmarshallInvalidProvider(): array
     {
         return [
             [new stdClass()],
@@ -380,7 +380,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         ];
     }
 
-    public function testUnmarshallListWithinRecord()
+    public function testUnmarshallListWithinRecord(): void
     {
         $unmarshaller = self::createUnmarshaller();
         $json = '

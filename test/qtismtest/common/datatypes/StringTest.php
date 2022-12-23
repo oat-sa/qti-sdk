@@ -11,14 +11,14 @@ use qtismtest\QtiSmTestCase;
  */
 class StringTest extends QtiSmTestCase
 {
-    public function testWrongValue()
+    public function testWrongValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The String Datatype only accepts to store string values.');
         $string = new QtiString(1337);
     }
 
-    public function testEmptyString()
+    public function testEmptyString(): void
     {
         $string = new QtiString('');
         $this::assertEquals('', $string->getValue());
@@ -30,7 +30,7 @@ class StringTest extends QtiSmTestCase
      * @param string $str
      * @param mixed $val
      */
-    public function testEqual($str, $val)
+    public function testEqual($str, $val): void
     {
         $qtiString = new QtiString($str);
         $this::assertTrue($qtiString->equals($val));
@@ -39,7 +39,7 @@ class StringTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function equalProvider()
+    public function equalProvider(): array
     {
         return [
             ['', null],
@@ -56,7 +56,7 @@ class StringTest extends QtiSmTestCase
      * @param string $str
      * @param mixed $val
      */
-    public function testNotEqual($str, $val)
+    public function testNotEqual($str, $val): void
     {
         $qtiString = new QtiString($str);
         $this::assertFalse($qtiString->equals($val));
@@ -65,7 +65,7 @@ class StringTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function notEqualProvider()
+    public function notEqualProvider(): array
     {
         return [
             ['test', null],

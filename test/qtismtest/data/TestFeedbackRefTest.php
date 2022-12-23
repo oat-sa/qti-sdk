@@ -13,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TestFeedbackRefTest extends QtiSmTestCase
 {
-    public function testSetAccessWrongType()
+    public function testSetAccessWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'1' is not a value from the TestFeedbackAccess enumeration.");
@@ -21,7 +21,7 @@ class TestFeedbackRefTest extends QtiSmTestCase
         $testFeedbackRef = new TestFeedbackRef('IDENTIFIER', 'OUTCOMEIDENTIFIER', true, ShowHide::SHOW, 'ref.xml');
     }
 
-    public function testSetShowHideWrongType()
+    public function testSetShowHideWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'1' is not a value from the ShowHide enumeration.");
@@ -29,7 +29,7 @@ class TestFeedbackRefTest extends QtiSmTestCase
         $testFeedbackRef = new TestFeedbackRef('IDENTIFIER', 'OUTCOMEIDENTIFIER', TestFeedbackAccess::DURING, true, 'ref.xml');
     }
 
-    public function testSetOutcomeIdentifierWrongType()
+    public function testSetOutcomeIdentifierWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
@@ -37,7 +37,7 @@ class TestFeedbackRefTest extends QtiSmTestCase
         $testFeedbackRef = new TestFeedbackRef('IDENTIFIER', 999, TestFeedbackAccess::DURING, ShowHide::SHOW, 'ref.xml');
     }
 
-    public function testSetIdentifierWrongType()
+    public function testSetIdentifierWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'999' is not a valid QTI Identifier.");
@@ -45,7 +45,7 @@ class TestFeedbackRefTest extends QtiSmTestCase
         $testFeedbackRef = new TestFeedbackRef(999, 'OUTCOMEIDENTIFIER', TestFeedbackAccess::DURING, ShowHide::SHOW, 'ref.xml');
     }
 
-    public function testSetHrefWrongType()
+    public function testSetHrefWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("'' is not a valid URI.");

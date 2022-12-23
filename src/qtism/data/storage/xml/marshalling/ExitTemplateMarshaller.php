@@ -38,7 +38,7 @@ class ExitTemplateMarshaller extends Marshaller
      * @param QtiComponent $component An ExitTemplate object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         return $this->createElement($component);
     }
@@ -47,9 +47,9 @@ class ExitTemplateMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI exitTemplate element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An ExitTemplate object.
+     * @return ExitTemplate An ExitTemplate object.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): ExitTemplate
     {
         return new ExitTemplate();
     }
@@ -57,7 +57,7 @@ class ExitTemplateMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'exitTemplate';
     }

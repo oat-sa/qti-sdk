@@ -11,7 +11,7 @@ use qtism\data\content\xhtml\text\Div;
  */
 class XmlAssessmentContentDocumentTest extends QtiSmTestCase
 {
-    public function testSimpleXmlBase()
+    public function testSimpleXmlBase(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'rendering/xmlbase_1.xml');
@@ -29,7 +29,7 @@ class XmlAssessmentContentDocumentTest extends QtiSmTestCase
         $this::assertFalse($imgs[2]->hasXmlBase());
     }
 
-    public function testModerateXmlBase()
+    public function testModerateXmlBase(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'rendering/xmlbase_2.xml');

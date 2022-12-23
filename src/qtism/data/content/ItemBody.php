@@ -77,7 +77,7 @@ class ItemBody extends BodyElement
      *
      * @param BlockCollection $content The collection of blocks composing the itemBody.
      */
-    public function setContent(BlockCollection $content)
+    public function setContent(BlockCollection $content): void
     {
         $this->content = $content;
     }
@@ -87,7 +87,7 @@ class ItemBody extends BodyElement
      *
      * @return BlockCollection
      */
-    public function getContent()
+    public function getContent(): BlockCollection
     {
         return $this->content;
     }
@@ -97,7 +97,7 @@ class ItemBody extends BodyElement
      *
      * @return BlockCollection A collection of Block objects.
      */
-    public function getComponents()
+    public function getComponents(): BlockCollection
     {
         return $this->getContent();
     }
@@ -105,7 +105,7 @@ class ItemBody extends BodyElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'itemBody';
     }

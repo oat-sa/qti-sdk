@@ -38,12 +38,12 @@ class BrMarshaller extends Marshaller
      * @param QtiComponent $component A Br object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
         if ($component->hasXmlBase() === true) {
-            self::setXmlBase($element, $component->setXmlBase());
+            self::setXmlBase($element, $component->getXmlBase());
         }
 
         $this->fillElement($element, $component);
@@ -55,10 +55,10 @@ class BrMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML br element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Br object.
+     * @return Br A Br object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Br
     {
         $component = new Br();
 
@@ -74,7 +74,7 @@ class BrMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'br';
     }

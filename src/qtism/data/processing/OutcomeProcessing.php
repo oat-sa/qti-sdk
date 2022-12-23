@@ -71,7 +71,7 @@ class OutcomeProcessing extends QtiComponent
      *
      * @return OutcomeRuleCollection A collection of OutcomeRule object.
      */
-    public function getOutcomeRules()
+    public function getOutcomeRules(): OutcomeRuleCollection
     {
         return $this->outcomeRules;
     }
@@ -81,7 +81,7 @@ class OutcomeProcessing extends QtiComponent
      *
      * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
      */
-    public function setOutcomeRules(OutcomeRuleCollection $outcomeRules)
+    public function setOutcomeRules(OutcomeRuleCollection $outcomeRules): void
     {
         $this->outcomeRules = $outcomeRules;
     }
@@ -89,7 +89,7 @@ class OutcomeProcessing extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'outcomeProcessing';
     }
@@ -97,7 +97,7 @@ class OutcomeProcessing extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection($this->getOutcomeRules()->getArrayCopy());
     }

@@ -15,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class AreaMappingTest extends QtiSmTestCase
 {
-    public function testCreateNoAreaMapEntries()
+    public function testCreateNoAreaMapEntries(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('An AreaMapping object must contain at least one AreaMapEntry object. none given.');
@@ -27,7 +27,7 @@ class AreaMappingTest extends QtiSmTestCase
         );
     }
 
-    public function testSetLowerBoundWrongType()
+    public function testSetLowerBoundWrongType(): void
     {
         $mapping = new AreaMapping(
             new AreaMapEntryCollection(
@@ -43,7 +43,7 @@ class AreaMappingTest extends QtiSmTestCase
         $mapping->setLowerBound(true);
     }
 
-    public function testSetUpperBoundWrongType()
+    public function testSetUpperBoundWrongType(): void
     {
         $mapping = new AreaMapping(
             new AreaMapEntryCollection(
@@ -59,7 +59,7 @@ class AreaMappingTest extends QtiSmTestCase
         $mapping->setUpperBound(true);
     }
 
-    public function testSetDefaultValueWrongType()
+    public function testSetDefaultValueWrongType(): void
     {
         $mapping = new AreaMapping(
             new AreaMapEntryCollection(

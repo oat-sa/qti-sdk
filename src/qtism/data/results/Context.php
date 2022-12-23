@@ -77,7 +77,7 @@ class Context extends QtiComponent
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'context';
     }
@@ -87,7 +87,7 @@ class Context extends QtiComponent
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         if ($this->hasSessionIdentifiers()) {
             $components = $this->getSessionIdentifiers()->getArrayCopy();
@@ -102,7 +102,7 @@ class Context extends QtiComponent
      *
      * @return QtiIdentifier|null
      */
-    public function getSourcedId()
+    public function getSourcedId(): ?QtiIdentifier
     {
         return $this->sourcedId;
     }
@@ -124,7 +124,7 @@ class Context extends QtiComponent
      *
      * @return bool
      */
-    public function hasSourcedId()
+    public function hasSourcedId(): bool
     {
         return $this->sourcedId !== null;
     }
@@ -134,7 +134,7 @@ class Context extends QtiComponent
      *
      * @return SessionIdentifierCollection
      */
-    public function getSessionIdentifiers()
+    public function getSessionIdentifiers(): SessionIdentifierCollection
     {
         return $this->sessionIdentifiers;
     }
@@ -184,7 +184,7 @@ class Context extends QtiComponent
      *
      * @return bool
      */
-    public function hasSessionIdentifiers()
+    public function hasSessionIdentifiers(): bool
     {
         return (bool)$this->sessionIdentifiers->count();
     }

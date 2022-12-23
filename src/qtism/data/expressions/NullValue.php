@@ -34,7 +34,7 @@ class NullValue extends Expression
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'null';
     }
@@ -44,7 +44,7 @@ class NullValue extends Expression
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return true;
     }

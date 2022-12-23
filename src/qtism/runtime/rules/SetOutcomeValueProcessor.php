@@ -23,8 +23,8 @@
 
 namespace qtism\runtime\rules;
 
-use qtism\runtime\common\OutcomeVariable;
 use qtism\data\rules\SetOutcomeValue;
+use qtism\runtime\common\OutcomeVariable;
 
 /**
  * From IMS QTI:
@@ -44,15 +44,15 @@ class SetOutcomeValueProcessor extends SetValueProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return SetOutcomeValue::class;
     }
 
     /**
-     * @return mixed|string
+     * @inheritDoc
      */
-    protected function getVariableType()
+    protected function getVariableType(): string
     {
         return OutcomeVariable::class;
     }

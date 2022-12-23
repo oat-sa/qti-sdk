@@ -19,7 +19,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class DurationGTEProcessorTest extends QtiSmTestCase
 {
-    public function testDurationGTE()
+    public function testDurationGTE(): void
     {
         // There is no need of intensive testing because
         // the main logic is contained in the Duration class.
@@ -43,7 +43,7 @@ class DurationGTEProcessorTest extends QtiSmTestCase
         $this::assertTrue($result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiDuration('P1D'), null]);
@@ -52,7 +52,7 @@ class DurationGTEProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiDuration('P1D'), new QtiInteger(256)]);
@@ -61,7 +61,7 @@ class DurationGTEProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiDuration('P1D'), new MultipleContainer(BaseType::DURATION, [new QtiDuration('P2D')])]);
@@ -70,7 +70,7 @@ class DurationGTEProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -78,7 +78,7 @@ class DurationGTEProcessorTest extends QtiSmTestCase
         $processor = new DurationGTEProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiDuration('P1D'), new QtiDuration('P2D'), new QtiDuration('P3D')]);
@@ -90,7 +90,7 @@ class DurationGTEProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<durationGTE>

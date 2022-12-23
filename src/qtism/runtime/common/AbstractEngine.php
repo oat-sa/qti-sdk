@@ -71,7 +71,7 @@ abstract class AbstractEngine implements Processable
      *
      * @param QtiComponent $component A QtiComponent object.
      */
-    public function setComponent(QtiComponent $component)
+    public function setComponent(QtiComponent $component): void
     {
         $this->component = $component;
     }
@@ -81,7 +81,7 @@ abstract class AbstractEngine implements Processable
      *
      * @return QtiComponent A QtiComponent object.
      */
-    public function getComponent()
+    public function getComponent(): QtiComponent
     {
         return $this->component;
     }
@@ -91,7 +91,7 @@ abstract class AbstractEngine implements Processable
      *
      * @param State $context A State object representing the execution context.
      */
-    public function setContext(State $context)
+    public function setContext(State $context): void
     {
         $this->context = $context;
     }
@@ -101,7 +101,7 @@ abstract class AbstractEngine implements Processable
      *
      * @return State A State object representing the execution context.
      */
-    public function getContext()
+    public function getContext(): State
     {
         return $this->context;
     }
@@ -112,7 +112,7 @@ abstract class AbstractEngine implements Processable
      *
      * @param StackTrace $stackTrace A StackTrace object.
      */
-    protected function setStackTrace(StackTrace $stackTrace)
+    protected function setStackTrace(StackTrace $stackTrace): void
     {
         $this->stackTrace = $stackTrace;
     }
@@ -123,7 +123,7 @@ abstract class AbstractEngine implements Processable
      *
      * @return StackTrace A StackTrace object.
      */
-    public function getStackTrace()
+    public function getStackTrace(): StackTrace
     {
         return $this->stackTrace;
     }
@@ -134,7 +134,7 @@ abstract class AbstractEngine implements Processable
      *
      * @param string $message A trace message.
      */
-    protected function trace($message)
+    protected function trace($message): void
     {
         $item = new StackTraceItem($this->getComponent(), $message);
         $this->stackTrace->push($item);

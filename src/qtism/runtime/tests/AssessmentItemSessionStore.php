@@ -57,7 +57,7 @@ class AssessmentItemSessionStore
      *
      * @param SplObjectStorage $shelves An SplObjectStorage object that will store AssessmentItemSessionCollection objects.
      */
-    protected function setShelves(SplObjectStorage $shelves)
+    protected function setShelves(SplObjectStorage $shelves): void
     {
         $this->shelves = $shelves;
     }
@@ -68,7 +68,7 @@ class AssessmentItemSessionStore
      *
      * @return SplObjectStorage An SplObjectStorage object that will store AssessmentItemSessionCollection objects.
      */
-    protected function getShelves()
+    protected function getShelves(): SplObjectStorage
     {
         return $this->shelves;
     }
@@ -79,7 +79,7 @@ class AssessmentItemSessionStore
      * @param AssessmentItemSession $assessmentItemSession
      * @param int $occurence The occurence number of the session.
      */
-    public function addAssessmentItemSession(AssessmentItemSession $assessmentItemSession, $occurence = 0)
+    public function addAssessmentItemSession(AssessmentItemSession $assessmentItemSession, $occurence = 0): void
     {
         $assessmentItemRef = $assessmentItemSession->getAssessmentItem();
 
@@ -98,8 +98,10 @@ class AssessmentItemSessionStore
      * @return AssessmentItemSession An AssessmentItemSession object.
      * @throws OutOfBoundsException If there is no AssessmentItemSession for the given $assessmentItemRef and $occurence.
      */
-    public function getAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0)
-    {
+    public function getAssessmentItemSession(
+        AssessmentItemRef $assessmentItemRef,
+        $occurence = 0
+    ): AssessmentItemSession {
         if (isset($this->shelves[$assessmentItemRef]) && isset($this->shelves[$assessmentItemRef][$occurence]) === true) {
             return $this->shelves[$assessmentItemRef][$occurence];
         } else {
@@ -116,7 +118,7 @@ class AssessmentItemSessionStore
      * @param int $occurence An occurence number.
      * @return bool
      */
-    public function hasAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0)
+    public function hasAssessmentItemSession(AssessmentItemRef $assessmentItemRef, $occurence = 0): bool
     {
         try {
             // Circumvent SplObjectStorage bug (prior PHP 7.0.8)
@@ -133,7 +135,7 @@ class AssessmentItemSessionStore
      * @return AssessmentItemSessionCollection A collection of AssessmentItemSession objects related to $assessmentItemRef.
      * @throws OutOfBoundsException If no item sessions related to $assessmentItemRef are found.
      */
-    public function getAssessmentItemSessions(AssessmentItemRef $assessmentItemRef)
+    public function getAssessmentItemSessions(AssessmentItemRef $assessmentItemRef): AssessmentItemSessionCollection
     {
         if (isset($this->shelves[$assessmentItemRef]) === true) {
             return $this->shelves[$assessmentItemRef];
@@ -153,7 +155,7 @@ class AssessmentItemSessionStore
      * @param AssessmentItemRef $assessmentItemRef An AssessmentItemRef object.
      * @return bool
      */
-    public function hasMultipleOccurences(AssessmentItemRef $assessmentItemRef)
+    public function hasMultipleOccurences(AssessmentItemRef $assessmentItemRef): bool
     {
         return isset($this->shelves[$assessmentItemRef]) && count($this->shelves[$assessmentItemRef]) > 1;
     }
@@ -163,7 +165,7 @@ class AssessmentItemSessionStore
      *
      * @return AssessmentItemSessionCollection A collection of AssessmentItemSession objects.
      */
-    public function getAllAssessmentItemSessions()
+    public function getAllAssessmentItemSessions(): AssessmentItemSessionCollection
     {
         $collection = new AssessmentItemSessionCollection();
 

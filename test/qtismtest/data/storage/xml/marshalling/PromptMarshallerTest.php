@@ -16,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class PromptMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new Prompt('my-prompt', 'qti-prompt');
         $component->setContent(new FlowStaticCollection([new TextRun('This is a prompt')]));
@@ -29,7 +29,7 @@ class PromptMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<prompt id="my-prompt" class="qti-prompt">This is a prompt</prompt>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is a prompt</prompt>');
 
@@ -45,7 +45,7 @@ class PromptMarshallerTest extends QtiSmTestCase
         $this::assertEquals('This is a prompt', $content[0]->getContent());
     }
 
-    public function testUnmarshallExcludedFlowStatic()
+    public function testUnmarshallExcludedFlowStatic(): void
     {
         $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is a prompt with a <pre>pre which is not allowed.</pre></prompt>');
 
@@ -55,7 +55,7 @@ class PromptMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallExcludedComponents()
+    public function testUnmarshallExcludedComponents(): void
     {
         $element = $this->createDOMElement('
             <prompt id="my-prompt" class="qti-prompt">
@@ -71,7 +71,7 @@ class PromptMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshallPromptWithAnchorInQti21ThrowsException()
+    public function testUnmarshallPromptWithAnchorInQti21ThrowsException(): void
     {
         $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is an anchor: <a href="#">anchor text</a></prompt>');
 
@@ -81,7 +81,7 @@ class PromptMarshallerTest extends QtiSmTestCase
         $marshaller->unmarshall($element);
     }
 
-    public function testUnmarshallPromptWithAnchorInQti22Works()
+    public function testUnmarshallPromptWithAnchorInQti22Works(): void
     {
         $element = $this->createDOMElement('<prompt id="my-prompt" class="qti-prompt">This is an anchor: <a href="#">anchor text</a></prompt>');
 

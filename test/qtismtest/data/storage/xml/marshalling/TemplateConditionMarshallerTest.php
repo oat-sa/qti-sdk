@@ -27,7 +27,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TemplateConditionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $true = new BaseValue(BaseType::BOOLEAN, true);
         $setTemplateValue = new SetTemplateValue('tpl1', new BaseValue(BaseType::INTEGER, 1337));
@@ -41,7 +41,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<templateCondition><templateIf><baseValue baseType="boolean">true</baseValue><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue></templateIf></templateCondition>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         $element = $this->createDOMElement('
 	        <templateCondition>
@@ -76,7 +76,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1337, $templateRules[0]->getExpression()->getValue());
     }
 
-    public function testMarshallElseIfMinimal()
+    public function testMarshallElseIfMinimal(): void
     {
         $true = new BaseValue(BaseType::BOOLEAN, true);
         $setTemplateValue = new SetTemplateValue('tpl1', new BaseValue(BaseType::INTEGER, 1337));
@@ -98,7 +98,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnMarshallElseIfMinimal()
+    public function testUnMarshallElseIfMinimal(): void
     {
         $element = $this->createDOMElement('
 	        <templateCondition>
@@ -149,7 +149,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(ExitTemplate::class, $templateRules[0]);
     }
 
-    public function testMarshallIfElseMinimal()
+    public function testMarshallIfElseMinimal(): void
     {
         $true = new BaseValue(BaseType::BOOLEAN, true);
         $setTemplateValue = new SetTemplateValue('tpl1', new BaseValue(BaseType::INTEGER, 1337));
@@ -171,7 +171,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshallIfElseMinimal()
+    public function testUnmarshallIfElseMinimal(): void
     {
         $element = $this->createDOMElement('
 	        <templateCondition>
@@ -223,7 +223,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('einstein', $setCorrectResponse->getExpression()->getValue());
     }
 
-    public function testUnmarshallUnleashTheBeast()
+    public function testUnmarshallUnleashTheBeast(): void
     {
         $element = $this->createDOMElement('
 	        <templateCondition>
@@ -473,7 +473,7 @@ class TemplateConditionMarshallerTest extends QtiSmTestCase
         $this::assertTrue($templateRules[0]->getExpression()->getValue());
     }
 
-    public function testMarshallUnleashTheBeast()
+    public function testMarshallUnleashTheBeast(): void
     {
         // Same structure as testUnmarshallUnleashTheBeast.
 

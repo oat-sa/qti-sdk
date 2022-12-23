@@ -60,7 +60,7 @@ class Caption extends BodyElement
      *
      * @return InlineCollection A collection of Inline objects.
      */
-    public function getComponents()
+    public function getComponents(): InlineCollection
     {
         return $this->getContent();
     }
@@ -70,7 +70,7 @@ class Caption extends BodyElement
      *
      * @param InlineCollection $content A collection of Inline objects.
      */
-    public function setContent(InlineCollection $content)
+    public function setContent(InlineCollection $content): void
     {
         $this->content = $content;
     }
@@ -80,7 +80,7 @@ class Caption extends BodyElement
      *
      * @return InlineCollection
      */
-    public function getContent()
+    public function getContent(): InlineCollection
     {
         return $this->content;
     }
@@ -88,7 +88,7 @@ class Caption extends BodyElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'caption';
     }

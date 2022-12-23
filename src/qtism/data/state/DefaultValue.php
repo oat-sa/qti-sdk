@@ -72,7 +72,7 @@ class DefaultValue extends QtiComponent
      *
      * @return string An interpretation.
      */
-    public function getInterpretation()
+    public function getInterpretation(): string
     {
         return $this->interpretation;
     }
@@ -84,7 +84,7 @@ class DefaultValue extends QtiComponent
      * @param string $interpretation An interpretation.
      * @throws InvalidArgumentException If $interpretation is not a string.
      */
-    public function setInterpretation($interpretation)
+    public function setInterpretation($interpretation): void
     {
         if (is_string($interpretation)) {
             $this->interpretation = $interpretation;
@@ -99,7 +99,7 @@ class DefaultValue extends QtiComponent
      *
      * @return ValueCollection A ValueCollection containing at least one Value object.
      */
-    public function getValues()
+    public function getValues(): ValueCollection
     {
         return $this->values;
     }
@@ -110,7 +110,7 @@ class DefaultValue extends QtiComponent
      * @param ValueCollection $values A collection of Value objects containing at least one Value object.
      * @throws InvalidArgumentException If $values does not contain at least one Value object.
      */
-    public function setValues(ValueCollection $values)
+    public function setValues(ValueCollection $values): void
     {
         if (count($values) > 0) {
             $this->values = $values;
@@ -123,7 +123,7 @@ class DefaultValue extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'defaultValue';
     }
@@ -131,7 +131,7 @@ class DefaultValue extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection($this->getValues()->getArrayCopy());
     }

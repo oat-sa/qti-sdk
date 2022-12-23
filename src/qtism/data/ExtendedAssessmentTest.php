@@ -56,7 +56,7 @@ class ExtendedAssessmentTest extends AssessmentTest
      *
      * @param TestFeedbackRefCollection $testFeedbackRefs
      */
-    public function setTestFeedbackRefs(TestFeedbackRefCollection $testFeedbackRefs)
+    public function setTestFeedbackRefs(TestFeedbackRefCollection $testFeedbackRefs): void
     {
         $this->testFeedbackRefs = $testFeedbackRefs;
     }
@@ -66,7 +66,7 @@ class ExtendedAssessmentTest extends AssessmentTest
      *
      * @return TestFeedbackRefCollection
      */
-    public function getTestFeedbackRefs()
+    public function getTestFeedbackRefs(): TestFeedbackRefCollection
     {
         return $this->testFeedbackRefs;
     }
@@ -76,7 +76,7 @@ class ExtendedAssessmentTest extends AssessmentTest
      *
      * @param TestFeedbackRef $testFeedbackRef
      */
-    public function addTestFeedbackRef(TestFeedbackRef $testFeedbackRef)
+    public function addTestFeedbackRef(TestFeedbackRef $testFeedbackRef): void
     {
         $this->getTestFeedbackRefs()->attach($testFeedbackRef);
     }
@@ -86,7 +86,7 @@ class ExtendedAssessmentTest extends AssessmentTest
      *
      * @param TestFeedbackRef $testFeedbackRef
      */
-    public function removeTestFeedbackRef(TestFeedbackRef $testFeedbackRef)
+    public function removeTestFeedbackRef(TestFeedbackRef $testFeedbackRef): void
     {
         $this->getTestFeedbackRefs()->detach($testFeedbackRef);
     }
@@ -97,7 +97,7 @@ class ExtendedAssessmentTest extends AssessmentTest
      * @param AssessmentTest $assessmentTest
      * @return ExtendedAssessmentTest
      */
-    public static function createFromAssessmentTest(AssessmentTest $assessmentTest)
+    public static function createFromAssessmentTest(AssessmentTest $assessmentTest): ExtendedAssessmentTest
     {
         $ref = new ExtendedAssessmentTest(
             $assessmentTest->getIdentifier(),
@@ -118,7 +118,7 @@ class ExtendedAssessmentTest extends AssessmentTest
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $components = array_merge(
             parent::getComponents()->getArrayCopy(),

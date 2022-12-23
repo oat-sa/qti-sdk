@@ -31,7 +31,7 @@ class Td extends TableCell
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'td';
     }

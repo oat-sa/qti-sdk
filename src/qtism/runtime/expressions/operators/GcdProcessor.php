@@ -50,7 +50,7 @@ class GcdProcessor extends OperatorProcessor
      * @return QtiInteger|null The integer value equal in value to the greatest common divisor of the sub-expressions. If any of the sub-expressions is NULL, the result is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiInteger
     {
         $operands = $this->getOperands();
 
@@ -119,7 +119,7 @@ class GcdProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Gcd::class;
     }

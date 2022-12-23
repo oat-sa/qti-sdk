@@ -44,7 +44,7 @@ class ConditionRenderingOptions
      * @return ConditionRenderingOptions The format by default for the
      * ConditionRenderingOptions.
      */
-    public static function getDefault()
+    public static function getDefault(): ConditionRenderingOptions
     {
         return new ConditionRenderingOptions(self::$defaultIdentation);
     }
@@ -70,7 +70,7 @@ class ConditionRenderingOptions
      * @return int
      */
 
-    public function getIndentation()
+    public function getIndentation(): int
     {
         return $this->indentation;
     }

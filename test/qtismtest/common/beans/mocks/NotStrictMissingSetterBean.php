@@ -42,7 +42,7 @@ class NotStrictMissingSetterBean
     /**
      * @param $firstName
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName): void
     {
         $this->firstName = $firstName;
     }
@@ -50,7 +50,7 @@ class NotStrictMissingSetterBean
     /**
      * @return mixed
      */
-    public function getFirstName()
+    public function getFirstName(): mixed
     {
         return $this->girstName;
     }
@@ -59,15 +59,17 @@ class NotStrictMissingSetterBean
      * @param $lastName
      * @return string
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName): string
     {
+        $this->lastName = $lastName;
+
         return $this->lastName;
     }
 
     /**
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -77,7 +79,7 @@ class NotStrictMissingSetterBean
      *
      * @param string $hair
      */
-    protected function setHair($hair)
+    protected function setHair($hair): void
     {
         $this->hair = $hair;
     }
@@ -85,7 +87,7 @@ class NotStrictMissingSetterBean
     /**
      * @return string
      */
-    public function getHair()
+    public function getHair(): string
     {
         return $this->hair;
     }

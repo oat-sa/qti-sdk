@@ -19,7 +19,7 @@ use qtism\data\expressions\operators\Equal;
  */
 class OutcomeConditionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallIfMinimal()
+    public function testMarshallIfMinimal(): void
     {
         $setOutcomeValue = new SetOutcomeValue('myStringVar', new BaseValue(BaseType::STRING, 'Tested!'));
         $outcomeIf = new OutcomeIf(new BaseValue(BaseType::BOOLEAN, true), new OutcomeRuleCollection([$setOutcomeValue]));
@@ -35,7 +35,7 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $this::assertSame($element->getElementsByTagName('outcomeIf')->item(0), $element->getElementsByTagName('setOutcomeValue')->item(0)->parentNode);
     }
 
-    public function testUnmarshallConditionMinimal()
+    public function testUnmarshallConditionMinimal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -66,7 +66,7 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('myStringVar', $outcomeRules[0]->getIdentifier());
     }
 
-    public function testUnmarshallConditionElseIf()
+    public function testUnmarshallConditionElseIf(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -113,7 +113,7 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('ElseIf!', $outcomeRules[0]->getExpression()->getValue());
     }
 
-    public function testUnmarshallConditionElseIfElse()
+    public function testUnmarshallConditionElseIfElse(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -171,7 +171,7 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Else!', $outcomeRules[0]->getExpression()->getValue());
     }
 
-    public function testUnmarshallConditionMultipleElseIf()
+    public function testUnmarshallConditionMultipleElseIf(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -242,7 +242,7 @@ class OutcomeConditionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('Else!', $outcomeRules[0]->getExpression()->getValue());
     }
 
-    public function testUnmarshallConditionUltimate()
+    public function testUnmarshallConditionUltimate(): void
     {
         // Special thanks to Younes Djaghloul ! We love you Younz :D !
         $dom = new DOMDocument('1.0', 'UTF-8');

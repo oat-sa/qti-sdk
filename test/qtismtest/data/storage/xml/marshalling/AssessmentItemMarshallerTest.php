@@ -19,7 +19,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class AssessmentItemMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         $identifier = 'Q01';
         $timeDependent = false;
@@ -50,7 +50,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $this::assertEquals($toolVersion, $element->getAttribute('toolVersion'));
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -77,7 +77,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $this::assertEquals('0.6.0', $component->getToolVersion());
     }
 
-    public function testMarshallMaximal()
+    public function testMarshallMaximal(): void
     {
         $identifier = 'Q01';
         $title = 'Test Item';
@@ -123,7 +123,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
         $this::assertEquals('out2', $outcomeDeclarationElts->item(1)->getAttribute('identifier'));
     }
 
-    public function testUnmarshallMaximal()
+    public function testUnmarshallMaximal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -159,7 +159,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshallMinimal
      */
-    public function testUnmarshallDecorate()
+    public function testUnmarshallDecorate(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="Q01" title="Test Item" timeDependent="false" label="My Label" toolName="My Tool" toolVersion="0.6.0"/>');
@@ -179,7 +179,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
     /**
      * @testUnmarshallMinimal
      */
-    public function testUnmarshallNoTitle()
+    public function testUnmarshallNoTitle(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -200,7 +200,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
     /**
      * @testUnmarshallMinimal
      */
-    public function testUnmarshallNoTimeDependent()
+    public function testUnmarshallNoTimeDependent(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -221,7 +221,7 @@ class AssessmentItemMarshallerTest extends QtiSmTestCase
     /**
      * @testUnmarshallMinimal
      */
-    public function testUnmarshallNoIdentifier()
+    public function testUnmarshallNoIdentifier(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

@@ -65,7 +65,7 @@ class GapText extends GapChoice
      *
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -75,7 +75,7 @@ class GapText extends GapChoice
      *
      * @param QtiComponentCollection $content
      */
-    public function setContent(QtiComponentCollection $content)
+    public function setContent(QtiComponentCollection $content): void
     {
         $this->content = $content;
     }
@@ -85,7 +85,7 @@ class GapText extends GapChoice
      *
      * @return QtiComponentCollection
      */
-    public function getContent()
+    public function getContent(): QtiComponentCollection
     {
         return $this->content;
     }
@@ -93,7 +93,7 @@ class GapText extends GapChoice
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'gapText';
     }

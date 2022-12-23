@@ -70,7 +70,7 @@ abstract class AbstractStorage
      *
      * @param AbstractSessionManager $manager
      */
-    protected function setManager(AbstractSessionManager $manager)
+    protected function setManager(AbstractSessionManager $manager): void
     {
         $this->manager = $manager;
     }
@@ -80,7 +80,7 @@ abstract class AbstractStorage
      *
      * @return AbstractSessionManager
      */
-    protected function getManager()
+    protected function getManager(): AbstractSessionManager
     {
         return $this->manager;
     }
@@ -92,7 +92,7 @@ abstract class AbstractStorage
      *
      * @param AssessmentTest $test
      */
-    protected function setAssessmentTest(AssessmentTest $test)
+    protected function setAssessmentTest(AssessmentTest $test): void
     {
         $this->assessmentTest = $test;
     }
@@ -152,7 +152,7 @@ abstract class AbstractStorage
      * @return bool
      * @throws StorageException If an error occurs while determining whether the AssessmentTestSession object exists in the storage.
      */
-    abstract public function exists($sessionId);
+    abstract public function exists($sessionId): bool;
 
     /**
      * Delete an AssessmentTestSession object from persistence.
@@ -172,5 +172,5 @@ abstract class AbstractStorage
      * @return bool
      * @throws StorageException If an error occurs while deleting the AssessmentTestSession object.
      */
-    abstract public function delete(AssessmentTestSession $assessmentTestSession);
+    abstract public function delete(AssessmentTestSession $assessmentTestSession): bool;
 }

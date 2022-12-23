@@ -20,12 +20,12 @@ class TimeTest extends QtiSmTestCase
      * @param DateTime $time2
      * @param int $expectedSeconds
      */
-    public function testTimeDiffSeconds(DateTime $time1, DateTime $time2, $expectedSeconds)
+    public function testTimeDiffSeconds(DateTime $time1, DateTime $time2, $expectedSeconds): void
     {
         $this::assertSame($expectedSeconds, TimeUtils::timeDiffSeconds($time1, $time2));
     }
 
-    public function testBasicToUtc()
+    public function testBasicToUtc(): void
     {
         $originalTime = DateTime::createFromFormat('Y-m-d G:i:s', '2014-07-15 16:56:20', new DateTimeZone('Europe/Luxembourg'));
         $utcTime = TimeUtils::toUtc($originalTime);
@@ -36,7 +36,7 @@ class TimeTest extends QtiSmTestCase
      * @return array
      * @throws Exception
      */
-    public function timeDiffSecondsProvider()
+    public function timeDiffSecondsProvider(): array
     {
         $tz = new DateTimeZone('UTC');
 

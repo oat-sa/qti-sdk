@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class StylesheetMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallOne()
+    public function testMarshallOne(): void
     {
         $uri = 'http://myuri.com';
         $type = 'text/css';
@@ -35,7 +35,7 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $this::assertEquals($title, $element->getAttribute('title'));
     }
 
-    public function testMarshallTwo()
+    public function testMarshallTwo(): void
     {
         $uri = 'http://myuri.com';
 
@@ -52,7 +52,7 @@ class StylesheetMarshallerTest extends QtiSmTestCase
         $this::assertFalse($element->hasAttribute('title'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<stylesheet xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" media="screen" href="http://myuri.com" type="text/css" title="A pure stylesheet"/>');

@@ -32,7 +32,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @param mixed $value
      * @param int|bool $expectedBaseType
      */
-    public function testInferBaseType($value, $expectedBaseType)
+    public function testInferBaseType($value, $expectedBaseType): void
     {
         $this::assertSame($expectedBaseType, Utils::inferBaseType($value));
     }
@@ -42,7 +42,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @param mixed $value
      * @param int|bool $expectedCardinality
      */
-    public function testInferCardinality($value, $expectedCardinality)
+    public function testInferCardinality($value, $expectedCardinality): void
     {
         $this::assertSame($expectedCardinality, Utils::inferCardinality($value));
     }
@@ -53,7 +53,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @param string $string
      * @param bool $expected
      */
-    public function testIsValidVariableIdentifier($string, $expected)
+    public function testIsValidVariableIdentifier($string, $expected): void
     {
         $this::assertSame($expected, Utils::isValidVariableIdentifier($string));
     }
@@ -64,7 +64,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @param QtiDatatype $value
      * @param bool $expected
      */
-    public function testIsNull(QtiDatatype $value = null, $expected)
+    public function testIsNull(QtiDatatype $value = null, $expected): void
     {
         $this::assertSame($expected, Utils::isNull($value));
     }
@@ -76,7 +76,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @param QtiDatatype $b
      * @param bool $expected
      */
-    public function testEquals(QtiDatatype $a = null, QtiDatatype $b = null, $expected)
+    public function testEquals(QtiDatatype $a = null, QtiDatatype $b = null, $expected): void
     {
         $this::assertSame($expected, Utils::equals($a, $b));
     }
@@ -86,7 +86,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @param mixed $value
      * @param string $expectedMsg
      */
-    public function testThrowTypingError($value, $expectedMsg)
+    public function testThrowTypingError($value, $expectedMsg): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($expectedMsg);
@@ -99,7 +99,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @param array $floatArray
      * @param array $integerArray
      */
-    public function testFloatArrayToInteger($floatArray, $integerArray)
+    public function testFloatArrayToInteger($floatArray, $integerArray): void
     {
         $this::assertEquals($integerArray, Utils::floatArrayToInteger($floatArray));
     }
@@ -109,7 +109,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @param array $integerArray
      * @param array $floatArray
      */
-    public function testIntegerArrayToFloat($integerArray, $floatArray)
+    public function testIntegerArrayToFloat($integerArray, $floatArray): void
     {
         $this::assertEquals($floatArray, Utils::integerArrayToFloat($integerArray));
     }
@@ -117,7 +117,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function throwTypingErrorProvider()
+    public function throwTypingErrorProvider(): array
     {
         $message = 'A value is not compliant with the QTI runtime model datatypes: Null, QTI Boolean, QTI Coords, QTI DirectedPair, QTI Duration, QTI File, QTI Float, QTI Identifier, QTI Integer, QTI IntOrIdentifier, QTI Pair, QTI Point, QTI String, QTI Uri. "%s" given.';
         return [
@@ -130,7 +130,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function floatArrayToIntegerProvider()
+    public function floatArrayToIntegerProvider(): array
     {
         return [
             [[10.2, 0.0], [10, 0]],
@@ -140,7 +140,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function integerArrayToFloatProvider()
+    public function integerArrayToFloatProvider(): array
     {
         return [
             [[10, 0], [10., 0.]],
@@ -150,7 +150,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function inferBaseTypeProvider()
+    public function inferBaseTypeProvider(): array
     {
         $returnValue = [];
 
@@ -177,7 +177,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function inferCardinalityProvider()
+    public function inferCardinalityProvider(): array
     {
         $returnValue = [];
 
@@ -202,7 +202,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function isValidVariableIdentifierProvider()
+    public function isValidVariableIdentifierProvider(): array
     {
         return [
             ['Q01', true],
@@ -234,7 +234,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function isNullDataProvider()
+    public function isNullDataProvider(): array
     {
         return [
             [new QtiBoolean(true), false],
@@ -251,7 +251,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function equalsProvider()
+    public function equalsProvider(): array
     {
         return [
             [new QtiBoolean(true), null, false],

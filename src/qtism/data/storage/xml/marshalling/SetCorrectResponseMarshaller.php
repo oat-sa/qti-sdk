@@ -40,7 +40,7 @@ class SetCorrectResponseMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $marshaller = $this->getMarshallerFactory()->createMarshaller($component->getExpression());
@@ -55,11 +55,11 @@ class SetCorrectResponseMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI setCorrectResponse element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A SetCorrectResponse object.
+     * @return SetCorrectResponse A SetCorrectResponse object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): SetCorrectResponse
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $expressionElt = self::getFirstChildElement($element);
@@ -80,7 +80,7 @@ class SetCorrectResponseMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'setCorrectResponse';
     }

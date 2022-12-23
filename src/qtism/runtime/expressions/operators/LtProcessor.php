@@ -45,7 +45,7 @@ class LtProcessor extends OperatorProcessor
      * @return QtiBoolean|null Whether the first sub-expression is numerically less than the second or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -69,7 +69,7 @@ class LtProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Lt::class;
     }

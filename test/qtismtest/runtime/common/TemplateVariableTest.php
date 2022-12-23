@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TemplateVariableTest extends QtiSmTestCase
 {
-    public function testCreateFromDataModel()
+    public function testCreateFromDataModel(): void
     {
         $decl = $this->createComponentFromXml('
             <templateDeclaration identifier="mytpl1" cardinality="single" baseType="identifier" paramVariable="true" mathVariable="false">

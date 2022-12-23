@@ -105,7 +105,7 @@ class Value extends QtiComponent
      * @param bool $partOfRecord
      * @throws InvalidArgumentException If $partOfRecord is not a boolean.
      */
-    public function setPartOfRecord($partOfRecord)
+    public function setPartOfRecord($partOfRecord): void
     {
         if (is_bool($partOfRecord)) {
             $this->isPartOfRecord = $partOfRecord;
@@ -120,7 +120,7 @@ class Value extends QtiComponent
      *
      * @return bool
      */
-    public function isPartOfRecord()
+    public function isPartOfRecord(): bool
     {
         return $this->isPartOfRecord;
     }
@@ -130,7 +130,7 @@ class Value extends QtiComponent
      *
      * @return string A QTI identifier.
      */
-    public function getFieldIdentifier()
+    public function getFieldIdentifier(): string
     {
         return $this->fieldIdentifier;
     }
@@ -141,7 +141,7 @@ class Value extends QtiComponent
      * @param string $fieldIdentifier A QTI identifier.
      * @throws InvalidArgumentException If $fieldIdentifier is not a valid QTI Identifier.
      */
-    public function setFieldIdentifier($fieldIdentifier)
+    public function setFieldIdentifier($fieldIdentifier): void
     {
         if ($fieldIdentifier == '' || Format::isIdentifier($fieldIdentifier)) {
             $this->fieldIdentifier = $fieldIdentifier;
@@ -156,7 +156,7 @@ class Value extends QtiComponent
      *
      * @return bool
      */
-    public function hasFieldIdentifier()
+    public function hasFieldIdentifier(): bool
     {
         return $this->getFieldIdentifier() !== '';
     }
@@ -166,7 +166,7 @@ class Value extends QtiComponent
      *
      * @return int A value of the BaseType enumeration or a negative value (< 0) if there is no baseType.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -177,7 +177,7 @@ class Value extends QtiComponent
      * @param int $baseType A value of the BaseType enumeration. A negative value (< 0) means there is no baseType.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType operation.
      */
-    public function setBaseType($baseType)
+    public function setBaseType($baseType): void
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType === -1) {
             $this->baseType = $baseType;
@@ -192,7 +192,7 @@ class Value extends QtiComponent
      *
      * @return bool
      */
-    public function hasBaseType()
+    public function hasBaseType(): bool
     {
         return $this->getBaseType() !== -1;
     }
@@ -202,6 +202,7 @@ class Value extends QtiComponent
      *
      * @return mixed A value with a datatype depending on the baseType of the Value.
      */
+    #[\ReturnTypeWillChange]
     public function getValue()
     {
         return $this->value;
@@ -213,7 +214,7 @@ class Value extends QtiComponent
      *
      * @param mixed $value A value with a correct datatype regarding the baseType.
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = $value;
     }
@@ -221,7 +222,7 @@ class Value extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'value';
     }
@@ -229,7 +230,7 @@ class Value extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

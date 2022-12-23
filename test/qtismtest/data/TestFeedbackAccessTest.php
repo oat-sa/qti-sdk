@@ -13,7 +13,7 @@ class TestFeedbackAccessTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return TestFeedbackAccess::class;
     }
@@ -21,7 +21,7 @@ class TestFeedbackAccessTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'atEnd',
@@ -32,7 +32,7 @@ class TestFeedbackAccessTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'AT_END',
@@ -43,7 +43,7 @@ class TestFeedbackAccessTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             TestFeedbackAccess::AT_END,

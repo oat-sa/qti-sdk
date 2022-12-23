@@ -111,7 +111,7 @@ class Param extends QtiComponent implements ObjectFlow
      * @param string $name A string.
      * @throws InvalidArgumentException If $name is not a string.
      */
-    public function setName($name)
+    public function setName($name): void
     {
         if (is_string($name)) {
             $this->name = $name;
@@ -126,7 +126,7 @@ class Param extends QtiComponent implements ObjectFlow
      *
      * @return string A string.
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -137,7 +137,7 @@ class Param extends QtiComponent implements ObjectFlow
      * @param string $value A value as a string.
      * @throws InvalidArgumentException If $value is not a string.
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         if (is_string($value)) {
             $this->value = $value;
@@ -152,7 +152,7 @@ class Param extends QtiComponent implements ObjectFlow
      *
      * @return string A value as a string.
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -163,7 +163,7 @@ class Param extends QtiComponent implements ObjectFlow
      * @param int $valueType A value from the ParamType enumeration.
      * @throws InvalidArgumentException If $valueType is not a value from the ParamType enumeration.
      */
-    public function setValueType($valueType)
+    public function setValueType($valueType): void
     {
         if (in_array($valueType, ParamType::asArray(), true)) {
             $this->valueType = $valueType;
@@ -178,7 +178,7 @@ class Param extends QtiComponent implements ObjectFlow
      *
      * @return int A value from the ParamType enumeration.
      */
-    public function getValueType()
+    public function getValueType(): int
     {
         return $this->valueType;
     }
@@ -190,7 +190,7 @@ class Param extends QtiComponent implements ObjectFlow
      * @param string $type A mime-type.
      * @throws InvalidArgumentException If the $type argument is not a string.
      */
-    public function setType($type)
+    public function setType($type): void
     {
         if (is_string($type)) {
             $this->type = $type;
@@ -206,7 +206,7 @@ class Param extends QtiComponent implements ObjectFlow
      *
      * @return string A mime-type or an empty string if no type was provided.
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -216,7 +216,7 @@ class Param extends QtiComponent implements ObjectFlow
      *
      * @return bool
      */
-    public function hasType()
+    public function hasType(): bool
     {
         return $this->getType() !== '';
     }
@@ -224,7 +224,7 @@ class Param extends QtiComponent implements ObjectFlow
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -232,7 +232,7 @@ class Param extends QtiComponent implements ObjectFlow
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'param';
     }

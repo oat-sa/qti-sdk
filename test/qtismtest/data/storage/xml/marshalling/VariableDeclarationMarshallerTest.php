@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class VariableDeclarationMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new VariableDeclaration('myVar', BaseType::INTEGER, Cardinality::SINGLE);
 
@@ -38,7 +38,7 @@ class VariableDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1, $defaultValueElts->length);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

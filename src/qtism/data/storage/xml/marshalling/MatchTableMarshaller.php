@@ -50,7 +50,7 @@ class MatchTableMarshaller extends Marshaller
      *
      * @return int
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -62,7 +62,7 @@ class MatchTableMarshaller extends Marshaller
      * @param int $baseType A value from the BaseType enumeration or -1 to state there is no particular baseType.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration nor -1.
      */
-    public function setBaseType($baseType)
+    public function setBaseType($baseType): void
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType == -1) {
             $this->baseType = $baseType;
@@ -93,7 +93,7 @@ class MatchTableMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -113,11 +113,11 @@ class MatchTableMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI MatchTable element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A MatchTable object.
+     * @return MatchTable A MatchTable object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException If the $element to unmarshall has no matchTableEntry children.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): MatchTable
     {
         $matchTableEntryElements = $element->getElementsByTagName('matchTableEntry');
         if ($matchTableEntryElements->length > 0) {
@@ -151,7 +151,7 @@ class MatchTableMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'matchTable';
     }

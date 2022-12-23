@@ -27,7 +27,7 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
      * @param string $expectedZ
      * @throws MarshallerNotFoundException
      */
-    public function testOutcomeConditionComplex($t, $tt, $expectedX, $expectedY, $expectedZ)
+    public function testOutcomeConditionComplex($t, $tt, $expectedX, $expectedY, $expectedZ): void
     {
         $rule = $this->createComponentFromXml('
 			<outcomeCondition>
@@ -105,7 +105,7 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
      * @param $expected
      * @param $value
      */
-    protected function check($expected, $value)
+    protected function check($expected, $value): void
     {
         if ($expected === null) {
             $this::assertNull($value);
@@ -114,7 +114,7 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
         }
     }
 
-    public function testWrongRuleType()
+    public function testWrongRuleType(): void
     {
         $rule = $this->createComponentFromXml('
 			<responseCondition>
@@ -137,7 +137,7 @@ class OutcomeConditionProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function outcomeConditionComplexProvider()
+    public function outcomeConditionComplexProvider(): array
     {
         return [
             [new QtiInteger(1), new QtiInteger(1), 'A', 'C', null],

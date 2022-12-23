@@ -17,7 +17,7 @@ class MarkupPostRendererTest extends QtiSmTestCase
      * @param string $relativeUri
      * @throws RenderingException
      */
-    public function testXmlDeclarationCleanUp($relativeUri)
+    public function testXmlDeclarationCleanUp($relativeUri): void
     {
         // Regular file, simple new line after XML declaration.
         $file = self::samplesDir() . $relativeUri;
@@ -37,7 +37,7 @@ class MarkupPostRendererTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function xmlDeclarationCleanUpProvider()
+    public function xmlDeclarationCleanUpProvider(): array
     {
         return [
             // Regular file, simple new line after XML declaration.
@@ -49,7 +49,7 @@ class MarkupPostRendererTest extends QtiSmTestCase
         ];
     }
 
-    public function testNoDocumentElement()
+    public function testNoDocumentElement(): void
     {
         $this->expectException(RenderingException::class);
 
@@ -58,7 +58,7 @@ class MarkupPostRendererTest extends QtiSmTestCase
         $output = $renderer->render($doc);
     }
 
-    public function testTemplateOrientedFeedback()
+    public function testTemplateOrientedFeedback(): void
     {
         $file = self::samplesDir() . 'rendering/postrendering/templateoriented_1.xml';
         $doc = new DOMDocument('1.0', 'UTF-8');
@@ -97,7 +97,7 @@ class MarkupPostRendererTest extends QtiSmTestCase
         unlink($filename);
     }
 
-    public function testTemplateOrientedInclude()
+    public function testTemplateOrientedInclude(): void
     {
         $file = self::samplesDir() . 'rendering/postrendering/templateoriented_2.xml';
         $doc = new DOMDocument('1.0', 'UTF-8');

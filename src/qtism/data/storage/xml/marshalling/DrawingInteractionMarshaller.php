@@ -40,7 +40,7 @@ class DrawingInteractionMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
@@ -63,11 +63,11 @@ class DrawingInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a DrawingInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A DrawingInteraction object.
+     * @return DrawingInteraction A DrawingInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): DrawingInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             $objectElts = $this->getChildElementsByTagName($element, 'object');
@@ -104,7 +104,7 @@ class DrawingInteractionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'drawingInteraction';
     }

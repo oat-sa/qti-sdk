@@ -55,7 +55,7 @@ interface FeedbackElement
      *
      * @return string A QTI Identifier.
      */
-    public function getOutcomeIdentifier();
+    public function getOutcomeIdentifier(): string;
 
     /**
      * Set how the visibility of the feedbackElement is controlled.
@@ -70,7 +70,7 @@ interface FeedbackElement
      *
      * @return int A value from the ShowHide enumeration.
      */
-    public function getShowHide();
+    public function getShowHide(): int;
 
     /**
      * Set the identifier typed value that determines the visibility of the feedback in conjunction
@@ -87,5 +87,5 @@ interface FeedbackElement
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier();
+    public function getIdentifier(): string;
 }

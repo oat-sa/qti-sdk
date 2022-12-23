@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MathConstantProcessorTest extends QtiSmTestCase
 {
-    public function testSimple()
+    public function testSimple(): void
     {
         $mathConstantExpr = $this->createComponentFromXml('<mathConstant name="e"/>');
         $mathConstantProcessor = new MathConstantProcessor($mathConstantExpr);

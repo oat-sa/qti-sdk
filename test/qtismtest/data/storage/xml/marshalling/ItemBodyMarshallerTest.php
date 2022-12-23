@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ItemBodyMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $itemBody = $this->createComponentFromXml('
             <itemBody id="my-body">
@@ -44,7 +44,7 @@ class ItemBodyMarshallerTest extends QtiSmTestCase
         $this::assertEquals('This is some stimulus.', $divContent[0]->getContent());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $h1 = new H1();
         $h1->setContent(new InlineCollection([new TextRun('Super Item')]));

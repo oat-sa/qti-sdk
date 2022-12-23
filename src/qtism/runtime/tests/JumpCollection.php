@@ -37,7 +37,7 @@ class JumpCollection extends AbstractCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a Jump object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Jump) {
             $msg = 'JumpCollection objects only accept to store Jump objects.';

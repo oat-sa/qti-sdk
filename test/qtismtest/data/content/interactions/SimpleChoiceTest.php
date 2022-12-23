@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ChoiceTest extends QtiSmTestCase
 {
-    public function testCreateChoiceWrongIdentifier()
+    public function testCreateChoiceWrongIdentifier(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'identifier' argument must be a valid QTI identifier");
@@ -19,7 +19,7 @@ class ChoiceTest extends QtiSmTestCase
         $choice = new SimpleChoice('999');
     }
 
-    public function testSetFixedWrongType()
+    public function testSetFixedWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'fixed' argument must be a boolean value, 'string' given.");
@@ -28,7 +28,7 @@ class ChoiceTest extends QtiSmTestCase
         $choice->setFixed('bla');
     }
 
-    public function testSetTemplateIdentifierWrongType()
+    public function testSetTemplateIdentifierWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'templateIdentifier' must be an empty string or a valid QTI identifier, 'integer' given.");
@@ -37,7 +37,7 @@ class ChoiceTest extends QtiSmTestCase
         $choice->setTemplateIdentifier(999);
     }
 
-    public function testSetShowHideWrongType()
+    public function testSetShowHideWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'showHide' argument must be a value from the ShowHide enumeration.");

@@ -40,8 +40,6 @@ use qtism\data\ItemSessionControl;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\ShowHide;
-use qtism\data\state\OutcomeDeclaration;
-use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ShufflingCollection;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
@@ -141,28 +139,28 @@ class AssessmentItemSession extends State
      *
      * @var string
      */
-    const COMPLETION_STATUS_INCOMPLETE = 'incomplete';
+    public const COMPLETION_STATUS_INCOMPLETE = 'incomplete';
 
     /**
      * The item completion status 'not_attempted'.
      *
      * @var string
      */
-    const COMPLETION_STATUS_NOT_ATTEMPTED = 'not_attempted';
+    public const COMPLETION_STATUS_NOT_ATTEMPTED = 'not_attempted';
 
     /**
      * The item completion status 'unknown'.
      *
      * @var string
      */
-    const COMPLETION_STATUS_UNKNOWN = 'unknown';
+    public const COMPLETION_STATUS_UNKNOWN = 'unknown';
 
     /**
      * The item completion status 'completed'.
      *
      * @var string
      */
-    const COMPLETION_STATUS_COMPLETED = 'completed';
+    public const COMPLETION_STATUS_COMPLETED = 'completed';
 
     /**
      * A timing reference used to compute the duration of the session.
@@ -305,7 +303,7 @@ class AssessmentItemSession extends State
      * @param int $state A value from the AssessmentItemSessionState enumeration.
      * @see \qtism\runtime\tests\AssessmentItemSessionState The AssessmentItemSessionState enumeration.
      */
-    public function setState($state)
+    public function setState($state): void
     {
         $this->state = $state;
     }
@@ -318,7 +316,7 @@ class AssessmentItemSession extends State
      * @return int A value from the AssessmentItemSessionState enumeration.
      * @see \qtism\runtime\tests\AssessmentItemSessionState The AssessmentItemSessionState enumeration.
      */
-    public function getState()
+    public function getState(): int
     {
         return $this->state;
     }
@@ -331,7 +329,7 @@ class AssessmentItemSession extends State
      *
      * @param ItemSessionControl $itemSessionControl An ItemSessionControl object.
      */
-    public function setItemSessionControl(ItemSessionControl $itemSessionControl)
+    public function setItemSessionControl(ItemSessionControl $itemSessionControl): void
     {
         $this->itemSessionControl = $itemSessionControl;
     }
@@ -341,7 +339,7 @@ class AssessmentItemSession extends State
      *
      * @return ItemSessionControl An ItemSessionControl object.
      */
-    public function getItemSessionControl()
+    public function getItemSessionControl(): ItemSessionControl
     {
         return $this->itemSessionControl;
     }
@@ -351,7 +349,7 @@ class AssessmentItemSession extends State
      *
      * @param TimeLimits $timeLimits A TimeLimits object or null if no time limits must be applied.
      */
-    public function setTimeLimits(TimeLimits $timeLimits = null)
+    public function setTimeLimits(TimeLimits $timeLimits = null): void
     {
         $this->timeLimits = $timeLimits;
     }
@@ -361,7 +359,7 @@ class AssessmentItemSession extends State
      *
      * @return TimeLimits A TimLimits object or null if no time limits must be applied.
      */
-    public function getTimeLimits()
+    public function getTimeLimits(): ?TimeLimits
     {
         return $this->timeLimits;
     }
@@ -373,7 +371,7 @@ class AssessmentItemSession extends State
      *
      * @param DateTime $timeReference A DateTime object.
      */
-    public function setTimeReference(DateTime $timeReference)
+    public function setTimeReference(DateTime $timeReference): void
     {
         $this->timeReference = $timeReference;
     }
@@ -385,7 +383,7 @@ class AssessmentItemSession extends State
      *
      * @return DateTime A DateTime object.
      */
-    public function getTimeReference()
+    public function getTimeReference(): ?DateTime
     {
         return $this->timeReference;
     }
@@ -395,7 +393,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    public function hasTimeReference()
+    public function hasTimeReference(): bool
     {
         return $this->timeReference !== null;
     }
@@ -405,7 +403,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    public function hasTimeLimits()
+    public function hasTimeLimits(): bool
     {
         return $this->getTimeLimits() !== null;
     }
@@ -416,7 +414,7 @@ class AssessmentItemSession extends State
      * @param int $navigationMode A value from the NavigationMode enumeration.
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
-    public function setNavigationMode($navigationMode)
+    public function setNavigationMode($navigationMode): void
     {
         $this->navigationMode = $navigationMode;
     }
@@ -427,7 +425,7 @@ class AssessmentItemSession extends State
      * @return int A value from the NavigationMode enumeration.
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
-    public function getNavigationMode()
+    public function getNavigationMode(): int
     {
         return $this->navigationMode;
     }
@@ -438,7 +436,7 @@ class AssessmentItemSession extends State
      * @param int $submissionMode A value from the SubmissionMode enumeration.
      * @see \qtism\data\SubmissionMode The SubmissionMode enumeration.
      */
-    public function setSubmissionMode($submissionMode)
+    public function setSubmissionMode($submissionMode): void
     {
         $this->submissionMode = $submissionMode;
     }
@@ -449,7 +447,7 @@ class AssessmentItemSession extends State
      * @return int A value from the SubmissionMode enumeration.
      * @see \qtism\data\SubmissionMode The SubmissionMode enumeration.
      */
-    public function getSubmissionMode()
+    public function getSubmissionMode(): int
     {
         return $this->submissionMode;
     }
@@ -462,7 +460,7 @@ class AssessmentItemSession extends State
      * @return bool
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
-    public function isNavigationLinear()
+    public function isNavigationLinear(): bool
     {
         return $this->getNavigationMode() === NavigationMode::LINEAR;
     }
@@ -475,7 +473,7 @@ class AssessmentItemSession extends State
      * @return bool
      * @see \qtism\data\NavigationMode The NavigationMode enumeration.
      */
-    public function isNavigationNonLinear()
+    public function isNavigationNonLinear(): bool
     {
         return $this->getNavigationMode() === NavigationMode::NONLINEAR;
     }
@@ -485,7 +483,7 @@ class AssessmentItemSession extends State
      *
      * @param IAssessmentItem $assessmentItem An IAssessmentItem object.
      */
-    public function setAssessmentItem(IAssessmentItem $assessmentItem)
+    public function setAssessmentItem(IAssessmentItem $assessmentItem): void
     {
         $this->assessmentItem = $assessmentItem;
     }
@@ -495,7 +493,7 @@ class AssessmentItemSession extends State
      *
      * @return IAssessmentItem An IAssessmentItem object.
      */
-    public function getAssessmentItem()
+    public function getAssessmentItem(): IAssessmentItem
     {
         return $this->assessmentItem;
     }
@@ -506,7 +504,7 @@ class AssessmentItemSession extends State
      * @param bool $attempting
      * @throws InvalidArgumentException If $attempting is not a boolean value.
      */
-    public function setAttempting($attempting)
+    public function setAttempting($attempting): void
     {
         $this->attempting = $attempting;
     }
@@ -520,7 +518,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    public function isAttempting()
+    public function isAttempting(): bool
     {
         return $this->attempting;
     }
@@ -530,7 +528,7 @@ class AssessmentItemSession extends State
      *
      * @param ShufflingCollection $shufflingStates
      */
-    public function setShufflingStates(ShufflingCollection $shufflingStates)
+    public function setShufflingStates(ShufflingCollection $shufflingStates): void
     {
         $this->shufflingStates = $shufflingStates;
     }
@@ -540,7 +538,7 @@ class AssessmentItemSession extends State
      *
      * @return ShufflingCollection $shufflingStates
      */
-    public function getShufflingStates()
+    public function getShufflingStates(): ShufflingCollection
     {
         return $this->shufflingStates;
     }
@@ -550,7 +548,7 @@ class AssessmentItemSession extends State
      *
      * @param bool $autoTemplateProcessing
      */
-    public function setAutoTemplateProcessing($autoTemplateProcessing)
+    public function setAutoTemplateProcessing($autoTemplateProcessing): void
     {
         $this->autoTemplateProcessing = $autoTemplateProcessing;
     }
@@ -560,7 +558,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    public function mustAutoTemplateProcessing()
+    public function mustAutoTemplateProcessing(): bool
     {
         return $this->autoTemplateProcessing;
     }
@@ -580,7 +578,7 @@ class AssessmentItemSession extends State
      * @param DateTime $time The current time that will be taken into account for all next interactions with the object.
      * @see \qtism\runtime\tests\AssessmentItemSession::endItemSession() The endItemSession() method.
      */
-    public function setTime(DateTime $time)
+    public function setTime(DateTime $time): void
     {
         // Force time to be UTC.
         $time = Time::toUtc($time);
@@ -621,7 +619,7 @@ class AssessmentItemSession extends State
      *
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#section10055 The IMS QTI 2.1 Item Session Lifecycle.
      */
-    public function beginItemSession()
+    public function beginItemSession(): void
     {
         // We initialize the item session and its variables.
         $data = &$this->getDataPlaceHolder();
@@ -668,7 +666,7 @@ class AssessmentItemSession extends State
      * @throws AssessmentItemSessionException If the maximum number of attempts or the maximum time limit in force is reached.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#section10055 The IMS QTI 2.1 Item Session Lifecycle.
      */
-    public function beginAttempt()
+    public function beginAttempt(): void
     {
         $maxAttempts = $this->itemSessionControl->getMaxAttempts();
         $numAttempts = $this['numAttempts']->getValue();
@@ -769,7 +767,7 @@ class AssessmentItemSession extends State
      * @throws AssessmentItemSessionException If the time limits in force are not respected, an error occurs during response processing, a state violation occurs.
      * @throws PhpStorageException
      */
-    public function endAttempt(State $responses = null, $responseProcessing = true, $forceLateSubmission = false)
+    public function endAttempt(State $responses = null, $responseProcessing = true, $forceLateSubmission = false): void
     {
         // Flag to indicate if time is exceed or not.
         $maxTimeExceeded = false;
@@ -873,7 +871,7 @@ class AssessmentItemSession extends State
      *
      * @param State $responses
      */
-    protected function mergeResponses(State $responses)
+    protected function mergeResponses(State $responses): void
     {
         foreach ($responses as $identifier => $value) {
             $this[$identifier] = $value->getValue();
@@ -893,7 +891,7 @@ class AssessmentItemSession extends State
      * @param State $responses (optional) A State object containing the responses to be stored in the item session at suspend time.
      * @throws AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INTERACTING nor MODAL_FEEDBACK prior to suspension.
      */
-    public function suspend(State $responses = null)
+    public function suspend(State $responses = null): void
     {
         $state = $this->getState();
 
@@ -934,7 +932,7 @@ class AssessmentItemSession extends State
      *
      * @throws AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not SUSPENDED.
      */
-    public function beginCandidateSession()
+    public function beginCandidateSession(): void
     {
         $state = $this->getState();
 
@@ -957,7 +955,7 @@ class AssessmentItemSession extends State
      * @throws AssessmentItemSessionException If a state violation occurs.
      * @throws PhpStorageException
      */
-    public function endCandidateSession()
+    public function endCandidateSession(): void
     {
         $state = $this->getState();
 
@@ -994,7 +992,7 @@ class AssessmentItemSession extends State
      *
      * The 'completionStatus' built-in outcome variable and the state of the item session goes to CLOSED.
      */
-    public function endItemSession()
+    public function endItemSession(): void
     {
         // If the candidate was interacting, suspend before
         // to get a correct state flow.
@@ -1014,7 +1012,7 @@ class AssessmentItemSession extends State
      *
      * @return int The number of remaining items. -1 means unlimited.
      */
-    public function getRemainingAttempts()
+    public function getRemainingAttempts(): int
     {
         $itemRef = $this->getAssessmentItem();
 
@@ -1049,7 +1047,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    public function isCorrect()
+    public function isCorrect(): bool
     {
         if ($this->getState() === AssessmentItemSessionState::NOT_SELECTED) {
             // The session cannot be considered as correct if not yet selected
@@ -1082,7 +1080,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    public function isPresented()
+    public function isPresented(): bool
     {
         return $this['numAttempts']->getValue() > 0;
     }
@@ -1092,7 +1090,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    public function isSelected()
+    public function isSelected(): bool
     {
         return true;
     }
@@ -1105,7 +1103,7 @@ class AssessmentItemSession extends State
      * @param bool $partially (optional) Whether to consider partially responded sessions as responded.
      * @return bool
      */
-    public function isResponded($partially = true)
+    public function isResponded($partially = true): bool
     {
         if ($this->isPresented() === false) {
             return false;
@@ -1133,7 +1131,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    public function isAttemptable()
+    public function isAttemptable(): bool
     {
         return $this->getRemainingAttempts() !== 0;
     }
@@ -1143,7 +1141,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    public function isAttempted()
+    public function isAttempted(): bool
     {
         return $this['numAttempts']->getValue() > 0;
     }
@@ -1154,7 +1152,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    protected function isMaxTimeReached()
+    protected function isMaxTimeReached(): bool
     {
         $reached = false;
 
@@ -1171,7 +1169,7 @@ class AssessmentItemSession extends State
      * @param bool $builtIn Whether to include the built-in ResponseVariables ('duration' and 'numAttempts').
      * @return State A State object composed exclusively with ResponseVariable objects.
      */
-    public function getResponseVariables($builtIn = true)
+    public function getResponseVariables($builtIn = true): State
     {
         $state = new State();
         $data = $this->getDataPlaceHolder();
@@ -1191,7 +1189,7 @@ class AssessmentItemSession extends State
      * @param bool $builtIn Whether to include the built-in OutcomeVariable 'completionStatus'.
      * @return State A State object composed exclusively with OutcomeVariable objects.
      */
-    public function getOutcomeVariables($builtIn = true)
+    public function getOutcomeVariables($builtIn = true): State
     {
         $state = new State();
         $data = $this->getDataPlaceHolder();
@@ -1220,7 +1218,7 @@ class AssessmentItemSession extends State
      * @return string
      * @throws OutOfBoundsException If no identifier is found at [$shufflingStateIndex,$choiceIndex].
      */
-    public function getShuffledChoiceIdentifierAt($shufflingStateIndex, $choiceIndex)
+    public function getShuffledChoiceIdentifierAt($shufflingStateIndex, $choiceIndex): string
     {
         $shufflings = $this->getShufflingStates();
         if (isset($shufflings[$shufflingStateIndex]) === false) {
@@ -1237,7 +1235,7 @@ class AssessmentItemSession extends State
      * @param ResponseProcessing $responseProcessing
      * @return ResponseProcessingEngine
      */
-    protected function createResponseProcessingEngine(ResponseProcessing $responseProcessing)
+    protected function createResponseProcessingEngine(ResponseProcessing $responseProcessing): ResponseProcessingEngine
     {
         return new ResponseProcessingEngine($responseProcessing, $this);
     }
@@ -1253,7 +1251,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    private function mustModalFeedback()
+    private function mustModalFeedback(): bool
     {
         // From IMS QTI 2.1:
         // A value of maxAttempts greater than 1, by definition, indicates that any applicable feedback must be shown.
@@ -1309,7 +1307,7 @@ class AssessmentItemSession extends State
      * @return bool Whether or not the template processing occurred.
      * @throws RuleProcessingException
      */
-    public function templateProcessing()
+    public function templateProcessing(): bool
     {
         $assessmentItem = $this->getAssessmentItem();
         if (($templateProcessing = $assessmentItem->getTemplateProcessing()) !== null) {
@@ -1338,7 +1336,7 @@ class AssessmentItemSession extends State
      * @param State $responses
      * @throws AssessmentItemSessionException If itemSessionControl->allowSkipping is false and the item is being skipped.
      */
-    private function checkAllowSkipping(State $responses)
+    private function checkAllowSkipping(State $responses): void
     {
         // In case there are no response variable at all, the item is "skippable" as there is no possibility to provide an answer.
         if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->doesAllowSkipping() === false && count($this->getResponseVariables(false)) > 0) {
@@ -1374,7 +1372,7 @@ class AssessmentItemSession extends State
      * @param State $responses
      * @throws AssessmentItemSessionException In case of a Response Validity Constraint is not respected.
      */
-    public function checkResponseValidityConstraints(State $responses)
+    public function checkResponseValidityConstraints(State $responses): void
     {
         if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->mustValidateResponses() === true) {
             $session = clone $this;

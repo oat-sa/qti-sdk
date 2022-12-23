@@ -41,7 +41,7 @@ use qtismtest\QtiSmAssessmentItemTestCase;
  */
 class ItemResultBuilderTest extends QtiSmAssessmentItemTestCase
 {
-    public function testBasic()
+    public function testBasic(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginAttempt();

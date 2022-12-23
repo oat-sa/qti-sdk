@@ -33,7 +33,7 @@ class Em extends SimpleInline
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'em';
     }

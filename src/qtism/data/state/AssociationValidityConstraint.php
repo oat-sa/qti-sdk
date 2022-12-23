@@ -82,7 +82,7 @@ class AssociationValidityConstraint extends QtiComponent
      * @param int $identifier
      * @throws InvalidArgumentException If $identifier is an empty string.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (is_string($identifier) === false || empty($identifier)) {
             throw new InvalidArgumentException(
@@ -98,7 +98,7 @@ class AssociationValidityConstraint extends QtiComponent
      *
      * @return string
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -109,7 +109,7 @@ class AssociationValidityConstraint extends QtiComponent
      * @param int $minConstraint A non negative integer (>= 0) integer value.
      * @throws InvalidArgumentException If $minConstraint is not a non negative (>= 0) integer value.
      */
-    public function setMinConstraint($minConstraint)
+    public function setMinConstraint($minConstraint): void
     {
         if (is_int($minConstraint) === false || $minConstraint < 0) {
             throw new InvalidArgumentException(
@@ -125,7 +125,7 @@ class AssociationValidityConstraint extends QtiComponent
      *
      * @return int A non negative (>= 0) integer value.
      */
-    public function getMinConstraint()
+    public function getMinConstraint(): int
     {
         return $this->minConstraint;
     }
@@ -138,7 +138,7 @@ class AssociationValidityConstraint extends QtiComponent
      * @param int $maxConstraint An integer value which is greater than the 'minConstraint' in place.
      * @throws InvalidArgumentException If $maxConstraint is not an integer greater or equal to the 'minConstraint' in place.
      */
-    public function setMaxConstraint($maxConstraint)
+    public function setMaxConstraint($maxConstraint): void
     {
         if (is_int($maxConstraint) === false) {
             throw new InvalidArgumentException(
@@ -164,7 +164,7 @@ class AssociationValidityConstraint extends QtiComponent
      *
      * @return int
      */
-    public function getMaxConstraint()
+    public function getMaxConstraint(): int
     {
         return $this->maxConstraint;
     }
@@ -172,7 +172,7 @@ class AssociationValidityConstraint extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'associationValidityConstraint';
     }
@@ -180,7 +180,7 @@ class AssociationValidityConstraint extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

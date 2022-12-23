@@ -55,33 +55,33 @@ class Cardinality implements Enumeration
      *
      * @var int
      */
-    const SINGLE = 0;
+    public const SINGLE = 0;
 
     /**
      * The QTI multiple cardinality.
      *
      * @var int
      */
-    const MULTIPLE = 1;
+    public const MULTIPLE = 1;
 
     /**
      * The QTI ordered cardinality.
      *
      * @var int
      */
-    const ORDERED = 2;
+    public const ORDERED = 2;
 
     /**
      * The QTI record cardinality.
      *
      * @var int
      */
-    const RECORD = 3;
+    public const RECORD = 3;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'SINGLE' => self::SINGLE,

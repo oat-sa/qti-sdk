@@ -37,7 +37,7 @@ class ResponseElseIfCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of ResponseElseIf.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof ResponseElseIf) {
             $msg = "ResponseElseIfCollection only accepts to store ResponseElseIf objects, '" . gettype($value) . "' given.";

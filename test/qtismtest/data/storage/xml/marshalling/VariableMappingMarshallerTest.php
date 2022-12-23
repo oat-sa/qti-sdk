@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class VariableMappingMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $source = 'myIdentifier1';
         $target = 'myIdentifier2';
@@ -27,7 +27,7 @@ class VariableMappingMarshallerTest extends QtiSmTestCase
         $this::assertEquals($target, $element->getAttribute('targetIdentifier'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<variableMapping xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sourceIdentifier="myIdentifier1" targetIdentifier="myIdentifier2"/>');

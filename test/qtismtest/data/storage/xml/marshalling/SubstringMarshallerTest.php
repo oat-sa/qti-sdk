@@ -15,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SubstringMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $expr = [new BaseValue(BaseType::STRING, 'Hell'), new BaseValue(BaseType::STRING, 'Shell')];
         $component = new Substring(new ExpressionCollection($expr), false);
@@ -35,7 +35,7 @@ class SubstringMarshallerTest extends QtiSmTestCase
         $this::assertEquals('string', $sub->getAttribute('baseType'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

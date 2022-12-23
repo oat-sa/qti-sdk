@@ -40,7 +40,7 @@ class OutcomeElseQtiPLRenderer extends AbstractQtiPLRenderer
      * @return mixed The rendered component into another constitution.
      * @throws RenderingException If something goes wrong while rendering the component.
      */
-    public function render($something)
+    public function render($something): string
     {
         $renderer = new QtiPLRenderer($this->getCRO());
         $qtipl = " else {\n";

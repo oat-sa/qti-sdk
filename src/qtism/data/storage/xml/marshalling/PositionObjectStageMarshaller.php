@@ -41,7 +41,7 @@ class PositionObjectStageMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $object = $component->getObject();
@@ -58,11 +58,11 @@ class PositionObjectStageMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an positionObjectStage element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A PositionObjectStage object.
+     * @return PositionObjectStage A PositionObjectStage object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): PositionObjectStage
     {
         $objectElts = $this->getChildElementsByTagName($element, 'object');
         if (count($objectElts) > 0) {
@@ -90,7 +90,7 @@ class PositionObjectStageMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'positionObjectStage';
     }

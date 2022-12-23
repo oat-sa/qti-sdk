@@ -40,6 +40,7 @@ class BaseValueProcessor extends ExpressionProcessor
      *
      * @return mixed A QTI Runtime compliant scalar value.
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $expression = $this->getExpression();
@@ -50,7 +51,7 @@ class BaseValueProcessor extends ExpressionProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return BaseValue::class;
     }

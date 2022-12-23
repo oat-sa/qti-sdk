@@ -75,7 +75,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
      *
      * @param InlineStaticCollection $content A collection of InlineStatic objects.
      */
-    public function setContent(InlineStaticCollection $content)
+    public function setContent(InlineStaticCollection $content): void
     {
         $this->content = $content;
     }
@@ -85,7 +85,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
      *
      * @return InlineStaticCollection
      */
-    public function getContent()
+    public function getContent(): InlineStaticCollection
     {
         return $this->content;
     }
@@ -93,7 +93,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
     /**
      * @return InlineStaticCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -101,7 +101,7 @@ class Hottext extends Choice implements FlowStatic, InlineStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'hottext';
     }

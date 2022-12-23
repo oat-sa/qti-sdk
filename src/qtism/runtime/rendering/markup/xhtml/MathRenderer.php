@@ -57,7 +57,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
      *
      * @param bool $namespaceOutput
      */
-    public function setNamespaceOutput($namespaceOutput)
+    public function setNamespaceOutput($namespaceOutput): void
     {
         $this->namespaceOutput = $namespaceOutput;
     }
@@ -67,7 +67,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
      *
      * @return bool
      */
-    public function mustNamespaceOutput()
+    public function mustNamespaceOutput(): bool
     {
         return $this->namespaceOutput;
     }
@@ -78,7 +78,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
      * @param string $base
      * @throws RenderingException
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         try {
             $dom = $component->getXml();

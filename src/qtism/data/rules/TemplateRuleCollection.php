@@ -38,7 +38,7 @@ class TemplateRuleCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of TemplateRule.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof TemplateRule) {
             $msg = 'A TemplateRuleCollection only accepts to store TemplateRule objects.';

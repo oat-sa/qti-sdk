@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SliderInteractionTest extends QtiSmTestCase
 {
-    public function testCreateSliderInteractionLowerBoundWrongType()
+    public function testCreateSliderInteractionLowerBoundWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'lowerBound' argument must be a float value, 'integer' given.");
@@ -19,7 +19,7 @@ class SliderInteractionTest extends QtiSmTestCase
         $sliderInteraction = new SliderInteraction('RESPONSE', 3, 3.33);
     }
 
-    public function testCreateSliderInteractionUpperBoundWrongType()
+    public function testCreateSliderInteractionUpperBoundWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'upperBound' argument must be a float value, 'integer' given.");
@@ -27,7 +27,7 @@ class SliderInteractionTest extends QtiSmTestCase
         $sliderInteraction = new SliderInteraction('RESPONSE', 3.33, 3);
     }
 
-    public function testSetStepNegative()
+    public function testSetStepNegative(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'step' argument must be a positive (>= 0) integer, 'integer' given.");
@@ -36,7 +36,7 @@ class SliderInteractionTest extends QtiSmTestCase
         $sliderInteraction->setStep(-5);
     }
 
-    public function testSetStepLabelNonBoolean()
+    public function testSetStepLabelNonBoolean(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'stepLabel' argument must be a boolean value, 'string' given.");
@@ -45,7 +45,7 @@ class SliderInteractionTest extends QtiSmTestCase
         $sliderInteraction->setStepLabel('true');
     }
 
-    public function testSetOrientationWrongValue()
+    public function testSetOrientationWrongValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'orientation' argument must be a value from the Orientation enumeration.");
@@ -54,7 +54,7 @@ class SliderInteractionTest extends QtiSmTestCase
         $sliderInteraction->setOrientation('true');
     }
 
-    public function testSetReverseWrongValue()
+    public function testSetReverseWrongValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'reverse' argument must be a boolean value, 'string' given.");

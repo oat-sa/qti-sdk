@@ -38,11 +38,11 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a graphicGapMatchInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A GraphicGapMatchInteraction object.
+     * @return GraphicGapMatchInteraction A GraphicGapMatchInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): GraphicGapMatchInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             $objectElts = $this->getChildElementsByTagName($element, 'object');
@@ -109,7 +109,7 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
@@ -139,7 +139,7 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'graphicGapMatchInteraction';
     }

@@ -42,7 +42,7 @@ class OutcomeConditionProcessor extends AbstractConditionProcessor
     /**
      * @return string
      */
-    public function getQtiNature()
+    public function getQtiNature(): string
     {
         return 'outcome';
     }
@@ -50,7 +50,7 @@ class OutcomeConditionProcessor extends AbstractConditionProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return OutcomeCondition::class;
     }

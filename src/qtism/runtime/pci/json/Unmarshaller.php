@@ -81,7 +81,7 @@ class Unmarshaller
      *
      * @param FileManager $fileManager A FileManager object.
      */
-    protected function setFileManager(FileManager $fileManager)
+    protected function setFileManager(FileManager $fileManager): void
     {
         $this->fileManager = $fileManager;
     }
@@ -92,7 +92,7 @@ class Unmarshaller
      *
      * @return FileManager A FileManager object.
      */
-    protected function getFileManager()
+    protected function getFileManager(): FileManager
     {
         return $this->fileManager;
     }
@@ -193,7 +193,7 @@ class Unmarshaller
      * @throws FileManagerException
      * @throws UnmarshallingException
      */
-    protected function unmarshallUnit(array $unit)
+    protected function unmarshallUnit(array $unit): ?QtiDatatype
     {
         if ($unit['base'] === null) {
             return null;
@@ -271,7 +271,7 @@ class Unmarshaller
      * @param array $unit
      * @return QtiBoolean
      */
-    protected function unmarshallBoolean(array $unit)
+    protected function unmarshallBoolean(array $unit): QtiBoolean
     {
         return new QtiBoolean($unit['base']['boolean']);
     }
@@ -282,7 +282,7 @@ class Unmarshaller
      * @param array $unit
      * @return QtiInteger
      */
-    protected function unmarshallInteger(array $unit)
+    protected function unmarshallInteger(array $unit): QtiInteger
     {
         return new QtiInteger($unit['base']['integer']);
     }
@@ -293,7 +293,7 @@ class Unmarshaller
      * @param array $unit
      * @return QtiFloat
      */
-    protected function unmarshallFloat(array $unit)
+    protected function unmarshallFloat(array $unit): QtiFloat
     {
         $val = $unit['base']['float'];
 
@@ -310,7 +310,7 @@ class Unmarshaller
      * @param array $unit
      * @return QtiString
      */
-    protected function unmarshallString(array $unit)
+    protected function unmarshallString(array $unit): QtiString
     {
         return new QtiString($unit['base']['string']);
     }
@@ -321,7 +321,7 @@ class Unmarshaller
      * @param array $unit
      * @return QtiPoint
      */
-    protected function unmarshallPoint(array $unit)
+    protected function unmarshallPoint(array $unit): QtiPoint
     {
         return new QtiPoint($unit['base']['point'][0], $unit['base']['point'][1]);
     }
@@ -332,7 +332,7 @@ class Unmarshaller
      * @param array $unit
      * @return QtiPair
      */
-    protected function unmarshallPair(array $unit)
+    protected function unmarshallPair(array $unit): QtiPair
     {
         return new QtiPair($unit['base']['pair'][0], $unit['base']['pair'][1]);
     }
@@ -343,7 +343,7 @@ class Unmarshaller
      * @param array $unit
      * @return QtiDirectedPair
      */
-    protected function unmarshallDirectedPair(array $unit)
+    protected function unmarshallDirectedPair(array $unit): QtiDirectedPair
     {
         return new QtiDirectedPair($unit['base']['directedPair'][0], $unit['base']['directedPair'][1]);
     }
@@ -354,7 +354,7 @@ class Unmarshaller
      * @param array $unit
      * @return QtiDuration
      */
-    protected function unmarshallDuration(array $unit)
+    protected function unmarshallDuration(array $unit): QtiDuration
     {
         return new QtiDuration($unit['base']['duration']);
     }
@@ -366,7 +366,7 @@ class Unmarshaller
      * @return QtiFile
      * @throws FileManagerException
      */
-    protected function unmarshallFile(array $unit)
+    protected function unmarshallFile(array $unit): QtiFile
     {
         $fileArray = $unit['base']['file'];
         return $this->getFileManager()->createFromData(
@@ -391,7 +391,7 @@ class Unmarshaller
      * @return QtiFile
      * @throws FileManagerException
      */
-    protected function unmarshallFileHash(array $unit)
+    protected function unmarshallFileHash(array $unit): QtiFile
     {
         $fileHashArray = $unit['base'][FileHash::FILE_HASH_KEY];
         if (empty($fileHashArray['id'])) {
@@ -412,7 +412,7 @@ class Unmarshaller
      * @param array $unit
      * @return QtiUri
      */
-    protected function unmarshallUri(array $unit)
+    protected function unmarshallUri(array $unit): QtiUri
     {
         return new QtiUri($unit['base']['uri']);
     }
@@ -423,7 +423,7 @@ class Unmarshaller
      * @param array $unit
      * @return QtiIntOrIdentifier
      */
-    protected function unmarshallIntOrIdentifier(array $unit)
+    protected function unmarshallIntOrIdentifier(array $unit): QtiIntOrIdentifier
     {
         return new QtiIntOrIdentifier($unit['base']['intOrIdentifier']);
     }
@@ -434,7 +434,7 @@ class Unmarshaller
      * @param array $unit
      * @return QtiIdentifier
      */
-    protected function unmarshallIdentifier(array $unit)
+    protected function unmarshallIdentifier(array $unit): QtiIdentifier
     {
         return new QtiIdentifier($unit['base']['identifier']);
     }
@@ -448,7 +448,7 @@ class Unmarshaller
      * @throws FileManagerException
      * @throws UnmarshallingException
      */
-    protected function unmarshallList(array $parsedJson)
+    protected function unmarshallList(array $parsedJson): MultipleContainer
     {
         $list = $parsedJson['list'];
         $key = key($list);

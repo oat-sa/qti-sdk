@@ -63,7 +63,7 @@ abstract class Html5ElementMarshaller extends Marshaller
      * @param DOMElement $element The DOMElement object from where the attribute values must be retrieved.
      * @throws UnmarshallingException If one of the attributes of $element is not valid.
      */
-    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element)
+    protected function fillBodyElement(BodyElement $bodyElement, DOMElement $element): void
     {
         $this->fillBodyElementAttributes($bodyElement, $element);
 

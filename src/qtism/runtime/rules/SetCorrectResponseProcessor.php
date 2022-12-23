@@ -50,7 +50,7 @@ class SetCorrectResponseProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException
      */
-    public function process()
+    public function process(): void
     {
         $rule = $this->getRule();
         $state = $this->getState();
@@ -85,7 +85,7 @@ class SetCorrectResponseProcessor extends RuleProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return SetCorrectResponse::class;
     }

@@ -15,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class HottextInteractionTest extends QtiSmTestCase
 {
-    public function testCreateNoContent()
+    public function testCreateNoContent(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('A HottextInteraction object must be composed of at least one BlockStatic object, none given.');
@@ -23,7 +23,7 @@ class HottextInteractionTest extends QtiSmTestCase
         new HottextInteraction('RESPONSE', new BlockStaticCollection());
     }
 
-    public function testSetMaxChoicesInvalidValue()
+    public function testSetMaxChoicesInvalidValue(): void
     {
         $div = new Div();
         $div->setContent(new FlowCollection([new TextRun('content...')]));
@@ -35,7 +35,7 @@ class HottextInteractionTest extends QtiSmTestCase
         $hottextInteraction->setMaxChoices(true);
     }
 
-    public function testSetMinChoicesInvalidValue()
+    public function testSetMinChoicesInvalidValue(): void
     {
         $div = new Div();
         $div->setContent(new FlowCollection([new TextRun('content...')]));
@@ -47,7 +47,7 @@ class HottextInteractionTest extends QtiSmTestCase
         $hottextInteraction->setMinChoices(true);
     }
 
-    public function testSetMinChoicesInvalidValueRegardingMaxChoices()
+    public function testSetMinChoicesInvalidValueRegardingMaxChoices(): void
     {
         $div = new Div();
         $div->setContent(new FlowCollection([new TextRun('content...')]));
@@ -60,7 +60,7 @@ class HottextInteractionTest extends QtiSmTestCase
         $hottextInteraction->setMinChoices(2);
     }
 
-    public function testSetMinChoicesValidValueWhenMaxChoicesIsZero()
+    public function testSetMinChoicesValidValueWhenMaxChoicesIsZero(): void
     {
         $div = new Div();
         $div->setContent(new FlowCollection([new TextRun('content...')]));

@@ -15,7 +15,7 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
  */
 class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCase
 {
-    public function testLinearAssessmentTestDuring()
+    public function testLinearAssessmentTestDuring(): void
     {
         $url = self::samplesDir() . 'custom/runtime/testfeedbacks/linear_assessmenttest_during.xml';
         $testSession = self::instantiate($url);
@@ -53,7 +53,7 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
 
-    public function testLinearAssessmentTestAtEndShow()
+    public function testLinearAssessmentTestAtEndShow(): void
     {
         $url = self::samplesDir() . 'custom/runtime/testfeedbacks/linear_assessmenttest_atend.xml';
         $testSession = self::instantiate($url);
@@ -87,7 +87,7 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
     /**
      * @depends testLinearAssessmentTestAtEndShow
      */
-    public function testLinearAssessmentTestAtEndNoShow()
+    public function testLinearAssessmentTestAtEndNoShow(): void
     {
         $url = self::samplesDir() . 'custom/runtime/testfeedbacks/linear_assessmenttest_atend.xml';
         $testSession = self::instantiate($url);
@@ -109,7 +109,7 @@ class AssessmentTestSessionFeedbackTest extends QtiSmAssessmentTestSessionTestCa
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
 
-    public function testLinearTestPartAtEndShow()
+    public function testLinearTestPartAtEndShow(): void
     {
         $url = self::samplesDir() . 'custom/runtime/testfeedbacks/linear_testpart_atend.xml';
         $testSession = self::instantiate($url);

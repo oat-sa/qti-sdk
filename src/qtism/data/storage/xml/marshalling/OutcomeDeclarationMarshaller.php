@@ -45,7 +45,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
         $version = $this->getVersion();
@@ -106,11 +106,11 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
      * Unmarshall a DOMElement object corresponding to a QTI outcomeDeclaration element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An OutcomeDeclaration object.
+     * @return OutcomeDeclaration An OutcomeDeclaration object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): OutcomeDeclaration
     {
         try {
             $version = $this->getVersion();
@@ -192,7 +192,7 @@ class OutcomeDeclarationMarshaller extends VariableDeclarationMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'outcomeDeclaration';
     }

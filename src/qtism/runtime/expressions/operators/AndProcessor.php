@@ -48,7 +48,7 @@ class AndProcessor extends OperatorProcessor
      * @return QtiBoolean True if the expression is true, false otherwise.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -78,7 +78,7 @@ class AndProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return AndOperator::class;
     }

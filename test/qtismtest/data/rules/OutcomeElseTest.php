@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeElseTest extends QtiSmTestCase
 {
-    public function testGetComponents()
+    public function testGetComponents(): void
     {
         $outcomeElse = new OutcomeElse(
             new OutcomeRuleCollection(

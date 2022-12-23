@@ -44,7 +44,7 @@ class IsNullProcessor extends OperatorProcessor
      * @return QtiBoolean Whether the sub-expression is considered to be NULL.
      * @throws OperatorProcessingException If something goes wrong.
      */
-    public function process()
+    public function process(): QtiBoolean
     {
         $operands = $this->getOperands();
         $expression = $this->getExpression();
@@ -55,7 +55,7 @@ class IsNullProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return IsNull::class;
     }

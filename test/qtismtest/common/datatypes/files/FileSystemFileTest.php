@@ -20,7 +20,7 @@ class FileSystemFileTest extends QtiSmTestCase
      * @param string $expectedMimeType
      * @param string $expectedData
      */
-    public function testRetrieve($path, $expectedFilename, $expectedMimeType, $expectedData)
+    public function testRetrieve($path, $expectedFilename, $expectedMimeType, $expectedData): void
     {
         $pFile = FileSystemFile::retrieveFile($path);
         $this::assertEquals($expectedFilename, $pFile->getFilename());
@@ -35,7 +35,7 @@ class FileSystemFileTest extends QtiSmTestCase
      * @param string $mimeType
      * @param bool|string $withFilename
      */
-    public function testCreateFromExistingFile($source, $mimeType, $withFilename = true)
+    public function testCreateFromExistingFile($source, $mimeType, $withFilename = true): void
     {
         $destination = tempnam('/tmp', 'qtism');
         $pFile = FileSystemFile::createFromExistingFile($source, $destination, $mimeType, $withFilename);
@@ -56,7 +56,7 @@ class FileSystemFileTest extends QtiSmTestCase
         unlink($destination);
     }
 
-    public function testCreateFromExistingFileMalformedDestinationPath()
+    public function testCreateFromExistingFileMalformedDestinationPath(): void
     {
         try {
             FileSystemFile::createFromExistingFile(
@@ -71,7 +71,7 @@ class FileSystemFileTest extends QtiSmTestCase
         }
     }
 
-    public function testCreateFromExistingFileMalformedDestinationPathTwo()
+    public function testCreateFromExistingFileMalformedDestinationPathTwo(): void
     {
         try {
             FileSystemFile::createFromExistingFile(
@@ -84,7 +84,7 @@ class FileSystemFileTest extends QtiSmTestCase
         }
     }
 
-    public function testCreateFromExistingFileSourceIsNotAFile()
+    public function testCreateFromExistingFileSourceIsNotAFile(): void
     {
         try {
             FileSystemFile::createFromExistingFile(
@@ -105,7 +105,7 @@ class FileSystemFileTest extends QtiSmTestCase
      * @param string $path
      * @param string $expectedData
      */
-    public function testGetStream($path, $expectedData)
+    public function testGetStream($path, $expectedData): void
     {
         $pFile = FileSystemFile::retrieveFile($path);
         $stream = $pFile->getStream();
@@ -121,7 +121,7 @@ class FileSystemFileTest extends QtiSmTestCase
         $this::assertEquals($expectedData, $data);
     }
 
-    public function testGetStreamError()
+    public function testGetStreamError(): void
     {
         $path = tempnam(sys_get_temp_dir(), 'qtism');
         file_put_contents(
@@ -140,7 +140,7 @@ class FileSystemFileTest extends QtiSmTestCase
         }
     }
 
-    public function testInstantiationWrongPath()
+    public function testInstantiationWrongPath(): void
     {
         $this->expectException(RuntimeException::class);
         new FileSystemFile('/qtism/test');
@@ -149,7 +149,7 @@ class FileSystemFileTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function retrieveProvider()
+    public function retrieveProvider(): array
     {
         return [
             [self::samplesDir() . 'datatypes/file/text-plain_name.txt', 'yours.txt', 'text/plain', ''],
@@ -161,7 +161,7 @@ class FileSystemFileTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function getStreamProvider()
+    public function getStreamProvider(): array
     {
         return [
             [self::samplesDir() . 'datatypes/file/text-plain_name.txt', ''],
@@ -173,7 +173,7 @@ class FileSystemFileTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function createFromExistingFileProvider()
+    public function createFromExistingFileProvider(): array
     {
         return [
             [self::samplesDir() . 'datatypes/file/raw/text.txt', 'text/plain', true],
@@ -181,7 +181,7 @@ class FileSystemFileTest extends QtiSmTestCase
         ];
     }
 
-    public function testEqualsNonQtiFile()
+    public function testEqualsNonQtiFile(): void
     {
         $destination = tempnam('/tmp', 'qtism');
         $pFile = FileSystemFile::createFromExistingFile(
@@ -193,7 +193,7 @@ class FileSystemFileTest extends QtiSmTestCase
         @unlink($destination);
     }
 
-    public function testEqualsMimeTypeDifference()
+    public function testEqualsMimeTypeDifference(): void
     {
         $destination1 = tempnam('/tmp', 'qtism');
         $pFile1 = FileSystemFile::createFromExistingFile(

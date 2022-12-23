@@ -20,7 +20,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ListMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshallUl()
+    public function testUnmarshallUl(): void
     {
         $ul = $this->createComponentFromXml('
 		    <ul class="my-qti-list">
@@ -80,7 +80,7 @@ class ListMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(P::class, $liContent[3]);
     }
 
-    public function testMarshallUl()
+    public function testMarshallUl(): void
     {
         $strong = new Strong();
         $strong->setContent(new InlineCollection([new TextRun('text')]));

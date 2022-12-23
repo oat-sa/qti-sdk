@@ -46,6 +46,7 @@ class SumProcessor extends OperatorProcessor
      * @return QtiInteger|QtiFloat|null A single integer/float that corresponds to the sum of the numerical values of the sub-expressions. If any of the sub-expressions are NULL, the operator results in NULL.
      * @throws OperatorProcessingException If invalid operands are given.
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $operands = $this->getOperands();
@@ -88,7 +89,7 @@ class SumProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Sum::class;
     }

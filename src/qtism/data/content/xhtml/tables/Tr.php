@@ -59,7 +59,7 @@ class Tr extends BodyElement
     /**
      * @return TableCellCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -69,7 +69,7 @@ class Tr extends BodyElement
      *
      * @param TableCellCollection $content A collection of TableCell objects.
      */
-    public function setContent(TableCellCollection $content)
+    public function setContent(TableCellCollection $content): void
     {
         $this->content = $content;
     }
@@ -79,7 +79,7 @@ class Tr extends BodyElement
      *
      * @return TableCellCollection
      */
-    public function getContent()
+    public function getContent(): TableCellCollection
     {
         return $this->content;
     }
@@ -87,7 +87,7 @@ class Tr extends BodyElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'tr';
     }

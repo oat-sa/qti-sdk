@@ -13,7 +13,7 @@ class TextFormatTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return TextFormat::class;
     }
@@ -21,7 +21,7 @@ class TextFormatTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'plain',
@@ -33,7 +33,7 @@ class TextFormatTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'PLAIN',
@@ -45,7 +45,7 @@ class TextFormatTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             TextFormat::PLAIN,

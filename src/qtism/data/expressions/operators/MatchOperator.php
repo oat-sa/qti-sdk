@@ -53,7 +53,7 @@ class MatchOperator extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'match';
     }

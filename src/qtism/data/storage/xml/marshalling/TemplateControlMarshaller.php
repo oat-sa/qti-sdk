@@ -54,7 +54,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      * @throws UnmarshallingException
      * @throws ReflectionException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         $expressionElts = $this->getChildElementsByTagName($element, Expression::getExpressionClassNames());
 
@@ -86,7 +86,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -106,7 +106,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      * @param DOMNode $element
      * @return bool
      */
-    protected function isElementFinal(DOMNode $element)
+    protected function isElementFinal(DOMNode $element): bool
     {
         return in_array($element->localName, array_merge([
             'setDefaultValue',
@@ -121,7 +121,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return bool
      */
-    protected function isComponentFinal(QtiComponent $component)
+    protected function isComponentFinal(QtiComponent $component): bool
     {
         return ($component instanceof ExitTemplate ||
             $component instanceof SetDefaultValue ||
@@ -134,7 +134,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      * @param DOMElement $element
      * @return array
      */
-    protected function getChildrenElements(DOMElement $element)
+    protected function getChildrenElements(DOMElement $element): array
     {
         return $this->getChildElementsByTagName($element, [
             'exitTemplate',
@@ -150,7 +150,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return array
      */
-    protected function getChildrenComponents(QtiComponent $component)
+    protected function getChildrenComponents(QtiComponent $component): array
     {
         return $component->getTemplateRules()->getArrayCopy();
     }
@@ -159,7 +159,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
      * @param DOMElement $currentNode
      * @return TemplateRuleCollection
      */
-    protected function createCollection(DOMElement $currentNode)
+    protected function createCollection(DOMElement $currentNode): TemplateRuleCollection
     {
         return new TemplateRuleCollection();
     }
@@ -167,7 +167,7 @@ class TemplateControlMarshaller extends RecursiveMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return '';
     }

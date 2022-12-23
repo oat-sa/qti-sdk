@@ -10,7 +10,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OutcomeMaximumTest extends QtiSmTestCase
 {
-    public function testOutcomeMaximum()
+    public function testOutcomeMaximum(): void
     {
         $outcomeMaximum = new OutcomeMaximum('SCORE', 'WEIGHT');
         $this::assertInstanceOf(OutcomeMaximum::class, $outcomeMaximum);

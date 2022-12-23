@@ -18,7 +18,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class TemplateDeclarationMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $values = new ValueCollection([new Value('tplx', BaseType::IDENTIFIER)]);
         $defaultValue = new DefaultValue($values);
@@ -30,7 +30,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<templateDeclaration identifier="tpl1" cardinality="single" baseType="identifier"><defaultValue><value>tplx</value></defaultValue></templateDeclaration>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
 	        <templateDeclaration identifier="tpl1" cardinality="single" baseType="identifier"><defaultValue><value>tplx</value></defaultValue></templateDeclaration>
@@ -49,7 +49,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('tplx', $values[0]->getValue());
     }
 
-    public function testMarshallHtmlEntities21()
+    public function testMarshallHtmlEntities21(): void
     {
         $values = new ValueCollection([new Value('non&nbsp;breaking&nbsp;space', BaseType::STRING)]);
         $defaultValue = new DefaultValue($values);
@@ -61,7 +61,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<templateDeclaration identifier="tpl1" cardinality="single" baseType="string"><defaultValue><value>non&amp;nbsp;breaking&amp;nbsp;space</value></defaultValue></templateDeclaration>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallHtmlEntities21()
+    public function testUnmarshallHtmlEntities21(): void
     {
         $element = $this->createDOMElement('
 	        <templateDeclaration identifier="tpl1" cardinality="single" baseType="string"><defaultValue><value>non&amp;nbsp;breaking&amp;nbsp;space</value></defaultValue></templateDeclaration>
@@ -80,7 +80,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('non&nbsp;breaking&nbsp;space', $values[0]->getValue());
     }
 
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         // Make sure that paramVariable and mathVariable appear in output even
         // if their value is false. In QTI 2.0, these attributes are required.
@@ -95,7 +95,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<templateDeclaration identifier="tpl1" cardinality="single" baseType="identifier" paramVariable="false" mathVariable="false"><defaultValue><value>tplx</value></defaultValue></templateDeclaration>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall20NoParamVariable()
+    public function testUnmarshall20NoParamVariable(): void
     {
         $element = $this->createDOMElement('
 	        <templateDeclaration identifier="tpl1" cardinality="single" baseType="identifier"><defaultValue><value>tplx</value></defaultValue></templateDeclaration>
@@ -107,7 +107,7 @@ class TemplateDeclarationMarshallerTest extends QtiSmTestCase
         $component = $this->getMarshallerFactory('2.0.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshall20NoMathVariable()
+    public function testUnmarshall20NoMathVariable(): void
     {
         $element = $this->createDOMElement('
 	        <templateDeclaration identifier="tpl1" cardinality="single" baseType="identifier" paramVariable="true"><defaultValue><value>tplx</value></defaultValue></templateDeclaration>

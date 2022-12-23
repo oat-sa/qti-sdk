@@ -15,7 +15,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class AreaMapEntryMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $mappedValue = 1.337;
         $shape = QtiShape::RECT;
@@ -32,7 +32,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
         $this::assertEquals('1.337', $element->getAttribute('mappedValue'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<areaMapEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" shape="rect" coords="0, 20, 100, 0" mappedValue="1.337"/>');
@@ -52,7 +52,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoMappedValue()
+    public function testUnmarshallNoMappedValue(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<areaMapEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" shape="rect" coords="0, 20, 100, 0"/>');
@@ -69,7 +69,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallWrongCoords()
+    public function testUnmarshallWrongCoords(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<areaMapEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" shape="rect" coords="xxx" mappedValue="1.337"/>');
@@ -86,7 +86,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoCoords()
+    public function testUnmarshallNoCoords(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<areaMapEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" shape="rect" mappedValue="1.337"/>');
@@ -103,7 +103,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallInvalidShape()
+    public function testUnmarshallInvalidShape(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<areaMapEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" shape="rectangle" mappedValue="1.337" coords="0, 20, 100, 0"/>');
@@ -120,7 +120,7 @@ class AreaMapEntryMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoShape()
+    public function testUnmarshallNoShape(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<areaMapEntry xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" mappedValue="1.337" coords="0, 20, 100, 0"/>');

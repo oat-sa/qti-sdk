@@ -42,7 +42,7 @@ class SliderInteractionMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
@@ -81,11 +81,11 @@ class SliderInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a SliderInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A SliderInteraction object.
+     * @return SliderInteraction A SliderInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): SliderInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             if (($lowerBound = $this->getDOMElementAttributeAs($element, 'lowerBound', 'float')) !== null) {
@@ -144,7 +144,7 @@ class SliderInteractionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'sliderInteraction';
     }

@@ -51,7 +51,7 @@ class SetDefaultValueProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException
      */
-    public function process()
+    public function process(): void
     {
         $rule = $this->getRule();
         $state = $this->getState();
@@ -86,7 +86,7 @@ class SetDefaultValueProcessor extends RuleProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return SetDefaultValue::class;
     }

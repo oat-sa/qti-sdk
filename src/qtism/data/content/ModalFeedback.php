@@ -127,7 +127,7 @@ class ModalFeedback extends QtiComponent
      * @param string $outcomeIdentifier A valid QTI identifier.
      * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI identifier.
      */
-    public function setOutcomeIdentifier($outcomeIdentifier)
+    public function setOutcomeIdentifier($outcomeIdentifier): void
     {
         if (Format::isIdentifier($outcomeIdentifier, false) === true) {
             $this->outcomeIdentifier = $outcomeIdentifier;
@@ -143,7 +143,7 @@ class ModalFeedback extends QtiComponent
      *
      * @return string A QTI identifier.
      */
-    public function getOutcomeIdentifier()
+    public function getOutcomeIdentifier(): string
     {
         return $this->outcomeIdentifier;
     }
@@ -154,7 +154,7 @@ class ModalFeedback extends QtiComponent
      * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
-    public function setShowHide($showHide)
+    public function setShowHide($showHide): void
     {
         if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
@@ -169,7 +169,7 @@ class ModalFeedback extends QtiComponent
      *
      * @return int A value from the ShowHide enumeration.
      */
-    public function getShowHide()
+    public function getShowHide(): int
     {
         return $this->showHide;
     }
@@ -181,7 +181,7 @@ class ModalFeedback extends QtiComponent
      * @param string $identifier A QTI identifier
      * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
@@ -197,7 +197,7 @@ class ModalFeedback extends QtiComponent
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -207,7 +207,7 @@ class ModalFeedback extends QtiComponent
      *
      * @param string $title A title.
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         $this->title = $title;
     }
@@ -217,7 +217,7 @@ class ModalFeedback extends QtiComponent
      *
      * @return string A title.
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -227,7 +227,7 @@ class ModalFeedback extends QtiComponent
      *
      * @return bool
      */
-    public function hasTitle()
+    public function hasTitle(): bool
     {
         return $this->getTitle() !== '';
     }
@@ -237,7 +237,7 @@ class ModalFeedback extends QtiComponent
      *
      * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
-    public function setContent(FlowStaticCollection $content)
+    public function setContent(FlowStaticCollection $content): void
     {
         $this->content = $content;
     }
@@ -247,7 +247,7 @@ class ModalFeedback extends QtiComponent
      *
      * @return FlowStaticCollection A collection of FlowStatic objects.
      */
-    public function getContent()
+    public function getContent(): FlowStaticCollection
     {
         return $this->content;
     }
@@ -255,7 +255,7 @@ class ModalFeedback extends QtiComponent
     /**
      * @return FlowStaticCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -263,7 +263,7 @@ class ModalFeedback extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'modalFeedback';
     }

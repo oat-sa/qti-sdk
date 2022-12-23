@@ -145,7 +145,7 @@ class ItemResult extends QtiComponent
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'itemResult';
     }
@@ -155,7 +155,7 @@ class ItemResult extends QtiComponent
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         if ($this->hasItemVariables()) {
             $components = $this->getItemVariables()->toArray();
@@ -170,7 +170,7 @@ class ItemResult extends QtiComponent
      *
      * @return QtiIdentifier
      */
-    public function getIdentifier()
+    public function getIdentifier(): QtiIdentifier
     {
         return $this->identifier;
     }
@@ -192,7 +192,7 @@ class ItemResult extends QtiComponent
      *
      * @return DateTime
      */
-    public function getDatestamp()
+    public function getDatestamp(): DateTime
     {
         return $this->datestamp;
     }
@@ -203,7 +203,7 @@ class ItemResult extends QtiComponent
      * @param DateTime $datestamp
      * @return $this
      */
-    public function setDatestamp(DateTime $datestamp)
+    public function setDatestamp(DateTime $datestamp): self
     {
         $this->datestamp = $datestamp;
         return $this;
@@ -212,9 +212,9 @@ class ItemResult extends QtiComponent
     /**
      * Get all test variables. Can be outcome, response, candidate or tempalte variable
      *
-     * @return ItemVariableCollection
+     * @return ItemVariableCollection|null
      */
-    public function getItemVariables()
+    public function getItemVariables(): ?ItemVariableCollection
     {
         return $this->itemVariables;
     }
@@ -225,7 +225,7 @@ class ItemResult extends QtiComponent
      * @param ItemVariableCollection $itemVariables
      * @return $this
      */
-    public function setItemVariables(ItemVariableCollection $itemVariables = null)
+    public function setItemVariables(ItemVariableCollection $itemVariables = null): self
     {
         $this->itemVariables = $itemVariables;
         return $this;
@@ -236,7 +236,7 @@ class ItemResult extends QtiComponent
      *
      * @return bool
      */
-    public function hasItemVariables()
+    public function hasItemVariables(): bool
     {
         return $this->itemVariables !== null;
     }
@@ -244,9 +244,9 @@ class ItemResult extends QtiComponent
     /**
      * Get the sequence of the item e.g. the position of the item in a test
      *
-     * @return QtiInteger
+     * @return QtiInteger|null
      */
-    public function getSequenceIndex()
+    public function getSequenceIndex(): ?QtiInteger
     {
         return $this->sequenceIndex;
     }
@@ -268,7 +268,7 @@ class ItemResult extends QtiComponent
      *
      * @return bool
      */
-    public function hasSequenceIndex()
+    public function hasSequenceIndex(): bool
     {
         return $this->sequenceIndex !== null;
     }
@@ -291,7 +291,7 @@ class ItemResult extends QtiComponent
      *
      * @throws InvalidArgumentException If the sessionStatus is not a valid sessionStatus
      */
-    public function setSessionStatus($sessionStatus)
+    public function setSessionStatus($sessionStatus): self
     {
         $sessionStatus = (int)$sessionStatus;
         if (!in_array($sessionStatus, SessionStatus::asArray(), true)) {
@@ -305,9 +305,9 @@ class ItemResult extends QtiComponent
     /**
      * Get the optional candidate comment or null if not set
      *
-     * @return string
+     * @return QtiString|string|null
      */
-    public function getCandidateComment()
+    public function getCandidateComment(): ?QtiString
     {
         return $this->candidateComment;
     }
@@ -318,7 +318,7 @@ class ItemResult extends QtiComponent
      * @param QtiString $candidateComment
      * @return $this
      */
-    public function setCandidateComment(QtiString $candidateComment = null)
+    public function setCandidateComment(QtiString $candidateComment = null): self
     {
         $this->candidateComment = $candidateComment;
         return $this;
@@ -329,7 +329,7 @@ class ItemResult extends QtiComponent
      *
      * @return bool
      */
-    public function hasCandidateComment()
+    public function hasCandidateComment(): bool
     {
         return $this->candidateComment !== null;
     }

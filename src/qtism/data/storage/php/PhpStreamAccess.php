@@ -57,7 +57,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @throws InvalidArgumentException If $scalar is not a PHP scalar value nor null.
      * @throws StreamAccessException If an error occurs while writing the scalar value.
      */
-    public function writeScalar($scalar)
+    public function writeScalar($scalar): void
     {
         if (Utils::isScalar($scalar) === false) {
             $msg = "A '" . gettype($scalar) . "' value is not a PHP scalar value nor null.";
@@ -92,7 +92,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param bool $spaces Whether to surround the equality symbol with spaces.
      * @throws StreamAccessException If an error occurs while writing the equality symbol.
      */
-    public function writeEquals($spaces = true)
+    public function writeEquals($spaces = true): void
     {
         try {
             if ($spaces === true) {
@@ -111,7 +111,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      *
      * @throws StreamAccessException If an error occurs while writing the equality symbol.
      */
-    public function writeNewline()
+    public function writeNewline(): void
     {
         try {
             $this->getStream()->write("\n");
@@ -127,7 +127,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param bool $newline Whether a newline escape sequence must be written after the opening tag.
      * @throws StreamAccessException If an error occurs while writing the opening tag.
      */
-    public function writeOpeningTag($newline = true)
+    public function writeOpeningTag($newline = true): void
     {
         try {
             $this->getStream()->write('<?php');
@@ -146,7 +146,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param bool $newline
      * @throws StreamAccessException
      */
-    public function writeClosingTag($newline = true)
+    public function writeClosingTag($newline = true): void
     {
         try {
             if ($newline === true) {
@@ -165,7 +165,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param bool $newline Whether a newline escape sequence follows the semicolon.
      * @throws StreamAccessException If an error occurs while writing the semicolon;
      */
-    public function writeSemicolon($newline = true)
+    public function writeSemicolon($newline = true): void
     {
         try {
             $this->getStream()->write(';');
@@ -183,7 +183,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      *
      * @throws StreamAccessException If an error occurs while writing the colon.
      */
-    public function writeColon()
+    public function writeColon(): void
     {
         try {
             $this->getStream()->write(':');
@@ -198,7 +198,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      *
      * @throws StreamAccessException If an error occurs while writing the scope resolution operator.
      */
-    public function writeScopeResolution()
+    public function writeScopeResolution(): void
     {
         try {
             $this->getStream()->write('::');
@@ -214,7 +214,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @throws StreamAccessException If an error occurs while writing the "Paamayim Nekudotayim".
      * @see PhpStreamAccess::writeScopeResolution
      */
-    public function writePaamayimNekudotayim()
+    public function writePaamayimNekudotayim(): void
     {
         try {
             $this->writeScopeResolution();
@@ -229,7 +229,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      *
      * @throws StreamAccessException If an error occurs while writing the opening parenthesis.
      */
-    public function writeOpeningParenthesis()
+    public function writeOpeningParenthesis(): void
     {
         try {
             $this->getStream()->write('(');
@@ -244,7 +244,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      *
      * @throws StreamAccessException If an error occurs while writing the closing parenthesis.
      */
-    public function writeClosingParenthesis()
+    public function writeClosingParenthesis(): void
     {
         try {
             $this->getStream()->write(')');
@@ -260,7 +260,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param bool $space Whether a white space must be written after the comma.
      * @throws StreamAccessException If an error occurs while writing the comma.
      */
-    public function writeComma($space = true)
+    public function writeComma($space = true): void
     {
         try {
             $this->getStream()->write(',');
@@ -278,7 +278,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      *
      * @throws StreamAccessException If an error occurs while writing the white space.
      */
-    public function writeSpace()
+    public function writeSpace(): void
     {
         try {
             $this->getStream()->write(' ');
@@ -294,7 +294,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param string $varname The name of the variable reference to write.
      * @throws StreamAccessException If an error occurs while writing the variable reference.
      */
-    public function writeVariable($varname)
+    public function writeVariable($varname): void
     {
         try {
             $this->getStream()->write('$' . $varname);
@@ -309,7 +309,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      *
      * @throws StreamAccessException If an error occurs while writing the object operator.
      */
-    public function writeObjectOperator()
+    public function writeObjectOperator(): void
     {
         try {
             $this->getStream()->write('->');
@@ -326,7 +326,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param PhpArgumentCollection $arguments A collection of PhpArgument objects representing the arguments to be given to the function call.
      * @throws StreamAccessException If an error occurs while writing the function call.
      */
-    public function writeFunctionCall($funcname, PhpArgumentCollection $arguments = null)
+    public function writeFunctionCall($funcname, PhpArgumentCollection $arguments = null): void
     {
         try {
             $this->getStream()->write($funcname);
@@ -352,8 +352,12 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param bool $static Whether or not the call is static.
      * @throws StreamAccessException If an error occurs while writing the method call.
      */
-    public function writeMethodCall($objectname, $methodname, PhpArgumentCollection $arguments = null, $static = false)
-    {
+    public function writeMethodCall(
+        $objectname,
+        $methodname,
+        PhpArgumentCollection $arguments = null,
+        $static = false
+    ): void {
         try {
             $this->writeVariable($objectname);
 
@@ -383,7 +387,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param bool $space Whether to write an extra white space after the new operator.
      * @throws StreamAccessException If an error occurs while writing the new operator.
      */
-    public function writeNew($space = true)
+    public function writeNew($space = true): void
     {
         try {
             $this->getStream()->write('new');
@@ -403,7 +407,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param PhpArgumentCollection $arguments A collection of PhpArgument objects.
      * @throws StreamAccessException
      */
-    public function writeInstantiation($classname, PhpArgumentCollection $arguments = null)
+    public function writeInstantiation($classname, PhpArgumentCollection $arguments = null): void
     {
         try {
             $this->writeNew();
@@ -427,7 +431,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param PhpArgumentCollection $arguments A collection of PhpArgument objects.
      * @throws StreamAccessException If an error occurs while writing the sequence of arguments.
      */
-    public function writeArguments(PhpArgumentCollection $arguments)
+    public function writeArguments(PhpArgumentCollection $arguments): void
     {
         try {
             $argsCount = count($arguments);
@@ -451,7 +455,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param PhpArgument $argument A PhpArgument object.
      * @throws StreamAccessException If an error occurs while writing the PHP argument.
      */
-    public function writeArgument(PhpArgument $argument)
+    public function writeArgument(PhpArgument $argument): void
     {
         try {
             $value = $argument->getValue();

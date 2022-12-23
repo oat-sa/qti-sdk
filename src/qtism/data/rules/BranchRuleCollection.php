@@ -37,7 +37,7 @@ class BranchRuleCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of BranchRule.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof BranchRule) {
             $msg = "BranchRuleCollection only accepts to store BranchRule objects, '" . gettype($value) . "' given.";

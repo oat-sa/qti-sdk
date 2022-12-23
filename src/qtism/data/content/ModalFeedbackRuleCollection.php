@@ -37,7 +37,7 @@ class ModalFeedbackRuleCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of ModalFeedbackRule.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof ModalFeedbackRule) {
             $msg = 'A RubricBlockRefCollection object only accepts to store ModalFeedbackRule objects.';

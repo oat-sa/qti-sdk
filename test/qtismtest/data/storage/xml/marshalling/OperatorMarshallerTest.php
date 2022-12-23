@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OperatorMarshallerTest extends QtiSmTestCase
 {
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -63,7 +63,7 @@ class OperatorMarshallerTest extends QtiSmTestCase
         $this::assertEquals(4, $sub22->getValue());
     }
 
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $sub1Operands = new ExpressionCollection([new BaseValue(BaseType::INTEGER, 1), new BaseValue(BaseType::INTEGER, 2)]);
         $sub2Operands = new ExpressionCollection([new BaseValue(BaseType::INTEGER, 3), new BaseValue(BaseType::INTEGER, 4)]);

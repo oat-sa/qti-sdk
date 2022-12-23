@@ -59,7 +59,7 @@ class PositionObjectStage extends QtiComponent implements Block
      * @param ObjectElement $object An ObjectElement object.
      * @qtism-bean-property
      */
-    public function setObject(ObjectElement $object)
+    public function setObject(ObjectElement $object): void
     {
         $this->object = $object;
     }
@@ -70,7 +70,7 @@ class PositionObjectStage extends QtiComponent implements Block
      * @return ObjectElement An ObjectElement object.
      * @qtism-bean-property
      */
-    public function getObject()
+    public function getObject(): ObjectElement
     {
         return $this->object;
     }
@@ -93,7 +93,7 @@ class PositionObjectStage extends QtiComponent implements Block
      * @param PositionObjectInteractionCollection $positionObjectInteractions A collection of PositionObjectInteraction objects.
      * @throws InvalidArgumentException If $positionObjectInteractions is empty.
      */
-    public function setPositionObjectInteractions(PositionObjectInteractionCollection $positionObjectInteractions)
+    public function setPositionObjectInteractions(PositionObjectInteractionCollection $positionObjectInteractions): void
     {
         if (count($positionObjectInteractions) > 0) {
             $this->positionObjectInteractions = $positionObjectInteractions;
@@ -108,7 +108,7 @@ class PositionObjectStage extends QtiComponent implements Block
      *
      * @return PositionObjectInteractionCollection A collection of PositionObjectInteraction objects.
      */
-    public function getPositionObjectInteractions()
+    public function getPositionObjectInteractions(): PositionObjectInteractionCollection
     {
         return $this->positionObjectInteractions;
     }
@@ -116,7 +116,7 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getPositionObjectInteractions()->getArrayCopy()));
     }
@@ -124,7 +124,7 @@ class PositionObjectStage extends QtiComponent implements Block
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'positionObjectStage';
     }

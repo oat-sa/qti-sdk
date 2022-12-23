@@ -21,7 +21,7 @@ use qtismtest\QtiSmItemSubsetTestCase;
  */
 class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase
 {
-    public function testNumberResponded()
+    public function testNumberResponded(): void
     {
         $session = $this->getTestSession();
 
@@ -123,7 +123,7 @@ class NumberRespondedProcessorTest extends QtiSmItemSubsetTestCase
      * @param IdentifierCollection|null $excludeCategories
      * @return NumberResponded
      */
-    protected static function getNumberResponded($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null)
+    protected static function getNumberResponded($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null): NumberResponded
     {
         $numberResponded = new NumberResponded();
         $numberResponded->setSectionIdentifier($sectionIdentifier);

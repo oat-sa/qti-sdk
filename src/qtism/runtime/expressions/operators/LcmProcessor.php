@@ -48,7 +48,7 @@ class LcmProcessor extends OperatorProcessor
      * @return QtiInteger|null A single integer equal in value to the lowest common multiple of the sub-expressions. If all arguments are 0, the result is 0, If any of the sub-expressions is NULL, the result is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiInteger
     {
         $operands = $this->getOperands();
 
@@ -109,7 +109,7 @@ class LcmProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Lcm::class;
     }

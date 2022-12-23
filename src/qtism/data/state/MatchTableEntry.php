@@ -70,7 +70,7 @@ class MatchTableEntry extends QtiComponent
      *
      * @return int An integer value.
      */
-    public function getSourceValue()
+    public function getSourceValue(): int
     {
         return $this->sourceValue;
     }
@@ -81,7 +81,7 @@ class MatchTableEntry extends QtiComponent
      * @param int $sourceValue An integer value.
      * @throws InvalidArgumentException If $sourceValue is not an integer.
      */
-    public function setSourceValue($sourceValue)
+    public function setSourceValue($sourceValue): void
     {
         if (is_int($sourceValue)) {
             $this->sourceValue = $sourceValue;
@@ -96,6 +96,7 @@ class MatchTableEntry extends QtiComponent
      *
      * @return mixed A value compliant with the QTI baseType datatype.
      */
+    #[\ReturnTypeWillChange]
     public function getTargetValue()
     {
         return $this->targetValue;
@@ -106,7 +107,7 @@ class MatchTableEntry extends QtiComponent
      *
      * @param mixed $targetValue A Value object.
      */
-    public function setTargetValue($targetValue)
+    public function setTargetValue($targetValue): void
     {
         $this->targetValue = $targetValue;
     }
@@ -114,7 +115,7 @@ class MatchTableEntry extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'matchTableEntry';
     }
@@ -122,7 +123,7 @@ class MatchTableEntry extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

@@ -38,7 +38,7 @@ class TrCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instanceof Tr.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Tr) {
             $msg = 'TrCollection objects only accept to store Tr objects.';

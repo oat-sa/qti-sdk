@@ -77,7 +77,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
      * @param string $identifier A QTI identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
@@ -92,7 +92,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -103,7 +103,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
      * @param string $href A URI.
      * @throws InvalidArgumentException If $href is not a valid URI.
      */
-    public function setHref($href)
+    public function setHref($href): void
     {
         if (Format::isUri($href) === true) {
             $this->href = $href;
@@ -118,7 +118,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
      *
      * @return string A URI.
      */
-    public function getHref()
+    public function getHref(): string
     {
         return $this->href;
     }
@@ -126,7 +126,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -134,7 +134,7 @@ class RubricBlockRef extends QtiComponent implements QtiIdentifiable
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'rubricBlockRef';
     }

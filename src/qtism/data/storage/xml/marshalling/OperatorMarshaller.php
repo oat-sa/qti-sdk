@@ -120,7 +120,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      *
      * @return array An array of string.
      */
-    public static function getOperators()
+    public static function getOperators(): array
     {
         return self::$operators;
     }
@@ -130,7 +130,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      *
      * @return array An array of string.
      */
-    public static function getExpressions()
+    public static function getExpressions(): array
     {
         return self::$expressions;
     }
@@ -141,7 +141,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      * @return mixed
      * @throws ReflectionException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         // Some exceptions applies on instanciation e.g. the And operator is named
         // AndOperator because of PHP reserved words restriction.
@@ -188,7 +188,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      * @param array $elements
      * @return DOMElement
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
         foreach ($elements as $elt) {
@@ -225,7 +225,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      * @param DOMNode $element
      * @return bool
      */
-    protected function isElementFinal(DOMNode $element)
+    protected function isElementFinal(DOMNode $element): bool
     {
         return !in_array($element->localName, static::getOperators());
     }
@@ -234,7 +234,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return bool
      */
-    protected function isComponentFinal(QtiComponent $component)
+    protected function isComponentFinal(QtiComponent $component): bool
     {
         return !$component instanceof Operator;
     }
@@ -243,7 +243,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      * @param DOMElement $element
      * @return array
      */
-    protected function getChildrenElements(DOMElement $element)
+    protected function getChildrenElements(DOMElement $element): array
     {
         return $this->getChildElementsByTagName($element, array_merge(self::getOperators(), self::getExpressions()));
     }
@@ -252,7 +252,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return array
      */
-    protected function getChildrenComponents(QtiComponent $component)
+    protected function getChildrenComponents(QtiComponent $component): array
     {
         if ($component instanceof Operator) {
             return $component->getExpressions()->getArrayCopy();
@@ -265,7 +265,7 @@ class OperatorMarshaller extends RecursiveMarshaller
      * @param DOMElement $currentNode
      * @return ExpressionCollection
      */
-    protected function createCollection(DOMElement $currentNode)
+    protected function createCollection(DOMElement $currentNode): ExpressionCollection
     {
         return new ExpressionCollection();
     }
@@ -273,7 +273,7 @@ class OperatorMarshaller extends RecursiveMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return '';
     }

@@ -45,8 +45,11 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children, AssessmentSection $assessmentSection = null)
-    {
+    protected function unmarshallChildrenKnown(
+        DOMElement $element,
+        QtiComponentCollection $children,
+        AssessmentSection $assessmentSection = null
+    ): QtiComponent {
         $baseMarshaller = new SectionPartMarshaller($this->getVersion());
         $baseComponent = $baseMarshaller->unmarshall($element);
 
@@ -125,7 +128,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $baseMarshaller = new SectionPartMarshaller($this->getVersion());
         $element = $baseMarshaller->marshall($component);
@@ -167,7 +170,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
      * @param DOMNode $element
      * @return bool
      */
-    protected function isElementFinal(DOMNode $element)
+    protected function isElementFinal(DOMNode $element): bool
     {
         return $element->localName != 'assessmentSection';
     }
@@ -176,7 +179,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return bool
      */
-    protected function isComponentFinal(QtiComponent $component)
+    protected function isComponentFinal(QtiComponent $component): bool
     {
         return !$component instanceof AssessmentSection;
     }
@@ -185,7 +188,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
      * @param DOMElement $element
      * @return array
      */
-    protected function getChildrenElements(DOMElement $element)
+    protected function getChildrenElements(DOMElement $element): array
     {
         if ($element->localName == 'assessmentSection') {
             $doc = $element->ownerDocument;
@@ -193,7 +196,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
             $nodeList = $xpath->query('assessmentSection | assessmentSectionRef | assessmentItemRef', $element);
 
             if ($nodeList->length == 0) {
-                $xpath->registerNamespace('qti', $doc->lookupNamespaceURI($doc->namespaceURI));
+                $xpath->registerNamespace('qti', (string)$doc->lookupNamespaceURI($doc->namespaceURI));
                 $nodeList = $xpath->query('qti:assessmentSection | qti:assessmentSectionRef | qti:assessmentItemRef', $element);
             }
 
@@ -213,7 +216,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
      * @param QtiComponent $component
      * @return array
      */
-    protected function getChildrenComponents(QtiComponent $component)
+    protected function getChildrenComponents(QtiComponent $component): array
     {
         if ($component instanceof AssessmentSection) {
             return $component->getSectionParts()->getArrayCopy();
@@ -226,7 +229,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
      * @param DOMElement $currentNode
      * @return SectionPartCollection
      */
-    protected function createCollection(DOMElement $currentNode)
+    protected function createCollection(DOMElement $currentNode): SectionPartCollection
     {
         return new SectionPartCollection();
     }
@@ -234,7 +237,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return '';
     }

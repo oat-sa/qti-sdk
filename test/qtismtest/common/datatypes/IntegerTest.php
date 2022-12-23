@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class IntegerTest extends QtiSmTestCase
 {
-    public function testWrongValue()
+    public function testWrongValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $integer = new QtiInteger(13.37);

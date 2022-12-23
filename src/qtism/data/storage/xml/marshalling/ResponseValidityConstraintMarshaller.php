@@ -41,7 +41,7 @@ class ResponseValidityConstraintMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    public function marshall(QtiComponent $component)
+    public function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'responseIdentifier', $component->getResponseIdentifier());
@@ -64,11 +64,11 @@ class ResponseValidityConstraintMarshaller extends Marshaller
      * Unmarshall a DOMElement to its ResponseValidityConstraint data model representation.
      *
      * @param DOMElement $element
-     * @return QtiComponent A ResponseValidityConstraint object.
+     * @return ResponseValidityConstraint A ResponseValidityConstraint object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    public function unmarshall(DOMElement $element)
+    public function unmarshall(DOMElement $element): ResponseValidityConstraint
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             if (($minConstraint = $this->getDOMElementAttributeAs($element, 'minConstraint', 'integer')) !== null) {
@@ -118,7 +118,7 @@ class ResponseValidityConstraintMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'responseValidityConstraint';
     }

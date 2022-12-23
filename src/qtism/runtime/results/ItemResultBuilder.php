@@ -45,7 +45,7 @@ class ItemResultBuilder extends AbstractResultBuilder
      * @return ItemResult
      * @throws Exception
      */
-    public function buildResult()
+    public function buildResult(): ItemResult
     {
         /** @var AssessmentItemSession $state */
         $state = $this->state;
@@ -72,7 +72,7 @@ class ItemResultBuilder extends AbstractResultBuilder
      *
      * @return VariableCollection
      */
-    protected function getAllVariables()
+    protected function getAllVariables(): VariableCollection
     {
         return $this->state->getAllVariables();
     }

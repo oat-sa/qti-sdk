@@ -39,7 +39,7 @@ class ExitTemplateProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException with code = RuleProcessingException::EXIT_TEMPLATE In any case.
      */
-    public function process()
+    public function process(): void
     {
         $msg = 'Termination of Template Processing.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_TEMPLATE);
@@ -48,7 +48,7 @@ class ExitTemplateProcessor extends RuleProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return ExitTemplate::class;
     }

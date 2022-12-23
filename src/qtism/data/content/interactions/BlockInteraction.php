@@ -67,9 +67,9 @@ abstract class BlockInteraction extends Interaction implements Block, Flow
     /**
      * Get the prompt for the interaction.
      *
-     * @return Prompt
+     * @return Prompt|null
      */
-    public function getPrompt()
+    public function getPrompt(): ?Prompt
     {
         return $this->prompt;
     }
@@ -79,7 +79,7 @@ abstract class BlockInteraction extends Interaction implements Block, Flow
      *
      * @param Prompt $prompt
      */
-    public function setPrompt($prompt = null)
+    public function setPrompt($prompt = null): void
     {
         $this->prompt = $prompt;
     }
@@ -89,7 +89,7 @@ abstract class BlockInteraction extends Interaction implements Block, Flow
      *
      * @return bool
      */
-    public function hasPrompt()
+    public function hasPrompt(): bool
     {
         return $this->getPrompt() !== null;
     }
@@ -97,7 +97,7 @@ abstract class BlockInteraction extends Interaction implements Block, Flow
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $array = [];
         if ($this->hasPrompt() === true) {

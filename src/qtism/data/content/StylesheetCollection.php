@@ -37,7 +37,7 @@ class StylesheetCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a Stylesheet object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Stylesheet) {
             $msg = "StylesheetCollection class only accept Stylesheet objects, '" . gettype($value) . "' given.";

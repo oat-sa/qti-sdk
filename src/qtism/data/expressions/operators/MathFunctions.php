@@ -32,66 +32,66 @@ use qtism\common\enums\Enumeration;
  */
 class MathFunctions implements Enumeration
 {
-    const SIN = 0;
+    public const SIN = 0;
 
-    const COS = 1;
+    public const COS = 1;
 
-    const TAN = 2;
+    public const TAN = 2;
 
-    const SEC = 3;
+    public const SEC = 3;
 
-    const CSC = 4;
+    public const CSC = 4;
 
-    const COT = 5;
+    public const COT = 5;
 
-    const ASIN = 6;
+    public const ASIN = 6;
 
-    const ACOS = 7;
+    public const ACOS = 7;
 
-    const ATAN = 8;
+    public const ATAN = 8;
 
-    const ATAN2 = 9;
+    public const ATAN2 = 9;
 
-    const ASEC = 10;
+    public const ASEC = 10;
 
-    const ACSC = 11;
+    public const ACSC = 11;
 
-    const ACOT = 12;
+    public const ACOT = 12;
 
-    const SINH = 13;
+    public const SINH = 13;
 
-    const COSH = 14;
+    public const COSH = 14;
 
-    const TANH = 15;
+    public const TANH = 15;
 
-    const SECH = 16;
+    public const SECH = 16;
 
-    const CSCH = 17;
+    public const CSCH = 17;
 
-    const COTH = 18;
+    public const COTH = 18;
 
-    const LOG = 19;
+    public const LOG = 19;
 
-    const LN = 20;
+    public const LN = 20;
 
-    const EXP = 21;
+    public const EXP = 21;
 
-    const ABS = 22;
+    public const ABS = 22;
 
-    const SIGNUM = 23;
+    public const SIGNUM = 23;
 
-    const FLOOR = 24;
+    public const FLOOR = 24;
 
-    const CEIL = 25;
+    public const CEIL = 25;
 
-    const TO_DEGREES = 26;
+    public const TO_DEGREES = 26;
 
-    const TO_RADIANS = 27;
+    public const TO_RADIANS = 27;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'SIN' => self::SIN,
@@ -127,11 +127,12 @@ class MathFunctions implements Enumeration
 
     /**
      * @param false|int $name
+     *
      * @return bool|int
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'sin':
                 return self::SIN;
                 break;

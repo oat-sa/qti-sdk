@@ -41,5 +41,6 @@ interface Stack
      *
      * @return mixed A value.
      */
+    #[\ReturnTypeWillChange]
     public function pop();
 }

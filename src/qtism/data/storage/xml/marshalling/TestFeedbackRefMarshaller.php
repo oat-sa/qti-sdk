@@ -40,7 +40,7 @@ class TestFeedbackRefMarshaller extends Marshaller
      * @param QtiComponent $component
      * @return DOMElement
      */
-    public function marshall(QtiComponent $component)
+    public function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -57,10 +57,10 @@ class TestFeedbackRefMarshaller extends Marshaller
      * Unmarshall a DOMElement to its TestFeedbackRef data model representation.
      *
      * @param DOMElement $element
-     * @return QtiComponent A TestFeedbackRef object.
+     * @return TestFeedbackRef A TestFeedbackRef object.
      * @throws UnmarshallingException If the element cannot be unmarshalled.
      */
-    public function unmarshall(DOMElement $element)
+    public function unmarshall(DOMElement $element): TestFeedbackRef
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($href = $this->getDOMElementAttributeAs($element, 'href')) !== null) {
@@ -96,7 +96,7 @@ class TestFeedbackRefMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'testFeedbackRef';
     }

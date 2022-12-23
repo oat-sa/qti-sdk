@@ -61,7 +61,7 @@ class PrintedVariableRenderer extends BodyElementRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-printedVariable');
@@ -72,20 +72,23 @@ class PrintedVariableRenderer extends BodyElementRenderer
             $fragment->firstChild->setAttribute('data-format', $component->getFormat());
         }
 
-        $fragment->firstChild->setAttribute('data-power-form', ($component->mustPowerForm() === true) ? 'true' : 'false');
-        $fragment->firstChild->setAttribute('data-base', $component->getBase());
+        $fragment->firstChild->setAttribute(
+            'data-power-form',
+            (string)($component->mustPowerForm() === true) ? 'true' : 'false'
+        );
+        $fragment->firstChild->setAttribute('data-base', (string)$component->getBase());
 
         if ($component->hasIndex() === true) {
-            $fragment->firstChild->setAttribute('data-index', $component->getIndex());
+            $fragment->firstChild->setAttribute('data-index', (string)$component->getIndex());
         }
 
-        $fragment->firstChild->setAttribute('data-delimiter', $component->getDelimiter());
+        $fragment->firstChild->setAttribute('data-delimiter', (string)$component->getDelimiter());
 
         if ($component->hasField() === true) {
-            $fragment->firstChild->setAttribute('data-field', $component->getField());
+            $fragment->firstChild->setAttribute('data-field', (string)$component->getField());
         }
 
-        $fragment->firstChild->setAttribute('data-mapping-indicator', $component->getMappingIndicator());
+        $fragment->firstChild->setAttribute('data-mapping-indicator', (string)$component->getMappingIndicator());
     }
 
     /**
@@ -93,7 +96,7 @@ class PrintedVariableRenderer extends BodyElementRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         $renderingEngine = $this->getRenderingEngine();
 

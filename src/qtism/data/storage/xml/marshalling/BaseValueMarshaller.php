@@ -40,7 +40,7 @@ class BaseValueMarshaller extends Marshaller
      * @param QtiComponent $component A BaseValue object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -54,10 +54,10 @@ class BaseValueMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI baseValue element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A BaseValue object.
+     * @return BaseValue A BaseValue object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): BaseValue
     {
         if (($baseType = $this->getDOMElementAttributeAs($element, 'baseType', 'string')) !== null) {
             $value = $element->nodeValue;
@@ -78,7 +78,7 @@ class BaseValueMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'baseValue';
     }

@@ -181,7 +181,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @return ViewCollection A Collection of values that are values from the View enumeration.
      */
-    public function getViews()
+    public function getViews(): ViewCollection
     {
         return $this->views;
     }
@@ -192,7 +192,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @param ViewCollection $views A collection of values that are values from the View enumeration.
      */
-    public function setViews(ViewCollection $views)
+    public function setViews(ViewCollection $views): void
     {
         $this->views = $views;
     }
@@ -203,7 +203,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @return string A string.
      */
-    public function getInterpretation()
+    public function getInterpretation(): string
     {
         return $this->interpretation;
     }
@@ -214,7 +214,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * @param string $interpretation A string.
      * @throws InvalidArgumentException If $interpretation is not a string.
      */
-    public function setInterpretation($interpretation)
+    public function setInterpretation($interpretation): void
     {
         if (is_string($interpretation)) {
             $this->interpretation = $interpretation;
@@ -229,7 +229,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @return string A URI.
      */
-    public function getLongInterpretation()
+    public function getLongInterpretation(): string
     {
         return $this->longInterpretation;
     }
@@ -240,7 +240,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * @param string $longInterpretation A string.
      * @throws InvalidArgumentException If $longInterpretation is not a string.
      */
-    public function setLongInterpretation($longInterpretation)
+    public function setLongInterpretation($longInterpretation): void
     {
         if (is_string($longInterpretation)) {
             $this->longInterpretation = $longInterpretation;
@@ -266,7 +266,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * @param mixed $normalMinimum A numeric value.
      * @throws InvalidArgumentException If $normalMinimum is not numeric nor false.
      */
-    public function setNormalMinimum($normalMinimum)
+    public function setNormalMinimum($normalMinimum): void
     {
         if (is_numeric($normalMinimum) || (is_bool($normalMinimum) && $normalMinimum === false)) {
             $this->normalMinimum = $normalMinimum;
@@ -292,7 +292,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * @param bool|number $normalMaximum A numeric value.
      * @throws InvalidArgumentException If $normalMaximum is not a numeric value nor false.
      */
-    public function setNormalMaximum($normalMaximum)
+    public function setNormalMaximum($normalMaximum): void
     {
         if (is_numeric($normalMaximum) || (is_bool($normalMaximum) && $normalMaximum === false)) {
             $this->normalMaximum = $normalMaximum;
@@ -318,7 +318,7 @@ class OutcomeDeclaration extends VariableDeclaration
      * @param bool|number $masteryValue A numeric value or false.
      * @throws InvalidArgumentException If $masteryValue is not numeric nor false.
      */
-    public function setMasteryValue($masteryValue)
+    public function setMasteryValue($masteryValue): void
     {
         if (is_numeric($masteryValue) || (is_bool($masteryValue) && $masteryValue === false)) {
             $this->masteryValue = $masteryValue;
@@ -333,7 +333,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @return LookupTable A LookupTable or null value if not specified.
      */
-    public function getLookupTable()
+    public function getLookupTable(): ?LookupTable
     {
         return $this->lookupTable;
     }
@@ -343,7 +343,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @param LookupTable $lookupTable A LookupTable object.
      */
-    public function setLookupTable(LookupTable $lookupTable = null)
+    public function setLookupTable(LookupTable $lookupTable = null): void
     {
         $this->lookupTable = $lookupTable;
     }
@@ -351,7 +351,7 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'outcomeDeclaration';
     }
@@ -359,7 +359,7 @@ class OutcomeDeclaration extends VariableDeclaration
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = parent::getComponents()->getArrayCopy();
 
@@ -375,7 +375,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @param int|null $externalScored
      */
-    public function setExternalScored($externalScored = null)
+    public function setExternalScored($externalScored = null): void
     {
         if ($externalScored !== null && !in_array($externalScored, ExternalScored::asArray(), true)) {
             throw new InvalidArgumentException(sprintf('Value %s is invalid in externalScored attribute', $externalScored));
@@ -388,7 +388,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @return int|null
      */
-    public function getExternalScored()
+    public function getExternalScored(): ?int
     {
         return $this->externalScored;
     }
@@ -398,7 +398,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @return bool
      */
-    public function isExternallyScored()
+    public function isExternallyScored(): bool
     {
         return $this->externalScored !== null;
     }
@@ -408,7 +408,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @return bool
      */
-    public function isScoredByHuman()
+    public function isScoredByHuman(): bool
     {
         return $this->externalScored === ExternalScored::HUMAN;
     }
@@ -418,7 +418,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @return bool
      */
-    public function isScoredByExternalMachine()
+    public function isScoredByExternalMachine(): bool
     {
         return $this->externalScored === ExternalScored::EXTERNAL_MACHINE;
     }

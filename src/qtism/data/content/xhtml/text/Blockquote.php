@@ -61,7 +61,7 @@ class Blockquote extends SimpleBlock
      *
      * @return string A URI.
      */
-    public function getCite()
+    public function getCite(): string
     {
         return $this->cite;
     }
@@ -72,7 +72,7 @@ class Blockquote extends SimpleBlock
      * @param string $cite
      * @throws InvalidArgumentException If $cite is not a valid URI.
      */
-    public function setCite($cite)
+    public function setCite($cite): void
     {
         if ($cite !== '' && !Format::isUri($cite)) {
             $msg = "The 'cite' argument must be a valid URI, '" . $cite . "' given.";
@@ -87,7 +87,7 @@ class Blockquote extends SimpleBlock
      *
      * @return bool
      */
-    public function hasCite()
+    public function hasCite(): bool
     {
         return $this->getCite() !== '';
     }
@@ -95,7 +95,7 @@ class Blockquote extends SimpleBlock
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'blockquote';
     }

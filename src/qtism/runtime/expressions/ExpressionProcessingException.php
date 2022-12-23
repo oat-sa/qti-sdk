@@ -38,7 +38,7 @@ class ExpressionProcessingException extends ProcessingException
      * @param Processable $source The source of the error.
      * @throws InvalidArgumentException If $source is not an ExpressionProcessor object.
      */
-    public function setSource(Processable $source)
+    public function setSource(Processable $source): void
     {
         if ($source instanceof ExpressionProcessor) {
             parent::setSource($source);

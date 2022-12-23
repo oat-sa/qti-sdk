@@ -16,7 +16,7 @@ use qtismtest\QtiSmTestCase;
  */
 class InsideMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $subs = new ExpressionCollection();
         $subs[] = new Variable('pointVariable');
@@ -35,7 +35,7 @@ class InsideMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1, $element->getElementsByTagName('variable')->length);
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

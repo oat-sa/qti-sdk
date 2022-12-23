@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class DirectedPairTest extends QtiSmTestCase
 {
-    public function testEquality()
+    public function testEquality(): void
     {
         $p1 = new QtiDirectedPair('A', 'B');
         $p2 = new QtiDirectedPair('A', 'B');

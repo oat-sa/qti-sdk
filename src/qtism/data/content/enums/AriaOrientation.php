@@ -35,12 +35,12 @@ class AriaOrientation implements Enumeration
     /**
      * @var int
      */
-    const HORIZONTAL = 0;
+    public const HORIZONTAL = 0;
 
     /**
      * @var int
      */
-    const VERTICAL = 1;
+    public const VERTICAL = 1;
 
     /**
      * As Array
@@ -50,7 +50,7 @@ class AriaOrientation implements Enumeration
      *
      * @return int[]
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'HORIZONTAL' => self::HORIZONTAL,

@@ -62,7 +62,7 @@ class MapResponseProcessor extends ExpressionProcessor
      * @return QtiFloat a QTI float value.
      * @throws ExpressionProcessingException
      */
-    public function process()
+    public function process(): QtiFloat
     {
         $expr = $this->getExpression();
         $state = $this->getState();
@@ -169,7 +169,7 @@ class MapResponseProcessor extends ExpressionProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return MapResponse::class;
     }

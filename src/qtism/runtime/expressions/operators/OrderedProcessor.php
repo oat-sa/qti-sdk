@@ -53,7 +53,7 @@ class OrderedProcessor extends OperatorProcessor
      * @return OrderedContainer|null An OrderedContainer object or NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?OrderedContainer
     {
         $operands = $this->getOperands();
 
@@ -100,7 +100,7 @@ class OrderedProcessor extends OperatorProcessor
      * @param OrderedContainer $container An OrderedContainer object you want to append something to.
      * @param QtiScalar|OrderedContainer $value A value to append to the $container.
      */
-    protected static function appendValue(OrderedContainer $container, $value)
+    protected static function appendValue(OrderedContainer $container, $value): void
     {
         if ($value instanceof OrderedContainer) {
             foreach ($value as $v) {
@@ -115,7 +115,7 @@ class OrderedProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Ordered::class;
     }

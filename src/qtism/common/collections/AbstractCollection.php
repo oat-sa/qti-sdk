@@ -63,7 +63,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      *
      * @param array $dataPlaceHolder An array.
      */
-    protected function setDataPlaceHolder(array &$dataPlaceHolder)
+    protected function setDataPlaceHolder(array &$dataPlaceHolder): void
     {
         $this->dataPlaceHolder = $dataPlaceHolder;
     }
@@ -73,7 +73,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      *
      * @return array The data placeholder of the collection.
      */
-    protected function &getDataPlaceHolder()
+    protected function &getDataPlaceHolder(): array
     {
         return $this->dataPlaceHolder;
     }
@@ -91,7 +91,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      *
      * @return int The amount of values stored by the collection.
      */
-    public function count()
+    public function count(): int
     {
         return count($this->dataPlaceHolder);
     }
@@ -101,6 +101,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      *
      * @return mixed The current element.
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return current($this->dataPlaceHolder);
@@ -109,7 +110,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     /**
      * Move forward to the next element of the collection while iterating.
      */
-    public function next()
+    public function next(): void
     {
         next($this->dataPlaceHolder);
     }
@@ -119,6 +120,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      *
      * @return mixed Depends on the implementation.
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return key($this->dataPlaceHolder);
@@ -129,7 +131,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      *
      * @return bool true on success or false on failure.
      */
-    public function valid()
+    public function valid(): bool
     {
         return key($this->dataPlaceHolder) !== null;
     }
@@ -137,7 +139,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     /**
      * Rewind the iterator to the first element of the collection;
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->dataPlaceHolder);
     }
@@ -148,7 +150,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * @param mixed $offset An offset to check for.
      * @return bool Whether the offset exist.
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->dataPlaceHolder[$offset]);
     }
@@ -160,6 +162,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * @param mixed $offset The offset to retrieve.
      * @return mixed The value at specified offset.
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->dataPlaceHolder[$offset] ?? null;
@@ -173,7 +176,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * @param mixed $value The value to set.
      * @throws InvalidArgumentException If $value has not a valid type regarding the implementation.
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->checkType($value);
 
@@ -187,7 +190,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     /**
      * @param mixed $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->dataPlaceHolder[$offset]);
     }
@@ -199,7 +202,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * @param bool $preserveKeys
      * @return array The collection as an array of data.
      */
-    public function getArrayCopy($preserveKeys = false)
+    public function getArrayCopy($preserveKeys = false): array
     {
         return ($preserveKeys === true) ? $this->dataPlaceHolder : array_values($this->dataPlaceHolder);
     }
@@ -211,7 +214,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * @param mixed $value A value.
      * @return bool Whether the collection contains $value.
      */
-    public function contains($value)
+    public function contains($value): bool
     {
         foreach (array_keys($this->dataPlaceHolder) as $key) {
             $data = $this->dataPlaceHolder[$key];
@@ -229,7 +232,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * @param mixed $object An object.
      * @throws InvalidArgumentException If $object is not an 'object' type or not compliant with the typing of the collection.
      */
-    public function attach($object)
+    public function attach($object): void
     {
         $this->checkType($object);
 
@@ -248,7 +251,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * @throws InvalidArgumentException If $object is not an 'object' type or not compliant with the typing of the collection.
      * @throws UnexpectedValueException If $object cannot be found in the collection.
      */
-    public function detach($object)
+    public function detach($object): void
     {
         $this->checkType($object);
 
@@ -277,7 +280,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * @throws InvalidArgumentException If $object or $replacement are not compliant with the current collection typing.
      * @throws UnexpectedValueException If $object is not contained in the collection.
      */
-    public function replace($object, $replacement)
+    public function replace($object, $replacement): void
     {
         $this->checkType($object);
         $this->checkType($replacement);
@@ -310,7 +313,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      *
      * @param mixed $object The object to remove from the collection.
      */
-    public function remove($object)
+    public function remove($object): void
     {
         foreach (array_keys($this->dataPlaceHolder) as $k) {
             if ($this->dataPlaceHolder[$k] === $object) {
@@ -324,7 +327,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
     /**
      * Reset the collection to an empty one.
      */
-    public function reset()
+    public function reset(): void
     {
         $a = [];
         $this->dataPlaceHolder = $a;
@@ -335,7 +338,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      *
      * @return array An array of values which are the keys of the collection.
      */
-    public function getKeys()
+    public function getKeys(): array
     {
         return array_keys($this->dataPlaceHolder);
     }
@@ -346,7 +349,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * @param AbstractCollection $collection
      * @throws InvalidArgumentException If $collection is not a subclass of the target of the call.
      */
-    public function merge(AbstractCollection $collection)
+    public function merge(self $collection): void
     {
         if (is_subclass_of($collection, get_class($this)) === true || get_class($collection) === get_class($this)) {
             $newData = array_merge($this->dataPlaceHolder, $collection->getDataPlaceHolder());
@@ -367,7 +370,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * @param AbstractCollection $collection
      * @return AbstractCollection
      */
-    public function diff(AbstractCollection $collection)
+    public function diff(self $collection): self
     {
         if (get_class($this) === get_class($collection)) {
             $newData = array_diff($this->dataPlaceHolder, $collection->getDataPlaceHolder());
@@ -385,7 +388,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * @param AbstractCollection $collection
      * @return AbstractCollection
      */
-    public function intersect(AbstractCollection $collection)
+    public function intersect(self $collection): self
     {
         if (get_class($this) === get_class($collection)) {
             $newData = array_intersect($this->dataPlaceHolder, $collection->getDataPlaceHolder());
@@ -401,7 +404,7 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
      * Reset the keys of the collection. This method is similar
      * in behaviour with PHP's array_values.
      */
-    public function resetKeys()
+    public function resetKeys(): void
     {
         $newData = array_values($this->dataPlaceHolder);
         $this->setDataPlaceHolder($newData);

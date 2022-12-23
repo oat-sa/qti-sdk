@@ -13,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OrderInteractionTest extends QtiSmTestCase
 {
-    public function testNotEnoughChoices()
+    public function testNotEnoughChoices(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('An OrderInteraction object must be composed of at lease one SimpleChoice object, none given');
@@ -24,7 +24,7 @@ class OrderInteractionTest extends QtiSmTestCase
         );
     }
 
-    public function testSetShuffleWrongType()
+    public function testSetShuffleWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'shuffle' argument must be a boolean value, 'string' given");
@@ -42,7 +42,7 @@ class OrderInteractionTest extends QtiSmTestCase
         $orderInteraction->setShuffle('true');
     }
 
-    public function testSetMinChoicesWrongType()
+    public function testSetMinChoicesWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'minChoices' argument must be a strictly positive (> 0) integer or -1, 'string' given.");
@@ -60,7 +60,7 @@ class OrderInteractionTest extends QtiSmTestCase
         $orderInteraction->setMinChoices('true');
     }
 
-    public function testSetMinChoicesChoicesOverflow()
+    public function testSetMinChoicesChoicesOverflow(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The value of 'minChoices' cannot exceed the number of available choices.");
@@ -78,7 +78,7 @@ class OrderInteractionTest extends QtiSmTestCase
         $orderInteraction->setMinChoices(3);
     }
 
-    public function testSetMaxChoicesWrongType()
+    public function testSetMaxChoicesWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'maxChoices' argument must be a strictly positive (> 0) integer or -1, 'string' given.");
@@ -96,7 +96,7 @@ class OrderInteractionTest extends QtiSmTestCase
         $orderInteraction->setMaxChoices('true');
     }
 
-    public function testSetMaxChoicesOverflow()
+    public function testSetMaxChoicesOverflow(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'maxChoices' argument cannot exceed the number of available choices.");
@@ -115,7 +115,7 @@ class OrderInteractionTest extends QtiSmTestCase
         $orderInteraction->setMaxChoices(3);
     }
 
-    public function testSetOrientationWrongType()
+    public function testSetOrientationWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The 'orientation' argument must be a value from the Orientation enumeration, 'string' given.");

@@ -42,7 +42,7 @@ class RepeatMarshaller extends OperatorMarshaller
      * @param array $elements An array of child DOMElement objects.
      * @return DOMElement The marshalled QTI repeat element.
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'numberRepeats', $component->getNumberRepeats());
@@ -62,7 +62,7 @@ class RepeatMarshaller extends OperatorMarshaller
      * @return QtiComponent A Repeat object.
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         if (($numberRepeats = $this->getDOMElementAttributeAs($element, 'numberRepeats')) !== null) {
             if (Format::isInteger($numberRepeats)) {

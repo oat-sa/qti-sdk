@@ -18,8 +18,6 @@
  * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
-declare(strict_types=1);
-
 namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
@@ -30,7 +28,7 @@ use qtism\data\QtiComponentCollection;
 
 class Html5RtMarshaller extends Html5ContentMarshaller
 {
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return Rt::QTI_CLASS_NAME;
     }
@@ -41,7 +39,7 @@ class Html5RtMarshaller extends Html5ContentMarshaller
      * @return mixed
      * @throws UnmarshallingException
      */
-    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children)
+    protected function unmarshallChildrenKnown(DOMElement $element, QtiComponentCollection $children): QtiComponent
     {
         $component = parent::unmarshallChildrenKnown($element, $children);
 
@@ -61,7 +59,7 @@ class Html5RtMarshaller extends Html5ContentMarshaller
      * @param array $elements
      * @return DOMElement
      */
-    protected function marshallChildrenKnown(QtiComponent $component, array $elements)
+    protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $element = parent::marshallChildrenKnown($component, $elements);
 

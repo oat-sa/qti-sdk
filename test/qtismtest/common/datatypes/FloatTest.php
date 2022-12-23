@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class FloatTest extends QtiSmTestCase
 {
-    public function testWrongValue()
+    public function testWrongValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $float = new QtiFloat(null);

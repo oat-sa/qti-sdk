@@ -59,7 +59,7 @@ class Dd extends DlElement
      *
      * @param FlowCollection $content A collection of Flow objects.
      */
-    public function setContent(FlowCollection $content)
+    public function setContent(FlowCollection $content): void
     {
         $this->content = $content;
     }
@@ -69,7 +69,7 @@ class Dd extends DlElement
      *
      * @return FlowCollection
      */
-    public function getContent()
+    public function getContent(): FlowCollection
     {
         return $this->content;
     }
@@ -79,7 +79,7 @@ class Dd extends DlElement
      *
      * @return FlowCollection A collection of Flow objects.
      */
-    public function getComponents()
+    public function getComponents(): FlowCollection
     {
         return $this->getContent();
     }
@@ -87,7 +87,7 @@ class Dd extends DlElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'dd';
     }

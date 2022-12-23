@@ -20,7 +20,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall21()
+    public function testMarshall21(): void
     {
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
@@ -52,7 +52,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshall21XmlBase()
+    public function testMarshall21XmlBase(): void
     {
         $prompt = new Prompt();
         $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
@@ -85,7 +85,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall21
      */
-    public function testMarshall20()
+    public function testMarshall20(): void
     {
         // Make sure that maxAssociations is always in the output but never minAssociations.
         $object = new ObjectElement('myimg.png', 'image/png');
@@ -111,7 +111,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall21()
+    public function testUnmarshall21(): void
     {
         $element = $this->createDOMElement('
             <graphicAssociateInteraction responseIdentifier="RESPONSE" id="prout" minAssociations="2" maxAssociations="3">
@@ -160,7 +160,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         $this::assertTrue($choices[2]->getCoords()->equals(new QtiCoords(QtiShape::CIRCLE, [4, 4, 15])));
     }
 
-    public function testUnmarshall21NoAssociableHotspot()
+    public function testUnmarshall21NoAssociableHotspot(): void
     {
         $element = $this->createDOMElement('
             <graphicAssociateInteraction responseIdentifier="RESPONSE" id="prout" minAssociations="2" maxAssociations="3">
@@ -175,7 +175,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
     }
 
-    public function testUnmarshall21InvalidContentIgnored()
+    public function testUnmarshall21InvalidContentIgnored(): void
     {
         $element = $this->createDOMElement('
             <graphicAssociateInteraction responseIdentifier="RESPONSE" id="prout" minAssociations="2" maxAssociations="3">
@@ -193,7 +193,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
         $this::assertCount(2, $choices);
     }
 
-    public function testUnmarshall20()
+    public function testUnmarshall20(): void
     {
         // Make sure minAssociations is not taken into account
         // in a QTI 2.0 context.
@@ -215,7 +215,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshall20NoMaxAssociations()
+    public function testUnmarshall20NoMaxAssociations(): void
     {
         $element = $this->createDOMElement('
             <graphicAssociateInteraction responseIdentifier="RESPONSE" minAssociations="2">
@@ -235,7 +235,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshall20NoAssociableHotspot()
+    public function testUnmarshall20NoAssociableHotspot(): void
     {
         // Make sure minAssociations is not taken into account
         // in a QTI 2.0 context.
@@ -254,7 +254,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshall20NoObject()
+    public function testUnmarshall20NoObject(): void
     {
         $element = $this->createDOMElement('
             <graphicAssociateInteraction responseIdentifier="RESPONSE" minAssociations="2">
@@ -273,7 +273,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshall20XmlBase()
+    public function testUnmarshall20XmlBase(): void
     {
         // Make sure minAssociations is not taken into account
         // in a QTI 2.0 context.
@@ -293,7 +293,7 @@ class GraphicAssociateInteractionMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall20
      */
-    public function testUnmarshall20NoResponseIdentifier()
+    public function testUnmarshall20NoResponseIdentifier(): void
     {
         $element = $this->createDOMElement('
             <graphicAssociateInteraction minAssociations="2" maxAssociations="3">

@@ -13,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ResultVersionTest extends QtiSmTestCase
 {
-    public function testVersionCompareSupported()
+    public function testVersionCompareSupported(): void
     {
         $this::assertTrue(ResultVersion::compare('2.1', '2.1.0', '='));
     }
@@ -24,7 +24,7 @@ class ResultVersionTest extends QtiSmTestCase
      * @param string $expectedVersion
      * @param string $expectedClass
      */
-    public function testCreateWithSupportedVersion(string $version, string $expectedVersion, string $expectedClass)
+    public function testCreateWithSupportedVersion(string $version, string $expectedVersion, string $expectedClass): void
     {
         $versionObject = ResultVersion::create($version);
         $this::assertInstanceOf($expectedClass, $versionObject);
@@ -47,7 +47,7 @@ class ResultVersionTest extends QtiSmTestCase
         ];
     }
 
-    public function testCreateWithUnsupportedVersionThrowsException()
+    public function testCreateWithUnsupportedVersionThrowsException(): void
     {
         $wrongVersion = '2.0';
 

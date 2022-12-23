@@ -45,9 +45,9 @@ interface Hotspot
     /**
      * Get the shape of the hotspot.
      *
-     * @return int A Shape object.
+     * @return int A value from the Shape enumeration.
      */
-    public function getShape();
+    public function getShape(): int;
 
     /**
      * Set the coords of the hotspot.
@@ -61,7 +61,7 @@ interface Hotspot
      *
      * @return QtiCoords A Coords object.
      */
-    public function getCoords();
+    public function getCoords(): QtiCoords;
 
     /**
      * Set the alternative text for this hotspot.
@@ -76,7 +76,7 @@ interface Hotspot
      *
      * @return string A string with a maximum of 256 characters.
      */
-    public function getHotspotLabel();
+    public function getHotspotLabel(): string;
 
     /**
      * Whether or not a value is defined for the hotspotLabel
@@ -84,5 +84,5 @@ interface Hotspot
      *
      * @return bool
      */
-    public function hasHotspotLabel();
+    public function hasHotspotLabel(): bool;
 }

@@ -37,14 +37,14 @@ class StreamAccessException extends Exception
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * A closed IStream object is given as the stream to be read.
      *
      * @var int
      */
-    const NOT_OPEN = 1;
+    public const NOT_OPEN = 1;
 
     /**
      * The AbstractStreamAccess object that caused the error.
@@ -72,7 +72,7 @@ class StreamAccessException extends Exception
      *
      * @param AbstractStreamAccess $source An AbstractStreamAccess object.
      */
-    protected function setSource(AbstractStreamAccess $source)
+    protected function setSource(AbstractStreamAccess $source): void
     {
         $this->source = $source;
     }
@@ -82,7 +82,7 @@ class StreamAccessException extends Exception
      *
      * @return AbstractStreamAccess An AbstractStreamAccess object.
      */
-    public function getSource()
+    public function getSource(): AbstractStreamAccess
     {
         return $this->source;
     }

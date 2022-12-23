@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TemplateControlMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallTemplateIfSimple()
+    public function testMarshallTemplateIfSimple(): void
     {
         $true = new BaseValue(BaseType::BOOLEAN, true);
         $setTemplateValue = new SetTemplateValue('tpl1', new BaseValue(BaseType::INTEGER, 1337));
@@ -30,7 +30,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<templateIf><baseValue baseType="boolean">true</baseValue><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue></templateIf>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallTemplateIfSimple()
+    public function testUnmarshallTemplateIfSimple(): void
     {
         $element = $this->createDOMElement('
 	        <templateIf>
@@ -50,7 +50,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }
 
-    public function testMarshallTemplateIfMultipleRules()
+    public function testMarshallTemplateIfMultipleRules(): void
     {
         $true = new BaseValue(BaseType::BOOLEAN, true);
         $setTemplateValue1 = new SetTemplateValue('tpl1', new BaseValue(BaseType::INTEGER, 1337));
@@ -67,7 +67,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshallTemplateIfMultipleRules()
+    public function testUnmarshallTemplateIfMultipleRules(): void
     {
         $element = $this->createDOMElement('
 	        <templateIf>
@@ -99,7 +99,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1338, $templateRules[1]->getExpression()->getValue());
     }
 
-    public function testMarshallTemplateElseIfSimple()
+    public function testMarshallTemplateElseIfSimple(): void
     {
         $true = new BaseValue(BaseType::BOOLEAN, true);
         $setTemplateValue = new SetTemplateValue('tpl1', new BaseValue(BaseType::INTEGER, 1337));
@@ -112,7 +112,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<templateElseIf><baseValue baseType="boolean">true</baseValue><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue></templateElseIf>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallTemplateElseIfSimple()
+    public function testUnmarshallTemplateElseIfSimple(): void
     {
         $element = $this->createDOMElement('
 	        <templateElseIf>
@@ -132,7 +132,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }
 
-    public function testMarshallTemplateElseSimple()
+    public function testMarshallTemplateElseSimple(): void
     {
         $setTemplateValue = new SetTemplateValue('tpl1', new BaseValue(BaseType::INTEGER, 1337));
         $templateIf = new TemplateElse(new TemplateRuleCollection([$setTemplateValue]));
@@ -144,7 +144,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<templateElse><setTemplateValue identifier="tpl1"><baseValue baseType="integer">1337</baseValue></setTemplateValue></templateElse>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallTemplateElseSimple()
+    public function testUnmarshallTemplateElseSimple(): void
     {
         $element = $this->createDOMElement('
 	        <templateElse>
@@ -162,7 +162,7 @@ class TemplateControlMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(BaseValue::class, $templateRules[0]->getExpression());
     }
 
-    public function testMarshallTemplateElseMultipleRules()
+    public function testMarshallTemplateElseMultipleRules(): void
     {
         $setTemplateValue1 = new SetTemplateValue('tpl1', new BaseValue(BaseType::INTEGER, 1337));
         $setTemplateValue2 = new SetTemplateValue('tpl2', new BaseValue(BaseType::INTEGER, 1338));

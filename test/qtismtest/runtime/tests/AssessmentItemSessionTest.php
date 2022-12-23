@@ -27,7 +27,7 @@ use qtismtest\QtiSmAssessmentItemTestCase;
  */
 class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
 {
-    public function testExternalScored()
+    public function testExternalScored(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_2/essay.xml');
@@ -52,7 +52,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertTrue($itemSession->isResponded());
     }
 
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $this::assertFalse($itemSession->isNavigationNonLinear());
@@ -108,7 +108,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertTrue($itemSession->isAttemptable());
     }
 
-    public function testEvolutionBasic()
+    public function testEvolutionBasic(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
@@ -156,7 +156,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         }
     }
 
-    public function testGetResponseVariables()
+    public function testGetResponseVariables(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
@@ -174,7 +174,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertTrue(isset($responses['RESPONSE']));
     }
 
-    public function testGetOutcomeVariables()
+    public function testGetOutcomeVariables(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
@@ -191,7 +191,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertTrue(isset($outcomes['SCORE']));
     }
 
-    public function testEvolutionAdaptiveItem()
+    public function testEvolutionAdaptiveItem(): void
     {
         $itemSession = $this->instantiateBasicAdaptiveAssessmentItem();
         $itemSession->beginItemSession();
@@ -233,7 +233,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         }
     }
 
-    public function testSkippingForbiddenSimple()
+    public function testSkippingForbiddenSimple(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
@@ -262,7 +262,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         }
     }
 
-    public function testSkippingForbiddenDefaultValue()
+    public function testSkippingForbiddenDefaultValue(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/skipping/default_value.xml');
@@ -306,7 +306,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertNull($itemSession['RESPONSE']);
     }
 
-    public function testSkippingAllowedSimple()
+    public function testSkippingAllowedSimple(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
@@ -319,7 +319,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertNull($itemSession['RESPONSE']);
     }
 
-    public function testValidResponsesInForceValid()
+    public function testValidResponsesInForceValid(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
@@ -334,7 +334,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertTrue(true);
     }
 
-    public function testIsCorrect()
+    public function testIsCorrect(): void
     {
         $itemSession = $this->instantiateBasicAdaptiveAssessmentItem();
         $this::assertEquals(AssessmentItemSessionState::NOT_SELECTED, $itemSession->getState());
@@ -365,7 +365,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals('completed', $itemSession['completionStatus']->getValue());
     }
 
-    public function testStandaloneItemSession()
+    public function testStandaloneItemSession(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/hotspot.xml');
@@ -379,7 +379,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals(1.0, $itemSession['SCORE']->getValue());
     }
 
-    public function testStandaloneMultipleInteractions()
+    public function testStandaloneMultipleInteractions(): void
     {
         $doc = new XmlDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/items/multiple_interactions.xml');
@@ -395,7 +395,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals(6.0, $itemSession['SCORE']->getValue());
     }
 
-    public function testModalFeedback()
+    public function testModalFeedback(): void
     {
         $doc = new XmlDocument('2.1.0');
         $doc->load(self::samplesDir() . 'ims/items/2_1/modalFeedback.xml');
@@ -426,7 +426,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals('completed', $itemSession['completionStatus']->getValue());
     }
 
-    public function testTemplateVariableDefault()
+    public function testTemplateVariableDefault(): void
     {
         // This test aims at testing whether template variables
         // are correctly instantiated as part of the item session and
@@ -457,7 +457,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertTrue($itemSession['SCORE']->equals($itemSession['WRONGSCORE']));
     }
 
-    public function testSimultaneousSubmissionOnlyOneAttempt()
+    public function testSimultaneousSubmissionOnlyOneAttempt(): void
     {
         // We want to test that if the current submission mode is SIMULTANEOUS,
         // only one attempt is allowed.
@@ -483,7 +483,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         }
     }
 
-    public function testSetOutcomeValuesWithSum()
+    public function testSetOutcomeValuesWithSum(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum.xml');
@@ -498,7 +498,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals(1., $itemSession['score-X']->getValue());
     }
 
-    public function testSetOutcomeValuesWithSumJuggling()
+    public function testSetOutcomeValuesWithSumJuggling(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/set_outcome_values_with_sum_juggling.xml');
@@ -513,7 +513,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals(1., $itemSession['score-X']->getValue());
     }
 
-    public function testSuspendWithResponses()
+    public function testSuspendWithResponses(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->beginItemSession();
@@ -558,7 +558,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertEquals(1, $itemSession['numAttempts']->getValue());
     }
 
-    public function testIsRespondedTextEntry()
+    public function testIsRespondedTextEntry(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'ims/items/2_1/text_entry.xml');
@@ -593,7 +593,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertTrue($itemSession->isResponded(false));
     }
 
-    public function testMultipleAttemptsSimultaneousSubmissionMode()
+    public function testMultipleAttemptsSimultaneousSubmissionMode(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSession->setSubmissionMode(SubmissionMode::SIMULTANEOUS);
@@ -608,7 +608,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->beginAttempt();
     }
 
-    public function testMultipleAttemptsIndividualSubmissionModeWhenSingleAttemptAllowed()
+    public function testMultipleAttemptsIndividualSubmissionModeWhenSingleAttemptAllowed(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
         $itemSessionControl = new ItemSessionControl();
@@ -624,7 +624,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->beginAttempt();
     }
 
-    public function testBeginAttemptAdaptiveCompletionStatusComplete()
+    public function testBeginAttemptAdaptiveCompletionStatusComplete(): void
     {
         $itemSession = $this->instantiateBasicAdaptiveAssessmentItem();
         $itemSession->beginItemSession();
@@ -637,7 +637,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->beginAttempt();
     }
 
-    public function testSuspendStateViolation()
+    public function testSuspendStateViolation(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
 
@@ -647,7 +647,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->suspend();
     }
 
-    public function testBeginCandidateSessionStateViolation()
+    public function testBeginCandidateSessionStateViolation(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
 
@@ -657,7 +657,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->beginCandidateSession();
     }
 
-    public function testEndCandidateSessionStateViolation()
+    public function testEndCandidateSessionStateViolation(): void
     {
         $itemSession = $this->instantiateBasicAssessmentItemSession();
 
@@ -667,7 +667,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $itemSession->endCandidateSession();
     }
 
-    public function testIsRespondedValueReflectsNonDefaultValues()
+    public function testIsRespondedValueReflectsNonDefaultValues(): void
     {
         $value = new QtiIdentifier('ChoiceA');
         $itemSession = $this->instantiateBasicAssessmentItemSession();
@@ -683,7 +683,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertTrue($itemSession->isResponded(false));
     }
 
-    public function testIsRespondedMultipleInteractions1()
+    public function testIsRespondedMultipleInteractions1(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/is_responded/is_responded_multiple_interactions_singlechoice_textentry.xml');
@@ -764,7 +764,7 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
         $this::assertTrue($itemSession->isResponded(false));
     }
 
-    public function testIsRespondedMultipleInteractions2()
+    public function testIsRespondedMultipleInteractions2(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/items/is_responded/is_responded_multiple_interactions_multiplechoice_textentry.xml');

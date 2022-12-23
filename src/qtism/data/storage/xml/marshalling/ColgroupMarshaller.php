@@ -41,7 +41,7 @@ class ColgroupMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->setDOMElementAttribute($element, 'span', $component->getSpan());
@@ -60,11 +60,11 @@ class ColgroupMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to an XHTML colgroup table element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A Colgroup object.
+     * @return Colgroup A Colgroup object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Colgroup
     {
         $component = new Colgroup();
 
@@ -87,7 +87,7 @@ class ColgroupMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'colgroup';
     }

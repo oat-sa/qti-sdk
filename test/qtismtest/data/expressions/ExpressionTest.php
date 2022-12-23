@@ -19,7 +19,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExpressionTest extends QtiSmTestCase
 {
-    public function testIsPure()
+    public function testIsPure(): void
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/tests/branchingpath.xml');
@@ -43,7 +43,7 @@ class ExpressionTest extends QtiSmTestCase
         }
     }
 
-    public function testQtiPL()
+    public function testQtiPL(): void
     {
         $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
@@ -82,7 +82,7 @@ class ExpressionTest extends QtiSmTestCase
         }
     }
 
-    public function testcoverageforQtiPL()
+    public function testcoverageforQtiPL(): void
     {
         $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();

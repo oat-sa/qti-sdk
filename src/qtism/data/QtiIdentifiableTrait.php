@@ -43,7 +43,7 @@ trait QtiIdentifiableTrait
      *
      * @return SplObjectStorage An SplObjectStorage object.
      */
-    public function getObservers()
+    public function getObservers(): SplObjectStorage
     {
         return $this->observers;
     }
@@ -53,7 +53,7 @@ trait QtiIdentifiableTrait
      *
      * @param SplObjectStorage $observers An SplObjectStorage object.
      */
-    public function setObservers(SplObjectStorage $observers)
+    public function setObservers(SplObjectStorage $observers): void
     {
         $this->observers = $observers;
     }
@@ -63,7 +63,7 @@ trait QtiIdentifiableTrait
      *
      * @param SplObserver $observer An SplObserver object.
      */
-    public function attach(SplObserver $observer)
+    public function attach(SplObserver $observer): void
     {
         $this->getObservers()->attach($observer);
     }
@@ -73,7 +73,7 @@ trait QtiIdentifiableTrait
      *
      * @param SplObserver $observer An SplObserver object.
      */
-    public function detach(SplObserver $observer)
+    public function detach(SplObserver $observer): void
     {
         $this->getObservers()->detach($observer);
     }
@@ -81,7 +81,7 @@ trait QtiIdentifiableTrait
     /**
      * SplSubject::notify implementation.
      */
-    public function notify()
+    public function notify(): void
     {
         foreach ($this->getObservers() as $observer) {
             $observer->update($this);

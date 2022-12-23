@@ -11,7 +11,7 @@ use qtismtest\QtiSmTestCase;
  */
 class TextEntryInteractionMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal21()
+    public function testMarshallMinimal21(): void
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
         $element = $this->getMarshallerFactory('2.1.0')->createMarshaller($textEntryInteraction)->marshall($textEntryInteraction);
@@ -21,7 +21,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<textEntryInteraction responseIdentifier="RESPONSE"/>', $dom->saveXML($element));
     }
 
-    public function testMarshallMaximal21()
+    public function testMarshallMaximal21(): void
     {
         $textEntryInteraction = new TextEntryInteraction('RESPONSE');
         $textEntryInteraction->setBase(2);
@@ -36,7 +36,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<textEntryInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..."/>', $dom->saveXML($element));
     }
 
-    public function testUnmarshallMinimal21()
+    public function testUnmarshallMinimal21(): void
     {
         $element = $this->createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE"/>');
         $textEntryInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);
@@ -50,7 +50,7 @@ class TextEntryInteractionMarshallerTest extends QtiSmTestCase
         $this::assertFalse($textEntryInteraction->hasPlaceholderText());
     }
 
-    public function testUnmarshallMaximal21()
+    public function testUnmarshallMaximal21(): void
     {
         $element = $this->createDOMElement('<textEntryInteraction responseIdentifier="RESPONSE" base="2" stringIdentifier="mystring" expectedLength="35" patternMask="[0-9]+" placeholderText="input here..."/>');
         $textEntryInteraction = $this->getMarshallerFactory('2.1.0')->createMarshaller($element)->unmarshall($element);

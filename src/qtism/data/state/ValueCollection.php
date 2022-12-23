@@ -37,7 +37,7 @@ class ValueCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of Value.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Value) {
             $msg = "ValueCollection only accepts to store Value objects, '" . gettype($value) . "' given.";

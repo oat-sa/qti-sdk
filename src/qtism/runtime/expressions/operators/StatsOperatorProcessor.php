@@ -61,7 +61,7 @@ class StatsOperatorProcessor extends OperatorProcessor
      * @return QtiFloat A single float or NULL if the sub-expression or any value contained therein is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiFloat
     {
         $operands = $this->getOperands();
 
@@ -88,7 +88,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     /**
      * @return null|QtiFloat
      */
-    protected function processMean()
+    protected function processMean(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -101,7 +101,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat|null
      */
-    protected function processSampleVariance()
+    protected function processSampleVariance(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -114,7 +114,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat|null
      */
-    protected function processSampleSD()
+    protected function processSampleSD(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -127,7 +127,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat|null
      */
-    protected function processPopVariance()
+    protected function processPopVariance(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -140,7 +140,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     /**
      * @return QtiFloat|null
      */
-    protected function processPopSD()
+    protected function processPopSD(): ?QtiFloat
     {
         $operands = $this->getOperands();
         $operand = $operands[0];
@@ -157,7 +157,7 @@ class StatsOperatorProcessor extends OperatorProcessor
      * @param array $data An array of Float and/or Integer values.
      * @return array A filtered array with PHP float and integers.
      */
-    protected static function filterValues(array $data)
+    protected static function filterValues(array $data): array
     {
         $returnValue = [];
         foreach ($data as $d) {
@@ -174,7 +174,7 @@ class StatsOperatorProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return StatsOperator::class;
     }

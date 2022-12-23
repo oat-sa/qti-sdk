@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class PositionObjectInteractionTest extends QtiSmTestCase
 {
-    public function testSetMinChoicesValidValueWhenMaxChoicesIsZero()
+    public function testSetMinChoicesValidValueWhenMaxChoicesIsZero(): void
     {
         $div = new Div();
         $div->setContent(new FlowCollection([new TextRun('content...')]));

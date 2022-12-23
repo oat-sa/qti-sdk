@@ -70,7 +70,7 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param LiCollection $content A collection of Li objects.
      */
-    public function setContent(LiCollection $content)
+    public function setContent(LiCollection $content): void
     {
         $this->content = $content;
     }
@@ -80,7 +80,7 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return LiCollection
      */
-    public function getContent()
+    public function getContent(): LiCollection
     {
         return $this->content;
     }
@@ -90,7 +90,7 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return LiCollection A collection of Li objects.
      */
-    public function getComponents()
+    public function getComponents(): LiCollection
     {
         return $this->getContent();
     }
@@ -101,7 +101,7 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic
      * @param string $xmlBase A URI.
      * @throws InvalidArgumentException if $base is not a valid URI nor an empty string.
      */
-    public function setXmlBase($xmlBase = '')
+    public function setXmlBase($xmlBase = ''): void
     {
         if (is_string($xmlBase) && (empty($xmlBase) || Format::isUri($xmlBase))) {
             $this->xmlBase = $xmlBase;
@@ -116,7 +116,7 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return string An empty string or a URI.
      */
-    public function getXmlBase()
+    public function getXmlBase(): string
     {
         return $this->xmlBase;
     }
@@ -124,7 +124,7 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return bool
      */
-    public function hasXmlBase()
+    public function hasXmlBase(): bool
     {
         return $this->getXmlBase() !== '';
     }
@@ -132,7 +132,7 @@ class Ul extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'ul';
     }

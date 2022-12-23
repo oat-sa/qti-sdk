@@ -55,7 +55,7 @@ class MarshallerNotFoundException extends Exception
      *
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return $this->qtiClassName;
     }
@@ -65,7 +65,7 @@ class MarshallerNotFoundException extends Exception
      *
      * @param string $qtiClassName
      */
-    protected function setQtiClassName($qtiClassName)
+    protected function setQtiClassName($qtiClassName): void
     {
         $this->qtiClassName = $qtiClassName;
     }

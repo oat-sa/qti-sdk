@@ -21,7 +21,7 @@ use qtismtest\QtiSmTestCase;
  */
 class BodyElementRendererTest extends QtiSmTestCase
 {
-    public function testRenderNoChildren()
+    public function testRenderNoChildren(): void
     {
         $ctx = new XhtmlRenderingEngine();
         $ctx->setCssClassPolicy(XhtmlRenderingEngine::CSSCLASS_ABSTRACT);
@@ -39,7 +39,7 @@ class BodyElementRendererTest extends QtiSmTestCase
         $this::assertEquals('', $element->getAttribute('label'));
     }
 
-    public function testRenderChildren()
+    public function testRenderChildren(): void
     {
         $ctx = new XhtmlRenderingEngine();
         $ctx->setCssClassPolicy(XhtmlRenderingEngine::CSSCLASS_ABSTRACT);
@@ -77,7 +77,7 @@ class BodyElementRendererTest extends QtiSmTestCase
         $this::assertSame('', $element->getAttribute('aria-hidden'));
     }
 
-    public function testRenderFullAria()
+    public function testRenderFullAria(): void
     {
         $ctx = new XhtmlRenderingEngine();
 

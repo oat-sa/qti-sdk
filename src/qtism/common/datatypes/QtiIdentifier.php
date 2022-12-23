@@ -38,7 +38,7 @@ class QtiIdentifier extends QtiString
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a string value.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (is_string($value) !== true) {
             $msg = 'The Identifier Datatype only accepts to store identifier values.';
@@ -55,7 +55,7 @@ class QtiIdentifier extends QtiString
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return BaseType::IDENTIFIER;
     }
@@ -66,7 +66,7 @@ class QtiIdentifier extends QtiString
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::SINGLE;
     }
@@ -74,7 +74,7 @@ class QtiIdentifier extends QtiString
     /**
      * @return mixed
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getValue();
     }

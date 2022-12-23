@@ -37,7 +37,7 @@ class IdentifierCollection extends StringCollection
      * @param mixed $value A given value.
      * @throws InvalidArgumentException If $value is not a valid QTI Identifier.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!is_string($value)) {
             $msg = "IdentifierCollection class only accept string values, '" . gettype($value) . "' given.";
@@ -55,7 +55,7 @@ class IdentifierCollection extends StringCollection
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $strArray = [];
         $dataPlaceHolder = &$this->getDataPlaceHolder();

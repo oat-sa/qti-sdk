@@ -15,7 +15,7 @@ class PhpUtilsTest extends QtiSmTestCase
      * @param string $input
      * @param string $expected
      */
-    public function testDoubleQuotedPhpString($input, $expected)
+    public function testDoubleQuotedPhpString($input, $expected): void
     {
         $this::assertEquals($expected, PhpUtils::doubleQuotedPhpString($input));
     }
@@ -23,7 +23,7 @@ class PhpUtilsTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function doubleQuotedPhpStringDataProvider()
+    public function doubleQuotedPhpStringDataProvider(): array
     {
         return [
             ['', '""'],

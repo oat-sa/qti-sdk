@@ -71,7 +71,7 @@ class Colgroup extends BodyElement
      * @param int $span A strictly positive (> 0) integer.
      * @throws InvalidArgumentException If $span is not a strictly positive integer.
      */
-    public function setSpan($span)
+    public function setSpan($span): void
     {
         if (is_int($span) && $span > 0) {
             $this->span = $span;
@@ -86,7 +86,7 @@ class Colgroup extends BodyElement
      *
      * @return int A strictly positive (> 0) integer.
      */
-    public function getSpan()
+    public function getSpan(): int
     {
         return $this->span;
     }
@@ -94,7 +94,7 @@ class Colgroup extends BodyElement
     /**
      * @return ColCollection|QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -104,7 +104,7 @@ class Colgroup extends BodyElement
      *
      * @param ColCollection $content A collection of Col objects.
      */
-    public function setContent(ColCollection $content)
+    public function setContent(ColCollection $content): void
     {
         $this->content = $content;
     }
@@ -114,7 +114,7 @@ class Colgroup extends BodyElement
      *
      * @return ColCollection
      */
-    public function getContent()
+    public function getContent(): ColCollection
     {
         return $this->content;
     }
@@ -122,7 +122,7 @@ class Colgroup extends BodyElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'colgroup';
     }

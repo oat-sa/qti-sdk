@@ -100,7 +100,7 @@ class ExpressionEngine extends AbstractEngine
      * @param QtiComponent $expression An Expression object.
      * @throws InvalidArgumentException If $expression is not an Expression object.
      */
-    public function setComponent(QtiComponent $expression)
+    public function setComponent(QtiComponent $expression): void
     {
         if ($expression instanceof Expression) {
             parent::setComponent($expression);
@@ -115,7 +115,7 @@ class ExpressionEngine extends AbstractEngine
      *
      * @param ExpressionProcessorFactory $expressionProcessorFactory An ExpressionProcessorFactory object.
      */
-    public function setExpressionProcessorFactory(ExpressionProcessorFactory $expressionProcessorFactory)
+    public function setExpressionProcessorFactory(ExpressionProcessorFactory $expressionProcessorFactory): void
     {
         $this->expressionProcessorFactory = $expressionProcessorFactory;
     }
@@ -125,7 +125,7 @@ class ExpressionEngine extends AbstractEngine
      *
      * @param OperatorProcessorFactory $operatorProcessorFactory An OperatorProcessorFactory object.
      */
-    public function setOperatorProcessorFactory(OperatorProcessorFactory $operatorProcessorFactory)
+    public function setOperatorProcessorFactory(OperatorProcessorFactory $operatorProcessorFactory): void
     {
         $this->operatorProcessorFactory = $operatorProcessorFactory;
     }
@@ -135,7 +135,7 @@ class ExpressionEngine extends AbstractEngine
      *
      * @param OperandsCollection $operands An OperandsCo
      */
-    protected function setOperands(OperandsCollection $operands)
+    protected function setOperands(OperandsCollection $operands): void
     {
         $this->operands = $operands;
     }
@@ -145,7 +145,7 @@ class ExpressionEngine extends AbstractEngine
      *
      * @param Expression|ExpressionCollection $expression An Expression/ExpressionCollection object to be pushed on top of the trail stack.
      */
-    protected function pushTrail($expression)
+    protected function pushTrail($expression): void
     {
         if ($expression instanceof Expression) {
             array_push($this->trail, $expression);
@@ -164,7 +164,7 @@ class ExpressionEngine extends AbstractEngine
      *
      * @return Expression $expression The Expression object at the top of the trail stack.
      */
-    protected function popTrail()
+    protected function popTrail(): Expression
     {
         return array_pop($this->trail);
     }
@@ -174,7 +174,7 @@ class ExpressionEngine extends AbstractEngine
      *
      * @return array A reference on the trail stack.
      */
-    protected function &getTrail()
+    protected function &getTrail(): array
     {
         return $this->trail;
     }
@@ -184,7 +184,7 @@ class ExpressionEngine extends AbstractEngine
      *
      * @param Expression $expression An explored Expression object.
      */
-    protected function mark(Expression $expression)
+    protected function mark(Expression $expression): void
     {
         array_push($this->marker, $expression);
     }
@@ -195,7 +195,7 @@ class ExpressionEngine extends AbstractEngine
      * @param Expression $expression An Expression object.
      * @return bool Whether $expression is marked as explored.
      */
-    protected function isMarked(Expression $expression)
+    protected function isMarked(Expression $expression): bool
     {
         return in_array($expression, $this->marker, true);
     }
@@ -264,7 +264,7 @@ class ExpressionEngine extends AbstractEngine
      * @param ExpressionProcessor $processor The processor that undertook the processing.
      * @param mixed $result The result of the processing.
      */
-    protected function traceExpression(ExpressionProcessor $processor, $result)
+    protected function traceExpression(ExpressionProcessor $processor, $result): void
     {
         $qtiClassName = $processor->getExpression()->getQtiClassName();
         $this->trace("${qtiClassName} [${result}]");
@@ -276,12 +276,12 @@ class ExpressionEngine extends AbstractEngine
      * @param OperatorProcessor $processor The processor that undertook the processing.
      * @param mixed $result The result of the processing.
      */
-    protected function traceOperator(OperatorProcessor $processor, $result)
+    protected function traceOperator(OperatorProcessor $processor, $result): void
     {
         $stringOperands = [];
 
         foreach ($processor->getOperands() as $operand) {
-            $stringOperands[] = '' . $operand;
+            $stringOperands[] = (string)$operand;
         }
 
         $qtiClassName = $processor->getExpression()->getQtiClassName();

@@ -37,7 +37,7 @@ class ExpressionCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of Expression.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Expression) {
             $msg = "ExpressionCollection only accepts to store Expression objects, '" . gettype($value) . "' given.";
@@ -50,7 +50,7 @@ class ExpressionCollection extends QtiComponentCollection
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         foreach ($this as $expr) {
             if (!$expr->isPure()) {

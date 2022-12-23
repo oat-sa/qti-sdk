@@ -41,7 +41,7 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
         $baseType = $component->getBaseType();
@@ -68,11 +68,11 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
      * Unmarshall a DOMElement object corresponding to a QTI responseDeclaration element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A ResponseDeclaration object.
+     * @return ResponseDeclaration A ResponseDeclaration object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): ResponseDeclaration
     {
         try {
             $baseComponent = parent::unmarshall($element);
@@ -112,7 +112,7 @@ class ResponseDeclarationMarshaller extends VariableDeclarationMarshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'responseDeclaration';
     }

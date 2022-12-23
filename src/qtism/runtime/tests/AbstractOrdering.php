@@ -97,7 +97,7 @@ abstract class AbstractOrdering
      *
      * @return AssessmentSection An AssessmentSection object.
      */
-    public function getAssessmentSection()
+    public function getAssessmentSection(): AssessmentSection
     {
         return $this->assessmentSection;
     }
@@ -107,7 +107,7 @@ abstract class AbstractOrdering
      *
      * @param AssessmentSection $assessmentSection An AssessmentSection object.
      */
-    public function setAssessmentSection(AssessmentSection $assessmentSection)
+    public function setAssessmentSection(AssessmentSection $assessmentSection): void
     {
         $this->assessmentSection = $assessmentSection;
     }
@@ -117,7 +117,7 @@ abstract class AbstractOrdering
      *
      * @return SelectableRouteCollection A collection of Route objects.
      */
-    public function getSelectableRoutes()
+    public function getSelectableRoutes(): SelectableRouteCollection
     {
         return $this->selectableRoutes;
     }
@@ -127,7 +127,7 @@ abstract class AbstractOrdering
      *
      * @param SelectableRouteCollection $selectableRoutes A collection of Route objects.
      */
-    public function setSelectableRoutes(SelectableRouteCollection $selectableRoutes)
+    public function setSelectableRoutes(SelectableRouteCollection $selectableRoutes): void
     {
         $this->selectableRoutes = $selectableRoutes;
     }
@@ -138,5 +138,5 @@ abstract class AbstractOrdering
      * @return SelectableRouteCollection A collection of SelectableRoute object that were ordered accordingly.
      * @throws OrderingException If an error occurs while ordering the child elements of the target AssessmentSection.
      */
-    abstract public function order();
+    abstract public function order(): SelectableRouteCollection;
 }

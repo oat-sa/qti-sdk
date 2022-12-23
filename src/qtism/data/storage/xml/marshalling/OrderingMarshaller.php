@@ -38,7 +38,7 @@ class OrderingMarshaller extends Marshaller
      * @param QtiComponent $component An Ordering object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -51,9 +51,9 @@ class OrderingMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI Ordering element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent An Ordering object.
+     * @return Ordering An Ordering object.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Ordering
     {
         $object = new Ordering();
 
@@ -67,7 +67,7 @@ class OrderingMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'ordering';
     }

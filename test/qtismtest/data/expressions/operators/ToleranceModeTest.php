@@ -13,7 +13,7 @@ class ToleranceModeTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return ToleranceMode::class;
     }
@@ -21,7 +21,7 @@ class ToleranceModeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'exact',
@@ -33,7 +33,7 @@ class ToleranceModeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'EXACT',
@@ -45,7 +45,7 @@ class ToleranceModeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             ToleranceMode::EXACT,

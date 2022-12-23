@@ -37,7 +37,7 @@ class FileManagerException extends Exception
      *
      * @var int
      */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /**
      * Create a new FileManagerException object.

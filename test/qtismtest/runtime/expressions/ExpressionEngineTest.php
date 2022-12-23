@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ExpressionEngineTest extends QtiSmTestCase
 {
-    public function testExpressionEngineBaseValue()
+    public function testExpressionEngineBaseValue(): void
     {
         $expression = $this->createComponentFromXml('<baseValue baseType="duration">P2D</baseValue>');
         $engine = new ExpressionEngine($expression);
@@ -23,7 +23,7 @@ class ExpressionEngineTest extends QtiSmTestCase
         $this::assertEquals(2, $result->getDays());
     }
 
-    public function testExpressionEngineSum()
+    public function testExpressionEngineSum(): void
     {
         $expression = $this->createComponentFromXml('
 			<sum> <!-- 60 -->
@@ -44,7 +44,7 @@ class ExpressionEngineTest extends QtiSmTestCase
         $this::assertEquals(60.0, $result->getValue());
     }
 
-    public function testCreateWrongExpressionType()
+    public function testCreateWrongExpressionType(): void
     {
         $expression = new ItemSessionControl();
 

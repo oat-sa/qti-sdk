@@ -97,7 +97,7 @@ class ResponseProcessing extends QtiComponent
      *
      * @return ResponseRuleCollection A collection of ResponseRule objects.
      */
-    public function getResponseRules()
+    public function getResponseRules(): ResponseRuleCollection
     {
         return $this->responseRules;
     }
@@ -107,7 +107,7 @@ class ResponseProcessing extends QtiComponent
      *
      * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
      */
-    public function setResponseRules(ResponseRuleCollection $responseRules)
+    public function setResponseRules(ResponseRuleCollection $responseRules): void
     {
         $this->responseRules = $responseRules;
     }
@@ -118,7 +118,7 @@ class ResponseProcessing extends QtiComponent
      *
      * @return string The URI of the response processing template.
      */
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->template;
     }
@@ -128,7 +128,7 @@ class ResponseProcessing extends QtiComponent
      *
      * @return bool
      */
-    public function hasTemplate()
+    public function hasTemplate(): bool
     {
         return $this->getTemplate() !== '';
     }
@@ -140,7 +140,7 @@ class ResponseProcessing extends QtiComponent
      * @param string $template The URI of the template.
      * @throws InvalidArgumentException If $template is not a valid URI nor an empty string.
      */
-    public function setTemplate($template)
+    public function setTemplate($template): void
     {
         if (Format::isUri($template) === true || (is_string($template) && empty($template))) {
             $this->template = $template;
@@ -156,7 +156,7 @@ class ResponseProcessing extends QtiComponent
      *
      * @return string The URI of the response processing template location.
      */
-    public function getTemplateLocation()
+    public function getTemplateLocation(): string
     {
         return $this->templateLocation;
     }
@@ -166,7 +166,7 @@ class ResponseProcessing extends QtiComponent
      *
      * @return bool
      */
-    public function hasTemplateLocation()
+    public function hasTemplateLocation(): bool
     {
         return $this->getTemplateLocation() !== '';
     }
@@ -178,7 +178,7 @@ class ResponseProcessing extends QtiComponent
      * @param string $templateLocation The URI of the template location.
      * @throws InvalidArgumentException If $templateLocation is not a valid URI nor an empty string.
      */
-    public function setTemplateLocation($templateLocation)
+    public function setTemplateLocation($templateLocation): void
     {
         if (Format::isUri($templateLocation) === true || (is_string($templateLocation) && empty($templateLocation))) {
             $this->templateLocation = $templateLocation;
@@ -191,7 +191,7 @@ class ResponseProcessing extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'responseProcessing';
     }
@@ -199,7 +199,7 @@ class ResponseProcessing extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection($this->getResponseRules()->getArrayCopy());
     }

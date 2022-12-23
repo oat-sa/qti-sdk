@@ -20,7 +20,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class TruncateProcessorTest extends QtiSmTestCase
 {
-    public function testRound()
+    public function testRound(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -109,7 +109,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $this::assertEquals(INF, $result->getValue());
     }
 
-    public function testNull()
+    public function testNull(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -119,7 +119,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -129,7 +129,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeOne()
+    public function testWrongBaseTypeOne(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -139,7 +139,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongBaseTypeTwo()
+    public function testWrongBaseTypeTwo(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -149,7 +149,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -157,7 +157,7 @@ class TruncateProcessorTest extends QtiSmTestCase
         $processor = new TruncateProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -171,7 +171,7 @@ class TruncateProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<truncate>
@@ -183,7 +183,7 @@ class TruncateProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function provider()
+    public function provider(): array
     {
         return [
             [97.2, 97],
@@ -199,7 +199,7 @@ class TruncateProcessorTest extends QtiSmTestCase
      * @param int $expected
      * @throws MarshallerNotFoundException
      */
-    public function testForProvider($val, $expected)
+    public function testForProvider($val, $expected): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();

@@ -97,7 +97,7 @@ abstract class Operator extends Expression
      * @param ExpressionCollection $expressions A collection of $expressions that form the hierarchy of expressions.
      * @throws InvalidArgumentException If $expressions does not contain at least one Expression object.
      */
-    public function setExpressions(ExpressionCollection $expressions)
+    public function setExpressions(ExpressionCollection $expressions): void
     {
         $this->expressions = $expressions;
     }
@@ -107,7 +107,7 @@ abstract class Operator extends Expression
      *
      * @return ExpressionCollection A collection of Expression objects.
      */
-    public function getExpressions()
+    public function getExpressions(): ExpressionCollection
     {
         return $this->expressions;
     }
@@ -115,7 +115,7 @@ abstract class Operator extends Expression
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = $this->getExpressions()->getArrayCopy();
 
@@ -128,7 +128,7 @@ abstract class Operator extends Expression
      * @param int $minOperands An integer which is >= 0.
      * @throws InvalidArgumentException If $minOperands is not an integer >= 0.
      */
-    public function setMinOperands($minOperands)
+    public function setMinOperands($minOperands): void
     {
         if (is_int($minOperands) && $minOperands >= 0) {
             $this->minOperands = $minOperands;
@@ -143,7 +143,7 @@ abstract class Operator extends Expression
      *
      * @return int
      */
-    public function getMinOperands()
+    public function getMinOperands(): int
     {
         return $this->minOperands;
     }
@@ -155,7 +155,7 @@ abstract class Operator extends Expression
      * @param int $maxOperands
      * @throws InvalidArgumentException If $maxOperands is not an integer.
      */
-    public function setMaxOperands($maxOperands)
+    public function setMaxOperands($maxOperands): void
     {
         if (is_int($maxOperands)) {
             $this->maxOperands = $maxOperands;
@@ -171,7 +171,7 @@ abstract class Operator extends Expression
      *
      * @return int
      */
-    public function getMaxOperands()
+    public function getMaxOperands(): int
     {
         return $this->maxOperands;
     }
@@ -181,7 +181,7 @@ abstract class Operator extends Expression
      *
      * @return array An array of values from the Cardinality enumeration.
      */
-    public function getAcceptedCardinalities()
+    public function getAcceptedCardinalities(): array
     {
         return $this->acceptedCardinalities;
     }
@@ -192,7 +192,7 @@ abstract class Operator extends Expression
      * @param array $acceptedCardinalities An array of values from the Cardinality enumeration.
      * @throws InvalidArgumentException If a value from $acceptedCardinalities is not a value from the Cardinality enumeration.
      */
-    public function setAcceptedCardinalities(array $acceptedCardinalities)
+    public function setAcceptedCardinalities(array $acceptedCardinalities): void
     {
         foreach ($acceptedCardinalities as $cardinality) {
             if (!in_array($cardinality, OperatorCardinality::asArray(), true)) {
@@ -209,7 +209,7 @@ abstract class Operator extends Expression
      *
      * @return array An array of values from OperatorBaseType enumeration.
      */
-    public function getAcceptedBaseTypes()
+    public function getAcceptedBaseTypes(): array
     {
         return $this->acceptedBaseTypes;
     }
@@ -220,7 +220,7 @@ abstract class Operator extends Expression
      * @param array $acceptedBaseTypes An array of values from the OperatorBaseType enumeration.
      * @throws InvalidArgumentException If a value from the $acceptedBaseTypes is not a value from the OperatorBaseType.
      */
-    public function setAcceptedBaseTypes(array $acceptedBaseTypes)
+    public function setAcceptedBaseTypes(array $acceptedBaseTypes): void
     {
         foreach ($acceptedBaseTypes as $baseType) {
             if (!in_array($baseType, OperatorBaseType::asArray(), true)) {
@@ -237,7 +237,7 @@ abstract class Operator extends Expression
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return $this->getExpressions()->isPure();
     }

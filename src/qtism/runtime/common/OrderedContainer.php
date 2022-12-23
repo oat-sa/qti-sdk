@@ -38,7 +38,7 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype
      * @param mixed $obj
      * @return bool
      */
-    public function equals($obj)
+    public function equals($obj): bool
     {
         $countA = count($this);
 
@@ -69,7 +69,7 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype
     /**
      * @return int
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::ORDERED;
     }
@@ -77,7 +77,7 @@ class OrderedContainer extends MultipleContainer implements QtiDatatype
     /**
      * @return array
      */
-    protected function getToStringBounds()
+    protected function getToStringBounds(): array
     {
         return ['<', '>'];
     }

@@ -36,7 +36,7 @@ class AssessmentItemRefCollection extends SectionPartCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a AssessmentItemRef object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof AssessmentItemRef) {
             $msg = "AssessmentItemRefCollection class only accept AssessmentItemRef objects, '" . gettype($value) . "' given.";

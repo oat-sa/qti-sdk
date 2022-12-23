@@ -38,7 +38,7 @@ class TemplateElseIfCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of TemplateElseIf.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof TemplateElseIf) {
             $msg = 'A TemplateElseIfCollection aims at storing TemplateElseIf objects only.';

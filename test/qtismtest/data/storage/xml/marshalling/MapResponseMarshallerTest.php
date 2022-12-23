@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MapResponseMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $identifier = 'myMapResponse1';
 
@@ -25,7 +25,7 @@ class MapResponseMarshallerTest extends QtiSmTestCase
         $this::assertEquals($identifier, $element->getAttribute('identifier'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<mapResponse xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="myMapResponse1"/>');

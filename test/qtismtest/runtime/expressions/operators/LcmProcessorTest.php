@@ -26,7 +26,7 @@ class LcmProcessorTest extends QtiSmTestCase
      * @param int $expected
      * @throws MarshallerNotFoundException
      */
-    public function testLcm(array $operands, $expected)
+    public function testLcm(array $operands, $expected): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection($operands);
@@ -34,7 +34,7 @@ class LcmProcessorTest extends QtiSmTestCase
         $this::assertSame($expected, $processor->process()->getValue());
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
@@ -42,7 +42,7 @@ class LcmProcessorTest extends QtiSmTestCase
         $processor = new LcmProcessor($expression, $operands);
     }
 
-    public function testWrongBaseType()
+    public function testWrongBaseType(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new MultipleContainer(BaseType::STRING, [new QtiString('String!')]), new QtiInteger(10)]);
@@ -51,7 +51,7 @@ class LcmProcessorTest extends QtiSmTestCase
         $result = $processor->process();
     }
 
-    public function testWrongCardinality()
+    public function testWrongCardinality(): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(20), new RecordContainer(['A' => new QtiInteger(10)]), new QtiInteger(30)]);
@@ -65,7 +65,7 @@ class LcmProcessorTest extends QtiSmTestCase
      * @param array $operands
      * @throws MarshallerNotFoundException
      */
-    public function testGcdWithNullValues(array $operands)
+    public function testGcdWithNullValues(array $operands): void
     {
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection($operands);
@@ -76,7 +76,7 @@ class LcmProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function lcmProvider()
+    public function lcmProvider(): array
     {
         return [
             [[new QtiInteger(0)], 0],
@@ -97,7 +97,7 @@ class LcmProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function lcmWithNullValuesProvider()
+    public function lcmWithNullValuesProvider(): array
     {
         return [
             [[null]],
@@ -113,7 +113,7 @@ class LcmProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression()
+    public function createFakeExpression(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<lcm>

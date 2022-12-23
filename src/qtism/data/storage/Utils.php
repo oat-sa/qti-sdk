@@ -49,6 +49,7 @@ class Utils
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
      * @throws UnexpectedValueException If $string cannot be transformed in a Value expression with the given $baseType.
      */
+    #[\ReturnTypeWillChange]
     public static function stringToDatatype(?string $string, int $baseType)
     {
         $string = $string ?? '';
@@ -141,7 +142,7 @@ class Utils
                 throw new RuntimeException('Unsupported baseType: file.');
 
             case BaseType::STRING:
-                return '' . $string;
+                return (string)$string;
 
             case BaseType::POINT:
                 if (!Format::isPoint($string)) {
@@ -180,7 +181,7 @@ class Utils
      * @throws UnexpectedValueException If $string cannot be converted to a Coords object.
      * @throws InvalidArgumentException If $string is are not valid coordinates or $shape is not a value from the Shape enumeration.
      */
-    public static function stringToCoords(string $string, int $shape)
+    public static function stringToCoords(string $string, int $shape): QtiCoords
     {
         if (Format::isCoords($string)) {
             $stringCoords = explode(',', $string);
@@ -209,7 +210,7 @@ class Utils
      * @return string A sanitized Uniform Resource Identifier.
      * @throws InvalidArgumentException If $uri is not a string.
      */
-    public static function sanitizeUri($uri)
+    public static function sanitizeUri($uri): string
     {
         if (is_string($uri)) {
             return rtrim($uri, '/');

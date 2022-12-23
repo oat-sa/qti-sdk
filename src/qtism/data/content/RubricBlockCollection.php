@@ -37,7 +37,7 @@ class RubricBlockCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a RubricBlock object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof RubricBlock) {
             $msg = "RubricBlockCollection class only accept RubricBlock objects, '" . gettype($value) . "' given.";

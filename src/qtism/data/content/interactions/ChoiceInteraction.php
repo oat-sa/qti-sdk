@@ -122,7 +122,7 @@ class ChoiceInteraction extends BlockInteraction
      * @param SimpleChoiceCollection $simpleChoices A collection of SimpleChoice objects.
      * @throws InvalidArgumentException If $simpleChoices is empty.
      */
-    public function setSimpleChoices(SimpleChoiceCollection $simpleChoices)
+    public function setSimpleChoices(SimpleChoiceCollection $simpleChoices): void
     {
         if (count($simpleChoices) > 0) {
             $this->simpleChoices = $simpleChoices;
@@ -137,7 +137,7 @@ class ChoiceInteraction extends BlockInteraction
      *
      * @return SimpleChoiceCollection A collection of at least one SimpleChoice object.
      */
-    public function getSimpleChoices()
+    public function getSimpleChoices(): SimpleChoiceCollection
     {
         return $this->simpleChoices;
     }
@@ -149,7 +149,7 @@ class ChoiceInteraction extends BlockInteraction
      * @param bool $shuffle
      * @throws InvalidArgumentException If $shuffle is not a boolean value.
      */
-    public function setShuffle($shuffle)
+    public function setShuffle($shuffle): void
     {
         if (is_bool($shuffle)) {
             $this->shuffle = $shuffle;
@@ -165,7 +165,7 @@ class ChoiceInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function mustShuffle()
+    public function mustShuffle(): bool
     {
         return $this->shuffle;
     }
@@ -176,7 +176,7 @@ class ChoiceInteraction extends BlockInteraction
      * @param int $maxChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $maxChoices is not a positive integer.
      */
-    public function setMaxChoices($maxChoices)
+    public function setMaxChoices($maxChoices): void
     {
         if (is_int($maxChoices) && $maxChoices >= 0) {
             $this->maxChoices = $maxChoices;
@@ -191,7 +191,7 @@ class ChoiceInteraction extends BlockInteraction
      *
      * @return int A strictly positive (> 0) integer.
      */
-    public function getMaxChoices()
+    public function getMaxChoices(): int
     {
         return $this->maxChoices;
     }
@@ -204,7 +204,7 @@ class ChoiceInteraction extends BlockInteraction
      * @param int $minChoices A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minChoices is not a positive (>= 0) integer.
      */
-    public function setMinChoices($minChoices)
+    public function setMinChoices($minChoices): void
     {
         if (is_int($minChoices) && $minChoices >= 0) {
             $this->minChoices = $minChoices;
@@ -219,7 +219,7 @@ class ChoiceInteraction extends BlockInteraction
      *
      * @return int A positive (> 0) integer.
      */
-    public function getMinChoices()
+    public function getMinChoices(): int
     {
         return $this->minChoices;
     }
@@ -230,7 +230,7 @@ class ChoiceInteraction extends BlockInteraction
      * @param int $orientation A value from the Orientation enumeration.
      * @throws InvalidArgumentException If $orientation is not a value from the Orientation enumeration.
      */
-    public function setOrientation($orientation)
+    public function setOrientation($orientation): void
     {
         if (in_array($orientation, Orientation::asArray(), true)) {
             $this->orientation = $orientation;
@@ -245,7 +245,7 @@ class ChoiceInteraction extends BlockInteraction
      *
      * @return int A value from the Orientation enumeration.
      */
-    public function getOrientation()
+    public function getOrientation(): int
     {
         return $this->orientation;
     }
@@ -253,7 +253,7 @@ class ChoiceInteraction extends BlockInteraction
     /**
      * @return ResponseValidityConstraint
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
     {
         return new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -265,7 +265,7 @@ class ChoiceInteraction extends BlockInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'choiceInteraction';
     }
@@ -273,7 +273,7 @@ class ChoiceInteraction extends BlockInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $parentComponents = parent::getComponents();
 

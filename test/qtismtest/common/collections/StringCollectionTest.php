@@ -30,7 +30,7 @@ class StringCollectionTest extends QtiSmTestCase
         unset($this->collection);
     }
 
-    public function testAddString()
+    public function testAddString(): void
     {
         $string = 'foobar';
         $this->collection[] = $string;
@@ -41,7 +41,7 @@ class StringCollectionTest extends QtiSmTestCase
     /**
      * @depends testAddString
      */
-    public function testRemoveString()
+    public function testRemoveString(): void
     {
         $string = 'foobar';
         $this->collection[] = $string;
@@ -52,7 +52,7 @@ class StringCollectionTest extends QtiSmTestCase
     /**
      * @depends testAddString
      */
-    public function testModifyString()
+    public function testModifyString(): void
     {
         $string = 'foobar';
         $this->collection[] = $string;
@@ -61,14 +61,14 @@ class StringCollectionTest extends QtiSmTestCase
         $this::assertNotEquals($this->collection[0], $string);
     }
 
-    public function testAddStringWrongType()
+    public function testAddStringWrongType(): void
     {
         $int = 1;
         $this->expectException(InvalidArgumentException::class);
         $this->collection[] = $int;
     }
 
-    public function testForeachable()
+    public function testForeachable(): void
     {
         $a = ['string1', 'string2', 'string3'];
         foreach ($a as $s) {
@@ -103,14 +103,14 @@ class StringCollectionTest extends QtiSmTestCase
         $this::assertEquals(3, $i);
     }
 
-    public function testAttachNotObject()
+    public function testAttachNotObject(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("You can only attach 'objects' into an AbstractCollection, 'string' given");
         $this->collection->attach('string');
     }
 
-    public function testResetKeys()
+    public function testResetKeys(): void
     {
         $this->collection[] = 'string1';
         $this->collection[] = 'string2';

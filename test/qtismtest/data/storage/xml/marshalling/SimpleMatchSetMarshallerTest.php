@@ -15,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class SimpleMatchSetMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $associableChoice1 = new SimpleAssociableChoice('choice1', 1);
         $associableChoice1->setContent(new FlowStaticCollection([new TextRun('This is choice1')]));
@@ -33,7 +33,7 @@ class SimpleMatchSetMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<simpleMatchSet><simpleAssociableChoice identifier="choice1" matchMax="1">This is choice1</simpleAssociableChoice><simpleAssociableChoice identifier="choice2" matchMax="2" matchMin="1">This is choice2</simpleAssociableChoice></simpleMatchSet>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <simpleMatchSet><simpleAssociableChoice identifier="choice1" matchMax="1">This is choice1</simpleAssociableChoice><simpleAssociableChoice identifier="choice2" matchMax="2" matchMin="1">This is choice2</simpleAssociableChoice></simpleMatchSet>

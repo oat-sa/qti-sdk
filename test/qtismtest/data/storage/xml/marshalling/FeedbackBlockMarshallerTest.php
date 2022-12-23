@@ -16,7 +16,7 @@ use qtism\data\storage\xml\marshalling\UnmarshallingException;
  */
 class FeedbackBlockMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $div = new Div();
         $div->setContent(new FlowCollection([new TextRun('This is text...')]));
@@ -35,7 +35,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testMarshall
      */
-    public function testMarshallXmlBase()
+    public function testMarshallXmlBase(): void
     {
         $div = new Div();
         $div->setContent(new FlowCollection([new TextRun('This is text...')]));
@@ -52,7 +52,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show" xml:base="/home/jerome"><div>This is text...</div></feedbackBlock>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><div>This is text...</div></feedbackBlock>
@@ -77,7 +77,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallInvalidShowHide()
+    public function testUnmarshallInvalidShowHide(): void
     {
         $element = $this->createDOMElement('
 	        <feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="snow"><div>This is text...</div></feedbackBlock>
@@ -92,7 +92,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallInvalidContent1()
+    public function testUnmarshallInvalidContent1(): void
     {
         $element = $this->createDOMElement('
 	        <feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><simpleChoice identifier="ChoiceA"/></feedbackBlock>
@@ -107,7 +107,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallInvalidContent2()
+    public function testUnmarshallInvalidContent2(): void
     {
         $element = $this->createDOMElement('
 	        <feedbackBlock outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><endAttemptInteraction responseIdentifier="Check" title="My Title"/></feedbackBlock>
@@ -122,7 +122,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallXmlBase()
+    public function testUnmarshallXmlBase(): void
     {
         $element = $this->createDOMElement('
 	        <feedbackBlock xml:base="/home/jerome" outcomeIdentifier="outcome1" identifier="please_show_me" showHide="show"><div>This is text...</div></feedbackBlock>
@@ -135,7 +135,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoIdentifier()
+    public function testUnmarshallNoIdentifier(): void
     {
         $element = $this->createDOMElement('
 	        <feedbackBlock outcomeIdentifier="outcome1" showHide="snow"><div>This is text...</div></feedbackBlock>
@@ -150,7 +150,7 @@ class FeedbackBlockMarshallerTest extends QtiSmTestCase
     /**
      * @depends testUnmarshall
      */
-    public function testUnmarshallNoOutcomeIdentifier()
+    public function testUnmarshallNoOutcomeIdentifier(): void
     {
         $element = $this->createDOMElement('
 	        <feedbackBlock identifier="myidentifier" showHide="snow"><div>This is text...</div></feedbackBlock>

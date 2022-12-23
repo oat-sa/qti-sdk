@@ -79,7 +79,7 @@ class SelectableRoute extends Route
      *
      * @return bool
      */
-    public function isFixed()
+    public function isFixed(): bool
     {
         return $this->fixed;
     }
@@ -89,7 +89,7 @@ class SelectableRoute extends Route
      *
      * @return bool
      */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return $this->visible;
     }
@@ -99,7 +99,7 @@ class SelectableRoute extends Route
      *
      * @return bool
      */
-    public function isRequired()
+    public function isRequired(): bool
     {
         return $this->required;
     }
@@ -109,7 +109,7 @@ class SelectableRoute extends Route
      *
      * @param bool $fixed
      */
-    public function setFixed($fixed)
+    public function setFixed($fixed): void
     {
         $this->fixed = $fixed;
     }
@@ -119,7 +119,7 @@ class SelectableRoute extends Route
      *
      * @param bool $visible
      */
-    public function setVisible($visible)
+    public function setVisible($visible): void
     {
         $this->visible = $visible;
     }
@@ -129,7 +129,7 @@ class SelectableRoute extends Route
      *
      * @param bool $required
      */
-    public function setRequired($required)
+    public function setRequired($required): void
     {
         $this->required = $required;
     }
@@ -139,7 +139,7 @@ class SelectableRoute extends Route
      *
      * @param bool $keepTogether
      */
-    public function setKeepTogether($keepTogether)
+    public function setKeepTogether($keepTogether): void
     {
         $this->keepTogether = $keepTogether;
     }
@@ -149,7 +149,7 @@ class SelectableRoute extends Route
      *
      * @return bool
      */
-    public function mustKeepTogether()
+    public function mustKeepTogether(): bool
     {
         return $this->keepTogether;
     }

@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class RubricBlockRefMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $component = new RubricBlockRef('R01', './R01.xml');
         $marshaller = (new Compact21MarshallerFactory('2.1.0'))->createMarshaller($component);
@@ -23,7 +23,7 @@ class RubricBlockRefMarshallerTest extends QtiSmTestCase
         $this::assertEquals('./R01.xml', $elt->getAttribute('href'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<rubricBlockRef identifier="R01" href="./R01.xml"/>');

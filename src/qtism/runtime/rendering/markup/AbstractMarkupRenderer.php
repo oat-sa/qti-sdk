@@ -52,7 +52,7 @@ abstract class AbstractMarkupRenderer implements Renderable
     /**
      * @param AbstractMarkupRenderingEngine|null $renderingEngine
      */
-    public function setRenderingEngine(AbstractMarkupRenderingEngine $renderingEngine = null)
+    public function setRenderingEngine(AbstractMarkupRenderingEngine $renderingEngine = null): void
     {
         $this->renderingEngine = $renderingEngine;
     }
@@ -63,7 +63,7 @@ abstract class AbstractMarkupRenderer implements Renderable
      *
      * @return AbstractMarkupRenderingEngine
      */
-    public function getRenderingEngine()
+    public function getRenderingEngine(): AbstractMarkupRenderingEngine
     {
         return $this->renderingEngine;
     }
@@ -76,7 +76,7 @@ abstract class AbstractMarkupRenderer implements Renderable
      * @param string $baseUrl a baseUrl (xml:base).
      * @return string A transformed URL.
      */
-    protected function transformUri($url, $baseUrl)
+    protected function transformUri($url, $baseUrl): string
     {
         // Only relative URIs must be transformed while
         // taking xml:base into account.
@@ -105,7 +105,7 @@ abstract class AbstractMarkupRenderer implements Renderable
      * @param QtiComponent $component
      * @param DOMNode $node
      */
-    protected function handleXmlBase(QtiComponent $component, DOMNode $node)
+    protected function handleXmlBase(QtiComponent $component, DOMNode $node): void
     {
         if (
             $node instanceof DOMElement

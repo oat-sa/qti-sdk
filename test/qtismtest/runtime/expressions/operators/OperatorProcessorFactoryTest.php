@@ -35,7 +35,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         spl_autoload_unregister('custom_operator_autoloader');
     }
 
-    public function testCreateProcessor()
+    public function testCreateProcessor(): void
     {
         // get a fake sum expression.
         $expression = $this->createComponentFromXml(
@@ -53,7 +53,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $this::assertEquals(4, $processor->process()->getValue()); // x)
     }
 
-    public function testInvalidOperatorClass()
+    public function testInvalidOperatorClass(): void
     {
         $expression = $this->createComponentFromXml('<baseValue baseType="string">String!</baseValue>');
         $factory = new OperatorProcessorFactory();
@@ -62,7 +62,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $processor = $factory->createProcessor($expression);
     }
 
-    public function testCustomOperator()
+    public function testCustomOperator(): void
     {
         // Fake expression...
         $expression = $this->createComponentFromXml(
@@ -79,7 +79,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $this::assertTrue($processor->process()->equals(new OrderedContainer(BaseType::STRING, [new QtiString('this'), new QtiString('is'), new QtiString('a'), new QtiString('test')])));
     }
 
-    public function testCustomOperatorWithoutClassAttribute()
+    public function testCustomOperatorWithoutClassAttribute(): void
     {
         // Fake expression...
         $expression = $this->createComponentFromXml(
@@ -96,7 +96,7 @@ class OperatorProcessorFactoryTest extends QtiSmTestCase
         $factory->createProcessor($expression);
     }
 
-    public function testUnknownCustomOperator()
+    public function testUnknownCustomOperator(): void
     {
         // Fake expression...
         $expression = $this->createComponentFromXml(

@@ -40,7 +40,7 @@ class MediaInteractionMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
@@ -76,11 +76,11 @@ class MediaInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a MediaInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A MediaInteraction object.
+     * @return MediaInteraction A MediaInteraction object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): MediaInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             if (($autostart = $this->getDOMElementAttributeAs($element, 'autostart', 'boolean')) !== null) {
@@ -134,7 +134,7 @@ class MediaInteractionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'mediaInteraction';
     }

@@ -122,7 +122,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -133,7 +133,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      * @param string $identifier A QTI Identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
@@ -149,7 +149,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -160,7 +160,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
      */
-    public function setBaseType($baseType)
+    public function setBaseType($baseType): void
     {
         if (in_array($baseType, BaseType::asArray()) || $baseType === -1) {
             $this->baseType = $baseType;
@@ -176,7 +176,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      *
      * @return bool
      */
-    public function hasBaseType()
+    public function hasBaseType(): bool
     {
         return $this->getBaseType() !== -1;
     }
@@ -187,7 +187,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      *
      * @return DefaultValue A DefaultValue object.
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): ?DefaultValue
     {
         return $this->defaultValue;
     }
@@ -198,7 +198,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      *
      * @param DefaultValue $defaultValue A DefaultValue object.
      */
-    public function setDefaultValue(DefaultValue $defaultValue = null)
+    public function setDefaultValue(DefaultValue $defaultValue = null): void
     {
         $this->defaultValue = $defaultValue;
     }
@@ -208,7 +208,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      *
      * @return bool
      */
-    public function hasDefaultValue()
+    public function hasDefaultValue(): bool
     {
         return $this->getDefaultValue() !== null;
     }
@@ -218,7 +218,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      *
      * @return int A value from the Cardinality enumeration.
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return $this->cardinality;
     }
@@ -229,7 +229,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      * @param int $cardinality A value from the Cardinality enumeration.
      * @throws InvalidArgumentException If $cardinality is not a value from the Cardinality enumeration.
      */
-    public function setCardinality($cardinality)
+    public function setCardinality($cardinality): void
     {
         if (in_array($cardinality, Cardinality::asArray())) {
             $this->cardinality = $cardinality;
@@ -242,7 +242,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'variableDeclaration';
     }
@@ -250,7 +250,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = [];
 

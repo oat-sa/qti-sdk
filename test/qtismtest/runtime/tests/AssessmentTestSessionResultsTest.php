@@ -19,7 +19,7 @@ use qtismtest\runtime\tests\mocks\SimpleResultsSubmittableTestSessionFactory;
  */
 class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCase
 {
-    public function testTestResultsSubmissionNonLinearOutcomeProcessing()
+    public function testTestResultsSubmissionNonLinearOutcomeProcessing(): void
     {
         // This test focuses on test results submission at outcome processing time.
         $file = self::samplesDir() . 'custom/runtime/results_linear.xml';
@@ -71,7 +71,7 @@ class AssessmentTestSessionResultsTest extends QtiSmAssessmentTestSessionTestCas
         $this::assertSame(round(0.66666, 3), round($submittedTestResults['TEST_SCORE'][2]->getValue(), 3));
     }
 
-    public function testTestResultsSubmissionNonLinearEnd()
+    public function testTestResultsSubmissionNonLinearEnd(): void
     {
         // This test focuses on test results submission at outcome processing time.
         $file = self::samplesDir() . 'custom/runtime/results_linear.xml';

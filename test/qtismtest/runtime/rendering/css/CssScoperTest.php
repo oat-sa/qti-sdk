@@ -24,7 +24,7 @@ class CssScoperTest extends QtiSmTestCase
      * @throws RenderingException
      * @throws MemoryStreamException
      */
-    public function testOutput($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false)
+    public function testOutput($inputFile, $outputFile, $id, $cssMapping = false, $pseudoClassMapping = true, $wcFriendly = false): void
     {
         $cssScoper = new CssScoper($cssMapping, $pseudoClassMapping);
         $cssScoper->setWebComponentFriendly($wcFriendly);
@@ -36,7 +36,7 @@ class CssScoperTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function outputProvider()
+    public function outputProvider(): array
     {
         return [
             [self::samplesDir() . 'rendering/css/css_input1.css', self::samplesDir() . 'rendering/css/css_output1.css', 'myId'],
@@ -63,7 +63,7 @@ class CssScoperTest extends QtiSmTestCase
         ];
     }
 
-    public function testOutputIdGenerated()
+    public function testOutputIdGenerated(): void
     {
         $cssScoper = new CssScoper();
         $actual = $cssScoper->render(self::samplesDir() . 'rendering/css/css_input1.css');
@@ -71,7 +71,7 @@ class CssScoperTest extends QtiSmTestCase
         $this::assertSame(1, preg_match($pattern, $actual));
     }
 
-    public function testOutputUnknownFile()
+    public function testOutputUnknownFile(): void
     {
         $cssScoper = new CssScoper();
 

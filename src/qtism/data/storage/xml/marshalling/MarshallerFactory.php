@@ -301,7 +301,7 @@ abstract class MarshallerFactory
      * @param string $marshallerClassName A PHP marshaller class name (fully qualified).
      * @param string $ns
      */
-    public function addMappingEntry($qtiClassName, $marshallerClassName, $ns = 'qtism')
+    public function addMappingEntry($qtiClassName, $marshallerClassName, $ns = 'qtism'): void
     {
         $this->mapping[$ns][$qtiClassName] = $marshallerClassName;
     }
@@ -313,7 +313,7 @@ abstract class MarshallerFactory
      * @param string $ns
      * @return bool Whether a mapping entry is defined.
      */
-    public function hasMappingEntry($qtiClassName, $ns = 'qtism')
+    public function hasMappingEntry($qtiClassName, $ns = 'qtism'): bool
     {
         return isset($this->mapping[$ns][$qtiClassName]);
     }
@@ -336,7 +336,7 @@ abstract class MarshallerFactory
      * @param string $qtiClassName A QTI class name.
      * @param string $ns
      */
-    public function removeMappingEntry($qtiClassName, $ns = 'qtism')
+    public function removeMappingEntry($qtiClassName, $ns = 'qtism'): void
     {
         unset($this->mapping[$ns][$qtiClassName]);
     }
@@ -348,7 +348,7 @@ abstract class MarshallerFactory
      *
      * @param bool $webComponentFriendly
      */
-    protected function setWebComponentFriendly($webComponentFriendly)
+    protected function setWebComponentFriendly($webComponentFriendly): void
     {
         $this->webComponentFriendly = $webComponentFriendly;
     }
@@ -360,7 +360,7 @@ abstract class MarshallerFactory
      *
      * @return bool
      */
-    public function isWebComponentFriendly()
+    public function isWebComponentFriendly(): bool
     {
         return $this->webComponentFriendly;
     }
@@ -380,7 +380,7 @@ abstract class MarshallerFactory
      * @throws MarshallerNotFoundException If no Marshaller mapping is set for a given $object.
      * @throws InvalidArgumentException If $object is not a QtiComponent nor a DOMElement object.
      */
-    public function createMarshaller($object, array $args = [])
+    public function createMarshaller($object, array $args = []): Marshaller
     {
         if ($object instanceof QtiComponent) {
             // Asking for a Marshaller...
@@ -428,5 +428,6 @@ abstract class MarshallerFactory
      * @param array $args
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     abstract protected function instantiateMarshaller(ReflectionClass $class, array $args);
 }

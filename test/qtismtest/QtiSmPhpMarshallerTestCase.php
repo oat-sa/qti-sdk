@@ -49,7 +49,7 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
     /**
      * @return PhpMarshallingContext
      */
-    public function createMarshallingContext()
+    public function createMarshallingContext(): PhpMarshallingContext
     {
         $ctx = new PhpMarshallingContext($this->getStreamAccess());
         $ctx->setFormatOutput(true);
@@ -59,7 +59,7 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
     /**
      * @param MemoryStream $stream
      */
-    protected function setStream(MemoryStream $stream)
+    protected function setStream(MemoryStream $stream): void
     {
         $this->stream = $stream;
     }
@@ -67,7 +67,7 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
     /**
      * @return MemoryStream
      */
-    protected function getStream()
+    protected function getStream(): MemoryStream
     {
         return $this->stream;
     }
@@ -75,7 +75,7 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
     /**
      * @return PhpStreamAccess
      */
-    protected function getStreamAccess()
+    protected function getStreamAccess(): PhpStreamAccess
     {
         return $this->streamAccess;
     }
@@ -83,7 +83,7 @@ abstract class QtiSmPhpMarshallerTestCase extends QtiSmTestCase
     /**
      * @param PhpStreamAccess $streamAccess
      */
-    protected function setStreamAccess(PhpStreamAccess $streamAccess)
+    protected function setStreamAccess(PhpStreamAccess $streamAccess): void
     {
         $this->streamAccess = $streamAccess;
     }

@@ -36,7 +36,7 @@ class StringCollection extends AbstractCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a valid string.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!is_string($value)) {
             $msg = "StringCollection class only accept string values, '" . gettype($value) . "' given.";
@@ -50,7 +50,7 @@ class StringCollection extends AbstractCollection
      * @param mixed $value A string.
      * @return bool Whether the collection contains $value.
      */
-    public function contains($value)
+    public function contains($value): bool
     {
         $data = &$this->getDataPlaceHolder();
 

@@ -30,11 +30,11 @@ use qtism\data\storage\xml\marshalling\Compact21MarshallerFactory;
  */
 class CompactVersion21 extends CompactVersion
 {
-    const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
+    public const XMLNS = 'http://www.imsglobal.org/xsd/imsqti_v2p1';
 
-    const XSD = 'http://www.taotesting.com/xsd/qticompact_v2p1.xsd';
+    public const XSD = 'http://www.taotesting.com/xsd/qticompact_v2p1.xsd';
 
-    const LOCAL_XSD = 'qticompact_v2p1.xsd';
+    public const LOCAL_XSD = 'qticompact_v2p1.xsd';
 
-    const MARSHALLER_FACTORY = Compact21MarshallerFactory::class;
+    public const MARSHALLER_FACTORY = Compact21MarshallerFactory::class;
 }

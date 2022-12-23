@@ -36,7 +36,7 @@ class TestPartCollection extends QtiIdentifiableCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a TestPart object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof TestPart) {
             $msg = "TestPartCollection class only accept TestPart objects, '" . gettype($value) . "' given.";

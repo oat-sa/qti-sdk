@@ -40,7 +40,7 @@ class LookupOutcomeValueMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -56,11 +56,11 @@ class LookupOutcomeValueMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI lookupOutcomeValue element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A LookupOutcomeValue object.
+     * @return LookupOutcomeValue A LookupOutcomeValue object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): LookupOutcomeValue
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             $expressionElt = self::getFirstChildElement($element);
@@ -82,7 +82,7 @@ class LookupOutcomeValueMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'lookupOutcomeValue';
     }

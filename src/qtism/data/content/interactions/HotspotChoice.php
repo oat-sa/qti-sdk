@@ -90,7 +90,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * @param int $shape A value from the Shape enumeration.
      */
-    public function setShape($shape)
+    public function setShape($shape): void
     {
         if (in_array($shape, QtiShape::asArray())) {
             $this->shape = $shape;
@@ -101,11 +101,9 @@ class HotspotChoice extends Choice implements Hotspot
     }
 
     /**
-     * Get the shape of the associableHotspot.
-     *
-     * @return QtiShape A Shape object.
+     * @inheritDoc
      */
-    public function getShape()
+    public function getShape(): int
     {
         return $this->shape;
     }
@@ -115,7 +113,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * @param QtiCoords $coords A QtiCoords object.
      */
-    public function setCoords(QtiCoords $coords)
+    public function setCoords(QtiCoords $coords): void
     {
         $this->coords = $coords;
     }
@@ -125,7 +123,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * @return QtiCoords A QtiCoords object.
      */
-    public function getCoords()
+    public function getCoords(): QtiCoords
     {
         return $this->coords;
     }
@@ -136,7 +134,7 @@ class HotspotChoice extends Choice implements Hotspot
      * @param string $hotspotLabel A string with at most 256 characters.
      * @throws InvalidArgumentException If $hotspotLabel has more than 256 characters.
      */
-    public function setHotspotLabel($hotspotLabel)
+    public function setHotspotLabel($hotspotLabel): void
     {
         if (Format::isString256($hotspotLabel) === true) {
             $this->hotspotLabel = $hotspotLabel;
@@ -151,7 +149,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * @return string A string with at most 256 characters.
      */
-    public function getHotspotLabel()
+    public function getHotspotLabel(): string
     {
         return $this->hotspotLabel;
     }
@@ -161,7 +159,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * @return bool
      */
-    public function hasHotspotLabel()
+    public function hasHotspotLabel(): bool
     {
         return $this->getHotspotLabel() !== '';
     }
@@ -172,7 +170,7 @@ class HotspotChoice extends Choice implements Hotspot
      *
      * @return QtiComponentCollection An empty collection.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -180,7 +178,7 @@ class HotspotChoice extends Choice implements Hotspot
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'hotspotChoice';
     }

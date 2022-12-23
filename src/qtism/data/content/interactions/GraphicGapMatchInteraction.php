@@ -101,7 +101,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * @param GapImgCollection $gapImgs A collection of GapImg objects.
      * @throws InvalidArgumentException If $gapImgs is empty.
      */
-    public function setGapImgs(GapImgCollection $gapImgs)
+    public function setGapImgs(GapImgCollection $gapImgs): void
     {
         if (count($gapImgs) > 0) {
             $this->gapImgs = $gapImgs;
@@ -116,7 +116,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      *
      * @return GapImgCollection A collection of GapImg objects.
      */
-    public function getGapImgs()
+    public function getGapImgs(): GapImgCollection
     {
         return $this->gapImgs;
     }
@@ -127,7 +127,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * @param AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot objects.
      * @throws InvalidArgumentException If $associableHotspots is empty.
      */
-    public function setAssociableHotspots(AssociableHotspotCollection $associableHotspots)
+    public function setAssociableHotspots(AssociableHotspotCollection $associableHotspots): void
     {
         if (count($associableHotspots) > 0) {
             $this->associableHotspots = $associableHotspots;
@@ -142,7 +142,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      *
      * @return AssociableHotspotCollection A collection of AssociableHotspot objects.
      */
-    public function getAssociableHotspots()
+    public function getAssociableHotspots(): AssociableHotspotCollection
     {
         return $this->associableHotspots;
     }
@@ -150,7 +150,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     /**
      * @return ResponseValidityConstraint|null
      */
-    public function getResponseValidityConstraint()
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
@@ -174,7 +174,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $prompt = $this->getPrompt();
         $components = $prompt
@@ -194,7 +194,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'graphicGapMatchInteraction';
     }

@@ -82,7 +82,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
      *
      * @return string A QTI Identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -93,7 +93,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
      * @param string $identifier A QTI Identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI Identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
@@ -108,7 +108,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
      *
      * @param Expression $expression A QTI Expression.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -118,7 +118,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
      *
      * @return Expression
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -126,7 +126,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'setOutcomeValue';
     }
@@ -134,7 +134,7 @@ class SetOutcomeValue extends QtiComponent implements OutcomeRule, ResponseRule
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection([$this->getExpression()]);
     }

@@ -37,14 +37,14 @@ interface QtiIdentifiable extends SplSubject
      *
      * @return string A QTI Identifier.
      */
-    public function getIdentifier();
+    public function getIdentifier(): string;
 
     /**
      * Get the observers of the object.
      *
      * @return SplObjectStorage An SplObjectStorage object.
      */
-    public function getObservers();
+    public function getObservers(): SplObjectStorage;
 
     /**
      * Set the observers of the object.

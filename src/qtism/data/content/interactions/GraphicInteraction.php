@@ -64,7 +64,7 @@ abstract class GraphicInteraction extends BlockInteraction
      *
      * @param ObjectElement $object An ObjectElement object.
      */
-    public function setObject(ObjectElement $object)
+    public function setObject(ObjectElement $object): void
     {
         $this->object = $object;
     }
@@ -74,7 +74,7 @@ abstract class GraphicInteraction extends BlockInteraction
      *
      * @return ObjectElement An ObjectElement object.
      */
-    public function getObject()
+    public function getObject(): ObjectElement
     {
         return $this->object;
     }

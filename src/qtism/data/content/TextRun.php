@@ -60,7 +60,7 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
      *
      * @param string $content A string value.
      */
-    public function setContent($content)
+    public function setContent($content): void
     {
         $this->content = $content;
     }
@@ -70,7 +70,7 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
      *
      * @return string A string value.
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -78,7 +78,7 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -86,7 +86,7 @@ class TextRun extends QtiComponent implements FlowStatic, InlineStatic, TextOrVa
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'textRun';
     }

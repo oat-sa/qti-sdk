@@ -59,15 +59,15 @@ class MatchInteractionRenderer extends InteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-matchInteraction');
 
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
-        $fragment->firstChild->setAttribute('data-max-associations', $component->getMaxAssociations());
-        $fragment->firstChild->setAttribute('data-min-associations', $component->getMinAssociations());
+        $fragment->firstChild->setAttribute('data-max-associations', (string)$component->getMaxAssociations());
+        $fragment->firstChild->setAttribute('data-min-associations', (string)$component->getMinAssociations());
     }
 
     /**
@@ -75,7 +75,7 @@ class MatchInteractionRenderer extends InteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendChildren($fragment, $component, $base);
 

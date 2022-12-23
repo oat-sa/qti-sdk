@@ -69,7 +69,7 @@ class Substring extends Operator
      * @param bool $caseSensitive A boolean value.
      * @throws InvalidArgumentException If $caseSensitive is not a boolean value.
      */
-    public function setCaseSensitive($caseSensitive)
+    public function setCaseSensitive($caseSensitive): void
     {
         if (is_bool($caseSensitive)) {
             $this->caseSensitive = $caseSensitive;
@@ -84,7 +84,7 @@ class Substring extends Operator
      *
      * @return bool
      */
-    public function isCaseSensitive()
+    public function isCaseSensitive(): bool
     {
         return $this->caseSensitive;
     }
@@ -92,7 +92,7 @@ class Substring extends Operator
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'substring';
     }

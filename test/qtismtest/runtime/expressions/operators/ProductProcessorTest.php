@@ -22,7 +22,7 @@ use RuntimeException;
  */
 class ProductProcessorTest extends QtiSmTestCase
 {
-    public function testSimple()
+    public function testSimple(): void
     {
         $product = $this->createFakeProductComponent();
 
@@ -35,7 +35,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $this::assertEquals(1, $result->getValue());
     }
 
-    public function testNary()
+    public function testNary(): void
     {
         $product = $this->createFakeProductComponent();
 
@@ -47,7 +47,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $this::assertEquals(-96, $result->getValue());
     }
 
-    public function testComplex()
+    public function testComplex(): void
     {
         $product = $this->createFakeProductComponent();
 
@@ -61,7 +61,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $this::assertEquals(-1354.5, $result->getValue());
     }
 
-    public function testInvalidOperandsOne()
+    public function testInvalidOperandsOne(): void
     {
         $product = $this->createFakeProductComponent();
 
@@ -72,7 +72,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $result = $productProcessor->process();
     }
 
-    public function testInvalidOperandsTwo()
+    public function testInvalidOperandsTwo(): void
     {
         $product = $this->createFakeProductComponent();
         $operands = new OperandsCollection();
@@ -83,7 +83,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $result = $productProcessor->process();
     }
 
-    public function testNullInvolved()
+    public function testNullInvolved(): void
     {
         $product = $this->createFakeProductComponent();
         $operands = new OperandsCollection([new QtiInteger(10), new QtiInteger(10), null]);
@@ -92,7 +92,7 @@ class ProductProcessorTest extends QtiSmTestCase
         $this::assertNull($result);
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $product = $this->createFakeProductComponent();
         $operands = new OperandsCollection();
@@ -104,7 +104,7 @@ class ProductProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    private function createFakeProductComponent()
+    private function createFakeProductComponent(): QtiComponent
     {
         return $this->createComponentFromXml('
 			<product xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">

@@ -13,7 +13,7 @@ class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return AssessmentItemSessionState::class;
     }
@@ -21,7 +21,7 @@ class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'initial',
@@ -38,7 +38,7 @@ class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'INITIAL',
@@ -55,7 +55,7 @@ class AssessmentItemSessionStateTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             AssessmentItemSessionState::INITIAL,

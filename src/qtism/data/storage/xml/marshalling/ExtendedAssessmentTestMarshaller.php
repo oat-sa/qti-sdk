@@ -40,7 +40,7 @@ class ExtendedAssessmentTestMarshaller extends AssessmentTestMarshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = parent::marshall($component);
 
@@ -56,11 +56,11 @@ class ExtendedAssessmentTestMarshaller extends AssessmentTestMarshaller
     /**
      * @param DOMElement $element
      * @param AssessmentTest|null $assessmentTest
-     * @return ExtendedAssessmentTest|QtiComponent
+     * @return ExtendedAssessmentTest
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null)
+    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null): ExtendedAssessmentTest
     {
         $baseComponent = parent::unmarshall($element);
         $component = ExtendedAssessmentTest::createFromAssessmentTest($baseComponent);

@@ -46,7 +46,7 @@ class Exception
      * @param true $withClassName Whether to show the Exception class name.
      * @return string
      */
-    public static function formatMessage(\Exception $e, $withClassName = true)
+    public static function formatMessage(\Exception $e, $withClassName = true): string
     {
         $returnValue = '';
 

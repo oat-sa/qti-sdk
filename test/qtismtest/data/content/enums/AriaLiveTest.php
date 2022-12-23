@@ -34,7 +34,7 @@ class AriaLiveTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return AriaLive::class;
     }
@@ -42,7 +42,7 @@ class AriaLiveTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'off',
@@ -54,7 +54,7 @@ class AriaLiveTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'OFF',
@@ -66,7 +66,7 @@ class AriaLiveTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             AriaLive::OFF,

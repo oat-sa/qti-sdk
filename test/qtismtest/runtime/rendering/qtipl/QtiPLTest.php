@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class QtiPLTest extends QtiSmTestCase
 {
-    public function testPreCondition()
+    public function testPreCondition(): void
     {
         $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
@@ -25,7 +25,7 @@ class QtiPLTest extends QtiSmTestCase
         );
     }
 
-    public function testBranchRule()
+    public function testBranchRule(): void
     {
         $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
@@ -38,7 +38,7 @@ class QtiPLTest extends QtiSmTestCase
         );
     }
 
-    public function testXInclude()
+    public function testXInclude(): void
     {
         $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
@@ -51,7 +51,7 @@ class QtiPLTest extends QtiSmTestCase
         );
     }
 
-    public function testResponseRules()
+    public function testResponseRules(): void
     {
         $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
@@ -115,7 +115,7 @@ class QtiPLTest extends QtiSmTestCase
         );
     }
 
-    public function testTemplateRules()
+    public function testTemplateRules(): void
     {
         $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
@@ -147,7 +147,7 @@ class QtiPLTest extends QtiSmTestCase
         );
     }
 
-    public function testOutcomeRules()
+    public function testOutcomeRules(): void
     {
         $renderer = new QtiPLRenderer(ConditionRenderingOptions::getDefault());
         $doc = new XmlDocument();
@@ -179,7 +179,7 @@ class QtiPLTest extends QtiSmTestCase
         );
     }
 
-    public function testParametrableIndentation()
+    public function testParametrableIndentation(): void
     {
         $renderer = new QtiPLRenderer(new ConditionRenderingOptions(8));
         $doc = new XmlDocument();

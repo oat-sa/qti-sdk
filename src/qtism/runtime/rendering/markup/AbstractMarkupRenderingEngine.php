@@ -61,28 +61,28 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @var int
      */
-    const CONTEXT_STATIC = 0;
+    public const CONTEXT_STATIC = 0;
 
     /**
      * Context-aware rendering.
      *
      * @var int
      */
-    const CONTEXT_AWARE = 1;
+    public const CONTEXT_AWARE = 1;
 
     /**
      * Template oriented rendering.
      *
      * @var int
      */
-    const TEMPLATE_ORIENTED = 2;
+    public const TEMPLATE_ORIENTED = 2;
 
     /**
      * Ignore xml:base constraints.
      *
      * @var int
      */
-    const XMLBASE_IGNORE = 3;
+    public const XMLBASE_IGNORE = 3;
 
     /**
      * Keep xml:base in final rendering,
@@ -90,7 +90,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @var int
      */
-    const XMLBASE_KEEP = 4;
+    public const XMLBASE_KEEP = 4;
 
     /**
      * Process all URL resolutions by taking
@@ -99,7 +99,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @var int
      */
-    const XMLBASE_PROCESS = 5;
+    public const XMLBASE_PROCESS = 5;
 
     /**
      * Stylesheet components are rendered at the same place
@@ -107,7 +107,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @var int
      */
-    const STYLESHEET_INLINE = 6;
+    public const STYLESHEET_INLINE = 6;
 
     /**
      * Stylesheet components are rendered separately and pushed into
@@ -115,7 +115,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @var int
      */
-    const STYLESHEET_SEPARATE = 7;
+    public const STYLESHEET_SEPARATE = 7;
 
     /**
      * QTI specific CSS classes will be ones related to
@@ -123,7 +123,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @var int
      */
-    const CSSCLASS_CONCRETE = 8;
+    public const CSSCLASS_CONCRETE = 8;
 
     /**
      * QTI specific CSS classes will be corresponding to the
@@ -131,7 +131,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @var int
      */
-    const CSSCLASS_ABSTRACT = 9;
+    public const CSSCLASS_ABSTRACT = 9;
 
     /**
      * An array used to 'tag' explored Component object.
@@ -326,7 +326,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return SplStack
      */
-    protected function getExploration()
+    protected function getExploration(): SplStack
     {
         return $this->exploration;
     }
@@ -336,7 +336,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param SplStack $exploration
      */
-    protected function setExploration(SplStack $exploration)
+    protected function setExploration(SplStack $exploration): void
     {
         $this->exploration = $exploration;
     }
@@ -347,7 +347,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return array
      */
-    protected function getExplorationMarker()
+    protected function getExplorationMarker(): array
     {
         return $this->explorationMarker;
     }
@@ -358,7 +358,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param array $explorationMarker
      */
-    protected function setExplorationMarker(array $explorationMarker)
+    protected function setExplorationMarker(array $explorationMarker): void
     {
         $this->explorationMarker = $explorationMarker;
     }
@@ -368,7 +368,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return QtiComponent
      */
-    protected function getExploredComponent()
+    protected function getExploredComponent(): QtiComponent
     {
         return $this->exploredComponent;
     }
@@ -378,7 +378,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param QtiComponent $component
      */
-    protected function setExploredComponent(QtiComponent $component = null)
+    protected function setExploredComponent(QtiComponent $component = null): void
     {
         $this->exploredComponent = $component;
     }
@@ -388,7 +388,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param mixed $rendering
      */
-    protected function setLastRendering($rendering)
+    protected function setLastRendering($rendering): void
     {
         $this->lastRendering = $rendering;
     }
@@ -398,6 +398,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     protected function getLastRendering()
     {
         return $this->lastRendering;
@@ -408,7 +409,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param Interaction $interaction
      */
-    protected function setCurrentInteraction(Interaction $interaction = null)
+    protected function setCurrentInteraction(Interaction $interaction = null): void
     {
         $this->currentInteraction = $interaction;
     }
@@ -418,7 +419,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return Interaction
      */
-    protected function getCurrentInteraction()
+    protected function getCurrentInteraction(): ?Interaction
     {
         return $this->currentInteraction;
     }
@@ -429,7 +430,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @return mixed
      * @throws RenderingException
      */
-    public function render($component, $base = '')
+    public function render($component, $base = ''): DOMDocument
     {
         // Reset the engine to its initial state.
         $this->reset();
@@ -513,7 +514,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return bool
      */
-    protected function isFinal()
+    protected function isFinal(): bool
     {
         return count($this->getNextExploration()) === 0;
     }
@@ -524,7 +525,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return QtiComponentCollection The children Component object of the currently explored Component object.
      */
-    protected function getNextExploration()
+    protected function getNextExploration(): QtiComponentCollection
     {
         return new QtiComponentCollection(array_reverse($this->getExploredComponent()->getComponents()->getArrayCopy()));
     }
@@ -534,7 +535,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return bool
      */
-    protected function isExplored()
+    protected function isExplored(): bool
     {
         return in_array($this->getExploredComponent(), $this->getExplorationMarker(), true);
     }
@@ -542,7 +543,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     /**
      * @param QtiComponent $component
      */
-    protected function markAsExplored(QtiComponent $component)
+    protected function markAsExplored(QtiComponent $component): void
     {
         $marker = $this->getExplorationMarker();
         $marker[] = $component;
@@ -556,7 +557,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component
      * @return mixed
      */
-    protected function createFinalRendering(QtiComponent $component)
+    protected function createFinalRendering(QtiComponent $component): DOMDocument
     {
         $dom = $this->getDocument();
         if (($last = $this->getLastRendering()) !== null) {
@@ -615,7 +616,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param string $base the value of xml:base for the node to be processed.
      * @throws RenderingException If an error occurs while processing the node.
      */
-    protected function processNode($base = '')
+    protected function processNode($base = ''): void
     {
         $component = $this->getExploredComponent();
         $renderer = $this->getRenderer($component);
@@ -651,7 +652,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component A Component you want to know if it has to be ignored or not.
      * @return bool
      */
-    protected function mustIgnoreComponent(QtiComponent $component)
+    protected function mustIgnoreComponent(QtiComponent $component): bool
     {
         // In the list of QTI class names to be ignored?
         if (in_array($component->getQtiClassName(), $this->getIgnoreClasses())) {
@@ -688,7 +689,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component A TemplateElement or FeedbackElement or Choice element.
      * @return bool
      */
-    protected function identifierMatches(QtiComponent $component)
+    protected function identifierMatches(QtiComponent $component): bool
     {
         $variableIdentifier = ($component instanceof FeedbackElement || $component instanceof ModalFeedback) ? $component->getOutcomeIdentifier() : $component->getTemplateIdentifier();
         $identifier = new QtiIdentifier($component->getIdentifier());
@@ -713,7 +714,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param array $renderers
      */
-    protected function setRenderers(array $renderers)
+    protected function setRenderers(array $renderers): void
     {
         $this->renderers = $renderers;
     }
@@ -723,7 +724,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return array
      */
-    protected function getRenderers()
+    protected function getRenderers(): ?array
     {
         return $this->renderers;
     }
@@ -734,7 +735,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param array $ignoreClasses
      */
-    protected function setIgnoreClasses(array $ignoreClasses)
+    protected function setIgnoreClasses(array $ignoreClasses): void
     {
         $this->ignoreClasses = $ignoreClasses;
     }
@@ -742,7 +743,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     /**
      * @return array
      */
-    public function getIgnoreClasses()
+    public function getIgnoreClasses(): array
     {
         return $this->ignoreClasses;
     }
@@ -750,7 +751,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     /**
      * @param $classes
      */
-    public function ignoreQtiClasses($classes)
+    public function ignoreQtiClasses($classes): void
     {
         if (is_string($classes)) {
             $classes = [$classes];
@@ -769,7 +770,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param AbstractMarkupRenderer $renderer An AbstractRenderer object.
      * @param string $ns
      */
-    public function registerRenderer($qtiClassName, AbstractMarkupRenderer $renderer, $ns = 'qtism')
+    public function registerRenderer($qtiClassName, AbstractMarkupRenderer $renderer, $ns = 'qtism'): void
     {
         $renderer->setRenderingEngine($this);
         $renderers = $this->getRenderers();
@@ -785,7 +786,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @return AbstractMarkupRenderer The AbstractRenderer implementation to render $component.
      * @throws RenderingException If no implementation of AbstractRenderer is registered for $component.
      */
-    public function getRenderer(QtiComponent $component)
+    public function getRenderer(QtiComponent $component): AbstractMarkupRenderer
     {
         $renderers = $this->getRenderers();
         $className = $component->getQtiClassName();
@@ -806,7 +807,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return SplStack
      */
-    protected function getRenderingStack()
+    protected function getRenderingStack(): SplStack
     {
         return $this->renderingStack;
     }
@@ -817,7 +818,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param SplStack $renderingStack
      */
-    protected function setRenderingStack(SplStack $renderingStack)
+    protected function setRenderingStack(SplStack $renderingStack): void
     {
         $this->renderingStack = $renderingStack;
     }
@@ -828,7 +829,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param SplStack $xmlBaseStack
      */
-    protected function setXmlBaseStack(SplStack $xmlBaseStack)
+    protected function setXmlBaseStack(SplStack $xmlBaseStack): void
     {
         $this->xmlBaseStack = $xmlBaseStack;
     }
@@ -839,7 +840,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return SplStack
      */
-    protected function getXmlBaseStack()
+    protected function getXmlBaseStack(): SplStack
     {
         return $this->xmlBaseStack;
     }
@@ -851,7 +852,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component The $component from which the rendering was made.
      * @param mixed $rendering A component rendered in another format.
      */
-    public function storeRendering(QtiComponent $component, $rendering)
+    public function storeRendering(QtiComponent $component, $rendering): void
     {
         $this->getRenderingStack()->push([$component, $rendering]);
     }
@@ -862,7 +863,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component A QtiComponent object to be rendered.
      * @return array
      */
-    public function getChildrenRenderings(QtiComponent $component)
+    public function getChildrenRenderings(QtiComponent $component): array
     {
         $returnValue = [];
 
@@ -887,7 +888,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * to be ready for reuse i.e. render a new component. However,
      * configuration such as policies are kept intact.
      */
-    public function reset()
+    public function reset(): void
     {
         $this->choiceCounter = 0;
         $this->setExploration(new SplStack());
@@ -906,7 +907,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param string $substitution If set, the registered xml:base value will be the value of the argument instead of the currently explored component's xml:base value.
      */
-    protected function registerXmlBase($substitution = '')
+    protected function registerXmlBase($substitution = ''): void
     {
         $c = $this->getExploredComponent();
         $toPush = $substitution;
@@ -923,7 +924,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return string A URL or the empty string ('') if no base URL could be resolved.
      */
-    protected function resolveXmlBase()
+    protected function resolveXmlBase(): string
     {
         $stack = $this->getXmlBaseStack();
         $stack->rewind();
@@ -959,7 +960,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component
      * @return bool
      */
-    protected function mustTemplateFeedbackComponent(QtiComponent $component)
+    protected function mustTemplateFeedbackComponent(QtiComponent $component): bool
     {
         return (self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === self::TEMPLATE_ORIENTED);
     }
@@ -974,7 +975,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component
      * @return bool
      */
-    protected function mustTemplateRubricBlockComponent(QtiComponent $component)
+    protected function mustTemplateRubricBlockComponent(QtiComponent $component): bool
     {
         return (self::isRubricBlock($component) && $this->getViewPolicy() === self::TEMPLATE_ORIENTED);
     }
@@ -989,7 +990,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component
      * @return bool
      */
-    protected function mustTemplateChoiceComponent(QtiComponent $component)
+    protected function mustTemplateChoiceComponent(QtiComponent $component): bool
     {
         return self::isChoice($component) && $this->getChoiceShowHidePolicy() === self::TEMPLATE_ORIENTED && $component->hasTemplateIdentifier();
     }
@@ -998,7 +999,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component
      * @return bool
      */
-    protected function mustIncludeChoiceComponent(QtiComponent $component)
+    protected function mustIncludeChoiceComponent(QtiComponent $component): bool
     {
         $shufflables = [
             'choiceInteraction',
@@ -1025,7 +1026,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component A QtiComponent object.
      * @return bool
      */
-    protected static function isFeedback(QtiComponent $component)
+    protected static function isFeedback(QtiComponent $component): bool
     {
         return ($component instanceof FeedbackElement || $component instanceof ModalFeedback);
     }
@@ -1036,7 +1037,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component A QtiComponent object.
      * @return bool
      */
-    protected static function isChoice(QtiComponent $component)
+    protected static function isChoice(QtiComponent $component): bool
     {
         return $component instanceof Choice;
     }
@@ -1048,7 +1049,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component A QtiComponent object.
      * @return bool
      */
-    protected static function isRubricBlock(QtiComponent $component)
+    protected static function isRubricBlock(QtiComponent $component): bool
     {
         return ($component instanceof RubricBlock);
     }
@@ -1060,7 +1061,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param DOMDocumentFragment $rendering The rendering corresponding to $component.
      * @throws RenderingException If $component is not an instance of FeedbackElement nor ModalFeedback.
      */
-    protected function templateFeedbackComponent(QtiComponent $component, DOMDocumentFragment $rendering)
+    protected function templateFeedbackComponent(QtiComponent $component, DOMDocumentFragment $rendering): void
     {
         if (self::isFeedback($component) === false) {
             $msg = 'Cannot template a component which is not an instance of FeedbackElement nor ModalFeedback.';
@@ -1094,7 +1095,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param DOMDocumentFragment $rendering The rendering corresponding to $component.
      * @throws RenderingException If $component is not an instance of RubricBlock.
      */
-    protected function templateRubricBlockComponent(QtiComponent $component, DOMDocumentFragment $rendering)
+    protected function templateRubricBlockComponent(QtiComponent $component, DOMDocumentFragment $rendering): void
     {
         if (self::isRubricBlock($component) === false) {
             $msg = 'Cannot template a component which is not an instance of RubricBlock.';
@@ -1127,7 +1128,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param DOMDocumentFragment $rendering The rendering corresponding to $component
      * @throws RenderingException If $component is not an instance of Choice.
      */
-    protected function templateChoiceComponent(QtiComponent $component, DOMDocumentFragment $rendering)
+    protected function templateChoiceComponent(QtiComponent $component, DOMDocumentFragment $rendering): void
     {
         if (self::isChoice($component) === false) {
             $msg = 'Cannot template a component which is not an instance of Choice.';
@@ -1158,7 +1159,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param QtiComponent $component
      * @param DOMDocumentFragment $rendering
      */
-    protected function includeChoiceComponent(QtiComponent $component, DOMDocumentFragment $rendering)
+    protected function includeChoiceComponent(QtiComponent $component, DOMDocumentFragment $rendering): void
     {
         $choiceIndex = $this->choiceCounter;
         $choiceIdentifier = PhpUtils::doubleQuotedPhpString($component->getIdentifier());
@@ -1181,7 +1182,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param int $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10271 The qti:choice class.
      */
-    public function setChoiceShowHidePolicy($policy)
+    public function setChoiceShowHidePolicy($policy): void
     {
         $this->choiceShowHidePolicy = $policy;
     }
@@ -1196,7 +1197,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @return int AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10271 The qti:choice class.
      */
-    public function getChoiceShowHidePolicy()
+    public function getChoiceShowHidePolicy(): int
     {
         return $this->choiceShowHidePolicy;
     }
@@ -1210,7 +1211,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param int $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE or AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED.
      */
-    public function setFeedbackShowHidePolicy($policy)
+    public function setFeedbackShowHidePolicy($policy): void
     {
         $this->feedbackShowHidePolicy = $policy;
     }
@@ -1223,7 +1224,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return int AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      */
-    public function getFeedbackShowHidePolicy()
+    public function getFeedbackShowHidePolicy(): int
     {
         return $this->feedbackShowHidePolicy;
     }
@@ -1237,7 +1238,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param int $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      */
-    public function setViewPolicy($policy)
+    public function setViewPolicy($policy): void
     {
         $this->viewPolicy = $policy;
     }
@@ -1251,7 +1252,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return int AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE.
      */
-    public function getViewPolicy()
+    public function getViewPolicy(): int
     {
         return $this->viewPolicy;
     }
@@ -1265,7 +1266,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param int $printedVariablePolicy AbstractMarkup
      */
-    public function setPrintedVariablePolicy($printedVariablePolicy)
+    public function setPrintedVariablePolicy($printedVariablePolicy): void
     {
         $this->printedVariablePolicy = $printedVariablePolicy;
     }
@@ -1279,7 +1280,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return int
      */
-    public function getPrintedVariablePolicy()
+    public function getPrintedVariablePolicy(): int
     {
         return $this->printedVariablePolicy;
     }
@@ -1287,7 +1288,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     /**
      * @param $shufflingPolicy
      */
-    public function setShufflingPolicy($shufflingPolicy)
+    public function setShufflingPolicy($shufflingPolicy): void
     {
         $this->shufflingPolicy = $shufflingPolicy;
     }
@@ -1295,7 +1296,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     /**
      * @return int
      */
-    public function getShufflingPolicy()
+    public function getShufflingPolicy(): int
     {
         return $this->shufflingPolicy;
     }
@@ -1310,7 +1311,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @param int $xmlBasePolicy AbstractMarkupRenderingEngine::XMLBASE_IGNORE, AbstractMarkupRenderingEngine::XMLBASE_KEEP or AbstractMarkupRenderingEngine::XMLBASE_PROCESS.
      * @see http://www.w3.org/TR/xmlbase/#syntax W3C XML Base (Second Edition)
      */
-    public function setXmlBasePolicy($xmlBasePolicy)
+    public function setXmlBasePolicy($xmlBasePolicy): void
     {
         $this->xmlBasePolicy = $xmlBasePolicy;
     }
@@ -1325,7 +1326,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @return int AbstractMarkupRenderingEngine::XMLBASE_IGNORE, AbstractMarkupRenderingEngine::XMLBASE_KEEP or AbstractMarkupRenderingEngine::XMLBASE_PROCESS.
      * @see http://www.w3.org/TR/xmlbase/#syntax W3C XML Base (Second Edition)
      */
-    public function getXmlBasePolicy()
+    public function getXmlBasePolicy(): int
     {
         return $this->xmlBasePolicy;
     }
@@ -1338,7 +1339,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param int $stylesheetPolicy AbstractMarkupRenderingEngine::STYLESHEET_INLINE or AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE.
      */
-    public function setStylesheetPolicy($stylesheetPolicy)
+    public function setStylesheetPolicy($stylesheetPolicy): void
     {
         $this->stylesheetPolicy = $stylesheetPolicy;
     }
@@ -1351,7 +1352,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return int AbstractMarkupRenderingEngine::STYLESHEET_INLINE or AbstractMarkupRenderingEngine::STYLESHEET_SEPARATE.
      */
-    public function getStylesheetPolicy()
+    public function getStylesheetPolicy(): int
     {
         return $this->stylesheetPolicy;
     }
@@ -1364,7 +1365,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param int $cssClassPolicy
      */
-    public function setCssClassPolicy($cssClassPolicy)
+    public function setCssClassPolicy($cssClassPolicy): void
     {
         $this->cssClassPolicy = $cssClassPolicy;
     }
@@ -1377,7 +1378,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return int
      */
-    public function getCssClassPolicy()
+    public function getCssClassPolicy(): int
     {
         return $this->cssClassPolicy;
     }
@@ -1388,7 +1389,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param string $rootBase A URL.
      */
-    public function setRootBase($rootBase)
+    public function setRootBase($rootBase): void
     {
         $this->rootBase = $rootBase;
     }
@@ -1399,7 +1400,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return string A URL.
      */
-    public function getRootBase()
+    public function getRootBase(): string
     {
         return $this->rootBase;
     }
@@ -1410,7 +1411,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param string $stateName A variable name (without the leading dollar sign ('$')).
      */
-    public function setStateName($stateName)
+    public function setStateName($stateName): void
     {
         $this->stateName = $stateName;
     }
@@ -1421,7 +1422,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return string A variable name (without the leading dollar sign('$')).
      */
-    public function getStateName()
+    public function getStateName(): string
     {
         return $this->stateName;
     }
@@ -1432,7 +1433,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param string $viewsName A variable name (without the leading dollar sign ('$')).
      */
-    public function setViewsName($viewsName)
+    public function setViewsName($viewsName): void
     {
         $this->viewsName = $viewsName;
     }
@@ -1443,7 +1444,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return string A variable name (without the leading dollar sign ('$')).
      */
-    public function getViewsName()
+    public function getViewsName(): string
     {
         return $this->viewsName;
     }
@@ -1454,7 +1455,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return bool
      */
-    protected function hasRootBase()
+    protected function hasRootBase(): bool
     {
         return $this->getRootBase() !== '';
     }
@@ -1464,7 +1465,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param ViewCollection $views A collection of values from the View enumeration.
      */
-    public function setViews(ViewCollection $views)
+    public function setViews(ViewCollection $views): void
     {
         $this->views = $views;
     }
@@ -1474,7 +1475,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return ViewCollection A collection of values from the View enumeration.
      */
-    public function getViews()
+    public function getViews(): ViewCollection
     {
         return $this->views;
     }
@@ -1484,7 +1485,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param State $state A State object.
      */
-    public function setState(State $state)
+    public function setState(State $state): void
     {
         $this->state = $state;
     }
@@ -1494,7 +1495,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return State A State object.
      */
-    public function getState()
+    public function getState(): State
     {
         return $this->state;
     }
@@ -1506,7 +1507,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param DOMDocumentFragment $stylesheets A DOMDocumentFragment object.
      */
-    protected function setStylesheets(DOMDocumentFragment $stylesheets)
+    protected function setStylesheets(DOMDocumentFragment $stylesheets): void
     {
         $this->stylesheets = $stylesheets;
     }
@@ -1525,7 +1526,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * @return DOMDocumentFragment A DOMDocumentFragment object.
      * @see XhtmlRenderingEngine::getDocument() The method to get the owner document of the DOMDocument fragment.
      */
-    public function getStylesheets()
+    public function getStylesheets(): DOMDocumentFragment
     {
         return $this->stylesheets;
     }
@@ -1535,7 +1536,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param DOMDocument $document
      */
-    public function setDocument(DOMDocument $document)
+    public function setDocument(DOMDocument $document): void
     {
         $this->document = $document;
     }
@@ -1545,7 +1546,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @return DOMDocument
      */
-    public function getDocument()
+    public function getDocument(): DOMDocument
     {
         return $this->document;
     }

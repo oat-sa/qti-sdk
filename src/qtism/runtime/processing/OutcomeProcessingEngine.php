@@ -83,7 +83,7 @@ class OutcomeProcessingEngine extends AbstractEngine
      * @param QtiComponent $outcomeProcessing An OutcomeProcessing object.
      * @throws InvalidArgumentException If $outcomeProcessing is not An OutcomeProcessing object.
      */
-    public function setComponent(QtiComponent $outcomeProcessing)
+    public function setComponent(QtiComponent $outcomeProcessing): void
     {
         if ($outcomeProcessing instanceof OutcomeProcessing) {
             parent::setComponent($outcomeProcessing);
@@ -98,7 +98,7 @@ class OutcomeProcessingEngine extends AbstractEngine
      *
      * @param RuleProcessorFactory $ruleProcessorFactory A RuleProcessorFactory object.
      */
-    public function setRuleProcessorFactory(RuleProcessorFactory $ruleProcessorFactory)
+    public function setRuleProcessorFactory(RuleProcessorFactory $ruleProcessorFactory): void
     {
         $this->ruleProcessorFactory = $ruleProcessorFactory;
     }
@@ -108,7 +108,7 @@ class OutcomeProcessingEngine extends AbstractEngine
      *
      * @return RuleProcessorFactory A RuleProcessorFactory object.
      */
-    public function getRuleProcessorFactory()
+    public function getRuleProcessorFactory(): RuleProcessorFactory
     {
         return $this->ruleProcessorFactory;
     }
@@ -123,7 +123,7 @@ class OutcomeProcessingEngine extends AbstractEngine
      *
      * @throws ProcessingException If an error occurs while executing the OutcomeProcessing.
      */
-    public function process()
+    public function process(): void
     {
         $context = $this->getContext();
 

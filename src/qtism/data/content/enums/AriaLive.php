@@ -35,17 +35,17 @@ class AriaLive implements Enumeration
     /**
      * @var int
      */
-    const OFF = 0;
+    public const OFF = 0;
 
     /**
      * @var int
      */
-    const POLITE = 1;
+    public const POLITE = 1;
 
     /**
      * @var int
      */
-    const ASSERTIVE = 2;
+    public const ASSERTIVE = 2;
 
     /**
      * As Array
@@ -55,7 +55,7 @@ class AriaLive implements Enumeration
      *
      * @return int[]
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'OFF' => self::OFF,

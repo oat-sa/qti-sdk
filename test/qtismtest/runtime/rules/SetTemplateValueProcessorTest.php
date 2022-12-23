@@ -18,7 +18,7 @@ use qtism\common\datatypes\QtiFloat;
  */
 class SetTemplateValueProcessorTest extends QtiSmTestCase
 {
-    public function testSetTemplateValueSimple()
+    public function testSetTemplateValueSimple(): void
     {
         $rule = $this->createComponentFromXml('
 			<setTemplateValue identifier="TPL1">
@@ -38,7 +38,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $this::assertEquals(4.3, $state['TPL1']->getValue());
     }
 
-    public function testSetTemplateValueJugglingFromIntToFloat()
+    public function testSetTemplateValueJugglingFromIntToFloat(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setTemplateValue identifier="TPL1">
@@ -56,7 +56,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $this::assertEquals(4.0, $state['TPL1']->getValue());
     }
 
-    public function testSetTemplateValueJugglingFromFloatToInt()
+    public function testSetTemplateValueJugglingFromFloatToInt(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setTemplateValue identifier="TPL1">
@@ -74,7 +74,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $this::assertEquals(4, $state['TPL1']->getValue());
     }
 
-    public function testSetTemplateValueWrongJugglingScalar()
+    public function testSetTemplateValueWrongJugglingScalar(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setTemplateValue identifier="TPL1">
@@ -91,7 +91,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testSetTemplateValueWrongJugglingMultipleOne()
+    public function testSetTemplateValueWrongJugglingMultipleOne(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setTemplateValue identifier="TPL1">
@@ -108,7 +108,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $processor->process();
     }
 
-    public function testSetTemplateValueJugglingMultiple()
+    public function testSetTemplateValueJugglingMultiple(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setTemplateValue identifier="TPL1">
@@ -131,7 +131,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $this::assertEquals(1337, $state['TPL1']->getValue());
     }
 
-    public function testSetTemplateValueJugglingOrdered()
+    public function testSetTemplateValueJugglingOrdered(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setTemplateValue identifier="TPL1">
@@ -154,7 +154,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $this::assertEquals(1337, $state['TPL1']->getValue());
     }
 
-    public function testSetOutcomeValueModerate()
+    public function testSetOutcomeValueModerate(): void
     {
         $rule = $this->createComponentFromXml('
 			<setTemplateValue identifier="myBool">
@@ -180,7 +180,7 @@ class SetTemplateValueProcessorTest extends QtiSmTestCase
         $this::assertTrue($state['myBool']->getValue());
     }
 
-    public function testSetOutcomeValueNoVariable()
+    public function testSetOutcomeValueNoVariable(): void
     {
         $rule = $this->createComponentFromXml('
 	        <setTemplateValue identifier="TPLXXXX">

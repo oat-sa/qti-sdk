@@ -47,6 +47,7 @@ class ProductProcessor extends OperatorProcessor
      * @return QtiInteger|QtiFloat
      * @throws OperatorProcessingException If invalid operands are given.
      */
+    #[\ReturnTypeWillChange]
     public function process()
     {
         $operands = $this->getOperands();
@@ -79,7 +80,7 @@ class ProductProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Product::class;
     }

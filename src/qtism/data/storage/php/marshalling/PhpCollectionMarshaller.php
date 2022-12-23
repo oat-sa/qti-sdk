@@ -40,7 +40,7 @@ class PhpCollectionMarshaller extends PhpMarshaller
      *
      * @throws PhpMarshallingException If something wrong happens during marshalling.
      */
-    public function marshall()
+    public function marshall(): void
     {
         $collection = $this->getToMarshall();
         $ctx = $this->getContext();
@@ -83,7 +83,7 @@ class PhpCollectionMarshaller extends PhpMarshaller
      * @param mixed $toMarshall
      * @return bool
      */
-    protected function isMarshallable($toMarshall)
+    protected function isMarshallable($toMarshall): bool
     {
         return $toMarshall instanceof AbstractCollection;
     }

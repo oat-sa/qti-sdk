@@ -36,7 +36,7 @@ class AssessmentSectionCollection extends SectionPartCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a AssessmentSection object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof AssessmentSection) {
             $msg = "AssessmentSectionCollection class only accept AssessmentSection objects, '" . gettype($value) . "' given.";

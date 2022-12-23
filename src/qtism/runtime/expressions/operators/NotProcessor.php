@@ -44,7 +44,7 @@ class NotProcessor extends OperatorProcessor
      * @return QtiBoolean
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -70,7 +70,7 @@ class NotProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return NotOperator::class;
     }

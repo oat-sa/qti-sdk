@@ -74,7 +74,7 @@ class OutcomeIf extends QtiComponent
      *
      * @return Expression An expression.
      */
-    public function getExpression()
+    public function getExpression(): Expression
     {
         return $this->expression;
     }
@@ -84,7 +84,7 @@ class OutcomeIf extends QtiComponent
      *
      * @param Expression $expression An expression.
      */
-    public function setExpression(Expression $expression)
+    public function setExpression(Expression $expression): void
     {
         $this->expression = $expression;
     }
@@ -96,7 +96,7 @@ class OutcomeIf extends QtiComponent
      * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
      * @throws InvalidArgumentException If $outcomeRules is an empty collection.
      */
-    public function setOutcomeRules(OutcomeRuleCollection $outcomeRules)
+    public function setOutcomeRules(OutcomeRuleCollection $outcomeRules): void
     {
         if (count($outcomeRules) > 0) {
             $this->outcomeRules = $outcomeRules;
@@ -112,7 +112,7 @@ class OutcomeIf extends QtiComponent
      *
      * @return OutcomeRuleCollection A collection of Outcomeule objects.
      */
-    public function getOutcomeRules()
+    public function getOutcomeRules(): OutcomeRuleCollection
     {
         return $this->outcomeRules;
     }
@@ -120,7 +120,7 @@ class OutcomeIf extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'outcomeIf';
     }
@@ -128,7 +128,7 @@ class OutcomeIf extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = array_merge(
             [$this->getExpression()],

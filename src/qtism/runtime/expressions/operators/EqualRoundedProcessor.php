@@ -62,7 +62,7 @@ class EqualRoundedProcessor extends OperatorProcessor
      * @return QtiBoolean|null A boolean with a value of true if the two expressions are numerically equal after rounding and false if they are not. If either sub-expression is NULL, the operator results in NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -124,7 +124,7 @@ class EqualRoundedProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return EqualRounded::class;
     }

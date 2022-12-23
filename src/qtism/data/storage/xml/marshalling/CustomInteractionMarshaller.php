@@ -39,7 +39,7 @@ class CustomInteractionMarshaller extends Marshaller
      * @param QtiComponent $component A CustomInteraction object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
@@ -60,10 +60,10 @@ class CustomInteractionMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI customInteraction element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A CustomInteraction object.
+     * @return CustomInteraction A CustomInteraction object.
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): CustomInteraction
     {
         if (($responseIdentifier = $this->getDOMElementAttributeAs($element, 'responseIdentifier')) !== null) {
             $frag = $element->ownerDocument->createDocumentFragment();
@@ -81,7 +81,7 @@ class CustomInteractionMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'customInteraction';
     }

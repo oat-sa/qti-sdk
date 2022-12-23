@@ -60,7 +60,7 @@ class RepeatProcessor extends OperatorProcessor
      * @return OrderedContainer An ordered container filled sequentially by evaluating each sub-expressions, repeated a 'numberRepeats' of times. NULL is returned if all sub-expressions are NULL or numberRepeats < 1.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?OrderedContainer
     {
         $operands = $this->getOperands();
 
@@ -138,7 +138,7 @@ class RepeatProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Repeat::class;
     }

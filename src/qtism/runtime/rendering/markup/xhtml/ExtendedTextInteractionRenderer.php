@@ -68,21 +68,24 @@ class ExtendedTextInteractionRenderer extends StringInteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendAttributes(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendAttributes($fragment, $component, $base);
         $this->additionalClass('qti-blockInteraction');
         $this->additionalClass('qti-extendedTextInteraction');
 
-        $fragment->firstChild->setAttribute('data-min-strings', $component->getMinStrings());
-        $fragment->firstChild->setAttribute('data-format', TextFormat::getNameByConstant($component->getFormat()));
+        $fragment->firstChild->setAttribute('data-min-strings', (string)$component->getMinStrings());
+        $fragment->firstChild->setAttribute(
+            'data-format',
+            (string)TextFormat::getNameByConstant($component->getFormat())
+        );
 
         if ($component->hasMaxStrings() === true) {
-            $fragment->firstChild->setAttribute('data-max-strings', $component->getMaxStrings());
+            $fragment->firstChild->setAttribute('data-max-strings', (string)$component->getMaxStrings());
         }
 
         if ($component->hasExpectedLines() === true) {
-            $fragment->firstChild->setAttribute('data-expected-lines', $component->getExpectedLines());
+            $fragment->firstChild->setAttribute('data-expected-lines', (string)$component->getExpectedLines());
         }
     }
 
@@ -91,7 +94,7 @@ class ExtendedTextInteractionRenderer extends StringInteractionRenderer
      * @param QtiComponent $component
      * @param string $base
      */
-    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = '')
+    protected function appendChildren(DOMDocumentFragment $fragment, QtiComponent $component, $base = ''): void
     {
         parent::appendChildren($fragment, $component, $base);
 

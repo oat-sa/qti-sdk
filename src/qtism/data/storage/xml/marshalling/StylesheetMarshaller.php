@@ -38,7 +38,7 @@ class StylesheetMarshaller extends Marshaller
      * @param QtiComponent $component A Stylesheet object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -56,11 +56,11 @@ class StylesheetMarshaller extends Marshaller
     /**
      * Unmarshall a DOMElement object corresponding to a QTI stylesheet element.
      *
-     * @param DOMElement $element A DOMElement object.
+     * @param Stylesheet $element A DOMElement object.
      * @return QtiComponent A Stylesheet object.
      * @throws UnmarshallingException If the mandatory attribute 'href' is missing from $element.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): Stylesheet
     {
         // href is a mandatory value, retrieve it first.
         if (($value = $this->getDOMElementAttributeAs($element, 'href', 'string')) !== null) {
@@ -88,7 +88,7 @@ class StylesheetMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'stylesheet';
     }

@@ -38,7 +38,7 @@ use qtismtest\QtiSmTestCase;
  */
 class StringToNumberTest extends QtiSmTestCase {
 	
-    public function testSimpleOne() {
+    public function testSimpleOne(): void {
         $baseValue = new BaseValue(BaseType::STRING, '13,37');
         $customOperator = new CustomOperator(
             new ExpressionCollection(array($baseValue)),
@@ -53,7 +53,7 @@ class StringToNumberTest extends QtiSmTestCase {
         $this::assertEquals($result->getValue(), (float)1337);
     }
     
-    public function testSimpleTwo() {
+    public function testSimpleTwo(): void {
         $baseValue = new BaseValue(BaseType::STRING, '13.37');
         $customOperator = new CustomOperator(
             new ExpressionCollection(array($baseValue)),
@@ -68,7 +68,7 @@ class StringToNumberTest extends QtiSmTestCase {
         $this::assertEquals(round($result->getValue(), 2), round(13.37, 2));
     }
     
-    public function testReturnsNull() {
+    public function testReturnsNull(): void {
         $baseValue = new BaseValue(BaseType::BOOLEAN, false);
         $customOperator = new CustomOperator(
             new ExpressionCollection(array($baseValue)),

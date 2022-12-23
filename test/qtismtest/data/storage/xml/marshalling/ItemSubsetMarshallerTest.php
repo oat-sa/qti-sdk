@@ -13,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class ItemSubsetMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallNoCategories()
+    public function testMarshallNoCategories(): void
     {
         $sectionIdentifier = 'mySection1';
 
@@ -27,7 +27,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $this::assertEquals($sectionIdentifier, $element->getAttribute('sectionIdentifier'));
     }
 
-    public function testMarshallIncludeCategories()
+    public function testMarshallIncludeCategories(): void
     {
         $sectionIdentifier = 'mySection1';
         $includeCategories = new IdentifierCollection(['cat1', 'cat2']);
@@ -44,7 +44,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $this::assertEquals(implode("\x20", $includeCategories->getArrayCopy()), $element->getAttribute('includeCategory'));
     }
 
-    public function testMarshallIncludeExcludeCategories()
+    public function testMarshallIncludeExcludeCategories(): void
     {
         $sectionIdentifier = 'mySection1';
         $includeCategories = new IdentifierCollection(['cat1', 'cat2']);
@@ -64,7 +64,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $this::assertEquals(implode("\x20", $excludeCategories->getArrayCopy()), $element->getAttribute('excludeCategory'));
     }
 
-    public function testUnmarshallNoCategories()
+    public function testUnmarshallNoCategories(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<itemSubset xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1"/>');
@@ -77,7 +77,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $this::assertEquals('mySection1', $component->getSectionIdentifier());
     }
 
-    public function testUnmarshallIncludeCategories()
+    public function testUnmarshallIncludeCategories(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<itemSubset xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1" includeCategory="cat1 cat2"/>');
@@ -91,7 +91,7 @@ class ItemSubsetMarshallerTest extends QtiSmTestCase
         $this::assertEquals('cat1 cat2', implode("\x20", $component->getIncludeCategories()->getArrayCopy()));
     }
 
-    public function testUnmarshallIncludeExcludeCategories()
+    public function testUnmarshallIncludeExcludeCategories(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<itemSubset xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" sectionIdentifier="mySection1" includeCategory="cat1 cat2" excludeCategory="cat3"/>');

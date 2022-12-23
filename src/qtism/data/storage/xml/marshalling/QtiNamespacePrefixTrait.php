@@ -18,8 +18,6 @@
  * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
-declare(strict_types=1);
-
 namespace qtism\data\storage\xml\marshalling;
 
 use qtism\data\QtiComponent;
@@ -33,7 +31,7 @@ trait QtiNamespacePrefixTrait
     /**
      * @return string
      */
-    abstract public function getVersion();
+    abstract public function getVersion(): string;
 
     /**
      * @return DOMElement|false

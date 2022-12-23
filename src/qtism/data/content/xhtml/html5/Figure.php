@@ -18,14 +18,13 @@
  * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
-declare(strict_types=1);
-
 namespace qtism\data\content\xhtml\html5;
 
 use qtism\data\content\FlowCollection;
 use qtism\data\content\FlowStatic;
 use qtism\data\content\FlowTrait;
 use qtism\data\content\Inline;
+use qtism\data\QtiComponentCollection;
 
 class Figure extends Html5Element implements FlowStatic, Inline
 {
@@ -50,12 +49,12 @@ class Figure extends Html5Element implements FlowStatic, Inline
         $this->setContent(new FlowCollection());
     }
 
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return self::QTI_CLASS_NAME_FIGURE;
     }
 
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return $this->getContent();
     }
@@ -65,7 +64,7 @@ class Figure extends Html5Element implements FlowStatic, Inline
      *
      * @param FlowCollection $content A collection of Flow objects.
      */
-    public function setContent(FlowCollection $content)
+    public function setContent(FlowCollection $content): void
     {
         $this->content = $content;
     }
@@ -75,7 +74,7 @@ class Figure extends Html5Element implements FlowStatic, Inline
      *
      * @return FlowCollection
      */
-    public function getContent()
+    public function getContent(): FlowCollection
     {
         return $this->content;
     }

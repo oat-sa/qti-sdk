@@ -46,7 +46,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
      * @param string $field
      * @param string $mappingIndicator
      */
-    public function testPrintedVariable($expected, $identifier, State $state, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '=')
+    public function testPrintedVariable($expected, $identifier, State $state, $format = '', $powerForm = false, $base = 10, $index = -1, $delimiter = ';', $field = '', $mappingIndicator = '='): void
     {
         $printedVariable = new PrintedVariable($identifier);
         $printedVariable->setFormat($format);
@@ -65,7 +65,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function printedVariableProvider()
+    public function printedVariableProvider(): array
     {
         $state = new State();
 
@@ -294,7 +294,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
         ];
     }
 
-    public function testPrintedVariableWithUnknownValueType()
+    public function testPrintedVariableWithUnknownValueType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The PrintedVariableEngine class only accepts PrintedVariable objects to be executed.');
@@ -302,7 +302,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
         new PrintedVariableEngine(new TextRun('crash'));
     }
 
-    public function testPrintedVariableFromFile()
+    public function testPrintedVariableFromFile(): void
     {
         $tmp = tempnam('/tmp', 'qtism');
         $state = new State([new OutcomeVariable('file', Cardinality::SINGLE, BaseType::FILE, FileSystemFile::createFromData('test', $tmp, 'text/plain'))]);
@@ -329,7 +329,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
      * @param State $state
      */
 
-    public function testForNewProvider($expected, $id, State $state)
+    public function testForNewProvider($expected, $id, State $state): void
     {
         $printedVariable = new PrintedVariable($id);
         $printedVariable->setFormat('%d');
@@ -342,7 +342,7 @@ class PrintedVariableEngineTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function newProvider()
+    public function newProvider(): array
     {
         $state = new State();
 

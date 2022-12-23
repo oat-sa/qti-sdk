@@ -43,7 +43,7 @@ class RandomFloatProcessor extends ExpressionProcessor
      * @return QtiFloat A Random float value.
      * @throws ExpressionProcessingException
      */
-    public function process()
+    public function process(): QtiFloat
     {
         $expr = $this->getExpression();
         $min = $expr->getMin();
@@ -70,7 +70,7 @@ class RandomFloatProcessor extends ExpressionProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return RandomFloat::class;
     }

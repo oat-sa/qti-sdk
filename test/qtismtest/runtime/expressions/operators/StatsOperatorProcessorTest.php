@@ -31,7 +31,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param float|null $expected
      * @throws MarshallerNotFoundException
      */
-    public function testMean(Container $container = null, $expected)
+    public function testMean(Container $container = null, $expected): void
     {
         $expression = $this->createFakeExpression(Statistics::MEAN);
         $operands = new OperandsCollection([$container]);
@@ -46,7 +46,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param float|null $expected
      * @throws MarshallerNotFoundException
      */
-    public function testSampleVariance(Container $container = null, $expected)
+    public function testSampleVariance(Container $container = null, $expected): void
     {
         $expression = $this->createFakeExpression(Statistics::SAMPLE_VARIANCE);
         $operands = new OperandsCollection([$container]);
@@ -61,7 +61,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param float|null $expected
      * @throws MarshallerNotFoundException
      */
-    public function testSampleSD(Container $container = null, $expected)
+    public function testSampleSD(Container $container = null, $expected): void
     {
         $expression = $this->createFakeExpression(Statistics::SAMPLE_SD);
         $operands = new OperandsCollection([$container]);
@@ -76,7 +76,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param float|null $expected
      * @throws MarshallerNotFoundException
      */
-    public function testPopVariance(Container $container = null, $expected)
+    public function testPopVariance(Container $container = null, $expected): void
     {
         $expression = $this->createFakeExpression(Statistics::POP_VARIANCE);
         $operands = new OperandsCollection([$container]);
@@ -91,7 +91,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param float|null $expected
      * @throws MarshallerNotFoundException
      */
-    public function testPopSD(Container $container = null, $expected)
+    public function testPopSD(Container $container = null, $expected): void
     {
         $expression = $this->createFakeExpression(Statistics::POP_SD);
         $operands = new OperandsCollection([$container]);
@@ -104,7 +104,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param array $operands
      * @throws MarshallerNotFoundException
      */
-    public function testWrongCardinality(array $operands)
+    public function testWrongCardinality(array $operands): void
     {
         $expression = $this->createFakeExpression(Statistics::MEAN);
         $operands = new OperandsCollection($operands);
@@ -125,7 +125,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param array $operands
      * @throws MarshallerNotFoundException
      */
-    public function testWrongBaseType(array $operands)
+    public function testWrongBaseType(array $operands): void
     {
         $expression = $this->createFakeExpression(Statistics::MEAN);
         $operands = new OperandsCollection($operands);
@@ -140,7 +140,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         }
     }
 
-    public function testNotEnoughOperands()
+    public function testNotEnoughOperands(): void
     {
         $expression = $this->createFakeExpression(Statistics::MEAN);
         $operands = new OperandsCollection();
@@ -148,7 +148,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
         $processor = new StatsOperatorProcessor($expression, $operands);
     }
 
-    public function testTooMuchOperands()
+    public function testTooMuchOperands(): void
     {
         $expression = $this->createFakeExpression(Statistics::MEAN);
         $operands = new OperandsCollection([new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]), new MultipleContainer(BaseType::FLOAT, [new QtiFloat(10.0)])]);
@@ -160,7 +160,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param $expected
      * @param $value
      */
-    protected function check($expected, $value)
+    protected function check($expected, $value): void
     {
         if ($expected === null) {
             $this::assertNull($value);
@@ -173,7 +173,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function meanProvider()
+    public function meanProvider(): array
     {
         return [
             [new OrderedContainer(BaseType::FLOAT, [new QtiFloat(10.0), new QtiFloat(20.0), new QtiFloat(30.0)]), 20.0],
@@ -186,7 +186,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function sampleVarianceProvider()
+    public function sampleVarianceProvider(): array
     {
         return [
             [new OrderedContainer(BaseType::FLOAT, [new QtiFloat(10.0)]), null], // fails because containerSize <= 1
@@ -199,7 +199,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function sampleSDProvider()
+    public function sampleSDProvider(): array
     {
         return [
             [new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]), null], // containerSize <= 1
@@ -212,7 +212,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function popVarianceProvider()
+    public function popVarianceProvider(): array
     {
         return [
             [new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]), 0], // containerSize <= 1 but applied on a population -> OK.
@@ -224,7 +224,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function popSDProvider()
+    public function popSDProvider(): array
     {
         return [
             [new OrderedContainer(BaseType::INTEGER, [new QtiInteger(10)]), 0], // containerSize <= 1 but applied on population
@@ -236,7 +236,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function wrongCardinalityProvider()
+    public function wrongCardinalityProvider(): array
     {
         return [
             [[new QtiFloat(25.3)]],
@@ -248,7 +248,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
     /**
      * @return array
      */
-    public function wrongBaseTypeProvider()
+    public function wrongBaseTypeProvider(): array
     {
         return [
             [[new MultipleContainer(BaseType::POINT, [new QtiPoint(1, 2)])]],
@@ -261,7 +261,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression($name)
+    public function createFakeExpression($name): QtiComponent
     {
         $name = Statistics::getNameByConstant($name);
 

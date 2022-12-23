@@ -69,7 +69,7 @@ class BaseValue extends Expression
      *
      * @return int A value from the BaseType enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return $this->baseType;
     }
@@ -80,7 +80,7 @@ class BaseValue extends Expression
      * @param int $baseType A value from the BaseType enumeration.
      * @throws InvalidArgumentException If $baseType is not a value from the BaseType enumeration.
      */
-    public function setBaseType($baseType)
+    public function setBaseType($baseType): void
     {
         if (in_array($baseType, BaseType::asArray())) {
             $this->baseType = $baseType;
@@ -95,6 +95,7 @@ class BaseValue extends Expression
      *
      * @return mixed A value.
      */
+    #[\ReturnTypeWillChange]
     public function getValue()
     {
         return $this->value;
@@ -105,7 +106,7 @@ class BaseValue extends Expression
      *
      * @param mixed $value The actual value.
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = $value;
     }
@@ -113,7 +114,7 @@ class BaseValue extends Expression
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'baseValue';
     }
@@ -123,7 +124,7 @@ class BaseValue extends Expression
      *
      * @return bool
      */
-    public function isPure()
+    public function isPure(): bool
     {
         return true;
     }

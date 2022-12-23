@@ -36,33 +36,33 @@ class AssessmentTestPlace implements Enumeration
      *
      * @var int
      */
-    const TEST_PART = 1;
+    public const TEST_PART = 1;
 
     /**
      * Represents the concept of AssessmentSection in an AssessmentTest.
      *
      * @var int
      */
-    const ASSESSMENT_SECTION = 2;
+    public const ASSESSMENT_SECTION = 2;
 
     /**
      * Represents the concept of AssessmentItem in an AssessmentTest.
      *
      * @var int
      */
-    const ASSESSMENT_ITEM = 4;
+    public const ASSESSMENT_ITEM = 4;
 
     /**
      * Represents the concept of AssessmentTest (in an AssessmentTest).
      *
      * @var int
      */
-    const ASSESSMENT_TEST = 8;
+    public const ASSESSMENT_TEST = 8;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'TEST_PART' => self::TEST_PART,
@@ -78,7 +78,7 @@ class AssessmentTestPlace implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'testpart':
                 return self::TEST_PART;
                 break;

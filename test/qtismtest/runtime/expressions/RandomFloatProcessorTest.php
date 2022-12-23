@@ -12,7 +12,7 @@ use qtism\runtime\expressions\ExpressionProcessingException;
  */
 class RandomFloatProcessorTest extends QtiSmTestCase
 {
-    public function testSimple()
+    public function testSimple(): void
     {
         $expression = $this->createComponentFromXml('<randomFloat max="100.34"/>');
         $processor = new RandomFloatProcessor($expression);
@@ -36,7 +36,7 @@ class RandomFloatProcessorTest extends QtiSmTestCase
         $this::assertLessThanOrEqual(2430.6666, $result->getValue());
     }
 
-    public function testMinGreaterThanMax()
+    public function testMinGreaterThanMax(): void
     {
         $expression = $this->createComponentFromXml('<randomFloat min="133.2" max="25.3"/>');
         $processor = new RandomFloatProcessor($expression);

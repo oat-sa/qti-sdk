@@ -18,7 +18,7 @@ use qtismtest\QtiSmTestCase;
  */
 class PendingResponseStoreTest extends QtiSmTestCase
 {
-    public function testPendingResponseStore()
+    public function testPendingResponseStore(): void
     {
         $itemRef1 = new AssessmentItemRef('Q01', './Q01.xml');
         $itemRef2 = new AssessmentItemRef('Q02', './Q02.xml');

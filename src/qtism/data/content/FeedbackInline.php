@@ -97,7 +97,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
      * @param string $outcomeIdentifier A QTI identifier.
      * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI identifier.
      */
-    public function setOutcomeIdentifier($outcomeIdentifier)
+    public function setOutcomeIdentifier($outcomeIdentifier): void
     {
         if (Format::isIdentifier($outcomeIdentifier, false) === true) {
             $this->outcomeIdentifier = $outcomeIdentifier;
@@ -112,7 +112,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
      *
      * @return string A QTI identifier.
      */
-    public function getOutcomeIdentifier()
+    public function getOutcomeIdentifier(): string
     {
         return $this->outcomeIdentifier;
     }
@@ -125,7 +125,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
      * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
-    public function setShowHide($showHide)
+    public function setShowHide($showHide): void
     {
         if (in_array($showHide, ShowHide::asArray())) {
             $this->showHide = $showHide;
@@ -140,7 +140,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
      *
      * @return int A value from the ShowHide enumeration.
      */
-    public function getShowHide()
+    public function getShowHide(): int
     {
         return $this->showHide;
     }
@@ -151,7 +151,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
      * @param string $identifier A QTI identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         if (Format::isIdentifier($identifier, false) === true) {
             $this->identifier = $identifier;
@@ -166,7 +166,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -174,7 +174,7 @@ class FeedbackInline extends SimpleInline implements FeedbackElement
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'feedbackInline';
     }

@@ -13,7 +13,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MappingTest extends QtiSmTestCase
 {
-    public function testCreateNoMapEntries()
+    public function testCreateNoMapEntries(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('A Mapping object must contain at least one MapEntry object, none given.');
@@ -25,7 +25,7 @@ class MappingTest extends QtiSmTestCase
         );
     }
 
-    public function testSetLowerBoundWrongType()
+    public function testSetLowerBoundWrongType(): void
     {
         $mapping = new Mapping(
             new MapEntryCollection(
@@ -41,7 +41,7 @@ class MappingTest extends QtiSmTestCase
         $mapping->setLowerBound(true);
     }
 
-    public function testSetUpperBoundWrongType()
+    public function testSetUpperBoundWrongType(): void
     {
         $mapping = new Mapping(
             new MapEntryCollection(
@@ -57,7 +57,7 @@ class MappingTest extends QtiSmTestCase
         $mapping->setUpperBound(true);
     }
 
-    public function testSetDefaultValueWrongType()
+    public function testSetDefaultValueWrongType(): void
     {
         $mapping = new Mapping(
             new MapEntryCollection(

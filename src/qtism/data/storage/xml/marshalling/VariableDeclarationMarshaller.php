@@ -43,7 +43,7 @@ class VariableDeclarationMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws MarshallingException
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -68,11 +68,11 @@ class VariableDeclarationMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI variableDeclaration element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A VariableDeclaration object.
+     * @return VariableDeclaration A VariableDeclaration object.
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): VariableDeclaration
     {
         try {
             // identifier is a mandatory value for the variableDeclaration element.
@@ -114,7 +114,7 @@ class VariableDeclarationMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'variableDeclaration';
     }

@@ -63,7 +63,7 @@ abstract class PhpMarshaller
      * @param mixed $toMarshall The value to be marshalled.
      * @throws InvalidArgumentException If the value $toMarshall cannot be managed by this implementation.
      */
-    public function setToMarshall($toMarshall)
+    public function setToMarshall($toMarshall): void
     {
         if ($this->isMarshallable($toMarshall) === false) {
             $msg = 'The value to marshall cannot be managed by this implementation.';
@@ -78,6 +78,7 @@ abstract class PhpMarshaller
      *
      * @return mixed A value to be marshalled.
      */
+    #[\ReturnTypeWillChange]
     protected function getToMarshall()
     {
         return $this->toMarshall;
@@ -88,7 +89,7 @@ abstract class PhpMarshaller
      *
      * @param PhpMarshallingContext $context A PhpMarshallingContext object.
      */
-    protected function setContext(PhpMarshallingContext $context)
+    protected function setContext(PhpMarshallingContext $context): void
     {
         $this->context = $context;
     }
@@ -98,7 +99,7 @@ abstract class PhpMarshaller
      *
      * @return PhpMarshallingContext A PhpMarshallingContext object.
      */
-    protected function getContext()
+    protected function getContext(): PhpMarshallingContext
     {
         return $this->context;
     }
@@ -119,5 +120,5 @@ abstract class PhpMarshaller
      * @param mixed $toMarshall The value the current PhpMarshaller implementation has to deal with.
      * @return bool Whether or not the value $toMarshall can be marshalled or not by this implementation.
      */
-    abstract protected function isMarshallable($toMarshall);
+    abstract protected function isMarshallable($toMarshall): bool;
 }

@@ -15,7 +15,7 @@ use qtismtest\QtiSmTestCase;
  */
 class PositionObjectStageMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $interactionObject = new ObjectElement('airplane.jpg', 'image/jpeg');
         $interactionObject->setHeight('16');
@@ -37,7 +37,7 @@ class PositionObjectStageMarshallerTest extends QtiSmTestCase
         );
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
             <positionObjectStage>

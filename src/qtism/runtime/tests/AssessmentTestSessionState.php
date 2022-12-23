@@ -31,20 +31,20 @@ use qtism\common\enums\Enumeration;
  */
 class AssessmentTestSessionState implements Enumeration
 {
-    const INITIAL = 0;
+    public const INITIAL = 0;
 
-    const INTERACTING = 1;
+    public const INTERACTING = 1;
 
-    const MODAL_FEEDBACK = 2;
+    public const MODAL_FEEDBACK = 2;
 
-    const SUSPENDED = 3;
+    public const SUSPENDED = 3;
 
-    const CLOSED = 4;
+    public const CLOSED = 4;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'INITIAL' => self::INITIAL,
@@ -61,7 +61,7 @@ class AssessmentTestSessionState implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'initial':
                 return self::INITIAL;
                 break;

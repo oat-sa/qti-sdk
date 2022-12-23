@@ -75,7 +75,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param FlowStaticCollection $content A collection of FlowStatic objects.
      */
-    public function setContent(FlowStaticCollection $content)
+    public function setContent(FlowStaticCollection $content): void
     {
         $this->content = $content;
     }
@@ -85,7 +85,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return FlowStaticCollection A collection of FlowStatic objects.
      */
-    public function getContent()
+    public function getContent(): FlowStaticCollection
     {
         return $this->content;
     }
@@ -96,7 +96,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
      * @param string $title The title of the InfoControl.
      * @throws InvalidArgumentException If $title is not a string.
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         if (is_string($title)) {
             $this->title = $title;
@@ -111,7 +111,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
      *
      * @return string The title of the InfoControl.
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -119,7 +119,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'infoControl';
     }
@@ -127,7 +127,7 @@ class InfoControl extends BodyElement implements BlockStatic, FlowStatic
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection($this->getContent()->getArrayCopy());
     }

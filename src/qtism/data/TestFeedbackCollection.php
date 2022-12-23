@@ -36,7 +36,7 @@ class TestFeedbackCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a TestFeedback object.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof TestFeedback) {
             $msg = "TestFeedbackCollection class only accept TestFeedback objects, '" . gettype($value) . "' given.";

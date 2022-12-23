@@ -20,7 +20,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
      * @param string $method
      * @throws XmlStorageException
      */
-    public function testNumberXNonRunning($method)
+    public function testNumberXNonRunning($method): void
     {
         // Test AssessmentTestSession::numberCorrect, numberIncorrect, numberResponded, numberSelected, numberPresented
         //  with a non running test session.
@@ -38,7 +38,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
     /**
      * @return array
      */
-    public function numberXMethodProvider()
+    public function numberXMethodProvider(): array
     {
         return [
             ['numberCorrect'],
@@ -49,7 +49,7 @@ class AssessmentTestSessionNumberXTest extends QtiSmAssessmentTestSessionTestCas
         ];
     }
 
-    public function testNumberXRunning()
+    public function testNumberXRunning(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/subset/number_x.xml');
         $session->beginTestSession();

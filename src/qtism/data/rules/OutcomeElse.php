@@ -56,7 +56,7 @@ class OutcomeElse extends QtiComponent
      *
      * @return OutcomeRuleCollection A collection of OutcomeRule objects.
      */
-    public function getOutcomeRules()
+    public function getOutcomeRules(): OutcomeRuleCollection
     {
         return $this->outcomeRules;
     }
@@ -67,7 +67,7 @@ class OutcomeElse extends QtiComponent
      * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
      * @throws InvalidArgumentException If $outcomeRules is an empty collection.
      */
-    public function setOutcomeRules(OutcomeRuleCollection $outcomeRules)
+    public function setOutcomeRules(OutcomeRuleCollection $outcomeRules): void
     {
         if (count($outcomeRules) <= 0) {
             $msg = 'An OutcomeElse object must be bound to at least one OutcomeRule object.';
@@ -80,7 +80,7 @@ class OutcomeElse extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'outcomeElse';
     }
@@ -88,7 +88,7 @@ class OutcomeElse extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $comp = $this->getOutcomeRules()->getArrayCopy();
 

@@ -23,7 +23,7 @@ use qtism\common\datatypes\QtiDuration;
  */
 class ResponseDeclarationMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshallMinimal()
+    public function testMarshallMinimal(): void
     {
         // Initialize a minimal responseDeclaration.
         $identifier = 'response1';
@@ -41,7 +41,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('response1', $element->getAttribute('identifier'));
     }
 
-    public function testMarshallCorrectResponse()
+    public function testMarshallCorrectResponse(): void
     {
         $identifier = 'response2';
         $cardinality = Cardinality::MULTIPLE;
@@ -82,7 +82,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals('', $value->getAttribute('baseType'));
     }
 
-    public function testMarshallMapping()
+    public function testMarshallMapping(): void
     {
         $identifier = 'response3';
         $cardinality = Cardinality::SINGLE;
@@ -124,7 +124,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals(1.2, $entry->getAttribute('mappedValue'));
     }
 
-    public function testUnmarshallMinimal()
+    public function testUnmarshallMinimal(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<responseDeclaration xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="responseDeclaration1" cardinality="single" baseType="integer"/>');
@@ -139,7 +139,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertEquals(BaseType::INTEGER, $component->getBaseType());
     }
 
-    public function testUnmarshallCorrectResponse()
+    public function testUnmarshallCorrectResponse(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
@@ -176,7 +176,7 @@ class ResponseDeclarationMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(QtiDuration::class, $values[1]->getValue());
     }
 
-    public function testUnmarshallMatchTable()
+    public function testUnmarshallMatchTable(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

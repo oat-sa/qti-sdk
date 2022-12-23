@@ -40,7 +40,7 @@ class TimeLimitsMarshaller extends Marshaller
      * @param QtiComponent $component A TimeLimits object.
      * @return DOMElement The according DOMElement object.
      */
-    protected function marshall(QtiComponent $component)
+    protected function marshall(QtiComponent $component): DOMElement
     {
         $element = $this->createElement($component);
 
@@ -61,9 +61,9 @@ class TimeLimitsMarshaller extends Marshaller
      * Unmarshall a DOMElement object corresponding to a QTI timeLimits element.
      *
      * @param DOMElement $element A DOMElement object.
-     * @return QtiComponent A TimeLimits object.
+     * @return TimeLimits A TimeLimits object.
      */
-    protected function unmarshall(DOMElement $element)
+    protected function unmarshall(DOMElement $element): TimeLimits
     {
         $object = new TimeLimits();
 
@@ -85,7 +85,7 @@ class TimeLimitsMarshaller extends Marshaller
     /**
      * @return string
      */
-    public function getExpectedQtiClassName()
+    public function getExpectedQtiClassName(): string
     {
         return 'timeLimits';
     }

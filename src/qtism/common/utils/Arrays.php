@@ -34,7 +34,7 @@ class Arrays
      * @param array $array An array
      * @return bool
      */
-    public static function isAssoc(array $array)
+    public static function isAssoc(array $array): bool
     {
         return array_keys($array) !== range(0, count($array) - 1);
     }

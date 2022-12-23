@@ -13,7 +13,7 @@ class BaseTypeTest extends QtiSmEnumTestCase
     /**
      * @return string
      */
-    protected function getEnumerationFqcn()
+    protected function getEnumerationFqcn(): string
     {
         return BaseType::class;
     }
@@ -21,7 +21,7 @@ class BaseTypeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getNames()
+    protected function getNames(): array
     {
         return [
             'identifier',
@@ -43,7 +43,7 @@ class BaseTypeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getKeys()
+    protected function getKeys(): array
     {
         return [
             'IDENTIFIER',
@@ -65,7 +65,7 @@ class BaseTypeTest extends QtiSmEnumTestCase
     /**
      * @return array
      */
-    protected function getConstants()
+    protected function getConstants(): array
     {
         return [
             BaseType::IDENTIFIER,

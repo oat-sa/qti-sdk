@@ -39,7 +39,7 @@ class ExitTestProcessor extends RuleProcessor
      *
      * @throws RuleProcessingException with code = RuleProcessingException::EXIT_TEST In any case.
      */
-    public function process()
+    public function process(): void
     {
         $msg = 'Termination of Test.';
         throw new RuleProcessingException($msg, $this, RuleProcessingException::EXIT_TEST);
@@ -48,7 +48,7 @@ class ExitTestProcessor extends RuleProcessor
     /**
      * @return string
      */
-    protected function getRuleType()
+    protected function getRuleType(): string
     {
         return ExitTest::class;
     }

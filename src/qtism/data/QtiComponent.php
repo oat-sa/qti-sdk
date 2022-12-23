@@ -36,14 +36,14 @@ abstract class QtiComponent
      *
      * @return string A QTI class name.
      */
-    abstract public function getQtiClassName();
+    abstract public function getQtiClassName(): string;
 
     /**
      * Get the direct child components of this one.
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    abstract public function getComponents();
+    abstract public function getComponents(): QtiComponentCollection;
 
     /**
      * Get a QtiComponentIterator object which allows you to iterate
@@ -51,7 +51,7 @@ abstract class QtiComponent
      *
      * @return QtiComponentIterator A QtiComponentIterator object.
      */
-    public function getIterator()
+    public function getIterator(): QtiComponentIterator
     {
         return new QtiComponentIterator($this);
     }
@@ -65,7 +65,7 @@ abstract class QtiComponent
      * @return QtiComponent|null A QtiComponent object or null if not found.
      * @throws InvalidArgumentException If $identifier is not a string.
      */
-    public function getComponentByIdentifier($identifier, $recursive = true)
+    public function getComponentByIdentifier($identifier, $recursive = true): ?QtiComponent
     {
         if (!is_string($identifier)) {
             $msg = 'The QtiComponent::getComponentByIdentifier method only accepts a string as its ';
@@ -101,7 +101,7 @@ abstract class QtiComponent
      * @return QtiComponentCollection
      * @throws InvalidArgumentException If $classNames is not an array nor a string value.
      */
-    public function getComponentsByClassName($classNames, $recursive = true)
+    public function getComponentsByClassName($classNames, $recursive = true): QtiComponentCollection
     {
         if (!is_string($classNames) && !is_array($classNames)) {
             $msg = 'The QtiComponent::getComponentsByClassName method only accepts ';
@@ -135,7 +135,7 @@ abstract class QtiComponent
      * @param bool $recursive Whether to search recursively in contained QtiComponent objects.
      * @return QtiComponentCollection A QtiIdentifiableCollection or a QtiComponentCollection in case of collision.
      */
-    public function getIdentifiableComponents($recursive = true)
+    public function getIdentifiableComponents($recursive = true): QtiComponentCollection
     {
         $iterator = ($recursive === true) ? $this->getIterator() : $this->getComponents();
         $foundComponents = [];
@@ -165,7 +165,7 @@ abstract class QtiComponent
      * @param bool $recursive Whether to search recursively in contained QtiComponent objects.
      * @return bool
      */
-    public function containsComponentWithClassName($classNames, $recursive = true)
+    public function containsComponentWithClassName($classNames, $recursive = true): bool
     {
         if (is_array($classNames) === false) {
             $classNames = [$classNames];

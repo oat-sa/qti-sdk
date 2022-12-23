@@ -38,7 +38,7 @@ class PrintedVariableProcessingException extends ProcessingException
      * @param Processable $source The source of the error.
      * @throws InvalidArgumentException If $source is not a PrintedVariableEngine object.
      */
-    public function setSource(Processable $source)
+    public function setSource(Processable $source): void
     {
         if ($source instanceof PrintedVariableEngine) {
             parent::setSource($source);

@@ -86,7 +86,7 @@ class AreaMapEntry extends QtiComponent
      * @param int $shape A value from the Shape enumeration.
      * @throws InvalidArgumentException If $shape is not a value from the Shape enumeration.
      */
-    public function setShape($shape)
+    public function setShape($shape): void
     {
         if (in_array($shape, QtiShape::asArray())) {
             $this->shape = $shape;
@@ -101,7 +101,7 @@ class AreaMapEntry extends QtiComponent
      *
      * @return int A value from the Shape enumeration.
      */
-    public function getShape()
+    public function getShape(): int
     {
         return $this->shape;
     }
@@ -112,7 +112,7 @@ class AreaMapEntry extends QtiComponent
      *
      * @param QtiCoords $coords A QtiCoords object.
      */
-    public function setCoords(QtiCoords $coords)
+    public function setCoords(QtiCoords $coords): void
     {
         $this->coords = $coords;
     }
@@ -123,7 +123,7 @@ class AreaMapEntry extends QtiComponent
      *
      * @return QtiCoords A QtiCoords object.
      */
-    public function getCoords()
+    public function getCoords(): QtiCoords
     {
         return $this->coords;
     }
@@ -134,7 +134,7 @@ class AreaMapEntry extends QtiComponent
      * @param float $mappedValue A mapped value.
      * @throws InvalidArgumentException If $mappedValue is not a float value.
      */
-    public function setMappedValue($mappedValue)
+    public function setMappedValue($mappedValue): void
     {
         if (is_float($mappedValue)) {
             $this->mappedValue = $mappedValue;
@@ -149,7 +149,7 @@ class AreaMapEntry extends QtiComponent
      *
      * @return float A mapped value.
      */
-    public function getMappedValue()
+    public function getMappedValue(): float
     {
         return $this->mappedValue;
     }
@@ -157,7 +157,7 @@ class AreaMapEntry extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'areaMapEntry';
     }
@@ -165,7 +165,7 @@ class AreaMapEntry extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }

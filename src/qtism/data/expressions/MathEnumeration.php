@@ -37,7 +37,7 @@ class MathEnumeration implements Enumeration
      *
      * @var float
      */
-    const PI = 0;
+    public const PI = 0;
 
     /**
      * From IMS QTI:
@@ -46,12 +46,12 @@ class MathEnumeration implements Enumeration
      *
      * @var float
      */
-    const E = 1;
+    public const E = 1;
 
     /**
      * @return array
      */
-    public static function asArray()
+    public static function asArray(): array
     {
         return [
             'PI' => self::PI,
@@ -86,7 +86,7 @@ class MathEnumeration implements Enumeration
      */
     public static function getConstantByName($name)
     {
-        switch (strtolower($name)) {
+        switch (strtolower((string)$name)) {
             case 'pi':
                 return self::PI;
                 break;

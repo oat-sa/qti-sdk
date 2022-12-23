@@ -37,7 +37,7 @@ class ShufflingCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If the given $value is not an instance of Shuffling.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof Shuffling) {
             $msg = "ShufflingCollection only accepts to store Shuffling objects, '" . gettype($value) . "' given.";

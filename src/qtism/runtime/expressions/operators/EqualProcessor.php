@@ -67,7 +67,7 @@ class EqualProcessor extends OperatorProcessor
      * @return QtiBoolean|null Whether the two expressions are numerically equal and false if they are not or NULL if either sub-expression is NULL.
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -148,7 +148,7 @@ class EqualProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Equal::class;
     }

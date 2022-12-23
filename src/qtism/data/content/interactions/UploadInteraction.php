@@ -68,7 +68,7 @@ class UploadInteraction extends BlockInteraction
      * @param string $type A mime-type.
      * @throws InvalidArgumentException If $type is not a string value.
      */
-    public function setType($type)
+    public function setType($type): void
     {
         if (is_string($type)) {
             $this->type = $type;
@@ -83,7 +83,7 @@ class UploadInteraction extends BlockInteraction
      *
      * @return string A mime-type.
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -94,7 +94,7 @@ class UploadInteraction extends BlockInteraction
      *
      * @return bool
      */
-    public function hasType()
+    public function hasType(): bool
     {
         return $this->getType() !== '';
     }
@@ -102,7 +102,7 @@ class UploadInteraction extends BlockInteraction
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return parent::getComponents();
     }
@@ -110,7 +110,7 @@ class UploadInteraction extends BlockInteraction
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'uploadInteraction';
     }

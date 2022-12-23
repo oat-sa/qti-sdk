@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class HottextMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $hottext = new Hottext('choice1', 'my-hottext1', 'so hot');
         $hottext->setFixed(true);
@@ -29,7 +29,7 @@ class HottextMarshallerTest extends QtiSmTestCase
         $this::assertEquals('<hottext id="my-hottext1" class="so hot" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide">Choice1</hottext>', $dom->saveXML($element));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $element = $this->createDOMElement('
 	        <hottext id="my-hottext1" class="so hot" identifier="choice1" fixed="true" templateIdentifier="tpl1" showHide="hide">Choice1</hottext>

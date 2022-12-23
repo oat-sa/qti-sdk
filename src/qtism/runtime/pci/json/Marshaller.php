@@ -60,14 +60,14 @@ class Marshaller
      *
      * @var int
      */
-    const MARSHALL_ARRAY = 0;
+    public const MARSHALL_ARRAY = 0;
 
     /**
      * Output of marshalling as JSON string.
      *
      * @var int
      */
-    const MARSHALL_JSON = 1;
+    public const MARSHALL_JSON = 1;
 
     /**
      * Create a new JSON Marshaller object.
@@ -122,7 +122,7 @@ class Marshaller
      * @return array An array representing the JSON data to be encoded later on.
      * @throws MarshallingException
      */
-    protected function marshallUnit($unit)
+    protected function marshallUnit($unit): array
     {
         if ($unit === null) {
             $json = ['base' => null];
@@ -171,7 +171,7 @@ class Marshaller
      * @return array An array representing the JSON data to be encoded later on.
      * @throws MarshallingException
      */
-    protected function marshallScalar($scalar)
+    protected function marshallScalar($scalar): ?array
     {
         if ($scalar === null) {
             return null;
@@ -214,7 +214,7 @@ class Marshaller
      * @return array An array representing the JSON data to be encoded later on.
      * @throws MarshallingException
      */
-    protected function marshallComplex(QtiDatatype $complex)
+    protected function marshallComplex(QtiDatatype $complex): array
     {
         if ($complex === null) {
             return $complex;
@@ -250,7 +250,7 @@ class Marshaller
      * @param QtiBoolean $boolean
      * @return array
      */
-    protected function marshallBoolean(QtiBoolean $boolean)
+    protected function marshallBoolean(QtiBoolean $boolean): array
     {
         return ['base' => ['boolean' => $boolean->getValue()]];
     }
@@ -261,7 +261,7 @@ class Marshaller
      * @param QtiInteger $integer
      * @return array
      */
-    protected function marshallInteger(QtiInteger $integer)
+    protected function marshallInteger(QtiInteger $integer): array
     {
         return ['base' => ['integer' => $integer->getValue()]];
     }
@@ -272,7 +272,7 @@ class Marshaller
      * @param QtiFloat $float
      * @return array
      */
-    protected function marshallFloat(QtiFloat $float)
+    protected function marshallFloat(QtiFloat $float): array
     {
         return ['base' => ['float' => $float->getValue()]];
     }
@@ -283,7 +283,7 @@ class Marshaller
      * @param QtiIdentifier $identifier
      * @return array
      */
-    protected function marshallIdentifier(QtiIdentifier $identifier)
+    protected function marshallIdentifier(QtiIdentifier $identifier): array
     {
         return ['base' => ['identifier' => $identifier->getValue()]];
     }
@@ -294,7 +294,7 @@ class Marshaller
      * @param QtiUri $uri
      * @return array
      */
-    protected function marshallUri(QtiUri $uri)
+    protected function marshallUri(QtiUri $uri): array
     {
         return ['base' => ['uri' => $uri->getValue()]];
     }
@@ -305,7 +305,7 @@ class Marshaller
      * @param QtiString $string
      * @return array
      */
-    protected function marshallString(QtiString $string)
+    protected function marshallString(QtiString $string): array
     {
         return ['base' => ['string' => $string->getValue()]];
     }
@@ -316,7 +316,7 @@ class Marshaller
      * @param QtiIntOrIdentifier $intOrIdentifier
      * @return array
      */
-    protected function marshallIntOrIdentifier(QtiIntOrIdentifier $intOrIdentifier)
+    protected function marshallIntOrIdentifier(QtiIntOrIdentifier $intOrIdentifier): array
     {
         return ['base' => ['intOrIdentifier' => $intOrIdentifier->getValue()]];
     }
@@ -327,7 +327,7 @@ class Marshaller
      * @param QtiPoint $point
      * @return array
      */
-    protected function marshallPoint(QtiPoint $point)
+    protected function marshallPoint(QtiPoint $point): array
     {
         return ['base' => ['point' => [$point->getX(), $point->getY()]]];
     }
@@ -338,7 +338,7 @@ class Marshaller
      * @param QtiDirectedPair $directedPair
      * @return array
      */
-    protected function marshallDirectedPair(QtiDirectedPair $directedPair)
+    protected function marshallDirectedPair(QtiDirectedPair $directedPair): array
     {
         return ['base' => ['directedPair' => [$directedPair->getFirst(), $directedPair->getSecond()]]];
     }
@@ -349,7 +349,7 @@ class Marshaller
      * @param QtiPair $pair
      * @return array
      */
-    protected function marshallPair(QtiPair $pair)
+    protected function marshallPair(QtiPair $pair): array
     {
         return ['base' => ['pair' => [$pair->getFirst(), $pair->getSecond()]]];
     }
@@ -360,7 +360,7 @@ class Marshaller
      * @param QtiDuration $duration
      * @return array
      */
-    protected function marshallDuration(QtiDuration $duration)
+    protected function marshallDuration(QtiDuration $duration): array
     {
         return ['base' => ['duration' => $duration->__toString()]];
     }
@@ -371,7 +371,7 @@ class Marshaller
      * @param QtiFile $file
      * @return array
      */
-    protected function marshallFile(QtiFile $file)
+    protected function marshallFile(QtiFile $file): array
     {
         $data = [
             'base' => [
@@ -396,7 +396,7 @@ class Marshaller
      * @param FileHash $file
      * @return array
      */
-    protected function marshallFileHash(FileHash $file)
+    protected function marshallFileHash(FileHash $file): array
     {
         return [
             'base' => [

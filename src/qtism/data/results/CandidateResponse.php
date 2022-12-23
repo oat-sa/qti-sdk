@@ -59,7 +59,7 @@ class CandidateResponse extends QtiComponent
      *
      * @return string A QTI class name.
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'candidateResponse';
     }
@@ -69,7 +69,7 @@ class CandidateResponse extends QtiComponent
      *
      * @return QtiComponentCollection A collection of QtiComponent objects.
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         $components = [];
         if ($this->hasValues()) {
@@ -79,11 +79,11 @@ class CandidateResponse extends QtiComponent
     }
 
     /**
-     * Get candidate response values
+     * Get candidate response values.
      *
-     * @return ValueCollection
+     * @return ValueCollection|null
      */
-    public function getValues()
+    public function getValues(): ?ValueCollection
     {
         return $this->values;
     }
@@ -105,7 +105,7 @@ class CandidateResponse extends QtiComponent
      *
      * @return bool
      */
-    public function hasValues()
+    public function hasValues(): bool
     {
         return $this->values !== null;
     }

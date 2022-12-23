@@ -17,7 +17,7 @@ use qtismtest\QtiSmTestCase;
  */
 class MatchTableMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $matchTableEntryCollection = new MatchTableEntryCollection();
         $matchTableEntryCollection[] = new MatchTableEntry(1, new QtiPair('A', 'B'));
@@ -38,7 +38,7 @@ class MatchTableMarshallerTest extends QtiSmTestCase
         $this::assertEquals('1', $entry->getAttribute('sourceValue'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(

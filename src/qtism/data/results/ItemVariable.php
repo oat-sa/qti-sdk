@@ -83,7 +83,7 @@ abstract class ItemVariable extends QtiComponent
      *
      * @return QtiIdentifier An identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): QtiIdentifier
     {
         return $this->identifier;
     }
@@ -105,7 +105,7 @@ abstract class ItemVariable extends QtiComponent
      *
      * @return int
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return $this->cardinality;
     }
@@ -131,9 +131,9 @@ abstract class ItemVariable extends QtiComponent
     /**
      * Get the baseType of the Variable.
      *
-     * @return int A value from the Cardinality enumeration.
+     * @return int|null A value from the Cardinality enumeration.
      */
-    public function getBaseType()
+    public function getBaseType(): ?int
     {
         return $this->baseType;
     }
@@ -161,7 +161,7 @@ abstract class ItemVariable extends QtiComponent
      *
      * @return bool
      */
-    public function hasBaseType()
+    public function hasBaseType(): bool
     {
         return $this->baseType !== null;
     }

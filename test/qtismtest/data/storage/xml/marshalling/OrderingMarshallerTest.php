@@ -12,7 +12,7 @@ use qtismtest\QtiSmTestCase;
  */
 class OrderingMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $shuffle = true;
         $component = new Ordering($shuffle);
@@ -24,7 +24,7 @@ class OrderingMarshallerTest extends QtiSmTestCase
         $this::assertEquals('true', $element->getAttribute('shuffle'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<ordering xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" shuffle="false"/>');

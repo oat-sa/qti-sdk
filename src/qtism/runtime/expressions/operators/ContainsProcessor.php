@@ -46,7 +46,7 @@ class ContainsProcessor extends OperatorProcessor
      * @return QtiBoolean
      * @throws OperatorProcessingException
      */
-    public function process()
+    public function process(): ?QtiBoolean
     {
         $operands = $this->getOperands();
 
@@ -117,7 +117,7 @@ class ContainsProcessor extends OperatorProcessor
     /**
      * @return string
      */
-    protected function getExpressionType()
+    protected function getExpressionType(): string
     {
         return Contains::class;
     }

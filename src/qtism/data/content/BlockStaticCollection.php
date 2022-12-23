@@ -37,7 +37,7 @@ class BlockStaticCollection extends QtiComponentCollection
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of BlockStatic.
      */
-    protected function checkType($value)
+    protected function checkType($value): void
     {
         if (!$value instanceof BlockStatic) {
             $msg = 'BlockStaticCollection objects only accept BlockStatic objects to be stored.';

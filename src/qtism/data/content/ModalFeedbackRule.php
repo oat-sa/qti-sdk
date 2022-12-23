@@ -91,9 +91,9 @@ class ModalFeedbackRule extends QtiComponent
      * @param string $identifier A QTI identifier.
      * @throws InvalidArgumentException If $identifier is not a valid QTI identifier.
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
-        if (Format::isIdentifier($identifier, false) === true) {
+        if (Format::isIdentifier((string)$identifier, false) === true) {
             $this->identifier = $identifier;
         } else {
             $msg = "The 'identifier' argument must be a valid QTI identifier, '" . $identifier . "' given.";
@@ -106,7 +106,7 @@ class ModalFeedbackRule extends QtiComponent
      *
      * @return string A QTI identifier.
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -118,9 +118,9 @@ class ModalFeedbackRule extends QtiComponent
      * @param string $outcomeIdentifier A QTI identifier.
      * @throws InvalidArgumentException If $outcomeIdentifier is not a valid QTI identifier.
      */
-    public function setOutcomeIdentifier($outcomeIdentifier)
+    public function setOutcomeIdentifier($outcomeIdentifier): void
     {
-        if (Format::isIdentifier($outcomeIdentifier, false) === true) {
+        if (Format::isIdentifier((string)$outcomeIdentifier, false) === true) {
             $this->outcomeIdentifier = $outcomeIdentifier;
         } else {
             $msg = "The 'outcomeIdentifier' argument must be a valid QTI identifier, '" . $outcomeIdentifier . "' given.";
@@ -134,7 +134,7 @@ class ModalFeedbackRule extends QtiComponent
      *
      * @return string A QTI identifier.
      */
-    public function getOutcomeIdentifier()
+    public function getOutcomeIdentifier(): string
     {
         return $this->outcomeIdentifier;
     }
@@ -145,7 +145,7 @@ class ModalFeedbackRule extends QtiComponent
      * @param int $showHide A value from the ShowHide enumeration.
      * @throws InvalidArgumentException If $showHide is not a value from the ShowHide enumeration.
      */
-    public function setShowHide($showHide)
+    public function setShowHide($showHide): void
     {
         if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
@@ -160,7 +160,7 @@ class ModalFeedbackRule extends QtiComponent
      *
      * @return int A value from the ShowHide enumeration.
      */
-    public function getShowHide()
+    public function getShowHide(): int
     {
         return $this->showHide;
     }
@@ -173,7 +173,7 @@ class ModalFeedbackRule extends QtiComponent
      * @param string $title
      * @throws InvalidArgumentException If $title is not a string.
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         if (is_string($title)) {
             $this->title = $title;
@@ -188,7 +188,7 @@ class ModalFeedbackRule extends QtiComponent
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -198,7 +198,7 @@ class ModalFeedbackRule extends QtiComponent
      *
      * @return bool
      */
-    public function hasTitle()
+    public function hasTitle(): bool
     {
         return $this->getTitle() !== '';
     }
@@ -206,7 +206,7 @@ class ModalFeedbackRule extends QtiComponent
     /**
      * @return QtiComponentCollection
      */
-    public function getComponents()
+    public function getComponents(): QtiComponentCollection
     {
         return new QtiComponentCollection();
     }
@@ -214,7 +214,7 @@ class ModalFeedbackRule extends QtiComponent
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'modalFeedbackRule';
     }

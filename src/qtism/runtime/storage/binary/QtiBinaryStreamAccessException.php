@@ -35,110 +35,110 @@ class QtiBinaryStreamAccessException extends BinaryStreamAccessException
      *
      * @var int
      */
-    const VARIABLE = 10;
+    public const VARIABLE = 10;
 
     /**
      * An error occurred while reading/writing a Record Field.
      *
      * @var int
      */
-    const RECORDFIELD = 11;
+    public const RECORDFIELD = 11;
 
     /**
      * An error occurred while reading/writing a QTI identifier.
      *
      * @var int
      */
-    const IDENTIFIER = 12;
+    public const IDENTIFIER = 12;
 
     /**
      * An error occurred while reading/writing a QTI point.
      *
      * @var int
      */
-    const POINT = 13;
+    public const POINT = 13;
 
     /**
      * An error occurred while reading/writing a QTI pair.
      *
      * @var int
      */
-    const PAIR = 14;
+    public const PAIR = 14;
 
     /**
      * An error occurred while reading/writing a QTI directedPair.
      *
      * @var int
      */
-    const DIRECTEDPAIR = 15;
+    public const DIRECTEDPAIR = 15;
 
     /**
      * An error occurred while reading/writing a QTI duration.
      *
      * @var int
      */
-    const DURATION = 16;
+    public const DURATION = 16;
 
     /**
      * An error occurred while reading/writing a URI.
      *
      * @var int
      */
-    const URI = 17;
+    public const URI = 17;
 
     /**
      * An error occurred while reading/writing File's binary data.
      *
      * @var int
      */
-    const FILE = 18;
+    public const FILE = 18;
 
     /**
      * An error occurred while reading/writing an intOrIdentifier.
      *
      * @var int
      */
-    const INTORIDENTIFIER = 19;
+    public const INTORIDENTIFIER = 19;
 
     /**
      * An error occurred while reading/writing an assessment item session.
      *
      * @var int
      */
-    const ITEM_SESSION = 20;
+    public const ITEM_SESSION = 20;
 
     /**
      * An error occurred while reading/writing a route item.
      *
      * @var int
      */
-    const ROUTE_ITEM = 21;
+    public const ROUTE_ITEM = 21;
 
     /**
      * An error occurred while reading/writing pending responses.
      *
      * @var int
      */
-    const PENDING_RESPONSES = 22;
+    public const PENDING_RESPONSES = 22;
 
     /**
      * An error occurred while reading/writing path.
      *
      * @var int
      */
-    const PATH = 23;
+    public const PATH = 23;
 
     /**
      * An error occurred while reading/writing shuffling states.
      *
      * @var int
      */
-    const SHUFFLING_STATE = 24;
+    public const SHUFFLING_STATE = 24;
 
     /**
      * An error occurred while reading/writing a shuffling group.
      *
      * @var int
      */
-    const SHUFFLING_GROUP = 25;
+    public const SHUFFLING_GROUP = 25;
 }

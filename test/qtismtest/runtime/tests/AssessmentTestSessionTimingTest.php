@@ -31,7 +31,7 @@ use qtism\common\datatypes\QtiFloat;
  */
 class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
 {
-    public function testTestPartAssessmentSectionsDurations()
+    public function testTestPartAssessmentSectionsDurations(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/itemsubset.xml');
         // Try to get a duration on a non-begun test session.
@@ -86,7 +86,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertTrue($session['Q02.duration']->equals(new QtiDuration('PT3S')));
     }
 
-    public function testTestPartTimeLimitsLinear()
+    public function testTestPartTimeLimitsLinear(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/timelimits_testparts_linear_individual.xml');
 
@@ -188,7 +188,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
      * @throws PhpStorageException
      * @throws XmlStorageException
      */
-    public function testForceLateSubmission($forceLateSubmission = true)
+    public function testForceLateSubmission($forceLateSubmission = true): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/force_late_submission.xml');
 
@@ -225,7 +225,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         }
     }
 
-    public function testTimeConstraints()
+    public function testTimeConstraints(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/remaining_time_1.xml');
 
@@ -303,7 +303,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertFalse($timeConstraints[0]->maxTimeInForce());
     }
 
-    public function testTimeConstraintsDoNotConsiderMinTime()
+    public function testTimeConstraintsDoNotConsiderMinTime(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/dont_consider_mintime.xml');
 
@@ -323,7 +323,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         }
     }
 
-    public function testDurationBetweenItems()
+    public function testDurationBetweenItems(): void
     {
         /*
          * This test aims at testing that the duration of the whole test is not incremented while a
@@ -391,7 +391,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
     }
 
-    public function testMultipleOccurences()
+    public function testMultipleOccurences(): void
     {
         /*
          * This test aims at testing how duration behaves
@@ -438,7 +438,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
     }
 
-    public function testIsTimeout1()
+    public function testIsTimeout1(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/istimeout_1.xml');
 
@@ -501,7 +501,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertTrue($session['istimeout.duration']->equals(new QtiDuration('PT1M30S')));
     }
 
-    public function testItemSessionsAreClosed1()
+    public function testItemSessionsAreClosed1(): void
     {
         // - istimeout maxTime = 120
         // -- P01 maxTime = 90
@@ -617,7 +617,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         }
     }
 
-    public function testLastItemTimeout()
+    public function testLastItemTimeout(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/last_item_timeout.xml');
         $session->beginTestSession();
@@ -628,7 +628,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
     }
 
-    public function testLastItemSectionTimeout()
+    public function testLastItemSectionTimeout(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/last_item_section_timeout.xml');
         $session->beginTestSession();
@@ -639,7 +639,7 @@ class AssessmentTestSessionTimingTest extends QtiSmAssessmentTestSessionTestCase
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
     }
 
-    public function testLastItemTestPartTimeout()
+    public function testLastItemTestPartTimeout(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/timings/last_item_testpart_timeout.xml');
         $session->beginTestSession();

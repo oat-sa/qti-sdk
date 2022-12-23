@@ -68,7 +68,7 @@ class RecordContainer extends Container implements QtiDatatype
     /**
      * @return int
      */
-    public function getCardinality()
+    public function getCardinality(): int
     {
         return Cardinality::RECORD;
     }
@@ -82,7 +82,7 @@ class RecordContainer extends Container implements QtiDatatype
      *
      * @throws RuntimeException If $offset is not a string.
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_string($offset)) {
             $this->checkType($value);
@@ -101,7 +101,7 @@ class RecordContainer extends Container implements QtiDatatype
      * @return RecordContainer A Container object populated with the values found in $valueCollection.
      * @throws InvalidArgumentException If a value from $valueCollection is not compliant with the QTI Runtime Model or the container type or if a value has no fieldIdentifier.
      */
-    public static function createFromDataModel(ValueCollection $valueCollection)
+    public static function createFromDataModel(ValueCollection $valueCollection): RecordContainer
     {
         $container = new static();
         foreach ($valueCollection as $value) {
@@ -122,7 +122,7 @@ class RecordContainer extends Container implements QtiDatatype
     /**
      * @return array
      */
-    protected function getToStringBounds()
+    protected function getToStringBounds(): array
     {
         return ['{', '}'];
     }
@@ -130,7 +130,7 @@ class RecordContainer extends Container implements QtiDatatype
     /**
      * @return int
      */
-    public function getBaseType()
+    public function getBaseType(): int
     {
         return -1;
     }

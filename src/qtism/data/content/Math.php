@@ -49,12 +49,12 @@ class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, Inli
     /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'math';
     }
 
-    protected function buildTargetNamespace()
+    protected function buildTargetNamespace(): void
     {
         $this->setTargetNamespace('http://www.w3.org/1998/Math/MathML');
     }

@@ -38,7 +38,7 @@ use qtismtest\QtiSmTestCase;
  */
 class XmlResultDocumentTest extends QtiSmTestCase
 {
-    public function testLoad()
+    public function testLoad(): void
     {
         $xmlDoc = new XmlResultDocument();
         $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result.xml', true);
@@ -72,7 +72,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $this::assertCount(2, $testResult->getItemVariables());
     }
 
-    public function testLoadMissingData()
+    public function testLoadMissingData(): void
     {
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage('The document could not be validated with XML Schema');
@@ -81,7 +81,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result-missing-data.xml', true);
     }
 
-    public function testSaveToString()
+    public function testSaveToString(): void
     {
         $xmlDoc = new XmlResultDocument();
         $xmlDoc->load(self::samplesDir() . 'results/simple-assessment-result.xml', true);
@@ -97,7 +97,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
      * @param string $expectedVersion
      * @throws XmlStorageException
      */
-    public function testInferVersionAndSchemaValidate(string $testFile, string $expectedVersion)
+    public function testInferVersionAndSchemaValidate(string $testFile, string $expectedVersion): void
     {
         $xmlDoc = new XmlResultDocument();
         $xmlDoc->load($testFile, true);
@@ -116,7 +116,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
         ];
     }
 
-    public function testInferVersionWithMissingNamespaceReturnsDefaultVersion()
+    public function testInferVersionWithMissingNamespaceReturnsDefaultVersion(): void
     {
         $xmlDoc = new XmlResultDocument();
 
@@ -125,7 +125,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
         $this::assertEquals('2.1.0', $xmlDoc->getVersion());
     }
 
-    public function testInferVersionWithWrongNamespaceThrowsException()
+    public function testInferVersionWithWrongNamespaceThrowsException(): void
     {
         $xmlDoc = new XmlResultDocument();
 
@@ -142,7 +142,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
      * @param string $toFile
      * @throws XmlStorageException
      */
-    public function testChangeVersion($fromVersion, $fromFile, $toVersion, $toFile)
+    public function testChangeVersion($fromVersion, $fromFile, $toVersion, $toFile): void
     {
         $doc = new XmlResultDocument($fromVersion);
         $doc->load($fromFile, true);
@@ -167,7 +167,7 @@ class XmlResultDocumentTest extends QtiSmTestCase
         ];
     }
 
-    public function testChangeVersionWithUnknownVersionThrowsException()
+    public function testChangeVersionWithUnknownVersionThrowsException(): void
     {
         $wrongVersion = '36.15';
         $patchedWrongVersion = $wrongVersion . '.0';

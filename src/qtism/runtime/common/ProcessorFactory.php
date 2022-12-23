@@ -37,5 +37,5 @@ interface ProcessorFactory
      * @param QtiComponent $component A QtiComponent object that the returned Processable object is able to process.
      * @return Processable A Processable object able to process $component.
      */
-    public function createProcessor(QtiComponent $component);
+    public function createProcessor(QtiComponent $component): Processable;
 }

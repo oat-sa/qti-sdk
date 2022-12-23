@@ -23,7 +23,7 @@ use qtismtest\QtiSmAssessmentTestSessionTestCase;
  */
 class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTestCase
 {
-    public function testInstantiationSample1()
+    public function testInstantiationSample1(): void
     {
         $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
@@ -56,7 +56,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $this::assertCount(0, $routeItemQ04->getBranchRules());
     }
 
-    public function testBranchingSingleSectionLinear1()
+    public function testBranchingSingleSectionLinear1(): void
     {
         $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
@@ -97,7 +97,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $this::assertEquals(1.0, $testSession['Q04.SCORE']->getValue());
     }
 
-    public function testBranchingSingleSectionLinear2()
+    public function testBranchingSingleSectionLinear2(): void
     {
         $doc = new XmlCompactDocument('2.1');
         $doc->load(self::samplesDir() . 'custom/runtime/branchings/branchings_single_section_linear.xml');
@@ -127,7 +127,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $this::assertNull($testSession['Q04.SCORE']); // Not eligible.
     }
 
-    public function testBranchingSingleSectionNonLinear1()
+    public function testBranchingSingleSectionNonLinear1(): void
     {
         // This test only aims at testing if branch rules
         // are correctly ignored when the navigation mode is non linear.
@@ -149,7 +149,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $this::assertEquals('Q02', $testSession->getCurrentAssessmentItemRef()->getIdentifier());
     }
 
-    public function testBranchingSingleSectionNonLinear2()
+    public function testBranchingSingleSectionNonLinear2(): void
     {
         // This test aims at testing that branch rules are not
         // ignored in non-linear tests if force branching is in force.
@@ -180,7 +180,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
      * @throws PhpStorageException
      * @throws XmlStorageException
      */
-    public function testBranchingMultipleOccurences($response, $expectedTarget, $occurence)
+    public function testBranchingMultipleOccurences($response, $expectedTarget, $occurence): void
     {
         // This test aims at testing the possibility to jump
         // on a particular item ref occurence.
@@ -209,7 +209,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
     /**
      * @return array
      */
-    public function branchingMultipleOccurencesProvider()
+    public function branchingMultipleOccurencesProvider(): array
     {
         return [
             [new QtiIdentifier('goto21'), 'Q02', 0],
@@ -219,7 +219,7 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         ];
     }
 
-    public function testBranchingOnPreconditon()
+    public function testBranchingOnPreconditon(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/branchings_preconditions/branchings_preconditions_branchtopreconditionitem.xml');
         $session->beginTestSession();

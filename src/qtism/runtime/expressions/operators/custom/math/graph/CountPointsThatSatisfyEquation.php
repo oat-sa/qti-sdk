@@ -4,33 +4,36 @@ namespace qti\customOperators\math\graph;
 
 use Exception;
 use oat\beeme\Parser;
-use qtism\common\enums\BaseType;
 use qtism\common\datatypes\QtiInteger as QtismInteger;
-use qtism\common\datatypes\QtiString as QtismString;
 use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiString as QtismString;
+use qtism\common\enums\BaseType;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\expressions\operators\CustomOperatorProcessor;
 
 class CountPointsThatSatisfyEquation extends CustomOperatorProcessor
 {
-    public function process() 
+    /**
+     * @return QtismInteger|null
+     */
+    public function process(): ?QtismInteger
     {
         $returnValue = new QtismInteger(0);
         $operands = $this->getOperands();
-        
+
         if (count($operands) >= 2) {
             $points = $operands[0];
             $equation = $operands[1];
-            
+
             if (($points instanceof MultipleContainer || $points instanceof OrderedContainer) && ($points->getBaseType() === BaseType::POINT || $points->getBaseType() === BaseType::STRING) && $equation instanceof QtismString) {
                 // Check every Point X,Y against the equation...
                 $math = new Parser();
                 $math->setConstant('#pi', M_PI);
-                
+
                 try {
                     foreach ($points as $point) {
-                        
+
                         if ($point instanceof QtiPoint) {
                             $x = floatval($point->getX());
                             $y = floatval($point->getY());
@@ -44,7 +47,7 @@ class CountPointsThatSatisfyEquation extends CustomOperatorProcessor
                                 $y = floatval($strs[1]);
                             }
                         }
-                        
+
                         $result = $math->evaluate(
                             $equation->getValue(),
                             array(
@@ -52,7 +55,7 @@ class CountPointsThatSatisfyEquation extends CustomOperatorProcessor
                                 'y' => $y
                             )
                         );
-                        
+
                         if ($result === true) {
                             // The Point X,Y satisfies the equation...
                             $returnValue->setValue($returnValue->getValue() + 1);
@@ -67,7 +70,7 @@ class CountPointsThatSatisfyEquation extends CustomOperatorProcessor
                 return null;
             }
         }
-        
+
         return $returnValue;
     }
 }
