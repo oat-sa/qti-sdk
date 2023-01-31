@@ -33,7 +33,7 @@ class QtiBinaryVersion
     /**
      * The QTI binary data version number.
      */
-    public const CURRENT_VERSION = self::VERSION_VARIABLE_WITH_DEFAULT_VALUE_INITIALIZATION_FLAG;
+    public const CURRENT_VERSION = self::VERSION_ROUTE_COUNT_INTEGER;
 
     /**
      * The QTI Sdk branch to select behaviour of the binary storage.
@@ -44,6 +44,7 @@ class QtiBinaryVersion
     /**
      * These constants make the different versions a bit more self-explanatory.
      */
+    public const VERSION_ROUTE_COUNT_INTEGER = 13;
     public const VERSION_VARIABLE_WITH_DEFAULT_VALUE_INITIALIZATION_FLAG = 12;
     public const VERSION_VARIABLE_COUNT_INTEGER = 11;
     public const VERSION_FIRST_MASTER = 10;
@@ -110,6 +111,17 @@ class QtiBinaryVersion
         return $this->version === self::CURRENT_VERSION;
     }
 
+    /**
+     * @return bool
+     */
+    public function storesRouteCountAsInteger(): bool
+    {
+        return $this->version >= self::VERSION_ROUTE_COUNT_INTEGER;
+    }
+
+    /**
+     * @return bool
+     */
     public function storesVariableDefaultValueInitializationFlag(): bool
     {
         return $this->version >= self::VERSION_VARIABLE_WITH_DEFAULT_VALUE_INITIALIZATION_FLAG;

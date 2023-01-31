@@ -1347,6 +1347,41 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $this::assertTrue($session->isTestPartVisited($session->getCurrentTestPart()));
     }
 
+    public function test300Items(): void
+    {
+        // Test to prove that a test with more than 255 items can be instantiated and handled.
+        $doc = new XmlCompactDocument();
+        $doc->load(self::samplesDir() . 'custom/runtime/route_count/300_items_long.xml');
+        $test = $doc->getDocumentComponent();
+        $sessionManager = new SessionManager(new FileSystemFileManager());
+        $storage = new LocalQtiBinaryStorage($sessionManager, $test);
+        $session = $storage->instantiate();
+        $session->beginTestSession();
+        $sessionId = $session->getSessionId();
+
+        // To start, persist and forget.
+        $storage->persist($session);
+
+        // Let's test!
+        $expectedRouteCount = $test->getComponentsByClassName('assessmentItemRef')->count();
+
+        // Let's perform 300 moveNext calls to reach the end of the test.
+        for ($i = 0; $i < $expectedRouteCount; $i++) {
+            $session = $storage->retrieve($sessionId);
+
+            $position = $session->getRoute()->getPosition();
+            $assessmentItemRefIdentifier = $session->getCurrentAssessmentItemRef()->getIdentifier();
+            $this->assertEquals($i, $position);
+            $this->assertEquals('Q' . ($i + 1), $assessmentItemRefIdentifier);
+
+            $session->moveNext();
+            $storage->persist($session);
+        }
+
+        $this->assertEquals(300, $i);
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+    }
+
     public function testConfigPersistence(): void
     {
         $doc = new XmlCompactDocument();
