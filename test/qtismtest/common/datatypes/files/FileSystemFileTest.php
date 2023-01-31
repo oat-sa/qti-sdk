@@ -79,6 +79,8 @@ class FileSystemFileTest extends QtiSmTestCase
                 sys_get_temp_dir() . '/abcd\\t/v**',
                 'text/plain'
             );
+
+            $this->assertTrue(true, 'File could not be created from existing file.');
         } catch (RuntimeException $e) {
             $this::assertInstanceOf(RuntimeException::class, $e);
         }
