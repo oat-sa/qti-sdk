@@ -149,7 +149,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             // Write the current position in the route.
             $route = $assessmentTestSession->getRoute();
-            $access->writeTinyInt($route->getPosition());
+            $access->writeInteger($route->getPosition());
 
             // persist time reference.
             $timeReference = $assessmentTestSession->getTimeReference();
@@ -174,7 +174,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $access->writeShort($assessmentTestSession->getConfig());
 
             // -- Persist the Route of the AssessmentTestSession and the related item sessions.
-            $access->writeTinyInt($route->count());
+            $access->writeInteger($route->count());
             $itemSessionStore = $assessmentTestSession->getAssessmentItemSessionStore();
             $pendingResponseStore = $assessmentTestSession->getPendingResponseStore();
 
@@ -257,7 +257,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             // Deal with intrinsic values of the Test Session.
             $assessmentTestSessionState = $access->readTinyInt();
-            $currentPosition = $access->readTinyInt();
+            $currentPosition = ($this->version->storesRouteCountAsInteger()) ? $access->readInteger() : $access->readTinyInt();
 
             if ($access->readBoolean() === true) {
                 $timeReference = $access->readDateTime();
@@ -281,7 +281,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $lastOccurenceUpdate = new SplObjectStorage();
             $itemSessionStore = new AssessmentItemSessionStore();
             $pendingResponseStore = new PendingResponseStore();
-            $routeCount = $access->readTinyInt();
+            $routeCount = ($this->version->storesRouteCountAsInteger()) ? $access->readInteger() : $access->readTinyInt();
 
             // Create the item session factory that will be used to instantiate
             // new item sessions.
