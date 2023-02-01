@@ -276,7 +276,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
         $file = $fileManager->retrieve($samples . 'datatypes/file/text-plain_text_data.txt');
         $returnValue[] = [$file, '{ "base" : { "file" : { "mime" : "text\/plain", "data" : ' . json_encode(base64_encode('Some text...')) . ', "name" : "text.txt" } } }'];
 
-        $targetPath = $samples . 'datatypes/file/target_text-plain_text_data.txt';
+        $targetPath = sys_get_temp_dir() . '/target_text-plain_text_data.txt';
         $file = $fileManager->createFromData($file->getData(), $file->getMimeType(), $file->getFilename(), $targetPath);
         $returnValue[] = [$file, '{ "base" : { "file" : { "mime" : "text\/plain", "data" : ' . json_encode(base64_encode('Some text...')) . ', "name" : "text.txt", "path" : "' . $targetPath . '" } } }'];
 
