@@ -30,7 +30,9 @@ use qtism\runtime\storage\common\StorageException;
 use qtism\runtime\storage\driver\exception\DriverDeletionException;
 use qtism\runtime\storage\driver\StorageDriverInterface;
 use qtism\runtime\tests\AbstractSessionManager;
+use qtism\runtime\tests\AssessmentItemSessionStore;
 use qtism\runtime\tests\AssessmentTestSession;
+use qtism\runtime\tests\RouteItem;
 
 class QtiSerializableStorage extends AbstractStorage
 {
@@ -85,6 +87,10 @@ class QtiSerializableStorage extends AbstractStorage
     public function retrieve($sessionId)
     {
         $serializedSession = $this->storageDriver->read($sessionId);
+        if (!$serializedSession) {
+            throw new StorageException('', StorageException::RETRIEVAL);
+        }
+
         return $this->serializer->decode($serializedSession);
     }
 
