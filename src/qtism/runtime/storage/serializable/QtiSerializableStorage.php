@@ -165,7 +165,7 @@ class QtiSerializableStorage extends AbstractStorage
         $decodedSession->setLastOccurenceUpdate($newLastOccurrenceUpdate);
         $decodedSession->setRoute($newRoute);
         $decodedSession->setAssessmentItemSessionStore($newAssessmentItemSessionStore);
-
+        $decodedSession->setSessionManager($this->getManager());
 
         return $decodedSession;
     }

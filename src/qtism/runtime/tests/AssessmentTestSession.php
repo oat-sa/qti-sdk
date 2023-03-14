@@ -3126,4 +3126,25 @@ class AssessmentTestSession extends State
         $routeItem = ($nextRouteItem === false) ? $this->getCurrentRouteItem() : $this->getRoute()->getNext();
         return ($routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR || $this->mustForcePreconditions() === true);
     }
+
+    public function __sleep(): array
+    {
+        return [
+            'sessionId',
+            'assessmentItemSessionStore',
+            'route',
+            'state',
+            'assessmentTest',
+            'lastOccurenceUpdate',
+            'pendingResponseStore',
+            'testResultsSubmission',
+            'durationStore',
+            'timeReference',
+            'adaptivity',
+            'visitedTestPartIdentifiers',
+            'path',
+            'config',
+            'alwaysAllowJumps',
+        ];
+    }
 }
