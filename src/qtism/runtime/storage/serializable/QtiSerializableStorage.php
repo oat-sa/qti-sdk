@@ -25,13 +25,17 @@ namespace qtism\runtime\storage\serializable;
 use Exception;
 use qtism\common\datatypes\files\FileManagerException;
 use qtism\data\AssessmentTest;
+use qtism\data\QtiIdentifiable;
 use qtism\runtime\storage\common\AbstractStorage;
+use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\storage\common\StorageException;
 use qtism\runtime\storage\driver\exception\DriverDeletionException;
 use qtism\runtime\storage\driver\StorageDriverInterface;
 use qtism\runtime\tests\AbstractSessionManager;
+use qtism\runtime\tests\AssessmentItemSession;
 use qtism\runtime\tests\AssessmentItemSessionStore;
 use qtism\runtime\tests\AssessmentTestSession;
+use qtism\runtime\tests\Route;
 use qtism\runtime\tests\RouteItem;
 
 class QtiSerializableStorage extends AbstractStorage
@@ -39,12 +43,25 @@ class QtiSerializableStorage extends AbstractStorage
     private SerializerInterface $serializer;
     private StorageDriverInterface $storageDriver;
 
+    private AssessmentTestSeeker $seeker;
+
     public function __construct(
         AbstractSessionManager $manager,
         AssessmentTest $test,
         SerializerInterface $serializer,
         StorageDriverInterface $storageDriver
     ) {
+        $this->seeker = new AssessmentTestSeeker($test, [
+            'assessmentItemRef',
+            'assessmentSection',
+            'testPart',
+            'outcomeDeclaration',
+            'responseDeclaration',
+            'templateDeclaration',
+            'branchRule',
+            'preCondition',
+            'itemSessionControl',
+        ]);
         $this->serializer = $serializer;
         $this->storageDriver = $storageDriver;
         parent::__construct($manager, $test);
@@ -90,8 +107,67 @@ class QtiSerializableStorage extends AbstractStorage
         if (!$serializedSession) {
             throw new StorageException('', StorageException::RETRIEVAL);
         }
+        $decodedSession = $this->serializer->decode($serializedSession);
+        $route = $decodedSession->getRoute();
+        $oldAssessmentItemSessionStore = $decodedSession->getAssessmentItemSessionStore();
+        $newAssessmentItemSessionStore = new AssessmentItemSessionStore();
+        $newLastOccurrenceUpdate = new \SplObjectStorage();
+        $newRoute = new Route();
+        $newRoute->setPosition($route->getPosition());
+        $route->rewind();
+        while ($route->valid()) {
+            $currentPosition = $route->getPosition();
+            $copyRouteItem = $route->getRouteItemAt($currentPosition);
+            if (
+                !isset($originalAssessmentItemRef)
+                || (
+                    $originalAssessmentItemRef instanceof QtiIdentifiable
+                    && $copyRouteItem->getAssessmentItemRef()->getIdentifier() !== $originalAssessmentItemRef->getIdentifier()
+                )
+            ) {
+                $originalAssessmentItemRef = $this->seeker->seekComponent('assessmentItemRef', $currentPosition);
+            }
 
-        return $this->serializer->decode($serializedSession);
+            $routeItem = new RouteItem(
+                $originalAssessmentItemRef,
+                $copyRouteItem->getAssessmentSection(),
+                $copyRouteItem->getTestPart(),
+                $this->getAssessmentTest()
+            );
+            $routeItem->setOccurence($copyRouteItem->getOccurence());
+            $routeItem->setBranchRules($copyRouteItem->getBranchRules());
+            $routeItem->setPreConditions($copyRouteItem->getPreConditions());
+            $newRoute->addRouteItemObject($routeItem);
+
+            if ($copyRouteItem->getOccurence() === 0) {
+                $assessmentItemSessions = $oldAssessmentItemSessionStore->getAssessmentItemSessions(
+                    $copyRouteItem->getAssessmentItemRef()
+                );
+                /** @var AssessmentItemSession $assessmentItemSession */
+                foreach ($assessmentItemSessions as $occurrence => $assessmentItemSession) {
+                    $assessmentItemSession->setAssessmentItem($originalAssessmentItemRef);
+
+                    $newAssessmentItemSessionStore->addAssessmentItemSession(
+                        $assessmentItemSession,
+                        $occurrence
+                    );
+                    $lastOccurrenceUpdate = $decodedSession->whichLastOccurenceUpdate(
+                        $copyRouteItem->getAssessmentItemRef()
+                    );
+                    if ($lastOccurrenceUpdate !== false) {
+                        $newLastOccurrenceUpdate[$originalAssessmentItemRef] = $lastOccurrenceUpdate;
+                    }
+                }
+            }
+
+            $route->next();
+        }
+        $decodedSession->setLastOccurenceUpdate($newLastOccurrenceUpdate);
+        $decodedSession->setRoute($newRoute);
+        $decodedSession->setAssessmentItemSessionStore($newAssessmentItemSessionStore);
+
+
+        return $decodedSession;
     }
 
     /**
