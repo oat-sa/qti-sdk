@@ -139,9 +139,13 @@ class QtiSerializableStorage extends AbstractStorage
             $routeItem->setPreConditions($copyRouteItem->getPreConditions());
             $newRoute->addRouteItemObject($routeItem);
 
-            if ($copyRouteItem->getOccurence() === 0) {
+            $oldAssessmentItemRef = $copyRouteItem->getAssessmentItemRef();
+            if (
+                $copyRouteItem->getOccurence() === 0
+                && $oldAssessmentItemSessionStore->hasAssessmentItemSession($oldAssessmentItemRef)
+            ) {
                 $assessmentItemSessions = $oldAssessmentItemSessionStore->getAssessmentItemSessions(
-                    $copyRouteItem->getAssessmentItemRef()
+                    $oldAssessmentItemRef
                 );
                 /** @var AssessmentItemSession $assessmentItemSession */
                 foreach ($assessmentItemSessions as $occurrence => $assessmentItemSession) {
