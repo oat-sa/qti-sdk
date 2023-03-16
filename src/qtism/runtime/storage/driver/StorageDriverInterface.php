@@ -31,7 +31,7 @@ interface StorageDriverInterface
     /**
      * @throws DriverReadingException
      */
-    public function read(string $key):string;
+    public function read(string $key): string;
 
     /**
      * @throws DriverWritingException

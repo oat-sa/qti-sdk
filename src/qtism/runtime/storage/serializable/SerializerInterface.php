@@ -26,7 +26,7 @@ use qtism\runtime\tests\AssessmentTestSession;
 
 interface SerializerInterface
 {
-    public function encode(AssessmentTestSession $assessmentTestSession): string;
+    public function serialize(AssessmentTestSession $assessmentTestSession): string;
 
-    public function decode(string $serializedAssessmentTestSession): AssessmentTestSession;
+    public function deserialize(string $serializedAssessmentTestSession): AssessmentTestSession;
 }

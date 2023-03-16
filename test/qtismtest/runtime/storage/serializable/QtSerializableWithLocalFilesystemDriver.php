@@ -41,6 +41,7 @@ use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\storage\binary\LocalQtiBinaryStorage;
+use qtism\runtime\storage\common\AssessmentTestSeeker;
 use qtism\runtime\storage\driver\FilesystemLocalDriver;
 use qtism\runtime\storage\serializable\PhpSerializer;
 use qtism\runtime\storage\serializable\QtiSerializableStorage;
@@ -59,8 +60,19 @@ class QtSerializableWithLocalFilesystemDriver extends QtiSmTestCase
         $test = $doc->getDocumentComponent();
 
         $sessionManager = new SessionManager(new FileSystemFileManager());
-        $serializer = new PhpSerializer();
+        $seeker = new AssessmentTestSeeker($test, [
+            'assessmentItemRef',
+            'assessmentSection',
+            'testPart',
+            'outcomeDeclaration',
+            'responseDeclaration',
+            'templateDeclaration',
+            'branchRule',
+            'preCondition',
+            'itemSessionControl',
+        ]);
         $localStorageDriver = new FilesystemLocalDriver();
+        $serializer = new PhpSerializer($sessionManager, $test, $seeker);
         $storage = new QtiSerializableStorage($sessionManager, $test, $serializer, $localStorageDriver);
         $session = $storage->instantiate();
         $sessionId = $session->getSessionId();
