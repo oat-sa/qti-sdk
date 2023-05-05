@@ -93,7 +93,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
         try {
             $bin = $this->getStream()->read(2);
 
-            return current(unpack('S', $bin));
+            return current($this->tryUnpack('S', $bin));
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::SHORT);
         }
@@ -161,7 +161,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
         try {
             $bin = $this->getStream()->read(8);
 
-            return current(unpack('d', $bin));
+            return current($this->tryUnpack('d', $bin));
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::FLOAT);
         }
@@ -229,7 +229,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
     {
         try {
             $binLength = $this->getStream()->read(2);
-            $length = current(unpack('S', $binLength));
+            $length = current($this->tryUnpack('S', $binLength));
 
             return $this->getStream()->read($length);
         } catch (StreamException $e) {
@@ -294,7 +294,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
     public function readDateTime(): ?DateTime
     {
         try {
-            $timeStamp = current(unpack('l', $this->getStream()->read(4)));
+            $timeStamp = current($this->tryUnpack('l', $this->getStream()->read(4)));
             $date = new DateTime('now', new DateTimeZone('UTC'));
 
             return $date->setTimestamp($timeStamp);
@@ -374,17 +374,29 @@ class BinaryStreamAccess extends AbstractStreamAccess
                 $strAction = ucfirst($strAction);
                 $msg = "${strAction} a ${strType} from a closed binary stream is not permitted.";
                 throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN, $e);
-                break;
 
             case StreamException::READ:
                 $msg = "An error occurred while ${strAction} a ${strType}.";
                 throw new BinaryStreamAccessException($msg, $this, $typeError, $e);
-                break;
 
             default:
                 $msg = "An unknown error occurred while ${strAction} a ${strType}.";
                 throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
-                break;
         }
+    }
+
+    /**
+     * @throws UnpackingStreamException
+     */
+    private function tryUnpack(string $format, string $string): array
+    {
+        $unpackResult = unpack($format, $string);
+        if (false !== $unpackResult) {
+            return $unpackResult;
+        }
+        throw new UnpackingStreamException(
+            sprintf('Invalid data provided `%s` for unpacking in format `%s`', $string, $format),
+            $this->getStream()
+        );
     }
 }
