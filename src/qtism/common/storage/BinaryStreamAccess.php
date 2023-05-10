@@ -127,7 +127,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
         try {
             $bin = $this->getStream()->read(4);
 
-            return (int)current(unpack('l', $bin));
+            return (int)current($this->tryUnpack('l', $bin));
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::INT);
         }
