@@ -37,6 +37,7 @@ class RandomFloat extends Expression
      * The min attribute value.
      *
      * @var float
+     * @qtism-bean-property
      */
     private $min = 0.0;
 
