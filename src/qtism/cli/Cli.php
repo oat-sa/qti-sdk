@@ -165,7 +165,7 @@ abstract class Cli
      */
     protected function error($message): void
     {
-        $this->out("%r${message}%n", true);
+        $this->out("%r{$message}%n", true);
     }
 
     /**
@@ -179,7 +179,7 @@ abstract class Cli
     protected function success($message): void
     {
         if ($this->isVerbose() === true) {
-            $this->out("%g${message}%n", true);
+            $this->out("%g{$message}%n", true);
         }
 
         exit(self::EXIT_SUCCESS);
@@ -209,7 +209,7 @@ abstract class Cli
         $msg = 'Missing argument';
 
         if (array_key_exists($longName, $options)) {
-            $msg .= " '${longName}'";
+            $msg .= " '{$longName}'";
         }
 
         $msg .= '.';
@@ -228,7 +228,7 @@ abstract class Cli
     protected function info($message): void
     {
         if ($this->isVerbose() === true) {
-            $this->out("%w${message}%n", true);
+            $this->out("%w{$message}%n", true);
         }
     }
 

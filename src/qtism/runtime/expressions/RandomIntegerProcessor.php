@@ -60,7 +60,7 @@ class RandomIntegerProcessor extends ExpressionProcessor
 
         if (is_int($min) && is_int($max) && is_int($step)) {
             if ($min > $max) {
-                $msg = "'min':'${min}' is greater than 'max':'${max}'.";
+                $msg = "'min':'{$min}' is greater than 'max':'{$max}'.";
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::LOGIC_ERROR);
             }
 

@@ -136,7 +136,7 @@ class MatchTableMarshaller extends Marshaller
                     $object->setDefaultValue($defaultValue);
                 } catch (InvalidArgumentException $e) {
                     $strType = BaseType::getNameByConstant($this->getBaseType());
-                    $msg = "Unable to transform '$defaultValue' in a ${strType}.";
+                    $msg = "Unable to transform '$defaultValue' in a {$strType}.";
                     throw new UnmarshallingException($msg, $element, $e);
                 }
             }

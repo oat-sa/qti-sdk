@@ -55,7 +55,7 @@ class FeedbackElementMarshaller extends ContentMarshaller
                     try {
                         $component->setShowHide(ShowHide::getConstantByName($showHide));
                     } catch (InvalidArgumentException $e) {
-                        $msg = "'${showHide}' is not a valid value for the 'showHide' attribute of element '" . $element->localName . "'.";
+                        $msg = "'{$showHide}' is not a valid value for the 'showHide' attribute of element '" . $element->localName . "'.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
 
@@ -65,11 +65,11 @@ class FeedbackElementMarshaller extends ContentMarshaller
                     foreach ($children as $child) {
                         $qtiClassName = $child->getQtiClassName();
                         if ($inline === false && !$child instanceof Flow) {
-                            $msg = "A '${qtiClassName}' cannot be contained by a 'feedbackBlock'.";
+                            $msg = "A '{$qtiClassName}' cannot be contained by a 'feedbackBlock'.";
                             throw new UnmarshallingException($msg, $element);
                         }
                         if ($inline === false && in_array($child->getQtiClassName(), $blockExclusion)) {
-                            $msg = "A '${qtiClassName}' cannot be contained by a 'feedbackBlock'.";
+                            $msg = "A '{$qtiClassName}' cannot be contained by a 'feedbackBlock'.";
                             throw new UnmarshallingException($msg, $element);
                         }
 

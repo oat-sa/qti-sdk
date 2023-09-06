@@ -588,7 +588,7 @@ class AssessmentItemSession extends State
                 // The session state is INTERACTING. Thus, we need to update the built-in
                 // duration variable.
                 $diffSeconds = Time::timeDiffSeconds($this->getTimeReference(), $time);
-                $diffDuration = new QtiDuration("PT${diffSeconds}S");
+                $diffDuration = new QtiDuration("PT{$diffSeconds}S");
                 $this['duration']->add($diffDuration);
             }
 
@@ -691,19 +691,19 @@ class AssessmentItemSession extends State
         if ($this->getState() === AssessmentItemSessionState::CLOSED) {
             if ($this->isMaxTimeReached() === true) {
                 $identifier = $this->getAssessmentItem()->getIdentifier();
-                $msg = "A new attempt for item '${identifier}' is not allowed. The maximum time limit in force is reached.";
+                $msg = "A new attempt for item '{$identifier}' is not allowed. The maximum time limit in force is reached.";
                 throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::DURATION_OVERFLOW);
             } elseif ($this->getAssessmentItem()->isAdaptive() === true && $this['completionStatus']->getValue() === self::COMPLETION_STATUS_COMPLETED) {
                 $identifier = $this->getAssessmentItem()->getIdentifier();
-                $msg = "A new attempt for item '${identifier}' is not allowed. It is adaptive and its completion status is 'completed'.";
+                $msg = "A new attempt for item '{$identifier}' is not allowed. It is adaptive and its completion status is 'completed'.";
                 throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
             } elseif ($submissionMode === SubmissionMode::SIMULTANEOUS && $numAttempts > 0) {
                 $identifier = $this->getAssessmentItem()->getIdentifier();
-                $msg = "A new attempt for item '${identifier}' is not allowed. The submissionMode is simultaneous and the only accepted attempt is already begun.";
+                $msg = "A new attempt for item '{$identifier}' is not allowed. The submissionMode is simultaneous and the only accepted attempt is already begun.";
                 throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
             } elseif ($submissionMode === SubmissionMode::INDIVIDUAL && $maxAttempts !== 0 && $numAttempts >= $maxAttempts) {
                 $identifier = $this->getAssessmentItem()->getIdentifier();
-                $msg = "A new attempt for item '${identifier}' is not allowed. The maximum number of attempts (${maxAttempts}) is reached.";
+                $msg = "A new attempt for item '{$identifier}' is not allowed. The maximum number of attempts ({$maxAttempts}) is reached.";
                 throw new AssessmentItemSessionException($msg, $this, AssessmentItemSessionException::ATTEMPTS_OVERFLOW);
             }
         }
@@ -1222,7 +1222,7 @@ class AssessmentItemSession extends State
     {
         $shufflings = $this->getShufflingStates();
         if (isset($shufflings[$shufflingStateIndex]) === false) {
-            $msg = "No Shuffling State at index ${shufflingStateIndex}.";
+            $msg = "No Shuffling State at index {$shufflingStateIndex}.";
             throw new OutOfBoundsException($msg);
         } else {
             return $shufflings[$shufflingStateIndex]->getIdentifierAt($choiceIndex);
@@ -1391,7 +1391,7 @@ class AssessmentItemSession extends State
 
                 if (TestUtils::isResponseValid($value, $constraint) === false) {
                     throw new AssessmentItemSessionException(
-                        "Response '${responseIdentifier}' is invalid against the constraints described in the interaction it is bound to.",
+                        "Response '{$responseIdentifier}' is invalid against the constraints described in the interaction it is bound to.",
                         $this,
                         AssessmentItemSessionException::INVALID_RESPONSE
                     );

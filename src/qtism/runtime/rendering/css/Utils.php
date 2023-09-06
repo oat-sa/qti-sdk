@@ -47,7 +47,7 @@ class Utils
     public static function mapSelector($selector, array $map): string
     {
         foreach ($map as $k => $v) {
-            $pattern = "/(?:(^|\s|\+|,|~|>)(${k})(\$|\s|,|\+|\.|\~|>|:|\[))/u";
+            $pattern = "/(?:(^|\s|\+|,|~|>)({$k})(\$|\s|,|\+|\.|\~|>|:|\[))/u";
             $count = 1;
             while ($count > 0) {
                 $selector = preg_replace($pattern, '$1.' . $v . '$3', $selector, -1, $count);
@@ -65,7 +65,7 @@ class Utils
     public static function mapPseudoClasses($selector, array $map)
     {
         foreach ($map as $k => $v) {
-            $selector = str_replace(":-${k}", ".${v}", $selector);
+            $selector = str_replace(":-{$k}", ".{$v}", $selector);
         }
 
         return $selector;

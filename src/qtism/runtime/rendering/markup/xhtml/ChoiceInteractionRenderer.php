@@ -68,7 +68,7 @@ class ChoiceInteractionRenderer extends InteractionRenderer
 
         $qtiCount = count($component->getSimpleChoices());
         $qtiCount = ($qtiCount % 2 === 1) ? $qtiCount + 1 : $qtiCount;
-        $this->additionalUserClass("qti-count-${qtiCount}");
+        $this->additionalUserClass("qti-count-{$qtiCount}");
 
         $fragment->firstChild->setAttribute('data-shuffle', ($component->mustShuffle() === true) ? 'true' : 'false');
         $fragment->firstChild->setAttribute('data-max-choices', (string)$component->getMaxChoices());

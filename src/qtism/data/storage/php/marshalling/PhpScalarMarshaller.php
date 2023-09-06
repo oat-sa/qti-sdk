@@ -77,7 +77,7 @@ class PhpScalarMarshaller extends PhpMarshaller
 
             $ctx->pushOnVariableStack($varName);
         } catch (StreamAccessException $e) {
-            $msg = "An error occurred while marshalling the scalar value '${scalar}'.";
+            $msg = "An error occurred while marshalling the scalar value '{$scalar}'.";
             throw new PhpMarshallingException($msg, PhpMarshallingException::STREAM, $e);
         }
     }

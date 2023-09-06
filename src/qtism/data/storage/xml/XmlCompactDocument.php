@@ -437,7 +437,7 @@ class XmlCompactDocument extends XmlDocument
                 }
 
                 $parentId = $parent->getIdentifier();
-                $href = "./testFeedback_TF_${parentId}_${occurence}.xml";
+                $href = "./testFeedback_TF_{$parentId}_{$occurence}.xml";
 
                 // Generate the document.
                 $doc = new XmlDocument();

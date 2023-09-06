@@ -75,7 +75,7 @@ class MapResponse extends Expression
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
         } else {
-            $msg = "${identifier} is not a valid QTI Identifier.";
+            $msg = "{$identifier} is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

@@ -66,7 +66,7 @@ class CorrectProcessor extends ExpressionProcessor
         } elseif ($var instanceof ResponseVariable) {
             return $var->getCorrectResponse();
         } else {
-            $msg = "The variable with identifier '${identifier}' is not a ResponseVariable object.";
+            $msg = "The variable with identifier '{$identifier}' is not a ResponseVariable object.";
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
         }
     }

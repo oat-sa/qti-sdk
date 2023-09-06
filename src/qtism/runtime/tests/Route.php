@@ -816,7 +816,7 @@ class Route implements Iterator
         if (isset($routeItems[$position])) {
             return $routeItems[$position];
         } else {
-            $msg = "No RouteItem object found at position '${position}'.";
+            $msg = "No RouteItem object found at position '{$position}'.";
             throw new OutOfBoundsException($msg);
         }
     }
@@ -959,7 +959,7 @@ class Route implements Iterator
             return $routeItem->getTestPart() === $testPart;
         } catch (OutOfBoundsException $e) {
             // The position does not refer to any RouteItem. This is out of the bounds of the route.
-            $msg = "The position '${position}' is out of the bounds of the route.";
+            $msg = "The position '{$position}' is out of the bounds of the route.";
             throw new OutOfBoundsException($msg, 0, $e);
         }
     }
@@ -988,7 +988,7 @@ class Route implements Iterator
             $map = $this->getTestPartIdentifierMap();
 
             if (isset($map[$testPart]) === false) {
-                $msg = "No testPart with identifier '${testPart}' is referenced in the Route.";
+                $msg = "No testPart with identifier '{$testPart}' is referenced in the Route.";
                 throw new OutOfBoundsException($msg);
             }
 
@@ -1022,7 +1022,7 @@ class Route implements Iterator
             $map = $this->getAssessmentSectionIdentifierMap();
 
             if (isset($map[$assessmentSection]) === false) {
-                $msg = "No assessmentSection with identifier '${assessmentSection}' found in the Route.";
+                $msg = "No assessmentSection with identifier '{$assessmentSection}' found in the Route.";
                 throw new OutOfBoundsException($msg);
             }
 
@@ -1057,14 +1057,14 @@ class Route implements Iterator
             if (($ref = $this->assessmentItemRefs[$assessmentItemRef]) !== null) {
                 return $this->assessmentItemRefMap[$ref];
             } else {
-                $msg = "No AssessmentItemRef with identifier '${assessmentItemRef}' found in the Route.";
+                $msg = "No AssessmentItemRef with identifier '{$assessmentItemRef}' found in the Route.";
                 throw new OutOfBoundsException($msg);
             }
         } elseif ($assessmentItemRef instanceof AssessmentItemRef) {
             if (isset($this->assessmentItemRefMap[$assessmentItemRef]) === true) {
                 return $this->assessmentItemRefMap[$assessmentItemRef];
             } else {
-                $msg = "No AssessmentItemRef with 'identifier' ${assessmentItemRef}' found in the Route.";
+                $msg = "No AssessmentItemRef with 'identifier' {$assessmentItemRef}' found in the Route.";
                 throw new OutOfBoundsException($msg);
             }
         } else {
@@ -1105,7 +1105,7 @@ class Route implements Iterator
             $id = ($identifier->hasPrefix() === false) ? $identifier->getVariableName() : $identifier->getPrefix();
             $occurence = ($identifier->hasPrefix() === false) ? 0 : ($identifier->getVariableName() - 1);
         } catch (InvalidArgumentException $e) {
-            $msg = "The given identifier '${identifier}' is an invalid branching target.";
+            $msg = "The given identifier '{$identifier}' is an invalid branching target.";
             throw new OutOfRangeException($msg);
         }
 
@@ -1163,7 +1163,7 @@ class Route implements Iterator
         }
 
         // No such identifier referenced in the route, cannot branch.
-        $msg = "No such identifier '${id}' found in the route for branching.";
+        $msg = "No such identifier '{$id}' found in the route for branching.";
         throw new OutOfBoundsException($msg);
     }
 

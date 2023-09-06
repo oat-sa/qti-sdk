@@ -61,6 +61,6 @@ class Utils
     {
         $shortClassName = Reflection::shortClassName($expression);
 
-        return "[${shortClassName}] ${message}";
+        return "[{$shortClassName}] {$message}";
     }
 }

@@ -39,7 +39,7 @@ class FlysystemV2Filesystem implements FilesystemInterface
             $this->filesystem->write($url, $content);
             return true;
         } catch (Exception $e) {
-            throw new FilesystemException("Could not write to file '${url}'", $e->getCode(), $e);
+            throw new FilesystemException("Could not write to file '{$url}'", $e->getCode(), $e);
         }
     }
 
@@ -48,7 +48,7 @@ class FlysystemV2Filesystem implements FilesystemInterface
         try {
             return $this->filesystem->read($url);
         } catch (FlysystemException $e) {
-            throw new FilesystemException("Could not read file '${url}'", $e->getCode(), $e);
+            throw new FilesystemException("Could not read file '{$url}'", $e->getCode(), $e);
         }
     }
 }

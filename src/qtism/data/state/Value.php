@@ -146,7 +146,7 @@ class Value extends QtiComponent
         if ($fieldIdentifier == '' || Format::isIdentifier($fieldIdentifier)) {
             $this->fieldIdentifier = $fieldIdentifier;
         } else {
-            $msg = "'${fieldIdentifier}' is not a valid QTI identifier.";
+            $msg = "'{$fieldIdentifier}' is not a valid QTI identifier.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -182,7 +182,7 @@ class Value extends QtiComponent
         if (in_array($baseType, BaseType::asArray()) || $baseType === -1) {
             $this->baseType = $baseType;
         } else {
-            $msg = "'${baseType}' is not a value from the BaseType enumeration.";
+            $msg = "'{$baseType}' is not a value from the BaseType enumeration.";
             throw new InvalidArgumentException($msg);
         }
     }

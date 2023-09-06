@@ -371,7 +371,7 @@ class Format
     public static function scale10(float $float, string $x = 'x', $precision = false): string
     {
         // 1. Transform in 'E' notation.
-        $mask = ($precision === false) ? '%e' : "%.${precision}e";
+        $mask = ($precision === false) ? '%e' : "%.{$precision}e";
         $strFloat = sprintf($mask, $float);
 
         // 2. Transform the 'E' notation into 'x 10^n' notation.
@@ -398,7 +398,7 @@ class Format
             }
         }
 
-        return $parts[0] . " ${x} 10" . $newMantissa;
+        return $parts[0] . " {$x} 10" . $newMantissa;
     }
 
     /**

@@ -57,10 +57,10 @@ abstract class SetValueProcessor extends RuleProcessor
         $var = $state->getVariable($identifier);
 
         if ($var === null) {
-            $msg = "No variable with identifier '${identifier}' to be set in the current state.";
+            $msg = "No variable with identifier '{$identifier}' to be set in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
         } elseif (Reflection::isInstanceOf($var, $this->getVariableType()) === false) {
-            $msg = "The variable to set '${identifier}' is not an instance of '" . $this->getVariableType() . "'.";
+            $msg = "The variable to set '{$identifier}' is not an instance of '" . $this->getVariableType() . "'.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_TYPE);
         }
 
@@ -97,7 +97,7 @@ abstract class SetValueProcessor extends RuleProcessor
             $varBaseType = (BaseType::getNameByConstant($var->getBaseType()) === false) ? 'noBaseType' : BaseType::getNameByConstant($var->getBaseType());
             $varCardinality = (Cardinality::getNameByConstant($var->getCardinality()));
             // The affected value does not match the baseType of the variable $var.
-            $msg = "Unable to set value ${val} to variable '${identifier}' (cardinality = ${varCardinality}, baseType = ${varBaseType}).";
+            $msg = "Unable to set value {$val} to variable '{$identifier}' (cardinality = {$varCardinality}, baseType = {$varBaseType}).";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_BASETYPE, $e);
         }
     }

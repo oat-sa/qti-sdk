@@ -117,15 +117,15 @@ class MapResponsePointProcessor extends ExpressionProcessor
                     throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_CARDINALITY);
                 } else {
                     $strBaseType = BaseType::getNameByConstant($var->getBaseType());
-                    $msg = "The MapResponsePoint expression applies only on variables with baseType 'point', baseType '${strBaseType}' given.";
+                    $msg = "The MapResponsePoint expression applies only on variables with baseType 'point', baseType '{$strBaseType}' given.";
                     throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_BASETYPE);
                 }
             } else {
-                $msg = "The variable with identifier '${identifier}' is not a ResponseVariable.";
+                $msg = "The variable with identifier '{$identifier}' is not a ResponseVariable.";
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
             }
         } else {
-            $msg = "No variable with identifier '${identifier}' could be found in the current State object.";
+            $msg = "No variable with identifier '{$identifier}' could be found in the current State object.";
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE);
         }
     }

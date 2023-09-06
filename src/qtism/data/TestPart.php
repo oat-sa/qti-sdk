@@ -170,7 +170,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
             $this->identifier = $identifier;
             $this->notify();
         } else {
-            $msg = "'${identifier}' is not a valid QTI Identifier.";
+            $msg = "'{$identifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -196,7 +196,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
         if (in_array($navigationMode, NavigationMode::asArray())) {
             $this->navigationMode = $navigationMode;
         } else {
-            $msg = "'${navigationMode}' is not a valid value for NavigationMode.";
+            $msg = "'{$navigationMode}' is not a valid value for NavigationMode.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -222,7 +222,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
         if (in_array($submissionMode, SubmissionMode::asArray())) {
             $this->submissionMode = $submissionMode;
         } else {
-            $msg = "'${submissionMode}' is not a valid value for SubmissionMode.";
+            $msg = "'{$submissionMode}' is not a valid value for SubmissionMode.";
             throw new InvalidArgumentException($msg);
         }
     }

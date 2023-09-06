@@ -111,7 +111,7 @@ class TestVariables extends ItemSubset
         if (Format::isIdentifier($variableIdentifier)) {
             $this->variableIdentifier = $variableIdentifier;
         } else {
-            $msg = "'${variableIdentifier}' is not a valid QTI Identifier.";
+            $msg = "'{$variableIdentifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -163,7 +163,7 @@ class TestVariables extends ItemSubset
         if (Format::isIdentifier($weightIdentifier) || empty($weightIdentifier)) {
             $this->weightIdentifier = $weightIdentifier;
         } else {
-            $msg = "'${weightIdentifier}' is not a valid QTI Identifier.";
+            $msg = "'{$weightIdentifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

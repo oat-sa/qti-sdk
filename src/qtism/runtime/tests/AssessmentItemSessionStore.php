@@ -106,7 +106,7 @@ class AssessmentItemSessionStore
             return $this->shelves[$assessmentItemRef][$occurence];
         } else {
             $itemId = $assessmentItemRef->getIdentifier();
-            $msg = "No AssessmentItemSession object bound to '${itemId}.${occurence}'.";
+            $msg = "No AssessmentItemSession object bound to '{$itemId}.{$occurence}'.";
             throw new OutOfBoundsException($msg);
         }
     }
@@ -141,7 +141,7 @@ class AssessmentItemSessionStore
             return $this->shelves[$assessmentItemRef];
         } else {
             $itemId = $assessmentItemRef->getIdentifier();
-            $msg = "No AssessmentItemSession objects bound to '${itemId}'.";
+            $msg = "No AssessmentItemSession objects bound to '{$itemId}'.";
             throw new OutOfBoundsException($msg);
         }
     }

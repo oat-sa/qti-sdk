@@ -199,7 +199,7 @@ class PrintedVariableEngine extends AbstractEngine
         $mappingIndicator = $this->getComponent()->getMappingIndicator();
 
         foreach ($variable->getValue() as $k => $v) {
-            $processedValues[] = "${k}${mappingIndicator}" . $this->processValue(Utils::inferBaseType($v), $v);
+            $processedValues[] = "{$k}{$mappingIndicator}" . $this->processValue(Utils::inferBaseType($v), $v);
         }
 
         return implode($this->getComponent()->getDelimiter(), $processedValues);

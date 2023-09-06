@@ -234,7 +234,7 @@ class ExpressionEngine extends AbstractEngine
 
                 // trace the processing of the operator.
                 $qtiName = $expression->getQtiClassName();
-                $trace = "Operator '${qtiName}' processed.";
+                $trace = "Operator '{$qtiName}' processed.";
                 $this->traceOperator($processor, $result);
 
                 if ($expression !== $this->getComponent()) {
@@ -250,7 +250,7 @@ class ExpressionEngine extends AbstractEngine
 
                 // trace the processing of the expression.
                 $qtiName = $expression->getQtiClassName();
-                $trace = "Expression '${qtiName}' processed.";
+                $trace = "Expression '{$qtiName}' processed.";
                 $this->traceExpression($processor, $result);
             }
         }
@@ -267,7 +267,7 @@ class ExpressionEngine extends AbstractEngine
     protected function traceExpression(ExpressionProcessor $processor, $result): void
     {
         $qtiClassName = $processor->getExpression()->getQtiClassName();
-        $this->trace("${qtiClassName} [${result}]");
+        $this->trace("{$qtiClassName} [{$result}]");
     }
 
     /**
@@ -285,7 +285,7 @@ class ExpressionEngine extends AbstractEngine
         }
 
         $qtiClassName = $processor->getExpression()->getQtiClassName();
-        $msg = "${qtiClassName}(" . implode(', ', $stringOperands) . ") [${result}]";
+        $msg = "{$qtiClassName}(" . implode(', ', $stringOperands) . ") [{$result}]";
         $this->trace($msg);
     }
 }

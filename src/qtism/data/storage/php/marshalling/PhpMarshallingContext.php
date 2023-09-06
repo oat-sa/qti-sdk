@@ -224,7 +224,7 @@ class PhpMarshallingContext
     {
         $quantity = (int)$quantity;
         if ($quantity < 1) {
-            $msg = "The 'quantity' argument must be >= 1, '${quantity}' given.";
+            $msg = "The 'quantity' argument must be >= 1, '{$quantity}' given.";
             throw new InvalidArgumentException($msg);
         }
 
@@ -232,7 +232,7 @@ class PhpMarshallingContext
         $stackCount = count($stack);
 
         if ($stackCount < $quantity) {
-            $msg = "The number of elements in the variable names stack (${stackCount}) is lower than the requested quantity (${quantity}).";
+            $msg = "The number of elements in the variable names stack ({$stackCount}) is lower than the requested quantity ({$quantity}).";
             throw new RuntimeException($msg);
         }
 

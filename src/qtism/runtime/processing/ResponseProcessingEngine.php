@@ -222,12 +222,12 @@ class ResponseProcessingEngine extends AbstractEngine
             }
 
             if (empty($finalTemplateFile)) {
-                $msg = "The template file could not be found: template='${template}', templateLocation='${templateLocation}'.";
+                $msg = "The template file could not be found: template='{$template}', templateLocation='{$templateLocation}'.";
                 throw new ResponseProcessingException($msg, $this, ResponseProcessingException::TEMPLATE_NOT_FOUND);
             }
 
             // Open the file and retrieve the rules.
-            $this->trace("loading response processing template '${finalTemplateFile}'");
+            $this->trace("loading response processing template '{$finalTemplateFile}'");
             $php = new PhpDocument();
             $php->load($finalTemplateFile);
             $rules = $php->getDocumentComponent()->getResponseRules();

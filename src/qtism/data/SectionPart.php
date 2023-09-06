@@ -158,7 +158,7 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
             $this->identifier = $identifier;
             $this->notify();
         } else {
-            $msg = "'${identifier}' is not a valid QTI Identifier.";
+            $msg = "'{$identifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

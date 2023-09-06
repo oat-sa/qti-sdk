@@ -82,7 +82,7 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
             $className = $nsPackage . $qtiClassName . 'Processor';
 
             if (!class_exists($className)) {
-                $msg = "No dedicated OperatorProcessor class found for QTI operator '${qtiClassName}'.";
+                $msg = "No dedicated OperatorProcessor class found for QTI operator '{$qtiClassName}'.";
                 throw new RuntimeException($msg);
             }
         }

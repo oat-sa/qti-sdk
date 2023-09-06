@@ -372,15 +372,15 @@ class BinaryStreamAccess extends AbstractStreamAccess
         switch ($e->getCode()) {
             case StreamException::NOT_OPEN:
                 $strAction = ucfirst($strAction);
-                $msg = "${strAction} a ${strType} from a closed binary stream is not permitted.";
+                $msg = "{$strAction} a {$strType} from a closed binary stream is not permitted.";
                 throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::NOT_OPEN, $e);
 
             case StreamException::READ:
-                $msg = "An error occurred while ${strAction} a ${strType}.";
+                $msg = "An error occurred while {$strAction} a {$strType}.";
                 throw new BinaryStreamAccessException($msg, $this, $typeError, $e);
 
             default:
-                $msg = "An unknown error occurred while ${strAction} a ${strType}.";
+                $msg = "An unknown error occurred while {$strAction} a {$strType}.";
                 throw new BinaryStreamAccessException($msg, $this, BinaryStreamAccessException::UNKNOWN, $e);
         }
     }

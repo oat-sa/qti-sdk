@@ -58,7 +58,7 @@ class QtiComponentCollection extends AbstractCollection
         if (empty($offset)) {
             parent::offsetSet($offset, $value);
         } else {
-            $msg = "QtiComponentCollection must be used as a bag (specific key '${offset}' given).";
+            $msg = "QtiComponentCollection must be used as a bag (specific key '{$offset}' given).";
             throw new RuntimeException($msg);
         }
     }
@@ -71,7 +71,7 @@ class QtiComponentCollection extends AbstractCollection
         if (empty($offset)) {
             parent::offsetUnset($offset);
         } else {
-            $msg = "QtiComponentCollection must be used as a bag (specific key '${offset}' given).";
+            $msg = "QtiComponentCollection must be used as a bag (specific key '{$offset}' given).";
             throw new RuntimeException($msg);
         }
     }

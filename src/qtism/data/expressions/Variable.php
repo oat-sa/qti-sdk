@@ -112,7 +112,7 @@ class Variable extends Expression
         if (Format::isIdentifier($identifier, false)) {
             $this->identifier = $identifier;
         } else {
-            $msg = "'${identifier}' is not a valid QTI Identifier.";
+            $msg = "'{$identifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -139,7 +139,7 @@ class Variable extends Expression
         if (empty($weightIdentifier) || Format::isIdentifier($weightIdentifier)) {
             $this->weightIdentifier = $weightIdentifier;
         } else {
-            $msg = "'${weightIdentifier}' is not a valid QTI Identifier.";
+            $msg = "'{$weightIdentifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

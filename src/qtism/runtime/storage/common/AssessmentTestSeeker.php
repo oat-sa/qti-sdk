@@ -222,7 +222,7 @@ class AssessmentTestSeeker
             }
         }
 
-        $msg = "Unable to find a QtiComponent object with QTI class '${class}' at position '${position}'.";
+        $msg = "Unable to find a QtiComponent object with QTI class '{$class}' at position '{$position}'.";
         throw new OutOfBoundsException($msg);
     }
 
@@ -253,7 +253,7 @@ class AssessmentTestSeeker
         }
 
         $class = $component->getQtiClassName();
-        $msg = "Unable to find the position of a QtiComponent with QTI class '${class}'.";
+        $msg = "Unable to find the position of a QtiComponent with QTI class '{$class}'.";
         throw new OutOfBoundsException($msg);
     }
 

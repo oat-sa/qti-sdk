@@ -57,7 +57,7 @@ class LocalFileResolver extends FileResolver
         $baseDir = pathinfo($baseUrl, PATHINFO_DIRNAME);
 
         if (empty($baseDir)) {
-            $msg = "The base directory of the document ('${baseDir}') could not be resolved.";
+            $msg = "The base directory of the document ('{$baseDir}') could not be resolved.";
             throw new ResolutionException($msg);
         }
 

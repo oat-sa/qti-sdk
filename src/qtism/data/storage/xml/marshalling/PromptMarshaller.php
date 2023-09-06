@@ -70,7 +70,7 @@ class PromptMarshaller extends ContentMarshaller
 
         if ($error === true) {
             $qtiClass = $c->getQtiClassName();
-            $msg = "A 'prompt' cannot contain '${qtiClass}' elements.";
+            $msg = "A 'prompt' cannot contain '{$qtiClass}' elements.";
             throw new UnmarshallingException($msg, $element);
         }
 

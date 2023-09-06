@@ -40,7 +40,7 @@ class ViewCollection extends IntegerCollection
     protected function checkType($value): void
     {
         if (!in_array($value, View::asArray())) {
-            $msg = "The ViewsCollection class only accept View enumeration values, '${value}' given.";
+            $msg = "The ViewsCollection class only accept View enumeration values, '{$value}' given.";
             throw new InvalidArgumentException($msg);
         }
     }

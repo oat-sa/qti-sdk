@@ -82,7 +82,7 @@ class OutcomeMinimum extends ItemSubset
         if (Format::isIdentifier($outcomeIdentifier)) {
             $this->outcomeIdentifier = $outcomeIdentifier;
         } else {
-            $msg = "'${outcomeIdentifier}' is not a valid QTI Identifier.";
+            $msg = "'{$outcomeIdentifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -108,7 +108,7 @@ class OutcomeMinimum extends ItemSubset
         if (Format::isIdentifier($weightIdentifier) || $weightIdentifier == '') {
             $this->weightIdentifier = $weightIdentifier;
         } else {
-            $msg = "'${weightIdentifier}' is not a valid QTI Identifier.";
+            $msg = "'{$weightIdentifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

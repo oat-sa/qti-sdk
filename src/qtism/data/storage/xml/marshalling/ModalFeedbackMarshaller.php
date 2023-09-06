@@ -53,7 +53,7 @@ class ModalFeedbackMarshaller extends ContentMarshaller
                     try {
                         $component->setShowHide(ShowHide::getConstantByName($showHide));
                     } catch (InvalidArgumentException $e) {
-                        $msg = "'${showHide}' is not a valid value for the 'showHide' attribute of element 'modalFeedback'.";
+                        $msg = "'{$showHide}' is not a valid value for the 'showHide' attribute of element 'modalFeedback'.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
 

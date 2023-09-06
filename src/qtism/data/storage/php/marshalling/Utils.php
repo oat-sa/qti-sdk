@@ -68,7 +68,7 @@ class Utils
             $object = new ReflectionObject($value);
             $className = mb_strtolower($object->getShortName(), 'UTF-8');
 
-            return "${className}_${occurence}";
+            return "{$className}_{$occurence}";
         } elseif (is_scalar($value)) {
             return gettype($value) . '_' . $occurence;
         } elseif (is_array($value)) {

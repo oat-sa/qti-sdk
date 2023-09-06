@@ -132,7 +132,7 @@ class MapEntryMarshaller extends Marshaller
                 throw new UnmarshallingException($msg, $element);
             }
         } catch (UnexpectedValueException $e) {
-            $msg = "The value '${mapKey}' of the 'mapKey' attribute could not be converted to a '" . BaseType::getNameByConstant($this->getBaseType()) . "' value.";
+            $msg = "The value '{$mapKey}' of the 'mapKey' attribute could not be converted to a '" . BaseType::getNameByConstant($this->getBaseType()) . "' value.";
             throw new UnmarshallingException($msg, $element, $e);
         }
     }

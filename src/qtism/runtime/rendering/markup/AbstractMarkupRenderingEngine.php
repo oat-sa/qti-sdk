@@ -580,7 +580,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
 
                         foreach ($maths as $math) {
                             // Find <mi> and <ci> elements.
-                            foreach ($xpath->query(".//m:mi[text() = '${templateIdentifier}']|.//m:ci[text() = '${templateIdentifier}']|.//mi[text() = '${templateIdentifier}']|.//ci[text() = '${templateIdentifier}']", $math) as $mathElement) {
+                            foreach ($xpath->query(".//m:mi[text() = '{$templateIdentifier}']|.//m:ci[text() = '{$templateIdentifier}']|.//mi[text() = '{$templateIdentifier}']|.//ci[text() = '{$templateIdentifier}']", $math) as $mathElement) {
                                 $localElementName = ($mathElement->localName === 'mi') ? 'mn' : 'cn';
                                 $newMathElement = $mathElement->ownerDocument->createElement($localElementName);
                                 $printedVariable = new PrintedVariable($templateIdentifier);
@@ -796,7 +796,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         } elseif (isset($renderers['qtism'][$className])) {
             return $renderers['qtism'][$className];
         } else {
-            $msg = "No AbstractRenderer implementation registered for QTI class name '${className}'.";
+            $msg = "No AbstractRenderer implementation registered for QTI class name '{$className}'.";
             throw new RenderingException($msg, RenderingException::NO_RENDERER);
         }
     }
@@ -1074,11 +1074,11 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $identifierType = QtiIdentifier::class;
         $scalarType = QtiScalar::class;
         $containerType = Container::class;
-        $scalarCheck = "${val} instanceof ${identifierType} && ${val}->equals(new ${identifierType}('${identifier}'))";
-        $containerCheck = "${val} instanceof ${containerType} && ${val}->contains(new ${identifierType}('${identifier}'))";
-        $valCheck = "(${scalarCheck} || ${containerCheck})";
+        $scalarCheck = "{$val} instanceof {$identifierType} && {$val}->equals(new {$identifierType}('{$identifier}'))";
+        $containerCheck = "{$val} instanceof {$containerType} && {$val}->contains(new {$identifierType}('{$identifier}'))";
+        $valCheck = "({$scalarCheck} || {$containerCheck})";
 
-        $ifStmt = " qtism-if (${operator}(${val} !== null && ${valCheck})): ";
+        $ifStmt = " qtism-if ({$operator}({$val} !== null && {$valCheck})): ";
         $endifStmt = ' qtism-endif ';
 
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
@@ -1107,11 +1107,11 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $conds = [];
 
         foreach ($component->getViews() as $v) {
-            $conds[] = "in_array(${v}, ${viewsName})";
+            $conds[] = "in_array({$v}, {$viewsName})";
         }
 
         $conds = (count($views) > 1) ? implode(' || ', $conds) : $conds[0];
-        $ifStmt = " qtism-if (${conds}): ";
+        $ifStmt = " qtism-if ({$conds}): ";
         $endifStmt = ' qtism-endif ';
 
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
@@ -1141,11 +1141,11 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $identifierType = QtiIdentifier::class;
         $scalarType = QtiScalar::class;
         $containerType = Container::class;
-        $scalarCheck = "${val} instanceof ${identifierType} && ${val}->equals(new ${identifierType}('${identifier}'))";
-        $containerCheck = "${val} instanceof ${containerType} && ${val}->contains(new ${identifierType}('${identifier}'))";
-        $valCheck = "(${scalarCheck} || ${containerCheck})";
+        $scalarCheck = "{$val} instanceof {$identifierType} && {$val}->equals(new {$identifierType}('{$identifier}'))";
+        $containerCheck = "{$val} instanceof {$containerType} && {$val}->contains(new {$identifierType}('{$identifier}'))";
+        $valCheck = "({$scalarCheck} || {$containerCheck})";
 
-        $ifStmt = " qtism-if (${operator}(${val} !== null && ${valCheck})): ";
+        $ifStmt = " qtism-if ({$operator}({$val} !== null && {$valCheck})): ";
         $endifStmt = ' qtism-endif ';
 
         $ifStmtCmt = $rendering->ownerDocument->createComment($ifStmt);
@@ -1166,7 +1166,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
         $interactionIndex = $this->interactionCounter;
         $stateName = $this->getStateName();
 
-        $includeStmtCmt = $rendering->ownerDocument->createComment(' qtism-include($' . "${stateName}, ${interactionIndex}, ${choiceIdentifier}, ${choiceIndex}): ");
+        $includeStmtCmt = $rendering->ownerDocument->createComment(' qtism-include($' . "{$stateName}, {$interactionIndex}, {$choiceIdentifier}, {$choiceIndex}): ");
         $endIncludeStmtCmt = $rendering->ownerDocument->createComment(' qtism-endinclude ');
         $rendering->insertBefore($includeStmtCmt, $rendering->firstChild);
         $rendering->appendChild($endIncludeStmtCmt);
