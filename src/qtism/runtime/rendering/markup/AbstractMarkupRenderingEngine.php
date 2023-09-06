@@ -134,6 +134,11 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     public const CSSCLASS_ABSTRACT = 9;
 
     /**
+     * Use twig tags to generate template
+     */
+    public const TWIG_ORIENTED = 10;
+
+    /**
      * An array used to 'tag' explored Component object.
      *
      * @var array
@@ -638,6 +643,10 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
             $this->includeChoiceComponent($component, $rendering);
         }
 
+        if ($this->mustTwigFeedbackComponent($component) === true) {
+            $this->twigFeedbackComponent($component, $rendering);
+        }
+
         $this->setLastRendering($rendering);
     }
 
@@ -977,7 +986,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      */
     protected function mustTemplateRubricBlockComponent(QtiComponent $component): bool
     {
-        return (self::isRubricBlock($component) && $this->getViewPolicy() === self::TEMPLATE_ORIENTED);
+         return (self::isRubricBlock($component) && $this->getViewPolicy() === self::TEMPLATE_ORIENTED);
     }
 
     /**
@@ -1208,6 +1217,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      * * In CONTEXT_STATIC mode, the qti-show/qti-hide classes will be set on the rendered element depending on how the qti:feedbackElement is defined. It will never be discarded from the final rendering.
      * * In CONTEXT_AWARE mode, the component will be rendered as an element or discarded from the final rendering depending on the value of the variable referenced by the qti:feedbackElement.
      * * In TEMPLATE_ORIENTED mode, the component will be always rendered and enclosed in template tags, that can be processed later on depending on the needs.
+     * * In TWIG_ORIENTED mode, the component will be rendered and enclosed in twig template tags, that can be processed later on depending on the needs.
      *
      * @param int $policy AbstractMarkupRenderingEngine::CONTEXT_STATIC or AbstractMarkupRenderingEngine::CONTEXT_AWARE or AbstractMarkupRenderingEngine::TEMPLATE_ORIENTED.
      */
@@ -1549,5 +1559,28 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     public function getDocument(): DOMDocument
     {
         return $this->document;
+    }
+
+    private function twigFeedbackComponent(QtiComponent $component, DOMDocumentFragment $rendering)
+    {
+        $ifstatement = sprintf(
+            '{%% if getPrintedVariable(testSession, "%s", "%%s", false, 10, -1, ";", "", "=") == "%s" %%}',
+            $component->getOutcomeIdentifier(),
+            $component->getIdentifier()
+        );
+
+        $rendering->insertBefore(
+            $rendering->ownerDocument->createTextNode($ifstatement),
+            $rendering->firstChild
+        );
+
+        $rendering->appendChild(
+            $rendering->ownerDocument->createTextNode('{% endif %}')
+        );
+    }
+
+    private function mustTwigFeedbackComponent(QtiComponent $component): bool
+    {
+        return (self::isFeedback($component) && $this->getFeedbackShowHidePolicy() === self::TWIG_ORIENTED);
     }
 }
