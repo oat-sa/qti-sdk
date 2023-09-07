@@ -132,7 +132,7 @@ class AssessmentTestSeeker
      */
     protected function &getComponentStore(): array
     {
-        return $this->componentsStore;
+        return $this->componentStore;
     }
 
     /**
@@ -145,12 +145,12 @@ class AssessmentTestSeeker
     {
         $class = $component->getQtiClassName();
 
-        if (isset($this->componentsStore[$class]) === false) {
-            $this->componentsStore[$class] = [];
+        if (isset($this->componentStore[$class]) === false) {
+            $this->componentStore[$class] = [];
         }
 
         $position = $this->getClassCount($class);
-        $this->componentsStore[$class][$position] = $component;
+        $this->componentStore[$class][$position] = $component;
         $this->incrementClassCount($component);
 
         return $position;
@@ -168,8 +168,8 @@ class AssessmentTestSeeker
     {
         $component = false;
 
-        if (isset($this->componentsStore[$class]) === true && isset($this->componentsStore[$class][$position]) === true) {
-            $component = $this->componentsStore[$class][$position];
+        if (isset($this->componentStore[$class]) === true && isset($this->componentStore[$class][$position]) === true) {
+            $component = $this->componentStore[$class][$position];
         }
 
         return $component;
@@ -186,7 +186,7 @@ class AssessmentTestSeeker
         $position = false;
         $class = $component->getQtiClassName();
 
-        if ((isset($this->componentsStore[$class]) === true) && ($search = array_search($component, $this->componentsStore[$class], true)) !== false) {
+        if ((isset($this->componentStore[$class]) === true) && ($search = array_search($component, $this->componentStore[$class], true)) !== false) {
             $position = $search;
         }
 
