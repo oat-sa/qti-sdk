@@ -7,10 +7,10 @@ use qtism\data\storage\xml\XmlCompactDocument;
 
 $test = $argv[1];
 
-$xmlFile = __DIR__ . "/../runtime/${test}.xml";
+$xmlFile = __DIR__ . "/../runtime/{$test}.xml";
 $xmlDoc = new XmlCompactDocument();
 $xmlDoc->load($xmlFile);
 
 $phpDoc = new PhpDocument();
 $phpDoc->setDocumentComponent($xmlDoc->getDocumentComponent());
-$phpDoc->save("${test}.php");
+$phpDoc->save("{$test}.php");

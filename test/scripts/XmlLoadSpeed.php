@@ -29,7 +29,7 @@ function testAssessmentItems(array $files, $validate = false): void
         $outcomeDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('outcomeDeclaration'));
         $responseDeclarationCount = count($itemDoc->getDocumentComponent()->getComponentsByClassName('responseDeclaration'));
 
-        outputDescription("${responseDeclarationCount} resonseDeclaration(s), ${outcomeDeclarationCount} outcomeDeclaration(s)");
+        outputDescription("{$responseDeclarationCount} resonseDeclaration(s), {$outcomeDeclarationCount} outcomeDeclaration(s)");
         outputDescription('Memory usage is ' . (memory_get_usage() / 1024 ** 2) . ' MB');
         output('');
 
@@ -64,7 +64,7 @@ function testAssessmentTests(array $files, $validate = false): void
         $sectionCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentSection'));
         $itemCount = count($testDoc->getDocumentComponent()->getComponentsByClassName('assessmentItemRef'));
 
-        outputDescription("${partCount} testPart(s), ${sectionCount} assessmentSection(s), ${itemCount} assessmentItemRef(s)");
+        outputDescription("{$partCount} testPart(s), {$sectionCount} assessmentSection(s), {$itemCount} assessmentItemRef(s)");
         outputDescription('Memory usage is ' . (memory_get_usage() / 1024 ** 2) . ' MB');
 
         output('');
@@ -99,7 +99,7 @@ function outputAverage($avg): void
  */
 function outputDescription($msg): void
 {
-    output(" + ${msg}");
+    output(" + {$msg}");
 }
 
 /**
@@ -107,7 +107,7 @@ function outputDescription($msg): void
  */
 function output($msg): void
 {
-    echo "${msg}\n";
+    echo "{$msg}\n";
 }
 
 /**

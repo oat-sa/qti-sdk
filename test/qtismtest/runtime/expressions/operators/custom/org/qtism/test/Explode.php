@@ -25,7 +25,7 @@ class Explode extends CustomOperatorProcessor
             $msg = "The 'org.qtism.test.Explode' custom operator implementation requires 1 operand. None given.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NOT_ENOUGH_OPERANDS);
         } elseif ($count > 1) {
-            $msg = "The 'org.qtism.test.Explode' custom operator implementation requires 1 operand. ${count} given.";
+            $msg = "The 'org.qtism.test.Explode' custom operator implementation requires 1 operand. {$count} given.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::TOO_MUCH_OPERANDS);
         } else {
             parent::setOperands($operands);

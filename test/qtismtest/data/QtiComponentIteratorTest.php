@@ -143,13 +143,13 @@ class QtiComponentIteratorTest extends QtiSmTestCase
         $dir = self::samplesDir();
 
         return [
-            ["${dir}custom/runtime/itemsubset.xml", 7, ['responseProcessing']],
-            ["${dir}custom/runtime/itemsubset.xml", 1, ['testPart']],
-            ["${dir}custom/runtime/itemsubset.xml", 3, ['assessmentSection']],
-            ["${dir}custom/runtime/itemsubset.xml", 11, ['responseProcessing', 'testPart', 'assessmentSection']],
-            ["${dir}custom/runtime/itemsubset.xml", 15, ['outcomeDeclaration']],
-            ["${dir}custom/runtime/itemsubset.xml", 0, ['x']],
-            ["${dir}custom/runtime/itemsubset.xml", 0, ['x', 'y']],
+            ["{$dir}custom/runtime/itemsubset.xml", 7, ['responseProcessing']],
+            ["{$dir}custom/runtime/itemsubset.xml", 1, ['testPart']],
+            ["{$dir}custom/runtime/itemsubset.xml", 3, ['assessmentSection']],
+            ["{$dir}custom/runtime/itemsubset.xml", 11, ['responseProcessing', 'testPart', 'assessmentSection']],
+            ["{$dir}custom/runtime/itemsubset.xml", 15, ['outcomeDeclaration']],
+            ["{$dir}custom/runtime/itemsubset.xml", 0, ['x']],
+            ["{$dir}custom/runtime/itemsubset.xml", 0, ['x', 'y']],
         ];
     }
 }

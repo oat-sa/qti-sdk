@@ -61,5 +61,5 @@ foreach ($templates as $t) {
     }
     $meanPhp = $meanPhp / $iterations;
 
-    echo "+ ${t} (XML = ${meanXml} - PHP ${meanPhp})\n";
+    echo "+ {$t} (XML = {$meanXml} - PHP {$meanPhp})\n";
 }
