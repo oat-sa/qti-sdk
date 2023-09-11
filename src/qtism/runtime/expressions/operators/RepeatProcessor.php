@@ -75,10 +75,10 @@ class RepeatProcessor extends OperatorProcessor
             $varValue = $state[$varName];
 
             if ($varValue === null) {
-                $msg = "The variable with name '${varName}' could not be resolved.";
+                $msg = "The variable with name '{$varName}' could not be resolved.";
                 throw new OperatorProcessingException($msg, $this);
             } elseif (!$varValue instanceof QtiInteger) {
-                $msg = "The variable with name '${varName}' is not an integer value.";
+                $msg = "The variable with name '{$varName}' is not an integer value.";
                 throw new OperatorProcessingException($msg, $this);
             }
 

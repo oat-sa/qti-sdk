@@ -99,7 +99,7 @@ class Marshaller
             $json = $this->marshallUnit($data);
         } else {
             $className = get_class($this);
-            $msg = "The '${className}::marshall' method only takes State, QtiDatatype and null values as arguments, '";
+            $msg = "The '{$className}::marshall' method only takes State, QtiDatatype and null values as arguments, '";
 
             if (is_object($data)) {
                 $msg .= get_class($data);

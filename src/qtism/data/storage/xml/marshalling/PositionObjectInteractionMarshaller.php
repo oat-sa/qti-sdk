@@ -110,7 +110,7 @@ class PositionObjectInteractionMarshaller extends Marshaller
                             throw new UnmarshallingException($msg, $element);
                         }
                     } else {
-                        $msg = "The value of the 'centePoint' attribute of a 'positionObjectInteraction' element must be composed of exactly 2 integer values, ${pointsCount} given.";
+                        $msg = "The value of the 'centePoint' attribute of a 'positionObjectInteraction' element must be composed of exactly 2 integer values, {$pointsCount} given.";
                         throw new UnmarshallingException($msg, $element);
                     }
                 }

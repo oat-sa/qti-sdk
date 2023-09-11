@@ -121,7 +121,7 @@ class QtiIdentifiableCollection extends QtiComponentCollection implements SplObs
         if ($offset !== null) {
             $msg = 'No specific offset can be set in a QtiIdentifiableCollection. ';
             $msg .= "The offset is always infered from the 'identifier' attribute of ";
-            $msg .= "the given QtiIdentifiable object. Given offset is '${offset}'.";
+            $msg .= "the given QtiIdentifiable object. Given offset is '{$offset}'.";
 
             throw new OutOfRangeException($msg);
         }

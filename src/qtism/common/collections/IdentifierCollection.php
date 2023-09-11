@@ -43,7 +43,7 @@ class IdentifierCollection extends StringCollection
             $msg = "IdentifierCollection class only accept string values, '" . gettype($value) . "' given.";
             throw new InvalidArgumentException($msg);
         } elseif (!Format::isIdentifier($value)) {
-            $msg = "IdentifierCollection class only accept valid QTI Identifiers, '${value}' given.";
+            $msg = "IdentifierCollection class only accept valid QTI Identifiers, '{$value}' given.";
             throw new InvalidArgumentException($msg);
         }
     }

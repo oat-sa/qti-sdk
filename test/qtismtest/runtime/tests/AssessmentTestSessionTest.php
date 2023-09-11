@@ -108,8 +108,8 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $assessmentTestSession->beginTestSession();
         // check Q01.1, Q01.2, Q01.3 item sessions are all initialized.
         for ($i = 1; $i <= 3; $i++) {
-            $score = $assessmentTestSession["Q01.${i}.SCORE"];
-            $response = $assessmentTestSession["Q01.${i}.RESPONSE"];
+            $score = $assessmentTestSession["Q01.{$i}.SCORE"];
+            $response = $assessmentTestSession["Q01.{$i}.RESPONSE"];
             $this::assertNull($response);
             $this::assertInstanceOf(QtiFloat::class, $score);
             $this::assertEquals(0.0, $score->getValue());

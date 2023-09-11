@@ -482,7 +482,7 @@ class Unmarshaller
                 }
             } catch (InvalidArgumentException $e) {
                 $strBaseType = BaseType::getNameByConstant($baseType);
-                $msg = "A value is not compliant with the '${strBaseType}' baseType.";
+                $msg = "A value is not compliant with the '{$strBaseType}' baseType.";
                 $code = UnmarshallingException::NOT_PCI;
                 throw new UnmarshallingException($msg, $code);
             }

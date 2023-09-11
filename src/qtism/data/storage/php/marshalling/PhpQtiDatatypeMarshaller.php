@@ -76,7 +76,7 @@ class PhpQtiDatatypeMarshaller extends PhpMarshaller
         }
 
         $className = get_class($toMarshall);
-        $msg = "Cannot deal with QtiDatatype '${className}'.";
+        $msg = "Cannot deal with QtiDatatype '{$className}'.";
         throw new PhpMarshallingException($msg, PhpMarshallingException::RUNTIME);
     }
 

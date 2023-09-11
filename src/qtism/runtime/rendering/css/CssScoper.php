@@ -466,7 +466,7 @@ class CssScoper implements Renderable
                 $this->afterCharReading($char);
             } catch (MemoryStreamException $e) {
                 $stream->close();
-                $msg = "An unexpected error occurred while reading the CSS file '${file}'.";
+                $msg = "An unexpected error occurred while reading the CSS file '{$file}'.";
                 throw new RenderingException($msg, RenderingException::RUNTIME, $e);
             }
         }
@@ -498,7 +498,7 @@ class CssScoper implements Renderable
             $stream->open();
             $this->setStream($stream);
         } else {
-            throw new RenderingException("The CSS file '${file}' could not be open.", RenderingException::RUNTIME);
+            throw new RenderingException("The CSS file '{$file}' could not be open.", RenderingException::RUNTIME);
         }
     }
 

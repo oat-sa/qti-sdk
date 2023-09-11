@@ -229,7 +229,7 @@ class Container extends AbstractCollection implements Comparable
             if ($d === null) {
                 $strings[] = 'NULL';
             } elseif ($d instanceof QtiString) {
-                $strings[] = "'${d}'";
+                $strings[] = "'{$d}'";
             } elseif ($d instanceof QtiBoolean) {
                 // PHP boolean primitive type.
                 $strings[] = ($d->getValue() === true) ? 'true' : 'false';

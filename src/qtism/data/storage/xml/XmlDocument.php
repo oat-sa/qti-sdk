@@ -242,7 +242,7 @@ class XmlDocument extends QtiDocument
             return $factory->createMarshaller($element)->unmarshall($element);
         } catch (UnmarshallingException $e) {
             $line = $e->getDOMElement()->getLineNo();
-            $msg = "An error occurred while processing QTI-XML at line ${line}.";
+            $msg = "An error occurred while processing QTI-XML at line {$line}.";
             throw new XmlStorageException($msg, XmlStorageException::READ, $e);
         } catch (MarshallerNotFoundException $e) {
             throw XmlStorageException::unsupportedComponentInVersion($e, $this->getVersion());
@@ -420,7 +420,7 @@ class XmlDocument extends QtiDocument
             return $this->getFilesystem()->read($url);
         } catch (FilesystemException $e) {
             throw new XmlStorageException(
-                "Cannot load QTI file at path '${url}'. It does not exist or is not readable.",
+                "Cannot load QTI file at path '{$url}'. It does not exist or is not readable.",
                 XmlStorageException::RESOLUTION,
                 $e
             );
@@ -439,7 +439,7 @@ class XmlDocument extends QtiDocument
             return $this->getFilesystem()->write($url, $content);
         } catch (Exception $e) {
             throw new XmlStorageException(
-                "An error occurred while saving QTI-XML file at '${url}'. Maybe the save location is not reachable?",
+                "An error occurred while saving QTI-XML file at '{$url}'. Maybe the save location is not reachable?",
                 XmlStorageException::WRITE
             );
         }

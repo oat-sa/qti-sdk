@@ -26,7 +26,7 @@ class FlysystemV1Filesystem implements FilesystemInterface
         try {
             return $this->filesystem->put($url, $content);
         } catch (Exception $e) {
-            throw new FilesystemException("Could not write to file '${url}'", $e->getCode(), $e);
+            throw new FilesystemException("Could not write to file '{$url}'", $e->getCode(), $e);
         }
     }
 
@@ -35,7 +35,7 @@ class FlysystemV1Filesystem implements FilesystemInterface
         try {
             return $this->filesystem->read($url);
         } catch (FileNotFoundException $e) {
-            throw new FilesystemException("Could not read file '${url}'", $e->getCode(), $e);
+            throw new FilesystemException("Could not read file '{$url}'", $e->getCode(), $e);
         }
     }
 }

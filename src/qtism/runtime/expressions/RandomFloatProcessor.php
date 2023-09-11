@@ -58,7 +58,7 @@ class RandomFloatProcessor extends ExpressionProcessor
             if ($min <= $max) {
                 return new QtiFloat(($min + lcg_value() * (abs($max - $min))));
             } else {
-                $msg = "'min':'${min}' is greater than 'max':'${max}'.";
+                $msg = "'min':'{$min}' is greater than 'max':'{$max}'.";
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::LOGIC_ERROR);
             }
         } else {

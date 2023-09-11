@@ -96,7 +96,7 @@ class XmlStorageException extends StorageException
         MarshallerNotFoundException $e,
         string $version
     ): self {
-        $msg = "'" . $e->getQtiClassName() . "' components are not supported in QTI version '${version}'.";
+        $msg = "'" . $e->getQtiClassName() . "' components are not supported in QTI version '{$version}'.";
         return new self($msg, self::VERSION, $e);
     }
 

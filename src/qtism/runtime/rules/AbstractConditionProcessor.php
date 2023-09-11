@@ -155,8 +155,8 @@ abstract class AbstractConditionProcessor extends RuleProcessor
 
         $className = ucfirst($this->getQtiNature());
         $nsClass = 'qtism\\data\\rules\\' . $className . 'Condition';
-        $ruleGetter = "get${className}Rules";
-        $statementGetter = "get${className}"; // + 'If'|'ElseIf'|'Else'
+        $ruleGetter = "get{$className}Rules";
+        $statementGetter = "get{$className}"; // + 'If'|'ElseIf'|'Else'
 
         while (count($this->getTrail()) > 0) {
             $rule = $this->popTrail();

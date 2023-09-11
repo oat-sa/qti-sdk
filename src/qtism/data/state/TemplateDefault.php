@@ -91,7 +91,7 @@ class TemplateDefault extends QtiComponent
         if (Format::isIdentifier($templateIdentifier)) {
             $this->templateIdentifier = $templateIdentifier;
         } else {
-            $msg = "'${templateIdentifier}' is not a valid QTI Identifier.";
+            $msg = "'{$templateIdentifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

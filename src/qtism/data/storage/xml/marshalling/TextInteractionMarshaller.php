@@ -120,7 +120,7 @@ class TextInteractionMarshaller extends Marshaller
                 $class = 'qtism\\data\\content\\interactions\\' . $name;
                 $component = new $class($responseIdentifier);
             } catch (InvalidArgumentException $e) {
-                $msg = "The value '${responseIdentifier}' of the 'responseIdentifier' attribute of the '" . $element->localName . "' element is not a valid identifier.";
+                $msg = "The value '{$responseIdentifier}' of the 'responseIdentifier' attribute of the '" . $element->localName . "' element is not a valid identifier.";
                 throw new UnmarshallingException($msg, $element, $e);
             }
 

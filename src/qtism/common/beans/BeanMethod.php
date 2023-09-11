@@ -50,7 +50,7 @@ class BeanMethod
         try {
             $this->setMethod(new ReflectionMethod($class, $name));
         } catch (ReflectionException $e) {
-            $msg = "The method '${name}' does not exist.";
+            $msg = "The method '{$name}' does not exist.";
             throw new BeanException($msg, BeanException::NO_METHOD, $e);
         }
     }

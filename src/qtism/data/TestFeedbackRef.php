@@ -131,7 +131,7 @@ class TestFeedbackRef extends QtiComponent
         if (in_array($access, TestFeedbackAccess::asArray(), true)) {
             $this->access = $access;
         } else {
-            $msg = "'${access}' is not a value from the TestFeedbackAccess enumeration.";
+            $msg = "'{$access}' is not a value from the TestFeedbackAccess enumeration.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -157,7 +157,7 @@ class TestFeedbackRef extends QtiComponent
         if (Format::isIdentifier((string)$outcomeIdentifier)) {
             $this->outcomeIdentifier = $outcomeIdentifier;
         } else {
-            $msg = "'${outcomeIdentifier}' is not a valid QTI Identifier.";
+            $msg = "'{$outcomeIdentifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -183,7 +183,7 @@ class TestFeedbackRef extends QtiComponent
         if (Format::isIdentifier((string)$identifier, false)) {
             $this->identifier = $identifier;
         } else {
-            $msg = "'${identifier}' is not a valid QTI Identifier.";
+            $msg = "'{$identifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -209,7 +209,7 @@ class TestFeedbackRef extends QtiComponent
         if (in_array($showHide, ShowHide::asArray(), true)) {
             $this->showHide = $showHide;
         } else {
-            $msg = "'${showHide}' is not a value from the ShowHide enumeration.";
+            $msg = "'{$showHide}' is not a value from the ShowHide enumeration.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -234,7 +234,7 @@ class TestFeedbackRef extends QtiComponent
         if (Format::isUri($href) === true) {
             $this->href = $href;
         } else {
-            $msg = "'${href}' is not a valid URI.";
+            $msg = "'{$href}' is not a valid URI.";
             throw new InvalidArgumentException($msg);
         }
     }

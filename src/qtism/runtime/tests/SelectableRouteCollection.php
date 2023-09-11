@@ -59,12 +59,12 @@ class SelectableRouteCollection extends AbstractCollection
         $routes = &$this->getDataPlaceHolder();
 
         if (isset($routes[$position1]) === false) {
-            $msg = "No Route object at position '${position1}'.";
+            $msg = "No Route object at position '{$position1}'.";
             throw new OutOfBoundsException($msg);
         }
 
         if (isset($routes[$position2]) === false) {
-            $msg = "No Route object at position '${position2}'.";
+            $msg = "No Route object at position '{$position2}'.";
             throw new OutOfBoundsException($msg);
         }
 

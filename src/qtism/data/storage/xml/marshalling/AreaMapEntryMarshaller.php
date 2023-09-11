@@ -77,7 +77,7 @@ class AreaMapEntryMarshaller extends Marshaller
                         }
                     } catch (Exception $e) {
                         if (!$e instanceof UnmarshallingException) {
-                            $msg = "The attribute 'coords' with value '${coords}' has an invalid value.";
+                            $msg = "The attribute 'coords' with value '{$coords}' has an invalid value.";
                             throw new UnmarshallingException($msg, $element, $e);
                         } else {
                             throw $e;
@@ -88,7 +88,7 @@ class AreaMapEntryMarshaller extends Marshaller
                     throw new UnmarshallingException($msg, $element);
                 }
             } else {
-                $msg = "The 'shape' attribute value '${shape}' is not a valid value to represent QTI shapes.";
+                $msg = "The 'shape' attribute value '{$shape}' is not a valid value to represent QTI shapes.";
                 throw new UnmarshallingException($msg, $element);
             }
         } else {

@@ -76,7 +76,7 @@ class OutcomeMaximumProcessor extends ItemSubsetProcessor
                 if (isset($itemSession[$id]) && $itemSession->getVariable($id) instanceof OutcomeVariable) {
                     $var = $itemSession->getVariable($id);
                     $itemRefIdentifier = $itemSession->getAssessmentItem()->getIdentifier();
-                    $weight = (empty($weightIdentifier)) ? false : $testSession->getWeight("${itemRefIdentifier}.${weightIdentifier}");
+                    $weight = (empty($weightIdentifier)) ? false : $testSession->getWeight("{$itemRefIdentifier}.{$weightIdentifier}");
 
                     // Does this OutcomeVariable contain a value for normalMaximum?
                     if (($normalMaximum = $var->getNormalMaximum()) !== false) {

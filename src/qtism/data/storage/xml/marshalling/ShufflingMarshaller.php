@@ -71,7 +71,7 @@ class ShufflingMarshaller extends Marshaller
                 $msg = "A 'shuffling' element must contain at least 1 'shufflingGroup' element. None given.";
                 throw new UnmarshallingException($msg, $element);
             } elseif ($c > 2) {
-                $msg = "A 'shuffling' element must contain at most 2 'shufflingGroup' elements. ${c} given.";
+                $msg = "A 'shuffling' element must contain at most 2 'shufflingGroup' elements. {$c} given.";
                 throw new UnmarshallingException($msg, $element);
             } else {
                 $shufflingGroups = new ShufflingGroupCollection();

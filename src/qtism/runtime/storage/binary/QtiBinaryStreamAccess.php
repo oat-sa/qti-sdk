@@ -770,7 +770,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                     /** @var VariableDeclaration $variableDeclaration */
                     $variableDeclaration = $seeker->seekComponent($variableType, $varPosition);
                 } catch (OutOfBoundsException $e) {
-                    $msg = "No variable found at position ${varPosition} in the assessmentTest tree structure.";
+                    $msg = "No variable found at position {$varPosition} in the assessmentTest tree structure.";
                     throw new QtiBinaryStreamAccessException(
                         $msg,
                         $this,
@@ -819,7 +819,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $msg = 'An error occurred while reading an assessment item session.';
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
         } catch (OutOfBoundsException $e) {
-            $msg = "No assessmentItemRef found at position ${itemRefPosition} in the assessmentTest tree structure.";
+            $msg = "No assessmentItemRef found at position {$itemRefPosition} in the assessmentTest tree structure.";
             throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
         }
     }
@@ -1114,7 +1114,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                     $this->writeShort($seeker->seekPosition($responseDeclarations[$respId]));
                     $this->writeVariableValue($responseVariable);
                 } else {
-                    $msg = "No response variable with identifier '${respId}' found in related assessmentItemRef.";
+                    $msg = "No response variable with identifier '{$respId}' found in related assessmentItemRef.";
                     throw new QtiBinaryStreamAccessException(
                         $msg,
                         $this,

@@ -265,7 +265,7 @@ class AssessmentTestSession extends State
         if ($this->hasTimeReference() === true) {
             if ($this->getState() === AssessmentTestSessionState::INTERACTING) {
                 $diffSeconds = abs(Time::timeDiffSeconds($this->getTimeReference(), $time));
-                $diffDuration = new QtiDuration("PT${diffSeconds}S");
+                $diffDuration = new QtiDuration("PT{$diffSeconds}S");
 
                 // Update the duration store.
                 $routeItem = $this->getCurrentRouteItem();
@@ -1022,7 +1022,7 @@ class AssessmentTestSession extends State
         $route = $this->getRoute();
 
         if ($position >= $route->count()) {
-            $msg = "Position '${position}' is out of the Route boundaries.";
+            $msg = "Position '{$position}' is out of the Route boundaries.";
             throw new AssessmentTestSessionException($msg, AssessmentTestSessionException::FORBIDDEN_JUMP);
         }
 
@@ -1206,7 +1206,7 @@ class AssessmentTestSession extends State
             $v = new VariableIdentifier($identifier);
 
             if ($v->hasPrefix() === true || $v->hasSequenceNumber() === true) {
-                $msg = "'${identifier}' is not a valid item reference identifier.";
+                $msg = "'{$identifier}' is not a valid item reference identifier.";
                 throw new InvalidArgumentException($msg, 0);
             }
 
@@ -1221,7 +1221,7 @@ class AssessmentTestSession extends State
                 return false;
             }
         } catch (InvalidArgumentException $e) {
-            $msg = "'${identifier}' is not a valid item reference identifier.";
+            $msg = "'{$identifier}' is not a valid item reference identifier.";
             throw new InvalidArgumentException($msg, 0, $e);
         }
     }
@@ -1734,11 +1734,11 @@ class AssessmentTestSession extends State
             try {
                 $identifier = new VariableIdentifier($identifier);
                 if ($identifier->hasSequenceNumber() === true) {
-                    $msg = "The identifier ('${identifier}') cannot contain a sequence number.";
+                    $msg = "The identifier ('{$identifier}') cannot contain a sequence number.";
                     throw new InvalidArgumentException($msg);
                 }
             } catch (InvalidArgumentException $e) {
-                $msg = "'${identifier}' is not a valid variable identifier.";
+                $msg = "'{$identifier}' is not a valid variable identifier.";
                 throw new InvalidArgumentException($msg, 0, $e);
             }
         } elseif (!$identifier instanceof VariableIdentifier) {
@@ -1794,7 +1794,7 @@ class AssessmentTestSession extends State
             }
         } catch (InvalidArgumentException $e) {
             $variableIdentifier = $variable->getIdentifier();
-            $msg = "The identifier '${variableIdentifier}' of the variable to set is invalid.";
+            $msg = "The identifier '{$variableIdentifier}' of the variable to set is invalid.";
             throw new OutOfRangeException($msg, 0, $e);
         }
 
@@ -1916,7 +1916,7 @@ class AssessmentTestSession extends State
                 return null;
             }
         } catch (InvalidArgumentException $e) {
-            $msg = "AssessmentTestSession object addressed with an invalid identifier '${offset}'.";
+            $msg = "AssessmentTestSession object addressed with an invalid identifier '{$offset}'.";
             throw new OutOfRangeException($msg, 0, $e);
         }
     }
@@ -1944,7 +1944,7 @@ class AssessmentTestSession extends State
                 $data = &$this->getDataPlaceHolder();
                 $varName = $v->getVariableName();
                 if (isset($data[$varName]) === false) {
-                    $msg = "The variable '${varName}' to be set does not exist in the current context.";
+                    $msg = "The variable '{$varName}' to be set does not exist in the current context.";
                     throw new OutOfBoundsException($msg);
                 }
 
@@ -1975,7 +1975,7 @@ class AssessmentTestSession extends State
             }
         } catch (InvalidArgumentException $e) {
             // Invalid variable identifier.
-            $msg = "AssessmentTestSession object addressed with an invalid identifier '${offset}'.";
+            $msg = "AssessmentTestSession object addressed with an invalid identifier '{$offset}'.";
             throw new OutOfRangeException($msg, 0, $e);
         }
     }
@@ -1998,18 +1998,18 @@ class AssessmentTestSession extends State
             $v = new VariableIdentifier($offset);
 
             if ($v->hasPrefix() === true) {
-                $msg = "Only variables in the global scope of an AssessmentTestSession may be unset. '${offset}' is not in the global scope.";
+                $msg = "Only variables in the global scope of an AssessmentTestSession may be unset. '{$offset}' is not in the global scope.";
                 throw new OutOfBoundsException($msg);
             }
 
             if (isset($data[$offset])) {
                 $data[$offset]->setValue(null);
             } else {
-                $msg = "The variable '${offset}' does not exist in the AssessmentTestSession's global scope.";
+                $msg = "The variable '{$offset}' does not exist in the AssessmentTestSession's global scope.";
                 throw new OutOfBoundsException($msg);
             }
         } catch (InvalidArgumentException $e) {
-            $msg = "The variable identifier '${offset}' is not a valid variable identifier.";
+            $msg = "The variable identifier '{$offset}' is not a valid variable identifier.";
             throw new OutOfRangeException($msg, 0, $e);
         }
     }
@@ -2037,7 +2037,7 @@ class AssessmentTestSession extends State
 
             return isset($data[$offset]);
         } catch (InvalidArgumentException $e) {
-            $msg = "'${offset}' is not a valid variable identifier.";
+            $msg = "'{$offset}' is not a valid variable identifier.";
             throw new OutOfRangeException($msg);
         }
     }
@@ -2648,7 +2648,7 @@ class AssessmentTestSession extends State
                 $source = $constraint->getSource();
 
                 if ($minTimeRespected === false) {
-                    $msg = "Minimum duration of ${sourceNature} '${identifier}' not reached.";
+                    $msg = "Minimum duration of {$sourceNature} '{$identifier}' not reached.";
 
                     if ($source instanceof AssessmentTest) {
                         $code = AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_UNDERFLOW;
@@ -2662,7 +2662,7 @@ class AssessmentTestSession extends State
 
                     throw new AssessmentTestSessionException($msg, $code);
                 } elseif ($maxTimeRespected === false) {
-                    $msg = "Maximum duration of ${sourceNature} '${identifier}' not respected.";
+                    $msg = "Maximum duration of {$sourceNature} '{$identifier}' not respected.";
 
                     if ($source instanceof AssessmentTest) {
                         $code = AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_OVERFLOW;
@@ -2752,19 +2752,19 @@ class AssessmentTestSession extends State
 
                 case AssessmentItemSessionException::DURATION_OVERFLOW:
                     $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
-                    $msg = "Maximum duration of Item Session '${sessionIdentifier}' is reached.";
+                    $msg = "Maximum duration of Item Session '{$sessionIdentifier}' is reached.";
                     $code = AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW;
                     break;
 
                 case AssessmentItemSessionException::DURATION_UNDERFLOW:
                     $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
-                    $msg = "Minimum duration of Item Session '${sessionIdentifier}' not reached.";
+                    $msg = "Minimum duration of Item Session '{$sessionIdentifier}' not reached.";
                     $code = AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW;
                     break;
 
                 case AssessmentItemSessionException::ATTEMPTS_OVERFLOW:
                     $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
-                    $msg = "Maximum number of attempts of Item Session '${sessionIdentifier}' reached.";
+                    $msg = "Maximum number of attempts of Item Session '{$sessionIdentifier}' reached.";
                     $code = AssessmentTestSessionException::ASSESSMENT_ITEM_ATTEMPTS_OVERFLOW;
                     break;
 
@@ -2776,19 +2776,19 @@ class AssessmentTestSession extends State
 
                 case AssessmentItemSessionException::INVALID_RESPONSE:
                     $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
-                    $msg = "An invalid response was given for Item Session '${sessionIdentifier}' while 'itemSessionControl->validateResponses' is in force.";
+                    $msg = "An invalid response was given for Item Session '{$sessionIdentifier}' while 'itemSessionControl->validateResponses' is in force.";
                     $code = AssessmentTestSessionException::ASSESSMENT_ITEM_INVALID_RESPONSE;
                     break;
 
                 case AssessmentItemSessionException::SKIPPING_FORBIDDEN:
                     $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
-                    $msg = "The Item Session '${sessionIdentifier}' is not allowed to be skipped.";
+                    $msg = "The Item Session '{$sessionIdentifier}' is not allowed to be skipped.";
                     $code = AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN;
                     break;
 
                 case AssessmentItemSessionException::STATE_VIOLATION:
                     $sessionIdentifier = $this->buildCurrentItemSessionIdentifier();
-                    $msg = "The Item Session '${sessionIdentifier}' entered an invalid state.";
+                    $msg = "The Item Session '{$sessionIdentifier}' entered an invalid state.";
                     $code = AssessmentTestSessionException::STATE_VIOLATION;
                     break;
             }
@@ -2812,7 +2812,7 @@ class AssessmentTestSession extends State
         $itemIdentifier = $this->getCurrentAssessmentItemRef()->getIdentifier();
         $itemOccurence = $this->getCurrentAssessmentItemRefOccurence();
 
-        return "${itemIdentifier}.${itemOccurence}";
+        return "{$itemIdentifier}.{$itemOccurence}";
     }
 
     /**

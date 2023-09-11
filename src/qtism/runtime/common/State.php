@@ -114,7 +114,7 @@ class State extends AbstractCollection
         if (isset($data[$variableIdentifier])) {
             unset($data[$variableIdentifier]);
         } else {
-            $msg = "No Variable object with identifier '${variableIdentifier}' found in the current State object.";
+            $msg = "No Variable object with identifier '{$variableIdentifier}' found in the current State object.";
             throw new OutOfBoundsException($msg);
         }
     }
@@ -131,7 +131,7 @@ class State extends AbstractCollection
             if (isset($placeholder[$offset])) {
                 $placeholder[$offset]->setValue($value);
             } else {
-                $msg = "No Variable object with identifier '${offset}' found in the current State object.";
+                $msg = "No Variable object with identifier '{$offset}' found in the current State object.";
                 throw new OutOfBoundsException($msg);
             }
         } else {

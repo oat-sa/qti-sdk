@@ -121,12 +121,12 @@ class Bean
         }
 
         if ($this->hasProperty($propertyName) === false) {
-            $msg = "The bean has no '${propertyName}' property.";
+            $msg = "The bean has no '{$propertyName}' property.";
             throw new BeanException($msg, BeanException::NO_METHOD);
         }
 
         if (($getterName = $this->hasGetter($propertyName)) === false) {
-            $msg = "The bean has no public getter for a '${propertyName}' property.";
+            $msg = "The bean has no public getter for a '{$propertyName}' property.";
             throw new BeanException($msg, BeanException::NO_METHOD);
         }
 
@@ -214,12 +214,12 @@ class Bean
         }
 
         if ($this->hasProperty($propertyName) === false) {
-            $msg = "The bean has no '${propertyName}' property.";
+            $msg = "The bean has no '{$propertyName}' property.";
             throw new BeanException($msg, BeanException::NO_METHOD);
         }
 
         if ($this->hasSetter($propertyName) === false) {
-            $msg = "The bean has no public setter for a '${propertyName}' property.";
+            $msg = "The bean has no public setter for a '{$propertyName}' property.";
             throw new BeanException($msg, BeanException::NO_METHOD);
         }
 
@@ -314,11 +314,11 @@ class Bean
             try {
                 return new BeanProperty($className, $propertyName);
             } catch (BeanException $e) {
-                $msg = "The bean property with name '${propertyName}' in class '${className}' could not be retrieved.";
+                $msg = "The bean property with name '{$propertyName}' in class '{$className}' could not be retrieved.";
                 throw new BeanException($msg, BeanException::NO_PROPERTY, $e);
             }
         } else {
-            $msg = "No bean property with name '${propertyName}' in class '${className}'.";
+            $msg = "No bean property with name '{$propertyName}' in class '{$className}'.";
             throw new BeanException($msg, BeanException::NO_PROPERTY);
         }
     }
@@ -490,13 +490,13 @@ class Bean
                 $name = $param->getName();
 
                 if ($this->hasProperty($name) === false) {
-                    $msg = "The constructor parameter '${name}' of class '${class}' has no related bean property.";
+                    $msg = "The constructor parameter '{$name}' of class '{$class}' has no related bean property.";
                     throw new BeanException($msg, BeanException::NO_PROPERTY);
                 } elseif ($this->hasGetter($name) === false) {
-                    $msg = "The constructor parameter '${name}' of class '${class}' has no related bean getter.";
+                    $msg = "The constructor parameter '{$name}' of class '{$class}' has no related bean getter.";
                     throw new BeanException($msg, BeanException::NO_METHOD);
                 } elseif ($this->hasSetter($name) === false) {
-                    $msg = "The construct parameter '${name}' of class '${class}' has no related bean setter.";
+                    $msg = "The construct parameter '{$name}' of class '{$class}' has no related bean setter.";
                     throw new BeanException($msg, BeanException::NO_METHOD);
                 }
             }
@@ -512,10 +512,10 @@ class Bean
             if ($this->hasProperty($name) === true) {
                 // Annotated property found.
                 if ($this->hasGetter($name) === false) {
-                    $msg = "The bean property '${name}' has no related bean getter.";
+                    $msg = "The bean property '{$name}' has no related bean getter.";
                     throw new BeanException($msg, BeanException::NO_METHOD);
                 } elseif ($this->hasSetter($name) === false) {
-                    $msg = "The bean property '${name}' has no related bean setter.";
+                    $msg = "The bean property '{$name}' has no related bean setter.";
                     throw new BeanException($msg, BeanException::NO_METHOD);
                 }
             }

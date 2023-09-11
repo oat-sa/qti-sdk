@@ -81,7 +81,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->getStream()->write('null');
             }
         } catch (StreamException $e) {
-            $msg = "An error occurred while writing the scalar value '${scalar}'.";
+            $msg = "An error occurred while writing the scalar value '{$scalar}'.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }
@@ -466,7 +466,7 @@ class PhpStreamAccess extends AbstractStreamAccess
                 $this->writeScalar($value);
             }
         } catch (StreamException $e) {
-            $msg = "An error occurred while writing an argument with value '${value}'.";
+            $msg = "An error occurred while writing an argument with value '{$value}'.";
             throw new StreamAccessException($msg, $this, 0, $e);
         }
     }

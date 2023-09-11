@@ -122,7 +122,7 @@ class VariableIdentifier
         if (Utils::isValidVariableIdentifier($identifier)) {
             $this->identifier = $identifier;
         } else {
-            $msg = "The identifier '${identifier}' is not a valid QTI Variable Name Identifier.";
+            $msg = "The identifier '{$identifier}' is not a valid QTI Variable Name Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

@@ -325,7 +325,7 @@ class AssessmentItemSessionTimingTest extends QtiSmAssessmentItemTestCase
 
             // simulate some time... 1 second to answer the item.
             $t = $i + 1;
-            $itemSession->setTime(self::createDate("2014-07-14 13:00:0${t}"));
+            $itemSession->setTime(self::createDate("2014-07-14 13:00:0{$t}"));
 
             $itemSession['RESPONSE'] = $attempts[$i];
             $itemSession->endAttempt();

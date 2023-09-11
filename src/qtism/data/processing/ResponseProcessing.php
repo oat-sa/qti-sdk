@@ -145,7 +145,7 @@ class ResponseProcessing extends QtiComponent
         if (Format::isUri($template) === true || (is_string($template) && empty($template))) {
             $this->template = $template;
         } else {
-            $msg = "The given template '${template}' is not a valid URI.";
+            $msg = "The given template '{$template}' is not a valid URI.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -183,7 +183,7 @@ class ResponseProcessing extends QtiComponent
         if (Format::isUri($templateLocation) === true || (is_string($templateLocation) && empty($templateLocation))) {
             $this->templateLocation = $templateLocation;
         } else {
-            $msg = "The given templateLocation '${templateLocation}' is not a valid URI.";
+            $msg = "The given templateLocation '{$templateLocation}' is not a valid URI.";
             throw new InvalidArgumentException($msg);
         }
     }

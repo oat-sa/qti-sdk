@@ -71,10 +71,10 @@ class AnyNProcessor extends OperatorProcessor
             $varValue = $state[$varName];
 
             if ($varValue === null) {
-                $msg = "The variable with name '${varName}' could not be resolved or is null.";
+                $msg = "The variable with name '{$varName}' could not be resolved or is null.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$varValue instanceof QtiInteger) {
-                $msg = "The variable with name '${varName}' is not an integer.";
+                $msg = "The variable with name '{$varName}' is not an integer.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_BASETYPE);
             } else {
                 $min = $varValue->getValue();
@@ -88,10 +88,10 @@ class AnyNProcessor extends OperatorProcessor
             $varValue = $state[$varName];
 
             if ($varValue === null) {
-                $msg = "The variable with name '${varName}' could not be resolved or is null.";
+                $msg = "The variable with name '{$varName}' could not be resolved or is null.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$varValue instanceof QtiInteger) {
-                $msg = "The variable with name '${varName}' is not an integer.";
+                $msg = "The variable with name '{$varName}' is not an integer.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
             } else {
                 $max = $varValue->getValue();

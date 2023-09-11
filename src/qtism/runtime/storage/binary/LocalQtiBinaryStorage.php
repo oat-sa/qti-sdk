@@ -101,7 +101,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
         $written = @file_put_contents($path, $stream->getBinary());
 
         if ($written === false || $written === 0) {
-            $msg = "An error occurred while persisting the binary stream at '${path}'.";
+            $msg = "An error occurred while persisting the binary stream at '{$path}'.";
             throw new RuntimeException($msg);
         }
     }
@@ -121,7 +121,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
         $read = @file_get_contents($path);
 
         if ($read === false || strlen($read) === 0) {
-            $msg = "An error occurred while retrieving the binary stream at '${path}'. Nothing could be read. The file is empty or missing.";
+            $msg = "An error occurred while retrieving the binary stream at '{$path}'. Nothing could be read. The file is empty or missing.";
             throw new RuntimeException($msg);
         }
 
