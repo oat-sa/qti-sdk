@@ -321,7 +321,7 @@ abstract class Marshaller
     public function __call($method, $args)
     {
         if (count($args) < 1) {
-            throw new RuntimeException("Method '${method}' only accepts a single argument.");
+            throw new RuntimeException("Method '{$method}' only accepts a single argument.");
         }
 
         switch ($method) {
@@ -335,7 +335,7 @@ abstract class Marshaller
                 return $this->unmarshall(...$args);
 
             default:
-                throw new RuntimeException("Unknown method Marshaller::'${method}'.");
+                throw new RuntimeException("Unknown method Marshaller::'{$method}'.");
         }
     }
 
@@ -343,7 +343,7 @@ abstract class Marshaller
     {
         if (!$component instanceof QtiComponent || ($this->getExpectedQtiClassName() !== '' && $component->getQtiClassName() !== $this->getExpectedQtiClassName())) {
             $componentName = $this->getComponentName($component);
-            throw new RuntimeException("No marshaller implementation found while marshalling component '${componentName}'.");
+            throw new RuntimeException("No marshaller implementation found while marshalling component '{$componentName}'.");
         }
     }
 
@@ -351,7 +351,7 @@ abstract class Marshaller
     {
         if (!$element instanceof DOMElement || ($this->getExpectedQtiClassName() !== '' && $element->localName !== $this->getExpectedQtiClassName())) {
             $nodeName = $this->getElementName($element);
-            throw new RuntimeException("No Marshaller implementation found while unmarshalling element '${nodeName}'.");
+            throw new RuntimeException("No Marshaller implementation found while unmarshalling element '{$nodeName}'.");
         }
     }
 

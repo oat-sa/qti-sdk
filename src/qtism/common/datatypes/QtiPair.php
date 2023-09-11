@@ -76,7 +76,7 @@ class QtiPair implements QtiDatatype
         if (Format::isIdentifier($first)) {
             $this->first = $first;
         } else {
-            $msg = "'${first}' is an invalid QTI identifier.";
+            $msg = "'{$first}' is an invalid QTI identifier.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -102,7 +102,7 @@ class QtiPair implements QtiDatatype
         if (Format::isIdentifier($second)) {
             $this->second = $second;
         } else {
-            $msg = "'${second}' is an invalid QTI identifier.";
+            $msg = "'{$second}' is an invalid QTI identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

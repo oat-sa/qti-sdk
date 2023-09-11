@@ -55,7 +55,7 @@ class TemplateElementMarshaller extends ContentMarshaller
                     try {
                         $component->setShowHide(ShowHide::getConstantByName($showHide));
                     } catch (InvalidArgumentException $e) {
-                        $msg = "'${showHide}' is not a valid value for the 'showHide' attribute of element '" . $element->localName . "'.";
+                        $msg = "'{$showHide}' is not a valid value for the 'showHide' attribute of element '" . $element->localName . "'.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
 
@@ -73,7 +73,7 @@ class TemplateElementMarshaller extends ContentMarshaller
                         $component->setContent($content);
                     } catch (InvalidArgumentException $e) {
                         $mustContain = ($element->localName === 'feedbackInline') ? 'inline' : 'block';
-                        $msg = "The content of the '" . $element->localName . "' is invalid. It must only contain '${mustContain}' elements.";
+                        $msg = "The content of the '" . $element->localName . "' is invalid. It must only contain '{$mustContain}' elements.";
                         throw new UnmarshallingException($msg, $element, $e);
                     }
 

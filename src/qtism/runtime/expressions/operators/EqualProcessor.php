@@ -104,10 +104,10 @@ class EqualProcessor extends OperatorProcessor
                 $varValue = $state[$tolerance0Name];
 
                 if ($varValue === null) {
-                    $msg = "The variable with name '${tolerance0Name}' could not be resolved.";
+                    $msg = "The variable with name '{$tolerance0Name}' could not be resolved.";
                     throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
                 } elseif (!$varValue instanceof QtiFloat) {
-                    $msg = "The variable with name '${tolerance0Name}' is not a float.";
+                    $msg = "The variable with name '{$tolerance0Name}' is not a float.";
                     throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
                 }
 

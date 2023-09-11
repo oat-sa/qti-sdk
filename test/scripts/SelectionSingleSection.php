@@ -17,7 +17,7 @@ $sectionsDistribution = [];
 for ($i = 0; $i < $iterations; $i++) {
     $manager = new SessionManager(new FileSystemFileManager());
 
-    echo "Taking test ${i}...\n";
+    echo "Taking test {$i}...\n";
     $sections = [];
 
     $session = $manager->createAssessmentTestSession($doc->getDocumentComponent());
@@ -46,5 +46,5 @@ ksort($sectionsDistribution);
 echo "\nDistribution:\n";
 
 foreach ($sectionsDistribution as $section => $dist) {
-    echo "${section}: ${dist}\n";
+    echo "{$section}: {$dist}\n";
 }

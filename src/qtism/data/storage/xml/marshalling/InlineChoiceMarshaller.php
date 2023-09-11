@@ -52,7 +52,7 @@ class InlineChoiceMarshaller extends ContentMarshaller
             try {
                 $component = new $fqClass($identifier);
             } catch (InvalidArgumentException $e) {
-                $msg = "'${identifier}' is not a valid identifier for an 'inlineChoice' element.";
+                $msg = "'{$identifier}' is not a valid identifier for an 'inlineChoice' element.";
                 throw new UnmarshallingException($msg, $element, $e);
             }
 

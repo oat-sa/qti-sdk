@@ -312,7 +312,7 @@ class Utils
             return $attr;
         }
 
-        throw new InvalidArgumentException("Unknown datatype '${datatype}'.");
+        throw new InvalidArgumentException("Unknown datatype '{$datatype}'.");
     }
 
     /**
@@ -483,7 +483,7 @@ class Utils
             $formattedErrors = self::formatLibXmlErrors($libXmlErrors);
             if ($formattedErrors !== '') {
                 throw new XmlStorageException(
-                    "${exceptionMessage}:\n${formattedErrors}",
+                    "{$exceptionMessage}:\n{$formattedErrors}",
                     $exceptionCode,
                     null,
                     new LibXmlErrorCollection($libXmlErrors)

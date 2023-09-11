@@ -405,11 +405,11 @@ abstract class MarshallerFactory
                     $class = new ReflectionClass($this->getMappingEntry($qtiClassName));
                 } else {
                     // No qtiClassName/mapping entry found.
-                    $msg = "No mapping entry found for QTI class name '${qtiClassName}'.";
+                    $msg = "No mapping entry found for QTI class name '{$qtiClassName}'.";
                     throw new MarshallerNotFoundException($msg, $qtiClassName);
                 }
             } catch (ReflectionException $e) {
-                $msg = "No marshaller implementation could be found for component '${qtiClassName}'.";
+                $msg = "No marshaller implementation could be found for component '{$qtiClassName}'.";
                 throw new MarshallerNotFoundException($msg, $qtiClassName, $e);
             }
 

@@ -51,10 +51,10 @@ class BeanProperty
         try {
             $this->setProperty(new ReflectionProperty($class, $name));
         } catch (ReflectionException $e) {
-            $msg = "The class property with name '${name}' does not exist in class '${class}'.";
+            $msg = "The class property with name '{$name}' does not exist in class '{$class}'.";
             throw new BeanException($msg, BeanException::NO_PROPERTY, $e);
         } catch (BeanException $e) {
-            $msg = "The property with name '${name}' for class '${class}' is not annotated.";
+            $msg = "The property with name '{$name}' for class '{$class}' is not annotated.";
             throw new BeanException($msg, BeanException::NO_PROPERTY, $e);
         }
     }

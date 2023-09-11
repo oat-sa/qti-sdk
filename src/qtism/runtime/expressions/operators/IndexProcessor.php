@@ -70,17 +70,17 @@ class IndexProcessor extends OperatorProcessor
                 if ($index instanceof QtiInteger) {
                     $n = $index->getValue();
                 } else {
-                    $msg = "The value '${index}' is not an integer. Ordered containers can be only accessed by integers.";
+                    $msg = "The value '{$index}' is not an integer. Ordered containers can be only accessed by integers.";
                     throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
                 }
             } else {
-                $msg = "Unknown variable reference '${n}'.";
+                $msg = "Unknown variable reference '{$n}'.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             }
         }
 
         if ($n < 1) {
-            $msg = "The value of 'n' must be a non-zero postive integer, '${n}' given.";
+            $msg = "The value of 'n' must be a non-zero postive integer, '{$n}' given.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR);
         }
 

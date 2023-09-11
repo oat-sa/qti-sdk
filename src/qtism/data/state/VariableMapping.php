@@ -88,7 +88,7 @@ class VariableMapping extends QtiComponent
         if (Format::isIdentifier($source)) {
             $this->source = $source;
         } else {
-            $msg = "'${source}' is not a valid QTI identifier.";
+            $msg = "'{$source}' is not a valid QTI identifier.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -114,7 +114,7 @@ class VariableMapping extends QtiComponent
         if (Format::isIdentifier($target)) {
             $this->target = $target;
         } else {
-            $msg = "'${target}' is not a valid QTI identifier.";
+            $msg = "'{$target}' is not a valid QTI identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

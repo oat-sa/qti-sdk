@@ -161,7 +161,7 @@ class MapResponseProcessor extends ExpressionProcessor
                 throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::WRONG_VARIABLE_TYPE);
             }
         } else {
-            $msg = "No variable with identifier '${identifier}' could be found while processing MapResponse.";
+            $msg = "No variable with identifier '{$identifier}' could be found while processing MapResponse.";
             throw new ExpressionProcessingException($msg, $this, ExpressionProcessingException::NONEXISTENT_VARIABLE);
         }
     }

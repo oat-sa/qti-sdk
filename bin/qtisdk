@@ -38,6 +38,6 @@ switch ($module) {
         Render::main();
         break;
     default:
-        CliTools\err("%RUnknown module '${requestedModuleName}'. Available modules are: " . implode(',', $availableModules) . '.%n');
+        CliTools\err("%RUnknown module '{$requestedModuleName}'. Available modules are: " . implode(',', $availableModules) . '.%n');
         exit(Cli::EXIT_FAILURE);
 }

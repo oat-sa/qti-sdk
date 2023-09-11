@@ -53,7 +53,7 @@ class Exception
         do {
             $className = get_class($e);
             $message = $e->getMessage();
-            $returnValue .= ($withClassName === true) ? "[${className}] ${message}" : $message;
+            $returnValue .= ($withClassName === true) ? "[{$className}] {$message}" : $message;
 
             if ($e = $e->getPrevious()) {
                 $returnValue .= "\nCaused by:\n";

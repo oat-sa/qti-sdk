@@ -84,7 +84,7 @@ class PatternMatchProcessor extends OperatorProcessor
             return new QtiBoolean(false);
         } else {
             $errorType = OperatorUtils::lastPregErrorMessage();
-            $msg = "An internal error occurred while processing the regular expression '${rawPattern}': ${errorType}.";
+            $msg = "An internal error occurred while processing the regular expression '{$rawPattern}': {$errorType}.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::RUNTIME_ERROR);
         }
     }

@@ -130,7 +130,7 @@ class Utils
     {
         $givenValue = (is_object($value)) ? get_class($value) : gettype($value) . ':' . $value;
         $acceptedTypes = BaseType::getNameByConstant($baseType);
-        $msg = "The value '${givenValue}' is not compliant with the '${acceptedTypes}' baseType.";
+        $msg = "The value '{$givenValue}' is not compliant with the '{$acceptedTypes}' baseType.";
         throw new InvalidArgumentException($msg);
     }
 

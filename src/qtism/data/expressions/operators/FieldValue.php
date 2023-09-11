@@ -65,7 +65,7 @@ class FieldValue extends Operator
         if (Format::isIdentifier($fieldIdentifier)) {
             $this->fieldIdentifier = $fieldIdentifier;
         } else {
-            $msg = "'${fieldIdentifier}' is not a valid QTI Identifier.";
+            $msg = "'{$fieldIdentifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

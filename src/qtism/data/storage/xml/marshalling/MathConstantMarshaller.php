@@ -61,7 +61,7 @@ class MathConstantMarshaller extends Marshaller
             if (($cst = MathEnumeration::getConstantByName($name)) !== false) {
                 return new MathConstant($cst);
             } else {
-                $msg = "'${name}' is not a valid value for the attribute 'name' from element '" . $element->localName . "'.";
+                $msg = "'{$name}' is not a valid value for the attribute 'name' from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);
             }
         } else {

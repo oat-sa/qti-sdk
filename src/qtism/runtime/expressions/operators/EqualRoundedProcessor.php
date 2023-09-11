@@ -92,10 +92,10 @@ class EqualRoundedProcessor extends OperatorProcessor
             $varValue = $state[$varName];
 
             if ($varValue === null) {
-                $msg = "The variable with name '${varName}' could not be resolved.";
+                $msg = "The variable with name '{$varName}' could not be resolved.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NONEXISTENT_VARIABLE);
             } elseif (!$varValue instanceof QtiInteger) {
-                $msg = "The variable with name '${varName}' is not an integer.";
+                $msg = "The variable with name '{$varName}' is not an integer.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::WRONG_VARIABLE_BASETYPE);
             }
 
@@ -113,7 +113,7 @@ class EqualRoundedProcessor extends OperatorProcessor
             try {
                 $rounded[] = $roundToProcessor->process();
             } catch (OperatorProcessingException $e) {
-                $msg = "An error occurred while rounding '${operand}'.";
+                $msg = "An error occurred while rounding '{$operand}'.";
                 throw new OperatorProcessingException($msg, $this, OperatorProcessingException::LOGIC_ERROR, $e);
             }
         }

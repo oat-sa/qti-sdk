@@ -61,7 +61,7 @@ class ExpressionProcessorFactory implements ProcessorFactory
             return new $className($expression);
         }
 
-        $msg = "The QTI expression class '${qtiClassName}' has no dedicated ExpressionProcessor class.";
+        $msg = "The QTI expression class '{$qtiClassName}' has no dedicated ExpressionProcessor class.";
         throw new RuntimeException($msg);
     }
 }

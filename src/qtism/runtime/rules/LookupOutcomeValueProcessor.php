@@ -67,10 +67,10 @@ class LookupOutcomeValueProcessor extends RuleProcessor
         $var = $state->getVariable($identifier);
 
         if ($var === null) {
-            $msg = "The variable to set '${identifier}' does not exist in the current state.";
+            $msg = "The variable to set '{$identifier}' does not exist in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
         } elseif (!$var instanceof OutcomeVariable) {
-            $msg = "The variable to set '${identifier}' is not an OutcomeVariable.";
+            $msg = "The variable to set '{$identifier}' is not an OutcomeVariable.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_TYPE);
         }
 
@@ -83,7 +83,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor
             // Let's lookup the associated table.
             $table = $var->getLookupTable();
             if ($table === null) {
-                $msg = "No lookupTable in declaration of variable '${identifier}'.";
+                $msg = "No lookupTable in declaration of variable '{$identifier}'.";
                 throw new RuleProcessingException($msg, $this, RuleProcessingException::LOGIC_ERROR);
             }
 
@@ -97,7 +97,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor
 
             if ($table instanceof InterpolationTable) {
                 if (!$val instanceof QtiFloat && !$val instanceof QtiInteger && !$val instanceof QtiDuration) {
-                    $msg = "The value of variable '${identifier}' must be integer, float or duration when used with an interpolationTable";
+                    $msg = "The value of variable '{$identifier}' must be integer, float or duration when used with an interpolationTable";
                     throw new RuleProcessingException($msg, $this, RuleProcessingException::LOGIC_ERROR);
                 }
 
@@ -116,7 +116,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor
             } else {
                 // $table instanceof MatchTable
                 if (!$val instanceof QtiInteger) {
-                    $msg = "The value of the variable '${identifier}' must be integer when used with a matchTable.";
+                    $msg = "The value of the variable '{$identifier}' must be integer when used with a matchTable.";
                     throw new RuleProcessingException($msg, $this, RuleProcessingException::LOGIC_ERROR);
                 }
 
@@ -134,7 +134,7 @@ class LookupOutcomeValueProcessor extends RuleProcessor
                 $state[$identifier] = $finalVal;
             } catch (InvalidArgumentException $e) {
                 // $targetVal's baseType not compliant with target variable's baseType.
-                $msg = "The looked up value's baseType is not compliant with the baseType of variable '${identifier}'.";
+                $msg = "The looked up value's baseType is not compliant with the baseType of variable '{$identifier}'.";
                 throw new RuleProcessingException($msg, $this, RuleProcessingException::RUNTIME_ERROR);
             }
         } catch (ExpressionProcessingException $e) {

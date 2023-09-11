@@ -59,10 +59,10 @@ class SetCorrectResponseProcessor extends RuleProcessor
         $var = $state->getVariable($variableIdentifier);
 
         if ($var === null) {
-            $msg = "No variable with identifier '${variableIdentifier}' to be set in the current state.";
+            $msg = "No variable with identifier '{$variableIdentifier}' to be set in the current state.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::NONEXISTENT_VARIABLE);
         } elseif (!$var instanceof ResponseVariable) {
-            $msg = "The variable to set '${variableIdentifier}' is not an instance of 'ResponseVariable'.";
+            $msg = "The variable to set '{$variableIdentifier}' is not an instance of 'ResponseVariable'.";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_TYPE);
         }
 
@@ -74,7 +74,7 @@ class SetCorrectResponseProcessor extends RuleProcessor
             $varBaseType = (BaseType::getNameByConstant($var->getBaseType()) === false) ? 'noBaseType' : BaseType::getNameByConstant($var->getBaseType());
             $varCardinality = (Cardinality::getNameByConstant($var->getCardinality()));
             // The affected value does not match the baseType of the variable $var.
-            $msg = "Unable to set value ${val} to variable '${variableIdentifier}' (cardinality = ${varCardinality}, baseType = ${varBaseType}).";
+            $msg = "Unable to set value {$val} to variable '{$variableIdentifier}' (cardinality = {$varCardinality}, baseType = {$varBaseType}).";
             throw new RuleProcessingException($msg, $this, RuleProcessingException::WRONG_VARIABLE_BASETYPE, $e);
         } catch (ExpressionProcessingException $e) {
             $msg = "An error occurred while processing the expression bound with the 'SetCorrectResponse' rule.";

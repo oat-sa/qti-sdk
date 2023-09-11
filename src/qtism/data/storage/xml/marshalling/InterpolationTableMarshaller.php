@@ -136,7 +136,7 @@ class InterpolationTableMarshaller extends Marshaller
                 try {
                     $object->setDefaultValue(Utils::stringToDatatype($defaultValue, $this->getBaseType()));
                 } catch (UnexpectedValueException $e) {
-                    $msg = "Unable to transform '${defaultValue}' into float.";
+                    $msg = "Unable to transform '{$defaultValue}' into float.";
                     throw new UnmarshallingException($msg, $element, $e);
                 }
             }

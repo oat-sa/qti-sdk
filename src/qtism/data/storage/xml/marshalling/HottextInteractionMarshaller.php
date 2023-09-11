@@ -58,7 +58,7 @@ class HottextInteractionMarshaller extends ContentMarshaller
             try {
                 $component = new $fqClass($responseIdentifier, $content);
             } catch (InvalidArgumentException $e) {
-                $msg = "The value '${responseIdentifier}' for the attribute 'responseIdentifier' for element 'hottextInteraction' is not a valid QTI identifier.";
+                $msg = "The value '{$responseIdentifier}' for the attribute 'responseIdentifier' for element 'hottextInteraction' is not a valid QTI identifier.";
                 throw new UnmarshallingException($msg, $element, $e);
             }
 

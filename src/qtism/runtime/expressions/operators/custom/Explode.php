@@ -59,7 +59,7 @@ class Explode extends CustomOperatorProcessor
         $operands = $this->getOperands();
 
         if (($c = count($operands)) < 2) {
-            $msg = "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator takes 2 sub-expressions as parameters, ${c} given.";
+            $msg = "The 'qtism.runtime.expressions.operators.custom.Explode' custom operator takes 2 sub-expressions as parameters, {$c} given.";
             throw new OperatorProcessingException($msg, $this, OperatorProcessingException::NOT_ENOUGH_OPERANDS);
         } elseif ($operands->containsNull() === true) {
             return null;

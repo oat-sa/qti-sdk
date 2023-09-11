@@ -71,7 +71,7 @@ class MathConstant extends Expression
         if (in_array($name, MathEnumeration::asArray())) {
             $this->name = $name;
         } else {
-            $msg = "${name} is not a valid QTI Math constant.";
+            $msg = "{$name} is not a valid QTI Math constant.";
             throw new InvalidArgumentException($msg);
         }
     }

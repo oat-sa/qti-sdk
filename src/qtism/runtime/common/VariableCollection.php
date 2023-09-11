@@ -40,7 +40,7 @@ class VariableCollection extends AbstractCollection
     protected function checkType($value): void
     {
         if (!$value instanceof Variable) {
-            $msg = "The VariableCollection class only accept Variable objects, '${value}' given.";
+            $msg = "The VariableCollection class only accept Variable objects, '{$value}' given.";
             throw new InvalidArgumentException($msg);
         }
     }

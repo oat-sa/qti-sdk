@@ -50,17 +50,17 @@ class DurationStore extends State
 
         if (!$value instanceof OutcomeVariable) {
             $className = get_class($value);
-            $msg = "The DurationStore only aims at storing OutcomeVariable objects, ${className} object given.";
+            $msg = "The DurationStore only aims at storing OutcomeVariable objects, {$className} object given.";
             throw new InvalidArgumentException($msg);
         }
 
         if (($bt = $value->getBaseType()) !== BaseType::DURATION) {
             $baseTypeName = BaseType::getNameByConstant($bt);
             $msg = "The DurationStore only aims at storing OutcomeVariable objects with a 'duration' baseType, ";
-            $msg .= "'${baseTypeName}' baseType given ";
+            $msg .= "'{$baseTypeName}' baseType given ";
 
             $id = $value->getIdentifier();
-            $msg .= "for variable '${id}'.";
+            $msg .= "for variable '{$id}'.";
 
             throw new InvalidArgumentException($msg);
         }
@@ -68,10 +68,10 @@ class DurationStore extends State
         if (($bt = $value->getCardinality()) !== Cardinality::SINGLE) {
             $cardinalityName = Cardinality::getNameByConstant($bt);
             $msg = "The DurationStore only aims at storing OutcomeVariable objects with a 'single' cardinality, ";
-            $msg .= "'${cardinalityName}' cardinality given ";
+            $msg .= "'{$cardinalityName}' cardinality given ";
 
             $id = $value->getIdentifier();
-            $msg .= "for variable '${id}'.";
+            $msg .= "for variable '{$id}'.";
 
             throw new InvalidArgumentException($msg);
         }

@@ -330,7 +330,7 @@ class XmlDocumentTest extends QtiSmTestCase
         // This path does not resolve anything.
         $path = self::samplesDir() . 'invalid/unknown.xml';
 
-        $expectedMsg = "Cannot load QTI file at path '${path}'. It does not exist or is not readable.";
+        $expectedMsg = "Cannot load QTI file at path '{$path}'. It does not exist or is not readable.";
         $this->expectException(XmlStorageException::class);
         $this->expectExceptionMessage($expectedMsg);
         $this->expectExceptionCode(XmlStorageException::RESOLUTION);
@@ -445,7 +445,7 @@ class XmlDocumentTest extends QtiSmTestCase
             <sum>
                 <subtract>
                     <mathConstant name="pi"/>
-                    <mathConstant name="pi"/>            
+                    <mathConstant name="pi"/>
                 </subtract>
             </sum>');
 
@@ -481,7 +481,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument('2.2.0');
         $doc->loadFromString('
             <div>
-                <bdo dir="rtl">I am reversed!</bdo>            
+                <bdo dir="rtl">I am reversed!</bdo>
             </div>');
 
         // This should fail because in QTI 2.2.0 because <bdo> does not exist.
@@ -504,7 +504,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument('2.0.0');
         $doc->loadFromString('
             <div>
-                <bdo dir="rtl">I am reversed!</bdo>            
+                <bdo dir="rtl">I am reversed!</bdo>
             </div>');
     }
 
@@ -626,7 +626,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $path = 'invalid/unknown.xml';
 
         $this->expectException(XmlStorageException::class);
-        $this->expectExceptionMessage("Cannot load QTI file at path '${path}'. It does not exist or is not readable.");
+        $this->expectExceptionMessage("Cannot load QTI file at path '{$path}'. It does not exist or is not readable.");
 
         $doc->load($path);
     }

@@ -88,7 +88,7 @@ class ItemSubset extends Expression
         if (Format::isIdentifier($sectionIdentifier) || empty($sectionIdentifier)) {
             $this->sectionIdentifier = $sectionIdentifier;
         } else {
-            $msg = "'${sectionIdentifier}' is not a valid QTI Identifier.";
+            $msg = "'{$sectionIdentifier}' is not a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
     }

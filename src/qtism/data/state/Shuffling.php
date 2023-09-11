@@ -100,7 +100,7 @@ class Shuffling extends QtiComponent
             $msg = 'A Shuffling object must be composed of at least 1 ShufflingGroup object. None given';
             throw new InvalidArgumentException($msg);
         } elseif (($c = count($shufflingGroups)) > 2) {
-            $msg = "A Shuffling object must be composed of at most 2 ShufflingGroup objects. ${c} given.";
+            $msg = "A Shuffling object must be composed of at most 2 ShufflingGroup objects. {$c} given.";
             throw new InvalidArgumentException($msg);
         } else {
             $this->shufflingGroups = $shufflingGroups;
@@ -183,7 +183,7 @@ class Shuffling extends QtiComponent
             }
         }
 
-        throw new OutOfBoundsException("No identifier at index ${index}.");
+        throw new OutOfBoundsException("No identifier at index {$index}.");
     }
 
     /**

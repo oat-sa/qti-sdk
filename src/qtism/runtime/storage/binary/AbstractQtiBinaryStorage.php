@@ -233,7 +233,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $stream->close();
         } catch (Exception $e) {
             $sessionId = $assessmentTestSession->getSessionId();
-            $msg = "An error occurred while persisting AssessmentTestSession with ID '${sessionId}': " . $e->getMessage();
+            $msg = "An error occurred while persisting AssessmentTestSession with ID '{$sessionId}': " . $e->getMessage();
             throw new StorageException($msg, StorageException::PERSISTENCE, $e);
         }
     }

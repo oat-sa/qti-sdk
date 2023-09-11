@@ -76,7 +76,7 @@ class PhpDocument extends QtiDocument
         $written = @file_put_contents($url, $stream->getBinary());
 
         if ($written === false) {
-            throw new PhpStorageException("File located at '${url}' could not be written.");
+            throw new PhpStorageException("File located at '{$url}' could not be written.");
         }
 
         if ($written !== false && $exists === true && function_exists('opcache_invalidate') === true) {
@@ -189,7 +189,7 @@ class PhpDocument extends QtiDocument
     public function load(string $url): void
     {
         if (is_readable($url) === false) {
-            $msg = "The PHP document located at '${url}' is not readable or does not exist.";
+            $msg = "The PHP document located at '{$url}' is not readable or does not exist.";
             throw new PhpStorageException($msg, PhpStorageException::READ);
         }
 
@@ -199,7 +199,7 @@ class PhpDocument extends QtiDocument
             $this->setDocumentComponent($rootcomponent);
             $this->setUrl($url);
         } catch (Exception $e) {
-            $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document to be loaded at '${url}'.";
+            $msg = "A PHP Runtime Error occurred while executing the PHP source code representing the document to be loaded at '{$url}'.";
             throw new PhpStorageException($msg, PhpStorageException::UNKNOWN, $e);
         }
     }

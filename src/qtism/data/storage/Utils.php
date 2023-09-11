@@ -53,7 +53,7 @@ class Utils
     public static function stringToDatatype(?string $string, int $baseType)
     {
         $string = $string ?? '';
-        
+
         if (!in_array($baseType, BaseType::asArray(), true)) {
             $msg = 'BaseType must be a value from the BaseType enumeration.';
             throw new InvalidArgumentException($msg);
@@ -62,7 +62,7 @@ class Utils
         switch ($baseType) {
             case BaseType::BOOLEAN:
                 if (!Format::isBoolean($string)) {
-                    $msg = "'${string}' cannot be transformed into boolean.";
+                    $msg = "'{$string}' cannot be transformed into boolean.";
                     throw new UnexpectedValueException($msg);
                 }
 
@@ -70,7 +70,7 @@ class Utils
 
             case BaseType::INTEGER:
                 if (!Format::isInteger($string)) {
-                    $msg = "'${string}' cannot be transformed into integer.";
+                    $msg = "'{$string}' cannot be transformed into integer.";
                     throw new UnexpectedValueException($msg);
                 }
 
@@ -78,7 +78,7 @@ class Utils
 
             case BaseType::FLOAT:
                 if (!Format::isFloat($string)) {
-                    $msg = "'${string}' cannot be transformed into float.";
+                    $msg = "'{$string}' cannot be transformed into float.";
                     throw new UnexpectedValueException($msg);
                 }
 
@@ -86,7 +86,7 @@ class Utils
 
             case BaseType::URI:
                 if (!Format::isUri($string)) {
-                    $msg = "'${string}' is not a valid URI.";
+                    $msg = "'{$string}' is not a valid URI.";
                     throw new UnexpectedValueException($msg);
                 }
 
@@ -94,7 +94,7 @@ class Utils
 
             case BaseType::IDENTIFIER:
                 if (!Format::isIdentifier($string)) {
-                    $msg = "'${string}' is not a valid QTI Identifier.";
+                    $msg = "'{$string}' is not a valid QTI Identifier.";
                     throw new UnexpectedValueException($msg);
                 }
 
@@ -109,12 +109,12 @@ class Utils
                     return (int)$string;
                 }
 
-                $msg = "'${string}' is not a valid QTI Identifier nor a valid integer.";
+                $msg = "'{$string}' is not a valid QTI Identifier nor a valid integer.";
                 throw new UnexpectedValueException($msg);
 
             case BaseType::PAIR:
                 if (!Format::isPair($string)) {
-                    $msg = "'${string}' is not a valid pair.";
+                    $msg = "'{$string}' is not a valid pair.";
                     throw new UnexpectedValueException($msg);
                 }
 
@@ -123,7 +123,7 @@ class Utils
 
             case BaseType::DIRECTED_PAIR:
                 if (!Format::isDirectedPair($string)) {
-                    $msg = "'${string}' is not a valid directed pair.";
+                    $msg = "'{$string}' is not a valid directed pair.";
                     throw new UnexpectedValueException($msg);
                 }
 
@@ -132,7 +132,7 @@ class Utils
 
             case BaseType::DURATION:
                 if (!Format::isDuration($string)) {
-                    $msg = "'${string}' is not a valid duration.";
+                    $msg = "'{$string}' is not a valid duration.";
                     throw new UnexpectedValueException($msg);
                 }
 
@@ -146,7 +146,7 @@ class Utils
 
             case BaseType::POINT:
                 if (!Format::isPoint($string)) {
-                    $msg = "'${string}' is not valid point.";
+                    $msg = "'{$string}' is not valid point.";
                     throw new UnexpectedValueException($msg);
                 }
 
@@ -166,7 +166,7 @@ class Utils
     public static function stringToBoolean(string $string): bool
     {
         if (!Format::isBoolean($string)) {
-            throw new UnexpectedValueException("'${string}' cannot be transformed into boolean.");
+            throw new UnexpectedValueException("'{$string}' cannot be transformed into boolean.");
         }
 
         return strtolower(trim($string)) === 'true';
@@ -195,7 +195,7 @@ class Utils
             // the given shape?
             return new QtiCoords($shape, $intCoords);
         } else {
-            throw new UnexpectedValueException("'${string}' cannot be converted to Coords.");
+            throw new UnexpectedValueException("'{$string}' cannot be converted to Coords.");
         }
     }
 
