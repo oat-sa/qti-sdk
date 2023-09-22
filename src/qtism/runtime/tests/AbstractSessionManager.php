@@ -31,6 +31,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 use qtism\data\NavigationMode;
 use qtism\data\SubmissionMode;
+use qtism\data\TestPart;
 
 /**
  * The AbstractSessionManager class is a bed for instantiating
@@ -148,6 +149,7 @@ abstract class AbstractSessionManager
     {
         $routeStack = [];
 
+        /** @var TestPart $testPart */
         foreach ($test->getTestParts() as $testPart) {
             $assessmentSectionStack = [];
 
@@ -213,10 +215,18 @@ abstract class AbstractSessionManager
                     }
                 }
             }
+
+            // $route contains the currently processed testPart.
+            // Now, decorate last RouteItem of SelectableRoute with BranchRule objects if any.
+            if (!empty($route) && $route->count() > 0) {
+                $route->getLastRouteItem()->addBranchRules($testPart->getBranchRules());
+            }
         }
 
         $finalRoutes = $routeStack;
         $route = new SelectableRoute();
+
+        /** @var SelectableRoute $finalRoute */
         foreach ($finalRoutes as $finalRoute) {
             $route->appendRoute($finalRoute);
         }
