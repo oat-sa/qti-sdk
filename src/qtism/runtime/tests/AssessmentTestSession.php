@@ -2406,10 +2406,31 @@ class AssessmentTestSession extends State
         $stop = false;
 
         while ($route->valid() === true && $stop === false) {
+            $currentRouteItem = $route->current();
+            $branchRules = $currentRouteItem->getBranchRules();
+
+            if ($branchRules->count() === 0) {
+                $currentSection = $currentRouteItem->getAssessmentSection();
+                $sectionItems = $route->getRouteItemsByAssessmentSection($currentSection)->getArrayCopy();
+
+                if (end($sectionItems) === $currentRouteItem) {
+                    $branchRules = $currentSection->getBranchRules();
+                }
+
+                if ($branchRules->count() === 0) {
+                    $testPartItems = $route->getCurrentTestPartRouteItems()->getArrayCopy();
+
+                    if (end($testPartItems) === $currentRouteItem) {
+                        $branchRules = $currentRouteItem->getTestPart()->getBranchRules();
+                    }
+                }
+            }
+
+            $numberOfBranchRules = $branchRules->count();
+
             // Branchings?
-            if ($ignoreBranchings === false && count($route->current()->getBranchRules()) > 0 && $this->mustApplyBranchRules() === true) {
-                $branchRules = $route->current()->getBranchRules();
-                for ($i = 0; $i < count($branchRules); $i++) {
+            if ($ignoreBranchings === false && $numberOfBranchRules > 0 && $this->mustApplyBranchRules() === true) {
+                for ($i = 0; $i < $numberOfBranchRules; $i++) {
                     $engine = new ExpressionEngine($branchRules[$i]->getExpression(), $this);
                     $condition = $engine->process();
                     if ($condition !== null && $condition->getValue() === true) {
