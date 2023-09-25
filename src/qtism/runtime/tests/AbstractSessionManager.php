@@ -202,7 +202,6 @@ abstract class AbstractSessionManager
                             // Do the same as for branch rules for pre conditions, except that they must be
                             // attached on the first item of the route.
                             $route->getFirstRouteItem()->addPreConditions($current->getPreConditions());
-                            $route->getFirstRouteItem()->addPreConditions($testPart->getPreConditions());
                         }
 
                         array_push($routeStack, $route);
@@ -220,6 +219,7 @@ abstract class AbstractSessionManager
             // Now, decorate last RouteItem of SelectableRoute with BranchRule objects if any.
             if (!empty($route) && $route->count() > 0) {
                 $route->getLastRouteItem()->addBranchRules($testPart->getBranchRules());
+                $route->getFirstRouteItem()->addPreConditions($testPart->getPreConditions());
             }
         }
 
