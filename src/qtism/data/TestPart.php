@@ -419,4 +419,11 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     {
         $this->setObservers(new SplObjectStorage());
     }
+
+    public function isLastSection(AssessmentSection $assessmentSection): bool
+    {
+        $sections = $this->getAssessmentSections()->getArrayCopy();
+
+        return end($sections) === $assessmentSection;
+    }
 }

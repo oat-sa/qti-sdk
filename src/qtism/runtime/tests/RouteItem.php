@@ -463,25 +463,22 @@ class RouteItem
             return $sectionBranchRules ?? new BranchRuleCollection();
         }
 
-        $testPartSections = $this->getTestPart()->getAssessmentSections()->getArrayCopy();
+        $testPart = $this->getTestPart();
         $currentItemSections = $this->getAssessmentSections()->getArrayCopy();
 
-        if (
-            end($testPartSections) === $currentItemSections[0]
-            && $this->getTestPart()->getBranchRules()->count() > 0
-        ) {
-            return $this->getTestPart()->getBranchRules();
+        if (!$testPart->isLastSection($currentItemSections[0])) {
+            return new BranchRuleCollection();
         }
 
-        return new BranchRuleCollection();
+        return $testPart->getBranchRules();
     }
 
     /**
      * Selects branching rules from the section/subsection.
      * Branching rules will be selected only if the item or subsection is the last one in the parent section.
      *
-     * @return ?BranchRuleCollection Returns the branching rules for the last section or null if the element/subsection
-     *                               is not the last.
+     * @return BranchRuleCollection|null Returns the branching rules for the last section or null if the
+     *                                   element/subsection is not the last.
      */
     private function getEffectiveSectionBranchRules(): ?BranchRuleCollection
     {
@@ -490,9 +487,8 @@ class RouteItem
 
         // Remove the current section from the section list, as this section contains a list of items, not sections.
         $currentSection = array_pop($sections);
-        $currentSectionItems = $currentSection->getSectionParts()->getArrayCopy();
 
-        if (end($currentSectionItems) !== $this->getAssessmentItemRef()) {
+        if ($currentSection === null || !$currentSection->isLastSectionPart($this->getAssessmentItemRef())) {
             return null;
         }
 
@@ -506,9 +502,7 @@ class RouteItem
         // Note: $sections should not contain the current section, as `$section->getSectionParts()` would then return a
         // list of items instead of sections.
         foreach (array_reverse($sections) as $section) {
-            $sectionParts = $section->getSectionParts()->getArrayCopy();
-
-            if (end($sectionParts) !== $lastSection) {
+            if (!$section->isLastSectionPart($lastSection)) {
                 return null;
             }
 
