@@ -2406,26 +2406,7 @@ class AssessmentTestSession extends State
         $stop = false;
 
         while ($route->valid() === true && $stop === false) {
-            $currentRouteItem = $route->current();
-            $branchRules = $currentRouteItem->getBranchRules();
-
-            if ($branchRules->count() === 0) {
-                $currentSection = $currentRouteItem->getAssessmentSection();
-                $sectionItems = $route->getRouteItemsByAssessmentSection($currentSection)->getArrayCopy();
-
-                if (end($sectionItems) === $currentRouteItem) {
-                    $branchRules = $currentSection->getBranchRules();
-                }
-
-                if ($branchRules->count() === 0) {
-                    $testPartItems = $route->getCurrentTestPartRouteItems()->getArrayCopy();
-
-                    if (end($testPartItems) === $currentRouteItem) {
-                        $branchRules = $currentRouteItem->getTestPart()->getBranchRules();
-                    }
-                }
-            }
-
+            $branchRules = $route->getEffectiveBranchRules();
             $numberOfBranchRules = $branchRules->count();
 
             // Branchings?

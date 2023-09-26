@@ -34,6 +34,7 @@ use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\AssessmentTest;
 use qtism\data\NavigationMode;
+use qtism\data\rules\BranchRuleCollection;
 use qtism\data\SubmissionMode;
 use qtism\data\TestPart;
 use qtism\runtime\common\VariableIdentifier;
@@ -1184,5 +1185,34 @@ class Route implements Iterator
             $msg = 'No such RouteItem object referenced in the Route.';
             throw new OutOfBoundsException($msg);
         }
+    }
+
+    public function getEffectiveBranchRules(): BranchRuleCollection
+    {
+        $currentRouteItem = $this->current();
+        $branchRules = $currentRouteItem->getBranchRules();
+
+        if ($branchRules->count() > 0) {
+            return $branchRules;
+        }
+
+        $currentSection = $currentRouteItem->getAssessmentSection();
+        $sectionItems = $this->getRouteItemsByAssessmentSection($currentSection)->getArrayCopy();
+
+        if (end($sectionItems) === $currentRouteItem) {
+            $branchRules = $currentSection->getBranchRules();
+        }
+
+        if ($branchRules->count() > 0) {
+            return $branchRules;
+        }
+
+        $testPartItems = $this->getCurrentTestPartRouteItems()->getArrayCopy();
+
+        if (end($testPartItems) === $currentRouteItem) {
+            $branchRules = $currentRouteItem->getTestPart()->getBranchRules();
+        }
+
+        return $branchRules;
     }
 }
