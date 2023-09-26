@@ -219,7 +219,6 @@ abstract class AbstractSessionManager
             // Now, decorate last RouteItem of SelectableRoute with BranchRule objects if any.
             if (!empty($route) && $route->count() > 0) {
                 $route->getLastRouteItem()->addBranchRules($testPart->getBranchRules());
-                $route->getFirstRouteItem()->addPreConditions($testPart->getPreConditions());
             }
         }
 

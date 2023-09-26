@@ -2437,10 +2437,8 @@ class AssessmentTestSession extends State
                 $route->next();
             }
 
-            $preConditions = $route->current()->getEffectivePreConditions();
-
             // Preconditions on target?
-            if ($ignorePreConditions === false && $route->valid() === true && $preConditions->count() > 0 && $this->mustApplyPreConditions() === true) {
+            if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getEffectivePreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true) {
                 for ($i = 0; $i < count($preConditions); $i++) {
                     $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
                     $condition = $engine->process();
