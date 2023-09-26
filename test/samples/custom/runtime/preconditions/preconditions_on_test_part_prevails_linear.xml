@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v2p1.xsd"
+	identifier="preconditions" title="Preconditions">
+	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+		<assessmentSection identifier="S01" title="Section1" visible="true">
+			<assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false"/>
+		</assessmentSection>
+	</testPart>
+	<testPart identifier="P02" navigationMode="linear" submissionMode="individual">
+		<preCondition>
+			<baseValue baseType="boolean">false</baseValue>
+		</preCondition>
+		<assessmentSection identifier="S02" title="Section2" visible="true">
+			<assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false"/>
+		</assessmentSection>
+	</testPart>
+	<testPart identifier="P03" navigationMode="linear" submissionMode="individual">
+		<assessmentSection identifier="S03" title="Section3" visible="true">
+			<assessmentItemRef identifier="Q03" href="./Q03.xml" timeDependent="false"/>
+		</assessmentSection>
+	</testPart>
+</assessmentTest>

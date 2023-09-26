@@ -163,4 +163,28 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
 
         $this::assertFalse($testSession->isRunning());
     }
+
+    public function testSectionPreConditionOnLinearTestWorks(): void
+    {
+        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_on_section_prevails_linear.xml');
+        $testSession->beginTestSession();
+        $testSession->beginAttempt();
+        $testSession->moveNext();
+
+        // Q02 is skipped due precondition
+        $this::assertSame($testSession->getRoute()->current()->getAssessmentItemRef()->getIdentifier(), 'Q03');
+    }
+
+    public function testTestPartPreConditionOnLinearTestWorks(): void
+    {
+        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_on_test_part_prevails_linear.xml');
+        $testSession->beginTestSession();
+        $testSession->beginAttempt();
+        $testSession->moveNext();
+
+        // P02, S02, Q02 is skipped due precondition
+        $this::assertSame($testSession->getRoute()->current()->getTestPart()->getIdentifier(), 'P03');
+        $this::assertSame($testSession->getRoute()->current()->getAssessmentSection()->getIdentifier(), 'S03');
+        $this::assertSame($testSession->getRoute()->current()->getAssessmentItemRef()->getIdentifier(), 'Q03');
+    }
 }
