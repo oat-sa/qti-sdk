@@ -212,12 +212,6 @@ abstract class AbstractSessionManager
                     }
                 }
             }
-
-            // $route contains the currently processed testPart.
-            // Now, decorate last RouteItem of SelectableRoute with BranchRule objects if any.
-            if (!empty($route) && $route->count() > 0) {
-                $route->getFirstRouteItem()->addPreConditions($testPart->getPreConditions());
-            }
         }
 
         $finalRoutes = $routeStack;

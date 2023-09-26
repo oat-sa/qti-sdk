@@ -269,6 +269,30 @@ class RouteItem
     }
 
     /**
+     * Get the PreConditions that actually need to be applied considering all the parent elements: TestPart and Section
+     *
+     * @return PreConditionCollection A collection of PreCondition objects.
+     */
+    public function getEffectivePreConditions(): PreConditionCollection
+    {
+        $routeItemPreConditions = new PreConditionCollection([]);
+
+        foreach ($this->getTestPart()->getPreConditions() as $preCondition) {
+            $routeItemPreConditions->attach($preCondition);
+        }
+
+        foreach ($this->getAssessmentSection()->getPreConditions() as $preCondition) {
+            $routeItemPreConditions->attach($preCondition);
+        }
+
+        foreach ($this->getPreConditions() as $preCondition) {
+            $routeItemPreConditions->attach($preCondition);
+        }
+
+        return $routeItemPreConditions;
+    }
+
+    /**
      * Set the PreCondition objects to be applied prior to the RouteItem.
      *
      * @param PreConditionCollection $preConditions A collection of PreCondition objects.
