@@ -2406,7 +2406,7 @@ class AssessmentTestSession extends State
         $stop = false;
 
         while ($route->valid() === true && $stop === false) {
-            $branchRules = $route->getEffectiveBranchRules();
+            $branchRules = $route->current()->getEffectiveBranchRules();
             $numberOfBranchRules = $branchRules->count();
 
             // Branchings?

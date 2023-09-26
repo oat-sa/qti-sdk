@@ -426,4 +426,68 @@ class RouteItem
 
         return $timeLimits;
     }
+
+    public function getEffectiveBranchRules(): BranchRuleCollection
+    {
+        if ($this->getBranchRules()->count() > 0) {
+            return $this->getBranchRules();
+        }
+
+        $sectionBranchRules = $this->getEffectiveSectionBranchRules();
+
+        if ($sectionBranchRules === null || $sectionBranchRules->count() > 0) {
+            return $sectionBranchRules ?? new BranchRuleCollection();
+        }
+
+        $testPartSections = $this->getTestPart()->getAssessmentSections()->getArrayCopy();
+
+        if (
+            end($testPartSections) === $this->getAssessmentSection()
+            && $this->getTestPart()->getBranchRules()->count() > 0
+        ) {
+            return $this->getTestPart()->getBranchRules();
+        }
+
+        return new BranchRuleCollection();
+    }
+
+    /**
+     * Selects branching rules from the section/subsection.
+     * Branching rules will be selected only if the item or subsection is the last one in the parent section.
+     *
+     * @return ?BranchRuleCollection Returns the branching rules for the last section or null if the element/subsection
+     *                               is not the last.
+     */
+    public function getEffectiveSectionBranchRules(): ?BranchRuleCollection
+    {
+        $sections = $this->getAssessmentSections()->getArrayCopy();
+        $currentSection = array_pop($sections);
+        $currentSectionItems = $currentSection->getSectionParts()->getArrayCopy();
+
+        if (end($currentSectionItems) !== $this->getAssessmentItemRef()) {
+            return null;
+        }
+
+        if ($currentSection->getBranchRules()->count() > 0) {
+            return $currentSection->getBranchRules();
+        }
+
+        $lastSection = $currentSection;
+
+        foreach (array_reverse($sections) as $section) {
+            $sectionParts = $section->getSectionParts()->getArrayCopy();
+
+            if (end($sectionParts) !== $lastSection) {
+                return null;
+            }
+
+            if ($section->getBranchRules()->count() > 0) {
+                return $section->getBranchRules();
+            }
+
+            $lastSection = $section;
+        }
+
+        return new BranchRuleCollection();
+    }
 }
