@@ -2406,10 +2406,12 @@ class AssessmentTestSession extends State
         $stop = false;
 
         while ($route->valid() === true && $stop === false) {
+            $branchRules = $route->current()->getEffectiveBranchRules();
+            $numberOfBranchRules = $branchRules->count();
+
             // Branchings?
-            if ($ignoreBranchings === false && count($route->current()->getBranchRules()) > 0 && $this->mustApplyBranchRules() === true) {
-                $branchRules = $route->current()->getBranchRules();
-                for ($i = 0; $i < count($branchRules); $i++) {
+            if ($ignoreBranchings === false && $numberOfBranchRules > 0 && $this->mustApplyBranchRules() === true) {
+                for ($i = 0; $i < $numberOfBranchRules; $i++) {
                     $engine = new ExpressionEngine($branchRules[$i]->getExpression(), $this);
                     $condition = $engine->process();
                     if ($condition !== null && $condition->getValue() === true) {

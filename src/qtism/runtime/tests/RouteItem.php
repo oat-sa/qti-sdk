@@ -450,4 +450,69 @@ class RouteItem
 
         return $timeLimits;
     }
+
+    public function getEffectiveBranchRules(): BranchRuleCollection
+    {
+        if ($this->getBranchRules()->count() > 0) {
+            return $this->getBranchRules();
+        }
+
+        $sectionBranchRules = $this->getEffectiveSectionBranchRules();
+
+        if ($sectionBranchRules === null || $sectionBranchRules->count() > 0) {
+            return $sectionBranchRules ?? new BranchRuleCollection();
+        }
+
+        $testPart = $this->getTestPart();
+        $currentItemSections = $this->getAssessmentSections()->getArrayCopy();
+
+        if (!$testPart->isLastSection($currentItemSections[0])) {
+            return new BranchRuleCollection();
+        }
+
+        return $testPart->getBranchRules();
+    }
+
+    /**
+     * Selects branching rules from the section/subsection.
+     * Branching rules will be selected only if the item or subsection is the last one in the parent section.
+     *
+     * @return BranchRuleCollection|null Returns the branching rules for the last section or null if the
+     *                                   element/subsection is not the last.
+     */
+    private function getEffectiveSectionBranchRules(): ?BranchRuleCollection
+    {
+        /** @var AssessmentSection[] $sections */
+        $sections = $this->getAssessmentSections()->getArrayCopy();
+
+        // Remove the current section from the section list, as this section contains a list of items, not sections.
+        $currentSection = array_pop($sections);
+
+        if ($currentSection === null || !$currentSection->isLastSectionPart($this->getAssessmentItemRef())) {
+            return null;
+        }
+
+        if ($currentSection->getBranchRules()->count() > 0) {
+            return $currentSection->getBranchRules();
+        }
+
+        $lastSection = $currentSection;
+
+        // Iterate through parent sections.
+        // Note: $sections should not contain the current section, as `$section->getSectionParts()` would then return a
+        // list of items instead of sections.
+        foreach (array_reverse($sections) as $section) {
+            if (!$section->isLastSectionPart($lastSection)) {
+                return null;
+            }
+
+            if ($section->getBranchRules()->count() > 0) {
+                return $section->getBranchRules();
+            }
+
+            $lastSection = $section;
+        }
+
+        return new BranchRuleCollection();
+    }
 }

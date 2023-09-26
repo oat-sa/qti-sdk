@@ -320,4 +320,11 @@ class AssessmentSection extends SectionPart
 
         return new QtiComponentCollection($comp);
     }
+
+    public function isLastSectionPart(SectionPart $sectionPart): bool
+    {
+        $sectionParts = $this->getSectionParts()->getArrayCopy();
+
+        return end($sectionParts) === $sectionPart;
+    }
 }
