@@ -464,9 +464,10 @@ class RouteItem
         }
 
         $testPartSections = $this->getTestPart()->getAssessmentSections()->getArrayCopy();
+        $currentItemSections = $this->getAssessmentSections()->getArrayCopy();
 
         if (
-            end($testPartSections) === $this->getAssessmentSection()
+            end($testPartSections) === $currentItemSections[0]
             && $this->getTestPart()->getBranchRules()->count() > 0
         ) {
             return $this->getTestPart()->getBranchRules();
@@ -482,9 +483,12 @@ class RouteItem
      * @return ?BranchRuleCollection Returns the branching rules for the last section or null if the element/subsection
      *                               is not the last.
      */
-    public function getEffectiveSectionBranchRules(): ?BranchRuleCollection
+    private function getEffectiveSectionBranchRules(): ?BranchRuleCollection
     {
+        /** @var AssessmentSection[] $sections */
         $sections = $this->getAssessmentSections()->getArrayCopy();
+
+        // Remove the current section from the section list, as this section contains a list of items, not sections.
         $currentSection = array_pop($sections);
         $currentSectionItems = $currentSection->getSectionParts()->getArrayCopy();
 
@@ -498,6 +502,9 @@ class RouteItem
 
         $lastSection = $currentSection;
 
+        // Iterate through parent sections.
+        // Note: $sections should not contain the current section, as `$section->getSectionParts()` would then return a
+        // list of items instead of sections.
         foreach (array_reverse($sections) as $section) {
             $sectionParts = $section->getSectionParts()->getArrayCopy();
 
