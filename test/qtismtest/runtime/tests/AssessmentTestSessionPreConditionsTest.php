@@ -164,27 +164,29 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
         $this::assertFalse($testSession->isRunning());
     }
 
-    public function testSectionPreConditionOnLinearTestWorks(): void
+    public function testTestParAndSectionAndItemPreConditionOnLinearTestWorks(): void
     {
-        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_on_section_prevails_linear.xml');
+        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_on_test_part_section_item_combined_linear.xml');
         $testSession->beginTestSession();
         $testSession->beginAttempt();
         $testSession->moveNext();
 
-        // Q02 is skipped due precondition
-        $this::assertSame($testSession->getRoute()->current()->getAssessmentItemRef()->getIdentifier(), 'Q03');
-    }
+        // P02, S03, Q04 are skipped due precondition, but Q04.1 is passed
+        $this::assertSame($testSession->getRoute()->current()->getAssessmentItemRef()->getIdentifier(), 'Q04.1');
 
-    public function testTestPartPreConditionOnLinearTestWorks(): void
-    {
-        $testSession = self::instantiate(self::samplesDir() . 'custom/runtime/preconditions/preconditions_on_test_part_prevails_linear.xml');
-        $testSession->beginTestSession();
-        $testSession->beginAttempt();
         $testSession->moveNext();
 
-        // P02, S02, Q02 is skipped due precondition
-        $this::assertSame($testSession->getRoute()->current()->getTestPart()->getIdentifier(), 'P03');
-        $this::assertSame($testSession->getRoute()->current()->getAssessmentSection()->getIdentifier(), 'S03');
-        $this::assertSame($testSession->getRoute()->current()->getAssessmentItemRef()->getIdentifier(), 'Q03');
+        // P05 precondition passed
+        $this::assertSame($testSession->getRoute()->current()->getAssessmentItemRef()->getIdentifier(), 'Q05');
+
+        $testSession->moveNext();
+
+        // S06 precondition passed
+        $this::assertSame($testSession->getRoute()->current()->getAssessmentItemRef()->getIdentifier(), 'Q06');
+
+        $testSession->moveNext();
+
+        // S07 precondition passed
+        $this::assertSame($testSession->getRoute()->current()->getAssessmentItemRef()->getIdentifier(), 'Q07');
     }
 }
