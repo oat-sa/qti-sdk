@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v2p1.xsd"
+	identifier="preconditions" title="Preconditions">
+	<testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+		<assessmentSection identifier="S01" title="Section1" visible="true">
+			<assessmentItemRef identifier="Q01" href="./Q01.xml" timeDependent="false"/>
+		</assessmentSection>
+	</testPart>
+	<!-- All will be skipped due pre-conditions -->
+	<testPart identifier="P02" navigationMode="linear" submissionMode="individual">
+		<preCondition>
+			<baseValue baseType="boolean">false</baseValue>
+		</preCondition>
+		<assessmentSection identifier="S02" title="Section2" visible="true">
+			<assessmentItemRef identifier="Q02" href="./Q02.xml" timeDependent="false"/>
+		</assessmentSection>
+	</testPart>
+	<!-- All will be skipped due pre-conditions -->
+	<testPart identifier="P03" navigationMode="linear" submissionMode="individual">
+		<assessmentSection identifier="S03" title="Section3" visible="true">
+			<preCondition>
+				<baseValue baseType="boolean">false</baseValue>
+			</preCondition>
+			<assessmentItemRef identifier="Q03" href="./Q03.xml" timeDependent="false">
+			</assessmentItemRef>
+		</assessmentSection>
+	</testPart>
+	<!-- Q04 Will be skipped due pre-conditions  -->
+	<testPart identifier="P04" navigationMode="linear" submissionMode="individual">
+		<preCondition>
+			<baseValue baseType="boolean">true</baseValue>
+		</preCondition>
+		<assessmentSection identifier="S04" title="Section4" visible="true">
+			<preCondition>
+				<baseValue baseType="boolean">true</baseValue>
+			</preCondition>
+			<assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false">
+				<preCondition>
+					<baseValue baseType="boolean">false</baseValue>
+				</preCondition>
+			</assessmentItemRef>
+			<assessmentItemRef identifier="Q04.1" href="./Q04.1.xml" timeDependent="false">
+				<preCondition>
+					<baseValue baseType="boolean">true</baseValue>
+				</preCondition>
+			</assessmentItemRef>
+		</assessmentSection>
+	</testPart>
+	<!-- Will be accessed due pre-conditions -->
+	<testPart identifier="P05" navigationMode="linear" submissionMode="individual">
+		<preCondition>
+			<baseValue baseType="boolean">true</baseValue>
+		</preCondition>
+		<assessmentSection identifier="S05" title="Section5" visible="true">
+			<assessmentItemRef identifier="Q05" href="./Q05.xml" timeDependent="false"/>
+		</assessmentSection>
+	</testPart>
+	<!-- Will be accessed due pre-conditions -->
+	<testPart identifier="P06" navigationMode="linear" submissionMode="individual">
+		<assessmentSection identifier="S06" title="Section6" visible="true">
+			<preCondition>
+				<baseValue baseType="boolean">true</baseValue>
+			</preCondition>
+			<assessmentItemRef identifier="Q06" href="./Q06.xml" timeDependent="false"/>
+		</assessmentSection>
+	</testPart>
+	<!-- Will be accessed due pre-conditions -->
+	<testPart identifier="P07" navigationMode="linear" submissionMode="individual">
+		<assessmentSection identifier="S07" title="Section7" visible="true">
+			<assessmentItemRef identifier="Q07" href="./Q07.xml" timeDependent="false">
+				<preCondition>
+					<baseValue baseType="boolean">true</baseValue>
+				</preCondition>
+			</assessmentItemRef>
+		</assessmentSection>
+	</testPart>
+</assessmentTest>
