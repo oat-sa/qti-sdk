@@ -352,7 +352,6 @@ class TestPart extends QtiComponent implements QtiIdentifiable
             throw new InvalidArgumentException('A TestPart must contain at least one AssessmentSection.');
         }
 
-        // Check that we have only AssessmentSection and/ord AssessmentSectionRef objects.
         foreach ($assessmentSections as $assessmentSection) {
             if (
                 !$assessmentSection instanceof AssessmentSection
