@@ -453,27 +453,33 @@ class RouteItem
 
     public function getEffectiveBranchRules(): BranchRuleCollection
     {
+        // Checking branching rules at the Item level
         if (!$this->getBranchRules()->isEmpty()) {
             return $this->getBranchRules();
         }
 
-        /** @var AssessmentSection[] $sections */
-        $sections = $this->getAssessmentSections()->getArrayCopy();
         $currentSectionPart = $this->getAssessmentItemRef();
 
-        foreach (array_reverse($sections) as $section) {
+        // Checking branching rules at the Section/Subsection level
+        // To get branching rules for the current section, you need to make sure that the current part of the
+        // section (item or subsection) is the last part of the current section.
+        while ($parent = $currentSectionPart->getParent()) {
             if (!$currentSectionPart->isLast()) {
                 return new BranchRuleCollection();
             }
 
-            if (!$section->getBranchRules()->isEmpty()) {
-                return $section->getBranchRules();
+            if (!$parent->getBranchRules()->isEmpty()) {
+                return $parent->getBranchRules();
             }
 
-            $currentSectionPart = $section;
+            // If there are no branching rules for the current section, we proceed to check its parent section
+            // (if it exists)
+            $currentSectionPart = $parent;
         }
 
-        if (!$sections[0]->isLast()) {
+        // Checking branching rules at the Test Part level
+        // In this case, $currentSectionPart is the top-level section of the current item
+        if (!$currentSectionPart->isLast()) {
             return new BranchRuleCollection();
         }
 
