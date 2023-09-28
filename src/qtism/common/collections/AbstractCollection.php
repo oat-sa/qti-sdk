@@ -96,6 +96,11 @@ abstract class AbstractCollection implements Countable, Iterator, ArrayAccess
         return count($this->dataPlaceHolder);
     }
 
+    public function isEmpty(): bool
+    {
+        return empty($this->dataPlaceHolder);
+    }
+
     /**
      * Return the current element of the collection while iterating.
      *

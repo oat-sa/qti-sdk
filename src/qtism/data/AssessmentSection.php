@@ -288,6 +288,15 @@ class AssessmentSection extends SectionPart
      */
     public function setSectionParts(SectionPartCollection $sectionParts): void
     {
+        if (!$sectionParts->isEmpty()) {
+            /** @var SectionPart $sectionPart */
+            foreach ($sectionParts as $sectionPart) {
+                $sectionPart->setParent($this);
+            }
+
+            $sectionPart->setIsLast(true);
+        }
+
         $this->sectionParts = $sectionParts;
     }
 

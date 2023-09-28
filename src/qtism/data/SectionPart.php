@@ -117,6 +117,10 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
      */
     private $timeLimits = null;
 
+    private ?SectionPart $parent = null;
+
+    private bool $isLast = false;
+
     /**
      * Create a new instance of SectionPart.
      *
@@ -362,5 +366,25 @@ class SectionPart extends QtiComponent implements QtiIdentifiable, Shufflable
 
         // Reset observers.
         $this->setObservers(new SplObjectStorage());
+    }
+
+    public function getParent(): ?SectionPart
+    {
+        return $this->parent;
+    }
+
+    public function setParent(SectionPart $parent): void
+    {
+        $this->parent = $parent;
+    }
+
+    public function isLast(): bool
+    {
+        return $this->isLast;
+    }
+
+    public function setIsLast(bool $isLast): void
+    {
+        $this->isLast = $isLast;
     }
 }
