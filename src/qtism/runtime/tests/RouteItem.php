@@ -458,31 +458,26 @@ class RouteItem
             return $this->getBranchRules();
         }
 
-        $currentSectionPart = $this->getAssessmentItemRef();
-
-        // Checking branching rules at the Section/Subsection level
-        // To get branching rules for the current section, you need to make sure that the current part of the
-        // section (item or subsection) is the last part of the current section.
-        while ($parent = $currentSectionPart->getParent()) {
-            if (!$currentSectionPart->isLast()) {
-                return new BranchRuleCollection();
-            }
-
-            if (!$parent->getBranchRules()->isEmpty()) {
-                return $parent->getBranchRules();
-            }
-
-            // If there are no branching rules for the current section, we proceed to check its parent section
-            // (if it exists)
-            $currentSectionPart = $parent;
-        }
-
-        // Checking branching rules at the Test Part level
-        // In this case, $currentSectionPart is the top-level section of the current item
-        if (!$currentSectionPart->isLast()) {
+        if (!$this->getAssessmentItemRef()->isLast()) {
             return new BranchRuleCollection();
         }
 
+        $parentSection = $this->getAssessmentSection();
+
+        // Checking branching rules at the Section/Subsection level
+        // To get branching rules for the current section, you need to make sure that the current part of the
+        // section is the last part of the current section.
+        do {
+            if (!$parentSection->getBranchRules()->isEmpty()) {
+                return $parentSection->getBranchRules();
+            }
+
+            if (!$parentSection->isLast()) {
+                return new BranchRuleCollection();
+            }
+        } while ($parentSection = $parentSection->getParent());
+
+        // Return branching rules from the Test Part level
         return $this->getTestPart()->getBranchRules();
     }
 }
