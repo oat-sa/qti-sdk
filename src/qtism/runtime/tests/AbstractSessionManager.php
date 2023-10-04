@@ -138,6 +138,17 @@ abstract class AbstractSessionManager
     }
 
     /**
+     * Allow to recreate route items when AssessmentTest structure is changed
+     *
+     * @param AssessmentTest $test
+     * @return Route
+     */
+    public function recreateRoute(AssessmentTest $test): Route
+    {
+        return $this->createRoute($test);
+    }
+
+    /**
      * Contains the logic of creating the Route of a brand new AssessmentTestSession object.
      * The resulting Route object will be injected in the created AssessmentTestSession.
      *
