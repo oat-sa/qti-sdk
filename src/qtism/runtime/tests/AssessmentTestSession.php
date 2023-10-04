@@ -3062,6 +3062,16 @@ class AssessmentTestSession extends State
     }
 
     /**
+     * In case of need to recreate item sessions after the route was created
+     *
+     * @param RouteItem $routeItem
+     */
+    public function reinitializeAssessmentItemSession(RouteItem $routeItem): void
+    {
+        $this->initializeAssessmentItemSession($routeItem);
+    }
+
+    /**
      * @param RouteItem $routeItem
      */
     protected function initializeAssessmentItemSession(RouteItem $routeItem): void
