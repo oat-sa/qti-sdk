@@ -2440,21 +2440,8 @@ class AssessmentTestSession extends State
             }
 
             // Preconditions on target?
-            if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getEffectivePreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true) {
-                $preConditionFailed = false;
-
-                for ($i = 0; $i < count($preConditions); $i++) {
-                    $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
-                    $condition = $engine->process();
-
-                    if ($condition === null || $condition->getValue() === false) {
-                        // The item must NOT be presented.
-                        $preConditionFailed = true;
-                        break;
-                    }
-                }
-
-                $stop = !$preConditionFailed;
+            if ($ignorePreConditions === false && $route->valid() && $this->mustApplyPreConditions()) {
+                $stop = $this->routeItemMatchesPreconditions($route->current());
             } else {
                 $stop = true;
             }
@@ -2469,6 +2456,41 @@ class AssessmentTestSession extends State
         } else {
             $this->selectEligibleItems();
         }
+    }
+
+    public function routeMatchesPreconditions(): bool
+    {
+        $route = $this->getRoute();
+
+        if (!$route->valid()) {
+            return true;
+        }
+
+        if (!$this->mustApplyPreConditions()) {
+            return true;
+        }
+
+        return $this->routeItemMatchesPreconditions($route->current());
+    }
+
+    private function routeItemMatchesPreconditions(RouteItem $routeItem): bool
+    {
+        $preConditions = $routeItem->getEffectivePreConditions();
+
+        if ($preConditions->count() === 0) {
+            return true;
+        }
+
+        for ($i = 0; $i < $preConditions->count(); $i++) {
+            $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
+            $condition = $engine->process();
+
+            if ($condition === null || $condition->getValue() === false) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -3130,6 +3152,6 @@ class AssessmentTestSession extends State
     protected function mustApplyPreConditions($nextRouteItem = false): bool
     {
         $routeItem = ($nextRouteItem === false) ? $this->getCurrentRouteItem() : $this->getRoute()->getNext();
-        return ($routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR || $this->mustForcePreconditions() === true);
+        return ($routeItem && $routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR) || $this->mustForcePreconditions() === true;
     }
 }
