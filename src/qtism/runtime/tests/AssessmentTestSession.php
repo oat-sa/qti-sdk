@@ -43,6 +43,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
+use qtism\data\rules\PreConditionCollection;
 use qtism\data\ShowHide;
 use qtism\data\state\Weight;
 use qtism\data\storage\php\PhpStorageException;
@@ -2440,11 +2441,7 @@ class AssessmentTestSession extends State
             }
 
             // Preconditions on target?
-            if ($ignorePreConditions === false && $route->valid() && $this->mustApplyPreConditions()) {
-                $stop = $this->routeItemMatchesPreconditions($route->current());
-            } else {
-                $stop = true;
-            }
+            $stop = !($ignorePreConditions === false) || $this->routeMatchesPreconditions($route);
 
             // After a first iteration, we will not performed branching again, as they are executed
             // as soon as we leave an item. Chains of branch rules are not expected.
@@ -2458,25 +2455,31 @@ class AssessmentTestSession extends State
         }
     }
 
-    public function routeMatchesPreconditions(): bool
+    public function routeMatchesPreconditions(Route $route = null): bool
     {
-        $route = $this->getRoute();
+        $route = $route ?? $this->getRoute();
 
         if (!$route->valid()) {
             return true;
         }
 
-        if (!$this->mustApplyPreConditions()) {
-            return true;
+        $routeItem = $route->current();
+        $testPart = $routeItem->getTestPart();
+        $navigationMode = $testPart->getNavigationMode();
+
+        if ($navigationMode === NavigationMode::LINEAR || $this->mustForcePreconditions()) {
+            return $this->preConditionsMatch($routeItem->getEffectivePreConditions());
         }
 
-        return $this->routeItemMatchesPreconditions($route->current());
+        if ($navigationMode === NavigationMode::NONLINEAR) {
+            return $this->preConditionsMatch($testPart->getPreConditions());
+        }
+
+        return true;
     }
 
-    private function routeItemMatchesPreconditions(RouteItem $routeItem): bool
+    private function preConditionsMatch(PreConditionCollection $preConditions): bool
     {
-        $preConditions = $routeItem->getEffectivePreConditions();
-
         if ($preConditions->count() === 0) {
             return true;
         }
@@ -3081,7 +3084,7 @@ class AssessmentTestSession extends State
         }
 
         // Case 4. The next item has preconditions.
-        if ($this->mustApplyPreConditions(true) && count($this->getRoute()->getNext()->getPreConditions()) > 0) {
+        if ($this->mustApplyPreConditions(true)) {
             return false;
         }
 
@@ -3151,7 +3154,24 @@ class AssessmentTestSession extends State
      */
     protected function mustApplyPreConditions($nextRouteItem = false): bool
     {
-        $routeItem = ($nextRouteItem === false) ? $this->getCurrentRouteItem() : $this->getRoute()->getNext();
-        return ($routeItem && $routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR) || $this->mustForcePreconditions() === true;
+        if ($this->mustForcePreconditions()) {
+            return true;
+        }
+
+        $routeItem = $nextRouteItem === false ? $this->getCurrentRouteItem() : $this->getRoute()->getNext();
+
+        if (!$routeItem instanceof RouteItem) {
+            return false;
+        }
+
+        $testPart = $routeItem->getTestPart();
+        $navigationMode = $testPart->getNavigationMode();
+
+        if ($navigationMode === NavigationMode::LINEAR) {
+            return $routeItem->getEffectivePreConditions()->count() > 0;
+        }
+
+        // Now NonLinear Test part pre-conditions must be considered
+        return $navigationMode === NavigationMode::NONLINEAR && $testPart->getPreConditions()->count() > 0;
     }
 }

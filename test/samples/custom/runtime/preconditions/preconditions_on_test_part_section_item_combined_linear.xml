@@ -76,4 +76,23 @@
 			</assessmentItemRef>
 		</assessmentSection>
 	</testPart>
+	<!-- Non linear test part evaluates pre-condition -->
+	<testPart identifier="P08" navigationMode="nonlinear" submissionMode="individual">
+		<preCondition>
+			<baseValue baseType="boolean">false</baseValue>
+		</preCondition>
+		<assessmentSection identifier="S08" title="Section8" visible="true">
+			<assessmentItemRef identifier="Q08" href="./Q08.xml" timeDependent="false"/>
+		</assessmentSection>
+	</testPart>
+	<!-- Will be accessed due pre-conditions -->
+	<testPart identifier="P09" navigationMode="linear" submissionMode="individual">
+		<assessmentSection identifier="S07" title="Section9" visible="true">
+			<assessmentItemRef identifier="Q09" href="./Q09.xml" timeDependent="false">
+				<preCondition>
+					<baseValue baseType="boolean">true</baseValue>
+				</preCondition>
+			</assessmentItemRef>
+		</assessmentSection>
+	</testPart>
 </assessmentTest>

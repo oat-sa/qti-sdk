@@ -188,5 +188,10 @@ class AssessmentTestSessionPreConditionsTest extends QtiSmAssessmentTestSessionT
 
         // S07 precondition passed
         $this::assertSame($testSession->getRoute()->current()->getAssessmentItemRef()->getIdentifier(), 'Q07');
+
+        $testSession->moveNext();
+
+        // P08 is nonlinear, but it will be skipped, cause pre-conditions apply to non-linear test parts
+        $this::assertSame($testSession->getRoute()->current()->getAssessmentItemRef()->getIdentifier(), 'Q09');
     }
 }
