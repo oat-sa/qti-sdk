@@ -43,6 +43,7 @@ use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
+use qtism\data\rules\BranchRule;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\ShowHide;
 use qtism\data\state\Weight;
@@ -2514,8 +2515,21 @@ class AssessmentTestSession extends State
 
         $route = $this->getRoute();
         $from = $route->current();
+        $branchRules = $from->getTestPart()->getBranchRules();
 
         while ($route->valid() === true && $route->current()->getTestPart() === $from->getTestPart()) {
+            /** @var BranchRule $branchRule */
+            foreach ($branchRules as $branchRule) {
+                $engine = new ExpressionEngine($branchRule->getExpression(), $this);
+                $condition = $engine->process();
+
+                if ($condition !== null && $condition->getValue() === true) {
+                    $route->branch($branchRule->getTarget());
+
+                    break 2;
+                }
+            }
+
             $route->next();
         }
 

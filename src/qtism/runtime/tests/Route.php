@@ -1151,14 +1151,6 @@ class Route implements Iterator
         $testPartIdentifierMap = $this->getTestPartIdentifierMap();
         if (isset($testPartIdentifierMap[$id])) {
             // We branch to the first RouteItem belonging to the testPart.
-            if ($testPartIdentifierMap[$id][0]->getTestPart() === $this->current()->getTestPart()) {
-                // From IMS QTI:
-                // For testParts, the target must refer to another testPart.
-                $msg = 'Cannot branch to the same testPart.';
-                throw new OutOfBoundsException($msg);
-            }
-
-            // We branch to the first RouteItem belonging to the testPart.
             $this->setPosition($this->getRouteItemPosition($testPartIdentifierMap[$id][0]));
 
             return;

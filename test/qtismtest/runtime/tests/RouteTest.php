@@ -610,9 +610,9 @@ class RouteTest extends QtiSmRouteTestCase
     public function testBranchToSameTestPart(): void
     {
         $route = self::buildSimpleRoute(Route::class, 2, 1);
-        $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage('Cannot branch to the same testPart.');
         $route->branch('T1');
+
+        $this->assertEquals('T1', $route->current()->getTestPart()->getIdentifier());
     }
 
     public function testBranchToAnotherTestPart(): void
