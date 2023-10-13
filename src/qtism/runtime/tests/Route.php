@@ -1117,10 +1117,11 @@ class Route implements Iterator
 
             if ($targetRouteItems[$occurence]->getTestPart() !== $this->current()->getTestPart()) {
                 // From IMS QTI:
-                // In case of an item or section, the target must refer to an item or section
-                // in the same testPart [...]
-                $msg = 'Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification.';
-                throw new OutOfBoundsException($msg);
+                // In the case of an item or section, the target must refer to an item or section in the same test-part
+                // that has not yet been presented.
+                $this->next();
+
+                return;
             }
 
             $this->setPosition($this->getRouteItemPosition($targetRouteItems[$occurence]));
@@ -1133,10 +1134,11 @@ class Route implements Iterator
         if (isset($assessmentSectionIdentifierMap[$id])) {
             if ($assessmentSectionIdentifierMap[$id][0]->getTestPart() !== $this->current()->getTestPart()) {
                 // From IMS QTI:
-                // In case of an item or section, the target must refer to an item or section
-                // in the same testPart [...]
-                $msg = 'Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification.';
-                throw new OutOfBoundsException($msg);
+                // In the case of an item or section, the target must refer to an item or section in the same test-part
+                // that has not yet been presented.
+                $this->next();
+
+                return;
             }
 
             // We branch to the first RouteItem belonging to the section.
@@ -1148,14 +1150,6 @@ class Route implements Iterator
         // Check for a testPart.
         $testPartIdentifierMap = $this->getTestPartIdentifierMap();
         if (isset($testPartIdentifierMap[$id])) {
-            // We branch to the first RouteItem belonging to the testPart.
-            if ($testPartIdentifierMap[$id][0]->getTestPart() === $this->current()->getTestPart()) {
-                // From IMS QTI:
-                // For testParts, the target must refer to another testPart.
-                $msg = 'Cannot branch to the same testPart.';
-                throw new OutOfBoundsException($msg);
-            }
-
             // We branch to the first RouteItem belonging to the testPart.
             $this->setPosition($this->getRouteItemPosition($testPartIdentifierMap[$id][0]));
 

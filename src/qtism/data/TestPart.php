@@ -348,20 +348,24 @@ class TestPart extends QtiComponent implements QtiIdentifiable
      */
     public function setAssessmentSections(SectionPartCollection $assessmentSections): void
     {
-        if (count($assessmentSections) > 0) {
-            // Check that we have only AssessmentSection and/ord AssessmentSectionRef objects.
-            foreach ($assessmentSections as $assessmentSection) {
-                if (!$assessmentSection instanceof AssessmentSection && !$assessmentSection instanceof AssessmentSectionRef) {
-                    $msg = 'A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.';
-                    throw new InvalidArgumentException($msg);
-                }
-            }
-
-            $this->assessmentSections = $assessmentSections;
-        } else {
-            $msg = 'A TestPart must contain at least one AssessmentSection.';
-            throw new InvalidArgumentException($msg);
+        if ($assessmentSections->isEmpty()) {
+            throw new InvalidArgumentException('A TestPart must contain at least one AssessmentSection.');
         }
+
+        foreach ($assessmentSections as $assessmentSection) {
+            if (
+                !$assessmentSection instanceof AssessmentSection
+                && !$assessmentSection instanceof AssessmentSectionRef
+            ) {
+                throw new InvalidArgumentException(
+                    'A TestPart contain only contain AssessmentSection or AssessmentSectionRef objects.'
+                );
+            }
+        }
+
+        $assessmentSection->setIsLast(true);
+
+        $this->assessmentSections = $assessmentSections;
     }
 
     /**
@@ -418,5 +422,12 @@ class TestPart extends QtiComponent implements QtiIdentifiable
     public function __clone()
     {
         $this->setObservers(new SplObjectStorage());
+    }
+
+    public function isLastSection(AssessmentSection $assessmentSection): bool
+    {
+        $sections = $this->getAssessmentSections()->getArrayCopy();
+
+        return end($sections) === $assessmentSection;
     }
 }

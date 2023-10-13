@@ -601,18 +601,18 @@ class RouteTest extends QtiSmRouteTestCase
 
     public function testBranchToAssessmentItemRefOutsideOfTestPart(): void
     {
-        $route = self::buildSimpleRoute(Route::class, 2, 1);
-        $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage('Branchings to items outside of the current testPart is forbidden by the QTI 2.1 specification.');
-        $route->branch('Q2');
+        $route = self::buildSimpleRoute(Route::class, 2, 2);
+        $route->branch('Q3');
+
+        $this->assertEquals('Q2', $route->current()->getAssessmentItemRef()->getIdentifier());
     }
 
     public function testBranchToSameTestPart(): void
     {
         $route = self::buildSimpleRoute(Route::class, 2, 1);
-        $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage('Cannot branch to the same testPart.');
         $route->branch('T1');
+
+        $this->assertEquals('T1', $route->current()->getTestPart()->getIdentifier());
     }
 
     public function testBranchToAnotherTestPart(): void
@@ -655,24 +655,27 @@ class RouteTest extends QtiSmRouteTestCase
 
         $assessmentItemRef1 = new AssessmentItemRef('Q1', 'Q1.xml');
         $assessmentItemRef2 = new AssessmentItemRef('Q2', 'Q2.xml');
+        $assessmentItemRef3 = new AssessmentItemRef('Q3', 'Q3.xml');
 
         $assessmentSection1 = new AssessmentSection('S1', 'Section 1', true);
-        $assessmentSection1->setSectionParts(new SectionPartCollection([$assessmentItemRef1]));
+        $assessmentSection1->setSectionParts(new SectionPartCollection([$assessmentItemRef1, $assessmentItemRef2]));
 
         $assessmentSection2 = new AssessmentSection('S2', 'Section 2', true);
-        $assessmentSection2->setSectionParts(new SectionPartCollection([$assessmentItemRef2]));
+        $assessmentSection2->setSectionParts(new SectionPartCollection([$assessmentItemRef3]));
 
         $testPart1 = new TestPart('T1', new AssessmentSectionCollection([$assessmentSection1]));
         $testPart2 = new TestPart('T2', new AssessmentSectionCollection([$assessmentSection2]));
         $assessmentTest = new AssessmentTest('Test1', 'Test 1', new TestPartCollection([$testPart1, $testPart2]));
 
         $route->addRouteItem($assessmentItemRef1, $assessmentSection1, $testPart1, $assessmentTest);
-        $route->addRouteItem($assessmentItemRef2, $assessmentSection2, $testPart2, $assessmentTest);
-
-        $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage('Branchings to assessmentSections outside of the current testPart is forbidden by the QTI 2.1 specification.');
+        $route->addRouteItem($assessmentItemRef2, $assessmentSection1, $testPart1, $assessmentTest);
+        $route->addRouteItem($assessmentItemRef3, $assessmentSection2, $testPart2, $assessmentTest);
 
         $route->branch('S2');
+        $currentRoute = $route->current();
+
+        $this->assertEquals('Q2', $currentRoute->getAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('S1', $currentRoute->getAssessmentSection()->getIdentifier());
     }
 
     public function testGetRouteItemPositionUnknownRouteItem(): void

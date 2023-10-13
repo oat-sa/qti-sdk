@@ -269,6 +269,30 @@ class RouteItem
     }
 
     /**
+     * Get the PreConditions that actually need to be applied considering all the parent elements: TestPart and Section
+     *
+     * @return PreConditionCollection A collection of PreCondition objects.
+     */
+    public function getEffectivePreConditions(): PreConditionCollection
+    {
+        $routeItemPreConditions = new PreConditionCollection([]);
+
+        foreach ($this->getTestPart()->getPreConditions() as $preCondition) {
+            $routeItemPreConditions->attach($preCondition);
+        }
+
+        foreach ($this->getAssessmentSection()->getPreConditions() as $preCondition) {
+            $routeItemPreConditions->attach($preCondition);
+        }
+
+        foreach ($this->getPreConditions() as $preCondition) {
+            $routeItemPreConditions->attach($preCondition);
+        }
+
+        return $routeItemPreConditions;
+    }
+
+    /**
      * Set the PreCondition objects to be applied prior to the RouteItem.
      *
      * @param PreConditionCollection $preConditions A collection of PreCondition objects.
@@ -425,5 +449,35 @@ class RouteItem
         }
 
         return $timeLimits;
+    }
+
+    public function getEffectiveBranchRules(): BranchRuleCollection
+    {
+        // Checking branching rules at the Item level
+        if (!$this->getBranchRules()->isEmpty()) {
+            return $this->getBranchRules();
+        }
+
+        if (!$this->getAssessmentItemRef()->isLast()) {
+            return new BranchRuleCollection();
+        }
+
+        $parentSection = $this->getAssessmentSection();
+
+        // Checking branching rules at the Section/Subsection level
+        // To get branching rules for the current section, you need to make sure that the current part of the
+        // section is the last part of the current section.
+        do {
+            if (!$parentSection->getBranchRules()->isEmpty()) {
+                return $parentSection->getBranchRules();
+            }
+
+            if (!$parentSection->isLast()) {
+                return new BranchRuleCollection();
+            }
+        } while ($parentSection = $parentSection->getParent());
+
+        // Return branching rules from the Test Part level
+        return $this->getTestPart()->getBranchRules();
     }
 }

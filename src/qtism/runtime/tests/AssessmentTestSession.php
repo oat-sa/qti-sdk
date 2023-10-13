@@ -43,6 +43,8 @@ use qtism\data\AssessmentTest;
 use qtism\data\IAssessmentItem;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
+use qtism\data\rules\BranchRule;
+use qtism\data\rules\PreConditionCollection;
 use qtism\data\ShowHide;
 use qtism\data\state\Weight;
 use qtism\data\storage\php\PhpStorageException;
@@ -2406,10 +2408,12 @@ class AssessmentTestSession extends State
         $stop = false;
 
         while ($route->valid() === true && $stop === false) {
+            $branchRules = $route->current()->getEffectiveBranchRules();
+            $numberOfBranchRules = $branchRules->count();
+
             // Branchings?
-            if ($ignoreBranchings === false && count($route->current()->getBranchRules()) > 0 && $this->mustApplyBranchRules() === true) {
-                $branchRules = $route->current()->getBranchRules();
-                for ($i = 0; $i < count($branchRules); $i++) {
+            if ($ignoreBranchings === false && $numberOfBranchRules > 0 && $this->mustApplyBranchRules() === true) {
+                for ($i = 0; $i < $numberOfBranchRules; $i++) {
                     $engine = new ExpressionEngine($branchRules[$i]->getExpression(), $this);
                     $condition = $engine->process();
                     if ($condition !== null && $condition->getValue() === true) {
@@ -2438,20 +2442,7 @@ class AssessmentTestSession extends State
             }
 
             // Preconditions on target?
-            if ($ignorePreConditions === false && $route->valid() === true && ($preConditions = $route->current()->getPreConditions()) && count($preConditions) > 0 && $this->mustApplyPreConditions() === true) {
-                for ($i = 0; $i < count($preConditions); $i++) {
-                    $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
-                    $condition = $engine->process();
-
-                    if ($condition !== null && $condition->getValue() === true) {
-                        // The item must be presented.
-                        $stop = true;
-                        break;
-                    }
-                }
-            } else {
-                $stop = true;
-            }
+            $stop = !($ignorePreConditions === false) || $this->routeMatchesPreconditions($route);
 
             // After a first iteration, we will not performed branching again, as they are executed
             // as soon as we leave an item. Chains of branch rules are not expected.
@@ -2463,6 +2454,47 @@ class AssessmentTestSession extends State
         } else {
             $this->selectEligibleItems();
         }
+    }
+
+    public function routeMatchesPreconditions(Route $route = null): bool
+    {
+        $route = $route ?? $this->getRoute();
+
+        if (!$route->valid()) {
+            return true;
+        }
+
+        $routeItem = $route->current();
+        $testPart = $routeItem->getTestPart();
+        $navigationMode = $testPart->getNavigationMode();
+
+        if ($navigationMode === NavigationMode::LINEAR || $this->mustForcePreconditions()) {
+            return $this->preConditionsMatch($routeItem->getEffectivePreConditions());
+        }
+
+        if ($navigationMode === NavigationMode::NONLINEAR) {
+            return $this->preConditionsMatch($testPart->getPreConditions());
+        }
+
+        return true;
+    }
+
+    private function preConditionsMatch(PreConditionCollection $preConditions): bool
+    {
+        if ($preConditions->count() === 0) {
+            return true;
+        }
+
+        for ($i = 0; $i < $preConditions->count(); $i++) {
+            $engine = new ExpressionEngine($preConditions[$i]->getExpression(), $this);
+            $condition = $engine->process();
+
+            if ($condition === null || $condition->getValue() === false) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -2483,8 +2515,21 @@ class AssessmentTestSession extends State
 
         $route = $this->getRoute();
         $from = $route->current();
+        $branchRules = $from->getTestPart()->getBranchRules();
 
         while ($route->valid() === true && $route->current()->getTestPart() === $from->getTestPart()) {
+            /** @var BranchRule $branchRule */
+            foreach ($branchRules as $branchRule) {
+                $engine = new ExpressionEngine($branchRule->getExpression(), $this);
+                $condition = $engine->process();
+
+                if ($condition !== null && $condition->getValue() === true) {
+                    $route->branch($branchRule->getTarget());
+
+                    break 2;
+                }
+            }
+
             $route->next();
         }
 
@@ -3053,7 +3098,7 @@ class AssessmentTestSession extends State
         }
 
         // Case 4. The next item has preconditions.
-        if ($this->mustApplyPreConditions(true) && count($this->getRoute()->getNext()->getPreConditions()) > 0) {
+        if ($this->mustApplyPreConditions(true)) {
             return false;
         }
 
@@ -3133,7 +3178,24 @@ class AssessmentTestSession extends State
      */
     protected function mustApplyPreConditions($nextRouteItem = false): bool
     {
-        $routeItem = ($nextRouteItem === false) ? $this->getCurrentRouteItem() : $this->getRoute()->getNext();
-        return ($routeItem->getTestPart()->getNavigationMode() === NavigationMode::LINEAR || $this->mustForcePreconditions() === true);
+        if ($this->mustForcePreconditions()) {
+            return true;
+        }
+
+        $routeItem = $nextRouteItem === false ? $this->getCurrentRouteItem() : $this->getRoute()->getNext();
+
+        if (!$routeItem instanceof RouteItem) {
+            return false;
+        }
+
+        $testPart = $routeItem->getTestPart();
+        $navigationMode = $testPart->getNavigationMode();
+
+        if ($navigationMode === NavigationMode::LINEAR) {
+            return $routeItem->getEffectivePreConditions()->count() > 0;
+        }
+
+        // Now NonLinear Test part pre-conditions must be considered
+        return $navigationMode === NavigationMode::NONLINEAR && $testPart->getPreConditions()->count() > 0;
     }
 }
