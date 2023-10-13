@@ -248,4 +248,62 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $this::assertNull($session['Q03.SCORE']);
         $this::assertSame(1.0, $session['Q04.SCORE']->getValue());
     }
+
+    public function testBranchingOnTestPartsSimple1(): void
+    {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/branchings/branchings_testparts.xml');
+        $session->beginTestSession();
+
+        // We are starting at item Q01, in testPart P01.
+        $this->assertEquals('Q01', $session->getCurrentAssessmentItemRef()->getIdentifier());
+
+        // Let's jump to testPart P03.
+        $session->beginAttempt();
+        $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('GotoP03'))]));
+        $session->moveNext();
+
+        // We expect to land in testPart P03, item Q03.
+        $this->assertEquals('Q03', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $this->assertEquals('P03', $session->getCurrentTestPart()->getIdentifier());
+    }
+
+    public function testBranchingRules(): void
+    {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/branchings/branching_rules.xml');
+        $session->beginTestSession();
+
+        $this->assertEquals('testPart-1', $session->getCurrentTestPart()->getIdentifier());
+        $this->assertEquals('assessmentSection-1', $session->getCurrentAssessmentSection()->getIdentifier());
+        $this->assertEquals('item-1', $session->getCurrentAssessmentItemRef()->getIdentifier());
+
+        $session->moveNext();
+
+        $this->assertEquals('testPart-1', $session->getCurrentTestPart()->getIdentifier());
+        $this->assertEquals('assessmentSection-1', $session->getCurrentAssessmentSection()->getIdentifier());
+        $this->assertEquals('item-3', $session->getCurrentAssessmentItemRef()->getIdentifier());
+
+        $session->moveNext();
+
+        $this->assertEquals('testPart-1', $session->getCurrentTestPart()->getIdentifier());
+        $this->assertEquals('assessmentSection-3', $session->getCurrentAssessmentSection()->getIdentifier());
+        $this->assertEquals('item-5', $session->getCurrentAssessmentItemRef()->getIdentifier());
+
+        $session->moveNext();
+
+        $this->assertEquals('testPart-3', $session->getCurrentTestPart()->getIdentifier());
+        $this->assertEquals('assessmentSection-5', $session->getCurrentAssessmentSection()->getIdentifier());
+        $this->assertEquals('item-7', $session->getCurrentAssessmentItemRef()->getIdentifier());
+
+        $session->moveNext();
+
+        $this->assertEquals('testPart-4', $session->getCurrentTestPart()->getIdentifier());
+        $this->assertEquals('subsection-1', $session->getCurrentAssessmentSection()->getIdentifier());
+        $this->assertEquals('item-9', $session->getCurrentAssessmentItemRef()->getIdentifier());
+
+        $session->moveNext();
+
+        $this->assertEquals('testPart-5', $session->getCurrentTestPart()->getIdentifier());
+        $this->assertEquals('assessmentSection-8', $session->getCurrentAssessmentSection()->getIdentifier());
+        $this->assertEquals('item-11', $session->getCurrentAssessmentItemRef()->getIdentifier());
+    }
 }

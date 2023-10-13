@@ -288,6 +288,15 @@ class AssessmentSection extends SectionPart
      */
     public function setSectionParts(SectionPartCollection $sectionParts): void
     {
+        if (!$sectionParts->isEmpty()) {
+            /** @var SectionPart $sectionPart */
+            foreach ($sectionParts as $sectionPart) {
+                $sectionPart->setParent($this);
+            }
+
+            $sectionPart->setIsLast(true);
+        }
+
         $this->sectionParts = $sectionParts;
     }
 
@@ -319,5 +328,12 @@ class AssessmentSection extends SectionPart
         }
 
         return new QtiComponentCollection($comp);
+    }
+
+    public function isLastSectionPart(SectionPart $sectionPart): bool
+    {
+        $sectionParts = $this->getSectionParts()->getArrayCopy();
+
+        return end($sectionParts) === $sectionPart;
     }
 }
