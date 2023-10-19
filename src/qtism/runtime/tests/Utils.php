@@ -37,6 +37,8 @@ use RuntimeException;
 class Utils
 {
     private const MAX_ENTRY_RESTRICTION_PATTERN = '/^\/\^(?P<splitPattern>\([^{]+)\{(?P<min>\d+)(?:(?P<isRange>,)|,(?P<max>\d+))?\}\$\/\w*$/';
+    private const SOURCE_MAX_WORDS_SPLIT_PATTERN = '(?:(?:[^\s\:\!\?\;\…\€]+)[\s\:\!\?\;\…\€]*)';
+    private const MAX_WORDS_SPLIT_PATTERN = '/[\s.,:;?!&#%\/*+=]+/';
     private const CLOSE_MATCH_GROUP_TOKEN = ')';
     private const OPEN_MATCH_GROUP_TOKEN = '(';
 
@@ -90,21 +92,23 @@ class Utils
             $patternMask = OperatorUtils::prepareXsdPatternForPcre($patternMask);
 
             $isMaxEntryRestriction = preg_match(self::MAX_ENTRY_RESTRICTION_PATTERN, $patternMask, $matches)
-                && self::isSingleMatchGroup($patternMask);
+                && self::isSingleMatchGroup($patternMask)
+                && $matches['splitPattern'] === self::SOURCE_MAX_WORDS_SPLIT_PATTERN;
+
 
             foreach ($values as $value) {
-                $result = @preg_match($patternMask, (string)$value);
+                if ($isMaxEntryRestriction) {
+                    [$min, $max] = self::extractMaxEntryRestrictions($matches);
+                    $entries = count(array_filter(preg_split(self::MAX_WORDS_SPLIT_PATTERN, $value)));
+                    if ($entries > $max || $entries < $min) {
+                        return false;
+                    }
+                } else {
+                    $result = @preg_match($patternMask, (string)$value);
 
-                if ($result === 0) {
-                    return false;
-                } elseif ($result === false) {
-                    if ($isMaxEntryRestriction) {
-                        [$splitPattern, $min, $max] = self::extractMaxEntryRestrictionsRestrictions($matches);
-                        $entries = count(preg_split("/$splitPattern/", $value)) - 1;
-                        if ($entries > $max || $entries < $min) {
-                            return false;
-                        }
-                    } else {
+                    if ($result === 0) {
+                        return false;
+                    } elseif ($result === false) {
                         throw new RuntimeException(OperatorUtils::lastPregErrorMessage());
                     }
                 }
@@ -149,12 +153,12 @@ class Utils
     /**
      * @return array [(string)$splitPattern, (int)$min, (int)$max]
      */
-    private static function extractMaxEntryRestrictionsRestrictions(array $matches): array
+    private static function extractMaxEntryRestrictions(array $matches): array
     {
         extract($matches);
         $isRange = !empty($isRange);
         $max ??= $isRange ? PHP_INT_MAX : $min;
 
-        return [$splitPattern, (int)$min, (int)$max];
+        return [(int)$min, (int)$max];
     }
 }
