@@ -478,6 +478,9 @@ class RouteItem
         } while ($parentSection = $parentSection->getParent());
 
         // Return branching rules from the Test Part level
-        return $this->getTestPart()->getBranchRules();
+        $branchingRules = $this->getTestPart()->getBranchRules();
+        $branchingRules->allowForNonLinearNavigationMode();
+
+        return $branchingRules;
     }
 }

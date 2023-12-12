@@ -88,7 +88,7 @@
     </assessmentSection>
   </testPart>
   <testPart identifier="testPart-6" navigationMode="nonlinear" submissionMode="individual">
-    <branchRule target="testPart-7">
+    <branchRule target="testPart-8">
       <baseValue baseType="boolean">true</baseValue>
     </branchRule>
     <assessmentSection identifier="assessmentSection-9" title="Section" visible="true">
@@ -107,6 +107,7 @@
       </assessmentItemRef>
     </assessmentSection>
   </testPart>
+  <!-- Jump from testPart-7 -->
   <testPart identifier="testPart-8" navigationMode="nonlinear" submissionMode="individual">
     <assessmentSection identifier="assessmentSection-11" title="Section" visible="true">
       <itemSessionControl maxAttempts="0" allowComment="false" validateResponses="false"/>

@@ -2412,7 +2412,11 @@ class AssessmentTestSession extends State
             $numberOfBranchRules = $branchRules->count();
 
             // Branchings?
-            if ($ignoreBranchings === false && $numberOfBranchRules > 0 && $this->mustApplyBranchRules() === true) {
+            if (
+                $ignoreBranchings === false &&
+                $numberOfBranchRules > 0 &&
+                $this->mustApplyBranchRules() || $branchRules->isAllowedForNonLinearNavigationMode()
+            ) {
                 for ($i = 0; $i < $numberOfBranchRules; $i++) {
                     $engine = new ExpressionEngine($branchRules[$i]->getExpression(), $this);
                     $condition = $engine->process();
