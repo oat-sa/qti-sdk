@@ -479,7 +479,7 @@ class RouteItem
 
         // Return branching rules from the Test Part level
         $branchingRules = $this->getTestPart()->getBranchRules();
-        $branchingRules->allowForNonLinearNavigationMode();
+        $branchingRules->allowNonLinearNavigationMode();
 
         return $branchingRules;
     }

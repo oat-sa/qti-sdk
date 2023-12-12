@@ -33,16 +33,16 @@ class BranchRuleCollection extends QtiComponentCollection
 {
 
     /** @var bool */
-    private $supportsNonLinearNavigationMode = false;
+    private $allowNonLinearNavigationMode = false;
 
-    public function isAllowedForNonLinearNavigationMode(): bool
+    public function isNonLinearNavigationModeAllowed(): bool
     {
-        return $this->supportsNonLinearNavigationMode;
+        return $this->allowNonLinearNavigationMode;
     }
 
-    public function allowForNonLinearNavigationMode(): void
+    public function allowNonLinearNavigationMode(): void
     {
-        $this->supportsNonLinearNavigationMode = true;
+        $this->allowNonLinearNavigationMode = true;
     }
 
     /**
