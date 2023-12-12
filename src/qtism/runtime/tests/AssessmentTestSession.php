@@ -2415,7 +2415,7 @@ class AssessmentTestSession extends State
             if (
                 $ignoreBranchings === false &&
                 $numberOfBranchRules > 0 &&
-                $this->mustApplyBranchRules() || $branchRules->isNonLinearNavigationModeAllowed()
+                ($this->mustApplyBranchRules() || $branchRules->isNonLinearNavigationModeAllowed())
             ) {
                 for ($i = 0; $i < $numberOfBranchRules; $i++) {
                     $engine = new ExpressionEngine($branchRules[$i]->getExpression(), $this);
