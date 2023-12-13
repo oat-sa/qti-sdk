@@ -85,16 +85,33 @@
       <assessmentItemRef identifier="item-11" href="./item-11.xml" timeDependent="false">
         <itemSessionControl maxAttempts="0" allowComment="false" validateResponses="false"/>
       </assessmentItemRef>
+    </assessmentSection>
+  </testPart>
+  <testPart identifier="testPart-6" navigationMode="nonlinear" submissionMode="individual">
+    <branchRule target="testPart-8">
+      <baseValue baseType="boolean">true</baseValue>
+    </branchRule>
+    <assessmentSection identifier="assessmentSection-9" title="Section" visible="true">
+      <itemSessionControl maxAttempts="0" allowComment="false" validateResponses="false"/>
       <assessmentItemRef identifier="item-12" href="./item-12.xml" timeDependent="false">
         <itemSessionControl maxAttempts="0" allowComment="false" validateResponses="false"/>
       </assessmentItemRef>
+    </assessmentSection>
+  </testPart>
+  <!-- Will be skipped -->
+  <testPart identifier="testPart-7" navigationMode="nonlinear" submissionMode="individual">
+    <assessmentSection identifier="assessmentSection-10" title="Section" visible="true">
+      <itemSessionControl maxAttempts="0" allowComment="false" validateResponses="false"/>
       <assessmentItemRef identifier="item-13" href="./item-13.xml" timeDependent="false">
         <itemSessionControl maxAttempts="0" allowComment="false" validateResponses="false"/>
       </assessmentItemRef>
+    </assessmentSection>
+  </testPart>
+  <!-- Jump from testPart-6 -->
+  <testPart identifier="testPart-8" navigationMode="nonlinear" submissionMode="individual">
+    <assessmentSection identifier="assessmentSection-11" title="Section" visible="true">
+      <itemSessionControl maxAttempts="0" allowComment="false" validateResponses="false"/>
       <assessmentItemRef identifier="item-14" href="./item-14.xml" timeDependent="false">
-        <itemSessionControl maxAttempts="0" allowComment="false" validateResponses="false"/>
-      </assessmentItemRef>
-      <assessmentItemRef identifier="item-15" required="false" fixed="false" href="./item-15.xml" timeDependent="false">
         <itemSessionControl maxAttempts="0" allowComment="false" validateResponses="false"/>
       </assessmentItemRef>
     </assessmentSection>
