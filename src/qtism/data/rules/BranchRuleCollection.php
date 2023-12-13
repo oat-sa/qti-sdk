@@ -31,6 +31,20 @@ use qtism\data\QtiComponentCollection;
  */
 class BranchRuleCollection extends QtiComponentCollection
 {
+
+    /** @var bool */
+    private $allowNonLinearNavigationMode = false;
+
+    public function isNonLinearNavigationModeAllowed(): bool
+    {
+        return $this->allowNonLinearNavigationMode;
+    }
+
+    public function allowNonLinearNavigationMode(): void
+    {
+        $this->allowNonLinearNavigationMode = true;
+    }
+
     /**
      * Check if a given $value is an instance of BranchRule.
      *

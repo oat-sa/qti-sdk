@@ -305,5 +305,17 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $this->assertEquals('testPart-5', $session->getCurrentTestPart()->getIdentifier());
         $this->assertEquals('assessmentSection-8', $session->getCurrentAssessmentSection()->getIdentifier());
         $this->assertEquals('item-11', $session->getCurrentAssessmentItemRef()->getIdentifier());
+
+        $session->moveNext();
+
+        $this->assertEquals('testPart-6', $session->getCurrentTestPart()->getIdentifier());
+        $this->assertEquals('assessmentSection-9', $session->getCurrentAssessmentSection()->getIdentifier());
+        $this->assertEquals('item-12', $session->getCurrentAssessmentItemRef()->getIdentifier());
+
+        $session->moveNext();
+
+        $this->assertEquals('testPart-8', $session->getCurrentTestPart()->getIdentifier());
+        $this->assertEquals('assessmentSection-11', $session->getCurrentAssessmentSection()->getIdentifier());
+        $this->assertEquals('item-14', $session->getCurrentAssessmentItemRef()->getIdentifier());
     }
 }
