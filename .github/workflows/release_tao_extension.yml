@@ -32,6 +32,5 @@ jobs:
                   # setup the place
                   npm i -g @oat-sa/tao-extension-release
                   # install the package
-                  npm ci
                   #create tag and release a new version
                   taoRelease repoRelease --release-branch master --no-interactive
