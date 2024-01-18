@@ -45,10 +45,13 @@ use qtism\common\storage\BinaryStreamAccessException;
 use qtism\common\storage\IStream;
 use qtism\common\storage\StreamAccessException;
 use qtism\data\AssessmentItemRef;
+use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionCollection;
 use qtism\data\IAssessmentItem;
 use qtism\data\ItemSessionControl;
+use qtism\data\rules\BranchRule;
 use qtism\data\rules\BranchRuleCollection;
+use qtism\data\rules\PreCondition;
 use qtism\data\rules\PreConditionCollection;
 use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\ResponseDeclaration;
@@ -149,7 +152,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * @param int The kind of value to be read (self::RW_VALUE | self::RW_DEFAULTVALUE | self::RW_CORRECTRESPONSE)
      * @throws BinaryStreamAccessException If an error occurs at the binary level.
      */
-    public function readVariableValue(Variable $variable, $valueType = self::RW_VALUE): void
+    public function readVariableValue(Variable $variable, array &$var, $valueType = self::RW_VALUE): void
     {
         switch ($valueType) {
             case self::RW_DEFAULTVALUE:
@@ -167,29 +170,36 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
         try {
             $isNull = $this->readBoolean();
+            $var[$setterToCall]['$isNull'] = $isNull;
 
             if ($isNull === true) {
                 // Nothing more to be read.
                 $variable->$setterToCall(null);
                 return;
             }
-
+            $var[$setterToCall]=[];
             $count = ($this->readBoolean() === true) ? 1 : $this->readShort();
+            $var[$setterToCall]['$count']=$count;
 
             $cardinality = $variable->getCardinality();
             $baseType = $variable->getBaseType();
 
             if ($cardinality === Cardinality::RECORD) {
+                $var[$setterToCall]['records'] = [];
                 // Deal with records.
                 $values = new RecordContainer();
                 for ($i = 0; $i < $count; $i++) {
+                    $var[$setterToCall]['records'][$i] = [];
                     $isNull = $this->readBoolean();
-                    $val = $this->readRecordField($isNull);
+                    $var[$setterToCall]['records'][$i]['$isNull']=$isNull;
+                    $val = $this->readRecordField($isNull,$var[$setterToCall]['records'][$i]);
+
                     $values[$val[0]] = $val[1];
                 }
 
                 $variable->$setterToCall($values);
             } else {
+                $var[$setterToCall]['val'] = [];
                 $toCall = 'read' . ucfirst(BaseType::getNameByConstant($baseType));
 
                 if ($cardinality === Cardinality::SINGLE) {
@@ -202,7 +212,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                         : new OrderedContainer($baseType);
                     for ($i = 0; $i < $count; $i++) {
                         $isNull = $this->readBoolean();
+                        $var[$setterToCall]['val'][$i]['$isNull']=$isNull;
                         $values[] = ($isNull === true) ? null : Utils::valueToRuntime($this->$toCall(), $baseType);
+                        $var[$setterToCall]['val'][$i]['values']= $values;
                     }
 
                     $variable->$setterToCall($values);
@@ -305,13 +317,15 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * @return array An array where the value at index 0 is the key string and index 1 is the value.
      * @throws QtiBinaryStreamAccessException
      */
-    public function readRecordField($isNull = false): array
+    public function readRecordField($isNull = false,array &$records): array
     {
         try {
             $key = $this->readString();
+            $records['$key'] = $key;
 
             if ($isNull === false) {
                 $baseType = $this->readTinyInt();
+                $records['$baseType']= $baseType;
 
                 $toCall = 'read' . ucfirst(BaseType::getNameByConstant($baseType));
                 $value = Utils::valueToRuntime($this->$toCall(), $baseType);
@@ -492,23 +506,30 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * @return ShufflingGroup
      * @throws QtiBinaryStreamAccessException
      */
-    public function readShufflingGroup(): ShufflingGroup
+    public function readShufflingGroup(array &$var): ShufflingGroup
     {
         try {
             $identifiers = new IdentifierCollection();
             $fixedIdentifiers = new IdentifierCollection();
 
             $identifiersCount = $this->readTinyInt();
-
+            $var['$identifiersCount']=$identifiersCount;
+            $var['$identifiers']=[];
             for ($i = 0; $i < $identifiersCount; $i++) {
-                $identifiers[] = $this->readString();
+                $identifier=$this->readString();
+                $identifiers[] = $identifier;
+                $var['$identifiers'][]=$identifier;
             }
 
             $shufflingGroup = new ShufflingGroup($identifiers);
 
             $fixedIdentifiersCount = $this->readTinyInt();
+            $var['$fixedIdentifiersCount']=$fixedIdentifiersCount;
+            $var['$fixedIdentifiers']=[];
             for ($i = 0; $i < $fixedIdentifiersCount; $i++) {
-                $fixedIdentifiers[] = $this->readString();
+                $fixedIdentifier = $this->readString();
+                $fixedIdentifiers[] = $fixedIdentifier;
+                $var['$fixedIdentifiers'][]=$fixedIdentifier;
             }
 
             $shufflingGroup->setFixedIdentifiers($fixedIdentifiers);
@@ -552,16 +573,19 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * @return Shuffling
      * @throws QtiBinaryStreamAccessException
      */
-    public function readShufflingState(): Shuffling
+    public function readShufflingState(array &$var): Shuffling
     {
         try {
             $responseIdentifier = $this->readIdentifier();
+            $var['$responseIdentifier']=$responseIdentifier;
             $shufflingGroupCount = $this->readTinyInt();
+            $var['$shufflingGroupCount']=$shufflingGroupCount;
 
             $shufflingGroups = new ShufflingGroupCollection();
-
+            $var['$shufflingGroups']=[];
             for ($i = 0; $i < $shufflingGroupCount; $i++) {
-                $shufflingGroups[] = $this->readShufflingGroup();
+                $var['$shufflingGroups'][$i]=[];
+                $shufflingGroups[] = $this->readShufflingGroup($var['$shufflingGroups'][$i]);
             }
 
             return new Shuffling($responseIdentifier, $shufflingGroups);
@@ -717,40 +741,58 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     public function readAssessmentItemSession(
         AbstractSessionManager $manager,
         AssessmentTestSeeker $seeker,
-        QtiBinaryVersion $version
+        QtiBinaryVersion $version,
+        array &$var,
     ): AssessmentItemSession {
         try {
             $itemRefPosition = $this->readShort();
+            $var['$itemRefPosition'] = $itemRefPosition;
             /** @var IAssessmentItem $assessmentItemRef */
             $assessmentItemRef = $seeker->seekComponent('assessmentItemRef', $itemRefPosition);
-
             $session = $manager->createAssessmentItemSession($assessmentItemRef);
             $session->setAssessmentItem($assessmentItemRef);
-            $session->setState($this->readTinyInt());
-            $session->setNavigationMode($this->readTinyInt());
-            $session->setSubmissionMode($this->readTinyInt());
-            $session->setAttempting($this->readBoolean());
+            $sessionState = $this->readTinyInt();
+            $session->setState($sessionState);
+            $var['$sessionState'] = $sessionState;
+            $navigationMode = $this->readTinyInt();
+            $session->setNavigationMode($navigationMode);
+            $var['$navigationMode'] = $navigationMode;
+            $submissionMode = $this->readTinyInt();
+            $session->setSubmissionMode($submissionMode);
+            $var['$submissionMode'] = $submissionMode;
+            $attempting = $this->readBoolean();
+            $session->setAttempting($attempting);
+            $var['$attempting'] = $attempting;
 
             if ($this->readBoolean() === true) {
                 /** @var ItemSessionControl $itemSessionControl */
                 $itemSessionControl = $seeker->seekComponent('itemSessionControl', $this->readShort());
                 $session->setItemSessionControl($itemSessionControl);
+                $var['$itemSessionControl'] = $itemSessionControl->getQtiClassName();
             }
 
             $session['numAttempts'] = new QtiInteger($this->readTinyInt());
+            $var['numAttempts']=$session['numAttempts'];
             $session['duration'] = $this->readDuration();
+            $var['duration']=$session['duration'];
             $session['completionStatus'] = new QtiIdentifier($this->readString());
+            $var['completionStatus']=$session['completionStatus'];
+
 
             if ($this->readBoolean() === true) {
+                $timeReference = $this->readDateTime();
                 // A time reference is set.
                 $session->setTimeReference($this->readDateTime());
+                $var['$timeReference'] = $timeReference->getTimestamp();
             }
 
             // Read the number of item-specific variables involved in the session.
             $varCount = $version->storesVariableCountAsInteger()
                 ? $this->readInteger()
                 : $this->readTinyInt();
+            $var['$varCount'] = $varCount;
 
+            $var['variables']=[];
             for ($i = 0; $i < $varCount; $i++) {
                 // For each of these variables...
 
@@ -761,11 +803,12 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $variableType = $this->decodeVariableDeclarationType(
                     $this->readShort()
                 );
+                $var['variables'][$i]['$variableType']=$variableType;
 
                 // Read the position of the associated variableDeclaration
                 // in the assessment tree.
                 $varPosition = $this->readShort();
-
+                $var['variables'][$i]['$varPosition']=$variableType;
                 try {
                     /** @var VariableDeclaration $variableDeclaration */
                     $variableDeclaration = $seeker->seekComponent($variableType, $varPosition);
@@ -786,17 +829,20 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
                 // Do we have a specific default value? A specific correct response?
                 $hasDefaultValue = $this->readBoolean();
+                $var['variables'][$i]['$hasDefaultValue']=$hasDefaultValue;
                 $hasCorrectResponse = $this->readBoolean();
-
+                $var['variables'][$i]['$hasCorrectResponse']=$hasCorrectResponse;
                 // Read the intrinsic value of the variable.
-                $this->readVariableValue($variable);
+                $this->readVariableValue(
+                    $variable,$var['variables'][$i]
+                );
 
                 if ($hasDefaultValue === true) {
-                    $this->readVariableValue($variable, self::RW_DEFAULTVALUE);
+                    $this->readVariableValue($variable, $var['variables'][$i],self::RW_DEFAULTVALUE);
                 }
 
                 if ($hasCorrectResponse === true) {
-                    $this->readVariableValue($variable, self::RW_CORRECTRESPONSE);
+                    $this->readVariableValue($variable, $var['variables'][$i],self::RW_CORRECTRESPONSE);
                 }
 
                 if ($version->storesVariableDefaultValueInitializationFlag() && $this->readBoolean()) {
@@ -808,9 +854,12 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
             // Read shuffling states if any.
             $shufflingStateCount = $this->readTinyInt();
+            $var['$shufflingStateCount']=$shufflingStateCount;
             $shufflingStates = new ShufflingCollection();
+            $var['$shufflingStates'] = [];
             for ($i = 0; $i < $shufflingStateCount; $i++) {
-                $shufflingStates[] = $this->readShufflingState();
+                $var['$shufflingStates'][$i]=[];
+                $shufflingStates[] = $this->readShufflingState($var['$shufflingStates'][$i]);
             }
             $session->setShufflingStates($shufflingStates);
 
@@ -949,34 +998,55 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * @return RouteItem
      * @throws QtiBinaryStreamAccessException
      */
-    public function readRouteItem(AssessmentTestSeeker $seeker): RouteItem
+    public function readRouteItem(AssessmentTestSeeker $seeker, array &$var): RouteItem
     {
         try {
             $occurrence = $this->readTinyInt();
+            $var['$occurrence'] = $occurrence;
             /** @var AssessmentItemRef $itemRef */
             $itemRef = $seeker->seekComponent('assessmentItemRef', $this->readShort());
+            $var['$itemRef'] = $itemRef->getIdentifier();
             /** @var TestPart $testPart */
             $testPart = $seeker->seekComponent('testPart', $this->readShort());
+            $var['$testPart'] = $testPart->getIdentifier();
 
             $sectionsCount = $this->readTinyInt();
+            $var['$sectionsCount'] = $sectionsCount;
             $sections = new AssessmentSectionCollection();
-
+            $var['$sections']=[];
             for ($i = 0; $i < $sectionsCount; $i++) {
-                $sections[] = $seeker->seekComponent('assessmentSection', $this->readShort());
+                /** @var AssessmentSection $section */
+                $section = $seeker->seekComponent('assessmentSection', $this->readShort());
+                $sections[] = $section;
+                $var['$sections'][]=$section->getIdentifier();
             }
 
             $branchRulesCount = $this->readTinyInt();
+            $var['$branchRulesCount']=$branchRulesCount;
+            $var['$branchRules']=[];
             $branchRules = new BranchRuleCollection();
 
             for ($i = 0; $i < $branchRulesCount; $i++) {
-                $branchRules[] = $seeker->seekComponent('branchRule', $this->readShort());
+                /** @var BranchRule $branchRule */
+                $branchRule = $seeker->seekComponent('branchRule', $this->readShort());
+                $branchRules[] = $branchRule;
+                $var['$branchRules'][] = [
+                    'target' => $branchRule->getTarget(),
+                    '$branchRule->getExpression()->getQtiClassName()' => $branchRule->getExpression()->getQtiClassName()
+                ];
             }
 
             $preConditionsCount = $this->readTinyInt();
+            $var['$preConditionsCount']=$preConditionsCount;
             $preConditions = new PreConditionCollection();
-
+            $var['$preConditions']=[];
             for ($i = 0; $i < $preConditionsCount; $i++) {
-                $preConditions[] = $seeker->seekComponent('preCondition', $this->readShort());
+                /** @var PreCondition $precondition */
+                $precondition = $seeker->seekComponent('preCondition', $this->readShort());
+                $preConditions[] = $precondition;
+                $var['$preConditions'][]=[
+                    '$precondition->getExpression()->getQtiClassName()'=>$precondition->getExpression()->getQtiClassName()
+                ];
             }
 
             $routeItem = new RouteItem($itemRef, $sections, $testPart, $seeker->getAssessmentTest());

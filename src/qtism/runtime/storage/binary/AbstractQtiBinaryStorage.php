@@ -40,8 +40,10 @@ use qtism\runtime\tests\AbstractSessionManager;
 use qtism\runtime\tests\AssessmentItemSessionStore;
 use qtism\runtime\tests\AssessmentTestSession;
 use qtism\runtime\tests\DurationStore;
+use qtism\runtime\tests\PendingResponses;
 use qtism\runtime\tests\PendingResponseStore;
 use qtism\runtime\tests\Route;
+use qtism\runtime\tests\RouteItem;
 use RuntimeException;
 use SplObjectStorage;
 
@@ -247,6 +249,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      */
     public function retrieve($sessionId): AssessmentTestSession
     {
+        $retrievedData = [];
         try {
             $stream = $this->getRetrievalStream($sessionId);
             $stream->open();
@@ -257,24 +260,33 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             // Deal with intrinsic values of the Test Session.
             $assessmentTestSessionState = $access->readTinyInt();
+            $retrievedData['$assessmentTestSessionState'] = $assessmentTestSessionState;
             $currentPosition = ($this->version->storesRouteCountAsInteger()) ? $access->readInteger() : $access->readTinyInt();
+            $retrievedData['$currentPosition'] = $currentPosition;
 
             if ($access->readBoolean() === true) {
                 $timeReference = $access->readDateTime();
+                $retrievedData['$timeReference'] = $timeReference;
             } else {
                 $timeReference = null;
             }
 
             $visitedTestPartIdentifiers = [];
             $visitedTestPartIdentifiersCount = $access->readTinyInt();
+            $retrievedData['$visitedTestPartIdentifiersCount'] = $visitedTestPartIdentifiersCount;
+            $retrievedData['$visitedTestPartIdentifiers'] = [];
             for ($i = 0; $i < $visitedTestPartIdentifiersCount; $i++) {
-                $visitedTestPartIdentifiers[] = $access->readString();
+                $visitedTestPartIdentifier = $access->readString();
+                $visitedTestPartIdentifiers[] = $visitedTestPartIdentifier;
+                $retrievedData['$visitedTestPartIdentifiers'][] = $visitedTestPartIdentifier;
             }
 
             $path = $access->readPath();
+            $retrievedData['$path'] = $path;
 
             // -- Session configuration.
             $config = $access->readShort();
+            $retrievedData['$config'] = $config;
 
             // Build the route and the item sessions.
             $route = new Route();
@@ -282,19 +294,29 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $itemSessionStore = new AssessmentItemSessionStore();
             $pendingResponseStore = new PendingResponseStore();
             $routeCount = ($this->version->storesRouteCountAsInteger()) ? $access->readInteger() : $access->readTinyInt();
-
+            $retrievedData['$routeCount'] = $routeCount;
             // Create the item session factory that will be used to instantiate
             // new item sessions.
 
             $seeker = $this->getSeeker();
-
+            $retrievedData['$routeItems'] = [];
+            $retrievedData['$itemSessionStore'] = [];
+            $retrievedData['$pendingResponseStore'] = [];
             for ($i = 0; $i < $routeCount; $i++) {
-                $routeItem = $access->readRouteItem($seeker);
+                $retrievedData['$routeItems'][$i]=[];
+                /** @var RouteItem $routeItem */
+                $routeItem = $access->readRouteItem($seeker, $retrievedData);
                 $route->addRouteItemObject($routeItem);
 
                 // An already instantiated session for this route item?
                 if ($access->readBoolean() === true) {
-                    $itemSession = $access->readAssessmentItemSession($this->getManager(), $seeker, $this->version);
+                    $retrievedData['$itemSessionStore'][$i]=[];
+                    $itemSession = $access->readAssessmentItemSession(
+                        $this->getManager(),
+                        $seeker,
+                        $this->version,
+                        $retrievedData['$itemSessionStore'][$i],
+                    );
 
                     // last-update
                     if ($access->readBoolean() === true) {
@@ -303,7 +325,12 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
                     // pending-responses
                     if ($access->readBoolean() === true) {
-                        $pendingResponseStore->addPendingResponses($access->readPendingResponses($seeker));
+                        /** @var PendingResponses $pendingResponses */
+                        $pendingResponses = $access->readPendingResponses($seeker);
+                        $pendingResponseStore->addPendingResponses($pendingResponses);
+                        $retrievedData['$pendingResponseStore'] = [
+                            '$pendingResponses->getAssessmentItemRef()->getIdentifier()'=>$pendingResponses->getAssessmentItemRef()->getIdentifier(),
+                        ];
                     }
 
                     $itemSessionStore->addAssessmentItemSession($itemSession, $routeItem->getOccurence());
@@ -322,21 +349,27 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             $assessmentTestSession->setTimeReference($timeReference);
             $assessmentTestSession->setVisitedTestPartIdentifiers($visitedTestPartIdentifiers);
             $assessmentTestSession->setPath($path);
-
+            $retrievedData['outcomeVariables'] = [];
             // Build the test-level global scope, composed of Outcome Variables.
-            foreach ($test->getOutcomeDeclarations() as $outcomeDeclaration) {
+            foreach ($test->getOutcomeDeclarations() as $index=>$outcomeDeclaration) {
+                $retrievedData['outcomeVariables'][$index]=[];
                 $outcomeVariable = OutcomeVariable::createFromDataModel($outcomeDeclaration);
-                $access->readVariableValue($outcomeVariable);
+                $access->readVariableValue($outcomeVariable,$retrievedData['outcomeVariables'][$index]);
                 $assessmentTestSession->setVariable($outcomeVariable);
             }
 
             // Build the duration store.
             $durationStore = new DurationStore();
             $durationCount = $access->readShort();
+            $retrievedData['$durationCount']=$durationCount;
+            $retrievedData['$durationStore']=[];
             for ($i = 0; $i < $durationCount; $i++) {
+                $retrievedData['$durationStore'][$i]=[];
                 $varName = $access->readString();
+                $retrievedData['$durationStore'][$i]['$varName'] = $varName;
+                $retrievedData['$durationStore'][$i]['variable']=[];
                 $durationVariable = new OutcomeVariable($varName, Cardinality::SINGLE, BaseType::DURATION);
-                $access->readVariableValue($durationVariable);
+                $access->readVariableValue($durationVariable, $retrievedData['$durationStore'][$i]['variable']);
                 $durationStore->setVariable($durationVariable);
             }
             $assessmentTestSession->setDurationStore($durationStore);
@@ -345,7 +378,11 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             return $assessmentTestSession;
         } catch (Exception $e) {
-            $msg = 'An error occurred while retrieving AssessmentTestSession. ' . $e->getMessage();
+            $msg = sprintf(
+                'An error occurred while retrieving AssessmentTestSession. %s retrievedData %s',
+                $e->getMessage(),
+                json_encode($retrievedData)
+            );
             throw new StorageException($msg, StorageException::RETRIEVAL, $e);
         }
     }
