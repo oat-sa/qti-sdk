@@ -305,7 +305,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
             for ($i = 0; $i < $routeCount; $i++) {
                 $retrievedData['$routeItems'][$i]=[];
                 /** @var RouteItem $routeItem */
-                $routeItem = $access->readRouteItem($seeker, $retrievedData);
+                $routeItem = $access->readRouteItem($seeker, $retrievedData['$routeItems'][$i]);
                 $route->addRouteItemObject($routeItem);
 
                 // An already instantiated session for this route item?

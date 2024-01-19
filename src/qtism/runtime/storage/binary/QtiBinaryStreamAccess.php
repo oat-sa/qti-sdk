@@ -204,7 +204,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
                 if ($cardinality === Cardinality::SINGLE) {
                     // Deal with a single value.
-                    $variable->$setterToCall(Utils::valueToRuntime($this->$toCall(), $baseType));
+                    $var = Utils::valueToRuntime($this->$toCall(), $baseType);
+                    $variable->$setterToCall($var);
+                    $var[$setterToCall]['val'] = $var;
                 } else {
                     // Deal with multiple values.
                     $values = $cardinality === Cardinality::MULTIPLE
@@ -212,9 +214,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                         : new OrderedContainer($baseType);
                     for ($i = 0; $i < $count; $i++) {
                         $isNull = $this->readBoolean();
-                        $var[$setterToCall]['val'][$i]['$isNull']=$isNull;
+                        $var[$setterToCall]['val'][$i]['$isNull'] = $isNull;
                         $values[] = ($isNull === true) ? null : Utils::valueToRuntime($this->$toCall(), $baseType);
-                        $var[$setterToCall]['val'][$i]['values']= $values;
+                        $var[$setterToCall]['val'][$i]['values'] = $values;
                     }
 
                     $variable->$setterToCall($values);
