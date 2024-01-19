@@ -204,9 +204,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
                 if ($cardinality === Cardinality::SINGLE) {
                     // Deal with a single value.
-                    $var = Utils::valueToRuntime($this->$toCall(), $baseType);
-                    $variable->$setterToCall($var);
-                    $var[$setterToCall]['val'] = $var;
+                    $tempVar = Utils::valueToRuntime($this->$toCall(), $baseType);
+                    $variable->$setterToCall($tempVar);
+                    $var[$setterToCall]['val'] = $tempVar;
                 } else {
                     // Deal with multiple values.
                     $values = $cardinality === Cardinality::MULTIPLE
@@ -810,7 +810,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 // Read the position of the associated variableDeclaration
                 // in the assessment tree.
                 $varPosition = $this->readShort();
-                $var['variables'][$i]['$varPosition']=$variableType;
+                $var['variables'][$i]['$varPosition']=$varPosition;
                 try {
                     /** @var VariableDeclaration $variableDeclaration */
                     $variableDeclaration = $seeker->seekComponent($variableType, $varPosition);
