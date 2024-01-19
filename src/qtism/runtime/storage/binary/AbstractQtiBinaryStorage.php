@@ -378,6 +378,9 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
 
             return $assessmentTestSession;
         } catch (Exception $e) {
+            if ($e instanceof QtiSessionNotFoundException) {
+                throw $e;
+            }
             $msg = sprintf(
                 'An error occurred while retrieving AssessmentTestSession. %s retrievedData %s',
                 $e->getMessage(),
@@ -395,6 +398,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
      * @param string $sessionId A test session identifier.
      * @return MemoryStream A MemoryStream object.
      * @throws RuntimeException If an error occurs.
+     * @throws QtiSessionNotFoundException If session can't be retrieved because not found in storage
      */
     abstract protected function getRetrievalStream($sessionId): MemoryStream;
 

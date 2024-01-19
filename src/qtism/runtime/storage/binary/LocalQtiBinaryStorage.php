@@ -113,6 +113,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
      * @param string $sessionId The session ID of the AssessmentTestSession to retrieve.
      * @return MemoryStream A MemoryStream object.
      * @throws RuntimeException If the binary stream cannot be persisted.
+     * @throws QtiSessionNotFoundException
      */
     protected function getRetrievalStream($sessionId): MemoryStream
     {
@@ -122,7 +123,7 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
 
         if ($read === false || strlen($read) === 0) {
             $msg = "An error occurred while retrieving the binary stream at '{$path}'. Nothing could be read. The file is empty or missing.";
-            throw new RuntimeException($msg);
+            throw new QtiSessionNotFoundException($msg);
         }
 
         return new MemoryStream($read);
