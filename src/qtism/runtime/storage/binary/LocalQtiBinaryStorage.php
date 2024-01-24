@@ -172,6 +172,8 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
     }
 
     /**
+     * Set the $stream value manually for a given $sessionId.
+     *
      * @param MemoryStream $stream
      * @param string $sessionId
      * @return void
