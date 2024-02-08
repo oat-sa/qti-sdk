@@ -32,11 +32,11 @@ use qtism\data\storage\xml\marshalling\Qti30MarshallerFactory;
  */
 class QtiVersion300 extends QtiVersion
 {
-    public const XMLNS = 'http://www.imsglobal.org/xsd/imsaqti_item_v1p0';
+    public const XMLNS = 'http://www.imsglobal.org/xsd/imsqtiasi_v3p0';
 
-    public const XSD = 'http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
+    public const XSD = 'https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd';
 
-    public const LOCAL_XSD = 'aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd';
+    public const LOCAL_XSD = 'qtiv3p0/imsqti_asiv3p0_v1p0.xsd';
 
     public const MARSHALLER_FACTORY = Qti30MarshallerFactory::class;
 }
