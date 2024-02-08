@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-response-processing xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" 
+                         xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> 
+    <qti-response-condition>
+        <qti-response-if>
+            <qti-match>
+                <qti-variable identifier="RESPONSE"/>
+                <qti-correct identifier="RESPONSE"/>
+            </qti-match>
+            <qti-set-outcome-value identifier="SCORE">
+                <qti-base-value base-type="float">1</qti-base-value>
+            </qti-set-outcome-value>
+        </qti-response-if>
+        <qti-response-else>
+            <qti-set-outcome-value identifier="SCORE">
+                <qti-base-value base-type="float">0</qti-base-value>
+            </qti-set-outcome-value>
+        </qti-response-else>
+    </qti-response-condition>
+</qti-response-processing>
