@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsaqti_item_v1p0"
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:ssml="http://www.w3.org/2010/10/synthesis"
-  xsi:schemaLocation="http://www.imsglobal.org/xsd/imsaqti_item_v1p0 http://www.imsglobal.org/xsd/qti/aqtiv1p0/imsaqti_itemv1p0_v1p0.xsd"
+  xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd"
     identifier="aqti_tmh_sample_2"
     title="Estimate distances using multiplication with Grace"
     adaptive="false"
@@ -46,8 +46,8 @@
     <card support="linguistic-guidance">
       <htmlContent>
         <div class="lg">
-          <p>A small, rectangular instrument having a row of reeds set back in air holes. 
-            A harmonica is played by blowing through the air holes. Sometimes it is called a 
+          <p>A small, rectangular instrument having a row of reeds set back in air holes.
+            A harmonica is played by blowing through the air holes. Sometimes it is called a
             mouth organ, or mouth harp.</p>
         </div>
       </htmlContent>
