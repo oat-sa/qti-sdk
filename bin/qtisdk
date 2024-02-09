@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 use qtism\cli\Cli;
+use qtism\cli\CompactTest;
 use qtism\cli\Render;
 use qtism\cli\AssessmentTestSessionDump;
 use cli as CliTools;
@@ -41,6 +42,10 @@ switch ($module) {
 
     case 'dump':
         AssessmentTestSessionDump::main();
+        break;
+
+    case 'compact':
+        CompactTest::main();
         break;
     default:
         CliTools\err("%RUnknown module '{$requestedModuleName}'. Available modules are: " . implode(',', $availableModules) . '.%n');

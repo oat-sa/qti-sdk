@@ -14,7 +14,10 @@ use qtism\runtime\common\Variable;
 use qtism\runtime\storage\binary\LocalQtiBinaryStorage;
 use qtism\runtime\storage\common\StorageException;
 use qtism\runtime\tests\AssessmentItemSession;
+use qtism\runtime\tests\AssessmentItemSessionState;
+use qtism\runtime\tests\AssessmentTestSessionState;
 use qtism\runtime\tests\SessionManager;
+use qtism\runtime\tests\TimeConstraint;
 
 class AssessmentTestSessionDump extends Cli
 {
@@ -48,16 +51,18 @@ class AssessmentTestSessionDump extends Cli
             $this->out("Test Title: " . $session->getAssessmentTest()->getTitle());
             $this->out("Test Tool Name: " . $session->getAssessmentTest()->getToolName());
             $this->out("Test Tool Version: " . $session->getAssessmentTest()->getToolVersion());
+            $this->out("Session State: " . AssessmentTestSessionState::getNameByConstant($session->getState()));
             $this->out('');
 
             $this->out("Assessment Item Sessions");
-            $this->out('------------------------');
+            $this->out('========================');
 
             /** @var AssessmentItemSession $itemSession */
             foreach ($session->getAssessmentItemSessionStore()->getAllAssessmentItemSessions() as $itemSession) {
                 $this->out("Assessment Item Identifier: " . $itemSession->getAssessmentItem()->getIdentifier());
                 $this->out("Assessment Item Title: " . $itemSession->getAssessmentItem()->getTitle());
                 $this->out("Assessment Item Label: " . $itemSession->getAssessmentItem()->getLabel());
+                $this->out("Assessment Item Session State: " . AssessmentItemSessionState::getNameByConstant($itemSession->getState()));
 
                 /** @var Variable $variable */
                 foreach ($itemSession as $variable) {
@@ -74,6 +79,14 @@ class AssessmentTestSessionDump extends Cli
                 }
 
                 $this->out('');
+            }
+
+            $this->out("Duration by Location");
+            $this->out("====================");
+
+            $durationStore = $session->getDurationStore();
+            foreach ($durationStore as $variable) {
+                echo 'Identifier: ' . $variable->getIdentifier() . ' / Time: ' . $variable->getValue() . "\n";
             }
 
         } catch (XmlStorageException $e) {
