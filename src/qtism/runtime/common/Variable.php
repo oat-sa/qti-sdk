@@ -25,13 +25,12 @@ namespace qtism\runtime\common;
 
 use InvalidArgumentException;
 use qtism\common\datatypes\QtiDatatype;
-use qtism\common\datatypes\QtiFile;
+use qtism\common\datatypes\QtiScalar;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\Value;
 use qtism\data\state\ValueCollection;
 use qtism\data\state\VariableDeclaration;
-use qtism\data\storage\Utils as StorageUtils;
 use qtism\runtime\common\Utils as RuntimeUtils;
 use UnexpectedValueException;
 
@@ -577,19 +576,11 @@ abstract class Variable
 
     /**
      * @param QtiDatatype $value
-     * @param int|null $baseType
      * @return Value
      */
-    private function createValue(QtiDatatype $value, int $baseType = null): Value
+    private function createValue(QtiDatatype $value): Value
     {
-        if (!$value instanceof QtiFile || !$this->isFile()) {
-            $value = StorageUtils::stringToDatatype(
-                (string)$value,
-                $baseType ?? $this->getBaseType()
-            );
-        }
-
-        return new Value($value);
+        return new Value($value instanceof QtiScalar ? $value->getValue() : $value);
     }
 
     /**
@@ -598,7 +589,7 @@ abstract class Variable
      */
     private function createRecordValue(QtiDatatype $value): Value
     {
-        $value = $this->createValue($value, $value->getBaseType());
+        $value = $this->createValue($value);
         $value->setPartOfRecord(true);
         return $value;
     }
