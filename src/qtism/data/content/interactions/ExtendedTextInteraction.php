@@ -162,6 +162,9 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     private $format = TextFormat::PLAIN;
 
+    // This option disable also validation for patternMask
+    private $isDisabledMaxWordValidation = false;
+
     /**
      * Create a new ExtendedTextInteraction object.
      *
@@ -313,7 +316,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function getPatternMask(): string
     {
-        return $this->patternMask;
+        return !$this->isDisabledMaxWordValidation() ? $this->patternMask : '';
     }
 
     /**
@@ -323,7 +326,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function hasPatternMask(): bool
     {
-        return $this->getPatternMask() !== '';
+        return !$this->isDisabledMaxWordValidation() && $this->getPatternMask() !== '';
     }
 
     /**
@@ -389,7 +392,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function getMaxStrings(): int
     {
-        return $this->maxStrings;
+        return !$this->isDisabledMaxWordValidation() ? $this->maxStrings : -1;
     }
 
     /**
@@ -399,7 +402,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function hasMaxStrings(): bool
     {
-        return $this->getMaxStrings() !== -1;
+        return !$this->isDisabledMaxWordValidation() && $this->getMaxStrings() !== -1;
     }
 
     /**
@@ -505,7 +508,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
             $this->getResponseIdentifier(),
             $this->getMinStrings(),
             ($this->hasMaxStrings() === false) ? 0 : $this->getMaxStrings(),
-            $this->getPatternMask()
+            ($this->isDisabledMaxWordValidation() == false) ? $this->getPatternMask() : '',
         );
     }
 
@@ -523,5 +526,23 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     public function getQtiClassName(): string
     {
         return 'extendedTextInteraction';
+    }
+
+    /**
+     *  This option disable also validation for patternMask
+    */
+    public function isDisabledMaxWordValidation(): bool
+    {
+        return $this->isDisabledMaxWordValidation;
+    }
+
+    public function setIsDisabledMaxWordValidation(bool $isDisabledMaxWordValidation): void
+    {
+        $this->isDisabledMaxWordValidation = $isDisabledMaxWordValidation;
+    }
+
+    public function disabledMaxWordValidation(): void
+    {
+        $this->setIsDisabledMaxWordValidation(true);
     }
 }

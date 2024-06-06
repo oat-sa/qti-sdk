@@ -85,6 +85,16 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $extendedTextInteraction->setPatternMask(true);
     }
 
+    public function testPatternMaskIgnoredForDisabledValidation(): void
+    {
+        $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
+        $extendedTextInteraction->setPatternMask('pattern');
+        $extendedTextInteraction->disabledMaxWordValidation();
+
+        $this->assertEmpty($extendedTextInteraction->getPatternMask());
+        $this->assertFalse($extendedTextInteraction->hasPatternMask());
+    }
+
     public function testSetPlaceholderTextWrongType(): void
     {
         $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
@@ -103,6 +113,16 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $this->expectExceptionMessage("The 'maxStrings' argument must be a strictly positive (> 0) integer or -1, 'boolean' given.");
 
         $extendedTextInteraction->setMaxStrings(true);
+    }
+
+    public function testMaxStringsIgnoredForDisableValidation(): void
+    {
+        $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
+        $extendedTextInteraction->setMaxStrings(10);
+        $extendedTextInteraction->disabledMaxWordValidation();
+
+        $this->assertEquals(-1, $extendedTextInteraction->getMaxStrings());
+        $this->assertFalse($extendedTextInteraction->hasMaxStrings());
     }
 
     public function testSetMinStringsWrongType(): void
