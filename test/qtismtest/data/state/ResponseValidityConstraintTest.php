@@ -96,4 +96,10 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
         $this::assertCount(1, $responseValidityConstraint->getAssociationValidityConstraints());
         $this::assertEquals('MYID', $responseValidityConstraint->getAssociationValidityConstraints()[0]->getIdentifier());
     }
+
+    public function testExtraDataCouldBeProvidedToConstrain(): void
+    {
+        $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', 0, 0, ['qtiClassName' => 'test']);
+        $this::assertEquals(['qtiClassName' => 'test'], $responseValidityConstraint->getExtraData());
+    }
 }

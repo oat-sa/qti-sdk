@@ -70,6 +70,11 @@ class ResponseValidityConstraint extends QtiComponent
     private $associationValidityConstraints;
 
     /**
+     *  Provide additional information about the ResponseValidityConstraint.
+     */
+    private $extraData = [];
+
+    /**
      * Create a new ResponseValidityConstraint object.
      *
      * If the $patternMask attribute is provided, it represent a constraint to be applied on all string
@@ -81,13 +86,14 @@ class ResponseValidityConstraint extends QtiComponent
      * @param string $patternMask (optional) A XML Schema regular expression.
      * @throws InvalidArgumentException If one or more of the arguments above are invalid.
      */
-    public function __construct($responseIdentifier, $minConstraint, $maxConstraint, $patternMask = '')
+    public function __construct($responseIdentifier, $minConstraint, $maxConstraint, $patternMask = '', $extraData = [])
     {
         $this->setResponseIdentifier($responseIdentifier);
         $this->setMinConstraint($minConstraint);
         $this->setMaxConstraint($maxConstraint);
         $this->setPatternMask($patternMask);
         $this->setAssociationValidityConstraints(new AssociationValidityConstraintCollection());
+        $this->setExtraData($extraData);
     }
 
     /**
@@ -277,5 +283,15 @@ class ResponseValidityConstraint extends QtiComponent
         return new QtiComponentCollection(
             $this->getAssociationValidityConstraints()->getArrayCopy()
         );
+    }
+
+    public function getExtraData()
+    {
+        return $this->extraData;
+    }
+
+    public function setExtraData($extraData)
+    {
+        $this->extraData = $extraData;
     }
 }

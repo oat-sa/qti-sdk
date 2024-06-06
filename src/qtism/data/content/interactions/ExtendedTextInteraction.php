@@ -316,7 +316,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function getPatternMask(): string
     {
-        return !$this->isDisabledMaxWordValidation() ? $this->patternMask : '';
+        return $this->patternMask;
     }
 
     /**
@@ -326,7 +326,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function hasPatternMask(): bool
     {
-        return !$this->isDisabledMaxWordValidation() && $this->getPatternMask() !== '';
+        return $this->getPatternMask() !== '';
     }
 
     /**
@@ -392,7 +392,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function getMaxStrings(): int
     {
-        return !$this->isDisabledMaxWordValidation() ? $this->maxStrings : -1;
+        return $this->maxStrings;
     }
 
     /**
@@ -402,7 +402,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      */
     public function hasMaxStrings(): bool
     {
-        return !$this->isDisabledMaxWordValidation() && $this->getMaxStrings() !== -1;
+        return $this->getMaxStrings() !== -1;
     }
 
     /**
@@ -508,7 +508,13 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
             $this->getResponseIdentifier(),
             $this->getMinStrings(),
             ($this->hasMaxStrings() === false) ? 0 : $this->getMaxStrings(),
-            ($this->isDisabledMaxWordValidation() == false) ? $this->getPatternMask() : '',
+            $this->getPatternMask(),
+            [
+                'qtiClassName' => $this->getQtiClassName(),
+                'options' => [
+                    'format' => $this->getFormat(),
+                ],
+            ]
         );
     }
 
@@ -526,23 +532,5 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     public function getQtiClassName(): string
     {
         return 'extendedTextInteraction';
-    }
-
-    /**
-     *  This option disable also validation for patternMask
-    */
-    public function isDisabledMaxWordValidation(): bool
-    {
-        return $this->isDisabledMaxWordValidation;
-    }
-
-    public function setIsDisabledMaxWordValidation(bool $isDisabledMaxWordValidation): void
-    {
-        $this->isDisabledMaxWordValidation = $isDisabledMaxWordValidation;
-    }
-
-    public function disabledMaxWordValidation(): void
-    {
-        $this->setIsDisabledMaxWordValidation(true);
     }
 }
