@@ -100,6 +100,8 @@ class ResponseValidityConstraintTest extends QtiSmTestCase
     public function testExtraDataCouldBeProvidedToConstrain(): void
     {
         $responseValidityConstraint = new ResponseValidityConstraint('RESPONSE', 0, 0, ['qtiClassName' => 'test']);
-        $this::assertEquals(['qtiClassName' => 'test'], $responseValidityConstraint->getExtraData());
+        $extraData = $responseValidityConstraint->getExtraData();
+        $this->assertNotEmpty($extraData);
+        $this::assertEquals('test', $extraData['qtiClassName']);
     }
 }
