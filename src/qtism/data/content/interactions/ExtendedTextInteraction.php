@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,7 +17,7 @@ declare(strict_types=1);
  *
  * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * @author  Jérôme Bogaerts <jerome@taotesting.com>
+ * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
  */
 
@@ -49,7 +47,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * If the string interaction is bound to a numeric response variable then the base attribute
      * must be used to set the number base in which to interpret the value entered by the candidate.
      *
-     * @var                 int
+     * @var int
      * @qtism-bean-property
      */
     private $base = 10;
@@ -61,7 +59,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * entered by the candidate can also be captured by binding the interaction to a second
      * response variable (of base-type string).
      *
-     * @var                 string
+     * @var string
      * @qtism-bean-property
      */
     private $stringIdentifier = '';
@@ -74,7 +72,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * use the value of this attribute to set the size of the response box, where applicable.
      * This is not a validity constraint.
      *
-     * @var                 int|null
+     * @var int|null
      * @qtism-bean-property
      */
     private $expectedLength;
@@ -89,7 +87,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * responses is required for progression through a test. This could be done by providing
      * an illustrative sample response in the prompt, for example.
      *
-     * @var                 string
+     * @var string
      * @qtism-bean-property
      */
     private $patternMask = '';
@@ -104,7 +102,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * default placeholder text when this is required. Implementors should be aware of the
      * issues concerning the use of default values described in the section on Response Variables.
      *
-     * @var                 string
+     * @var string
      * @qtism-bean-property
      */
     private $placeholderText = '';
@@ -117,7 +115,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * to control the maximum number of separate strings accepted from the candidate. When
      * multiple strings are accepted, expectedLength applies to each string.
      *
-     * @var                 int
+     * @var int
      * @qtism-bean-property
      */
     private $maxStrings = -1;
@@ -133,7 +131,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * non-empty string to form a valid response. More complex constraints on the form of
      * the string can be controlled with the patternMask attribute.
      *
-     * @var                 int
+     * @var int
      * @qtism-bean-property
      */
     private $minStrings = 0;
@@ -146,7 +144,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Engine should use the value of this attribute to set the size of the response box,
      * where applicable. This is not a validity constraint.
      *
-     * @var                 int|null
+     * @var int|null
      * @qtism-bean-property
      */
     private $expectedLines;
@@ -159,7 +157,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * interpreted by response processing engines and also controls the way it should be
      * captured in the delivery engine.
      *
-     * @var                 int
+     * @var int
      * @qtism-bean-property
      */
     private $format = TextFormat::PLAIN;
@@ -167,11 +165,11 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Create a new ExtendedTextInteraction object.
      *
-     * @param  string $responseIdentifier The identifier of the associated response variable.
-     * @param  string $id                 The id of the bodyElement.
-     * @param  string $class              The class of the bodyElement.
-     * @param  string $lang               The lang of the bodyElement.
-     * @param  string $label              The label of the bodyElement.
+     * @param string $responseIdentifier The identifier of the associated response variable.
+     * @param string $id The id of the bodyElement.
+     * @param string $class The class of the bodyElement.
+     * @param string $lang The lang of the bodyElement.
+     * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException If any of the arguments is invalid.
      */
     public function __construct($responseIdentifier, $id = '', $class = '', $lang = '', $label = '')
@@ -183,7 +181,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * If the interaction is bound to a numeric response variable, get the number base in which
      * to interpret the value entered by the candidate.
      *
-     * @param  int $base A positive (>= 0) integer.
+     * @param int $base A positive (>= 0) integer.
      * @throws InvalidArgumentException If $base is not a positive integer.
      */
     public function setBase($base): void
@@ -212,7 +210,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * plain text entered by the candidate will be stored. If $stringIdentifier is an empty string, it means that
      * there is no value for the stringIdentifier attribute.
      *
-     * @param  string $stringIdentifier A QTI Identifier or an empty string.
+     * @param string $stringIdentifier A QTI Identifier or an empty string.
      * @throws InvalidArgumentException If $stringIdentifier is not a valid QTIIdentifier nor an empty string.
      */
     public function setStringIdentifier($stringIdentifier): void
@@ -251,7 +249,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the hint to the candidate about the expected overall length of its
      * response. A null value unsets expectedLength.
      *
-     * @param  int|null $expectedLength A non-negative integer (>= 0) or null to unset expectedLength.
+     * @param int|null $expectedLength A non-negative integer (>= 0) or null to unset expectedLength.
      * @throws InvalidArgumentException If $expectedLength is not a non-negative integer nor null.
      */
     public function setExpectedLength($expectedLength): void
@@ -293,7 +291,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the pattern mask specifying an XML Schema 2 regular expression that the candidate response must
      * match with. If $patternMask is an empty string, it means that there is no value defined for patternMask.
      *
-     * @param  string $patternMask An XML Schema 2 regular expression or an empty string.
+     * @param string $patternMask An XML Schema 2 regular expression or an empty string.
      * @throws InvalidArgumentException If $patternMask is not a string value.
      */
     public function setPatternMask($patternMask): void
@@ -332,7 +330,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set a placeholder text. If $placeholderText is an empty string, it means that no value is defined
      * for the placeholderText attribute.
      *
-     * @param  string $placeholderText A placeholder text or an empty string.
+     * @param string $placeholderText A placeholder text or an empty string.
      * @throws InvalidArgumentException If $placeholderText is not a string value.
      */
     public function setPlaceholderText($placeholderText): void
@@ -370,7 +368,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * If the interaction is bound to a numeric response variable, get the number of separate strings
      * accepted from the candidate. If $maxStrings is -1, it means no value is defined for the attribute.
      *
-     * @param  int $maxStrings A strictly positive (> 0) integer or -1.
+     * @param int $maxStrings A strictly positive (> 0) integer or -1.
      * @throws InvalidArgumentException If $maxStrings is not a strictly positive integer nor -1.
      */
     public function setMaxStrings($maxStrings): void
@@ -407,7 +405,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Set the minimum separate (non-empty) strings required from the candidate.
      *
-     * @param  string $minStrings A positive (>= 0) integer.
+     * @param string $minStrings A positive (>= 0) integer.
      * @throws InvalidArgumentException If $minStrings is not a positive integer.
      */
     public function setMinStrings($minStrings): void
@@ -434,7 +432,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
      * Set the hint to the candidate about the expected number of lines of its
      * response. A null value unsets expectedLines.
      *
-     * @param  int|null $expectedLines A non-negative integer (>= 0) or null.
+     * @param int|null $expectedLines A non-negative integer (>= 0) or null.
      * @throws InvalidArgumentException If $expectedLines is not a non-negative integer nor null.
      */
     public function setExpectedLines($expectedLines): void
@@ -475,7 +473,7 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     /**
      * Set the format of the text entered by the candidate.
      *
-     * @param  int $format A value from the TextFormat enumeration.
+     * @param int $format A value from the TextFormat enumeration.
      * @throws InvalidArgumentException If $format is not a value from the TextFormat enumeration.
      */
     public function setFormat($format): void
