@@ -66,24 +66,28 @@ class ResponseValidityConstraint extends QtiComponent
 
     /**
      * The collection of nested AssociationValidityConstraints objects.
+     *
+     * @var AssociationValidityConstraintCollection
      */
     private $associationValidityConstraints;
 
     /**
-     *  Provide additional information about the ResponseValidityConstraint.
+     * Metadata defined by @see \qtism\data\content\interactions\Interaction instantiating this ResponseValidityConstraint
      */
     private $extraData = [];
 
     /**
      * Create a new ResponseValidityConstraint object.
      *
-     * If the $patternMask attribute is provided, it represent a constraint to be applied on all string
+     * If the $patternMask attribute is provided, it represents a constraint to be applied on all string
      * values contained by the variable described in the $responseÏdentifier variable.
      *
      * @param string $responseIdentifier The identifier of the response the validity constraint applies to.
      * @param int $minConstraint The minimum cardinality the value to be set to the response must have.
      * @param int $maxConstraint The maximum cardinality the value to be set the response must have.
      * @param string $patternMask (optional) A XML Schema regular expression.
+     * @param array $extraData (optional) Metadata defined by the Interaction instantiating this ResponseValidityConstraint
+     *    @see \qtism\data\content\interactions\Interaction
      * @throws InvalidArgumentException If one or more of the arguments above are invalid.
      */
     public function __construct($responseIdentifier, $minConstraint, $maxConstraint, $patternMask = '', $extraData = [])
@@ -285,12 +289,12 @@ class ResponseValidityConstraint extends QtiComponent
         );
     }
 
-    public function getExtraData()
+    public function getExtraData(): array
     {
         return $this->extraData;
     }
 
-    public function setExtraData($extraData)
+    public function setExtraData(array $extraData)
     {
         $this->extraData = $extraData;
     }
