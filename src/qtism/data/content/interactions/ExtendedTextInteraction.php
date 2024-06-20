@@ -505,7 +505,13 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
             $this->getResponseIdentifier(),
             $this->getMinStrings(),
             ($this->hasMaxStrings() === false) ? 0 : $this->getMaxStrings(),
-            $this->getPatternMask()
+            $this->getPatternMask(),
+            [
+                'qtiClassName' => $this->getQtiClassName(),
+                'options' => [
+                    'format' => $this->getFormat(),
+                ],
+            ]
         );
     }
 
