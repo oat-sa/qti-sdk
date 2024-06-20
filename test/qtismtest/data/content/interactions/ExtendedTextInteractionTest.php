@@ -178,4 +178,10 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
 
         $extendedTextInteraction->setFormat(999);
     }
+
+    public function testExtraDataIsProvidedForValidityConstrains(): void
+    {
+        $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
+        $this::assertNotEmpty($extendedTextInteraction->getResponseValidityConstraint()->getExtraData());
+    }
 }
