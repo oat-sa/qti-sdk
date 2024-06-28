@@ -97,7 +97,7 @@ class Format
     public static function isIdentifier(string $string, bool $strict = true): bool
     {
         if (!$strict) {
-            return preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $string) === 1;
+            return preg_match("/^[a-zA-Z0-9_][a-zA-Z0-9_\.-]*$/u", $string) === 1;
         }
 
         if (!isset($string[0]) || !isset(CharacterMap::$identifier_first[$string[0]])) {
@@ -130,7 +130,7 @@ class Format
      */
     public static function sanitizeIdentifier(string $dirtyIdentifier): string
     {
-        if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $dirtyIdentifier)) {
+        if (preg_match("/^[a-zA-Z0-9_\.-]*$/u", $dirtyIdentifier)) {
             return $dirtyIdentifier;
         }
 
