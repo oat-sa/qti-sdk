@@ -768,9 +768,9 @@ class AssessmentItemTest extends QtiSmTestCase
     public function testCreateAssessmentItemWrongIdentifier(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The identifier argument must be a valid QTI Identifier, '999' given.");
+        $this->expectExceptionMessage("The identifier argument must be a valid QTI Identifier, '99\t9' given.");
 
-        $assessmentItem = new AssessmentItem('999', 'Nine Nine Nine', false);
+        $assessmentItem = new AssessmentItem("99\t9", 'Nine Nine Nine', false);
     }
 
     public function testCreateAssessmentItemWrongTitle(): void
