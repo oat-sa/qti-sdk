@@ -228,7 +228,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      */
     public function setIdentifier($identifier): void
     {
-        if (Format::isIdentifier($identifier, false)) {
+        if (Format::isNormalizedString($identifier)) {
             $this->identifier = $identifier;
             $this->notify();
         } else {
