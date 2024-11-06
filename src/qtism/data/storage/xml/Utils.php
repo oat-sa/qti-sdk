@@ -412,8 +412,7 @@ class Utils
                         $esc = "\u{FFFD}";
                         break;
                     }
-
-                continue 2;
+                    continue 2;
             }
             $result .= substr($value, $last, $i - $last - $width) . $esc;
             $last = $i;
