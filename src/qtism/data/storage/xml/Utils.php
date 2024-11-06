@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -353,9 +355,69 @@ class Utils
             return $value === true ? 'true' : 'false';
         }
         if ($encode) {
-            return htmlspecialchars((string)$value, ENT_XML1, 'UTF-8');
+            return self::xmlSpecialChars((string)$value);
         }
         return (string)$value;
+    }
+
+    private static function isInCharacterRange(int $char): bool
+    {
+        return $char == 0x09
+            || $char == 0x0A
+            || $char == 0x0D
+            || $char >= 0x20 && $char <= 0xDF77
+            || $char >= 0xE000 && $char <= 0xFFFD
+            || $char >= 0x10000 && $char <= 0x10FFFF;
+    }
+
+    public static function xmlSpecialChars(string $value): string
+    {
+        $result = '';
+
+        $last = 0;
+        $length = strlen($value);
+        $i = 0;
+
+        while ($i < $length) {
+            $r = mb_substr(substr($value, $i), 0, 1);
+            $width = strlen($r);
+            $i += $width;
+            switch ($r) {
+                case '"':
+                    $esc = '&#34;';
+                    break;
+                case "'":
+                    $esc = '&#39;';
+                    break;
+                case '&':
+                    $esc = '&amp;';
+                    break;
+                case '<':
+                    $esc = '&lt;';
+                    break;
+                case '>':
+                    $esc = '&gt;';
+                    break;
+                case "\t":
+                    $esc = '&#x9;';
+                    break;
+                case "\n":
+                    $esc = '&#xA;';
+                    break;
+                case "\r":
+                    $esc = '&#xD;';
+                    break;
+                default:
+                    if (!self::isInCharacterRange(mb_ord($r)) || (mb_ord($r) === 0xFFFD && $width === 1)) {
+                        $esc = "\u{FFFD}";
+                        break;
+                    }
+                    continue 2;
+            }
+            $result .= substr($value, $last, $i - $last - $width) . $esc;
+            $last = $i;
+        }
+        return $result . substr($value, $last);
     }
 
     /**

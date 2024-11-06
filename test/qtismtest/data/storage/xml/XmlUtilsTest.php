@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace qtismtest\data\storage\xml;
 
 use DOMDocument;
@@ -386,9 +388,52 @@ class XmlUtilsTest extends QtiSmTestCase
 ');
 
         self::assertSame(
-            ['qh5'=>'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0'],
+            ['qh5' => 'http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0'],
             Utils::findExternalNamespaces($xml)
         );
+    }
+
+    public function testValueAsStringReplaceSpecialSymbols(): void
+    {
+        $this->assertEquals("160\u{FFFD}", Utils::valueAsString("160\u{0008}"));
+    }
+
+    public function testProcessSpecialCharsetWithoutError(): void
+    {
+        $xml = ('<assessmentResult
+	xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<context/>
+	<testResult identifier="44127db28512-suomynona#903756e974e7#e94025be336b1f89159af64b1f6eda5d470ac8d61#local-dev-acc.nextgen-stack-local" datestamp="2024-10-30T12:56:32+00:00"/>
+	<itemResult identifier="item-1" datestamp="2024-10-30T12:56:32+00:00" sessionStatus="final">
+		<responseVariable identifier="numAttempts" cardinality="single" baseType="integer">
+			<candidateResponse>
+				<value>1</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value>PT22S</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="completionStatus" cardinality="single" baseType="identifier">
+			<value>completed</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" baseType="float">
+			<value>0</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" baseType="float">
+			<value>1</value>
+		</outcomeVariable>
+		<responseVariable identifier="RESPONSE" cardinality="single" baseType="string">
+			<candidateResponse>
+				<value>%s</value>
+			</candidateResponse>
+		</responseVariable>
+	</itemResult>
+</assessmentResult>
+');
+        $this->assertNotNull(Utils::findExternalNamespaces(sprintf($xml, Utils::valueAsString("160\u{0008}"))));
     }
 
     public function testremoveAllButFirstOccurrence(): void
