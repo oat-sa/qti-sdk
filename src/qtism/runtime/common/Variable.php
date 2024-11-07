@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2024 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -563,10 +563,10 @@ abstract class Variable
                 break;
 
             case Cardinality::RECORD:
-                foreach ($this->getValue() as $v) {
+                foreach ($this->getValue() as $k => $v) {
                     $values[] = $v === null
-                        ? $this->createRecordNullValue()
-                        : $this->createRecordValue($v);
+                        ? $this->createRecordNullValue($k)
+                        : $this->createRecordValue($v, $k);
                 }
                 break;
         }
@@ -583,26 +583,23 @@ abstract class Variable
         return new Value($value instanceof QtiScalar ? $value->getValue() : $value);
     }
 
-    /**
-     * @param QtiDatatype $value
-     * @return Value
-     */
-    private function createRecordValue(QtiDatatype $value): Value
+    private function createRecordValue(QtiDatatype $qtiValue, string $fieldIdentifier): Value
     {
-        $value = $this->createValue($value);
+        $value = $this->createValue($qtiValue);
         $value->setPartOfRecord(true);
+        $value->setFieldIdentifier($fieldIdentifier);
+        $value->setBaseType($qtiValue->getBaseType());
         return $value;
     }
 
     /**
      * Creates a null value to fill a gap in a record set.
-     *
-     * @return Value
      */
-    private function createRecordNullValue(): Value
+    private function createRecordNullValue(string $fieldIdentifier): Value
     {
         $value = new Value(null);
         $value->setPartOfRecord(true);
+        $value->setFieldIdentifier($fieldIdentifier);
         return $value;
     }
 
