@@ -14,6 +14,7 @@ use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\state\AreaMapping;
 use qtism\data\state\Mapping;
+use qtism\data\state\ResponseDeclaration;
 use qtism\runtime\common\MultipleContainer;
 use qtism\runtime\common\OrderedContainer;
 use qtism\runtime\common\RecordContainer;
@@ -54,6 +55,7 @@ class ResponseVariableTest extends QtiSmTestCase
 				</areaMapping>
 			</responseDeclaration>
 		');
+        /** @var ResponseDeclaration $responseDeclaration */
         $responseDeclaration = $factory->createMarshaller($element)->unmarshall($element);
         $responseVariable = ResponseVariable::createFromDataModel($responseDeclaration);
         $this::assertInstanceOf(ResponseVariable::class, $responseVariable);
@@ -126,12 +128,16 @@ class ResponseVariableTest extends QtiSmTestCase
 
         $this::assertCount(1, $values);
         $this::assertSame(10, $values[0]->getValue());
+        $this::assertSame('', $values[0]->getFieldIdentifier());
+        $this::assertSame(-1, $values[0]->getBaseType());
 
         $responseVariable = new ResponseVariable('MYVAR', Cardinality::SINGLE, BaseType::FLOAT, new QtiFloat(10.1));
         $values = $responseVariable->getDataModelValues();
 
         $this::assertCount(1, $values);
         $this::assertSame(10.1, $values[0]->getValue());
+        $this::assertSame('', $values[0]->getFieldIdentifier());
+        $this::assertSame(-1, $values[0]->getBaseType());
     }
 
     public function testGetNonScalarDataModelValuesSingleCardinality(): void
@@ -143,6 +149,8 @@ class ResponseVariableTest extends QtiSmTestCase
 
         $this::assertCount(1, $values);
         $this::assertTrue($qtiPair->equals($values[0]->getValue()));
+        $this::assertSame('', $values[0]->getFieldIdentifier());
+        $this::assertSame(-1, $values[0]->getBaseType());
 
         // QtiPoint
         $qtiPoint = new QtiPoint(1, 1);
@@ -151,6 +159,8 @@ class ResponseVariableTest extends QtiSmTestCase
 
         $this::assertCount(1, $values);
         $this::assertTrue($qtiPoint->equals($values[0]->getValue()));
+        $this::assertSame('', $values[0]->getFieldIdentifier());
+        $this::assertSame(-1, $values[0]->getBaseType());
 
         // QtiFile
         $fileManager = new FileSystemFileManager();
@@ -186,7 +196,11 @@ class ResponseVariableTest extends QtiSmTestCase
 
         $this::assertCount(2, $values);
         $this::assertEquals(10, $values[0]->getValue());
+        $this::assertSame('', $values[0]->getFieldIdentifier());
+        $this::assertSame(-1, $values[0]->getBaseType());
         $this::assertEquals(12, $values[1]->getValue());
+        $this::assertSame('', $values[1]->getFieldIdentifier());
+        $this::assertSame(-1, $values[1]->getBaseType());
     }
 
     public function testGetNonScalarDataModelValuesMultipleCardinality(): void
@@ -208,7 +222,11 @@ class ResponseVariableTest extends QtiSmTestCase
 
         $this::assertCount(2, $values);
         $this::assertTrue($qtiPair1->equals($values[0]->getValue()));
+        $this::assertSame('', $values[0]->getFieldIdentifier());
+        $this::assertSame(-1, $values[0]->getBaseType());
         $this::assertTrue($qtiPair2->equals($values[1]->getValue()));
+        $this::assertSame('', $values[1]->getFieldIdentifier());
+        $this::assertSame(-1, $values[1]->getBaseType());
 
         // QtiPoint
         $qtiPoint1 = new QtiPoint(0, 0);
@@ -227,7 +245,11 @@ class ResponseVariableTest extends QtiSmTestCase
 
         $this::assertCount(2, $values);
         $this::assertTrue($qtiPoint1->equals($values[0]->getValue()));
+        $this::assertSame('', $values[0]->getFieldIdentifier());
+        $this::assertSame(-1, $values[0]->getBaseType());
         $this::assertTrue($qtiPoint2->equals($values[1]->getValue()));
+        $this::assertSame('', $values[1]->getFieldIdentifier());
+        $this::assertSame(-1, $values[1]->getBaseType());
     }
 
     public function testGetDataModelValuesRecordCardinality(): void
@@ -251,9 +273,17 @@ class ResponseVariableTest extends QtiSmTestCase
 
         $this::assertCount(4, $values);
         $this::assertSame(12, $values[0]->getValue());
+        $this::assertSame('twelve', $values[0]->getFieldIdentifier());
+        $this::assertSame(BaseType::INTEGER, $values[0]->getBaseType());
         $this::assertSame('bar', $values[1]->getValue());
+        $this::assertSame('foo', $values[1]->getFieldIdentifier());
+        $this::assertSame(BaseType::STRING, $values[1]->getBaseType());
         $this::assertNull($values[2]->getValue());
+        $this::assertSame('null', $values[2]->getFieldIdentifier());
+        $this::assertSame(-1, $values[2]->getBaseType());
         $this::assertTrue($qtiPair->equals($values[3]->getValue()));
+        $this::assertSame('pair', $values[3]->getFieldIdentifier());
+        $this::assertSame(BaseType::PAIR, $values[3]->getBaseType());
     }
 
     public function testClone(): void
