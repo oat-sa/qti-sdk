@@ -170,7 +170,7 @@ class Render extends Cli
         $validate = !($arguments['novalidate'] === true);
 
         try {
-            $doc->load($source, $validate);
+            $doc->load(realpath($source), $validate);
 
             $renderingData = '';
 
