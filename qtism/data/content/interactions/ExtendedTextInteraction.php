@@ -26,6 +26,7 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -493,6 +494,22 @@ class ExtendedTextInteraction extends BlockInteraction implements StringInteract
     public function getFormat()
     {
         return $this->format;
+    }
+
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
+    {
+        return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            $this->getMinStrings(),
+            ($this->hasMaxStrings() === false) ? 0 : $this->getMaxStrings(),
+            $this->getPatternMask(),
+            [
+                'qtiClassName' => $this->getQtiClassName(),
+                'options' => [
+                    'format' => $this->getFormat(),
+                ],
+            ]
+        );
     }
 
     /**

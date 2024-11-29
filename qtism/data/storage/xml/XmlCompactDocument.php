@@ -275,6 +275,7 @@ class XmlCompactDocument extends XmlDocument
                 $compactAssessmentItemRef->setResponseProcessing($doc->getDocumentComponent()->getResponseProcessing());
             }
 
+            $compactAssessmentItemRef->setResponseValidityConstraints($doc->getDocumentComponent()->getResponseValidityConstraints());
             $compactAssessmentItemRef->setAdaptive($doc->getDocumentComponent()->isAdaptive());
             $compactAssessmentItemRef->setTimeDependent($doc->getDocumentComponent()->isTimeDependent());
         } catch (Exception $e) {

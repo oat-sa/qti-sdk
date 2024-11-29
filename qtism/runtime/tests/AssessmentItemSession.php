@@ -35,8 +35,6 @@ use qtism\data\IAssessmentItem;
 use qtism\data\ItemSessionControl;
 use qtism\data\NavigationMode;
 use qtism\data\processing\ResponseProcessing;
-use qtism\data\state\OutcomeDeclaration;
-use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\storage\php\PhpStorageException;
 use qtism\data\SubmissionMode;
 use qtism\data\TimeLimits;
@@ -45,6 +43,7 @@ use qtism\runtime\common\ResponseVariable;
 use qtism\runtime\common\State;
 use qtism\runtime\common\Utils;
 use qtism\runtime\processing\ResponseProcessingEngine;
+use qtism\runtime\tests\Utils as TestUtils;
 
 /**
  * The AssessmentItemSession class implements the lifecycle of an AssessmentItem session.
@@ -1183,5 +1182,33 @@ class AssessmentItemSession extends State
         }
 
         $this->setDataPlaceHolder($newData);
+    }
+
+    public function checkResponseValidityConstraints(State $responses): void
+    {
+        if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->mustValidateResponses() === true) {
+            $session = clone $this;
+
+            foreach ($responses as $identifier => $value) {
+                if (isset($session[$identifier])) {
+                    $session[$identifier] = $value->getValue();
+                }
+            }
+
+            $state = $session->getResponseVariables(false);
+
+            foreach ($this->getAssessmentItem()->getResponseValidityConstraints() as $constraint) {
+                $responseIdentifier = $constraint->getResponseIdentifier();
+                $value = $state[$responseIdentifier];
+
+                if (TestUtils::isResponseValid($value, $constraint) === false) {
+                    throw new AssessmentItemSessionException(
+                        "Response '{$responseIdentifier}' is invalid against the constraints described in the interaction it is bound to.",
+                        $this,
+                        AssessmentItemSessionException::INVALID_RESPONSE
+                    );
+                }
+            }
+        }
     }
 }

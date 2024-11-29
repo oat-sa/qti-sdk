@@ -30,6 +30,8 @@ use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\ResponseDeclarationCollection;
+use qtism\data\state\ResponseValidityConstraint;
+use qtism\data\state\ResponseValidityConstraintCollection;
 
 /**
  * The ExtendedAssessmentItemRef class is an extended representation of the QTI assessmentItemRef class.
@@ -93,6 +95,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 
         $this->setOutcomeDeclarations(new OutcomeDeclarationCollection());
         $this->setResponseDeclarations(new ResponseDeclarationCollection());
+        $this->setResponseValidityConstraints(new ResponseValidityConstraintCollection());
     }
 
     /**
@@ -298,4 +301,38 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 
         return new QtiComponentCollection($components);
     }
+
+    /**
+     * Get the response validity constraints related to the item content.
+     */
+    public function getResponseValidityConstraints(): ResponseValidityConstraintCollection
+    {
+        return $this->responseValidityConstraints;
+    }
+
+    /**
+     * Add a response validity constraint related to item content.
+     */
+    public function addResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint): void
+    {
+        $this->getResponseValidityConstraints()->attach($responseValidityConstraint);
+    }
+
+    /**
+     * Remove a response validity constraint related to item content.
+     */
+    public function removeResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint): void
+    {
+        $this->getResponseValidityConstraints()->detach($responseValidityConstraint);
+    }
+
+    /**
+     * Set the response validity constraints related to the item content.
+     */
+    public function setResponseValidityConstraints(ResponseValidityConstraintCollection $responseValidityConstraints): void
+    {
+        $this->responseValidityConstraints = $responseValidityConstraints;
+    }
+
+
 }

@@ -27,6 +27,7 @@ use InvalidArgumentException;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
+use qtism\data\state\ResponseValidityConstraintCollection;
 
 /**
  * Any clas that claims to represent An AssessmentItem must implement this interface.
@@ -104,4 +105,14 @@ interface IAssessmentItem extends QtiIdentifiable
      * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
      */
     public function setResponseProcessing(ResponseProcessing $responseProcessing = null);
+
+    /**
+     * Get the ResponseValidityConstraintCollection object.
+     *
+     * The ResponseValidityConstraint objects returned describes how the responses provided to make
+     * an attempt on the item should be validated.
+     *
+     * @return ResponseValidityConstraintCollection
+     */
+    public function getResponseValidityConstraints(): ResponseValidityConstraintCollection;
 }

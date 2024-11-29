@@ -32,6 +32,7 @@ use qtism\data\processing\ResponseProcessing;
 use qtism\data\processing\TemplateProcessing;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
+use qtism\data\state\ResponseValidityConstraintCollection;
 use qtism\data\state\TemplateDeclarationCollection;
 use SplObjectStorage;
 
@@ -656,6 +657,34 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     public function getModalFeedbacks()
     {
         return $this->modalFeedbacks;
+    }
+
+    public function getResponseValidityConstraints(): ResponseValidityConstraintCollection
+    {
+        $classNames = [
+            'choiceInteraction',
+            'orderInteraction',
+            'associateInteraction',
+            'matchInteraction',
+            'inlineChoiceInteraction',
+            'textEntryInteraction',
+            'extendedTextInteraction',
+            'hottextInteraction',
+            'hotspotInteraction',
+            'selectPointInteraction',
+            'graphicOrderInteraction',
+            'graphicAssociateInteraction',
+            'positionObjectInteraction',
+            'gapMatchInteraction',
+            'graphicGapMatchInteraction',
+        ];
+
+        $responseValidityConstraints = new ResponseValidityConstraintCollection();
+        foreach ($this->getComponentsByClassName($classNames) as $component) {
+            $responseValidityConstraints[] = $component->getResponseValidityConstraint();
+        }
+
+        return $responseValidityConstraints;
     }
 
     /**

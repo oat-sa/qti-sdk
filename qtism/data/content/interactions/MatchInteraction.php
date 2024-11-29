@@ -25,6 +25,8 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\AssociationValidityConstraint;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -258,6 +260,27 @@ class MatchInteraction extends BlockInteraction
         $parentComponents = parent::getComponents();
 
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleMatchSets()->getArrayCopy()));
+    }
+
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
+    {
+        $responseValidityConstraint = new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            $this->getMinAssociations(),
+            $this->getMaxAssociations()
+        );
+
+        foreach ($this->getComponentsByClassName('simpleAssociableChoice') as $simpleAssociableChoice) {
+            $responseValidityConstraint->addAssociationValidityConstraint(
+                new AssociationValidityConstraint(
+                    $simpleAssociableChoice->getIdentifier(),
+                    $simpleAssociableChoice->getMatchMin(),
+                    $simpleAssociableChoice->getMatchMax()
+                )
+            );
+        }
+
+        return $responseValidityConstraint;
     }
 
     /**
