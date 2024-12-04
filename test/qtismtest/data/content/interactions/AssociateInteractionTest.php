@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use qtism\data\content\interactions\AssociateInteraction;
 use qtism\data\content\interactions\SimpleAssociableChoice;
 use qtism\data\content\interactions\SimpleAssociableChoiceCollection;
+use qtism\data\state\ResponseValidityConstraint;
 use qtismtest\QtiSmTestCase;
 
 /**
@@ -63,5 +64,16 @@ class AssociateInteractionTest extends QtiSmTestCase
 
         $associateInteraction = new AssociateInteraction('RESPONSE', new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('identifier', 1)]));
         $associateInteraction->setShuffle('true');
+    }
+
+    public function testGetResponseValidityConstraint(): void
+    {
+        $associateInteraction = new AssociateInteraction(
+            'RESPONSE',
+            new SimpleAssociableChoiceCollection([new SimpleAssociableChoice('identifier', 1)])
+        );
+
+        $responseValidityConstraint = $associateInteraction->getResponseValidityConstraint();
+        $this::assertInstanceOf(ResponseValidityConstraint::class, $responseValidityConstraint);
     }
 }
