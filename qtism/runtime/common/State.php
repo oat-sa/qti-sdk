@@ -190,4 +190,28 @@ class State extends AbstractCollection
             throw new InvalidArgumentException($msg);
         }
     }
+
+    /**
+     * Whether or not the State contains NULL only values.
+     *
+     * Please note that in QTI terms, empty containers and empty strings are considered
+     * to be NULL as well. Moreover, if the State is empty of any variable, the method
+     * will return true.
+     *
+     * @return bool
+     */
+    public function containsNullOnly(): bool
+    {
+        $data = $this->getDataPlaceHolder();
+
+        foreach ($data as $variable) {
+            $variable->getValue();
+
+            if ($variable->isNull() === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

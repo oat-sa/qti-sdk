@@ -1184,6 +1184,9 @@ class AssessmentItemSession extends State
         $this->setDataPlaceHolder($newData);
     }
 
+    /**
+     * @throws AssessmentItemSessionException
+     */
     public function checkResponseValidityConstraints(State $responses): void
     {
         if ($this->getSubmissionMode() === SubmissionMode::INDIVIDUAL && $this->getItemSessionControl()->mustValidateResponses() === true) {
