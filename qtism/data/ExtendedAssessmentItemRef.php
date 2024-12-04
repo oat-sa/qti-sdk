@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2024 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -80,6 +80,12 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * @qtism-bean-property
      */
     private $timeDependent = false;
+
+    /**
+     * @var ResponseValidityConstraintCollection
+     * @qtism-bean-property
+     */
+    private $responseValidityConstraints;
 
     /**
      * Create a new instance of CompactAssessmentItem
@@ -305,7 +311,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Get the response validity constraints related to the item content.
      */
-    public function getResponseValidityConstraints(): ResponseValidityConstraintCollection
+    public function getResponseValidityConstraints()
     {
         return $this->responseValidityConstraints;
     }

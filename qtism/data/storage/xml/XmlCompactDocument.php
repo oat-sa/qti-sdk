@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2024 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @author Julien Sébire <julien@taotesting.com>
@@ -33,6 +33,8 @@ use qtism\data\AssessmentTest;
 use qtism\data\content\RubricBlockRef;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\ExtendedAssessmentSection;
+use qtism\data\ExtendedAssessmentTest;
+use qtism\data\ExtendedTestPart;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentIterator;
 use qtism\data\storage\FileResolver;
@@ -237,9 +239,12 @@ class XmlCompactDocument extends XmlDocument
                             break;
                         }
                     }
+                } elseif ($component instanceof TestPart) {
+                    $testPart = ExtendedTestPart::createFromTestPart($component);
+                    $root->getTestParts()->replace($component, $testPart);
                 } elseif ($component === $root) {
                     // 2nd pass on the root, we have to stop.
-                    $compactAssessmentTest->setDocumentComponent($assessmentTest);
+                    $compactAssessmentTest->setDocumentComponent(ExtendedAssessmentTest::createFromAssessmentTest($assessmentTest));
 
                     return $compactAssessmentTest;
                 }
@@ -276,7 +281,6 @@ class XmlCompactDocument extends XmlDocument
             }
 
             $compactAssessmentItemRef->setResponseValidityConstraints($doc->getDocumentComponent()->getResponseValidityConstraints());
-            $compactAssessmentItemRef->setAdaptive($doc->getDocumentComponent()->isAdaptive());
             $compactAssessmentItemRef->setTimeDependent($doc->getDocumentComponent()->isTimeDependent());
         } catch (Exception $e) {
             $msg = "An error occurred while unreferencing item reference with identifier '" . $compactAssessmentItemRef->getIdentifier() . "'.";
