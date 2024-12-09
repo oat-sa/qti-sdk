@@ -4,6 +4,7 @@ namespace qtismtest\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\data\content\interactions\ExtendedTextInteraction;
+use qtism\data\state\ResponseValidityConstraint;
 use qtismtest\QtiSmTestCase;
 
 /**
@@ -177,5 +178,19 @@ class ExtendedTextInteractionTest extends QtiSmTestCase
         $this->expectExceptionMessage("The 'format' argument must be a value from the TextFormat enumeration, 'integer' given.");
 
         $extendedTextInteraction->setFormat(999);
+    }
+
+    public function testGetResponseValidityConstraint()
+    {
+        $extendedTextInteraction = new ExtendedTextInteraction('RESPONSE');
+        $extendedTextInteraction->setMinStrings(10);
+        $extendedTextInteraction->setMaxStrings(20);
+        $extendedTextInteraction->setPatternMask('mask');
+
+        $responseValidityConstraint = $extendedTextInteraction->getResponseValidityConstraint();
+        $this->assertInstanceOf(ResponseValidityConstraint::class, $responseValidityConstraint);
+        $this->assertEquals($responseValidityConstraint->getMinConstraint(), 10);
+        $this->assertEquals($responseValidityConstraint->getMaxConstraint(), 20);
+        $this->assertEquals($responseValidityConstraint->getPatternMask(), 'mask');
     }
 }
