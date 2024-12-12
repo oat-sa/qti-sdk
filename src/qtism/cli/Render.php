@@ -33,6 +33,7 @@ use qtism\runtime\rendering\markup\AbstractMarkupRenderingEngine;
 use qtism\runtime\rendering\markup\goldilocks\GoldilocksRenderingEngine;
 use qtism\runtime\rendering\markup\xhtml\XhtmlRenderingEngine;
 use qtism\runtime\rendering\RenderingException;
+use qtism\data\storage\xml\filesystem\FilesystemFactory;
 
 /**
  * Render CLI Module.
@@ -167,10 +168,11 @@ class Render extends Cli
         // Load XML Document.
         $source = $arguments['source'];
         $doc = new XmlDocument();
+        $doc->setFileSystem(FilesystemFactory::local(getcwd()));
         $validate = !($arguments['novalidate'] === true);
 
         try {
-            $doc->load(realpath($source), $validate);
+            $doc->load($source, $validate);
 
             $renderingData = '';
 
