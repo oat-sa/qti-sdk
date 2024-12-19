@@ -44,6 +44,24 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 {
     use QtiIdentifiableTrait;
 
+    private const INTERACTION_CLASS_NAMES = [
+        'choiceInteraction',
+        'orderInteraction',
+        'associateInteraction',
+        'matchInteraction',
+        'inlineChoiceInteraction',
+        'textEntryInteraction',
+        'extendedTextInteraction',
+        'hottextInteraction',
+        'hotspotInteraction',
+        'selectPointInteraction',
+        'graphicOrderInteraction',
+        'graphicAssociateInteraction',
+        'positionObjectInteraction',
+        'gapMatchInteraction',
+        'graphicGapMatchInteraction',
+    ];
+
     /**
      * From IMS QTI:
      *
@@ -661,26 +679,8 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
 
     public function getResponseValidityConstraints(): ResponseValidityConstraintCollection
     {
-        $classNames = [
-            'choiceInteraction',
-            'orderInteraction',
-            'associateInteraction',
-            'matchInteraction',
-            'inlineChoiceInteraction',
-            'textEntryInteraction',
-            'extendedTextInteraction',
-            'hottextInteraction',
-            'hotspotInteraction',
-            'selectPointInteraction',
-            'graphicOrderInteraction',
-            'graphicAssociateInteraction',
-            'positionObjectInteraction',
-            'gapMatchInteraction',
-            'graphicGapMatchInteraction',
-        ];
-
         $responseValidityConstraints = new ResponseValidityConstraintCollection();
-        foreach ($this->getComponentsByClassName($classNames) as $component) {
+        foreach ($this->getComponentsByClassName(self::INTERACTION_CLASS_NAMES) as $component) {
             $responseValidityConstraints[] = $component->getResponseValidityConstraint();
         }
 

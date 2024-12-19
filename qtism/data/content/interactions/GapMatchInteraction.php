@@ -190,7 +190,7 @@ class GapMatchInteraction extends BlockInteraction
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getGapChoices()->getArrayCopy(), $this->getContent()->getArrayCopy()));
     }
 
-    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
             $this->getResponseIdentifier(),
