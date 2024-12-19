@@ -25,6 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -181,6 +182,15 @@ class InlineChoiceInteraction extends InlineInteraction
     public function getComponents()
     {
         return $this->getContent();
+    }
+
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
+    {
+        return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            ($this->isRequired() === true) ? 1 : 0,
+            1
+        );
     }
 
     /**
