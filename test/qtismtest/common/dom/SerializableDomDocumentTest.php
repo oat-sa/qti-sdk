@@ -81,7 +81,7 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $dom->$method();
     }
 
-    public function testCheckThatUnsetIsWorkingSimilarToRealDomObject(): void
+    public function testMagicMutatorsAndAccessors(): void
     {
         $serializableDOM = $this->getSerializableDomDocument();
         $coreDom = new DOMDocument($serializableDOM->xmlVersion, $serializableDOM->encoding);
@@ -89,11 +89,11 @@ class SerializableDomDocumentTest extends QtiSmTestCase
         $this->assertEquals($coreDom->xmlVersion, $serializableDOM->version);
         $this->assertEquals($coreDom->encoding, $serializableDOM->encoding);
 
-        unset($coreDom->xmlVersion);
-        unset($coreDom->encoding);
+        $coreDom->xmlVersion = null;
+        $coreDom->encoding = 'ASCII';
 
-        unset($serializableDOM->xmlVersion);
-        unset($serializableDOM->encoding);
+        $serializableDOM->xmlVersion = null;
+        $serializableDOM->encoding = 'ASCII';
 
         $this->assertEquals($coreDom->xmlVersion, $serializableDOM->version);
         $this->assertEquals($coreDom->encoding, $serializableDOM->encoding);
