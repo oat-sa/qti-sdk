@@ -5,6 +5,7 @@ namespace qtismtest\runtime\expressions\operators;
 use qtism\common\datatypes\QtiInteger;
 use qtism\common\datatypes\QtiPoint;
 use qtism\common\enums\BaseType;
+use qtism\data\expressions\Expression;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\marshalling\MarshallerNotFoundException;
 use qtism\runtime\common\MultipleContainer;
@@ -24,7 +25,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $expression = $this->createFakeExpression();
         $operands = new OperandsCollection();
         $this->expectException(ExpressionProcessingException::class);
-        $processor = new FieldValueProcessor($expression, $operands);
+        new FieldValueProcessor($expression, $operands);
     }
 
     public function testTooMuchOperands(): void
@@ -34,7 +35,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands[] = new RecordContainer();
         $operands[] = new RecordContainer();
         $this->expectException(ExpressionProcessingException::class);
-        $processor = new FieldValueProcessor($expression, $operands);
+        new FieldValueProcessor($expression, $operands);
     }
 
     public function testNullOne(): void
@@ -55,9 +56,9 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands = new OperandsCollection();
         // null value as operand.
         $operands[] = null;
-        $this->expectException(ExpressionProcessingException::class);
         $processor = new FieldValueProcessor($expression, $operands);
         $result = $processor->process();
+        $this::assertNull($result);
     }
 
     public function testWrongCardinalityOne(): void
@@ -68,7 +69,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands[] = new QtiInteger(10);
         $processor = new FieldValueProcessor($expression, $operands);
         $this->expectException(ExpressionProcessingException::class);
-        $result = $processor->process();
+        $processor->process();
     }
 
     public function testWrongCardinalityTwo(): void
@@ -79,7 +80,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         $operands[] = new QtiPoint(1, 2);
         $processor = new FieldValueProcessor($expression, $operands);
         $this->expectException(ExpressionProcessingException::class);
-        $result = $processor->process();
+        $processor->process();
     }
 
     public function testWrongCardinalityThree(): void
@@ -91,7 +92,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
         // Wrong container (Multiple, Ordered)
         $processor = new FieldValueProcessor($expression, $operands);
         $this->expectException(ExpressionProcessingException::class);
-        $result = $processor->process();
+        $processor->process();
     }
 
     public function testFieldValue(): void
@@ -116,7 +117,7 @@ class FieldValueProcessorTest extends QtiSmTestCase
      * @return QtiComponent
      * @throws MarshallerNotFoundException
      */
-    public function createFakeExpression($identifier = ''): QtiComponent
+    public function createFakeExpression($identifier = ''): Expression
     {
         // The following XML Component creation
         // underlines the need of a <record> operator... :)
