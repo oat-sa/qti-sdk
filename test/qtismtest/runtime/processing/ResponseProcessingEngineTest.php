@@ -221,7 +221,7 @@ class ResponseProcessingEngineTest extends QtiSmTestCase
 
         self::assertNotNull($exceptions);
         self::assertEquals(
-            'The FieldValue operator only accepts operands with a cardinality of record.',
+            'No variable with identifier \'SCORE\' to be set in the current state.',
             $exceptions->getProcessingExceptions()[0]->getMessage()
         );
     }
