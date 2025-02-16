@@ -378,7 +378,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param QtiComponent $component
      */
-    protected function setExploredComponent(QtiComponent $component = null): void
+    protected function setExploredComponent(?QtiComponent $component = null): void
     {
         $this->exploredComponent = $component;
     }
@@ -409,7 +409,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
      *
      * @param Interaction $interaction
      */
-    protected function setCurrentInteraction(Interaction $interaction = null): void
+    protected function setCurrentInteraction(?Interaction $interaction = null): void
     {
         $this->currentInteraction = $interaction;
     }

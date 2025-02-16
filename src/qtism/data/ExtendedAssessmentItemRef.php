@@ -163,7 +163,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      * @param IdentifierCollection $categories Optional categories.
      * @throws InvalidArgumentException if $identifier is not a valid QTI Identifier or $href is not a valid URI.
      */
-    public function __construct($identifier, $href, IdentifierCollection $categories = null)
+    public function __construct($identifier, $href, ?IdentifierCollection $categories = null)
     {
         parent::__construct($identifier, $href, $categories);
 
@@ -201,7 +201,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no response processing described.
      */
-    public function setResponseProcessing(ResponseProcessing $responseProcessing = null): void
+    public function setResponseProcessing(?ResponseProcessing $responseProcessing = null): void
     {
         $this->responseProcessing = $responseProcessing;
     }
@@ -231,7 +231,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
      *
      * @param TemplateProcessing $templateProcessing
      */
-    public function setTemplateProcessing(TemplateProcessing $templateProcessing = null): void
+    public function setTemplateProcessing(?TemplateProcessing $templateProcessing = null): void
     {
         $this->templateProcessing = $templateProcessing;
     }
