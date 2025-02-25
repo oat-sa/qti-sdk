@@ -46,7 +46,7 @@ class UnmarshallingException extends Exception
      * @param int $code A machine-understandable (see class constants) error code.
      * @param Exception $previous An eventual previous Exception.
      */
-    public function __construct($message, $code = 0, Exception $previous = null)
+    public function __construct($message, $code = 0, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

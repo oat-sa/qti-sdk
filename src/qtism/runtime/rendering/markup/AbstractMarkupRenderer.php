@@ -44,7 +44,7 @@ abstract class AbstractMarkupRenderer implements Renderable
      *
      * @param AbstractMarkupRenderingEngine|null $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    public function __construct(?AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         $this->setRenderingEngine($renderingEngine);
     }
@@ -52,7 +52,7 @@ abstract class AbstractMarkupRenderer implements Renderable
     /**
      * @param AbstractMarkupRenderingEngine|null $renderingEngine
      */
-    public function setRenderingEngine(AbstractMarkupRenderingEngine $renderingEngine = null): void
+    public function setRenderingEngine(?AbstractMarkupRenderingEngine $renderingEngine = null): void
     {
         $this->renderingEngine = $renderingEngine;
     }

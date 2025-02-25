@@ -70,8 +70,11 @@ class TemplateCondition extends QtiComponent implements TemplateRule
      * @param TemplateElseIfCollection $templateElseIfs The collection of TemplateElseIf objects composing the template condition.
      * @param TemplateElse $templateElse An optional TemplateElse object composing the template condition.
      */
-    public function __construct(TemplateIf $templateIf, TemplateElseIfCollection $templateElseIfs = null, TemplateElse $templateElse = null)
-    {
+    public function __construct(
+        TemplateIf $templateIf,
+        ?TemplateElseIfCollection $templateElseIfs = null,
+        ?TemplateElse $templateElse = null
+    ) {
         $this->setTemplateIf($templateIf);
         $this->setTemplateElseIfs($templateElseIfs ?? new TemplateElseIfCollection());
         $this->setTemplateElse($templateElse);

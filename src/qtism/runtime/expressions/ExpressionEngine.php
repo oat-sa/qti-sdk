@@ -84,7 +84,7 @@ class ExpressionEngine extends AbstractEngine
      * @param QtiComponent $expression The Expression object to be processed.
      * @param State $context (optional) The execution context. If no execution context is given, a virgin one will be set up.
      */
-    public function __construct(QtiComponent $expression, State $context = null)
+    public function __construct(QtiComponent $expression, ?State $context = null)
     {
         parent::__construct($expression, $context);
 
