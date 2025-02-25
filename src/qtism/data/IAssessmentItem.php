@@ -130,7 +130,7 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
      */
-    public function setResponseProcessing(ResponseProcessing $responseProcessing = null);
+    public function setResponseProcessing(?ResponseProcessing $responseProcessing = null);
 
     /**
      * Get the associated TemplateProcessing object.
@@ -144,7 +144,7 @@ interface IAssessmentItem extends QtiIdentifiable
      *
      * @param TemplateProcessing $templateProcessing A TemplateProcessing object or null if no associated template processing.
      */
-    public function setTemplateProcessing(TemplateProcessing $templateProcessing = null);
+    public function setTemplateProcessing(?TemplateProcessing $templateProcessing = null);
 
     /**
      * Get the response variable identifiers related to endAttemptInteractions in the item content.
