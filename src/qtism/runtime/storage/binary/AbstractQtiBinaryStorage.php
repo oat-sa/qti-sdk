@@ -70,7 +70,7 @@ abstract class AbstractQtiBinaryStorage extends AbstractStorage
     public function __construct(
         AbstractSessionManager $manager,
         AssessmentTest $test,
-        QtiBinaryVersion $version = null
+        ?QtiBinaryVersion $version = null
     ) {
         parent::__construct($manager, $test);
         $seeker = new BinaryAssessmentTestSeeker($test);

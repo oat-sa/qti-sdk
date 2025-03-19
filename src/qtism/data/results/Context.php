@@ -63,7 +63,7 @@ class Context extends QtiComponent
      * @param QtiIdentifier|null $sourcedId
      * @param SessionIdentifierCollection|null $sessionIdentifiers
      */
-    public function __construct(QtiIdentifier $sourcedId = null, SessionIdentifierCollection $sessionIdentifiers = null)
+    public function __construct(?QtiIdentifier $sourcedId = null, ?SessionIdentifierCollection $sessionIdentifiers = null)
     {
         $this->setSourcedId($sourcedId);
         if ($sessionIdentifiers === null) {

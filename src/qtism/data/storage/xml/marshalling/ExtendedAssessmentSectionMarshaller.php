@@ -69,7 +69,7 @@ class ExtendedAssessmentSectionMarshaller extends AssessmentSectionMarshaller
     protected function unmarshallChildrenKnown(
         DOMElement $element,
         QtiComponentCollection $children,
-        AssessmentSection $assessmentSection = null
+        ?AssessmentSection $assessmentSection = null
     ): QtiComponent {
         $baseComponent = parent::unmarshallChildrenKnown($element, $children);
         $component = ExtendedAssessmentSection::createFromAssessmentSection($baseComponent);

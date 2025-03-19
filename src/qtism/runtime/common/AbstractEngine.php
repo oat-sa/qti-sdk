@@ -59,7 +59,7 @@ abstract class AbstractEngine implements Processable
      * @param QtiComponent $component A QtiComponent object to process.
      * @param State $context (optional) The execution context. If no execution context is given, a virgin one will be set up.
      */
-    public function __construct(QtiComponent $component, State $context = null)
+    public function __construct(QtiComponent $component, ?State $context = null)
     {
         $this->setComponent($component);
         $this->setContext($context ?? new State());

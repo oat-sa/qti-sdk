@@ -54,7 +54,7 @@ class OrderingException extends Exception
      * @param int $code The code that enables client-code to identify the nature of the error efficiently.
      * @param Exception $previous An optional previous Exception object.
      */
-    public function __construct($message, $code = 0, Exception $previous = null)
+    public function __construct($message, $code = 0, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

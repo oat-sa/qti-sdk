@@ -44,7 +44,7 @@ class MarshallerNotFoundException extends Exception
      * @param string $qtiClassName The QTI class name for which no Marshaller implementation could be find.
      * @param Exception $previous An optional previous caught Exception object.
      */
-    public function __construct($message, $qtiClassName, Exception $previous = null)
+    public function __construct($message, $qtiClassName, ?Exception $previous = null)
     {
         parent::__construct($message, 0, $previous);
         $this->setQtiClassName($qtiClassName);

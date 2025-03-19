@@ -79,7 +79,7 @@ class ResponseVariable extends Variable
      * @param QtiDatatype|null $value A QtiDatatype object or null.
      * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
      */
-    public function __construct($identifier, $cardinality, $baseType = -1, QtiDatatype $value = null)
+    public function __construct($identifier, $cardinality, $baseType = -1, ?QtiDatatype $value = null)
     {
         parent::__construct($identifier, $cardinality, $baseType, $value);
     }

@@ -111,7 +111,7 @@ class ProcessingException extends RuntimeException
      * @param int A code to characterize the error.
      * @param Exception $previous An optional Exception object that caused the error.
      */
-    public function __construct($msg, Processable $source, $code = 0, Exception $previous = null)
+    public function __construct($msg, Processable $source, $code = 0, ?Exception $previous = null)
     {
         parent::__construct($msg, $code, $previous);
         $this->setSource($source);

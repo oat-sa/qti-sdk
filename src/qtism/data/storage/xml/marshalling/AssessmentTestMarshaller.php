@@ -101,7 +101,7 @@ class AssessmentTestMarshaller extends SectionPartMarshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null): AssessmentTest
+    protected function unmarshall(DOMElement $element, ?AssessmentTest $assessmentTest = null): AssessmentTest
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($title = $this->getDOMElementAttributeAs($element, 'title')) !== null) {

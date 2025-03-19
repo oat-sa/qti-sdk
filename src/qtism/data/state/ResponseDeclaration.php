@@ -115,7 +115,7 @@ class ResponseDeclaration extends VariableDeclaration
      * @param int $cardinality A value from the Cardinality enumeration.
      * @param DefaultValue $defaultValue A DefaultValue object.
      */
-    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null)
+    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, ?DefaultValue $defaultValue = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
     }

@@ -68,7 +68,7 @@ class BranchRuleTargetException extends Exception implements QtiSdkPackageConten
      * @param QtiComponent A QtiComponent from where the Exception comes from.
      * @param Exception $previous An eventual previous Exception object.
      */
-    public function __construct($message, $code = 0, $source = null, Exception $previous = null)
+    public function __construct($message, $code = 0, $source = null, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

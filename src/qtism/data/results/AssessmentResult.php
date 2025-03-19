@@ -75,7 +75,7 @@ class AssessmentResult extends QtiComponent
      * @param TestResult|null $testResult
      * @param ItemResultCollection|null $itemResults
      */
-    public function __construct(Context $context, TestResult $testResult = null, ItemResultCollection $itemResults = null)
+    public function __construct(Context $context, ?TestResult $testResult = null, ?ItemResultCollection $itemResults = null)
     {
         $this->setContext($context);
         $this->setTestResult($testResult);

@@ -52,7 +52,7 @@ class ResultTemplateVariable extends ItemVariable
      * @param null $baseType
      * @param ValueCollection|null $values
      */
-    public function __construct(QtiIdentifier $identifier, $cardinality, $baseType = null, ValueCollection $values = null)
+    public function __construct(QtiIdentifier $identifier, $cardinality, $baseType = null, ?ValueCollection $values = null)
     {
         parent::__construct($identifier, $cardinality, $baseType);
         $this->setValues($values);

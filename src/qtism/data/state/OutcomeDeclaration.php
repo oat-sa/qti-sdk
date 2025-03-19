@@ -167,7 +167,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @throws InvalidArgumentException If one or more of the arguments are invalid.
      */
-    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null, $externalScored = null)
+    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, ?DefaultValue $defaultValue = null, $externalScored = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
         $this->setViews(new ViewCollection());

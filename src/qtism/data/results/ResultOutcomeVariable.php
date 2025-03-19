@@ -125,13 +125,13 @@ class ResultOutcomeVariable extends ItemVariable
         QtiIdentifier $identifier,
         $cardinality,
         $baseType = null,
-        ValueCollection $values = null,
-        $view = null,
-        QtiString $interpretation = null,
-        QtiUri $longInterpretation = null,
-        QtiFloat $normalMaximum = null,
-        QtiFloat $normalMinimum = null,
-        QtiFloat $masteryValue = null
+        ?ValueCollection $values = null,
+        ?$view = null,
+        ?QtiString $interpretation = null,
+        ?QtiUri $longInterpretation = null,
+        ?QtiFloat $normalMaximum = null,
+        ?QtiFloat $normalMinimum = null,
+        ?QtiFloat $masteryValue = null
     ) {
         parent::__construct($identifier, $cardinality, $baseType);
         $this->setValues($values);

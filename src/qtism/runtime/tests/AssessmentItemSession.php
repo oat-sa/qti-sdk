@@ -349,7 +349,7 @@ class AssessmentItemSession extends State
      *
      * @param TimeLimits $timeLimits A TimeLimits object or null if no time limits must be applied.
      */
-    public function setTimeLimits(TimeLimits $timeLimits = null): void
+    public function setTimeLimits(?TimeLimits $timeLimits = null): void
     {
         $this->timeLimits = $timeLimits;
     }
@@ -767,7 +767,7 @@ class AssessmentItemSession extends State
      * @throws AssessmentItemSessionException If the time limits in force are not respected, an error occurs during response processing, a state violation occurs.
      * @throws PhpStorageException
      */
-    public function endAttempt(State $responses = null, $responseProcessing = true, $forceLateSubmission = false): void
+    public function endAttempt(?State $responses = null, $responseProcessing = true, $forceLateSubmission = false): void
     {
         // Flag to indicate if time is exceed or not.
         $maxTimeExceeded = false;
@@ -891,7 +891,7 @@ class AssessmentItemSession extends State
      * @param State $responses (optional) A State object containing the responses to be stored in the item session at suspend time.
      * @throws AssessmentItemSessionException With code STATE_VIOLATION if the state of the session is not INTERACTING nor MODAL_FEEDBACK prior to suspension.
      */
-    public function suspend(State $responses = null): void
+    public function suspend(?State $responses = null): void
     {
         $state = $this->getState();
 

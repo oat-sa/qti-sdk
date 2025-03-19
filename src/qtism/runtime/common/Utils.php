@@ -288,7 +288,7 @@ class Utils
      * @param QtiDatatype $b
      * @return bool
      */
-    public static function equals(QtiDatatype $a = null, QtiDatatype $b = null): bool
+    public static function equals(?QtiDatatype $a = null, ?QtiDatatype $b = null): bool
     {
         return ($a === null ? $b === null : $a->equals($b));
     }

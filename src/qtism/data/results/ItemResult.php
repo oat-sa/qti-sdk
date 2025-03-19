@@ -128,9 +128,9 @@ class ItemResult extends QtiComponent
         QtiIdentifier $identifier,
         DateTime $datestamp,
         $sessionStatus,
-        ItemVariableCollection $itemVariables = null,
-        QtiString $candidateComment = null,
-        QtiInteger $sequenceIndex = null
+        ?ItemVariableCollection $itemVariables = null,
+        ?QtiString $candidateComment = null,
+        ?QtiInteger $sequenceIndex = null
     ) {
         $this->setIdentifier($identifier);
         $this->setDatestamp($datestamp);
@@ -257,7 +257,7 @@ class ItemResult extends QtiComponent
      * @param QtiInteger|null $sequenceIndex
      * @return $this
      */
-    public function setSequenceIndex(QtiInteger $sequenceIndex = null)
+    public function setSequenceIndex(?QtiInteger $sequenceIndex = null)
     {
         $this->sequenceIndex = $sequenceIndex;
         return $this;

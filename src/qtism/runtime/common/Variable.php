@@ -87,7 +87,7 @@ abstract class Variable
      * @param QtiDatatype|null $value A QtiDatatype object or null.
      * @throws InvalidArgumentException If the cardinality is record but -1 is not given as a $baseType (Records have no baseType) or If the given $value is not compliant with the given $baseType.
      */
-    public function __construct($identifier, $cardinality, $baseType = -1, QtiDatatype $value = null)
+    public function __construct($identifier, $cardinality, $baseType = -1, ?QtiDatatype $value = null)
     {
         $this->setIdentifier($identifier);
         $this->setCardinality($cardinality);

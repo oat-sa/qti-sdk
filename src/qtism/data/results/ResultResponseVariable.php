@@ -81,8 +81,8 @@ class ResultResponseVariable extends ItemVariable
         $cardinality,
         CandidateResponse $candidateResponse,
         $baseType = null,
-        CorrectResponse $correctResponse = null,
-        QtiIdentifier $choiceSequence = null
+        ?CorrectResponse $correctResponse = null,
+        ?QtiIdentifier $choiceSequence = null
     ) {
         parent::__construct($identifier, $cardinality, $baseType);
         $this->setCandidateResponse($candidateResponse);
