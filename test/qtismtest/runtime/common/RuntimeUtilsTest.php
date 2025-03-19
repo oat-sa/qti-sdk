@@ -64,7 +64,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @param QtiDatatype $value
      * @param bool $expected
      */
-    public function testIsNull(QtiDatatype $value = null, $expected): void
+    public function testIsNull(?QtiDatatype $value = null, $expected): void
     {
         $this::assertSame($expected, Utils::isNull($value));
     }
@@ -76,7 +76,7 @@ class RuntimeUtilsTest extends QtiSmTestCase
      * @param QtiDatatype $b
      * @param bool $expected
      */
-    public function testEquals(QtiDatatype $a = null, QtiDatatype $b = null, $expected): void
+    public function testEquals(?QtiDatatype $a = null, ?QtiDatatype $b = null, $expected): void
     {
         $this::assertSame($expected, Utils::equals($a, $b));
     }

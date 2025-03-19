@@ -48,7 +48,7 @@ class JsonUnmarshallerTest extends QtiSmTestCase
      * @throws UnmarshallingException
      * @throws FileManagerException
      */
-    public function testUnmarshallScalar(QtiScalar $expectedScalar = null, $json): void
+    public function testUnmarshallScalar(?QtiScalar $expectedScalar = null, $json): void
     {
         $unmarshaller = self::createUnmarshaller();
         if ($expectedScalar !== null) {
