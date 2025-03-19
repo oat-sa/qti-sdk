@@ -154,7 +154,7 @@ class AssessmentResult extends QtiComponent
      * @param TestResult $testResult
      * @return $this
      */
-    public function setTestResult(TestResult $testResult = null)
+    public function setTestResult(?TestResult $testResult = null)
     {
         $this->testResult = $testResult;
         return $this;
@@ -186,7 +186,7 @@ class AssessmentResult extends QtiComponent
      * @param ItemResultCollection|null $itemResults
      * @return $this
      */
-    public function setItemResults(ItemResultCollection $itemResults = null)
+    public function setItemResults(?ItemResultCollection $itemResults = null)
     {
         $this->itemResults = $itemResults;
         return $this;

@@ -198,7 +198,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      *
      * @param DefaultValue $defaultValue A DefaultValue object.
      */
-    public function setDefaultValue(DefaultValue $defaultValue = null): void
+    public function setDefaultValue(?DefaultValue $defaultValue = null): void
     {
         $this->defaultValue = $defaultValue;
     }

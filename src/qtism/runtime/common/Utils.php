@@ -269,7 +269,7 @@ class Utils
      * @param QtiDatatype $value
      * @return bool
      */
-    public static function isNull(QtiDatatype $value = null): bool
+    public static function isNull(?QtiDatatype $value = null): bool
     {
         return $value === null
             || ($value instanceof QtiString && $value->getValue() === '')

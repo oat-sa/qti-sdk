@@ -225,7 +225,7 @@ class ItemResult extends QtiComponent
      * @param ItemVariableCollection $itemVariables
      * @return $this
      */
-    public function setItemVariables(ItemVariableCollection $itemVariables = null): self
+    public function setItemVariables(?ItemVariableCollection $itemVariables = null): self
     {
         $this->itemVariables = $itemVariables;
         return $this;
@@ -318,7 +318,7 @@ class ItemResult extends QtiComponent
      * @param QtiString $candidateComment
      * @return $this
      */
-    public function setCandidateComment(QtiString $candidateComment = null): self
+    public function setCandidateComment(?QtiString $candidateComment = null): self
     {
         $this->candidateComment = $candidateComment;
         return $this;

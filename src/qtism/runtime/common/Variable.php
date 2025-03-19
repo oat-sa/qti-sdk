@@ -205,7 +205,7 @@ abstract class Variable
      * @param QtiDatatype|null $value A QtiDatatype object or null.
      * @throws InvalidArgumentException If the baseType and cardinality of $value are not compliant with the Variable.
      */
-    public function setValue(QtiDatatype $value = null): void
+    public function setValue(?QtiDatatype $value = null): void
     {
         if (
             !Utils::isBaseTypeCompliant($this->getBaseType(), $value)
@@ -235,7 +235,7 @@ abstract class Variable
      * @throws InvalidArgumentException If $defaultValue's type is not
      * compliant with the qti:baseType of the Variable.
      */
-    public function setDefaultValue(QtiDatatype $defaultValue = null): void
+    public function setDefaultValue(?QtiDatatype $defaultValue = null): void
     {
         if (!Utils::isBaseTypeCompliant($this->getBaseType(), $defaultValue) || !Utils::isCardinalityCompliant($this->getCardinality(), $defaultValue)) {
             Utils::throwBaseTypeTypingError($this->getBaseType(), $defaultValue);

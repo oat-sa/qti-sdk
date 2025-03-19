@@ -105,7 +105,7 @@ class XmlStorageException extends StorageException
      *
      * @param LibXmlErrorCollection $errors A collection of LibXMLError objects.
      */
-    protected function setErrors(LibXmlErrorCollection $errors = null): void
+    protected function setErrors(?LibXmlErrorCollection $errors = null): void
     {
         $this->errors = $errors;
     }

@@ -133,7 +133,7 @@ class ResponseCondition extends QtiComponent implements ResponseRule
      *
      * @param ResponseElse $responseElse A ResponseElse object.
      */
-    public function setResponseElse(ResponseElse $responseElse = null): void
+    public function setResponseElse(?ResponseElse $responseElse = null): void
     {
         $this->responseElse = $responseElse;
     }

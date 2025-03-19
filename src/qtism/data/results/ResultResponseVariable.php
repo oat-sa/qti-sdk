@@ -152,7 +152,7 @@ class ResultResponseVariable extends ItemVariable
      * @param CorrectResponse $correctResponse
      * @return $this
      */
-    public function setCorrectResponse(CorrectResponse $correctResponse = null)
+    public function setCorrectResponse(?CorrectResponse $correctResponse = null)
     {
         $this->correctResponse = $correctResponse;
         return $this;
@@ -184,7 +184,7 @@ class ResultResponseVariable extends ItemVariable
      * @param QtiIdentifier $choiceSequence
      * @return $this
      */
-    public function setChoiceSequence(QtiIdentifier $choiceSequence = null)
+    public function setChoiceSequence(?QtiIdentifier $choiceSequence = null)
     {
         $this->choiceSequence = $choiceSequence;
         return $this;

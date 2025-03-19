@@ -194,7 +194,7 @@ class OutcomeVariable extends Variable
      *
      * @param LookupTable $lookupTable A QTI Data Model LookupTable object or null if not specified.
      */
-    public function setLookupTable(LookupTable $lookupTable = null): void
+    public function setLookupTable(?LookupTable $lookupTable = null): void
     {
         $this->lookupTable = $lookupTable;
     }

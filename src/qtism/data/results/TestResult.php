@@ -167,7 +167,7 @@ class TestResult extends QtiComponent
      * @param ItemVariableCollection $itemVariables
      * @return $this
      */
-    public function setItemVariables(ItemVariableCollection $itemVariables = null)
+    public function setItemVariables(?ItemVariableCollection $itemVariables = null)
     {
         $this->itemVariables = $itemVariables;
         return $this;

@@ -113,7 +113,7 @@ class Context extends QtiComponent
      * @param QtiIdentifier $sourcedId
      * @return $this
      */
-    public function setSourcedId(QtiIdentifier $sourcedId = null)
+    public function setSourcedId(?QtiIdentifier $sourcedId = null)
     {
         $this->sourcedId = $sourcedId;
         return $this;
@@ -145,7 +145,7 @@ class Context extends QtiComponent
      * @param SessionIdentifierCollection $sessionIdentifiers
      * @return $this
      */
-    public function setSessionIdentifiers(SessionIdentifierCollection $sessionIdentifiers = null)
+    public function setSessionIdentifiers(?SessionIdentifierCollection $sessionIdentifiers = null)
     {
         $this->sessionIdentifiers = $sessionIdentifiers;
         return $this;

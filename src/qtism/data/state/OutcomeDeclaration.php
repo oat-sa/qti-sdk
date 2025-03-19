@@ -343,7 +343,7 @@ class OutcomeDeclaration extends VariableDeclaration
      *
      * @param LookupTable $lookupTable A LookupTable object.
      */
-    public function setLookupTable(LookupTable $lookupTable = null): void
+    public function setLookupTable(?LookupTable $lookupTable = null): void
     {
         $this->lookupTable = $lookupTable;
     }
