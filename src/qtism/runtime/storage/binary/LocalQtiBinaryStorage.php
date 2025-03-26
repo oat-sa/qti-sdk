@@ -170,4 +170,17 @@ class LocalQtiBinaryStorage extends AbstractQtiBinaryStorage
 
         return @unlink($this->getPath() . DIRECTORY_SEPARATOR . md5($assessmentTestSession->getSessionId()) . '.bin');
     }
+
+    /**
+     * Set the $stream value manually for a given $sessionId.
+     *
+     * @param MemoryStream $stream
+     * @param string $sessionId
+     * @return void
+     */
+    public function setStream(MemoryStream $stream, string $sessionId): void
+    {
+        $path = $this->getPath() . DIRECTORY_SEPARATOR . md5($sessionId) . '.bin';
+        @file_put_contents($path, $stream->getBinary());
+    }
 }

@@ -1,7 +1,9 @@
 #!/usr/bin/env php
 <?php
 use qtism\cli\Cli;
+use qtism\cli\CompactTest;
 use qtism\cli\Render;
+use qtism\cli\AssessmentTestSessionDump;
 use cli as CliTools;
 
 if (!ini_get('date.timezone')) {
@@ -18,7 +20,7 @@ foreach (array(__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoloa
 if (!defined('QTISDK_COMPOSER_INSTALL')) {
     fwrite(STDERR,
         'You need to set up the project dependencies using the following commands:' . PHP_EOL .
-        'wget http://getcomposer.org/composer.phar' . PHP_EOL .
+        'wget https://getcomposer.org/composer.phar' . PHP_EOL .
         'php composer.phar install' . PHP_EOL
     );
     exit(Cli::EXIT_FAILURE);
@@ -30,12 +32,20 @@ require QTISDK_COMPOSER_INSTALL;
 CliTools\Colors::enable(false);
 
 // Execute main entry point.
-$availableModules = array('render');
+$availableModules = array('render', 'dump');
 $requestedModuleName = (isset($argv[1])) ? $argv[1] : '';
 $module = strtolower($requestedModuleName);
 switch ($module) {
     case 'render':
         Render::main();
+        break;
+
+    case 'dump':
+        AssessmentTestSessionDump::main();
+        break;
+
+    case 'compact':
+        CompactTest::main();
         break;
     default:
         CliTools\err("%RUnknown module '{$requestedModuleName}'. Available modules are: " . implode(',', $availableModules) . '.%n');
