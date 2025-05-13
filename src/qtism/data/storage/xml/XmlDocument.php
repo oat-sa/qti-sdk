@@ -165,7 +165,7 @@ class XmlDocument extends QtiDocument
      * local filesystem.
      *
      * @param string $url The Uniform Resource Identifier that identifies/locate the file.
-     * @param bool $validate Whether or not the file must be validated unsing XML Schema? Default is false.
+     * @param bool $validate Whether the file must be validated unsing XML Schema? Default is false.
      * @throws XmlStorageException If an error occurs while loading the QTI-XML file.
      */
     public function load(string $url, $validate = false): void
@@ -452,7 +452,7 @@ class XmlDocument extends QtiDocument
      * the include components can be resolved by calling this method. Files will
      * be included following the rules described by the XInclude specification.
      *
-     * @param bool $validate Whether or not validate files being included. Default is false.
+     * @param bool $validate Whether validate files being included. Default is false.
      * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      * @throws ReflectionException
      */
@@ -513,7 +513,7 @@ class XmlDocument extends QtiDocument
      * this method will try to resolve responseProcessing fragments referenced by responseProcessing
      * elements having a templateLocation attribute.
      *
-     * @param bool $validate Whether or not validate files being included. Default is false.
+     * @param bool $validate Whether validate files being included. Default is false.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
      * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */
@@ -560,7 +560,7 @@ class XmlDocument extends QtiDocument
      * to assessmentSections are resolved. assessmentSectionRefs will be replaced with their assessmentSection
      * content.
      *
-     * @param bool $validate (optional) Whether or not validate the content of included assessmentSectionRefs.
+     * @param bool $validate (optional) Whether validate the content of included assessmentSectionRefs.
      * @throws LogicException If the method is called prior the load or loadFromString method was called.
      * @throws XmlStorageException If an error occurred while parsing or validating files to be included.
      */

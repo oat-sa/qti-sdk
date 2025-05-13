@@ -33,7 +33,7 @@ use qtism\data\QtiComponentCollection;
 class TemplateElseIfCollection extends QtiComponentCollection
 {
     /**
-     * Check whether or not $value is an instance of TemplateElseIf.
+     * Check whether $value is an instance of TemplateElseIf.
      *
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of TemplateElseIf.

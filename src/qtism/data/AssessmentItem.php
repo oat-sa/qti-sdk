@@ -306,7 +306,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-     * Whether or not a value is defined for the label attribute.
+     * Whether a value is defined for the label attribute.
      *
      * @return bool
      */
@@ -426,7 +426,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     }
 
     /**
-     * Whether or not a value is defined for the toolName attribute.
+     * Whether a value is defined for the toolName attribute.
      *
      * @return bool
      */

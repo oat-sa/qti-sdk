@@ -107,7 +107,7 @@ class State extends AbstractCollection
         } elseif ($variable instanceof Variable) {
             $variableIdentifier = $variable->getIdentifier();
         } else {
-            $msg = "The variable argument must be a Variable object or a string, '" . $variable . "' given";
+            $msg = "The variable argument must be a Variable object or a string, '" . gettype($variable) . "' given";
             throw new InvalidArgumentException($msg);
         }
 
@@ -197,7 +197,7 @@ class State extends AbstractCollection
     }
 
     /**
-     * Whether or not the State contains NULL only values.
+     * Whether the State contains NULL only values.
      *
      * Please note that in QTI terms, empty containers and empty strings are considered
      * to be NULL as well. Moreover, if the State is empty of any variable, the method
@@ -221,7 +221,7 @@ class State extends AbstractCollection
     }
 
     /**
-     * Whether or not the State contains only values that are equals to their variable default value only.
+     * Whether the State contains only values that are equals to their variable default value only.
      *
      * @return bool
      */

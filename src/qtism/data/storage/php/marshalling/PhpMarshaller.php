@@ -115,10 +115,10 @@ abstract class PhpMarshaller
 
     /**
      * Implementations of this class must implement this method which states
-     * whether or not the value $toMarshall can be handled or not.
+     * whether the value $toMarshall can be handled or not.
      *
      * @param mixed $toMarshall The value the current PhpMarshaller implementation has to deal with.
-     * @return bool Whether or not the value $toMarshall can be marshalled or not by this implementation.
+     * @return bool Whether the value $toMarshall can be marshalled or not by this implementation.
      */
     abstract protected function isMarshallable($toMarshall): bool;
 }

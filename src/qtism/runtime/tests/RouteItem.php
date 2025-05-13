@@ -423,7 +423,7 @@ class RouteItem
     /**
      * Get the TimeLimits in force for the RouteItem.
      *
-     * @param bool $excludeItem Whether or not include the TimeLimits in force for the assessment item of the RouteItem.
+     * @param bool $excludeItem Whether include the TimeLimits in force for the assessment item of the RouteItem.
      * @return RouteTimeLimitsCollection
      */
     public function getTimeLimits($excludeItem = false): RouteTimeLimitsCollection

@@ -100,7 +100,7 @@ class Value extends QtiComponent
     }
 
     /**
-     * Set whether or not the value is part of a record.
+     * Set whether the value is part of a record.
      *
      * @param bool $partOfRecord
      * @throws InvalidArgumentException If $partOfRecord is not a boolean.
@@ -152,7 +152,7 @@ class Value extends QtiComponent
     }
 
     /**
-     * Whether or not a field identifier is defined.
+     * Whether a field identifier is defined.
      *
      * @return bool
      */

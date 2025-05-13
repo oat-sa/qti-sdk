@@ -126,7 +126,7 @@ abstract class AbstractSessionManager
     abstract protected function instantiateAssessmentItemSession(IAssessmentItem $assessmentItem, $navigationMode, $submissionMode): AssessmentItemSession;
 
     /**
-     * Contains the Route create logic depending on whether or not
+     * Contains the Route create logic depending on whether
      * an optional Route to be used is given or not.
      *
      * @param AssessmentTest $test

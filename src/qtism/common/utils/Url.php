@@ -67,13 +67,13 @@ class Url
     }
 
     /**
-     * Whether or not a given $url is relative.
+     * Whether a given $url is relative.
      *
      * @param string $url
      * @return bool
      */
     public static function isRelative($url): bool
     {
-        return (preg_match("/^[a-z][a-z0-9+\-\.]+:(\/\/){0,1}|^\//i", $url) === 0) ? true : false;
+        return (preg_match("/^[a-z][a-z0-9+\-.]+:(\/\/){0,1}|^\//i", $url) === 0) ? true : false;
     }
 }

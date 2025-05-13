@@ -248,7 +248,7 @@ class AssociableHotspot extends Choice implements AssociableChoice, Hotspot
     }
 
     /**
-     * Whether or not the associableHotspot has an hotspotLabel.
+     * Whether the associableHotspot has an hotspotLabel.
      *
      * @return bool
      */

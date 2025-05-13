@@ -349,7 +349,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param string $objectname The name of the variable where the object on which you want to call the method is stored e.g. 'foobar'.
      * @param string $methodname The name of the method you want to call.
      * @param PhpArgumentCollection $arguments A collection of PhpArgument objects.
-     * @param bool $static Whether or not the call is static.
+     * @param bool $static Whether the call is static.
      * @throws StreamAccessException If an error occurs while writing the method call.
      */
     public function writeMethodCall(

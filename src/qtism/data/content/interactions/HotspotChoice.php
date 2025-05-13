@@ -155,7 +155,7 @@ class HotspotChoice extends Choice implements Hotspot
     }
 
     /**
-     * Whether or not a value is defined for the hotspotLabel attribute.
+     * Whether a value is defined for the hotspotLabel attribute.
      *
      * @return bool
      */

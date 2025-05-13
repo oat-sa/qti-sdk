@@ -33,7 +33,7 @@ use qtism\common\enums\Cardinality;
 class QtiString extends QtiScalar
 {
     /**
-     * Checks whether or not $value is a valid string.
+     * Checks whether $value is a valid string.
      *
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a valid string.
@@ -69,7 +69,7 @@ class QtiString extends QtiScalar
     }
 
     /**
-     * Whether or not the current QtiString object is equal to $obj.
+     * Whether the current QtiString object is equal to $obj.
      *
      * Two QtiString objects are considered to be identical if their intrinsic
      * values are equals. If the current QtiString is an empty string, and $obj

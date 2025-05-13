@@ -122,7 +122,7 @@ class Render extends Cli
         }
 
         // Check 'flavour' argument.
-        if (empty($arguments['flavour']) == true) {
+        if (empty($arguments['flavour'])) {
             $arguments['flavour'] = 'xhtml';
         }
 
@@ -137,7 +137,7 @@ class Render extends Cli
         }
 
         // Check 'xmlbase' argument.
-        if (empty($arguments['xmlbase']) == true) {
+        if (empty($arguments['xmlbase'])) {
             $arguments['xmlbase'] = 'process';
         }
 
@@ -167,12 +167,10 @@ class Render extends Cli
         // Load XML Document.
         $source = $arguments['source'];
         $doc = new XmlDocument();
-        $validate = !($arguments['novalidate'] === true);
+        $validate = $arguments['novalidate'] !== true;
 
         try {
             $doc->load($source, $validate);
-
-            $renderingData = '';
 
             switch (strtolower($arguments['flavour'])) {
                 case 'goldilocks':
@@ -182,9 +180,12 @@ class Render extends Cli
                 case 'xhtml':
                     $renderingData = $this->runXhtml($doc, $engine);
                     break;
+
+                default:
+                    $renderingData = '';
             }
 
-            // Add final new line?
+            // Add a final new line?
             $nl = false;
             if ($arguments['document'] !== true && $arguments['format'] !== true) {
                 $nl = true;
@@ -230,7 +231,6 @@ class Render extends Cli
     private function runGoldilocks(XmlDocument $doc, GoldilocksRenderingEngine $renderer): string
     {
         $arguments = $this->getArguments();
-        $profile = $arguments['flavour'];
 
         $xml = $renderer->render($doc->getDocumentComponent());
 
@@ -249,6 +249,7 @@ class Render extends Cli
             $header .= "<!doctype html>\n";
         }
 
+        $body = '';
         $xpath = new DOMXPath($xml);
         $assessmentItemElts = $xpath->query("//div[contains(@class, 'qti-assessmentItem')]");
 
@@ -279,14 +280,14 @@ class Render extends Cli
                 $body = substr($body, strlen('<div>'));
                 $body = substr($body, 0, strlen('</div>') * -1);
                 $body = "<body {$body}</body>{$nl}";
-            } else {
-                $body = $xml->saveXml($xml->documentElement) . $nl;
             }
 
             if ($arguments['document'] === true) {
                 $footer = "</html>\n";
             }
-        } else {
+        }
+
+        if (!$body) {
             $body = $xml->saveXml($xml->documentElement) . $nl;
         }
 
@@ -297,14 +298,12 @@ class Render extends Cli
             $indent = '';
         }
 
-        foreach (preg_split('/\n|\r/u', $body, -1, PREG_SPLIT_NO_EMPTY) as $bodyLine) {
+        foreach (preg_split('/[\n\r]/u', $body, -1, PREG_SPLIT_NO_EMPTY) as $bodyLine) {
             // do stuff with $line
             $indentBody .= "{$indent}{$bodyLine}{$nl}";
         }
 
-        $body = $indentBody;
-
-        return "{$header}{$body}{$footer}";
+        return "{$header}{$indentBody}{$footer}";
     }
 
     /**
@@ -318,7 +317,6 @@ class Render extends Cli
     private function runXhtml(XmlDocument $doc, XhtmlRenderingEngine $renderer): string
     {
         $arguments = $this->getArguments();
-        $profile = $arguments['flavour'];
 
         $xml = $renderer->render($doc->getDocumentComponent());
 
@@ -367,12 +365,10 @@ class Render extends Cli
             $indent = '';
         }
 
-        foreach (preg_split('/\n|\r/u', $body, -1, PREG_SPLIT_NO_EMPTY) as $bodyLine) {
+        foreach (preg_split('/[\n\r]/u', $body, -1, PREG_SPLIT_NO_EMPTY) as $bodyLine) {
             // do stuff with $line
             $indentBody .= "{$indent}{$indent}{$bodyLine}{$nl}";
         }
-
-        $body = $indentBody;
 
         return "{$header}{$indentBody}{$footer}";
     }
@@ -388,7 +384,6 @@ class Render extends Cli
     private function instantiateEngine(): AbstractMarkupRenderingEngine
     {
         $arguments = $this->getArguments();
-        $engine = null;
         switch (strtolower($arguments['flavour'])) {
             case 'goldilocks':
                 $engine = new GoldilocksRenderingEngine();
@@ -397,6 +392,9 @@ class Render extends Cli
             case 'xhtml':
                 $engine = new XhtmlRenderingEngine();
                 break;
+
+            default:
+                $engine = null;
         }
 
         if ($arguments['xmlbase'] === 'process') {

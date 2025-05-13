@@ -81,7 +81,7 @@ abstract class QtiScalar implements QtiDatatype
     }
 
     /**
-     * Whether or not $this is equal to $obj. Two Scalar
+     * Whether $this is equal to $obj. Two Scalar
      * objects are considered to be identical if their intrinsic
      * values are strictly (===) equal.
      *

@@ -82,7 +82,7 @@ class Reflection
     }
 
     /**
-     * Whether or not a given $object is an instance of $className. This method
+     * Whether a given $object is an instance of $className. This method
      * exists because is_sublcass_of() does not take into account interfaces
      * in PHP 5.3.
      *

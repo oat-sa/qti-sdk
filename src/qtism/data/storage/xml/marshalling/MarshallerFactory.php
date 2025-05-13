@@ -51,7 +51,7 @@ abstract class MarshallerFactory
     private $mapping = [];
 
     /**
-     * Whether or not element and attribute serialization must be Web Component friendly.
+     * Whether element and attribute serialization must be Web Component friendly.
      *
      * @var bool
      */
@@ -344,7 +344,7 @@ abstract class MarshallerFactory
     /**
      * Set Web Componenent Friendship
      *
-     * Sets whether or not consider Web Component friendly QTI components.
+     * Sets whether consider Web Component friendly QTI components.
      *
      * @param bool $webComponentFriendly
      */
@@ -356,7 +356,7 @@ abstract class MarshallerFactory
     /**
      * Web Component Friendship Status
      *
-     * Whether or not Web Component friendly QTI components are considered.
+     * Whether Web Component friendly QTI components are considered.
      *
      * @return bool
      */

@@ -33,7 +33,7 @@ use qtism\data\QtiComponentCollection;
 class TemplateRuleCollection extends QtiComponentCollection
 {
     /**
-     * Check whether or not $value is an instance of TemplateRule.
+     * Check whether $value is an instance of TemplateRule.
      *
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of TemplateRule.

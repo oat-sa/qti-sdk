@@ -95,7 +95,7 @@ class SliderInteraction extends BlockInteraction
      * From IMS QTI:
      *
      * By default, sliders are labelled only at their ends. The stepLabel
-     * attribute controls whether or not each step on the slider should
+     * attribute controls whether each step on the slider should
      * also be labelled. It is unlikely that delivery engines will be
      * able to guarantee to label steps so this attribute should be
      * treated only as request.
@@ -233,7 +233,7 @@ class SliderInteraction extends BlockInteraction
     }
 
     /**
-     * Whether or not a value is defined for the step attribute.
+     * Whether a value is defined for the step attribute.
      *
      * @return bool
      */
@@ -243,7 +243,7 @@ class SliderInteraction extends BlockInteraction
     }
 
     /**
-     * Set whether or not each step on the slider has to be labelled.
+     * Set whether each step on the slider has to be labelled.
      *
      * @param bool $stepLabel
      * @throws InvalidArgumentException If $stepLabel is not a boolean value.

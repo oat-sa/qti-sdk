@@ -223,7 +223,7 @@ class ModalFeedback extends QtiComponent
     }
 
     /**
-     * Whether or not a value is defined for the title attribute.
+     * Whether a value is defined for the title attribute.
      *
      * @return bool
      */

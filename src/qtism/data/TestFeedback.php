@@ -40,7 +40,7 @@ class TestFeedback extends QtiComponent
      * (referred to as atEnd).
      *
      * The value of an outcome variable is used in conjunction with the showHide and
-     * identifier attributes to determine whether or not the feedback is actually
+     * identifier attributes to determine whether the feedback is actually
      * shown in a similar way to feedbackElement (Item Model).
      *
      * @var int

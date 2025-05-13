@@ -42,7 +42,7 @@ class TemplateDeclaration extends VariableDeclaration
     /**
      * From IMS QTI:
      *
-     * This attribute determines whether or not the template variable's
+     * This attribute determines whether the template variable's
      * value should be substituted for object parameter values that match its name.
      * See param for more information.
      *
@@ -54,7 +54,7 @@ class TemplateDeclaration extends VariableDeclaration
     /**
      * From IMS QTI:
      *
-     * This attribute determines whether or not the template variable's value should
+     * This attribute determines whether the template variable's value should
      * be substituted for identifiers that match its name in MathML expressions.
      * See Combining Template Variables and MathML for more information.
      *
@@ -77,7 +77,7 @@ class TemplateDeclaration extends VariableDeclaration
     }
 
     /**
-     * Set whether or not the template variable's value should be substituted for
+     * Set whether the template variable's value should be substituted for
      * object parameters.
      *
      * @param bool $paramVariable A boolean value.
@@ -94,7 +94,7 @@ class TemplateDeclaration extends VariableDeclaration
     }
 
     /**
-     * Lets you know whether or not the template variable's value should be substituted for
+     * Lets you know whether the template variable's value should be substituted for
      * object parameters.
      *
      * @return bool
