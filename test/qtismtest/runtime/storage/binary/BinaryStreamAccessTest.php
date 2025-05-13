@@ -311,7 +311,7 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $this::assertEquals('binary', $string);
 
         try {
-            $string = $reader->readString();
+            $reader->readString();
             $this::assertTrue(false);
         } catch (BinaryStreamAccessException $e) {
             $this::assertEquals(BinaryStreamAccessException::STRING, $e->getCode());
@@ -415,10 +415,8 @@ class BinaryStreamAccessTest extends QtiSmTestCase
 
     public function testWriteStringMaxLengthExceeded(): void
     {
-        $string = '';
-        for ($i = 0; $i < 2 ** 17; $i++) {
-            $string .= 'a';
-        }
+        $substitute = mb_substitute_character();
+        $string = str_repeat('a', 2 ** 17);
 
         $stream = $this->getEmptyStream();
         $access = new BinaryStreamAccess($stream);
@@ -426,7 +424,23 @@ class BinaryStreamAccessTest extends QtiSmTestCase
         $stream->rewind();
 
         // The written string should be 2^16 - 1 long anyway (force by implementation to not break).
-        $this::assertEquals(2 ** 16 - 1, strlen($access->readString()));
+        $this::assertSame(str_repeat('a', 2 ** 16 - 1), $access->readString());
+        $this::assertSame($substitute, mb_substitute_character());
+    }
+
+    public function testWriteStringMaxLengthWithMultiByteExceeded(): void
+    {
+        $substitute = mb_substitute_character();
+        $string = str_repeat('a', 2 ** 16 - 2) . '🤦';
+
+        $stream = $this->getEmptyStream();
+        $access = new BinaryStreamAccess($stream);
+        $access->writeString($string);
+        $stream->rewind();
+
+        // The written string will be 2^16 - 2 long as the multi-byte character at the end exceeds the 2^16 - 1 limit
+        $this::assertSame(str_repeat('a', 2 ** 16 - 2), $access->readString());
+        $this::assertSame($substitute, mb_substitute_character());
     }
 
     public function testReadBinary(): void

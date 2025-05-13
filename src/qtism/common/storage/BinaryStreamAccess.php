@@ -227,13 +227,17 @@ class BinaryStreamAccess extends AbstractStreamAccess
      */
     public function readString(): string
     {
+        $substitute = mb_substitute_character();
+        mb_substitute_character('none');
         try {
             $binLength = $this->getStream()->read(2);
             $length = current($this->tryUnpack('S', $binLength));
 
-            return $this->getStream()->read($length);
+            return mb_scrub($this->getStream()->read($length));
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::STRING);
+        } finally {
+            mb_substitute_character($substitute);
         }
 
         return '';
@@ -252,8 +256,11 @@ class BinaryStreamAccess extends AbstractStreamAccess
         $len = strlen((string)$string);
 
         if ($len > $maxLen) {
-            $len = $maxLen;
-            $string = substr($string, 0, $maxLen);
+            $substitute = mb_substitute_character();
+            mb_substitute_character('none');
+            $string = mb_scrub(substr($string, 0, $maxLen));
+            $len = strlen($string);
+            mb_substitute_character($substitute);
         }
 
         try {
