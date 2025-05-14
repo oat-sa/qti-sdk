@@ -76,7 +76,7 @@ class Equal extends Operator
     /**
      * From IMS QTI:
      *
-     * Controls whether or not the lower bound is included in the comparison.
+     * Controls whether the lower bound is included in the comparison.
      *
      * @var bool
      * @qtism-bean-property
@@ -97,8 +97,8 @@ class Equal extends Operator
      * @param ExpressionCollection $expressions A collection of Expression objects.
      * @param int $toleranceMode The tolerance mode, a value from the ToleranceMode enumeration.
      * @param array $tolerance An array of 1 or 2 elements which are float or variableRef values.
-     * @param bool $includeLowerBound Whether or not to include the lower bound in the comparison.
-     * @param bool $includeUpperBound Whether or not to include the upper bound in the comparison.
+     * @param bool $includeLowerBound Whether to include the lower bound in the comparison.
+     * @param bool $includeUpperBound Whether to include the upper bound in the comparison.
      * @throws UnexpectedValueException If The tolerance argument is ABSOLUTE or RELATIVE but no $tolerance array is given.
      * @throws InvalidArgumentException If $toleranceMode is not a value from the ToleranceMode, if $tolerance is not a valid tolerance array, if $includeLowerBound/$includeUpperBound is not a boolean.
      */

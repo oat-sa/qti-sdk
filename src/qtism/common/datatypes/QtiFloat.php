@@ -33,7 +33,7 @@ use qtism\common\enums\Cardinality;
 class QtiFloat extends QtiScalar
 {
     /**
-     * Check whether or not $value is a Float object.
+     * Check whether $value is a Float object.
      *
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of Float.

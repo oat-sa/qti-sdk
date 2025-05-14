@@ -343,7 +343,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
 
     /**
      * Set the array used to 'tag' components in order to know
-     * whether or not they are already explored.
+     * whether they are already explored.
      *
      * @return array
      */
@@ -509,7 +509,7 @@ abstract class AbstractMarkupRenderingEngine implements Renderable
     }
 
     /**
-     * Whether or not the currently explored Component object
+     * Whether the currently explored Component object
      * is a final leaf of the tree structured explored hierarchy.
      *
      * @return bool

@@ -133,7 +133,7 @@ class QtiPair implements QtiDatatype
      * of $obj are the same as the ones of $obj.
      *
      * @param mixed $obj A value to compare.
-     * @return bool Whether or not the equality could be established.
+     * @return bool Whether the equality could be established.
      */
     public function equals($obj): bool
     {

@@ -103,7 +103,7 @@ class QtiPoint implements QtiDatatype
         if (is_int($y)) {
             $this->y = $y;
         } else {
-            $msg = "The Y argument must be an integer value, '" . gettype($x) . "' given.";
+            $msg = "The Y argument must be an integer value, '" . gettype($y) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
@@ -123,7 +123,7 @@ class QtiPoint implements QtiDatatype
      * are considered to be the same if they have the same coordinates.
      *
      * @param mixed $obj An object.
-     * @return bool Whether or not the equality is established.
+     * @return bool Whether the equality is established.
      */
     public function equals($obj): bool
     {

@@ -97,7 +97,7 @@ use qtism\runtime\tests\Utils as TestUtils;
  *
  * In a typical non-Adaptive Test the items are selected in advance and the candidate's
  * interaction with all items is reported at the end of the test session, regardless of
- * whether or not the candidate actually attempted all the items. In effect, item sessions
+ * whether the candidate actually attempted all the items. In effect, item sessions
  * are created in the initial state for all items at the start of the test and are
  * maintained in parallel. In an Adaptive Test the items that are to be presented are
  * selected during the session based on the responses and outcomes associated with the
@@ -217,7 +217,7 @@ class AssessmentItemSession extends State
     private $assessmentItem;
 
     /**
-     * Whether or not the session (SUSPENDED or INTERACTING) is currently attempting an attempt.
+     * Whether the session (SUSPENDED or INTERACTING) is currently attempting an attempt.
      * In other words, a candidate begun an attempt and did not ended it yet.
      *
      * @var bool
@@ -249,7 +249,7 @@ class AssessmentItemSession extends State
      * @param IAssessmentItem $assessmentItem The description of the item that the session handles.
      * @param int $navigationMode (optional) A value from the NavigationMode enumeration.
      * @param int $submissionMode (optional) A value from the SubmissionMode enumeration.
-     * @param bool $autoTemplateProcessing (optional) Whether or not template processing must occur automatically. Default is true.
+     * @param bool $autoTemplateProcessing (optional) Whether template processing must occur automatically. Default is true.
      * @throws InvalidArgumentException If $navigationMode or $submission is not a value from the NavigationMode/SubmissionMode enumeration.
      * @see \qtism\runtime\tests\AssessmentItemSession::setItemSessionControl() The setItemSessionControl() method.
      * @see \qtism\runtime\tests\AssessmentItemSession::setTimeLimits() The setTimeLimits() method.
@@ -679,7 +679,7 @@ class AssessmentItemSession extends State
          * In simultaneous mode, response processing cannot take place until the testPart is
          * complete so each item session passes between the interacting and suspended states only.
          * By definition the candidate can take one and only one attempt at each item and feedback
-         * cannot be seen during the test. Whether or not the candidate can return to review
+         * cannot be seen during the test. Whether the candidate can return to review
          * their responses and/or any item-level feedback after the test, is outside the scope
          * of this specification. Simultaneous mode is typical of paper-based tests.
          */
@@ -1076,7 +1076,7 @@ class AssessmentItemSession extends State
 
     /**
      * Whether the item of the session has been attempted (at least once).
-     * In other words, items which the user has interacted, whether or not they provided a response.
+     * In other words, items which the user has interacted, whether they provided a response.
      *
      * @return bool
      */
@@ -1243,7 +1243,7 @@ class AssessmentItemSession extends State
     /**
      * Whether the current session affects visibility of modal feedbacks.
      *
-     * This method will detect whether or not the current is composed by a scope of
+     * This method will detect whether the current is composed by a scope of
      * variable set in such a way that at least one modalFeedback elements must be displayed.
      *
      * Please note that if the current itemSessionControl's showFeedback attribute value is false
@@ -1269,7 +1269,7 @@ class AssessmentItemSession extends State
         // is lesser or equal to 1, no feedback must be shown. This is very problematic in case of a linear test, where it is logic
         // to set the maxAttempts to 1, because the number of attempts is defacto 1 in such a linear test. In such a context, no
         // feedbacks can be shown. QTI-SDK Developers decided that it was more sensitive to show feedbacks if maxAttempts is lesser
-        // or equal to 1. However, "once the maximum number of allowed attempts have been used whether or not the feeback is shown
+        // or equal to 1. However, "once the maximum number of allowed attempts have been used whether the feeback is shown
         // is still controlled by the showFeedback constraint.
 
         $mustModalFeedback = false;
@@ -1304,7 +1304,7 @@ class AssessmentItemSession extends State
     /**
      * Apply templateProcessing on the session if a templateProcessing is described.
      *
-     * @return bool Whether or not the template processing occurred.
+     * @return bool Whether the template processing occurred.
      * @throws RuleProcessingException
      */
     public function templateProcessing(): bool
@@ -1330,7 +1330,7 @@ class AssessmentItemSession extends State
     /**
      * Check whether or not the item can be skipped.
      *
-     * This method checks whether or not the item can be skipped depending on the current itemSessionControl
+     * This method checks whether the item can be skipped depending on the current itemSessionControl
      * configuration and the $responses provided to end the attempt.
      *
      * @param State $responses
@@ -1366,7 +1366,7 @@ class AssessmentItemSession extends State
     /**
      * Check Response Validity Constraints of the item.
      *
-     * This method checks whether or not a set of $responses are all valid against the Response Validity Constraints
+     * This method checks whether a set of $responses are all valid against the Response Validity Constraints
      * in force for the item managed by the AssessmentItemSession.
      *
      * @param State $responses

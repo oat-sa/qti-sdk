@@ -164,7 +164,7 @@ class QtiDuration implements QtiDatatype
      */
     public function getDays($total = false): int
     {
-        return ($total == true) ? $this->getInterval()->days : $this->getInterval()->d;
+        return $total ? $this->getInterval()->days : $this->getInterval()->d;
     }
 
     /**
@@ -374,7 +374,7 @@ class QtiDuration implements QtiDatatype
     }
 
     /**
-     * Whether or not the duration is negative e.g. -PT20S = -20 seconds.
+     * Whether the duration is negative e.g. -PT20S = -20 seconds.
      *
      * @return bool
      */

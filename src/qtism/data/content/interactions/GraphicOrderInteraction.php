@@ -168,7 +168,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     }
 
     /**
-     * Whether or not a value is defined for the minChoices attribute.
+     * Whether a value is defined for the minChoices attribute.
      *
      * @return bool
      */
@@ -211,7 +211,7 @@ class GraphicOrderInteraction extends GraphicInteraction
     }
 
     /**
-     * Whether or not a value is defined for the maxChoice attribute.
+     * Whether a value is defined for the maxChoice attribute.
      *
      * @return bool
      */

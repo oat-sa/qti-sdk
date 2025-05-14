@@ -143,9 +143,9 @@ abstract class AbstractStorage
     abstract public function retrieve($sessionId);
 
     /**
-     * Whether or not an AssessmentTestSession object exits in persistence for a given session ID.
+     * Whether an AssessmentTestSession object exits in persistence for a given session ID.
      *
-     * This method allows you to know whether or not an AssessmentTestSession object
+     * This method allows you to know whether an AssessmentTestSession object
      * with session ID $sessionId exists as a persistent entity.
      *
      * @param string $sessionId

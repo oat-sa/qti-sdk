@@ -205,7 +205,7 @@ class PositionObjectInteraction extends Interaction
     }
 
     /**
-     * Whether or not a value is defined for the minChoices attribute.
+     * Whether a value is defined for the minChoices attribute.
      *
      * @return bool
      */

@@ -211,7 +211,7 @@ interface IAssessmentItem extends QtiIdentifiable
     /**
      * Has a label.
      *
-     * Whether or not the assessmentItem has a label.
+     * Whether the assessmentItem has a label.
      *
      * @return bool
      */

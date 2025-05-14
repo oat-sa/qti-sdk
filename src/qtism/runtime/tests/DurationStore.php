@@ -35,7 +35,7 @@ use qtism\runtime\common\State;
 class DurationStore extends State
 {
     /**
-     * Checks whether or not $value:
+     * Checks whether $value:
      *
      * * is an instance of OutcomeVariable
      * * has a 'duration' QTI baseType.

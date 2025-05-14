@@ -211,7 +211,7 @@ class FileSystemFile implements QtiFile
      * @param string $source The source path.
      * @param string $destination Where the file resulting from $source will be stored.
      * @param string $mimeType The MIME type of the file.
-     * @param mixed $withFilename Whether or not consider the $source's filename to be the $destination's file name. Give true to use the current file name. Give a string to select a different one. Default is true.
+     * @param mixed $withFilename Whether consider the $source's filename to be the $destination's file name. Give true to use the current file name. Give a string to select a different one. Default is true.
      * @return FileSystemFile
      * @throws RuntimeException If something wrong happens.
      */
@@ -336,7 +336,7 @@ class FileSystemFile implements QtiFile
     }
 
     /**
-     * Whether or not the File has a file name.
+     * Whether the File has a file name.
      *
      * @return bool
      */

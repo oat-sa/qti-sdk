@@ -40,7 +40,7 @@ class Substring extends Operator
     /**
      * From IMS QTI:
      *
-     * Used to control whether or not the substring is matched case sensitively.
+     * Used to control whether the substring is matched case sensitively.
      * If true then the match is case sensitive and, for example, "Hell" is not
      * a substring of "Shell". If false then the match is not case sensitive and "Hell"
      * is a substring of "Shell".
@@ -80,7 +80,7 @@ class Substring extends Operator
     }
 
     /**
-     * Whether or not the operator is case sensitive.
+     * Whether the operator is case sensitive.
      *
      * @return bool
      */

@@ -79,7 +79,7 @@ interface Hotspot
     public function getHotspotLabel(): string;
 
     /**
-     * Whether or not a value is defined for the hotspotLabel
+     * Whether a value is defined for the hotspotLabel
      * attribute.
      *
      * @return bool

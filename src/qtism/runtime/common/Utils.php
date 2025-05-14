@@ -261,7 +261,7 @@ class Utils
     }
 
     /**
-     * Whether or not a QtiDatatype is considered to be null.
+     * Whether a QtiDatatype is considered to be null.
      *
      * As per the QTI specification, the NULL value, empty strings and empty containers
      * are always treated as NULL values.
@@ -277,7 +277,7 @@ class Utils
     }
 
     /**
-     * Whether or not two QtiDatatype instances are equals.
+     * Whether two QtiDatatype instances are equals.
      *
      * Because the runtime model
      * also deals with null values, this utility method helps to determine equality

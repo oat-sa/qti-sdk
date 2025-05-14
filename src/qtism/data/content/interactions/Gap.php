@@ -63,7 +63,7 @@ class Gap extends Choice implements AssociableChoice, InlineStatic
      * Create a new Gap object.
      *
      * @param string $identifier The identifier of the gap.
-     * @param bool $required Whether or not the Gap is required to be filled to form a valid response.
+     * @param bool $required Whether the Gap is required to be filled to form a valid response.
      * @param string $id The identifier of the bodyElement.
      * @param string $class The class of the bodyElement.
      * @param string $lang The language of the bodyElement.

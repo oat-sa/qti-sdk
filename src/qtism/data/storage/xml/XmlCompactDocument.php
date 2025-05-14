@@ -61,7 +61,7 @@ use SplObjectStorage;
 class XmlCompactDocument extends XmlDocument
 {
     /**
-     * Whether or not the rubricBlock elements
+     * Whether the rubricBlock elements
      * must be separated from the core document.
      *
      * @var bool
@@ -69,7 +69,7 @@ class XmlCompactDocument extends XmlDocument
     private $explodeRubricBlocks = false;
 
     /**
-     * Whether or not the testFeedback elements
+     * Whether the testFeedback elements
      * must be separated from the core document.
      *
      * @var bool

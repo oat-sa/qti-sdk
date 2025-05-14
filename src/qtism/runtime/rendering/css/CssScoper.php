@@ -108,13 +108,6 @@ class CssScoper implements Renderable
     private $previousChar = false;
 
     /**
-     * The previously read significant char.
-     *
-     * @var string
-     */
-    private $previousSignificantChar = false;
-
-    /**
      * The currently read char.
      *
      * @var string
@@ -143,19 +136,19 @@ class CssScoper implements Renderable
     private $previousState = false;
 
     /**
-     * Whether or not map QTI classes to their qti-X CSS classes.
+     * Whether map QTI classes to their qti-X CSS classes.
      *
      * @var bool
      */
     private $mapQtiClasses = false;
 
     /**
-     * Whether or not map -qti-* like peuso classes to qti-X CSS classes.
+     * Whether map -qti-* like peuso classes to qti-X CSS classes.
      */
     private $mapQtiPseudoClasses = false;
 
     /**
-     * @var bool Whether or not using the Web Component Friendly mode.
+     * @var bool Whether using the Web Component Friendly mode.
      */
     private $webComponentFriendly = false;
 
@@ -336,8 +329,8 @@ class CssScoper implements Renderable
     /**
      * Create a new CssScoper object.
      *
-     * @param bool $mapQtiClasses Whether or not to map QTI classes (e.g. simpleChoice) to their qti-X CSS class equivalent. Default is false.
-     * @param bool $mapQtiPseudoClasses Whether or not to map QTI pseudo classes (e.g. -qti-selected) to their qti-X CSS class equivalent. Default is false.
+     * @param bool $mapQtiClasses Whether to map QTI classes (e.g. simpleChoice) to their qti-X CSS class equivalent. Default is false.
+     * @param bool $mapQtiPseudoClasses Whether to map QTI pseudo classes (e.g. -qti-selected) to their qti-X CSS class equivalent. Default is false.
      */
     public function __construct($mapQtiClasses = false, $mapQtiPseudoClasses = false)
     {
@@ -491,7 +484,6 @@ class CssScoper implements Renderable
         $this->setBuffer([]);
         $this->setOutput('');
         $this->setPreviousChar(false);
-        $this->setPreviousSignificantChar(false);
 
         if (($data = @file_get_contents($file)) !== false) {
             $stream = new MemoryStream($data);
@@ -580,20 +572,6 @@ class CssScoper implements Renderable
     protected function afterCharReading($char): void
     {
         $this->setPreviousChar($char);
-
-        if (self::isWhiteSpace($char) === false) {
-            $this->setPreviousSignificantChar($char);
-        }
-    }
-
-    /**
-     * Set the previous significant char.
-     *
-     * @param string $char
-     */
-    protected function setPreviousSignificantChar($char): void
-    {
-        $this->previousSignificantChar = $char;
     }
 
     /**

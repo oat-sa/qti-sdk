@@ -33,7 +33,7 @@ use qtism\common\enums\Cardinality;
 class QtiIdentifier extends QtiString
 {
     /**
-     * Checks whether or not $value is a string value.
+     * Checks whether $value is a string value.
      *
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not a string value.

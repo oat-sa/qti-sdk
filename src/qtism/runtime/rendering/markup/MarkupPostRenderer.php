@@ -32,14 +32,14 @@ use qtism\runtime\rendering\RenderingException;
 class MarkupPostRenderer implements Renderable
 {
     /**
-     * Whether or not format the XML output.
+     * Whether format the XML output.
      *
      * @var bool
      */
     private $formatOutput = false;
 
     /**
-     * Whether or not clean up XML declarations.
+     * Whether clean up XML declarations.
      *
      * @var bool
      */
@@ -70,9 +70,9 @@ class MarkupPostRenderer implements Renderable
     /**
      * Create a new MarkupPostRenderer object.
      *
-     * @param bool $formatOutput Whether or not format the XML output.
-     * @param bool $cleanUpXmlDeclaration Whether or not clean up XML declaration (i.e. <?xml version="1.0" ... ?>).
-     * @param bool $templateOriented Whether or not replace qtism control statements (e.g. qtism-if, qtism-endif) or qtism functions (e.g. qtism-printedVariable) into PHP control statements/function calls.
+     * @param bool $formatOutput Whether format the XML output.
+     * @param bool $cleanUpXmlDeclaration Whether clean up XML declaration (i.e. <?xml version="1.0" ... ?>).
+     * @param bool $templateOriented Whether replace qtism control statements (e.g. qtism-if, qtism-endif) or qtism functions (e.g. qtism-printedVariable) into PHP control statements/function calls.
      */
     public function __construct($formatOutput = false, $cleanUpXmlDeclaration = false, $templateOriented = false)
     {

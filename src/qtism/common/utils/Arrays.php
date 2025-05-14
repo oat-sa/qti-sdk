@@ -29,7 +29,7 @@ namespace qtism\common\utils;
 class Arrays
 {
     /**
-     * Whether or not a given $array is an associative array.
+     * Whether a given $array is an associative array.
      *
      * @param array $array An array
      * @return bool

@@ -40,7 +40,7 @@ class StringMatch extends Operator
     /**
      * From IMS QTI:
      *
-     * Whether or not the match is to be carried out case sensitively.
+     * Whether the match is to be carried out case sensitively.
      *
      * @var bool
      * @qtism-bean-property
@@ -63,7 +63,7 @@ class StringMatch extends Operator
      * Create a new instance of StringMatch.
      *
      * @param ExpressionCollection $expressions A collection of Expression objects.
-     * @param bool $caseSensitive Whether or not the match to be carried out case sensitively.
+     * @param bool $caseSensitive Whether the match to be carried out case sensitively.
      * @param bool $substring Deprecated argument, use the substring operator instead.
      * @throws InvalidArgumentException If $caseSensitive or $substring are not booleans or if the $expressions count is greather than 2.
      */
@@ -75,7 +75,7 @@ class StringMatch extends Operator
     }
 
     /**
-     * Set Whether or not the match is to be carried out case sensitively.
+     * Set Whether the match is to be carried out case sensitively.
      *
      * @param bool $caseSensitive Case sensitiveness.
      * @throws InvalidArgumentException If $caseSensitive is not a boolean.

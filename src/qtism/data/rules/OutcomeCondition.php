@@ -139,7 +139,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
     }
 
     /**
-     * Whether or not an OutcomeElse object is defined for the outcome condition.
+     * Whether an OutcomeElse object is defined for the outcome condition.
      *
      * @return bool
      */

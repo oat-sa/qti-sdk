@@ -634,7 +634,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Has a title.
      *
-     * Whether or not a title was found in the referenced assessmentItem.
+     * Whether a title was found in the referenced assessmentItem.
      *
      * @return bool
      */
@@ -675,7 +675,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     /**
      * Has a label.
      *
-     * Whether or not a label was found in the referenced assessmentItem.
+     * Whether a label was found in the referenced assessmentItem.
      *
      * @return bool
      */

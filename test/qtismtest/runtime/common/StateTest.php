@@ -236,7 +236,7 @@ class StateTest extends QtiSmTestCase
         $state = new State();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The variable argument must be a Variable object or a string, '1' given");
+        $this->expectExceptionMessage("The variable argument must be a Variable object or a string, 'boolean' given");
 
         $state->unsetVariable(true);
     }

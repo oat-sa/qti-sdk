@@ -37,7 +37,7 @@ use qtism\data\state\VariableDeclaration;
  * A note from IMS about response variables initialization:
  *
  * At runtime, response variables are instantiated as part of an item session. Their values are always initialized to
- * NULL (no value) regardless of whether or not a default value is given in the declaration. A response variable with a NULL
+ * NULL (no value) regardless of whether a default value is given in the declaration. A response variable with a NULL
  * value indicates that the candidate has not offered a response, either because they have not attempted the item at all or
  * because they have attempted it and chosen not to provide a response.
  *

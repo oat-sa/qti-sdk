@@ -36,7 +36,7 @@ use qtism\common\enums\Cardinality;
 class QtiDirectedPair extends QtiPair
 {
     /**
-     * Whether or not $obj is equal to $this. Two DirectedPair objects
+     * Whether $obj is equal to $this. Two DirectedPair objects
      * are considered to be equal if their first and second values are the same.
      *
      * @param mixed $obj
