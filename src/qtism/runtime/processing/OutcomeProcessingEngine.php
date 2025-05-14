@@ -70,7 +70,7 @@ class OutcomeProcessingEngine extends AbstractEngine
      * @param QtiComponent $outcomeProcessing A QTI Data Model OutcomeProcessing object.
      * @param State $context A State object as the execution context.
      */
-    public function __construct(QtiComponent $outcomeProcessing, State $context = null)
+    public function __construct(QtiComponent $outcomeProcessing, ?State $context = null)
     {
         parent::__construct($outcomeProcessing, $context);
         $this->setRuleProcessorFactory(new RuleProcessorFactory());

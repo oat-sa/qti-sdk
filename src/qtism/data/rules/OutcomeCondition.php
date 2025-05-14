@@ -71,7 +71,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
      * @param OutcomeElseIfCollection $outcomeElseIfs A collection of OutcomeElseIf objects.
      * @param OutcomeElse $outcomeElse An OutcomeElse object.
      */
-    public function __construct(OutcomeIf $outcomeIf, OutcomeElseIfCollection $outcomeElseIfs = null, OutcomeElse $outcomeElse = null)
+    public function __construct(OutcomeIf $outcomeIf, ?OutcomeElseIfCollection $outcomeElseIfs = null, ?OutcomeElse $outcomeElse = null)
     {
         $this->setOutcomeIf($outcomeIf);
         $this->setOutcomeElse($outcomeElse);
@@ -133,7 +133,7 @@ class OutcomeCondition extends QtiComponent implements OutcomeRule
      *
      * @param OutcomeElse $outcomeElse An OutcomeElse object.
      */
-    public function setOutcomeElse(OutcomeElse $outcomeElse = null): void
+    public function setOutcomeElse(?OutcomeElse $outcomeElse = null): void
     {
         $this->outcomeElse = $outcomeElse;
     }

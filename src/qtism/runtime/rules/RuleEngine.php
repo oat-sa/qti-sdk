@@ -50,7 +50,7 @@ class RuleEngine extends AbstractEngine
      * @param QtiComponent $rule A rule object to be executed.
      * @param State $context An execution context if needed.
      */
-    public function __construct(QtiComponent $rule, State $context = null)
+    public function __construct(QtiComponent $rule, ?State $context = null)
     {
         parent::__construct($rule, $context);
         $this->setRuleProcessorFactory(new RuleProcessorFactory());

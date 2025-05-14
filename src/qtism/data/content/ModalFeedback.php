@@ -112,7 +112,7 @@ class ModalFeedback extends QtiComponent
      * @param string $title The title of the modal feedback.
      * @throws InvalidArgumentException If any of the arguments is invalid.
      */
-    public function __construct($outcomeIdentifier, $identifier, FlowStaticCollection $content = null, $title = '')
+    public function __construct($outcomeIdentifier, $identifier, ?FlowStaticCollection $content = null, $title = '')
     {
         $this->setOutcomeIdentifier($outcomeIdentifier);
         $this->setIdentifier($identifier);

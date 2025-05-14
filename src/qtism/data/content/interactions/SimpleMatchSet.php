@@ -46,7 +46,7 @@ class SimpleMatchSet extends QtiComponent
      *
      * @param SimpleAssociableChoiceCollection $simpleAssociableChoices The ordered set of choices for the set.
      */
-    public function __construct(SimpleAssociableChoiceCollection $simpleAssociableChoices = null)
+    public function __construct(?SimpleAssociableChoiceCollection $simpleAssociableChoices = null)
     {
         $this->setSimpleAssociableChoices($simpleAssociableChoices ?? new SimpleAssociableChoiceCollection());
     }

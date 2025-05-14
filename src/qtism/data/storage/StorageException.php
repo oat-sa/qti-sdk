@@ -67,7 +67,7 @@ class StorageException extends Exception implements QtiSdkPackageContentExceptio
      * @param int $code A exception code (see class constants).
      * @param Exception $previous An eventual previous Exception object.
      */
-    public function __construct($message, $code = 0, Exception $previous = null)
+    public function __construct($message, $code = 0, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

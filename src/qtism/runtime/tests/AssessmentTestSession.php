@@ -350,7 +350,7 @@ class AssessmentTestSession extends State
      *
      * @param DateTime $timeReference
      */
-    public function setTimeReference(DateTime $timeReference = null): void
+    public function setTimeReference(?DateTime $timeReference = null): void
     {
         $this->timeReference = $timeReference;
     }
@@ -1255,7 +1255,7 @@ class AssessmentTestSession extends State
      * @param IdentifierCollection $excludeCategories The optional item categories to be excluded from the subset.
      * @return AssessmentItemRefCollection A collection of AssessmentItemRef objects that match all the given criteria.
      */
-    public function getItemSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null): AssessmentItemRefCollection
+    public function getItemSubset($sectionIdentifier = '', ?IdentifierCollection $includeCategories = null, ?IdentifierCollection $excludeCategories = null): AssessmentItemRefCollection
     {
         return $this->getRoute()->getAssessmentItemRefsSubset($sectionIdentifier, $includeCategories, $excludeCategories);
     }
@@ -2456,7 +2456,7 @@ class AssessmentTestSession extends State
         }
     }
 
-    public function routeMatchesPreconditions(Route $route = null): bool
+    public function routeMatchesPreconditions(?Route $route = null): bool
     {
         $route = $route ?? $this->getRoute();
 

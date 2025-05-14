@@ -762,7 +762,7 @@ class Route implements Iterator
      * @param IdentifierCollection $excludeCategories A collection of category identifiers to be excluded from the selection.
      * @return AssessmentItemRefCollection A collection of filtered AssessmentItemRef objects.
      */
-    public function getAssessmentItemRefsSubset($sectionIdentifier = '', IdentifierCollection $includeCategories = null, IdentifierCollection $excludeCategories = null): AssessmentItemRefCollection
+    public function getAssessmentItemRefsSubset($sectionIdentifier = '', ?IdentifierCollection $includeCategories = null, ?IdentifierCollection $excludeCategories = null): AssessmentItemRefCollection
     {
         $bySection = (empty($sectionIdentifier)) ? $this->getAssessmentItemRefs() : $this->getAssessmentItemRefsBySection($sectionIdentifier);
 

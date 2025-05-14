@@ -111,7 +111,7 @@ class AssessmentItemSessionException extends Exception
      * @param int $code A numeric error code. The accepted error codes are described in the constants of this class.
      * @param Exception $previous An optional previous Exception object that was previously thrown and led to this Exception.
      */
-    public function __construct($message, AssessmentItemSession $source, $code = AssessmentItemSessionException::UNKNOWN, Exception $previous = null)
+    public function __construct($message, AssessmentItemSession $source, $code = AssessmentItemSessionException::UNKNOWN, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
         $this->setSource($source);

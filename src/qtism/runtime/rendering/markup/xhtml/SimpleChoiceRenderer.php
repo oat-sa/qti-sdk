@@ -50,7 +50,7 @@ class SimpleChoiceRenderer extends ChoiceRenderer
      *
      * @param AbstractMarkupRenderingEngine|null $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    public function __construct(?AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         parent::__construct($renderingEngine);
         $this->transform('li');

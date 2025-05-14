@@ -326,7 +326,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param PhpArgumentCollection $arguments A collection of PhpArgument objects representing the arguments to be given to the function call.
      * @throws StreamAccessException If an error occurs while writing the function call.
      */
-    public function writeFunctionCall($funcname, PhpArgumentCollection $arguments = null): void
+    public function writeFunctionCall($funcname, ?PhpArgumentCollection $arguments = null): void
     {
         try {
             $this->getStream()->write($funcname);
@@ -355,7 +355,7 @@ class PhpStreamAccess extends AbstractStreamAccess
     public function writeMethodCall(
         $objectname,
         $methodname,
-        PhpArgumentCollection $arguments = null,
+        ?PhpArgumentCollection $arguments = null,
         $static = false
     ): void {
         try {
@@ -407,7 +407,7 @@ class PhpStreamAccess extends AbstractStreamAccess
      * @param PhpArgumentCollection $arguments A collection of PhpArgument objects.
      * @throws StreamAccessException
      */
-    public function writeInstantiation($classname, PhpArgumentCollection $arguments = null): void
+    public function writeInstantiation($classname, ?PhpArgumentCollection $arguments = null): void
     {
         try {
             $this->writeNew();

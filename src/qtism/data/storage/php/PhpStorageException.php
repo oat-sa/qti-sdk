@@ -39,7 +39,7 @@ class PhpStorageException extends StorageException
      * @param int $code An error code.
      * @param Exception $previous A previously thrown and caught exception.
      */
-    public function __construct($message, $code = 0, Exception $previous = null)
+    public function __construct($message, $code = 0, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

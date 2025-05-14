@@ -47,7 +47,7 @@ class UnmarshallingException extends Exception
      * @param DOMElement $element The DOMElement object that caused the exception to be thrown.
      * @param Exception $previous A previous Exception that caused the exception to be thrown.
      */
-    public function __construct($message, DOMElement $element, Exception $previous = null)
+    public function __construct($message, DOMElement $element, ?Exception $previous = null)
     {
         parent::__construct($message, 0, $previous);
         $this->setDOMElement($element);

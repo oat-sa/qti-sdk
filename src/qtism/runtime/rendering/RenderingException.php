@@ -64,7 +64,7 @@ class RenderingException extends Exception implements QtiSdkPackageContentExcept
      * @param int $code A code for the client-code.
      * @param Exception $previous An optional previous exception.
      */
-    public function __construct($message, $code, Exception $previous = null)
+    public function __construct($message, $code, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

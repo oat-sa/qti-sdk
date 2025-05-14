@@ -20,7 +20,7 @@ class XmlAssessmentSectionDocumentTest extends QtiSmTestCase
      * @param AssessmentSection|null $assessmentSection
      * @throws XmlStorageException
      */
-    public function testLoad(AssessmentSection $assessmentSection = null): void
+    public function testLoad(?AssessmentSection $assessmentSection = null): void
     {
         if (empty($assessmentSection)) {
             $uri = self::samplesDir() . 'custom/standalone_assessmentsection.xml';

@@ -79,7 +79,7 @@ class ResponseVariable extends Variable
      * @param QtiDatatype|null $value A QtiDatatype object or null.
      * @throws InvalidArgumentException If $identifier is not a string, if $baseType is not a value from the BaseType enumeration, if $cardinality is not a value from the Cardinality enumeration, if $value is not compliant with the QTI Runtime Model.
      */
-    public function __construct($identifier, $cardinality, $baseType = -1, QtiDatatype $value = null)
+    public function __construct($identifier, $cardinality, $baseType = -1, ?QtiDatatype $value = null)
     {
         parent::__construct($identifier, $cardinality, $baseType, $value);
     }
@@ -90,7 +90,7 @@ class ResponseVariable extends Variable
      * @param QtiDatatype|null $correctResponse A QtiDatatype object or null.
      * @throws InvalidArgumentException If $correctResponse does not match baseType and/or cardinality of the variable.
      */
-    public function setCorrectResponse(QtiDatatype $correctResponse = null): void
+    public function setCorrectResponse(?QtiDatatype $correctResponse = null): void
     {
         if ($correctResponse !== null 
             && (!Utils::isBaseTypeCompliant($this->getBaseType(), $correctResponse)
@@ -129,7 +129,7 @@ class ResponseVariable extends Variable
      *
      * @param Mapping $mapping A Mapping object from the QTI Data Model.
      */
-    public function setMapping(Mapping $mapping = null): void
+    public function setMapping(?Mapping $mapping = null): void
     {
         $this->mapping = $mapping;
     }
@@ -149,7 +149,7 @@ class ResponseVariable extends Variable
      *
      * @param AreaMapping $areaMapping An AreaMapping object from the QTI Data Model.
      */
-    public function setAreaMapping(AreaMapping $areaMapping = null): void
+    public function setAreaMapping(?AreaMapping $areaMapping = null): void
     {
         $this->areaMapping = $areaMapping;
     }

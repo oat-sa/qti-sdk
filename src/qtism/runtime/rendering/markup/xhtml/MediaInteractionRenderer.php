@@ -131,7 +131,7 @@ class MediaInteractionRenderer extends InteractionRenderer
      *
      * @param AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    public function __construct(?AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         parent::__construct($renderingEngine);
         $this->setVideoTypes(['video/mp4', 'video/webm', 'video/ogg']);

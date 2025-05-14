@@ -57,7 +57,7 @@ abstract class QtiDocument
      * @param string $versionNumber
      * @param QtiComponent|null $documentComponent
      */
-    public function __construct($versionNumber = '2.1.0', QtiComponent $documentComponent = null)
+    public function __construct($versionNumber = '2.1.0', ?QtiComponent $documentComponent = null)
     {
         $this->setVersion($versionNumber);
         $this->setDocumentComponent($documentComponent);
@@ -89,7 +89,7 @@ abstract class QtiDocument
      *
      * @param QtiComponent $documentComponent A QTI Component object.
      */
-    public function setDocumentComponent(QtiComponent $documentComponent = null): void
+    public function setDocumentComponent(?QtiComponent $documentComponent = null): void
     {
         $this->documentComponent = $documentComponent;
     }

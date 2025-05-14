@@ -125,13 +125,13 @@ class ResultOutcomeVariable extends ItemVariable
         QtiIdentifier $identifier,
         $cardinality,
         $baseType = null,
-        ValueCollection $values = null,
+        ?ValueCollection $values = null,
         $view = null,
-        QtiString $interpretation = null,
-        QtiUri $longInterpretation = null,
-        QtiFloat $normalMaximum = null,
-        QtiFloat $normalMinimum = null,
-        QtiFloat $masteryValue = null
+        ?QtiString $interpretation = null,
+        ?QtiUri $longInterpretation = null,
+        ?QtiFloat $normalMaximum = null,
+        ?QtiFloat $normalMinimum = null,
+        ?QtiFloat $masteryValue = null
     ) {
         parent::__construct($identifier, $cardinality, $baseType);
         $this->setValues($values);
@@ -183,7 +183,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param ValueCollection $values
      * @return $this
      */
-    public function setValues(ValueCollection $values = null): self
+    public function setValues(?ValueCollection $values = null): self
     {
         $this->values = $values;
         return $this;
@@ -252,7 +252,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiString $interpretation
      * @return $this
      */
-    public function setInterpretation(QtiString $interpretation = null): self
+    public function setInterpretation(?QtiString $interpretation = null): self
     {
         $this->interpretation = $interpretation;
         return $this;
@@ -284,7 +284,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiUri $longInterpretation
      * @return $this
      */
-    public function setLongInterpretation(QtiUri $longInterpretation = null): self
+    public function setLongInterpretation(?QtiUri $longInterpretation = null): self
     {
         $this->longInterpretation = $longInterpretation;
         return $this;
@@ -316,7 +316,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiFloat $normalMaximum
      * @return $this
      */
-    public function setNormalMaximum(QtiFloat $normalMaximum = null): self
+    public function setNormalMaximum(?QtiFloat $normalMaximum = null): self
     {
         $this->normalMaximum = $normalMaximum;
         return $this;
@@ -348,7 +348,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiFloat $normalMinimum
      * @return $this
      */
-    public function setNormalMinimum(QtiFloat $normalMinimum = null): self
+    public function setNormalMinimum(?QtiFloat $normalMinimum = null): self
     {
         $this->normalMinimum = $normalMinimum;
         return $this;
@@ -380,7 +380,7 @@ class ResultOutcomeVariable extends ItemVariable
      * @param QtiFloat $masteryValue
      * @return $this
      */
-    public function setMasteryValue(QtiFloat $masteryValue = null): self
+    public function setMasteryValue(?QtiFloat $masteryValue = null): self
     {
         $this->masteryValue = $masteryValue;
         return $this;

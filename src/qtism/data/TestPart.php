@@ -283,7 +283,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
      *
      * @param ItemSessionControl $itemSessionControl An ItemSessionControl object.
      */
-    public function setItemSessionControl(ItemSessionControl $itemSessionControl = null): void
+    public function setItemSessionControl(?ItemSessionControl $itemSessionControl = null): void
     {
         $this->itemSessionControl = $itemSessionControl;
     }
@@ -315,7 +315,7 @@ class TestPart extends QtiComponent implements QtiIdentifiable
      *
      * @param TimeLimits $timeLimits A TimeLimits object.
      */
-    public function setTimeLimits(TimeLimits $timeLimits = null): void
+    public function setTimeLimits(?TimeLimits $timeLimits = null): void
     {
         $this->timeLimits = $timeLimits;
     }

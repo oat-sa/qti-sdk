@@ -71,7 +71,7 @@ class ResponseProcessingMarshaller extends Marshaller
      */
     protected function unmarshall(
         DOMElement $element,
-        ResponseProcessing $responseProcessing = null
+        ?ResponseProcessing $responseProcessing = null
     ): ResponseProcessing {
         $responseRuleElts = self::getChildElements($element);
 

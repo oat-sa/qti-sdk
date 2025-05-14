@@ -183,7 +183,7 @@ class AssessmentTestSessionException extends Exception
      * @param int $code A code to enable client-code to identify the error programatically.
      * @param Exception $previous An optional previous exception.
      */
-    public function __construct($message, $code = 0, Exception $previous = null)
+    public function __construct($message, $code = 0, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

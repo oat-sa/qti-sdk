@@ -48,7 +48,7 @@ class AssessmentSectionMarshaller extends RecursiveMarshaller
     protected function unmarshallChildrenKnown(
         DOMElement $element,
         QtiComponentCollection $children,
-        AssessmentSection $assessmentSection = null
+        ?AssessmentSection $assessmentSection = null
     ): QtiComponent {
         $baseMarshaller = new SectionPartMarshaller($this->getVersion());
         $baseComponent = $baseMarshaller->unmarshall($element);
