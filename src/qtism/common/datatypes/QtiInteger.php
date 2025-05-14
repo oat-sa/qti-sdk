@@ -38,7 +38,7 @@ use qtism\common\enums\Cardinality;
 class QtiInteger extends QtiScalar
 {
     /**
-     * Checks whether or not $value is an integer compliant
+     * Checks whether $value is an integer compliant
      * with the QTI Integer datatype. Will check the range to make sure
      * its contained into [-2147483648,2147483647].
      *

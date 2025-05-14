@@ -279,7 +279,7 @@ class MemoryStream implements IStream
     }
 
     /**
-     * Specify whether or not the stream is open.
+     * Specify whether the stream is open.
      *
      * @param bool $open
      */

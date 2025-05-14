@@ -359,7 +359,7 @@ abstract class Marshaller
      * Get Attribute Name to Use for Marshalling
      *
      * This method provides the attribute name to be used to retrieve an element attribute value
-     * by considering whether or not the Marshaller implementation is running in Web Component
+     * by considering whether the Marshaller implementation is running in Web Component
      * Friendly mode.
      *
      * Examples:
@@ -760,7 +760,7 @@ abstract class Marshaller
     /**
      * Is Web Component Friendly
      *
-     * Whether or not the Marshaller should work in Web Component Friendly mode.
+     * Whether the Marshaller should work in Web Component Friendly mode.
      *
      * @return bool
      */

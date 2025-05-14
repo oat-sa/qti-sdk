@@ -44,7 +44,7 @@ class ItemSessionControl extends QtiComponent
      * that any applicable feedback must be shown. This applies to both Modal
      * Feedback and Integrated Feedback where applicable. However, once the
      * maximum number of allowed attempts have been used (or for adaptive items,
-     * completionStatus has been set to completed) whether or not feedback is shown
+     * completionStatus has been set to completed) whether feedback is shown
      * is controlled by the showFeedback constraint.
      *
      * @var int
@@ -101,7 +101,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * From IMS QTI:
      *
-     * This constraint controls whether or not the system may provide the candidate with a
+     * This constraint controls whether the system may provide the candidate with a
      * way of entering the solution state. The default is false.
      *
      * @var bool
@@ -114,7 +114,7 @@ class ItemSessionControl extends QtiComponent
      *
      * Some delivery systems support the capture of candidate comments. The comment is not
      * part of the assessed responses but provides feedback from the candidate to the other
-     * actors in the assessment process. This constraint controls whether or not the candidate
+     * actors in the assessment process. This constraint controls whether the candidate
      * is allowed to provide a comment on the item during the session.
      *
      * @var bool
@@ -292,7 +292,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Is the candidate allowed to skip items?
      *
-     * Know whether or not the Delivery Engine allow the candidate to skip items.
+     * Know whether the Delivery Engine allow the candidate to skip items.
      *
      * @return bool true if allowed, false if not.
      */
@@ -304,7 +304,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Set if the candidate is allowed to skip items.
      *
-     * Set whether or not the Delivery Engine allows the candidate to skip items.
+     * Set whether the Delivery Engine allows the candidate to skip items.
      *
      * @param bool $allowSkipping true if allowed, false otherwise.
      * @throws InvalidArgumentException If $allowSkipping is not a valid boolean.
@@ -350,7 +350,7 @@ class ItemSessionControl extends QtiComponent
     /**
      * Set if the responses must be validated.
      *
-     * Set whether or not responses must be validated by the Delivery Engine.
+     * Set whether responses must be validated by the Delivery Engine.
      *
      * @param bool $validateResponses true if responses must be validated, false if not.
      * @throws InvalidArgumentException If $validateResponses is not a boolean.

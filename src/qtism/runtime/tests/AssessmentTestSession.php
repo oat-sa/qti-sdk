@@ -199,7 +199,7 @@ class AssessmentTestSession extends State
     private $config = 0;
 
     /**
-     * Whether or not allowing jump in any case.
+     * Whether allowing jump in any case.
      *
      * If enabled, jumps will be allowed even if the current navigation mode is linear.
      *
@@ -321,7 +321,7 @@ class AssessmentTestSession extends State
                             foreach ($routeItemsToClose as $routeItem) {
                                 $itemRef = $routeItem->getAssessmentItemRef();
                                 $occurence = $routeItem->getOccurence();
-                                $session = $this->getItemSession($itemRef, $occurence)->endItemSession();
+                                $this->getItemSession($itemRef, $occurence)->endItemSession();
                             }
 
                             break;
@@ -614,7 +614,7 @@ class AssessmentTestSession extends State
     }
 
     /**
-     * Whether or not the AssessmentTest or one of its testPart to be delivered is adaptive (preConditions, branchingRules).
+     * Whether the AssessmentTest or one of its testPart to be delivered is adaptive (preConditions, branchingRules).
      *
      * @param string $testPartIdentifier
      * @return bool
@@ -645,7 +645,7 @@ class AssessmentTestSession extends State
     }
 
     /**
-     * Know whether or not branch rules are forced to be executed.
+     * Know whether branch rules are forced to be executed.
      *
      * When turned on, branch rules will be executed even if the current navigation mode is non-linear.
      *
@@ -1281,7 +1281,7 @@ class AssessmentTestSession extends State
             $i = 0;
 
             foreach ($this->getRoute()->getAllRouteItems() as $routeItem) {
-                if (!($routeItem->getTestPart()->getNavigationMode() === NavigationMode::NONLINEAR && count($routeItem->getAssessmentItemRef()->getResponseDeclarations()) === 0)) {
+                if ($routeItem->getTestPart()->getNavigationMode() !== NavigationMode::NONLINEAR || count($routeItem->getAssessmentItemRef()->getResponseDeclarations())) {
                     $i++;
                 }
             }
@@ -1515,19 +1515,15 @@ class AssessmentTestSession extends State
             switch ($e->getCode()) {
                 case AssessmentTestSessionException::ASSESSMENT_TEST_DURATION_OVERFLOW:
                     return AssessmentTestPlace::ASSESSMENT_TEST;
-                    break;
 
                 case AssessmentTestSessionException::TEST_PART_DURATION_OVERFLOW:
                     return AssessmentTestPlace::TEST_PART;
-                    break;
 
                 case AssessmentTestSessionException::ASSESSMENT_SECTION_DURATION_OVERFLOW:
                     return AssessmentTestPlace::ASSESSMENT_SECTION;
-                    break;
 
                 case AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW:
                     return AssessmentTestPlace::ASSESSMENT_ITEM;
-                    break;
             }
         }
 
@@ -1892,7 +1888,7 @@ class AssessmentTestSession extends State
 
                         // As per QTI 2.1 specs, The value of an item variable taken from an item instantiated multiple times from the
                         // same assessmentItemRef (through the use of selection withReplacement) is taken from the last instance submitted
-                        // if submission is simultaneous, otherwise it is undefined.
+                        // if the submission is simultaneous, otherwise it is undefined.
                         if ($sequence === false || $this->getCurrentSubmissionMode() === SubmissionMode::INDIVIDUAL) {
                             return null;
                         }
@@ -2151,7 +2147,7 @@ class AssessmentTestSession extends State
      * Select items that are eligible for the candidate depending on the current test session context.
      *
      * AssessmentItemSession objects related to the eligible items will be instantiated. However, the decision
-     * about whether or not they must be instantiated at a given time depends on the "Adaptivty" of the test definition.
+     * about whether they must be instantiated at a given time depends on the "Adaptivty" of the test definition.
      *
      * * The test is adaptive: an AssessmentItemSession will be instantiated for the current route item only.
      * * The test is not adaptive: all route items are scanned. If an AssessmentItemSession does not exist for a route item, it is instantiated.
@@ -2384,8 +2380,8 @@ class AssessmentTestSession extends State
      * * If there is no more item in the route to be explored the session ends gracefully.
      * * If there the end of a test part is reached, pending responses are submitted.
      *
-     * @param bool $ignoreBranchings Whether or not to ignore branching.
-     * @param bool $ignorePreConditions Whether or not to ignore preConditions.
+     * @param bool $ignoreBranchings Whether to ignore branching.
+     * @param bool $ignorePreConditions Whether to ignore preConditions.
      * @throws AssessmentTestSessionException If the test session is not running or something wrong happens during deffered outcome processing or branching.
      * @throws AssessmentItemSessionException
      * @throws PhpStorageException
@@ -2446,9 +2442,9 @@ class AssessmentTestSession extends State
             }
 
             // Preconditions on target?
-            $stop = !($ignorePreConditions === false) || $this->routeMatchesPreconditions($route);
+            $stop = $ignorePreConditions !== false || $this->routeMatchesPreconditions($route);
 
-            // After a first iteration, we will not performed branching again, as they are executed
+            // After the first iteration, we will not performed branching again, as they are executed
             // as soon as we leave an item. Chains of branch rules are not expected.
             $ignoreBranchings = true;
         }
@@ -2659,7 +2655,7 @@ class AssessmentTestSession extends State
      * * AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_OVERFLOW
      * * AssessmentTestSessionException::ASSESSMENT_ITEM_DURATION_UNDERFLOW
      *
-     * @param bool $includeMinTime Whether or not to check minimum times. If this argument is true, minimum times on assessmentSections and assessmentItems will be checked only if the current navigation mode is LINEAR.
+     * @param bool $includeMinTime Whether to check minimum times. If this argument is true, minimum times on assessmentSections and assessmentItems will be checked only if the current navigation mode is LINEAR.
      * @param bool $includeAssessmentItem If set to true, the time constraints in force at the item level will also be checked.
      * @throws AssessmentTestSessionException If one or more time limits in force are not respected.
      * @see http://www.imsglobal.org/question/qtiv2p1/imsqti_infov2p1.html#element10535 IMS QTI about TimeLimits.
@@ -2674,11 +2670,8 @@ class AssessmentTestSession extends State
 
         $constraints = $this->getTimeConstraints($places);
         foreach ($constraints as $constraint) {
-            $maxTimeRespected = true;
-            $minTimeRespected = true;
             $includeMinTime = $includeMinTime && $constraint->minTimeInForce();
             $includeMaxTime = $constraint->maxTimeInForce() && $constraint->allowLateSubmission() === false;
-            $spentTime = $constraint->getDuration();
 
             if ($includeMinTime === true) {
                 $minRemainingTime = $constraint->getMinimumRemainingTime();
@@ -2688,8 +2681,8 @@ class AssessmentTestSession extends State
                 $maxRemainingTime = $constraint->getMaximumRemainingTime();
             }
 
-            $minTimeRespected = !($includeMinTime === true && $minRemainingTime->getSeconds(true) > 0);
-            $maxTimeRespected = !($includeMaxTime === true && $maxRemainingTime->getSeconds(true) === 0);
+            $minTimeRespected = !$includeMinTime || $minRemainingTime->getSeconds(true) === 0;
+            $maxTimeRespected = !$includeMaxTime || $maxRemainingTime->getSeconds(true) > 0;
 
             if ($minTimeRespected === false || $maxTimeRespected === false) {
                 $sourceNature = ucfirst($constraint->getSource()->getQtiClassName());
@@ -2867,7 +2860,7 @@ class AssessmentTestSession extends State
     /**
      * Whether or not time limits are in force for the current route item.
      *
-     * @param bool $excludeItem Whether or not include item time limits.
+     * @param bool $excludeItem Whether include item time limits.
      * @return bool
      */
     protected function timeLimitsInForce($excludeItem = false): bool
@@ -2949,7 +2942,7 @@ class AssessmentTestSession extends State
     /**
      * Behaviours to be applied when visiting a test part.
      *
-     * Basically, this method checks whether or not the current testPart has already been
+     * Basically, this method checks whether the current testPart has already been
      * visited by the candidate. In addition, if the navigation mode is nonLinear, templateDefaults
      * and templateProcessing will be applied if necessary to the item sessions that belong to the testPart.
      */
@@ -3015,7 +3008,7 @@ class AssessmentTestSession extends State
     }
 
     /**
-     * Whether or not a given $testPart has already been visited by the candidate.
+     * Whether a given $testPart has already been visited by the candidate.
      *
      * @param TestPart|string A TestPart object or a testPart identifier.
      * @return bool
@@ -3071,7 +3064,7 @@ class AssessmentTestSession extends State
     /**
      * Next Route Item Prediction
      *
-     * This method indicates whether or not the next route item is predictible.
+     * This method indicates whether the next route item is predictable.
      *
      * This method returns false when:
      *
@@ -3129,7 +3122,7 @@ class AssessmentTestSession extends State
         $occurence = $routeItem->getOccurence();
         $session = $this->getItemSession($itemRef, $occurence);
 
-        // Does such a session exist for item + occurence?
+        // Does such a session exist for item + occurrence?
         if ($session === false) {
             // Instantiate the item session...
             $testPart = $routeItem->getTestPart();
@@ -3163,7 +3156,7 @@ class AssessmentTestSession extends State
     /**
      * Must Apply Branch Rules
      *
-     * Whether or not Branch Rules have to be applied.
+     * Whether Branch Rules have to be applied.
      *
      * @return bool
      */
@@ -3175,9 +3168,9 @@ class AssessmentTestSession extends State
     /**
      * Must Apply PreConditions
      *
-     * Whether or not PreConditions have to be applied.
+     * Whether PreConditions have to be applied.
      *
-     * @param bool $nextRouteItem To be set to true in order to know whether or not to apply PreConditions for the next route item.
+     * @param bool $nextRouteItem To be set to true in order to know whether to apply PreConditions for the next route item.
      * @return bool
      */
     protected function mustApplyPreConditions($nextRouteItem = false): bool

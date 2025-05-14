@@ -333,7 +333,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
     }
 
     /**
-     * Whether or not an index is defined for the printedVariable.
+     * Whether an index is defined for the printedVariable.
      *
      * @return bool
      */
@@ -399,7 +399,7 @@ class PrintedVariable extends BodyElement implements FlowStatic, InlineStatic, T
     }
 
     /**
-     * Whether or not the printedVariable has a value for the field attribute.
+     * Whether the printedVariable has a value for the field attribute.
      *
      * @return bool
      */

@@ -39,7 +39,7 @@ class TemplateVariable extends Variable
     /**
      * From IMS QTI:
      *
-     * This attribute determines whether or not the template variable's value should be substituted for
+     * This attribute determines whether the template variable's value should be substituted for
      * object parameter values that match its name. See param for more information.
      *
      * @var bool
@@ -49,7 +49,7 @@ class TemplateVariable extends Variable
     /**
      * From IMS QTI:
      *
-     * This attribute determines whether or not the template variable's value should be substituted
+     * This attribute determines whether the template variable's value should be substituted
      * for identifiers that match its name in MathML expressions. See Combining Template Variables
      * and MathML for more information.
      *
@@ -73,7 +73,7 @@ class TemplateVariable extends Variable
     }
 
     /**
-     * Set whether or not the template's value should be substituted for object
+     * Set whether the template's value should be substituted for object
      * parameter values.
      *
      * @param bool $paramVariable
@@ -90,7 +90,7 @@ class TemplateVariable extends Variable
     }
 
     /**
-     * Let you know whether or not the template variable's value should be substituted
+     * Let you know whether the template variable's value should be substituted
      * for object parameter values.
      *
      * @return bool

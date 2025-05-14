@@ -173,7 +173,7 @@ class TimeConstraint
     }
 
     /**
-     * Whether or not a maxTime constraint is in force for the timeLimits (if existing) bound to the source
+     * Whether a maxTime constraint is in force for the timeLimits (if existing) bound to the source
      * of the time constraint.
      *
      * @return bool
@@ -184,7 +184,7 @@ class TimeConstraint
     }
 
     /**
-     * Whether or not a minTime constraint is in force for the timeLimits (if existing) bound to the source of
+     * Whether a minTime constraint is in force for the timeLimits (if existing) bound to the source of
      * the time constraint.
      *
      * Please note that minTimes are applicable to assessmentSection and assessmentItems only when linear navigation

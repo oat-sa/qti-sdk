@@ -135,7 +135,7 @@ class SelectableRoute extends Route
     }
 
     /**
-     * Set whether or not the RouteItem objects held by the Route must be kept together.
+     * Set whether the RouteItem objects held by the Route must be kept together.
      *
      * @param bool $keepTogether
      */

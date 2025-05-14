@@ -90,7 +90,7 @@ class Container extends AbstractCollection implements Comparable
 
     /**
      * In the QTI runtime model, an empty container is considered to
-     * have the NULL value. This method helps you to know whether or not
+     * have the NULL value. This method helps you to know whether
      * the container has the NULL value.
      *
      * @return bool Whether the container has to be considered as NULL.

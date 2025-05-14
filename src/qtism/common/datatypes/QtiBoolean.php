@@ -33,7 +33,7 @@ use qtism\common\enums\Cardinality;
 class QtiBoolean extends QtiScalar
 {
     /**
-     * Check whether or not the intrinsic $value is a PHP boolean.
+     * Check whether the intrinsic $value is a PHP boolean.
      *
      * @param mixed $value A given value.
      * @throws InvalidArgumentException

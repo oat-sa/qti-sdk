@@ -53,7 +53,7 @@ interface QtiFile extends QtiDatatype
     public function getMimeType();
 
     /**
-     * Whether or not a file name is defined for this file.
+     * Whether a file name is defined for this file.
      *
      * @return bool
      */

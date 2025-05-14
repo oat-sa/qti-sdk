@@ -32,7 +32,7 @@ use qtism\data\QtiComponentCollection;
 class ModalFeedbackCollection extends QtiComponentCollection
 {
     /**
-     * Checks whether or not $value is an instance of ModalFeedback.
+     * Checks whether $value is an instance of ModalFeedback.
      *
      * @param mixed $value
      * @throws InvalidArgumentException If $value is not an instance of ModalFeedback.

@@ -89,7 +89,7 @@ class UploadInteraction extends BlockInteraction
     }
 
     /**
-     * Whether or not a value is defined for the 'type'
+     * Whether a value is defined for the 'type'
      * attribute.
      *
      * @return bool

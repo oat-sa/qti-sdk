@@ -116,7 +116,7 @@ class MediaInteraction extends BlockInteraction
     }
 
     /**
-     * Set whether or not the media must start as soon as the candidate starts the attempt.
+     * Set whether the media must start as soon as the candidate starts the attempt.
      *
      * @param bool $autostart
      * @throws InvalidArgumentException If $autostart is not a boolean value.
@@ -214,7 +214,7 @@ class MediaInteraction extends BlockInteraction
     }
 
     /**
-     * Set whether or not the continuous play (subject to maxPlays) of the media is in force.
+     * Set whether the continuous play (subject to maxPlays) of the media is in force.
      *
      * @param bool $loop
      * @throws InvalidArgumentException If $loop is not a boolean value.

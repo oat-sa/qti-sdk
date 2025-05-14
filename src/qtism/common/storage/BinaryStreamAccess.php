@@ -227,13 +227,17 @@ class BinaryStreamAccess extends AbstractStreamAccess
      */
     public function readString(): string
     {
+        $substitute = mb_substitute_character();
+        mb_substitute_character('none');
         try {
             $binLength = $this->getStream()->read(2);
             $length = current($this->tryUnpack('S', $binLength));
 
-            return $this->getStream()->read($length);
+            return mb_scrub($this->getStream()->read($length));
         } catch (StreamException $e) {
             $this->handleBinaryStreamException($e, BinaryStreamAccessException::STRING);
+        } finally {
+            mb_substitute_character($substitute);
         }
 
         return '';
@@ -252,8 +256,11 @@ class BinaryStreamAccess extends AbstractStreamAccess
         $len = strlen((string)$string);
 
         if ($len > $maxLen) {
-            $len = $maxLen;
-            $string = substr($string, 0, $maxLen);
+            $substitute = mb_substitute_character();
+            mb_substitute_character('none');
+            $string = mb_scrub(substr($string, 0, $maxLen));
+            $len = strlen($string);
+            mb_substitute_character($substitute);
         }
 
         try {
@@ -326,7 +333,7 @@ class BinaryStreamAccess extends AbstractStreamAccess
      *
      * @param StreamException $e The StreamException object to deal with.
      * @param int $typeError The BinaryStreamAccess exception code to be thrown in case of error.
-     * @param bool $read Whether or not the error occurred in a reading/writing context.
+     * @param bool $read Whether the error occurred in a reading/writing context.
      * @throws BinaryStreamAccessException The resulting BinaryStreamAccessException.
      */
     protected function handleBinaryStreamException(StreamException $e, $typeError, $read = true): void

@@ -97,7 +97,7 @@ class Format
     public static function isIdentifier(string $string, bool $strict = true): bool
     {
         if (!$strict) {
-            return preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $string) === 1;
+            return preg_match("/^[a-zA-Z_][a-zA-Z0-9_.-]*$/u", $string) === 1;
         }
 
         if (!isset($string[0]) || !isset(CharacterMap::$identifier_first[$string[0]])) {
@@ -130,14 +130,14 @@ class Format
      */
     public static function sanitizeIdentifier(string $dirtyIdentifier): string
     {
-        if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $dirtyIdentifier)) {
+        if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_.-]*$/u", $dirtyIdentifier)) {
             return $dirtyIdentifier;
         }
 
         $cleanIdentifier = preg_replace('/^[^a-zA-Z_]+/u', '', $dirtyIdentifier); // Cleaning start
-        $cleanIdentifier = preg_replace("/[^a-zA-Z0-9_\.-]+/u", '', $cleanIdentifier); // Cleaning content
+        $cleanIdentifier = preg_replace("/[^a-zA-Z0-9_.-]+/u", '', $cleanIdentifier); // Cleaning content
 
-        if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_\.-]*$/u", $cleanIdentifier)) {
+        if (preg_match("/^[a-zA-Z_][a-zA-Z0-9_.-]*$/u", $cleanIdentifier)) {
             return $cleanIdentifier;
         }
 
@@ -296,7 +296,7 @@ class Format
     }
 
     /**
-     * Whether or not a given string is a variable ref.
+     * Whether a given string is a variable ref.
      * Valid example: '{myIdentifier1}', 'myIdentifier1'.
      *
      * @param string $string A given string.
@@ -315,7 +315,7 @@ class Format
     }
 
     /**
-     * Whether or not a given string is a coordinate collection.
+     * Whether a given string is a coordinate collection.
      *
      * For compatibility reasons, float formatted numbers will also
      * be accepted as valid numbers to compose coordinates.
@@ -615,7 +615,7 @@ class Format
 
     public static function isMimeType(string $string): bool
     {
-        return preg_match('/^[-a-z]+\/[-+\.a-z0-9]+$/', $string) === 1;
+        return preg_match('/^[-a-z]+\/[-+.a-z0-9]+$/', $string) === 1;
     }
 
     /**

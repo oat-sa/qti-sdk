@@ -138,7 +138,7 @@ class Unmarshaller
             throw new UnmarshallingException($msg, $code);
         }
 
-        // Check whether or not $json is a state (no 'base' nor 'list' keys found),
+        // Check whether $json is a state (no 'base' nor 'list' keys found),
         // a base, a list or a record.
         $keys = array_keys($json);
 
@@ -205,59 +205,45 @@ class Unmarshaller
             switch ($keys[0]) {
                 case 'boolean':
                     return $this->unmarshallBoolean($unit);
-                    break;
 
                 case 'integer':
                     return $this->unmarshallInteger($unit);
-                    break;
 
                 case 'float':
                     return $this->unmarshallFloat($unit);
-                    break;
 
                 case 'string':
                     return $this->unmarshallString($unit);
-                    break;
 
                 case 'point':
                     return $this->unmarshallPoint($unit);
-                    break;
 
                 case 'pair':
                     return $this->unmarshallPair($unit);
-                    break;
 
                 case 'directedPair':
                     return $this->unmarshallDirectedPair($unit);
-                    break;
 
                 case 'duration':
                     return $this->unmarshallDuration($unit);
-                    break;
 
                 case 'file':
                     return $this->unmarshallFile($unit);
-                    break;
 
                 case FileHash::FILE_HASH_KEY:
                     return $this->unmarshallFileHash($unit);
-                    break;
 
                 case 'uri':
                     return $this->unmarshallUri($unit);
-                    break;
 
                 case 'intOrIdentifier':
                     return $this->unmarshallIntOrIdentifier($unit);
-                    break;
 
                 case 'identifier':
                     return $this->unmarshallIdentifier($unit);
-                    break;
 
                 default:
                     throw new UnmarshallingException("Unknown QTI baseType '" . $keys[0] . "'");
-                    break;
             }
         } catch (InvalidArgumentException $e) {
             $msg = 'A value does not satisfy its baseType.';

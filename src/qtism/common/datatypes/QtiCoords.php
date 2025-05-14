@@ -191,7 +191,7 @@ class QtiCoords extends IntegerCollection implements QtiDatatype
     }
 
     /**
-     * Whether or not $obj is equals to $this. Two Coords objects are
+     * Whether $obj is equals to $this. Two Coords objects are
      * considered to be equal if they have the same coordinates and shape.
      *
      * @param mixed $obj

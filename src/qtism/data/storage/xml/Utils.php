@@ -160,7 +160,7 @@ class Utils
      *
      * @param DOMElement $from The source DOMElement.
      * @param DOMElement $into The target DOMElement.
-     * @param bool $deep Whether or not to import the whole node hierarchy.
+     * @param bool $deep Whether to import the whole node hierarchy.
      */
     public static function importChildNodes(DOMElement $from, DOMElement $into, $deep = true): void
     {
@@ -204,7 +204,7 @@ class Utils
      * * & --> &amp;
      *
      * @param string $string An input string.
-     * @param bool $isAttribute Whether or not to escape ', >, < which do not have to be escaped in attributes.
+     * @param bool $isAttribute Whether to escape ', >, < which do not have to be escaped in attributes.
      * @return string An escaped string.
      */
     public static function escapeXmlSpecialChars($string, $isAttribute = false): string

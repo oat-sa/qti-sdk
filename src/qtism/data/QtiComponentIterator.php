@@ -276,7 +276,7 @@ class QtiComponentIterator implements Iterator
     }
 
     /**
-     * Whether or not a given $component has already been traversed by
+     * Whether a given $component has already been traversed by
      * the iterator.
      *
      * @param QtiComponent $component

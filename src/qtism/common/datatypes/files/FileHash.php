@@ -228,7 +228,7 @@ class FileHash implements QtiFile, JsonSerializable
     }
 
     /**
-     * Whether or not the File has a file name.
+     * Whether the File has a file name.
      *
      * @return bool
      */
@@ -238,7 +238,7 @@ class FileHash implements QtiFile, JsonSerializable
     }
 
     /**
-     * Whether or not two File objects are equals. Two File values
+     * Whether two File objects are equals. Two File values
      * are considered to be identical if they have the same file name,
      * mime-type and hash.
      *

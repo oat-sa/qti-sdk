@@ -46,7 +46,7 @@ class PhpScalarMarshaller extends PhpMarshaller
     }
 
     /**
-     * Checks whether or not the given value is marshallable by this implementation.
+     * Checks whether the given value is marshallable by this implementation.
      *
      * @param mixed $toMarshall
      * @return bool

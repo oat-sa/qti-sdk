@@ -121,7 +121,7 @@ class Utils
     }
 
     /**
-     * Whether or not a given $node element has the given CSS $class(es).
+     * Whether a given $node element has the given CSS $class(es).
      *
      * @param DOMElement $node
      * @param string|array $class A class or an array of CSS classes.

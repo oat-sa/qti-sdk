@@ -297,7 +297,7 @@ class XmlUtilsTest extends QtiSmTestCase
             ['float', 1.1, '<foo float="1.1"/>'],
             ['double', 1.1, '<foo double="1.1"/>'],
             ['boolean', true, '<foo boolean="true"/>'],
-            ['not-existing',  null, '<foo not-existing=""/>'],
+            ['not-existing', null, '<foo not-existing=""/>'],
         ];
     }
 
@@ -400,39 +400,40 @@ class XmlUtilsTest extends QtiSmTestCase
 
     public function testProcessSpecialCharsetWithoutError(): void
     {
-        $xml = ('<assessmentResult
-	xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p1"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<context/>
-	<testResult identifier="44127db28512-suomynona#903756e974e7#e94025be336b1f89159af64b1f6eda5d470ac8d61#local-dev-acc.nextgen-stack-local" datestamp="2024-10-30T12:56:32+00:00"/>
-	<itemResult identifier="item-1" datestamp="2024-10-30T12:56:32+00:00" sessionStatus="final">
-		<responseVariable identifier="numAttempts" cardinality="single" baseType="integer">
-			<candidateResponse>
-				<value>1</value>
-			</candidateResponse>
-		</responseVariable>
-		<responseVariable identifier="duration" cardinality="single" baseType="duration">
-			<candidateResponse>
-				<value>PT22S</value>
-			</candidateResponse>
-		</responseVariable>
-		<outcomeVariable identifier="completionStatus" cardinality="single" baseType="identifier">
-			<value>completed</value>
-		</outcomeVariable>
-		<outcomeVariable identifier="SCORE" cardinality="single" baseType="float">
-			<value>0</value>
-		</outcomeVariable>
-		<outcomeVariable identifier="MAXSCORE" cardinality="single" baseType="float">
-			<value>1</value>
-		</outcomeVariable>
-		<responseVariable identifier="RESPONSE" cardinality="single" baseType="string">
-			<candidateResponse>
-				<value>%s</value>
-			</candidateResponse>
-		</responseVariable>
-	</itemResult>
+        $xml = <<<'XML'
+<assessmentResult
+    xmlns="http://www.imsglobal.org/xsd/imsqti_result_v2p1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <context/>
+    <testResult identifier="44127db28512-suomynona#903756e974e7#e94025be336b1f89159af64b1f6eda5d470ac8d61#local-dev-acc.nextgen-stack-local" datestamp="2024-10-30T12:56:32+00:00"/>
+    <itemResult identifier="item-1" datestamp="2024-10-30T12:56:32+00:00" sessionStatus="final">
+        <responseVariable identifier="numAttempts" cardinality="single" baseType="integer">
+            <candidateResponse>
+                <value>1</value>
+            </candidateResponse>
+        </responseVariable>
+        <responseVariable identifier="duration" cardinality="single" baseType="duration">
+            <candidateResponse>
+                <value>PT22S</value>
+            </candidateResponse>
+        </responseVariable>
+        <outcomeVariable identifier="completionStatus" cardinality="single" baseType="identifier">
+            <value>completed</value>
+        </outcomeVariable>
+        <outcomeVariable identifier="SCORE" cardinality="single" baseType="float">
+            <value>0</value>
+        </outcomeVariable>
+        <outcomeVariable identifier="MAXSCORE" cardinality="single" baseType="float">
+            <value>1</value>
+        </outcomeVariable>
+        <responseVariable identifier="RESPONSE" cardinality="single" baseType="string">
+            <candidateResponse>
+                <value>%s</value>
+            </candidateResponse>
+        </responseVariable>
+    </itemResult>
 </assessmentResult>
-');
+XML;
         $this->assertNotNull(Utils::findExternalNamespaces(sprintf($xml, Utils::valueAsString("160\u{0008}"))));
     }
 

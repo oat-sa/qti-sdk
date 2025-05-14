@@ -61,7 +61,7 @@ class MapEntry extends QtiComponent
     /**
      * From IMS QTI:
      *
-     * Used to control whether or not a mapEntry string is matched case sensitively.
+     * Used to control whether a mapEntry string is matched case sensitively.
      *
      * @var bool
      * @qtism-bean-property

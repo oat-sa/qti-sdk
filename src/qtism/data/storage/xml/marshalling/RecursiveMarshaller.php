@@ -373,7 +373,7 @@ abstract class RecursiveMarshaller extends Marshaller
     abstract protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement;
 
     /**
-     * Whether or not a QtiComponent object is final. In other words, whether $component
+     * Whether a QtiComponent object is final. In other words, whether $component
      * contains child QtiComponent objects.
      *
      * @param QtiComponent $component

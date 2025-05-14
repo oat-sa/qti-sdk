@@ -121,7 +121,7 @@ class ExternalQtiComponent extends QtiComponent implements IExternal, QtiNamespa
     }
 
     /**
-     * Whether or not a target namespace is defined.
+     * Whether a target namespace is defined.
      *
      * @return bool
      */

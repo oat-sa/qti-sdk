@@ -120,7 +120,7 @@ class CustomOperator extends Operator implements IExternal
     }
 
     /**
-     * Whether or not a value is defined for the class attribute.
+     * Whether a value is defined for the class attribute.
      *
      * @return bool
      */
@@ -158,7 +158,7 @@ class CustomOperator extends Operator implements IExternal
     }
 
     /**
-     * Whether or not a value is defined for the definition attribute.
+     * Whether a value is defined for the definition attribute.
      *
      * @return bool
      */
