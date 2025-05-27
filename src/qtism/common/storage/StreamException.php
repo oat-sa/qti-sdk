@@ -101,7 +101,7 @@ abstract class StreamException extends Exception
      * @param int $code A code describing the error.
      * @param Exception $previous An optional previous exception.
      */
-    public function __construct($message, IStream $source, $code = 0, Exception $previous = null)
+    public function __construct($message, IStream $source, $code = 0, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
         $this->setSource($source);

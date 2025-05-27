@@ -149,7 +149,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      * @param $title
      * @param TestPartCollection|null $testParts
      */
-    public function __construct($identifier, $title, TestPartCollection $testParts = null)
+    public function __construct($identifier, $title, ?TestPartCollection $testParts = null)
     {
         $this->setObservers(new SplObjectStorage());
 
@@ -303,7 +303,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @param TimeLimits $timeLimits A TimeLimits object.
      */
-    public function setTimeLimits(TimeLimits $timeLimits = null): void
+    public function setTimeLimits(?TimeLimits $timeLimits = null): void
     {
         $this->timeLimits = $timeLimits;
     }
@@ -344,7 +344,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
      *
      * @param OutcomeProcessing $outcomeProcessing An OutcomeProcessing object.
      */
-    public function setOutcomeProcessing(OutcomeProcessing $outcomeProcessing = null): void
+    public function setOutcomeProcessing(?OutcomeProcessing $outcomeProcessing = null): void
     {
         $this->outcomeProcessing = $outcomeProcessing;
     }

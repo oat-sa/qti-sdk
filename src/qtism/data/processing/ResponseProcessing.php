@@ -83,7 +83,7 @@ class ResponseProcessing extends QtiComponent
      *
      * @param ResponseRuleCollection $responseRules A collection of ResponseRule objects.
      */
-    public function __construct(ResponseRuleCollection $responseRules = null)
+    public function __construct(?ResponseRuleCollection $responseRules = null)
     {
         if (empty($responseRules)) {
             $responseRules = new ResponseRuleCollection();

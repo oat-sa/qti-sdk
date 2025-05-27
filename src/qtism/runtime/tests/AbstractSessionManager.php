@@ -86,7 +86,7 @@ abstract class AbstractSessionManager
      *
      * @return AssessmentTestSession An AssessmentTestSession object.
      */
-    public function createAssessmentTestSession(AssessmentTest $test, Route $route = null, $config = 0): AssessmentTestSession
+    public function createAssessmentTestSession(AssessmentTest $test, ?Route $route = null, $config = 0): AssessmentTestSession
     {
         return $this->instantiateAssessmentTestSession($test, $this->getRoute($test, $route), $config);
     }
@@ -133,7 +133,7 @@ abstract class AbstractSessionManager
      * @param Route $route
      * @return Route
      */
-    protected function getRoute(AssessmentTest $test, Route $route = null): Route
+    protected function getRoute(AssessmentTest $test, ?Route $route = null): Route
     {
         return $route ?? $this->createRoute($test);
     }

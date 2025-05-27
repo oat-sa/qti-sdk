@@ -75,7 +75,7 @@ class TestResult extends QtiComponent
      * @param DateTime $datestamp The timestamp when testResult has been registered
      * @param ItemVariableCollection|null $itemVariables All variables
      */
-    public function __construct(QtiIdentifier $identifier, DateTime $datestamp, ItemVariableCollection $itemVariables = null)
+    public function __construct(QtiIdentifier $identifier, DateTime $datestamp, ?ItemVariableCollection $itemVariables = null)
     {
         $this->setIdentifier($identifier);
         $this->setDatestamp($datestamp);
@@ -167,7 +167,7 @@ class TestResult extends QtiComponent
      * @param ItemVariableCollection $itemVariables
      * @return $this
      */
-    public function setItemVariables(ItemVariableCollection $itemVariables = null)
+    public function setItemVariables(?ItemVariableCollection $itemVariables = null)
     {
         $this->itemVariables = $itemVariables;
         return $this;

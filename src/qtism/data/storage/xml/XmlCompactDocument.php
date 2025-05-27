@@ -85,7 +85,7 @@ class XmlCompactDocument extends XmlDocument
      * @param string $version
      * @param QtiComponent|null $documentComponent
      */
-    public function __construct($version = '2.1.0', QtiComponent $documentComponent = null)
+    public function __construct($version = '2.1.0', ?QtiComponent $documentComponent = null)
     {
         // Version 1.0 was used in legacy code, let's keep it BC.
         if ($version === '1.0') {
@@ -172,7 +172,7 @@ class XmlCompactDocument extends XmlDocument
      * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
      * @throws ReflectionException
      */
-    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, FileResolver $resolver = null, $version = '2.1'): XmlCompactDocument
+    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, ?FileResolver $resolver = null, $version = '2.1'): XmlCompactDocument
     {
         $compactAssessmentTest = new XmlCompactDocument($version);
         $compactAssessmentTest->setFilesystem($xmlAssessmentTestDocument->getFilesystem());

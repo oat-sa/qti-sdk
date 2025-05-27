@@ -56,7 +56,7 @@ class SliderInteractionRenderer extends InteractionRenderer
      *
      * @param AbstractMarkupRenderingEngine $renderingEngine
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null)
+    public function __construct(?AbstractMarkupRenderingEngine $renderingEngine = null)
     {
         parent::__construct($renderingEngine);
         $this->transform('div');

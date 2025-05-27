@@ -31,7 +31,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param float|null $expected
      * @throws MarshallerNotFoundException
      */
-    public function testMean(Container $container = null, $expected): void
+    public function testMean(?Container $container = null, $expected): void
     {
         $expression = $this->createFakeExpression(Statistics::MEAN);
         $operands = new OperandsCollection([$container]);
@@ -46,7 +46,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param float|null $expected
      * @throws MarshallerNotFoundException
      */
-    public function testSampleVariance(Container $container = null, $expected): void
+    public function testSampleVariance(?Container $container = null, $expected): void
     {
         $expression = $this->createFakeExpression(Statistics::SAMPLE_VARIANCE);
         $operands = new OperandsCollection([$container]);
@@ -61,7 +61,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param float|null $expected
      * @throws MarshallerNotFoundException
      */
-    public function testSampleSD(Container $container = null, $expected): void
+    public function testSampleSD(?Container $container = null, $expected): void
     {
         $expression = $this->createFakeExpression(Statistics::SAMPLE_SD);
         $operands = new OperandsCollection([$container]);
@@ -76,7 +76,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param float|null $expected
      * @throws MarshallerNotFoundException
      */
-    public function testPopVariance(Container $container = null, $expected): void
+    public function testPopVariance(?Container $container = null, $expected): void
     {
         $expression = $this->createFakeExpression(Statistics::POP_VARIANCE);
         $operands = new OperandsCollection([$container]);
@@ -91,7 +91,7 @@ class StatsOperatorProcessorTest extends QtiSmTestCase
      * @param float|null $expected
      * @throws MarshallerNotFoundException
      */
-    public function testPopSD(Container $container = null, $expected): void
+    public function testPopSD(?Container $container = null, $expected): void
     {
         $expression = $this->createFakeExpression(Statistics::POP_SD);
         $operands = new OperandsCollection([$container]);

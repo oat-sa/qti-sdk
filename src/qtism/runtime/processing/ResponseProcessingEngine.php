@@ -57,7 +57,7 @@ class ResponseProcessingEngine extends AbstractEngine
      * @param State $context
      * @throws InvalidArgumentException If $responseProcessing is not a ResponseProcessing object.
      */
-    public function __construct(QtiComponent $responseProcessing, State $context = null)
+    public function __construct(QtiComponent $responseProcessing, ?State $context = null)
     {
         parent::__construct($responseProcessing, $context);
 

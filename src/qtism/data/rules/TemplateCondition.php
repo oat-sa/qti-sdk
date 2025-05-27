@@ -125,7 +125,7 @@ class TemplateCondition extends QtiComponent implements TemplateRule
      *
      * @param TemplateElse $templateElse A TemplateElse object.
      */
-    public function setTemplateElse(TemplateElse $templateElse = null): void
+    public function setTemplateElse(?TemplateElse $templateElse = null): void
     {
         $this->templateElse = $templateElse;
     }

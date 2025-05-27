@@ -53,7 +53,7 @@ class TemplateProcessingEngine extends AbstractEngine
      * @param QtiComponent $templateProcessing A QTI Data Model TemplateProcessing object.
      * @param State $context A State object as the execution context.
      */
-    public function __construct(QtiComponent $templateProcessing, State $context = null)
+    public function __construct(QtiComponent $templateProcessing, ?State $context = null)
     {
         parent::__construct($templateProcessing, $context);
         $this->setRuleProcessorFactory(new RuleProcessorFactory());

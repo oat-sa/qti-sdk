@@ -49,7 +49,7 @@ class CandidateResponse extends QtiComponent
      *
      * @param ValueCollection|null $values
      */
-    public function __construct(ValueCollection $values = null)
+    public function __construct(?ValueCollection $values = null)
     {
         $this->setValues($values);
     }
@@ -94,7 +94,7 @@ class CandidateResponse extends QtiComponent
      * @param ValueCollection|null $values
      * @return $this
      */
-    public function setValues(ValueCollection $values = null)
+    public function setValues(?ValueCollection $values = null)
     {
         $this->values = $values;
         return $this;

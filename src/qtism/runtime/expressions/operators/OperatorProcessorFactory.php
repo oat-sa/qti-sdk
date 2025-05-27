@@ -54,7 +54,7 @@ class OperatorProcessorFactory extends ExpressionProcessorFactory
      * @throws InvalidArgumentException If $expression is not an Operator object.
      * @throws RuntimeException If no relevant OperatorProcessor is found for the given $expression.
      */
-    public function createProcessor(QtiComponent $expression, OperandsCollection $operands = null): OperatorProcessor
+    public function createProcessor(QtiComponent $expression, ?OperandsCollection $operands = null): OperatorProcessor
     {
         if (!($expression instanceof Operator)) {
             $msg = 'The OperatorProcessorFactory only accepts to create processors for Operator objects.';

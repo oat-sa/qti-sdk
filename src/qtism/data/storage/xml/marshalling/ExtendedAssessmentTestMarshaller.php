@@ -60,7 +60,7 @@ class ExtendedAssessmentTestMarshaller extends AssessmentTestMarshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element, AssessmentTest $assessmentTest = null): ExtendedAssessmentTest
+    protected function unmarshall(DOMElement $element, ?AssessmentTest $assessmentTest = null): ExtendedAssessmentTest
     {
         $baseComponent = parent::unmarshall($element);
         $component = ExtendedAssessmentTest::createFromAssessmentTest($baseComponent);

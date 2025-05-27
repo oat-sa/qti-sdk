@@ -60,7 +60,7 @@ class Utils
      * @param ResponseValidityConstraint $constraint
      * @return bool
      */
-    public static function isResponseValid(QtiDatatype $response = null, ResponseValidityConstraint $constraint): bool
+    public static function isResponseValid(?QtiDatatype $response = null, ResponseValidityConstraint $constraint): bool
     {
         $min = $constraint->getMinConstraint();
         $max = $constraint->getMaxConstraint();
