@@ -7,8 +7,8 @@
 
 # QTI Software Development Kit for PHP
 
-An IMS QTI (Question &amp; Test Interoperability) Software Development Kit for PHP 7.4 and higher supporting a wide 
-range of features described by the [IMS QTI specification family](http://www.imsglobal.org/question).
+A 1EdTech QTI (Question &amp; Test Interoperability) Software Development Kit for PHP 7.4 and higher supporting a wide 
+range of features described by the [1EdTech QTI specification family](https://www.1edtech.org/standards/qti/index).
 
 __This implementation of QTI is under constant enhancement. The API of the master branch might change at any time.__
 
