@@ -259,7 +259,7 @@ abstract class RecursiveMarshaller extends Marshaller
      * @return QtiComponent A QtiComponent object corresponding to the DOMElement to unmarshall.
      * @throws MarshallerNotFoundException
      */
-    protected function unmarshall(DOMElement $element, QtiComponent $rootComponent = null): QtiComponent
+    protected function unmarshall(DOMElement $element, ?QtiComponent $rootComponent = null): QtiComponent
     {
         // Reset.
         $this->resetTrail();

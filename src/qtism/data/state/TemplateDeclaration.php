@@ -71,7 +71,7 @@ class TemplateDeclaration extends VariableDeclaration
      * @param int $cardinality
      * @param DefaultValue|null $defaultValue
      */
-    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null)
+    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, ?DefaultValue $defaultValue = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
     }

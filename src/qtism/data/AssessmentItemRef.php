@@ -89,7 +89,7 @@ class AssessmentItemRef extends SectionPart
      * @param IdentifierCollection $categories The categories to which the item belongs to.
      * @throws InvalidArgumentException If $href is not a string.
      */
-    public function __construct($identifier, $href, IdentifierCollection $categories = null)
+    public function __construct($identifier, $href, ?IdentifierCollection $categories = null)
     {
         parent::__construct($identifier);
 

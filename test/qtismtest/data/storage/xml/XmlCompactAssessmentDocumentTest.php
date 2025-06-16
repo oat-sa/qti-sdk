@@ -28,7 +28,7 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
      * @param XmlCompactDocument|null $doc
      * @throws XmlStorageException
      */
-    public function testLoad(XmlCompactDocument $doc = null): void
+    public function testLoad(?XmlCompactDocument $doc = null): void
     {
         if ($doc === null) {
             $doc = new XmlCompactDocument('2.1');

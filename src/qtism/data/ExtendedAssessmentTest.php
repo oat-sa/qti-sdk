@@ -45,7 +45,7 @@ class ExtendedAssessmentTest extends AssessmentTest
      * @param string $title A title.
      * @param TestPartCollection $testParts A collection of ExtendedTestPart objects.
      */
-    public function __construct($identifier, $title, TestPartCollection $testParts = null)
+    public function __construct($identifier, $title, ?TestPartCollection $testParts = null)
     {
         parent::__construct($identifier, $title, $testParts);
         $this->setTestFeedbackRefs(new TestFeedbackRefCollection());

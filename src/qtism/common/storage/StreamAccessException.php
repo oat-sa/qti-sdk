@@ -61,7 +61,7 @@ class StreamAccessException extends Exception
      * @param int $code An exception code. See class constants.
      * @param Exception $previous An optional previously thrown exception.
      */
-    public function __construct($message, AbstractStreamAccess $source, $code = 0, Exception $previous = null)
+    public function __construct($message, AbstractStreamAccess $source, $code = 0, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
         $this->setSource($source);

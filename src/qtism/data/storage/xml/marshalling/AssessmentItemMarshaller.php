@@ -126,7 +126,7 @@ class AssessmentItemMarshaller extends Marshaller
      * @throws MarshallerNotFoundException
      * @throws UnmarshallingException
      */
-    protected function unmarshall(DOMElement $element, AssessmentItem $assessmentItem = null): AssessmentItem
+    protected function unmarshall(DOMElement $element, ?AssessmentItem $assessmentItem = null): AssessmentItem
     {
         if (($identifier = $this->getDOMElementAttributeAs($element, 'identifier')) !== null) {
             if (($timeDependent = $this->getDOMElementAttributeAs($element, 'timeDependent', 'boolean')) !== null) {

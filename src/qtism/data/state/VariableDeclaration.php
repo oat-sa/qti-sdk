@@ -107,7 +107,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      * @param int $cardinality A value from the Cardinality enumeration.
      * @param DefaultValue $defaultValue A DefaultValue object.
      */
-    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null)
+    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, ?DefaultValue $defaultValue = null)
     {
         $this->setObservers(new SplObjectStorage());
 
@@ -198,7 +198,7 @@ class VariableDeclaration extends QtiComponent implements QtiIdentifiable
      *
      * @param DefaultValue $defaultValue A DefaultValue object.
      */
-    public function setDefaultValue(DefaultValue $defaultValue = null): void
+    public function setDefaultValue(?DefaultValue $defaultValue = null): void
     {
         $this->defaultValue = $defaultValue;
     }

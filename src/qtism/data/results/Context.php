@@ -63,7 +63,7 @@ class Context extends QtiComponent
      * @param QtiIdentifier|null $sourcedId
      * @param SessionIdentifierCollection|null $sessionIdentifiers
      */
-    public function __construct(QtiIdentifier $sourcedId = null, SessionIdentifierCollection $sessionIdentifiers = null)
+    public function __construct(?QtiIdentifier $sourcedId = null, ?SessionIdentifierCollection $sessionIdentifiers = null)
     {
         $this->setSourcedId($sourcedId);
         if ($sessionIdentifiers === null) {
@@ -113,7 +113,7 @@ class Context extends QtiComponent
      * @param QtiIdentifier $sourcedId
      * @return $this
      */
-    public function setSourcedId(QtiIdentifier $sourcedId = null)
+    public function setSourcedId(?QtiIdentifier $sourcedId = null)
     {
         $this->sourcedId = $sourcedId;
         return $this;
@@ -145,7 +145,7 @@ class Context extends QtiComponent
      * @param SessionIdentifierCollection $sessionIdentifiers
      * @return $this
      */
-    public function setSessionIdentifiers(SessionIdentifierCollection $sessionIdentifiers = null)
+    public function setSessionIdentifiers(?SessionIdentifierCollection $sessionIdentifiers = null)
     {
         $this->sessionIdentifiers = $sessionIdentifiers;
         return $this;

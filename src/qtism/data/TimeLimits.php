@@ -114,7 +114,7 @@ class TimeLimits extends QtiComponent
      *
      * @param QtiDuration $minTime A Duration object or null if unlimited.
      */
-    public function setMinTime(QtiDuration $minTime = null): void
+    public function setMinTime(?QtiDuration $minTime = null): void
     {
         // Prevent to get 0s durations stored.
         if ($minTime !== null && $minTime->getSeconds(true) === 0) {
@@ -149,7 +149,7 @@ class TimeLimits extends QtiComponent
      *
      * @param QtiDuration $maxTime A duration object or null if unlimited.
      */
-    public function setMaxTime(QtiDuration $maxTime = null): void
+    public function setMaxTime(?QtiDuration $maxTime = null): void
     {
         // Prevent to get 0s durations stored.
         if ($maxTime !== null && $maxTime->getSeconds(true) === 0) {

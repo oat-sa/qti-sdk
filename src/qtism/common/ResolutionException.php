@@ -38,7 +38,7 @@ class ResolutionException extends RuntimeException
      * @param string $message A human-readable description of the exception.
      * @param Exception $previous An optional previous Exception that caused the exception to be thrown.
      */
-    public function __construct($message, Exception $previous = null)
+    public function __construct($message, ?Exception $previous = null)
     {
         parent::__construct($message, 0, $previous);
     }

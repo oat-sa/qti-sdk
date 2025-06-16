@@ -57,7 +57,7 @@ class OutcomeProcessing extends QtiComponent
      *
      * @param OutcomeRuleCollection $outcomeRules A collection of OutcomeRule objects.
      */
-    public function __construct(OutcomeRuleCollection $outcomeRules = null)
+    public function __construct(?OutcomeRuleCollection $outcomeRules = null)
     {
         if (empty($outcomeRules)) {
             $outcomeRules = new OutcomeRuleCollection();
