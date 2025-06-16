@@ -115,7 +115,7 @@ class XmlDocument extends QtiDocument
      *
      * @param Filesystem|FilesystemInterface|null $filesystem
      */
-    public function setFilesystem(FilesystemInterface $filesystem = null): void
+    public function setFilesystem(?FilesystemInterface $filesystem = null): void
     {
         if (!$filesystem) {
             $filesystem = FilesystemFactory::local();

@@ -115,7 +115,7 @@ class ResponseDeclaration extends VariableDeclaration
      * @param int $cardinality A value from the Cardinality enumeration.
      * @param DefaultValue $defaultValue A DefaultValue object.
      */
-    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, DefaultValue $defaultValue = null)
+    public function __construct($identifier, $baseType = -1, $cardinality = Cardinality::SINGLE, ?DefaultValue $defaultValue = null)
     {
         parent::__construct($identifier, $baseType, $cardinality, $defaultValue);
     }
@@ -125,7 +125,7 @@ class ResponseDeclaration extends VariableDeclaration
      *
      * @param CorrectResponse $correctResponse A CorrectResponse object or null.
      */
-    public function setCorrectResponse(CorrectResponse $correctResponse = null): void
+    public function setCorrectResponse(?CorrectResponse $correctResponse = null): void
     {
         $this->correctResponse = $correctResponse;
     }
@@ -145,7 +145,7 @@ class ResponseDeclaration extends VariableDeclaration
      *
      * @param Mapping $mapping A Mapping object or null if no mapping is specified.
      */
-    public function setMapping(Mapping $mapping = null): void
+    public function setMapping(?Mapping $mapping = null): void
     {
         $this->mapping = $mapping;
     }
@@ -165,7 +165,7 @@ class ResponseDeclaration extends VariableDeclaration
      *
      * @param AreaMapping $areaMapping An AreaMapping object or null if no area mapping was specified.
      */
-    public function setAreaMapping(AreaMapping $areaMapping = null): void
+    public function setAreaMapping(?AreaMapping $areaMapping = null): void
     {
         $this->areaMapping = $areaMapping;
     }

@@ -46,7 +46,7 @@ class MathRenderer extends ExternalQtiComponentRenderer
      * @param AbstractMarkupRenderingEngine $renderingEngine
      * @param bool $namespaceOutput Whether to embed the resulting output into the MathML namespace.
      */
-    public function __construct(AbstractMarkupRenderingEngine $renderingEngine = null, $namespaceOutput = true)
+    public function __construct(?AbstractMarkupRenderingEngine $renderingEngine = null, $namespaceOutput = true)
     {
         parent::__construct($renderingEngine);
         $this->setNamespaceOutput($namespaceOutput);

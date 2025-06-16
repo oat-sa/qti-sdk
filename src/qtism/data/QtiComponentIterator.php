@@ -144,7 +144,7 @@ class QtiComponentIterator implements Iterator
     /**
      * @param QtiComponent|null $currentContainer
      */
-    protected function setCurrentContainer(QtiComponent $currentContainer = null): void
+    protected function setCurrentContainer(?QtiComponent $currentContainer = null): void
     {
         $this->currentContainer = $currentContainer;
     }
@@ -173,7 +173,7 @@ class QtiComponentIterator implements Iterator
      *
      * @param QtiComponent $currentComponent
      */
-    protected function setCurrentComponent(QtiComponent $currentComponent = null): void
+    protected function setCurrentComponent(?QtiComponent $currentComponent = null): void
     {
         $this->currentComponent = $currentComponent;
     }

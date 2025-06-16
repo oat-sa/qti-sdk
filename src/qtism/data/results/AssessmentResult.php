@@ -75,7 +75,7 @@ class AssessmentResult extends QtiComponent
      * @param TestResult|null $testResult
      * @param ItemResultCollection|null $itemResults
      */
-    public function __construct(Context $context, TestResult $testResult = null, ItemResultCollection $itemResults = null)
+    public function __construct(Context $context, ?TestResult $testResult = null, ?ItemResultCollection $itemResults = null)
     {
         $this->setContext($context);
         $this->setTestResult($testResult);
@@ -154,7 +154,7 @@ class AssessmentResult extends QtiComponent
      * @param TestResult $testResult
      * @return $this
      */
-    public function setTestResult(TestResult $testResult = null)
+    public function setTestResult(?TestResult $testResult = null)
     {
         $this->testResult = $testResult;
         return $this;
@@ -186,7 +186,7 @@ class AssessmentResult extends QtiComponent
      * @param ItemResultCollection|null $itemResults
      * @return $this
      */
-    public function setItemResults(ItemResultCollection $itemResults = null)
+    public function setItemResults(?ItemResultCollection $itemResults = null)
     {
         $this->itemResults = $itemResults;
         return $this;

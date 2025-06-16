@@ -159,7 +159,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param Caption $caption A Caption object or null.
      */
-    public function setCaption(Caption $caption = null): void
+    public function setCaption(?Caption $caption = null): void
     {
         $this->caption = $caption;
     }
@@ -231,7 +231,7 @@ class Table extends BodyElement implements BlockStatic, FlowStatic
      *
      * @param Thead $thead A Thead object or null.
      */
-    public function setThead(Thead $thead = null): void
+    public function setThead(?Thead $thead = null): void
     {
         $this->thead = $thead;
     }

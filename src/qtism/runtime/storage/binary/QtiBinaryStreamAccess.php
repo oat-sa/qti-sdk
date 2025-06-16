@@ -114,7 +114,7 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     public function __construct(
         IStream $stream,
         FileManager $fileManager,
-        VariableFactoryInterface $variableFactory = null
+        ?VariableFactoryInterface $variableFactory = null
     ) {
         parent::__construct($stream);
         $this->setFileManager($fileManager);

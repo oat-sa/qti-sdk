@@ -157,7 +157,7 @@ abstract class Html5Element extends BodyElement implements QtiNamespaced
         return $value ?? $default;
     }
 
-    protected function acceptNormalizedStringOrNull($value, string $argumentName, string $default = null): string
+    protected function acceptNormalizedStringOrNull($value, string $argumentName, ?string $default = null): string
     {
         if ($value === null) {
             return $default;
@@ -309,7 +309,7 @@ abstract class Html5Element extends BodyElement implements QtiNamespaced
      * @return int
      * @throws InvalidArgumentException If $value is not null, 0 or a positive integer.
      */
-    public function acceptNonNegativeIntegerOrNull($value, string $argumentName, int $default = null): int
+    public function acceptNonNegativeIntegerOrNull($value, string $argumentName, ?int $default = null): int
     {
         if ($value !== null && (!is_int($value) || $value < 0)) {
             $given = is_int($value)

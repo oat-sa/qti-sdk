@@ -119,7 +119,7 @@ class PositionObjectInteraction extends Interaction
      *
      * @param QtiPoint $centerPoint A Point object or null.
      */
-    public function setCenterPoint(QtiPoint $centerPoint = null): void
+    public function setCenterPoint(?QtiPoint $centerPoint = null): void
     {
         $this->centerPoint = $centerPoint;
     }

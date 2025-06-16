@@ -87,7 +87,7 @@ class BeanException extends Exception
      * @param int $code An error code from the BeanException class constants.
      * @param Exception $previous An optional previous exception.
      */
-    public function __construct($message, $code = 0, Exception $previous = null)
+    public function __construct($message, $code = 0, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

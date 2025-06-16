@@ -538,7 +538,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param TemplateProcessing $templateProcessing A TemplateProcessing object or null.
      */
-    public function setTemplateProcessing(TemplateProcessing $templateProcessing = null): void
+    public function setTemplateProcessing(?TemplateProcessing $templateProcessing = null): void
     {
         $this->templateProcessing = $templateProcessing;
     }
@@ -589,7 +589,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param ItemBody $itemBody An ItemBody object or the NULL value to state that the item has no content.
      */
-    public function setItemBody(ItemBody $itemBody = null): void
+    public function setItemBody(?ItemBody $itemBody = null): void
     {
         $this->itemBody = $itemBody;
     }
@@ -629,7 +629,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      *
      * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
      */
-    public function setResponseProcessing(ResponseProcessing $responseProcessing = null): void
+    public function setResponseProcessing(?ResponseProcessing $responseProcessing = null): void
     {
         $this->responseProcessing = $responseProcessing;
     }
