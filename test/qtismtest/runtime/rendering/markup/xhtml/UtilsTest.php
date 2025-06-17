@@ -42,6 +42,18 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $choice->setAttribute('class', 'qti-simpleChoice');
         $node->appendChild($choice);
 
+        $choice = $dom->createElement('div');
+        $choice->setAttribute('fixed', 'true');
+        $choice->setAttribute('id', 'choice4');
+        $choice->setAttribute('class', 'qti-simpleChoice');
+        $node->appendChild($choice);
+
+        $choice = $dom->createElement('div');
+        $choice->setAttribute('fixed', 'false');
+        $choice->setAttribute('id', 'choice5');
+        $choice->setAttribute('class', 'qti-simpleChoice');
+        $node->appendChild($choice);
+
         // In memory model creation ...
         $shufflables = new ShufflableCollection();
 
@@ -60,13 +72,49 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $choice->setId('choice3');
         $shufflables[] = $choice;
 
+        $choice = new SimpleChoice('choice4');
+        $choice->setFixed(true);
+        $choice->setId('choice4');
+        $shufflables[] = $choice;
+
+        $choice = new SimpleChoice('choice5');
+        $choice->setFixed(false);
+        $choice->setId('choice5');
+        $shufflables[] = $choice;
+
         Utils::shuffle($node, $shufflables);
 
-        // Let's check if 'choice2' is still in place...
-        $this::assertEquals('choice2', $node->getElementsByTagName('div')->item(1)->getAttribute('id'));
+        // Let's check if fixed 'choice2' and 'choice4' are still in place...
+        $this::assertEquals(
+            'choice2',
+            $node->getElementsByTagName('div')->item(1)->getAttribute('id')
+        );
+        $this::assertEquals(
+            'choice4',
+            $node->getElementsByTagName('div')->item(3)->getAttribute('id')
+        );
+
+        // Check shuffled
         $node0Id = $node->getElementsByTagName('div')->item(0)->getAttribute('id');
-        $node1Id = $node->getElementsByTagName('div')->item(2)->getAttribute('id');
-        $this::assertTrue($node0Id === 'choice1' && $node1Id === 'choice3' || $node0Id === 'choice3' && $node1Id === 'choice1');
+        $node2Id = $node->getElementsByTagName('div')->item(2)->getAttribute('id');
+        $node4Id = $node->getElementsByTagName('div')->item(4)->getAttribute('id');
+        $shuffled = ['choice1', 'choice3', 'choice5'];
+        $place0 = array_search($node0Id, $shuffled);
+        $place2 = array_search($node2Id, $shuffled);
+        $place4 = array_search($node4Id, $shuffled);
+
+        // None of them lost
+        $this::assertFalse(
+            $place0 === false || $place2 === false || $place4 === false
+        );
+        // None of them repeated
+        $this::assertFalse(
+            $place0 == $place2 || $place0 == $place4 || $place2 == $place4
+        );
+        // None fixed duplicates
+        $this::assertEquals(0, count(array_intersect(['choice2', 'choice4'], [$node0Id, $node2Id, $node4Id])));
+        // Overall still the same amount of choices
+        $this::assertEquals(5, $node->getElementsByTagName('div')->count());
     }
 
     public function testShuffleWithStatements(): void

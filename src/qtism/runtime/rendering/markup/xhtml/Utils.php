@@ -71,52 +71,60 @@ class Utils
             }
         }
 
-        // Swap two elements together N times where N is the number of shufflable components.
-        $count = count($shufflableIndexes);
-        $max = $count - 1;
-        for ($i = 0; $i < $count; $i++) {
-            $r1 = mt_rand(0, $max);
-            $r2 = mt_rand(0, $max);
+        // Swap elements to place them in shuffled order
+        shuffle($shufflableIndexes);
+        $shufflableIndexesKey = 0;
+        foreach ($elements as $elementIndex => $element) {
+            $newIndex = $shufflableIndexes[$shufflableIndexesKey];
+            if (
+                !in_array($elementIndex, $shufflableIndexes)
+                || $elementIndex == $newIndex
+            ) {
+                // skip: fixed elements || already swapped || already in place
+                continue;
+            }
+            $elementToSwap = $elements[$newIndex];
 
-            if ($r1 !== $r2) {
-                // Do only if swapping is 'useful'...
-                $placeholder1 = $node->ownerDocument->createElement('placeholder1');
-                $placeholder2 = $node->ownerDocument->createElement('placeholder2');
+            // remove to not swap back
+            unset($shufflableIndexes[$shufflableIndexesKey]);
+            $shufflableIndexesKey++;
 
-                $statements1 = self::extractStatements($elements[$shufflableIndexes[$r1]]);
-                $statements2 = self::extractStatements($elements[$shufflableIndexes[$r2]]);
+            $placeholder1 = $node->ownerDocument->createElement('placeholder1');
+            $placeholder2 = $node->ownerDocument->createElement('placeholder2');
 
-                $node->replaceChild($placeholder1, $elements[$shufflableIndexes[$r1]]);
-                $node->replaceChild($placeholder2, $elements[$shufflableIndexes[$r2]]);
+            $statements1 = self::extractStatements($element);
+            $statements2 = self::extractStatements($elementToSwap);
 
-                $placeholder1 = $node->replaceChild($elements[$shufflableIndexes[$r2]], $placeholder1);
-                $placeholder2 = $node->replaceChild($elements[$shufflableIndexes[$r1]], $placeholder2);
+            $node->replaceChild($placeholder1, $element);
+            $node->replaceChild($placeholder2, $elementToSwap);
 
-                if (empty($statements1) === false && empty($statements2) === false) {
-                    for ($i = 0; $i < 2; $i++) {
-                        $node->removeChild($statements1[$i]);
-                        $node->replaceChild($statements1[$i], $statements2[$i]);
-                    }
+            $placeholder1 = $node->replaceChild($elementToSwap, $placeholder1);
+            $placeholder2 = $node->replaceChild($element, $placeholder2);
 
-                    $node->insertBefore($statements2[0], $elements[$shufflableIndexes[$r2]]);
-                    $elements[$shufflableIndexes[$r2]]->parentNode->insertBefore($statements2[1], $elements[$shufflableIndexes[$r2]]->nextSibling);
-                } elseif (empty($statements1) === false && empty($statements2)) {
-                    $node->removeChild($statements1[0]);
-                    $node->removeChild($statements1[1]);
-
-                    $node->insertBefore($statements1[0], $elements[$shufflableIndexes[$r1]]);
-                    $elements[$shufflableIndexes[$r1]]->parentNode->insertBefore($statements1[1], $elements[$shufflableIndexes[$r1]]->nextSibling);
-                } elseif (empty($statements2) === false && empty($statements1)) {
-                    $node->removeChild($statements2[0]);
-                    $node->removeChild($statements2[1]);
-
-                    $node->insertBefore($statements2[0], $elements[$shufflableIndexes[$r2]]);
-                    $elements[$shufflableIndexes[$r2]]->parentNode->insertBefore($statements2[1], $elements[$shufflableIndexes[$r2]]->nextSibling);
+            if (empty($statements1) === false && empty($statements2) === false) {
+                for ($i = 0; $i < 2; $i++) {
+                    $node->removeChild($statements1[$i]);
+                    $node->replaceChild($statements1[$i], $statements2[$i]);
                 }
 
-                unset($placeholder1);
-                unset($placeholder2);
+                $node->insertBefore($statements2[0], $elementToSwap);
+                $elementToSwap->parentNode->insertBefore($statements2[1], $elementToSwap->nextSibling);
+            } elseif (empty($statements1) === false && empty($statements2)) {
+                $node->removeChild($statements1[0]);
+                $node->removeChild($statements1[1]);
+
+                $node->insertBefore($statements1[0], $element);
+                $element->parentNode->insertBefore($statements1[1], $element->nextSibling);
+            } elseif (empty($statements2) === false && empty($statements1)) {
+                $node->removeChild($statements2[0]);
+                $node->removeChild($statements2[1]);
+
+                $node->insertBefore($statements2[0], $elementToSwap);
+                $elementToSwap->parentNode->insertBefore($statements2[1], $elementToSwap->nextSibling);
             }
+
+            unset($placeholder1);
+            unset($placeholder2);
         }
     }
 
