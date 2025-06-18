@@ -78,7 +78,7 @@ class Utils
             $newIndex = $shufflableIndexes[$shufflableIndexesKey];
             if (
                 !in_array($elementIndex, $shufflableIndexes)
-                || $elementIndex == $newIndex
+                || $elementIndex === $newIndex
             ) {
                 // skip: fixed elements || already swapped || already in place
                 continue;
