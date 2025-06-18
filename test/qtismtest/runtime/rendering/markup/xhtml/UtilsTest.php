@@ -54,6 +54,12 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $choice->setAttribute('class', 'qti-simpleChoice');
         $node->appendChild($choice);
 
+        $choice = $dom->createElement('div');
+        $choice->setAttribute('fixed', 'false');
+        $choice->setAttribute('id', 'choice6');
+        $choice->setAttribute('class', 'qti-simpleChoice');
+        $node->appendChild($choice);
+
         // In memory model creation ...
         $shufflables = new ShufflableCollection();
 
@@ -82,6 +88,11 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $choice->setId('choice5');
         $shufflables[] = $choice;
 
+        $choice = new SimpleChoice('choice6');
+        $choice->setFixed(false);
+        $choice->setId('choice6');
+        $shufflables[] = $choice;
+
         Utils::shuffle($node, $shufflables);
 
         // Let's check if fixed 'choice2' and 'choice4' are still in place...
@@ -98,23 +109,26 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $node0Id = $node->getElementsByTagName('div')->item(0)->getAttribute('id');
         $node2Id = $node->getElementsByTagName('div')->item(2)->getAttribute('id');
         $node4Id = $node->getElementsByTagName('div')->item(4)->getAttribute('id');
-        $shuffled = ['choice1', 'choice3', 'choice5'];
+        $node5Id = $node->getElementsByTagName('div')->item(5)->getAttribute('id');
+        $shuffled = ['choice1', 'choice3', 'choice5', 'choice6'];
         $place0 = array_search($node0Id, $shuffled);
         $place2 = array_search($node2Id, $shuffled);
         $place4 = array_search($node4Id, $shuffled);
+        $place5 = array_search($node5Id, $shuffled);
 
         // None of them lost
         $this::assertFalse(
-            $place0 === false || $place2 === false || $place4 === false
+            $place0 === false || $place2 === false || $place4 === false || $place5 === false
         );
         // None of them repeated
         $this::assertFalse(
-            $place0 == $place2 || $place0 == $place4 || $place2 == $place4
+            $place0 == $place2 || $place0 == $place4 || $place2 == $place4 ||  $place4 == $place5
+            || $place5 === $place0 || $place2 === $place5
         );
         // None fixed duplicates
-        $this::assertEquals(0, count(array_intersect(['choice2', 'choice4'], [$node0Id, $node2Id, $node4Id])));
+        $this::assertEquals(0, count(array_intersect(['choice2', 'choice4'], [$node0Id, $node2Id, $node4Id, $node5Id])));
         // Overall still the same amount of choices
-        $this::assertEquals(5, $node->getElementsByTagName('div')->count());
+        $this::assertEquals(6, $node->getElementsByTagName('div')->count());
     }
 
     public function testShuffleWithStatements(): void
@@ -202,18 +216,17 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
 
     public function testGetSwappingMapByValuesSimpleReorder()
     {
-        $shufflableIndexes = [0, 2, 3, 4, 5];
-        $shuffledIndexes = [2, 4, 3, 0, 5];
+        $shufflableIndexes = [1, 2, 3, 4, 5];
+        $shuffledIndexes = [3, 4, 5, 1, 2];
 
-        $expectedSwappingMap = [
-            [2, 0], // Swap value 2 (at index 0) with value 0 (at index 3)
-            [4, 2]  // After previous swap: Array is [0, 4, 3, 2, 5]. Swap value 4 (at index 1) with value 2 (at index 3)
+        $expectedSwappingMap =[
+            [1, 3], // Expected 3. Current 1. Find 3 (at index 2). Swap (1,3).
+            [2, 4], // Expected 4. Current 2. Find 4 (at index 3). Swap (2,4).
+            [1, 5], // Expected 5. Current 1. Find 5 (at index 4). Swap (1,5)
+            [2, 1], // Expected 1. Current 2. Find 1 (at index 4). Swap (2,1).
         ];
 
-        $actualSwappingMap = Utils::getSwappingMapByValues($shufflableIndexes, $shuffledIndexes);
-
-        // Assert that the generated map is as expected
-        $this->assertEquals($expectedSwappingMap, $actualSwappingMap);
+        $this->assertEquals($expectedSwappingMap, Utils::getSwappingMapByValues($shuffledIndexes, $shufflableIndexes));
     }
 
     public function testGetSwappingMapByValuesAlreadyOrderedOrEmpty()
