@@ -199,4 +199,29 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
         $statements = Utils::extractStatements($div);
         $this::assertEquals([], $statements);
     }
+
+    public function testGetSwappingMapByValuesSimpleReorder()
+    {
+        $shufflableIndexes = [0, 2, 3, 4, 5];
+        $shuffledIndexes = [2, 4, 3, 0, 5];
+
+        $expectedSwappingMap = [
+            [2, 0], // Swap value 2 (at index 0) with value 0 (at index 3)
+            [4, 2]  // After previous swap: Array is [0, 4, 3, 2, 5]. Swap value 4 (at index 1) with value 2 (at index 3)
+        ];
+
+        $actualSwappingMap = Utils::getSwappingMapByValues($shufflableIndexes, $shuffledIndexes);
+
+        // Assert that the generated map is as expected
+        $this->assertEquals($expectedSwappingMap, $actualSwappingMap);
+    }
+
+    public function testGetSwappingMapByValuesAlreadyOrderedOrEmpty()
+    {
+        $shufflableIndexes = [1, 2, 3, 4, 5];
+        $shuffledIndexes = $shufflableIndexes;
+
+        $this->assertEquals([], Utils::getSwappingMapByValues($shufflableIndexes, $shuffledIndexes));
+        $this->assertEquals([], Utils::getSwappingMapByValues([], []));
+    }
 }
