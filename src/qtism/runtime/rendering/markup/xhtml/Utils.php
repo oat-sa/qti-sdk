@@ -74,6 +74,7 @@ class Utils
         // Swap elements to place them in shuffled order
         $shuffledIndexes = $shufflableIndexes;
         shuffle($shuffledIndexes);
+        // use swapping map to not touch existing DOM ordering approach
         $map = self::getSwappingMapByValues($shuffledIndexes, $shufflableIndexes);
         foreach ($map as $swapPair) {
             list($elIndex1, $elIndex2) = $swapPair;
@@ -119,6 +120,10 @@ class Utils
         }
     }
 
+    /**
+     * This returns a map several pairs of indexes that needs to be swapped between each other
+     * to order $shufflableIndexes array to the same order as $shuffledIndexes have
+     */
     public static function getSwappingMapByValues(array $shufflableIndexes, array $shuffledIndexes): array
     {
         $swappingMapByValues = [];

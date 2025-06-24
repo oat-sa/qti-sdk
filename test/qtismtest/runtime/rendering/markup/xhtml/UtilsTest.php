@@ -216,8 +216,8 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
 
     public function testGetSwappingMapByValuesSimpleReorder()
     {
-        $shufflableIndexes = [1, 2, 3, 4, 5];
-        $shuffledIndexes = [3, 4, 5, 1, 2];
+        $shuffledIndexes = [1, 2, 3, 4, 5];
+        $shufflableIndexes = [3, 4, 5, 1, 2];
 
         $expectedSwappingMap =[
             [1, 3], // Expected 3. Current 1. Find 3 (at index 2). Swap (1,3).
@@ -226,7 +226,7 @@ class RenderingMarkupXhtmlUtils extends QtiSmTestCase
             [2, 1], // Expected 1. Current 2. Find 1 (at index 4). Swap (2,1).
         ];
 
-        $this->assertEquals($expectedSwappingMap, Utils::getSwappingMapByValues($shuffledIndexes, $shufflableIndexes));
+        $this->assertEquals($expectedSwappingMap, Utils::getSwappingMapByValues($shufflableIndexes, $shuffledIndexes));
     }
 
     public function testGetSwappingMapByValuesAlreadyOrderedOrEmpty()
