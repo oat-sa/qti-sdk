@@ -74,7 +74,7 @@ class BasicOrdering extends AbstractOrdering
 
             $shuffledIndexes = $shufflingIndexes;
             shuffle($shuffledIndexes);
-            $map = \qtism\runtime\rendering\markup\xhtml\Utils::getSwappingMapByValues($shuffledIndexes, $shufflingIndexes);
+            $map = Utils::getSwappingMapByValues($shuffledIndexes, $shufflingIndexes);
             foreach ($map as $swapPair) {
                 list($elIndex1, $elIndex2) = $swapPair;
                 $selectableRoutes->swap($elIndex1, $elIndex2);
