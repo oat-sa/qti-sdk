@@ -23,6 +23,8 @@
 
 namespace qtism\runtime\tests;
 
+use qtism\runtime\rendering\markup\xhtml\Utils;
+
 /**
  * A basic implementation of QTI ordering.
  */
@@ -70,17 +72,12 @@ class BasicOrdering extends AbstractOrdering
                 }
             }
 
-            $shufflingIndexesCount = count($shufflingIndexes);
-
-            $shufflingMaxIndex = $shufflingIndexesCount - 1;
-
-            // Let's swap 2 routes together N times where N is the amount of 'shufflable' routes.
-            // (A 'shufflable' route is a route wich is not 'fixed'.
-            for ($i = 0; $i < $shufflingIndexesCount; $i++) {
-                $swapIndex1 = $shufflingIndexes[mt_rand(0, $shufflingMaxIndex)];
-                $swapIndex2 = $shufflingIndexes[mt_rand(0, $shufflingMaxIndex)];
-
-                $selectableRoutes->swap($swapIndex1, $swapIndex2);
+            $shuffledIndexes = shuffle($shufflingIndexes);
+            shuffle($shuffledIndexes);
+            $map = Utils::getSwappingMapByValues($shuffledIndexes, $shufflingIndexes);
+            foreach ($map as $swapPair) {
+                list($elIndex1, $elIndex2) = $swapPair;
+                $selectableRoutes->swap($elIndex1, $elIndex2);
             }
 
             return $selectableRoutes;
