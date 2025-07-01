@@ -72,7 +72,7 @@ class BasicOrdering extends AbstractOrdering
                 }
             }
 
-            $shuffledIndexes = shuffle($shufflingIndexes);
+            $shuffledIndexes = $shufflingIndexes;
             shuffle($shuffledIndexes);
             $map = Utils::getSwappingMapByValues($shuffledIndexes, $shufflingIndexes);
             foreach ($map as $swapPair) {
