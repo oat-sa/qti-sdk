@@ -67,28 +67,59 @@ class Utils
             }
         }
 
-        // Swap two elements together N times where N is the number of shufflable components.
-        $count = count($shufflableIndexes);
-        $max = $count - 1;
-        for ($i = 0; $i < $count; $i++) {
-            $r1 = mt_rand(0, $max);
-            $r2 = mt_rand(0, $max);
+        // Swap elements to place them in shuffled order
+        $shuffledIndexes = $shufflableIndexes;
+        shuffle($shuffledIndexes);
+        $map = self::getSwappingMapByValues($shuffledIndexes, $shufflableIndexes);
+        foreach ($map as $swapPair) {
+            list($elIndex1, $elIndex2) = $swapPair;
+            $element = $elements[$elIndex1];
+            $elementToSwap = $elements[$elIndex2];
 
-            if ($r1 !== $r2) {
-                // Do only if swapping is 'useful'...
-                $placeholder1 = $node->ownerDocument->createElement('placeholder1');
-                $placeholder2 = $node->ownerDocument->createElement('placeholder2');
+            $placeholder1 = $node->ownerDocument->createElement('placeholder1');
+            $placeholder2 = $node->ownerDocument->createElement('placeholder2');
 
-                $node->replaceChild($placeholder1, $elements[$shufflableIndexes[$r1]]);
-                $node->replaceChild($placeholder2, $elements[$shufflableIndexes[$r2]]);
+            $node->replaceChild($placeholder1, $element);
+            $node->replaceChild($placeholder2, $elementToSwap);
 
-                $placeholder1 = $node->replaceChild($elements[$shufflableIndexes[$r2]], $placeholder1);
-                $placeholder2 = $node->replaceChild($elements[$shufflableIndexes[$r1]], $placeholder2);
+            $placeholder1 = $node->replaceChild($elementToSwap, $placeholder1);
+            $placeholder2 = $node->replaceChild($element, $placeholder2);
+            unset($placeholder1);
+            unset($placeholder2);
+        }
+    }
 
-                unset($placeholder1);
-                unset($placeholder2);
+    public static function getSwappingMapByValues(array $shufflableIndexes, array $shuffledIndexes): array
+    {
+        $swappingMapByValues = [];
+        $tempShuffled = $shuffledIndexes; // Create a temporary copy to modify
+
+        // Create a reverse lookup for the temporary shuffled array: value => current_index
+        $valueToIndexMap = array_flip($tempShuffled);
+
+        for ($i = 0; $i < count($shufflableIndexes); $i++) {
+            $expectedValue = $shufflableIndexes[$i]; // The value that should be at this position
+            $currentValue = $tempShuffled[$i];     // The value currently at this position
+
+            // If the current value is not the expected value, a swap is needed
+            if ($currentValue !== $expectedValue) {
+                // Find the current index of the expected value
+                $indexOfExpectedValue = $valueToIndexMap[$expectedValue];
+
+                // Record the swap pair: [value_to_move_out, value_to_move_in]
+                $swappingMapByValues[] = [$currentValue, $expectedValue];
+
+                // --- Perform the actual swap in the temporary array (using indexes) ---
+                // This is where the value-based map gets translated back to index operations
+                list($tempShuffled[$i], $tempShuffled[$indexOfExpectedValue]) = [$tempShuffled[$indexOfExpectedValue], $tempShuffled[$i]];
+
+                // --- Update the valueToIndexMap because values have moved ---
+                $valueToIndexMap[$currentValue] = $indexOfExpectedValue; // The 'currentValue' moved to the old spot of 'expectedValue'
+                $valueToIndexMap[$expectedValue] = $i;                 // The 'expectedValue' moved to the current spot
             }
         }
+
+        return $swappingMapByValues;
     }
 
     /**
