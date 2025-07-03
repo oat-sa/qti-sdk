@@ -1822,22 +1822,15 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER)]));
 
         $session->beginAttempt();
-        // I should not be able to skip by providing the 'ChoiceA' value for RESPONSE. Indeed, it's the RESPONSE's default value...
-        try {
-            $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
-        } catch (AssessmentTestSessionException $e) {
-            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
-            $this::assertEquals("The Item Session 'Q02.0' is not allowed to be skipped.", $e->getMessage());
-
-            // The session should not have changed.
-            $this::assertNull($session['Q02.RESPONSE']);
-            $this::assertEquals(2, $session['Q02.numAttempts']->getValue());
-        }
+        // I should be able to skip by providing the 'ChoiceA' value for RESPONSE, which is the RESPONSE's default value...
+        $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
+        $this::assertEquals('ChoiceA', $session['Q02.RESPONSE']->getValue());
 
         // I should be able to end the attempt by providing a value different from the default value for the RESPONSE variable.
+        $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
         $this::assertEquals('ChoiceB', $session['Q02.RESPONSE']->getValue());
-        $this::assertEquals(2, $session['Q02.numAttempts']->getValue());
+        $this::assertEquals(3, $session['Q02.numAttempts']->getValue());
         $this::assertEquals('completed', $session['Q02.completionStatus']->getValue());
         $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getAssessmentItemSessions('Q02')[0]->getState());
 

@@ -285,17 +285,12 @@ class AssessmentItemSessionTest extends QtiSmAssessmentItemTestCase
             $this::assertEquals('ChoiceA', $itemSession['RESPONSE']->getValue());
         }
 
-        // Test with a value equal to default value...
-        try {
-            $itemSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
-            $this::assertTrue(false);
-        } catch (AssessmentItemSessionException $e) {
-            $this::assertEquals("Skipping item 'default_value' is not allowed.", $e->getMessage());
-            $this::assertEquals(AssessmentItemSessionException::SKIPPING_FORBIDDEN, $e->getCode());
-            $this::assertEquals('ChoiceA', $itemSession['RESPONSE']->getValue());
-        }
+        // Test ending the attempt with a value equal to default value
+        $itemSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
+        $this::assertEquals('ChoiceA', $itemSession['RESPONSE']->getValue());
 
-        // Finally, with a value different than default value, we can end the attempt.
+        // With a value different than default value, we can also end the attempt.
+        $itemSession->beginAttempt();
         $itemSession->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
         $this::assertEquals('ChoiceB', $itemSession['RESPONSE']->getValue());
 
