@@ -26,6 +26,8 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\AssociationValidityConstraint;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -157,6 +159,27 @@ class GraphicGapMatchInteraction extends GraphicInteraction
                 $this->getAssociableHotspots()->getArrayCopy()
             )
         );
+    }
+
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
+    {
+        $responseValidityConstraint = new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            0,
+            0
+        );
+
+        foreach ($this->getComponentsByClassName(['gapImg', 'gapText']) as $gapChoice) {
+            $responseValidityConstraint->addAssociationValidityConstraint(
+                new AssociationValidityConstraint(
+                    $gapChoice->getIdentifier(),
+                    $gapChoice->getMatchMin(),
+                    $gapChoice->getMatchMax()
+                )
+            );
+        }
+
+        return $responseValidityConstraint;
     }
 
     /**

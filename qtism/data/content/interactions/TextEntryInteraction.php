@@ -26,6 +26,7 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -317,6 +318,11 @@ class TextEntryInteraction extends InlineInteraction implements StringInteractio
     public function getComponents()
     {
         return new QtiComponentCollection();
+    }
+
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
+    {
+        return new ResponseValidityConstraint($this->getResponseIdentifier(), 0, 1, $this->getPatternMask());
     }
 
     /**

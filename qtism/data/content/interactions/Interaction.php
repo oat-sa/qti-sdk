@@ -26,6 +26,7 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\content\BodyElement;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -96,6 +97,20 @@ abstract class Interaction extends BodyElement
             $msg = "The 'responseIdentifier' argument must be a valid QTI identifier.";
             throw new InvalidArgumentException($msg);
         }
+    }
+
+
+    /**
+     * Get the validaty constraint rules to be applied on the response bound to the interaction.
+     *
+     * Subclasses of Interaction that claim to provide response validity constraints must override
+     * this method in order to return an appropriately instantiated ResponseValidityConstraint object.
+     *
+     * @return ResponseValidityConstraint|null A ResponseValidityConstraint object or a null value if there is not response validity constraint bound to the interaction's response variable.
+     */
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
+    {
+        return null;
     }
 
     /**

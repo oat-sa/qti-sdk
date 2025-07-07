@@ -26,6 +26,7 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\data\content\BlockStaticCollection;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -191,6 +192,15 @@ class HottextInteraction extends BlockInteraction
     public function getComponents()
     {
         return $this->getContent();
+    }
+
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
+    {
+        return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            $this->getMinChoices(),
+            $this->getMaxChoices()
+        );
     }
 
     /**

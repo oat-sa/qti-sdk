@@ -25,6 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -247,6 +248,15 @@ class ChoiceInteraction extends BlockInteraction
     public function getOrientation()
     {
         return $this->orientation;
+    }
+
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
+    {
+        return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            $this->getMinChoices(),
+            $this->getMaxChoices()
+        );
     }
 
     /**

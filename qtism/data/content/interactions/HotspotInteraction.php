@@ -26,6 +26,7 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -193,6 +194,15 @@ class HotspotInteraction extends GraphicInteraction
         $array[] = $this->getObject();
 
         return new QtiComponentCollection(array_merge($array, $this->getHotspotChoices()->getArrayCopy()));
+    }
+
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
+    {
+        return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            $this->getMinChoices(),
+            $this->getMaxChoices()
+        );
     }
 
     /**

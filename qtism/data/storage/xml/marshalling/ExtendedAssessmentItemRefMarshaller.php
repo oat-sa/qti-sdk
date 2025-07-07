@@ -28,6 +28,7 @@ use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\QtiComponent;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
+use qtism\data\state\ResponseValidityConstraintCollection;
 
 /**
  * A Marshaller aiming at marshalling/unmarshalling ExtendedAssessmentItemRefs.
@@ -119,6 +120,15 @@ class ExtendedAssessmentItemRefMarshaller extends AssessmentItemRefMarshaller
             $marshaller = $this->getMarshallerFactory()->createMarshaller($responseProcessingElts[0]);
             $compactAssessmentItemRef->setResponseProcessing($marshaller->unmarshall($responseProcessingElts[0]));
         }
+
+        // ResponseValidityConstraints.
+        $responseValidityConstraintElts = $this->getChildElementsByTagName($element, 'responseValidityConstraint');
+        $responseValidityConstraints = new ResponseValidityConstraintCollection();
+        foreach ($responseValidityConstraintElts as $responseValidityConstraintElt) {
+            $marshaller = $this->getMarshallerFactory()->createMarshaller($responseValidityConstraintElt);
+            $responseValidityConstraints[] = $marshaller->unmarshall($responseValidityConstraintElt);
+        }
+        $compactAssessmentItemRef->setResponseValidityConstraints($responseValidityConstraints);
 
         if (($adaptive = $this->getDOMElementAttributeAs($element, 'adaptive', 'boolean')) !== null) {
             $compactAssessmentItemRef->setAdaptive($adaptive);

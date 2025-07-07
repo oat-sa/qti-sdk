@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use qtism\data\content\interactions\ChoiceInteraction;
 use qtism\data\content\interactions\SimpleChoice;
 use qtism\data\content\interactions\SimpleChoiceCollection;
+use qtism\data\state\ResponseValidityConstraint;
 use qtismtest\QtiSmTestCase;
 
 /**
@@ -55,5 +56,11 @@ class ChoiceInteractionTest extends QtiSmTestCase
 
         $choiceInteraction = new ChoiceInteraction('RESPONSE', new SimpleChoiceCollection([new SimpleChoice('identifier')]));
         $choiceInteraction->setOrientation(true);
+    }
+
+    public function testGetResponseValidityConstraint(): void
+    {
+        $choiceInteraction = new ChoiceInteraction('RESPONSE', new SimpleChoiceCollection([new SimpleChoice('identifier')]));
+        $this->assertInstanceOf(ResponseValidityConstraint::class, $choiceInteraction->getResponseValidityConstraint());
     }
 }

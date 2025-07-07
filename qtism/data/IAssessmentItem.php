@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2024 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -27,6 +27,7 @@ use InvalidArgumentException;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
+use qtism\data\state\ResponseValidityConstraintCollection;
 
 /**
  * Any clas that claims to represent An AssessmentItem must implement this interface.
@@ -104,4 +105,14 @@ interface IAssessmentItem extends QtiIdentifiable
      * @param ResponseProcessing $responseProcessing A ResponseProcessing object or null if no associated response processing.
      */
     public function setResponseProcessing(ResponseProcessing $responseProcessing = null);
+
+    /**
+     * Get the ResponseValidityConstraintCollection object.
+     *
+     * The ResponseValidityConstraint objects returned describes how the responses provided to make
+     * an attempt on the item should be validated.
+     *
+     * @return ResponseValidityConstraintCollection
+     */
+    public function getResponseValidityConstraints();
 }
