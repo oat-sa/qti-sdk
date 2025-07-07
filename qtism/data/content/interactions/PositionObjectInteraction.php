@@ -27,6 +27,7 @@ use InvalidArgumentException;
 use qtism\common\datatypes\QtiPoint;
 use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -239,6 +240,15 @@ class PositionObjectInteraction extends Interaction
     public function getComponents()
     {
         return new QtiComponentCollection([$this->getObject()]);
+    }
+
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
+    {
+        return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            $this->getMinChoices(),
+            $this->getMaxChoices()
+        );
     }
 
     /**

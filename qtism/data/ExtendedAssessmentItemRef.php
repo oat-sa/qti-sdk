@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2024 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -30,6 +30,8 @@ use qtism\data\state\OutcomeDeclaration;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclaration;
 use qtism\data\state\ResponseDeclarationCollection;
+use qtism\data\state\ResponseValidityConstraint;
+use qtism\data\state\ResponseValidityConstraintCollection;
 
 /**
  * The ExtendedAssessmentItemRef class is an extended representation of the QTI assessmentItemRef class.
@@ -80,6 +82,12 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
     private $timeDependent = false;
 
     /**
+     * @var ResponseValidityConstraintCollection
+     * @qtism-bean-property
+     */
+    private $responseValidityConstraints;
+
+    /**
      * Create a new instance of CompactAssessmentItem
      *
      * @param string $identifier A QTI Identifier.
@@ -93,6 +101,7 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 
         $this->setOutcomeDeclarations(new OutcomeDeclarationCollection());
         $this->setResponseDeclarations(new ResponseDeclarationCollection());
+        $this->setResponseValidityConstraints(new ResponseValidityConstraintCollection());
     }
 
     /**
@@ -298,4 +307,38 @@ class ExtendedAssessmentItemRef extends AssessmentItemRef implements IAssessment
 
         return new QtiComponentCollection($components);
     }
+
+    /**
+     * Get the response validity constraints related to the item content.
+     */
+    public function getResponseValidityConstraints()
+    {
+        return $this->responseValidityConstraints;
+    }
+
+    /**
+     * Add a response validity constraint related to item content.
+     */
+    public function addResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint): void
+    {
+        $this->getResponseValidityConstraints()->attach($responseValidityConstraint);
+    }
+
+    /**
+     * Remove a response validity constraint related to item content.
+     */
+    public function removeResponseValidityConstraint(ResponseValidityConstraint $responseValidityConstraint): void
+    {
+        $this->getResponseValidityConstraints()->detach($responseValidityConstraint);
+    }
+
+    /**
+     * Set the response validity constraints related to the item content.
+     */
+    public function setResponseValidityConstraints(ResponseValidityConstraintCollection $responseValidityConstraints): void
+    {
+        $this->responseValidityConstraints = $responseValidityConstraints;
+    }
+
+
 }

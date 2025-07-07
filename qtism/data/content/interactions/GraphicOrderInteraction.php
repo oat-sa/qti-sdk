@@ -26,6 +26,7 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -225,6 +226,15 @@ class GraphicOrderInteraction extends GraphicInteraction
     public function getComponents()
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getHotspotChoices()->getArrayCopy()));
+    }
+
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
+    {
+        return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            ($this->hasMinChoices() === true) ? $this->getMinChoices() : count($this->getHotspotChoices()),
+            $this->hasMinChoices() && $this->hasMaxChoices() ? $this->getMaxChoices() : 0
+        );
     }
 
     /**

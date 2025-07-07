@@ -26,6 +26,8 @@ namespace qtism\data\content\interactions;
 use InvalidArgumentException;
 use qtism\data\content\xhtml\ObjectElement;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\AssociationValidityConstraint;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -191,6 +193,27 @@ class GraphicAssociateInteraction extends GraphicInteraction
     public function getComponents()
     {
         return new QtiComponentCollection(array_merge([$this->getObject()], $this->getAssociableHotspots()->getArrayCopy()));
+    }
+
+    public function getResponseValidityConstraint(): ?ResponseValidityConstraint
+    {
+        $responseValidityConstraint = new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            $this->getMinAssociations(),
+            $this->getMaxAssociations()
+        );
+
+        foreach ($this->getComponentsByClassName('associableHotspot') as $associableHotspot) {
+            $responseValidityConstraint->addAssociationValidityConstraint(
+                new AssociationValidityConstraint(
+                    $associableHotspot->getIdentifier(),
+                    $associableHotspot->getMatchMin(),
+                    $associableHotspot->getMatchMax()
+                )
+            );
+        }
+
+        return $responseValidityConstraint;
     }
 
     /**

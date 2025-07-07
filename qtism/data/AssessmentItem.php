@@ -32,6 +32,7 @@ use qtism\data\processing\ResponseProcessing;
 use qtism\data\processing\TemplateProcessing;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\state\ResponseDeclarationCollection;
+use qtism\data\state\ResponseValidityConstraintCollection;
 use qtism\data\state\TemplateDeclarationCollection;
 use SplObjectStorage;
 
@@ -42,6 +43,24 @@ use SplObjectStorage;
 class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmentItem
 {
     use QtiIdentifiableTrait;
+
+    private const INTERACTION_CLASS_NAMES = [
+        'choiceInteraction',
+        'orderInteraction',
+        'associateInteraction',
+        'matchInteraction',
+        'inlineChoiceInteraction',
+        'textEntryInteraction',
+        'extendedTextInteraction',
+        'hottextInteraction',
+        'hotspotInteraction',
+        'selectPointInteraction',
+        'graphicOrderInteraction',
+        'graphicAssociateInteraction',
+        'positionObjectInteraction',
+        'gapMatchInteraction',
+        'graphicGapMatchInteraction',
+    ];
 
     /**
      * From IMS QTI:
@@ -222,7 +241,7 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
      */
     public function setIdentifier($identifier)
     {
-        if (Format::isIdentifier($identifier, false)) {
+        if (Format::isNormalizedString($identifier)) {
             $this->identifier = $identifier;
             $this->notify();
         } else {
@@ -656,6 +675,16 @@ class AssessmentItem extends QtiComponent implements QtiIdentifiable, IAssessmen
     public function getModalFeedbacks()
     {
         return $this->modalFeedbacks;
+    }
+
+    public function getResponseValidityConstraints(): ResponseValidityConstraintCollection
+    {
+        $responseValidityConstraints = new ResponseValidityConstraintCollection();
+        foreach ($this->getComponentsByClassName(self::INTERACTION_CLASS_NAMES) as $component) {
+            $responseValidityConstraints[] = $component->getResponseValidityConstraint();
+        }
+
+        return $responseValidityConstraints;
     }
 
     /**

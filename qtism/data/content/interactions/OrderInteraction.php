@@ -25,6 +25,7 @@ namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
 use qtism\data\QtiComponentCollection;
+use qtism\data\state\ResponseValidityConstraint;
 
 /**
  * From IMS QTI:
@@ -299,6 +300,15 @@ class OrderInteraction extends BlockInteraction
         $parentComponents = parent::getComponents();
 
         return new QtiComponentCollection(array_merge($parentComponents->getArrayCopy(), $this->getSimpleChoices()->getArrayCopy()));
+    }
+
+    public function getResponseValidityConstraint(): ResponseValidityConstraint
+    {
+        return new ResponseValidityConstraint(
+            $this->getResponseIdentifier(),
+            ($this->hasMinChoices() === true) ? $this->getMinChoices() : count($this->getSimpleChoices()),
+            $this->hasMinChoices() && $this->hasMaxChoices() ? $this->getMaxChoices() : 0
+        );
     }
 
     /**

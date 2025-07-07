@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2024 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -156,5 +156,28 @@ abstract class QtiComponent
         }
 
         return ($collision === true) ? new QtiComponentCollection($foundComponents) : new QtiIdentifiableCollection($foundComponents);
+    }
+
+    /**
+     * Whether the component contains child components with class $classNames.
+     *
+     * @param string|array $classNames
+     * @param bool $recursive Whether to search recursively in contained QtiComponent objects.
+     * @return bool
+     */
+    public function containsComponentWithClassName($classNames, $recursive = true): bool
+    {
+        if (is_array($classNames) === false) {
+            $classNames = [$classNames];
+        }
+
+        $iterator = ($recursive === true) ? $this->getIterator($classNames) : $this->getComponents();
+        foreach ($iterator as $component) {
+            if (in_array($component->getQtiClassName(), $classNames)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
