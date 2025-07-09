@@ -341,7 +341,7 @@ class Utils
         $pattern = self::pregAddDelimiter('^' . $pattern . '$');
 
         // XSD regexp always case-sensitive (nothing to do), dot matches white-spaces (use PCRE_DOTALL).
-        $pattern .= 's';
+        $pattern .= 'su';
 
         return $pattern;
     }
