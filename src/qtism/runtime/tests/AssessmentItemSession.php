@@ -1353,7 +1353,7 @@ class AssessmentItemSession extends State
             // As per QTI Specification, the allowSkipping attribute is consistent with the numberResponded operator.
             // In other words, the item can be submitted if at least one non-default value for at least one of the
             // response variables is provided.
-            if (!$session->isResponded() && $state->containsValuesEqualToVariableDefaultOnly() === true) {
+            if (!$session->isResponded(false)) {
                 throw new AssessmentItemSessionException(
                     "Skipping item '" . $this->getAssessmentItem()->getIdentifier() . "' is not allowed.",
                     $this,
