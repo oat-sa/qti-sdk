@@ -1873,16 +1873,13 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
             $this::assertEquals(1, $session['Q03.numAttempts']->getValue());
         }
 
-        // I should not be able to skip by providing a non-null value for at least one RESPONSE (partial response).
+        // I should ΒΕ able to skip by providing a non-null value for at least one RESPONSE (partial response).
         $session->beginAttempt();
-        try {
-            $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER), new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::STRING, new QtiString('correct'))]));
-        } catch (AssessmentTestSessionException $e) {
-            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
-            $this::assertEquals("The Item Session 'Q03.0' is not allowed to be skipped.", $e->getMessage());
-            $this::assertNull($session['Q03.RESPONSE']);
-            $this::assertEquals($session['Q03.RESPONSE2']->getValue(), 'default');
-        }
+
+        $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER), new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::STRING, new QtiString('correct'))]));
+        $this::assertNull($session['Q03.RESPONSE1']);
+        $this::assertEquals($session['Q03.RESPONSE2']->getValue(), 'correct');
+
 
         $session->moveNext();
 
@@ -1942,10 +1939,12 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         // Simultaneous submission mode test part ends...
         $session->moveNext();
 
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q03')[0]->getState());
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q08')[0]->getState());
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q09')[0]->getState());
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q10')[0]->getState());
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+
     }
 
     public function testPathTracking(): void
