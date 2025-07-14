@@ -20,6 +20,12 @@ identifier="dont-validate-skipping-not-allowed-linear-individual" title="Do Not 
                 <responseValidityConstraint responseIdentifier="RESPONSE1" minConstraint="0" maxConstraint="1"/>
                 <responseValidityConstraint responseIdentifier="RESPONSE2" minConstraint="1" maxConstraint="1" patternMask="[a-z]{1,5}"/>
             </assessmentItemRef>
+            <assessmentItemRef identifier="Q04" href="./Q04.xml" timeDependent="false">
+                <responseDeclaration identifier="RESPONSE1" cardinality="single" baseType="string"/>
+                <responseDeclaration identifier="RESPONSE2" cardinality="single" baseType="string"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE1" minConstraint="0" maxConstraint="1" patternMask="[a-z]{1,5}"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE2" minConstraint="0" maxConstraint="1" patternMask="[a-z]{1,5}"/>
+            </assessmentItemRef>
         </assessmentSection>
     </testPart>
 </assessmentTest>

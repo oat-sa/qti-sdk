@@ -889,6 +889,31 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
 
 
         $testSession->moveNext();
+        $testSession->beginAttempt();
+        $testSession->endAttempt(
+            new State(
+                [
+                    new ResponseVariable(
+                        'RESPONSE1',
+                        Cardinality::SINGLE,
+                        BaseType::STRING,
+                        null
+                    ),
+                    new ResponseVariable(
+                        'RESPONSE2',
+                        Cardinality::SINGLE,
+                        BaseType::STRING,
+                        new QtiString('a123')
+                    ),
+                ]
+            )
+        );
+
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q04.RESPONSE2']->equals(new QtiString('a123')));
+        $this::assertNull($testSession['Q04.RESPONSE1']);
+
+        $testSession->moveNext();
 
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $testSession->getState());
     }
