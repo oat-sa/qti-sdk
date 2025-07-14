@@ -1830,7 +1830,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         }
 
         $session->beginAttempt();
-        // I should be able to skip by providing the 'ChoiceA' value for RESPONSE, which is the RESPONSE's default value...
+        // I should be able to end the attempt by providing the 'ChoiceA' value for RESPONSE, which is the RESPONSE's default value...
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
         $this::assertEquals('ChoiceA', $session['Q02.RESPONSE']->getValue());
 
