@@ -1056,7 +1056,7 @@ class AssessmentItemSession extends State
      *
      * @return bool
      */
-    protected function isMaxTimeReached()
+    public function isMaxTimeReached()
     {
         $reached = false;
 
