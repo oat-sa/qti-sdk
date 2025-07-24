@@ -860,35 +860,31 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             $this::assertNull($testSession['Q03.RESPONSE2']);
         }
 
-        // Q03 - By providing a null response to RESPONSE1 should throw an exception
-        try {
-            $testSession->endAttempt(
-                new State(
-                    [
-                        new ResponseVariable(
-                            'RESPONSE1',
-                            Cardinality::MULTIPLE,
-                            BaseType::IDENTIFIER,
-                            null
-                        ),
-                        new ResponseVariable(
-                            'RESPONSE2',
-                            Cardinality::SINGLE,
-                            BaseType::STRING,
-                            new QtiString('a')
-                        ),
-                    ]
-                )
-            );
-            $this->assertFalse(true, sprintf('Exception has not been thrown, %s expected', AssessmentTestSessionException::class));
-        } catch (AssessmentTestSessionException $e) {
-            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
-            $this::assertEquals("The Item Session 'Q03.0' is not allowed to be skipped.", $e->getMessage());
-            $this::assertNull($testSession['Q03.RESPONSE1']);
-            $this::assertNull($testSession['Q03.RESPONSE2']);
-        }
+        // Q03 - By providing a null response to RESPONSE1 should NOT throw an exception because partial response is allowed
+        $testSession->endAttempt(
+            new State(
+                [
+                    new ResponseVariable(
+                        'RESPONSE1',
+                        Cardinality::MULTIPLE,
+                        BaseType::IDENTIFIER,
+                        null
+                    ),
+                    new ResponseVariable(
+                        'RESPONSE2',
+                        Cardinality::SINGLE,
+                        BaseType::STRING,
+                        new QtiString('a')
+                    ),
+                ]
+            )
+        );
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q03.RESPONSE2']->equals(new QtiString('a')));
+        $this::assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER, [])));
 
 
+        // same as above
         $testSession->moveNext();
         $testSession->beginAttempt();
         $testSession->endAttempt(
