@@ -880,6 +880,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                     ]
                 )
             );
+            $this->assertFalse(true, sprintf('Exception has not been thrown, %s expected', AssessmentTestSessionException::class));
         } catch (AssessmentTestSessionException $e) {
             $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
             $this::assertEquals("The Item Session 'Q03.0' is not allowed to be skipped.", $e->getMessage());
