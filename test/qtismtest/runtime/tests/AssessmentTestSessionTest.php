@@ -1873,7 +1873,7 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
             $this::assertEquals(1, $session['Q03.numAttempts']->getValue());
         }
 
-        // I should ΒΕ able to skip by providing a non-null value for at least one RESPONSE (partial response).
+        // I should be able to skip by providing a non-null value for at least one RESPONSE (partial response).
         $session->beginAttempt();
 
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER), new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::STRING, new QtiString('correct'))]));
