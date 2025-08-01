@@ -860,7 +860,7 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
             $this::assertNull($testSession['Q03.RESPONSE2']);
         }
 
-        // Q03 - By providing a null response to RESPONSE1 but a valid, It's ok because I don't skip and responses are valid.
+        // Q03 - By providing a null response to RESPONSE1 should NOT throw an exception because partial response is allowed
         $testSession->endAttempt(
             new State(
                 [
@@ -879,10 +879,36 @@ class AssessmentTestSessionResponseValidationTest extends QtiSmAssessmentTestSes
                 ]
             )
         );
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
+        $this::assertTrue($testSession['Q03.RESPONSE2']->equals(new QtiString('a')));
+        $this::assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER, [])));
+
+
+        // same as above
+        $testSession->moveNext();
+        $testSession->beginAttempt();
+        $testSession->endAttempt(
+            new State(
+                [
+                    new ResponseVariable(
+                        'RESPONSE1',
+                        Cardinality::SINGLE,
+                        BaseType::STRING,
+                        null
+                    ),
+                    new ResponseVariable(
+                        'RESPONSE2',
+                        Cardinality::SINGLE,
+                        BaseType::STRING,
+                        new QtiString('a123')
+                    ),
+                ]
+            )
+        );
 
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $testSession->getCurrentAssessmentItemSession()->getState());
-        $this::assertTrue($testSession['Q03.RESPONSE1']->equals(new MultipleContainer(BaseType::IDENTIFIER)));
-        $this::assertTrue($testSession['Q03.RESPONSE2']->equals(new QtiString('a')));
+        $this::assertTrue($testSession['Q04.RESPONSE2']->equals(new QtiString('a123')));
+        $this::assertNull($testSession['Q04.RESPONSE1']);
 
         $testSession->moveNext();
 

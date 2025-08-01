@@ -1818,23 +1818,24 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
             $this::assertEquals(1, $session['Q02.numAttempts']->getValue());
         }
 
-        // I should be able to skip by providing a null value for RESPONSE (different from default).
-        $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER)]));
-
-        $session->beginAttempt();
-        // I should not be able to skip by providing the 'ChoiceA' value for RESPONSE. Indeed, it's the RESPONSE's default value...
+        // I should not be able to skip by providing a null value for RESPONSE (different from default).
         try {
-            $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
+            $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER)]));
         } catch (AssessmentTestSessionException $e) {
             $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
             $this::assertEquals("The Item Session 'Q02.0' is not allowed to be skipped.", $e->getMessage());
 
-            // The session should not have changed.
-            $this::assertNull($session['Q02.RESPONSE']);
-            $this::assertEquals(2, $session['Q02.numAttempts']->getValue());
+            $this::assertEquals('ChoiceA', $session['Q02.RESPONSE']->getValue());
+            $this::assertEquals(1, $session['Q02.numAttempts']->getValue());
         }
 
+        $session->beginAttempt();
+        // I should be able to end the attempt by providing the 'ChoiceA' value for RESPONSE, which is the RESPONSE's default value...
+        $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceA'))]));
+        $this::assertEquals('ChoiceA', $session['Q02.RESPONSE']->getValue());
+
         // I should be able to end the attempt by providing a value different from the default value for the RESPONSE variable.
+        $session->beginAttempt();
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER, new QtiIdentifier('ChoiceB'))]));
         $this::assertEquals('ChoiceB', $session['Q02.RESPONSE']->getValue());
         $this::assertEquals(2, $session['Q02.numAttempts']->getValue());
@@ -1862,16 +1863,23 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
             $this::assertEquals(1, $session['Q03.numAttempts']->getValue());
         }
 
-        // I should be able to skip by providing a null value for all RESPONSES (empty string is equivalent to NULL, as per QTI spec).
-        $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER), new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::STRING, new QtiString(''))]));
+        // I should not be able to skip by providing a null value for all RESPONSES (empty string is equivalent to NULL, as per QTI spec).
+        try {
+            $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER), new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::STRING, new QtiString(''))]));
+        } catch (AssessmentTestSessionException $e) {
+            $this::assertEquals(AssessmentTestSessionException::ASSESSMENT_ITEM_SKIPPING_FORBIDDEN, $e->getCode());
+            $this::assertEquals("The Item Session 'Q03.0' is not allowed to be skipped.", $e->getMessage());
+            $this::assertNull($session['Q03.RESPONSE']);
+            $this::assertEquals(1, $session['Q03.numAttempts']->getValue());
+        }
 
-        // I should be able to skip by providing a non-null value for at least one RESPONSE.
+        // I should be able to skip by providing a non-null value for at least one RESPONSE (partial response).
         $session->beginAttempt();
+
         $session->endAttempt(new State([new ResponseVariable('RESPONSE', Cardinality::SINGLE, BaseType::IDENTIFIER), new ResponseVariable('RESPONSE2', Cardinality::SINGLE, BaseType::STRING, new QtiString('correct'))]));
-        $this::assertNull($session['Q03.RESPONSE']);
-        $this::assertEquals('correct', $session['Q03.RESPONSE2']->getValue());
-        $this::assertEquals(2, $session['Q03.numAttempts']->getValue());
-        $this::assertEquals(AssessmentItemSessionState::SUSPENDED, $session->getAssessmentItemSessions('Q03')[0]->getState());
+        $this::assertNull($session['Q03.RESPONSE1']);
+        $this::assertEquals($session['Q03.RESPONSE2']->getValue(), 'correct');
+
 
         $session->moveNext();
 
@@ -1931,10 +1939,12 @@ class AssessmentTestSessionTest extends QtiSmAssessmentTestSessionTestCase
         // Simultaneous submission mode test part ends...
         $session->moveNext();
 
+        $this::assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q03')[0]->getState());
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q08')[0]->getState());
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q09')[0]->getState());
         $this::assertEquals(AssessmentItemSessionState::CLOSED, $session->getAssessmentItemSessions('Q10')[0]->getState());
         $this::assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+
     }
 
     public function testPathTracking(): void
