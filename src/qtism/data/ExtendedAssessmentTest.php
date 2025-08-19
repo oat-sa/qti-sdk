@@ -111,6 +111,9 @@ class ExtendedAssessmentTest extends AssessmentTest
         $ref->setTestFeedbacks($assessmentTest->getTestFeedbacks());
         $ref->setToolName($assessmentTest->getToolName());
         $ref->setToolVersion($assessmentTest->getToolVersion());
+        if (method_exists($assessmentTest, 'getMetaData')) {
+            $ref->setMetaData($assessmentTest->getMetaData());
+        }
 
         return $ref;
     }

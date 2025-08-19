@@ -27,6 +27,7 @@ use InvalidArgumentException;
 use qtism\common\utils\Format;
 use qtism\data\processing\OutcomeProcessing;
 use qtism\data\rules\BranchRule;
+use qtism\data\state\MetaData;
 use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\Utils as DataUtils;
 use SplObjectStorage;
@@ -143,6 +144,13 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     private $testFeedbacks;
 
     /**
+     * Metadata custom element, not part of QTI.
+     *
+     * @var MetaData
+     */
+    private MetaData $metaData;
+
+    /**
      * AssessmentTest constructor.
      *
      * @param $identifier
@@ -158,6 +166,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         $this->setOutcomeDeclarations(new OutcomeDeclarationCollection());
         $this->setTestParts((empty($testParts)) ? new TestPartCollection() : $testParts);
         $this->setTestFeedbacks(new TestFeedbackCollection());
+        $this->setMetaData(new MetaData());
     }
 
     /**
@@ -286,6 +295,16 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
     public function setOutcomeDeclarations(OutcomeDeclarationCollection $outcomeDeclarations): void
     {
         $this->outcomeDeclarations = $outcomeDeclarations;
+    }
+
+    public function getMetaData(): MetaData
+    {
+        return $this->metaData;
+    }
+
+    public function setMetaData(MetaData $metaData): void
+    {
+        $this->metaData = $metaData;
     }
 
     /**

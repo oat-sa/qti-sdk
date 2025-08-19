@@ -188,6 +188,9 @@ class XmlCompactDocument extends XmlDocument
         $assessmentTest->setTimeLimits($xmlAssessmentTestDocument->getDocumentComponent()->getTimeLimits());
         $assessmentTest->setToolName($xmlAssessmentTestDocument->getDocumentComponent()->getToolName());
         $assessmentTest->setToolVersion($xmlAssessmentTestDocument->getDocumentComponent()->getToolVersion());
+        if (method_exists($xmlAssessmentTestDocument->getDocumentComponent(), 'getMetaData')) {
+            $assessmentTest->setMetaData($xmlAssessmentTestDocument->getDocumentComponent()->getMetaData());
+        }
 
         if ($resolver === null) {
             $resolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
