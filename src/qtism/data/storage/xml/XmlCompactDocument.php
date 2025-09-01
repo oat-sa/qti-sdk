@@ -77,6 +77,13 @@ class XmlCompactDocument extends XmlDocument
     private $explodeTestFeedbacks = false;
 
     /**
+     * The interpretation resolver for handling interpretations and their definitions.
+     *
+     * @var InterpretationResolver|null
+     */
+    private $interpretationResolver = null;
+
+    /**
      * XmlCompactDocument constructor.
      *
      * Create a new XmlCompactDocument object.
@@ -93,6 +100,9 @@ class XmlCompactDocument extends XmlDocument
         }
 
         parent::__construct($version, $documentComponent);
+        
+        // Initialize the interpretation resolver
+        $this->interpretationResolver = new InterpretationResolver();
     }
 
     /**
@@ -163,6 +173,80 @@ class XmlCompactDocument extends XmlDocument
     }
 
     /**
+     * Load the manifest document to enable scale resolution for interpretations.
+     *
+     * @param string $manifestUrl The URL of the manifest file (e.g., 'imsmanifest.xml').
+     * @param string|null $baseUrl The base URL for resolving relative paths. If null, uses the document's URL.
+     * @throws XmlStorageException If an error occurs while loading the manifest.
+     */
+    public function loadManifest(string $manifestUrl, ?string $baseUrl = null): void
+    {
+        if ($baseUrl === null) {
+            $baseUrl = $this->getUrl();
+        }
+
+        if (empty($baseUrl)) {
+            throw new XmlStorageException('Cannot load manifest: no base URL available.');
+        }
+
+        $this->interpretationResolver->loadManifest($manifestUrl, $baseUrl);
+        
+        // Set the assessment test context for the interpretation resolver
+        if ($this->getDocumentComponent() !== null) {
+            $this->interpretationResolver->setAssessmentTestContext($this->getDocumentComponent());
+        }
+    }
+
+
+
+    /**
+     * Get all resolved interpretations with their interpretation information.
+     *
+     * @return array An array of resolved interpretations with their interpretation information.
+     */
+    public function getResolvedInterpretations(): array
+    {
+        if ($this->getDocumentComponent() === null) {
+            return [];
+        }
+
+        return $this->interpretationResolver->resolveInterpretations($this->getDocumentComponent());
+    }
+
+    /**
+     * Get the interpretation value for a specific outcome declaration.
+     *
+     * @param string $outcomeIdentifier
+     * @param float $value
+     * @return string|null
+     */
+    public function getInterpretationValue(string $outcomeIdentifier, float $value): ?string
+    {
+        return $this->interpretationResolver->getInterpretationValue($outcomeIdentifier, $value);
+    }
+
+    /**
+     * Check if an interpretation exists for a given URI.
+     *
+     * @param string $interpretationUri
+     * @return bool
+     */
+    public function hasInterpretation(string $interpretationUri): bool
+    {
+        return $this->interpretationResolver->hasInterpretation($interpretationUri);
+    }
+
+    /**
+     * Get all available interpretations from the manifest.
+     *
+     * @return array
+     */
+    public function getAvailableInterpretations(): array
+    {
+        return $this->interpretationResolver->getAvailableInterpretations();
+    }
+
+    /**
      * Create a new instance of XmlCompactDocument from an XmlAssessmentTestDocument.
      *
      * @param XmlDocument $xmlAssessmentTestDocument An XmlAssessmentTestDocument object you want to store as a compact XML file.
@@ -172,7 +256,7 @@ class XmlCompactDocument extends XmlDocument
      * @throws XmlStorageException If an error occurs while transforming the XmlAssessmentTestDocument object into an XmlCompactAssessmentTestDocument object.
      * @throws ReflectionException
      */
-    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, ?FileResolver $resolver = null, $version = '2.1'): XmlCompactDocument
+    public static function createFromXmlAssessmentTestDocument(XmlDocument $xmlAssessmentTestDocument, ?FileResolver $resolver = null, $version = '2.1', ?string $manifestUrl = null): XmlCompactDocument
     {
         $compactAssessmentTest = new XmlCompactDocument($version);
         $compactAssessmentTest->setFilesystem($xmlAssessmentTestDocument->getFilesystem());
@@ -193,6 +277,16 @@ class XmlCompactDocument extends XmlDocument
             $resolver = new LocalFileResolver($xmlAssessmentTestDocument->getUrl());
         } else {
             $resolver->setBasePath($xmlAssessmentTestDocument->getUrl());
+        }
+
+        // Load manifest if provided
+        if ($manifestUrl !== null) {
+            try {
+                $compactAssessmentTest->loadManifest($manifestUrl, $xmlAssessmentTestDocument->getUrl());
+            } catch (XmlStorageException $e) {
+                // Log warning but continue without manifest
+                // In a production environment, you might want to handle this differently
+            }
         }
 
         // It simply consists of replacing assessmentItemRef and assessmentSectionRef elements.
