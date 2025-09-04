@@ -82,13 +82,13 @@ class ManifestDocument
     {
         $this->interpretations = [];
 
-        // Look for LOM metadata with custom properties
+        // Look for LOM metadata with custom properties.
         $xpath = new DOMXPath($this->domDocument);
         $xpath->registerNamespace('imsmd', 'http://ltsc.ieee.org/xsd/LOM');
+        $xpath->registerNamespace('imscp', 'http://www.imsglobal.org/xsd/imscp_v1p1');
 
-        // Find all custom properties in the metadata
-        $properties = $xpath->query('//imsmd:customProperties/imsmd:property');
-
+        // Find all custom properties in the metadata.
+        $properties = $xpath->query('//imsmd:lom/imsmd:metaMetadata/imscp:extension/imscp:customProperties/imscp:property');
         foreach ($properties as $property) {
             $this->extractInterpretationFromProperty($property);
         }
@@ -96,10 +96,10 @@ class ManifestDocument
 
     private function extractInterpretationFromProperty(DOMElement $property): void
     {
-        $uri = $this->getElementText($property, 'imsmd:uri');
-        $label = $this->getElementText($property, 'imsmd:label');
-        $domain = $this->getElementText($property, 'imsmd:domain');
-        $interpretationData = $this->getElementText($property, 'imsmd:scale');
+        $uri   = $this->getElementText($property, 'imscp:uri');
+        $label = $this->getElementText($property, 'imscp:label');
+        $domain= $this->getElementText($property, 'imscp:domain');
+        $interpretationData = $this->getElementText($property, 'imscp:scale');
 
         // Check if this property represents an interpretation.
         if ($uri && $interpretationData) {
@@ -119,13 +119,14 @@ class ManifestDocument
         }
     }
 
-    private function getElementText(DOMElement $parent, string $childName): ?string
+    private function getElementText(DOMElement $parent, string $childQName): ?string
     {
         $xpath = new DOMXPath($parent->ownerDocument);
         $xpath->registerNamespace('imsmd', 'http://ltsc.ieee.org/xsd/LOM');
+        $xpath->registerNamespace('imscp', 'http://www.imsglobal.org/xsd/imscp_v1p1');
 
-        $element = $xpath->query($childName, $parent)->item(0);
+        $node = $xpath->query('./' . $childQName, $parent)->item(0);
 
-        return $element ? trim($element->textContent) : null;
+        return $node ? trim($node->textContent) : null;
     }
 }
