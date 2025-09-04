@@ -506,6 +506,11 @@ class XmlCompactDocument extends XmlDocument
         return $references;
     }
 
+    public function resolveReferencesUsingManifest(string $manifestXmlString)
+    {
+        // TODO
+    }
+
     /**
      * Infer the QTI Compact version of the document from its XML definition.
      *
