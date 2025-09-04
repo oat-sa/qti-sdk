@@ -109,8 +109,7 @@ class ManifestDocument
                     $this->interpretations[$uri] = [
                         'uri' => $uri,
                         'label' => $label,
-                        'domain' => $domain,
-                        'interpretationData' => $data
+                        'values' => $data
                     ];
                 }
             } catch (Exception $e) {

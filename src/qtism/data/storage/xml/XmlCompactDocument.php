@@ -528,7 +528,7 @@ class XmlCompactDocument extends XmlDocument
                 continue;
             }
 
-            $outcomeDeclaration->setInterpretation($resolvedInterpretations[$outcomeDeclaration->getIdentifier()]);
+            $outcomeDeclaration->setScale($resolvedInterpretations[$outcomeDeclaration->getIdentifier()]);
             $outcomeDeclarations->update($outcomeDeclaration);
         }
 

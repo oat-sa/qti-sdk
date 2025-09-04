@@ -65,7 +65,7 @@ class InterpretationResolver
             if (!empty($interpretation)) {
                 $interpretationDef = $this->manifestDocument->getInterpretation($interpretation);
                 if ($interpretationDef) {
-                    $resolvedInterpretations[$outcomeDeclaration->getIdentifier()] = json_encode($interpretationDef);
+                    $resolvedInterpretations[$outcomeDeclaration->getIdentifier()] = $interpretationDef;
                 }
             }
         }

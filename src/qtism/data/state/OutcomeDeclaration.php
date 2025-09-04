@@ -99,6 +99,24 @@ class OutcomeDeclaration extends VariableDeclaration
     private $longInterpretation = '';
 
     /**
+     * Outcome declaration interpretation scale information after resolution.
+     *
+     * Example:
+     * "scale":{
+     *      "uri":"http://www.tao.lu/Ontologies/TAO.rdf#CERF-A1-A2",
+     *      "label":"CEFR SCALE A1-A2",
+     *      "values":{
+     *          "1":"Under A1",
+     *          "2":"A1",
+     *          "3":"A2"
+     *      }
+     * }
+     *
+     * @var array
+     */
+    private array $scale = [];
+
+    /**
      * Normal Maximum. If false, means it was not specified.
      *
      * From IMS QTI:
@@ -421,5 +439,15 @@ class OutcomeDeclaration extends VariableDeclaration
     public function isScoredByExternalMachine(): bool
     {
         return $this->externalScored === ExternalScored::EXTERNAL_MACHINE;
+    }
+
+    public function getScale(): array
+    {
+        return $this->scale;
+    }
+
+    public function setScale(array $scale): void
+    {
+        $this->scale = $scale;
     }
 }
