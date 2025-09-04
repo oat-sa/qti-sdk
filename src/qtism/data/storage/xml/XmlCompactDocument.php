@@ -30,6 +30,7 @@ use qtism\data\AssessmentItemRef;
 use qtism\data\AssessmentSection;
 use qtism\data\AssessmentSectionRef;
 use qtism\data\AssessmentTest;
+use qtism\data\AssessmentTest as QtiAssessmentTest;
 use qtism\data\content\RubricBlockRef;
 use qtism\data\ExtendedAssessmentItemRef;
 use qtism\data\ExtendedAssessmentSection;
@@ -37,6 +38,8 @@ use qtism\data\ExtendedAssessmentTest;
 use qtism\data\ExtendedTestPart;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentIterator;
+use qtism\data\state\OutcomeDeclaration;
+use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\storage\xml\versions\CompactVersion;
@@ -506,9 +509,31 @@ class XmlCompactDocument extends XmlDocument
         return $references;
     }
 
-    public function resolveReferencesUsingManifest(string $manifestXmlString)
+    /**
+     * @throws XmlStorageException
+     */
+    public function resolveOutcomeDeclarationImplementationReferences(string $manifestXmlString): void
     {
-        // TODO
+        /** @var QtiAssessmentTest $qtiAssessmentTest */
+        $qtiAssessmentTest = $this->getDocumentComponent();
+        $interpretationResolver = new InterpretationResolver();
+        $interpretationResolver->loadManifestDocument($manifestXmlString);
+        $interpretationResolver->setAssessmentTest($qtiAssessmentTest);
+        $resolvedInterpretations = $interpretationResolver->resolveInterpretations();
+        $outcomeDeclarations = $qtiAssessmentTest->getOutcomeDeclarations();
+
+        /** @var OutcomeDeclaration $outcomeDeclaration */
+        foreach ($outcomeDeclarations as $outcomeDeclaration) {
+            if (isset($resolvedInterpretations[$outcomeDeclaration->getIdentifier()]) === false) {
+                continue;
+            }
+
+            $outcomeDeclaration->setInterpretation($resolvedInterpretations[$outcomeDeclaration->getIdentifier()]);
+            $outcomeDeclarations->update($outcomeDeclaration);
+        }
+
+        $qtiAssessmentTest->setOutcomeDeclarations($outcomeDeclarations);
+        $this->setDocumentComponent($qtiAssessmentTest);
     }
 
     /**
