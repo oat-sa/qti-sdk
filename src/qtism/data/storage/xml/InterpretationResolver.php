@@ -25,6 +25,7 @@ namespace qtism\data\storage\xml;
 
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentIterator;
+use qtism\data\state\OutcomeDeclaration;
 
 /**
  * The InterpretationResolver class provides functionality to resolve interpretations
@@ -58,13 +59,13 @@ class InterpretationResolver
         $resolvedInterpretations = [];
         $iterator = new QtiComponentIterator($this->assessmentTest, ['outcomeDeclaration']);
 
+        /** @var OutcomeDeclaration $outcomeDeclaration */
         foreach ($iterator as $outcomeDeclaration) {
             $interpretation = $outcomeDeclaration->getInterpretation();
-
             if (!empty($interpretation)) {
                 $interpretationDef = $this->manifestDocument->getInterpretation($interpretation);
                 if ($interpretationDef) {
-                    $resolvedInterpretations[$outcomeDeclaration->getIdentifier()] = $interpretation;
+                    $resolvedInterpretations[$outcomeDeclaration->getIdentifier()] = json_encode($interpretationDef);
                 }
             }
         }
