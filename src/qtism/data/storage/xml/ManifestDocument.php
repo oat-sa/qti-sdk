@@ -99,17 +99,18 @@ class ManifestDocument
         $uri   = $this->getElementText($property, 'imscp:uri');
         $label = $this->getElementText($property, 'imscp:label');
         $domain= $this->getElementText($property, 'imscp:domain');
-        $interpretationData = $this->getElementText($property, 'imscp:scale');
+        $scale = $this->getElementText($property, 'imscp:scale');
 
         // Check if this property represents an interpretation.
-        if ($uri && $interpretationData) {
+        if ($uri && $scale) {
             try {
-                $data = json_decode($interpretationData, true);
+                $data = json_decode($scale, true);
                 if (is_array($data)) {
                     $this->interpretations[$uri] = [
                         'uri' => $uri,
                         'label' => $label,
-                        'values' => $data
+                        'domain' => $domain,
+                        'scale' => $data
                     ];
                 }
             } catch (Exception $e) {

@@ -102,10 +102,11 @@ class OutcomeDeclaration extends VariableDeclaration
      * Outcome declaration interpretation scale information after resolution.
      *
      * Example:
-     * "scale":{
+     * {
      *      "uri":"http://www.tao.lu/Ontologies/TAO.rdf#CERF-A1-A2",
      *      "label":"CEFR SCALE A1-A2",
-     *      "values":{
+     *      "domain":"http://www.tao.lu/Ontologies/TAO.rdf#Scale",
+     *      "scale":{
      *          "1":"Under A1",
      *          "2":"A1",
      *          "3":"A2"
