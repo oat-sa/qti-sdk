@@ -512,7 +512,7 @@ class XmlCompactDocument extends XmlDocument
     /**
      * @throws XmlStorageException
      */
-    public function resolveOutcomeDeclarationImplementationReferences(string $manifestXmlString): void
+    public function resolveOutcomeDeclarationInterpretationReferences(string $manifestXmlString): void
     {
         /** @var QtiAssessmentTest $qtiAssessmentTest */
         $qtiAssessmentTest = $this->getDocumentComponent();
