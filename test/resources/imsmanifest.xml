@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+<manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/qti/qtiv2p2/qtiv2p2_imscpv1p2_v1p0.xsd http://ltsc.ieee.org/xsd/LOM http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd http://ltsc.ieee.org/xsd/LOM http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd http://ltsc.ieee.org/xsd/LOM http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd"
+          identifier="QTI-TEST-MANIFEST-tao68b96d8c07bb63-84276412" xmlns:imsmd="http://ltsc.ieee.org/xsd/LOM">
+    <metadata>
+        <schema>QTIv2.2 Package</schema>
+        <schemaversion>1.0.0</schemaversion>
+        <imsmd:lom>
+            <imsmd:metaMetadata>
+                <extension>
+                    <customProperties>
+                        <property>
+                            <uri>http://www.tao.lu/Ontologies/TAOItem.rdf#ItemContent</uri>
+                            <label>Item Content</label>
+                            <domain>http://www.tao.lu/Ontologies/TAOItem.rdf#Item</domain>
+                            <checksum>da39a3ee5e6b4b0d3255bfef95601890afd80709</checksum>
+                        </property>
+                        <property>
+                            <uri>http://www.tao.lu/Ontologies/TAOItem.rdf#ItemModel</uri>
+                            <label>Item Model</label>
+                            <domain>http://www.tao.lu/Ontologies/TAOItem.rdf#Item</domain>
+                            <widget>http://www.tao.lu/datatypes/WidgetDefinitions.rdf#RadioBox</widget>
+                            <checksum>99336650bf0c454a35ac0dafa585708284ad57b1</checksum>
+                        </property>
+                        <property>
+                            <uri>http://www.tao.lu/Ontologies/TAO.rdf#Language</uri>
+                            <label>Language</label>
+                            <domain>http://www.tao.lu/Ontologies/TAOTest.rdf#Test</domain>
+                            <alias>taoLanguage</alias>
+                            <widget>http://www.tao.lu/datatypes/WidgetDefinitions.rdf#ComboBox</widget>
+                            <checksum>1b88afc1be2813e2eecc193d3d9510ce288fd5c7</checksum>
+                        </property>
+                        <property>
+                            <uri>http://www.tao.lu/Ontologies/TAO.rdf#TranslationStatus</uri>
+                            <label>Translation Status</label>
+                            <domain>http://www.tao.lu/Ontologies/TAOTest.rdf#Test</domain>
+                            <alias>taoTranslationStatus</alias>
+                            <widget>http://www.tao.lu/datatypes/WidgetDefinitions.rdf#ComboBox</widget>
+                            <checksum>7b807dbd395f6a4b7517c86bd133b8e189731fbb</checksum>
+                        </property>
+                        <property>
+                            <uri>http://www.tao.lu/Ontologies/TAO.rdf#TranslationType</uri>
+                            <label>Translation Type</label>
+                            <domain>http://www.tao.lu/Ontologies/TAOTest.rdf#Test</domain>
+                            <alias>taoTranslationType</alias>
+                            <widget>http://www.tao.lu/datatypes/WidgetDefinitions.rdf#ComboBox</widget>
+                            <checksum>17669e4aa9b5fe5cb08cb5e84854e38c08890709</checksum>
+                        </property>
+                        <property>
+                            <uri>http://www.tao.lu/Ontologies/TAO.rdf#UniqueIdentifier</uri>
+                            <label>Equivalent Resource ID</label>
+                            <domain>http://www.tao.lu/Ontologies/TAOTest.rdf#Test</domain>
+                            <alias>taoUniqueIdentifier</alias>
+                            <widget>http://www.tao.lu/datatypes/WidgetDefinitions.rdf#Readonly</widget>
+                        </property>
+                        <property>
+                            <uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+                            <label>type</label>
+                            <domain>http://www.w3.org/2000/01/rdf-schema#Resource</domain>
+                            <multiple>http://www.tao.lu/Ontologies/generis.rdf#True</multiple>
+                            <widget>http://www.tao.lu/datatypes/WidgetDefinitions.rdf#TreeView</widget>
+                        </property>
+                        <property>
+                            <uri>http://www.w3.org/2000/01/rdf-schema#label</uri>
+                            <label>Label</label>
+                            <domain>http://www.w3.org/2000/01/rdf-schema#Resource</domain>
+                            <widget>http://www.tao.lu/datatypes/WidgetDefinitions.rdf#TextBox</widget>
+                        </property>
+                        <property>
+                            <uri>http://www.tao.lu/Ontologies/TAO.rdf#CERF-A1-A2</uri>
+                            <label>CEFR SCALE A1-A2</label>
+                            <domain>http://www.tao.lu/Ontologies/TAO.rdf#Scale</domain>
+                            <scale>{"1":"Under A1","2":"A1","3":"A2"}</scale>
+                        </property>
+                        <property>
+                            <uri>http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent</uri>
+                            <label>Test Content</label>
+                            <domain>http://www.tao.lu/Ontologies/TAOTest.rdf#Test</domain>
+                            <checksum>da39a3ee5e6b4b0d3255bfef95601890afd80709</checksum>
+                        </property>
+                        <property>
+                            <uri>http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel</uri>
+                            <label>Test Model</label>
+                            <domain>http://www.tao.lu/Ontologies/TAOTest.rdf#Test</domain>
+                            <widget>http://www.tao.lu/datatypes/WidgetDefinitions.rdf#RadioBox</widget>
+                        </property>
+                    </customProperties>
+                </extension>
+            </imsmd:metaMetadata>
+        </imsmd:lom>
+    </metadata>
+    <organizations/>
+    <resources>
+        <resource identifier="i68b353e54e463202508302141252477c842" type="imsqti_item_xmlv2p2"
+                  href="items/i68b353e54e463202508302141252477c842/qti.xml">
+            <metadata>
+                <imsmd:lom>
+                    <imsmd:classification>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#Language
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">English (USA)</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#TranslationStatus
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">Not Ready for Translation</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#TranslationType
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">Original</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#UniqueIdentifier
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">000000001</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.w3.org/2000/01/rdf-schema#label</imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">Manual 1</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                    </imsmd:classification>
+                </imsmd:lom>
+            </metadata>
+            <file href="items/i68b353e54e463202508302141252477c842/qti.xml"/>
+        </resource>
+        <resource identifier="i68b3540a4e86220250830214202c269e542" type="imsqti_item_xmlv2p2"
+                  href="items/i68b3540a4e86220250830214202c269e542/qti.xml">
+            <metadata>
+                <imsmd:lom>
+                    <imsmd:classification>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#Language
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">English (USA)</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#TranslationStatus
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">Not Ready for Translation</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#TranslationType
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">Original</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#UniqueIdentifier
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">000000002</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.w3.org/2000/01/rdf-schema#label</imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">Manual 2</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                    </imsmd:classification>
+                </imsmd:lom>
+            </metadata>
+            <file href="items/i68b3540a4e86220250830214202c269e542/qti.xml"/>
+        </resource>
+        <resource identifier="i68b354460ac832025083021430216e482e4" type="imsqti_test_xmlv2p2"
+                  href="tests/i68b354460ac832025083021430216e482e4/test.xml">
+            <metadata>
+                <imsmd:lom>
+                    <imsmd:classification>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#Language
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">English (USA)</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#TranslationStatus
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">Not Ready for Translation</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#TranslationType
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">Original</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.tao.lu/Ontologies/TAO.rdf#UniqueIdentifier
+                                </imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">AVSFQRSB</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                        <imsmd:taxonPath>
+                            <imsmd:source>
+                                <imsmd:string xml:lang="en-US">http://www.w3.org/2000/01/rdf-schema#label</imsmd:string>
+                            </imsmd:source>
+                            <imsmd:taxon>
+                                <imsmd:entry>
+                                    <imsmd:string xml:lang="en-US">CEFR 1</imsmd:string>
+                                </imsmd:entry>
+                            </imsmd:taxon>
+                        </imsmd:taxonPath>
+                    </imsmd:classification>
+                </imsmd:lom>
+            </metadata>
+            <file href="tests/i68b354460ac832025083021430216e482e4/test.xml"/>
+            <dependency identifierref="i68b353e54e463202508302141252477c842"/>
+            <dependency identifierref="i68b3540a4e86220250830214202c269e542"/>
+        </resource>
+    </resources>
+</manifest>

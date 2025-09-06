@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                identifier="AVSFQRSB" title="Test 4" toolName="tao" toolVersion="2025.09"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.taotesting.com/xsd/qticompact_v2p2.xsd">
+    <outcomeDeclaration identifier="OUTCOME_2" cardinality="single" baseType="float"
+                        interpretation="http://www.tao.lu/Ontologies/TAO.rdf#CERF-A1-A2" externalScored="human"/>
+    <outcomeDeclaration identifier="OUTCOME_4" cardinality="single" baseType="float"
+                        interpretation="http://www.tao.lu/Ontologies/TAO.rdf#CERF-A1-A2" externalScored="human"/>
+    <outcomeDeclaration identifier="GRADE" cardinality="single" baseType="float"
+                        interpretation="http://www.tao.lu/Ontologies/TAO.rdf#CERF-A1-A2"/>
+    <outcomeDeclaration identifier="GRADE_MAX" cardinality="single" baseType="float"
+                        interpretation="http://www.tao.lu/Ontologies/TAO.rdf#CERF-A1-A2">
+        <defaultValue>
+            <value>3</value>
+        </defaultValue>
+    </outcomeDeclaration>
+    <timeLimits allowLateSubmission="false"/>
+    <testPart identifier="testPart-1" navigationMode="linear" submissionMode="individual">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false"
+                            allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <assessmentSection identifier="assessmentSection-1" required="true" fixed="false" title="Section" visible="true"
+                           keepTogether="true">
+            <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false"
+                                allowComment="false" allowSkipping="true" validateResponses="false"/>
+            <assessmentItemRef identifier="item-1" required="false" fixed="false" href="./item-1/item.json"
+                               adaptive="false" timeDependent="false" title="Manual 1" label="Manual 1">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false"
+                                    allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"
+                                    normalMinimum="0"/>
+                <outcomeDeclaration identifier="OUTCOME_1" cardinality="single" baseType="float" normalMaximum="5"
+                                    normalMinimum="0" externalScored="human"/>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>5</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item-2" required="false" fixed="false" href="./item-2/item.json"
+                               adaptive="false" timeDependent="false" title="Manual 2" label="Manual 2">
+                <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false"
+                                    allowComment="false" allowSkipping="true" validateResponses="false"/>
+                <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+                <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"
+                                    normalMinimum="0"/>
+                <outcomeDeclaration identifier="OUTCOME_1" cardinality="single" baseType="float" normalMaximum="5"
+                                    normalMinimum="0" externalScored="human"/>
+                <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+                    <defaultValue>
+                        <value>5</value>
+                    </defaultValue>
+                </outcomeDeclaration>
+                <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+                <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+            </assessmentItemRef>
+        </assessmentSection>
+    </testPart>
+    <outcomeProcessing>
+        <setOutcomeValue identifier="GRADE">
+            <min>
+                <variable identifier="OUTCOME_2"/>
+                <variable identifier="OUTCOME_4"/>
+            </min>
+        </setOutcomeValue>
+    </outcomeProcessing>
+</assessmentTest>

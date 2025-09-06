@@ -956,4 +956,65 @@ class XmlCompactAssessmentDocumentTest extends QtiSmTestCase
 
         $doc->changeVersion($wrongVersion);
     }
+
+    /**
+     * @throws XmlStorageException
+     */
+    public function testResolveOutcomeDeclarationInterpretationReferences()
+    {
+        $xmlCompactDocument = new XmlCompactDocument();
+        $xmlCompactDocument->loadFromString(file_get_contents(__DIR__ . '/../../../../resources/compact-test.xml'));
+        $xmlCompactDocument->resolveOutcomeDeclarationInterpretationReferences(file_get_contents(__DIR__ . '/../../../../resources/imsmanifest.xml'));
+
+        $expectedOutComeDeclarations = [
+            'OUTCOME_2' => [
+                'uri' => 'http://www.tao.lu/Ontologies/TAO.rdf#CERF-A1-A2',
+                'label' => 'CEFR SCALE A1-A2',
+                'domain' => 'http://www.tao.lu/Ontologies/TAO.rdf#Scale',
+                'scale' => [
+                    1 => 'Under A1',
+                    2 => 'A1',
+                    3 => 'A2',
+                ]
+            ],
+            'OUTCOME_4' => [
+                'uri' => 'http://www.tao.lu/Ontologies/TAO.rdf#CERF-A1-A2',
+                'label' => 'CEFR SCALE A1-A2',
+                'domain' => 'http://www.tao.lu/Ontologies/TAO.rdf#Scale',
+                'scale' => [
+                    1 => 'Under A1',
+                    2 => 'A1',
+                    3 => 'A2',
+                ]
+            ],
+            'GRADE' => [
+                'uri' => 'http://www.tao.lu/Ontologies/TAO.rdf#CERF-A1-A2',
+                'label' => 'CEFR SCALE A1-A2',
+                'domain' => 'http://www.tao.lu/Ontologies/TAO.rdf#Scale',
+                'scale' => [
+                    1 => 'Under A1',
+                    2 => 'A1',
+                    3 => 'A2',
+                ]
+            ],
+            'GRADE_MAX' => [
+                'uri' => 'http://www.tao.lu/Ontologies/TAO.rdf#CERF-A1-A2',
+                'label' => 'CEFR SCALE A1-A2',
+                'domain' => 'http://www.tao.lu/Ontologies/TAO.rdf#Scale',
+                'scale' => [
+                    1 => 'Under A1',
+                    2 => 'A1',
+                    3 => 'A2',
+                ]
+            ]
+        ];
+
+        $outComeDeclarations = $xmlCompactDocument->getDocumentComponent()->getOutcomeDeclarations();
+        foreach ($outComeDeclarations as $outcomeDeclaration) {
+            $this->assertSame(
+                $expectedOutComeDeclarations[$outcomeDeclaration->getIdentifier()],
+                $outcomeDeclaration->getScale()
+            );
+        }
+    }
 }

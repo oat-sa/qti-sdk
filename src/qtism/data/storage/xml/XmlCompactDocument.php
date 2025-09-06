@@ -39,7 +39,6 @@ use qtism\data\ExtendedTestPart;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentIterator;
 use qtism\data\state\OutcomeDeclaration;
-use qtism\data\state\OutcomeDeclarationCollection;
 use qtism\data\storage\FileResolver;
 use qtism\data\storage\LocalFileResolver;
 use qtism\data\storage\xml\versions\CompactVersion;
@@ -79,6 +78,8 @@ class XmlCompactDocument extends XmlDocument
      */
     private $explodeTestFeedbacks = false;
 
+    private InterpretationResolver $interpretationResolver;
+
     /**
      * XmlCompactDocument constructor.
      *
@@ -87,12 +88,17 @@ class XmlCompactDocument extends XmlDocument
      *
      * @param string $version
      * @param QtiComponent|null $documentComponent
+     * @param InterpretationResolver|null $interpretationResolver
      */
-    public function __construct($version = '2.1.0', ?QtiComponent $documentComponent = null)
+    public function __construct($version = '2.1.0', ?QtiComponent $documentComponent = null, ?InterpretationResolver $interpretationResolver = null)
     {
         // Version 1.0 was used in legacy code, let's keep it BC.
         if ($version === '1.0') {
             $version = '2.1.0';
+        }
+
+        if (null === $interpretationResolver) {
+            $this->interpretationResolver = new InterpretationResolver();
         }
 
         parent::__construct($version, $documentComponent);
@@ -516,10 +522,9 @@ class XmlCompactDocument extends XmlDocument
     {
         /** @var QtiAssessmentTest $qtiAssessmentTest */
         $qtiAssessmentTest = $this->getDocumentComponent();
-        $interpretationResolver = new InterpretationResolver();
-        $interpretationResolver->loadManifestDocument($manifestXmlString);
-        $interpretationResolver->setAssessmentTest($qtiAssessmentTest);
-        $resolvedInterpretations = $interpretationResolver->resolveInterpretations();
+        $this->interpretationResolver->loadManifestDocument($manifestXmlString);
+        $this->interpretationResolver->setAssessmentTest($qtiAssessmentTest);
+        $resolvedInterpretations = $this->interpretationResolver->resolveInterpretations();
         $outcomeDeclarations = $qtiAssessmentTest->getOutcomeDeclarations();
 
         /** @var OutcomeDeclaration $outcomeDeclaration */

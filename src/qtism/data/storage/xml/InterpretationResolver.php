@@ -36,6 +36,14 @@ class InterpretationResolver
     private ?ManifestDocument $manifestDocument = null;
     private ?QtiComponent $assessmentTest = null;
 
+    public function __construct(?ManifestDocument $manifestDocument = null)
+    {
+        if (null === $manifestDocument) {
+            $manifestDocument = new ManifestDocument();
+        }
+        $this->manifestDocument = $manifestDocument;
+    }
+
     public function setAssessmentTest(QtiComponent $assessmentTest): void
     {
         $this->assessmentTest = $assessmentTest;
@@ -46,13 +54,12 @@ class InterpretationResolver
      */
     public function loadManifestDocument(string $manifestXmlString): void
     {
-        $this->manifestDocument = new ManifestDocument();
         $this->manifestDocument->loadFromString($manifestXmlString);
     }
 
     public function resolveInterpretations(): array
     {
-        if ($this->manifestDocument === null || $this->assessmentTest === null) {
+        if ( $this->assessmentTest === null) {
             return [];
         }
 

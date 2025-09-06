@@ -45,9 +45,12 @@ class ManifestDocument
      */
     private array $interpretations = [];
 
-    public function __construct()
+    public function __construct(?DOMDocument $domDocument = null)
     {
-        $this->domDocument = new DOMDocument('1.0', 'UTF-8');
+        if (null === $domDocument) {
+            $domDocument = new DOMDocument('1.0', 'UTF-8');
+        }
+        $this->domDocument = $domDocument;
     }
 
     /**
@@ -103,18 +106,14 @@ class ManifestDocument
 
         // Check if this property represents an interpretation.
         if ($uri && $scale) {
-            try {
-                $data = json_decode($scale, true);
-                if (is_array($data)) {
-                    $this->interpretations[$uri] = [
-                        'uri' => $uri,
-                        'label' => $label,
-                        'domain' => $domain,
-                        'scale' => $data
-                    ];
-                }
-            } catch (Exception $e) {
-                // Skip invalid interpretation data.
+            $data = json_decode($scale, true);
+            if (is_array($data)) {
+                $this->interpretations[$uri] = [
+                    'uri' => $uri,
+                    'label' => $label,
+                    'domain' => $domain,
+                    'scale' => $data
+                ];
             }
         }
     }
