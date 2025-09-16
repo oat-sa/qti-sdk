@@ -104,7 +104,8 @@ class Utils
                         return false;
                     }
                 } else {
-                    $result = @preg_match($patternMask, (string)$value);
+                    $normalizedValue = preg_replace('/\n/', '', (string)$value);
+                    $result = @preg_match($patternMask, $normalizedValue);
 
                     if ($result === 0) {
                         return false;
