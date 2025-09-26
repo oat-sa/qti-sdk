@@ -37,6 +37,7 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
+use qtism\data\storage\xml\marshalling\BranchRuleConsistencyException;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -55,6 +56,7 @@ class XmlDocument extends QtiDocument
      * Lib Xml configuration flags for Xml loading.
      */
     const LIB_XML_FLAGS = LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE | LIBXML_BIGLINES | LIBXML_PARSEHUGE;
+    private const ERROR_MISSING_TARGET = 'BranchRule is missing a target attribute';
 
     /**
      * The produced domDocument after a successful call to
@@ -184,7 +186,11 @@ class XmlDocument extends QtiDocument
                     $element = $this->getDomDocument()->documentElement;
                     $factory = $this->createMarshallerFactory();
                     $marshaller = $factory->createMarshaller($element);
-                    $this->setDocumentComponent($marshaller->unmarshall($element));
+                    $docComponent = $marshaller->unmarshall($element);
+                    if ($validate === true) {
+                        $this->validateDocComponent($docComponent);
+                    }
+                    $this->setDocumentComponent($docComponent);
                 } catch (UnmarshallingException $e) {
                     $line = $e->getDOMElement()->getLineNo();
                     $msg = "An error occurred while processing QTI-XML at line ${line}.";
@@ -552,5 +558,33 @@ class XmlDocument extends QtiDocument
     protected function inferVersion(): string
     {
         return QtiVersion::infer($this->getDomDocument());
+    }
+
+    /**
+     * Validate the document component after unmarshalling.
+     */
+    private function validateDocComponent(QtiComponent $docComponent): void
+    {
+        $branchRules = $docComponent->getComponentsByClassName('branchRule');
+        if ($branchRules->count() === 0) {
+            return;
+        }
+
+        foreach ($branchRules as $branchRule) {
+            $error = [];
+            $target = $branchRule->getTarget();
+            if (empty($target)) {
+                $error[] = self::ERROR_MISSING_TARGET;
+            } else {
+                $targetElement = $docComponent->getComponentByIdentifier($target);
+                if ($targetElement === null) {
+                    $error[] = sprintf('BranchRule target "%s" does not exist in the document', $target);
+                }
+            }
+        }
+
+        if (!empty($error)) {
+            throw new BranchRuleConsistencyException(implode('; ', $error));
+        }
     }
 }
