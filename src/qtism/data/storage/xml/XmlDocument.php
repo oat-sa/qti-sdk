@@ -698,7 +698,7 @@ class XmlDocument extends QtiDocument
             $error = [];
             $target = $branchRule->getTarget();
             if (empty($target)) {
-                $error[] = BranchRuleTargetException::UNKNOWN_TARGET;
+                $error[] = 'BranchRule is missing a target attribute';
             } else {
                 $targetElement = $docComponent->getComponentByIdentifier($target);
                 if ($targetElement === null) {
