@@ -50,6 +50,16 @@ use qtism\data\QtiComponentCollection;
  */
 class BranchRule extends QtiComponent implements Rule
 {
+    public const EXIT_TEST = 'EXIT_TEST';
+    public const EXIT_TESTPART = 'EXIT_TESTPART';
+    public const EXIT_SECTION = 'EXIT_SECTION';
+
+    public const SPECIAL_TARGETS = [
+        self::EXIT_TEST,
+        self::EXIT_TESTPART,
+        self::EXIT_SECTION,
+    ];
+
     /**
      * The expression of the BranchRule.
      *

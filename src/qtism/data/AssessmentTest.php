@@ -805,7 +805,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
         // Special cases
 
         switch ($branch->getTarget()) {
-            case 'EXIT_TEST':
+            case BranchRule::EXIT_TEST:
                 $prevItem = DataUtils::getLastItem($this, $component, $sections);
 
                 if ($prevItem == null) {
@@ -826,7 +826,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                 }
                 break;
 
-            case 'EXIT_TESTPART':
+            case BranchRule::EXIT_TESTPART:
                 $prevItem = DataUtils::getLastItem($this, $component, $sections);
                 $targetItem = null;
                 $currentTpFound = false;
@@ -866,7 +866,7 @@ class AssessmentTest extends QtiComponent implements QtiIdentifiable
                 }
                 break;
 
-            case 'EXIT_SECTION':
+            case BranchRule::EXIT_SECTION:
                 if ($component->getQtiClassName() == 'testPart') {
                     break;
                 }
