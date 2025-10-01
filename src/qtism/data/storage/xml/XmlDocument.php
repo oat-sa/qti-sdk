@@ -170,7 +170,7 @@ class XmlDocument extends QtiDocument
      * @param bool $validate Whether the file must be validated unsing XML Schema? Default is false.
      * @throws XmlStorageException If an error occurs while loading the QTI-XML file.
      */
-    public function load(string $url, $validate = false): void
+    public function load(string $url, ?bool $validate = false): void
     {
         $this->loadImplementation($this->loadFromFile($url), $validate);
         $this->setUrl($url);
@@ -195,6 +195,7 @@ class XmlDocument extends QtiDocument
      * @param mixed $data
      * @param bool $validate
      * @throws XmlStorageException
+     * @throws BranchRuleTargetException
      */
     protected function loadImplementation($data, bool $validate): void
     {

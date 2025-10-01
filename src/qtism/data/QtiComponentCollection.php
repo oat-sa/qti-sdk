@@ -44,7 +44,8 @@ class QtiComponentCollection extends AbstractCollection
     protected function checkType($value): void
     {
         if (!$value instanceof QtiComponent) {
-            $msg = "QtiComponentCollection class only accept QtiComponent objects, '" . get_class($value) . "' given.";
+            $msg = "QtiComponentCollection class only accept QtiComponent objects, '" .
+                (is_object($value) ? get_class($value) : gettype($value)) . "' given.";
             throw new InvalidArgumentException($msg);
         }
     }
