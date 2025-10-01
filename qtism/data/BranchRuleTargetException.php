@@ -24,13 +24,12 @@
 namespace qtism\data;
 
 use Exception;
-use qtism\common\QtiSdkPackageContentException;
 
 /**
  * An exception to be thrown when an error occurs while dealing with
  * target of BranchingRules in AssessmentTest.
  */
-class BranchRuleTargetException extends Exception implements QtiSdkPackageContentException
+class BranchRuleTargetException extends Exception
 {
     /**
      * The target is unknown.
