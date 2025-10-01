@@ -32,6 +32,7 @@ use LibXMLError;
 use LogicException;
 use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
+use qtism\data\BranchRuleTargetException;
 use qtism\data\content\Flow;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
@@ -574,7 +575,7 @@ class XmlDocument extends QtiDocument
             $error = [];
             $target = $branchRule->getTarget();
             if (empty($target)) {
-                $error[] = self::ERROR_MISSING_TARGET;
+                $error[] = BranchRuleTargetException::UNKNOWN_TARGET;
             } else {
                 $targetElement = $docComponent->getComponentByIdentifier($target);
                 if ($targetElement === null) {
@@ -584,7 +585,7 @@ class XmlDocument extends QtiDocument
         }
 
         if (!empty($error)) {
-            throw new BranchRuleConsistencyException(implode('; ', $error));
+            throw new BranchRuleTargetException(implode('; ', $error));
         }
     }
 }
