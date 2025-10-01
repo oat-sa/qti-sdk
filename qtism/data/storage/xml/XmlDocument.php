@@ -57,7 +57,6 @@ class XmlDocument extends QtiDocument
      * Lib Xml configuration flags for Xml loading.
      */
     const LIB_XML_FLAGS = LIBXML_COMPACT | LIBXML_NONET | LIBXML_XINCLUDE | LIBXML_BIGLINES | LIBXML_PARSEHUGE;
-    private const ERROR_MISSING_TARGET = 'BranchRule is missing a target attribute';
 
     /**
      * The produced domDocument after a successful call to
@@ -575,7 +574,7 @@ class XmlDocument extends QtiDocument
             $error = [];
             $target = $branchRule->getTarget();
             if (empty($target)) {
-                $error[] = BranchRuleTargetException::UNKNOWN_TARGET;
+                $error[] = 'BranchRule is missing a target attribute';
             } else {
                 $targetElement = $docComponent->getComponentByIdentifier($target);
                 if ($targetElement === null) {
