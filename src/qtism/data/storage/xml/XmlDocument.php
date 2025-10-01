@@ -34,6 +34,7 @@ use LogicException;
 use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
 use qtism\data\AssessmentItem;
+use qtism\data\BranchRuleTargetException;
 use qtism\data\content\Flow;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\QtiComponent;
@@ -222,6 +223,10 @@ class XmlDocument extends QtiDocument
 
         // Unmarshalls the root element.
         $component = $this->unmarshallElement($this->domDocument->documentElement);
+
+        if ($validate) {
+            $this->validateDocComponent($component);
+        }
 
         $this->setDocumentComponent($component);
     }
@@ -676,5 +681,34 @@ class XmlDocument extends QtiDocument
     protected function inferVersion(): string
     {
         return QtiVersion::infer($this->getDomDocument());
+    }
+
+    /**
+     * Validate the document component after unmarshalling.
+     * @throws BranchRuleTargetException
+     */
+    private function validateDocComponent(QtiComponent $docComponent): void
+    {
+        $branchRules = $docComponent->getComponentsByClassName('branchRule');
+        if ($branchRules->count() === 0) {
+            return;
+        }
+
+        foreach ($branchRules as $branchRule) {
+            $error = [];
+            $target = $branchRule->getTarget();
+            if (empty($target)) {
+                $error[] = BranchRuleTargetException::UNKNOWN_TARGET;
+            } else {
+                $targetElement = $docComponent->getComponentByIdentifier($target);
+                if ($targetElement === null) {
+                    $error[] = sprintf('BranchRule target "%s" does not exist in the document', $target);
+                }
+            }
+        }
+
+        if (!empty($error)) {
+            throw new BranchRuleTargetException(implode('; ', $error));
+        }
     }
 }
