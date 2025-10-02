@@ -109,7 +109,7 @@ class ResultResponseVariable extends ItemVariable
     {
         $components = [$this->getCandidateResponse()];
         if ($this->hasCorrectResponse()) {
-            $components = array_merge($components, $this->getCorrectResponse());
+            $components[] = $this->getCorrectResponse();
         }
         return new QtiComponentCollection($components);
     }

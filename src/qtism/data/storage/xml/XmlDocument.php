@@ -691,7 +691,7 @@ class XmlDocument extends QtiDocument
      */
     private function validateDocComponent(QtiComponent $docComponent): void
     {
-        $branchRules = $docComponent->getComponentsByClassName('branchRule');
+        $branchRules = $docComponent->getComponentsByClassName('branchRule', true);
         if ($branchRules->count() === 0) {
             return;
         }

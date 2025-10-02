@@ -99,10 +99,11 @@ class TestResult extends QtiComponent
      */
     public function getComponents(): QtiComponentCollection
     {
+        $components = [];
         if ($this->hasItemVariables()) {
-            $components = $this->getItemVariables()->toArray();
-        } else {
-            $components = [];
+            foreach ($this->getItemVariables() as $itemVariable) {
+                $components[] = $itemVariable;
+            }
         }
         return new QtiComponentCollection($components);
     }

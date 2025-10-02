@@ -108,7 +108,9 @@ class AssessmentResult extends QtiComponent
         }
 
         if ($this->hasItemResults()) {
-            $components[] = $this->getItemResults()->getArrayCopy();
+            foreach ($this->getItemResults() as $itemResult) {
+                $components[] = $itemResult;
+            }
         }
 
         return new QtiComponentCollection($components);
