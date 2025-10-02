@@ -696,21 +696,22 @@ class XmlDocument extends QtiDocument
             return;
         }
 
+        $errors = [];
         foreach ($branchRules as $branchRule) {
-            $error = [];
             $target = $branchRule->getTarget();
             if (empty($target)) {
-                $error[] = 'BranchRule is missing a target attribute';
-            } else {
-                $targetElement = $docComponent->getComponentByIdentifier($target);
-                if ($targetElement === null && !in_array($target, BranchRule::SPECIAL_TARGETS, true)) {
-                    $error[] = sprintf('BranchRule target "%s" does not exist in the document', $target);
-                }
+                $errors[] = 'BranchRule is missing a target attribute';
+                continue;
+            }
+
+            $targetElement = $docComponent->getComponentByIdentifier($target);
+            if ($targetElement === null && !in_array($target, BranchRule::SPECIAL_TARGETS, true)) {
+                $errors[] = sprintf('BranchRule target "%s" does not exist in the document', $target);
             }
         }
 
-        if (!empty($error)) {
-            throw new BranchRuleTargetException(implode('; ', $error));
+        if (!empty($errors)) {
+            throw new BranchRuleTargetException(implode('; ', $errors));
         }
     }
 }
