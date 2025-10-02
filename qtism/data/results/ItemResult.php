@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2025 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
@@ -157,8 +157,11 @@ class ItemResult extends QtiComponent
      */
     public function getComponents()
     {
+        $components = [];
         if ($this->hasItemVariables()) {
-            $components = $this->getItemVariables()->toArray();
+            foreach ($this->getItemVariables() as $itemVariable) {
+                $components[] = $itemVariable;
+            }
         } else {
             $components = [];
         }
