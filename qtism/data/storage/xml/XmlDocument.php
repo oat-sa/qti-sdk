@@ -38,7 +38,7 @@ use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
-use qtism\data\storage\xml\marshalling\BranchRuleConsistencyException;
+use qtism\data\rules\BranchRule;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -577,7 +577,7 @@ class XmlDocument extends QtiDocument
                 $error[] = 'BranchRule is missing a target attribute';
             } else {
                 $targetElement = $docComponent->getComponentByIdentifier($target);
-                if ($targetElement === null) {
+                if ($targetElement === null && !in_array($target, BranchRule::SPECIAL_TARGETS, true)) {
                     $error[] = sprintf('BranchRule target "%s" does not exist in the document', $target);
                 }
             }
