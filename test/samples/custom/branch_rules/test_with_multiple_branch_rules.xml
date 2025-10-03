@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+                identifier="test-with-multiple-branch-rules" 
+                title="Test with Multiple Branch Rules">
+    <testPart identifier="part1" navigationMode="linear" submissionMode="individual">
+        <assessmentSection identifier="section1" title="Section 1" visible="true">
+            <assessmentItemRef identifier="item1" href="./item1.xml">
+                <branchRule target="item2">
+                    <match>
+                        <baseValue baseType="boolean">true</baseValue>
+                        <baseValue baseType="boolean">true</baseValue>
+                    </match>
+                </branchRule>
+                <branchRule target="nonexistent_item">
+                    <match>
+                        <baseValue baseType="boolean">false</baseValue>
+                        <baseValue baseType="boolean">false</baseValue>
+                    </match>
+                </branchRule>
+            </assessmentItemRef>
+            <assessmentItemRef identifier="item2" href="./item2.xml" />
+        </assessmentSection>
+    </testPart>
+</assessmentTest>
