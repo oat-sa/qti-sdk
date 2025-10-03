@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2025 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -50,6 +50,16 @@ use qtism\data\QtiComponentCollection;
  */
 class BranchRule extends QtiComponent implements Rule
 {
+    public const EXIT_TEST = 'EXIT_TEST';
+    public const EXIT_TESTPART = 'EXIT_TESTPART';
+    public const EXIT_SECTION = 'EXIT_SECTION';
+
+    public const SPECIAL_TARGETS = [
+        self::EXIT_TEST,
+        self::EXIT_TESTPART,
+        self::EXIT_SECTION,
+    ];
+
     /**
      * The expression of the BranchRule.
      *
