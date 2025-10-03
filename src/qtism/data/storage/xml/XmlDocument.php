@@ -13,9 +13,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * Foundation, Inc., 31 Milk St # 960789 Boston, MA 02196 USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2025 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @author Julien Sébire <julien@taotesting.com>
@@ -34,12 +34,14 @@ use LogicException;
 use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
 use qtism\data\AssessmentItem;
+use qtism\data\BranchRuleTargetException;
 use qtism\data\content\Flow;
 use qtism\data\processing\ResponseProcessing;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
+use qtism\data\rules\BranchRule;
 use qtism\data\storage\xml\filesystem\FilesystemFactory;
 use qtism\data\storage\xml\filesystem\FilesystemInterface;
 use qtism\data\storage\xml\filesystem\FilesystemException;
@@ -168,7 +170,7 @@ class XmlDocument extends QtiDocument
      * @param bool $validate Whether the file must be validated unsing XML Schema? Default is false.
      * @throws XmlStorageException If an error occurs while loading the QTI-XML file.
      */
-    public function load(string $url, $validate = false): void
+    public function load(string $url, bool $validate = false): void
     {
         $this->loadImplementation($this->loadFromFile($url), $validate);
         $this->setUrl($url);
@@ -193,6 +195,7 @@ class XmlDocument extends QtiDocument
      * @param mixed $data
      * @param bool $validate
      * @throws XmlStorageException
+     * @throws BranchRuleTargetException
      */
     protected function loadImplementation($data, bool $validate): void
     {
@@ -222,6 +225,10 @@ class XmlDocument extends QtiDocument
 
         // Unmarshalls the root element.
         $component = $this->unmarshallElement($this->domDocument->documentElement);
+
+        if ($validate) {
+            $this->validateDocComponent($component);
+        }
 
         $this->setDocumentComponent($component);
     }
@@ -676,5 +683,35 @@ class XmlDocument extends QtiDocument
     protected function inferVersion(): string
     {
         return QtiVersion::infer($this->getDomDocument());
+    }
+
+    /**
+     * Validate the document component after unmarshalling.
+     * @throws BranchRuleTargetException
+     */
+    private function validateDocComponent(QtiComponent $docComponent): void
+    {
+        $branchRules = $docComponent->getComponentsByClassName('branchRule', true);
+        if ($branchRules->count() === 0) {
+            return;
+        }
+
+        $errors = [];
+        foreach ($branchRules as $branchRule) {
+            $target = $branchRule->getTarget();
+            if (empty($target)) {
+                $errors[] = 'BranchRule is missing a target attribute';
+                continue;
+            }
+
+            $targetElement = $docComponent->getComponentByIdentifier($target);
+            if ($targetElement === null && !in_array($target, BranchRule::RESERVED_TARGETS, true)) {
+                $errors[] = sprintf('BranchRule target "%s" does not exist in the document', $target);
+            }
+        }
+
+        if (!empty($errors)) {
+            throw new BranchRuleTargetException(implode('; ', $errors));
+        }
     }
 }

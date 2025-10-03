@@ -13,9 +13,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * Foundation, Inc., 31 Milk St # 960789 Boston, MA 02196 USA.
  *
- * Copyright (c) 2018-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2018-2025 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Moyon Camille <camille@taotesting.com>
  * @license GPLv2
@@ -157,10 +157,11 @@ class ItemResult extends QtiComponent
      */
     public function getComponents(): QtiComponentCollection
     {
+        $components = [];
         if ($this->hasItemVariables()) {
-            $components = $this->getItemVariables()->toArray();
-        } else {
-            $components = [];
+            foreach ($this->getItemVariables() as $itemVariable) {
+                $components[] = $itemVariable;
+            }
         }
         return new QtiComponentCollection($components);
     }
