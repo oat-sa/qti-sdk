@@ -2524,7 +2524,13 @@ class AssessmentTestSession extends State
                 $condition = $engine->process();
 
                 if ($condition !== null && $condition->getValue() === true) {
-                    $route->branch($branchRule->getTarget());
+                    $target = $branchRule->getTarget();
+
+                    if ($target === BranchRule::EXIT_TEST) {
+                        $this->endTestSession();
+                    } else {
+                        $route->branch($target);
+                    }
 
                     break 2;
                 }
