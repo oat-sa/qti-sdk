@@ -81,16 +81,25 @@ class BranchRule extends QtiComponent implements Rule
     private $target;
 
     /**
+     * The parent identifier of the BranchRule.
+     *
+     * @qtism-bean-property
+     */
+    private string $parentIdentifier;
+
+    /**
      * Create a new instance of BranchRule.
      *
      * @param Expression $expression The expression of the BranchRule.
      * @param string $target The target identifier of the BranchRule.
+     * @param string $parentIdentifier The parent identifier of the BranchRule.
      * @throws InvalidArgumentException If $target is not a valid QTI Identifier.
      */
-    public function __construct(Expression $expression, $target)
+    public function __construct(Expression $expression, $target, string $parentIdentifier)
     {
         $this->setExpression($expression);
         $this->setTarget($target);
+        $this->setParentIdentifier($parentIdentifier);
     }
 
     /**
@@ -114,7 +123,7 @@ class BranchRule extends QtiComponent implements Rule
     }
 
     /**
-     * Set the target identifier of the BranchRule.
+     * Get the target identifier of the BranchRule.
      *
      * @return string A QTI Identifier.
      */
@@ -124,7 +133,7 @@ class BranchRule extends QtiComponent implements Rule
     }
 
     /**
-     * Get the target identifier of the BranchRule.
+     * Set the target identifier of the BranchRule.
      *
      * @param string $target A QTI Identifier.
      * @throws InvalidArgumentException If $target is not a valid QTI Identifier.
@@ -137,6 +146,31 @@ class BranchRule extends QtiComponent implements Rule
             $msg = "'Target' must be a valid QTI Identifier.";
             throw new InvalidArgumentException($msg);
         }
+    }
+
+    /**
+     * Get the parent identifier of the BranchRule.
+     *
+     * @return string A QTI Identifier.
+     */
+    public function getParentIdentifier(): string
+    {
+        return $this->parentIdentifier;
+    }
+
+    /**
+     * Set the parent identifier of the BranchRule.
+     *
+     * @param string $parentIdentifier A QTI Identifier.
+     * @throws InvalidArgumentException If $target is not a valid QTI Identifier.
+     */
+    public function setParentIdentifier(string $parentIdentifier): void
+    {
+        if (!Format::isIdentifier($parentIdentifier)) {
+            throw new InvalidArgumentException('"Parent" must be a valid QTI Identifier.');
+        }
+
+        $this->parentIdentifier = $parentIdentifier;
     }
 
     /**
