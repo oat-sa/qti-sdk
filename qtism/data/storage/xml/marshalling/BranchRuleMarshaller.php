@@ -65,7 +65,12 @@ class BranchRuleMarshaller extends Marshaller
 
             if ($expressionElt !== false) {
                 $marshaller = $this->getMarshallerFactory()->createMarshaller($expressionElt);
-                return new BranchRule($marshaller->unmarshall($expressionElt), $target);
+
+                return new BranchRule(
+                    $marshaller->unmarshall($expressionElt),
+                    $target,
+                    $this->getParentIdentifier($element)
+                );
             } else {
                 $msg = "The mandatory child element 'expression' is missing from element '" . $element->localName . "'.";
                 throw new UnmarshallingException($msg, $element);
@@ -82,5 +87,28 @@ class BranchRuleMarshaller extends Marshaller
     public function getExpectedQtiClassName()
     {
         return 'branchRule';
+    }
+
+    private function getParentIdentifier(DomElement $element): string
+    {
+        $parentElement = $element->parentNode;
+
+        if (empty($parentElement)) {
+            throw new UnmarshallingException(
+                sprintf('Element %s must have a parent element', $element->localName),
+                $element
+            );
+        }
+
+        $parentIdentifier = $this->getDOMElementAttributeAs($parentElement, 'identifier');
+
+        if (empty($parentIdentifier)) {
+            throw new UnmarshallingException(
+                sprintf('The mandatory attribute "identifier" is missing from element %s', $parentElement->localName),
+                $element
+            );
+        }
+
+        return $parentIdentifier;
     }
 }

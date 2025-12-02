@@ -566,21 +566,40 @@ class XmlDocument extends QtiDocument
     private function validateDocComponent(QtiComponent $docComponent): void
     {
         $branchRules = $docComponent->getComponentsByClassName('branchRule', true);
+
         if ($branchRules->count() === 0) {
             return;
         }
 
         $errors = [];
+
         foreach ($branchRules as $branchRule) {
             $target = $branchRule->getTarget();
+
             if (empty($target)) {
                 $errors[] = 'BranchRule is missing a target attribute';
                 continue;
             }
 
+            if (in_array($target, BranchRule::SPECIAL_TARGETS, true)) {
+                continue;
+            }
+
             $targetElement = $docComponent->getComponentByIdentifier($target);
-            if ($targetElement === null && !in_array($target, BranchRule::SPECIAL_TARGETS, true)) {
+
+            if ($targetElement === null) {
                 $errors[] = sprintf('BranchRule target "%s" does not exist in the document', $target);
+            }
+
+            $parentIdentifier = $branchRule->getParentIdentifier();
+            $parentElement = $docComponent->getComponentByIdentifier($parentIdentifier);
+
+            if ($parentElement instanceof TestPart && !($targetElement instanceof TestPart)) {
+                $errors[] = sprintf(
+                    'BranchRule inside test part "%s" must target another test part, but "%s" is not a test part',
+                    $parentIdentifier,
+                    $target
+                );
             }
         }
 
