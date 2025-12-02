@@ -34,11 +34,13 @@ use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
 use qtism\data\BranchRuleTargetException;
 use qtism\data\content\Flow;
+use qtism\data\expressions\Variable;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
 use qtism\data\rules\BranchRule;
+use qtism\data\state\OutcomeDeclaration;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -566,6 +568,10 @@ class XmlDocument extends QtiDocument
     private function validateDocComponent(QtiComponent $docComponent): void
     {
         $branchRules = $docComponent->getComponentsByClassName('branchRule', true);
+        $outcomeDeclarationIds = array_map(
+            static fn (OutcomeDeclaration $outcomeDeclaration) => $outcomeDeclaration->getIdentifier(),
+            $docComponent->getComponentsByClassName('outcomeDeclaration')->getArrayCopy()
+        );
 
         if ($branchRules->count() === 0) {
             return;
@@ -600,6 +606,20 @@ class XmlDocument extends QtiDocument
                     $parentIdentifier,
                     $target
                 );
+            }
+
+            foreach ($branchRule->getExpression()->getExpressions() as $expression) {
+                if (!($expression instanceof Variable)) {
+                    continue;
+                }
+
+                if (!in_array($expression->getIdentifier(), $outcomeDeclarationIds, true)) {
+                    $errors[] = sprintf(
+                        'Variable "%s" used in BranchRule targeting "%s" does not reference any existing outcome declaration.',
+                        $expression->getIdentifier(),
+                        $target
+                    );
+                }
             }
         }
 
