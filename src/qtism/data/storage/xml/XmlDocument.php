@@ -694,58 +694,79 @@ class XmlDocument extends QtiDocument
     private function validateDocComponent(QtiComponent $docComponent): void
     {
         $branchRules = $docComponent->getComponentsByClassName('branchRule', true);
-        $outcomeDeclarationIds = array_map(
-            static fn (OutcomeDeclaration $outcomeDeclaration) => $outcomeDeclaration->getIdentifier(),
-            $docComponent->getComponentsByClassName('outcomeDeclaration')->getArrayCopy()
-        );
 
         if ($branchRules->count() === 0) {
             return;
         }
 
         $errors = [];
+        $components = [];
 
+        $outcomeDeclarationIds = array_map(
+            static fn (OutcomeDeclaration $outcomeDeclaration) => $outcomeDeclaration->getIdentifier(),
+            $docComponent->getComponentsByClassName('outcomeDeclaration')->getArrayCopy()
+        );
+
+        if (empty($outcomeDeclarationIds)) {
+            $errors[] = 'Outcome Declarations are required for branch rules.';
+        }
+
+        /** @var BranchRule $branchRule */
         foreach ($branchRules as $branchRule) {
             $target = $branchRule->getTarget();
 
             if (empty($target)) {
                 $errors[] = 'BranchRule is missing a target attribute';
+
                 continue;
+            }
+
+            if (!empty($outcomeDeclarationIds)) {
+                foreach ($branchRule->getExpression()->getExpressions() as $expression) {
+                    if (
+                        $expression instanceof Variable
+                        && !in_array($expression->getIdentifier(), $outcomeDeclarationIds, true)
+                    ) {
+                        $errors[] = sprintf(
+                            'Variable "%s" used in BranchRule targeting "%s" does not reference any existing outcome declaration.',
+                            $expression->getIdentifier(),
+                            $target
+                        );
+                    }
+                }
             }
 
             if (in_array($target, BranchRule::RESERVED_TARGETS, true)) {
                 continue;
             }
 
-            $targetElement = $docComponent->getComponentByIdentifier($target);
+            $components[$target] ??= $docComponent->getComponentByIdentifier($target);
 
-            if ($targetElement === null) {
+            if ($components[$target] === null) {
                 $errors[] = sprintf('BranchRule target "%s" does not exist in the document', $target);
+
+                continue;
             }
 
             $parentIdentifier = $branchRule->getParentIdentifier();
-            $parentElement = $docComponent->getComponentByIdentifier($parentIdentifier);
 
-            if ($parentElement instanceof TestPart && !($targetElement instanceof TestPart)) {
+            if (!$parentIdentifier) {
+                $errors[] = sprintf(
+                    'BranchRule targeting "%s" does not have a parent or the parent does not contain an identifier',
+                    $target
+                );
+
+                continue;
+            }
+
+            $components[$parentIdentifier] ??= $docComponent->getComponentByIdentifier($parentIdentifier);
+
+            if ($components[$parentIdentifier] instanceof TestPart && !($components[$target] instanceof TestPart)) {
                 $errors[] = sprintf(
                     'BranchRule inside test part "%s" must target another test part, but "%s" is not a test part',
                     $parentIdentifier,
                     $target
                 );
-            }
-
-            foreach ($branchRule->getExpression()->getExpressions() as $expression) {
-                if (!($expression instanceof Variable)) {
-                    continue;
-                }
-
-                if (!in_array($expression->getIdentifier(), $outcomeDeclarationIds, true)) {
-                    $errors[] = sprintf(
-                        'Variable "%s" used in BranchRule targeting "%s" does not reference any existing outcome declaration.',
-                        $expression->getIdentifier(),
-                        $target
-                    );
-                }
             }
         }
 
