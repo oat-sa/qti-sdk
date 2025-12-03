@@ -160,7 +160,7 @@ class BranchRule extends QtiComponent implements Rule
      * Set the parent identifier of the BranchRule.
      *
      * @param string $parentIdentifier A QTI Identifier.
-     * @throws InvalidArgumentException If $target is not a valid QTI Identifier.
+     * @throws InvalidArgumentException If $parentIdentifier is not a valid QTI Identifier.
      */
     public function setParentIdentifier(string $parentIdentifier): void
     {
