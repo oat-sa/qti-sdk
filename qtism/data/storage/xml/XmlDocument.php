@@ -568,22 +568,25 @@ class XmlDocument extends QtiDocument
     private function validateDocComponent(QtiComponent $docComponent): void
     {
         $branchRules = $docComponent->getComponentsByClassName('branchRule', true);
-        $outcomeDeclarationIds = array_map(
-            static fn (OutcomeDeclaration $outcomeDeclaration) => $outcomeDeclaration->getIdentifier(),
-            $docComponent->getComponentsByClassName('outcomeDeclaration')->getArrayCopy()
-        );
 
         if ($branchRules->count() === 0) {
             return;
         }
 
+        $outcomeDeclarationIds = array_map(
+            static fn (OutcomeDeclaration $outcomeDeclaration) => $outcomeDeclaration->getIdentifier(),
+            $docComponent->getComponentsByClassName('outcomeDeclaration')->getArrayCopy()
+        );
+
         $errors = [];
+        $components = [];
 
         foreach ($branchRules as $branchRule) {
             $target = $branchRule->getTarget();
 
             if (empty($target)) {
                 $errors[] = 'BranchRule is missing a target attribute';
+
                 continue;
             }
 
@@ -591,16 +594,18 @@ class XmlDocument extends QtiDocument
                 continue;
             }
 
-            $targetElement = $docComponent->getComponentByIdentifier($target);
+            $components[$target] ??= $docComponent->getComponentByIdentifier($target);
 
-            if ($targetElement === null) {
+            if ($components[$target] === null) {
                 $errors[] = sprintf('BranchRule target "%s" does not exist in the document', $target);
+
+                continue;
             }
 
             $parentIdentifier = $branchRule->getParentIdentifier();
-            $parentElement = $docComponent->getComponentByIdentifier($parentIdentifier);
+            $components[$parentIdentifier] ??= $docComponent->getComponentByIdentifier($parentIdentifier);
 
-            if ($parentElement instanceof TestPart && !($targetElement instanceof TestPart)) {
+            if ($components[$parentIdentifier] instanceof TestPart && !($components[$target] instanceof TestPart)) {
                 $errors[] = sprintf(
                     'BranchRule inside test part "%s" must target another test part, but "%s" is not a test part',
                     $parentIdentifier,
@@ -609,11 +614,10 @@ class XmlDocument extends QtiDocument
             }
 
             foreach ($branchRule->getExpression()->getExpressions() as $expression) {
-                if (!($expression instanceof Variable)) {
-                    continue;
-                }
-
-                if (!in_array($expression->getIdentifier(), $outcomeDeclarationIds, true)) {
+                if (
+                    $expression instanceof Variable
+                    && !in_array($expression->getIdentifier(), $outcomeDeclarationIds, true)
+                ) {
                     $errors[] = sprintf(
                         'Variable "%s" used in BranchRule targeting "%s" does not reference any existing outcome declaration.',
                         $expression->getIdentifier(),

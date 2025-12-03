@@ -1,0 +1,2 @@
+remote_config:
+    url: 'https://raw.githubusercontent.com/oat-sa/tao-code-quality/refs/heads/main/coderabbit/php/common/v1/.coderabbit.yaml'
