@@ -85,21 +85,19 @@ class BranchRule extends QtiComponent implements Rule
      *
      * @qtism-bean-property
      */
-    private string $parentIdentifier;
+    private ?string $parentIdentifier = null;
 
     /**
      * Create a new instance of BranchRule.
      *
      * @param Expression $expression The expression of the BranchRule.
      * @param string $target The target identifier of the BranchRule.
-     * @param string $parentIdentifier The parent identifier of the BranchRule.
      * @throws InvalidArgumentException If $target is not a valid QTI Identifier.
      */
-    public function __construct(Expression $expression, $target, string $parentIdentifier)
+    public function __construct(Expression $expression, $target)
     {
         $this->setExpression($expression);
         $this->setTarget($target);
-        $this->setParentIdentifier($parentIdentifier);
     }
 
     /**
@@ -151,9 +149,9 @@ class BranchRule extends QtiComponent implements Rule
     /**
      * Get the parent identifier of the BranchRule.
      *
-     * @return string A QTI Identifier.
+     * @return string|null A QTI Identifier or null if no parent provided.
      */
-    public function getParentIdentifier(): string
+    public function getParentIdentifier(): ?string
     {
         return $this->parentIdentifier;
     }

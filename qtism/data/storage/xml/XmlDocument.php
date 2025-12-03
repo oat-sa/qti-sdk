@@ -581,6 +581,7 @@ class XmlDocument extends QtiDocument
         $errors = [];
         $components = [];
 
+        /** @var BranchRule $branchRule */
         foreach ($branchRules as $branchRule) {
             $target = $branchRule->getTarget();
 
@@ -603,6 +604,16 @@ class XmlDocument extends QtiDocument
             }
 
             $parentIdentifier = $branchRule->getParentIdentifier();
+
+            if (!$parentIdentifier) {
+                $errors[] = sprintf(
+                    'BranchRule targeting "%s" does not have a parent or the parent does not contain an identifier',
+                    $target
+                );
+
+                continue;
+            }
+
             $components[$parentIdentifier] ??= $docComponent->getComponentByIdentifier($parentIdentifier);
 
             if ($components[$parentIdentifier] instanceof TestPart && !($components[$target] instanceof TestPart)) {
