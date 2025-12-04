@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+                identifier="testpart-branch-rule-invalid-target-type"
+                title="TestPart BranchRule Invalid Target Type">
+    <testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+        <!-- Invalid: branchRule inside testPart targets a section instead of a testPart -->
+        <branchRule target="S01">
+            <baseValue baseType="boolean">true</baseValue>
+        </branchRule>
+        <assessmentSection identifier="S01" title="Section 1" visible="true">
+            <assessmentItemRef identifier="Q01" href="./Q01.xml"/>
+        </assessmentSection>
+    </testPart>
+    <testPart identifier="P02" navigationMode="linear" submissionMode="individual">
+        <assessmentSection identifier="S02" title="Section 2" visible="true">
+            <assessmentItemRef identifier="Q02" href="./Q02.xml"/>
+        </assessmentSection>
+    </testPart>
+    <outcomeProcessing/>
+</assessmentTest>
