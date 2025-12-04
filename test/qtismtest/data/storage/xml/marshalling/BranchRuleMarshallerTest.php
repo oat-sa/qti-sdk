@@ -14,7 +14,7 @@ use qtismtest\QtiSmTestCase;
  */
 class BranchRuleMarshallerTest extends QtiSmTestCase
 {
-    public function testMarshall()
+    public function testMarshall(): void
     {
         $target = 'target1';
 
@@ -28,17 +28,19 @@ class BranchRuleMarshallerTest extends QtiSmTestCase
         $this::assertEquals($target, $element->getAttribute('target'));
     }
 
-    public function testUnmarshall()
+    public function testUnmarshall(): void
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML(
             '
-			<branchRule xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" target="target1">
-				<baseValue baseType="boolean">true</baseValue>
-			</branchRule>
+			<testPart xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="testPart1">
+				<branchRule target="target1">
+					<baseValue baseType="boolean">true</baseValue>
+				</branchRule>
+			</testPart>
 			'
         );
-        $element = $dom->documentElement;
+        $element = $dom->getElementsByTagName('branchRule')->item(0);
 
         $marshaller = $this->getMarshallerFactory('2.1.0')->createMarshaller($element);
         $component = $marshaller->unmarshall($element);
@@ -46,5 +48,6 @@ class BranchRuleMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(BranchRule::class, $component);
         $this::assertEquals('target1', $component->getTarget());
         $this::assertInstanceOf(BaseValue::class, $component->getExpression());
+        $this::assertEquals('testPart1', $component->getParentIdentifier());
     }
 }
