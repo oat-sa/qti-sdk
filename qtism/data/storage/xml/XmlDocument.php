@@ -34,13 +34,11 @@ use qtism\common\dom\SerializableDomDocument;
 use qtism\common\utils\Url;
 use qtism\data\BranchRuleTargetException;
 use qtism\data\content\Flow;
-use qtism\data\expressions\Variable;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
 use qtism\data\QtiComponentIterator;
 use qtism\data\QtiDocument;
 use qtism\data\rules\BranchRule;
-use qtism\data\state\OutcomeDeclaration;
 use qtism\data\storage\xml\marshalling\MarshallerFactory;
 use qtism\data\storage\xml\marshalling\MarshallingException;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
@@ -576,15 +574,6 @@ class XmlDocument extends QtiDocument
         $errors = [];
         $components = [];
 
-        $outcomeDeclarationIds = array_map(
-            static fn (OutcomeDeclaration $outcomeDeclaration) => $outcomeDeclaration->getIdentifier(),
-            $docComponent->getComponentsByClassName('outcomeDeclaration')->getArrayCopy()
-        );
-
-        if (empty($outcomeDeclarationIds)) {
-            $errors[] = 'Outcome Declarations are required for branch rules.';
-        }
-
         /** @var BranchRule $branchRule */
         foreach ($branchRules as $branchRule) {
             $target = $branchRule->getTarget();
@@ -593,21 +582,6 @@ class XmlDocument extends QtiDocument
                 $errors[] = 'BranchRule is missing a target attribute';
 
                 continue;
-            }
-
-            if (!empty($outcomeDeclarationIds)) {
-                foreach ($branchRule->getExpression()->getExpressions() as $expression) {
-                    if (
-                        $expression instanceof Variable
-                        && !in_array($expression->getIdentifier(), $outcomeDeclarationIds, true)
-                    ) {
-                        $errors[] = sprintf(
-                            'Variable "%s" used in BranchRule targeting "%s" does not reference any existing outcome declaration.',
-                            $expression->getIdentifier(),
-                            $target
-                        );
-                    }
-                }
             }
 
             if (in_array($target, BranchRule::SPECIAL_TARGETS, true)) {
