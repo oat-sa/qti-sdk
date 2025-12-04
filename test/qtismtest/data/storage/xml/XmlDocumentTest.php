@@ -495,6 +495,35 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc->load(self::samplesDir() . 'custom/branch_rules/test_with_missing_target_branch_rule.xml', true);
     }
 
+    /**
+     * Test loading a document with an empty branch rule target
+     * should fail XML Schema validation.
+     */
+    public function testEmptyBranchRuleTarget(): void
+    {
+        $doc = new XmlDocument();
+
+        $this->expectException(XmlStorageException::class);
+
+        $doc->load(self::samplesDir() . 'custom/branch_rules/test_with_empty_target_branch_rule.xml', true);
+    }
+
+    /**
+     * Test that a branch rule inside a testPart must target another testPart
+     * and not, for example, an assessmentSection.
+     */
+    public function testTestPartBranchRuleMustTargetTestPart(): void
+    {
+        $doc = new XmlDocument();
+
+        $this->expectException(BranchRuleTargetException::class);
+        $this->expectExceptionMessage(
+            'BranchRule inside test part "P01" must target another test part, but "S01" is not a test part'
+        );
+
+        $doc->load(self::samplesDir() . 'custom/branch_rules/testpart_branch_rule_invalid_target_type.xml', true);
+    }
+
     public function changeVersionProvider(): array
     {
         $path = self::samplesDir() . 'ims/tests/empty_tests/empty_test_';
