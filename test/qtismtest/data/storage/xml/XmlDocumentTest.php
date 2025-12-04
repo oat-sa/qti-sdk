@@ -527,7 +527,7 @@ class XmlDocumentTest extends QtiSmTestCase
         $doc = new XmlDocument('2.1.0');
         $doc->load($uri, true);
     }
-    
+
     /**
      * Test loading a document with valid branch rule targets
      */
@@ -535,11 +535,11 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/branch_rules/test_with_valid_branch_rules.xml', true);
-        
+
         // If we get here, the document loaded and validated successfully
         $this::assertTrue(true);
     }
-    
+
     /**
      * Test loading a document with special branch rule targets (EXIT_TEST, etc.)
      */
@@ -547,25 +547,25 @@ class XmlDocumentTest extends QtiSmTestCase
     {
         $doc = new XmlDocument();
         $doc->load(self::samplesDir() . 'custom/branch_rules/test_with_special_targets.xml', true);
-        
+
         // If we get here, the document loaded and validated successfully
         $this::assertTrue(true);
     }
-    
+
     /**
-     * Test loading a document with an invalid branch rule target 
+     * Test loading a document with an invalid branch rule target
      * should throw a BranchRuleTargetException
      */
     public function testInvalidBranchRuleTarget(): void
     {
         $doc = new XmlDocument();
-        
+
         $this->expectException(BranchRuleTargetException::class);
         $this->expectExceptionMessage('BranchRule target "nonexistent_item" does not exist in the document');
-        
+
         $doc->load(self::samplesDir() . 'custom/branch_rules/test_with_invalid_target_branch_rule.xml', true);
     }
-    
+
     /**
      * Test loading a document with multiple branch rules where one has an invalid target
      * should throw a BranchRuleTargetException
@@ -573,13 +573,13 @@ class XmlDocumentTest extends QtiSmTestCase
     public function testMultipleBranchRulesWithOneInvalid(): void
     {
         $doc = new XmlDocument();
-        
+
         $this->expectException(BranchRuleTargetException::class);
         $this->expectExceptionMessage('BranchRule target "nonexistent_item" does not exist in the document');
-        
+
         $doc->load(self::samplesDir() . 'custom/branch_rules/test_with_multiple_branch_rules.xml', true);
     }
-    
+
     /**
      * Test loading a document with a missing branch rule target
      * should throw an XmlStorageException due to XML Schema validation failure
@@ -587,12 +587,12 @@ class XmlDocumentTest extends QtiSmTestCase
     public function testMissingBranchRuleTarget(): void
     {
         $doc = new XmlDocument();
-        
+
         $this->expectException(XmlStorageException::class);
-        
+
         $doc->load(self::samplesDir() . 'custom/branch_rules/test_with_missing_target_branch_rule.xml', true);
     }
-    
+
     /**
      * Test loading a document with multiple invalid branch rule targets
      * should throw a BranchRuleTargetException with multiple error messages
@@ -600,11 +600,40 @@ class XmlDocumentTest extends QtiSmTestCase
     public function testMultipleInvalidBranchRuleTargets(): void
     {
         $doc = new XmlDocument();
-        
+
         $this->expectException(BranchRuleTargetException::class);
         $this->expectExceptionMessage('BranchRule target "nonexistent_item1" does not exist in the document; BranchRule target "nonexistent_item2" does not exist in the document');
-        
+
         $doc->load(self::samplesDir() . 'custom/branch_rules/test_with_multiple_invalid_targets.xml', true);
+    }
+
+    /**
+     * Test loading a document with an empty branch rule target
+     * should fail XML Schema validation.
+     */
+    public function testEmptyBranchRuleTarget(): void
+    {
+        $doc = new XmlDocument();
+
+        $this->expectException(XmlStorageException::class);
+
+        $doc->load(self::samplesDir() . 'custom/branch_rules/test_with_empty_target_branch_rule.xml', true);
+    }
+
+    /**
+     * Test that a branch rule inside a testPart must target another testPart
+     * and not, for example, an assessmentSection.
+     */
+    public function testTestPartBranchRuleMustTargetTestPart(): void
+    {
+        $doc = new XmlDocument();
+
+        $this->expectException(BranchRuleTargetException::class);
+        $this->expectExceptionMessage(
+            'BranchRule inside test part "P01" must target another test part, but "S01" is not a test part'
+        );
+
+        $doc->load(self::samplesDir() . 'custom/branch_rules/testpart_branch_rule_invalid_target_type.xml', true);
     }
 
     public function testXIncludeNoComponent(): void

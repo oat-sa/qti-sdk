@@ -692,21 +692,55 @@ class XmlDocument extends QtiDocument
     private function validateDocComponent(QtiComponent $docComponent): void
     {
         $branchRules = $docComponent->getComponentsByClassName('branchRule', true);
+
         if ($branchRules->count() === 0) {
             return;
         }
 
         $errors = [];
+        $components = [];
+
+        /** @var BranchRule $branchRule */
         foreach ($branchRules as $branchRule) {
             $target = $branchRule->getTarget();
+
             if (empty($target)) {
                 $errors[] = 'BranchRule is missing a target attribute';
+
                 continue;
             }
 
-            $targetElement = $docComponent->getComponentByIdentifier($target);
-            if ($targetElement === null && !in_array($target, BranchRule::RESERVED_TARGETS, true)) {
+            if (in_array($target, BranchRule::RESERVED_TARGETS, true)) {
+                continue;
+            }
+
+            $components[$target] ??= $docComponent->getComponentByIdentifier($target);
+
+            if ($components[$target] === null) {
                 $errors[] = sprintf('BranchRule target "%s" does not exist in the document', $target);
+
+                continue;
+            }
+
+            $parentIdentifier = $branchRule->getParentIdentifier();
+
+            if (!$parentIdentifier) {
+                $errors[] = sprintf(
+                    'BranchRule targeting "%s" does not have a parent or the parent does not contain an identifier',
+                    $target
+                );
+
+                continue;
+            }
+
+            $components[$parentIdentifier] ??= $docComponent->getComponentByIdentifier($parentIdentifier);
+
+            if ($components[$parentIdentifier] instanceof TestPart && !($components[$target] instanceof TestPart)) {
+                $errors[] = sprintf(
+                    'BranchRule inside test part "%s" must target another test part, but "%s" is not a test part',
+                    $parentIdentifier,
+                    $target
+                );
             }
         }
 

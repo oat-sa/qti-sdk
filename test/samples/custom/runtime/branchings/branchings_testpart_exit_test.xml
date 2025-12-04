@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"
+                identifier="branchings-testpart-exit-test"
+                title="Branchings test part EXIT_TEST">
+    <testPart identifier="P01" navigationMode="linear" submissionMode="individual">
+        <branchRule target="EXIT_TEST">
+            <baseValue baseType="boolean">true</baseValue>
+        </branchRule>
+        <assessmentSection identifier="S01" title="Section 1" visible="true">
+            <assessmentItemRef identifier="Q01" href="./item-1.xml" timeDependent="false"/>
+        </assessmentSection>
+    </testPart>
+    <testPart identifier="P02" navigationMode="linear" submissionMode="individual">
+        <assessmentSection identifier="S02" title="Section 2" visible="true">
+            <assessmentItemRef identifier="Q02" href="./item-2.xml" timeDependent="false"/>
+        </assessmentSection>
+    </testPart>
+    <outcomeProcessing/>
+</assessmentTest>
+
+
