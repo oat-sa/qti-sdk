@@ -267,6 +267,22 @@ class AssessmentTestSessionBranchingsTest extends QtiSmAssessmentTestSessionTest
         $this->assertEquals('P03', $session->getCurrentTestPart()->getIdentifier());
     }
 
+    public function testBranchingOnTestPartExitTest(): void
+    {
+        $session = self::instantiate(self::samplesDir() . 'custom/runtime/branchings/branchings_testpart_exit_test.xml');
+        $session->beginTestSession();
+
+        // We are starting in testPart P01.
+        $this->assertEquals('P01', $session->getCurrentTestPart()->getIdentifier());
+
+        // The testPart has a branchRule with target EXIT_TEST and condition always true.
+        // When moving to the next test part, the session should end instead of branching.
+        $session->moveNextTestPart();
+
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+        $this->assertFalse($session->isRunning());
+    }
+
     public function testBranchingRules(): void
     {
         $session = self::instantiate(self::samplesDir() . 'custom/runtime/branchings/branching_rules.xml');
