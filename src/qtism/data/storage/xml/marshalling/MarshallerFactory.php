@@ -25,9 +25,6 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use InvalidArgumentException;
-use qtism\data\ExternalQtiComponent;
-use qtism\data\content\xhtml\html5\Figure;
-use qtism\data\content\xhtml\html5\Figcaption;
 use qtism\data\QtiComponent;
 use qtism\data\storage\xml\QtiNamespaced;
 use qtism\data\storage\xml\Utils;
@@ -42,6 +39,8 @@ use RuntimeException;
  */
 abstract class MarshallerFactory
 {
+    private const DEFAULT_NAMESPACE = 'qtism';
+
     /**
      * An associative array where keys are QTI class names
      * and values are fully qualified marshaller PHP class names.
@@ -299,46 +298,46 @@ abstract class MarshallerFactory
      *
      * @param string $qtiClassName A QTI class name.
      * @param string $marshallerClassName A PHP marshaller class name (fully qualified).
-     * @param string $ns
+     * @param ?string $ns
      */
-    public function addMappingEntry($qtiClassName, $marshallerClassName, $ns = 'qtism'): void
+    public function addMappingEntry($qtiClassName, $marshallerClassName, $ns = null): void
     {
-        $this->mapping[$ns][$qtiClassName] = $marshallerClassName;
+        $this->mapping[$ns ?? self::DEFAULT_NAMESPACE][$qtiClassName] = $marshallerClassName;
     }
 
     /**
      * Whether a mapping entry is defined for a given $qtiClassName.
      *
      * @param string $qtiClassName A QTI class name.
-     * @param string $ns
+     * @param ?string $ns
      * @return bool Whether a mapping entry is defined.
      */
-    public function hasMappingEntry($qtiClassName, $ns = 'qtism'): bool
+    public function hasMappingEntry($qtiClassName, $ns = null): bool
     {
-        return isset($this->mapping[$ns][$qtiClassName]);
+        return isset($this->mapping[$ns ?? self::DEFAULT_NAMESPACE][$qtiClassName]);
     }
 
     /**
      * Get the mapping entry.
      *
      * @param string $qtiClassName A QTI class name.
-     * @param string $ns
+     * @param ?string $ns
      * @return false|string False if does not exist, otherwise a fully qualified class name.
      */
-    public function getMappingEntry($qtiClassName, $ns = 'qtism')
+    public function getMappingEntry($qtiClassName, $ns = null)
     {
-        return $this->mapping[$ns][$qtiClassName] ?? false;
+        return $this->mapping[$ns ?? self::DEFAULT_NAMESPACE][$qtiClassName] ?? false;
     }
 
     /**
      * Remove a mapping for $qtiClassName.
      *
      * @param string $qtiClassName A QTI class name.
-     * @param string $ns
+     * @param ?string $ns
      */
-    public function removeMappingEntry($qtiClassName, $ns = 'qtism'): void
+    public function removeMappingEntry($qtiClassName, $ns = null): void
     {
-        unset($this->mapping[$ns][$qtiClassName]);
+        unset($this->mapping[$ns ?? self::DEFAULT_NAMESPACE][$qtiClassName]);
     }
 
     /**
