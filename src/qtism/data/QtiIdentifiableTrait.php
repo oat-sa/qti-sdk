@@ -65,7 +65,7 @@ trait QtiIdentifiableTrait
      */
     public function attach(SplObserver $observer): void
     {
-        $this->getObservers()->attach($observer);
+        $this->getObservers()[$observer] = null;
     }
 
     /**
@@ -75,7 +75,7 @@ trait QtiIdentifiableTrait
      */
     public function detach(SplObserver $observer): void
     {
-        $this->getObservers()->detach($observer);
+        unset($this->getObservers()[$observer]);
     }
 
     /**
