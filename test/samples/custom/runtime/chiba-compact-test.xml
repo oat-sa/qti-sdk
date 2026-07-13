@@ -1,0 +1,945 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentTest xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" identifier="OBUPBGSY" title="デザインシート小学校５年生" toolName="tao" toolVersion="2022.08" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.taotesting.com/xsd/qticompact_v2p1.xsd">
+  <timeLimits allowLateSubmission="false"/>
+  <testPart identifier="testPart-1" navigationMode="linear" submissionMode="individual">
+    <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+    <timeLimits allowLateSubmission="false"/>
+    <assessmentSection identifier="assessmentSection-2" required="false" fixed="false" title="問題の説明" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-2" required="false" fixed="false" href="../../items/i64e80d844048721971acb9fe5b258044e/qti.xml" category="x-tao-option-zoom" adaptive="false" timeDependent="false" title="全体のながれ（小学）" label="00_全体の流れ（小学）">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseProcessing/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-3" required="false" fixed="false" href="../../items/i64e80d8c8c740219767975b548a55d837/qti.xml" category="x-tao-option-zoom" adaptive="false" timeDependent="false" title="画面説明" label="00_画面説明">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseProcessing/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-4" required="false" fixed="false" href="../../items/i64e80d948b25a21971fd3e2251aeb7146/qti.xml" category="x-tao-option-zoom" adaptive="false" timeDependent="false" title="操作の練習はじめ" label="01_操作の練習_はじめ">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseProcessing/>
+      </assessmentItemRef>
+    </assessmentSection>
+    <assessmentSection identifier="assessmentSection-1" required="false" fixed="false" title="操作の練習" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-11" required="false" fixed="false" href="../../items/i64e80d9d204e32197924ff431a81196a1/qti.xml" adaptive="false" timeDependent="false" title="練習１" label="01_練習１">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-12" required="false" fixed="false" href="../../items/i64e80da5710e02197eff62456108b68d1/qti.xml" adaptive="false" timeDependent="false" title="練習２" label="02_練習２">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-13" required="false" fixed="false" href="../../items/i64e80dae14e8e219786274f6fe88e6575/qti.xml" adaptive="false" timeDependent="false" title="練習３" label="03_練習３">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <responseProcessing>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE"/>
+                <correct identifier="RESPONSE"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_1"/>
+                <correct identifier="RESPONSE_1"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+        </responseProcessing>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-34" required="false" fixed="false" href="../../items/i64e80db75e4d9219711718d78f16791f6/qti.xml" adaptive="false" timeDependent="false" title="練習４" label="04_練習４">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-35" required="false" fixed="false" href="../../items/i64e80dc05d0eb2197c475736230be3363/qti.xml" adaptive="false" timeDependent="false" title="練習５" label="05_練習５">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1" patternMask="^[\s\S]{0,5}$"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-21" required="false" fixed="false" href="../../items/i6503fb2b881bc21218f3d26929a444ae0/qti.xml" adaptive="false" timeDependent="false" title="練習６" label="06_練習６">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="0">
+          <associationValidityConstraint identifier="gapimg_1" minConstraint="0" maxConstraint="1"/>
+          <associationValidityConstraint identifier="gapimg_2" minConstraint="0" maxConstraint="1"/>
+          <associationValidityConstraint identifier="gapimg_3" minConstraint="0" maxConstraint="1"/>
+        </responseValidityConstraint>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-22" required="false" fixed="false" href="../../items/i64e80dc8a67df2197285ed6659215e3a5/qti.xml" adaptive="false" timeDependent="false" title="問題_はじめ" label="07_問題_はじめ">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+    </assessmentSection>
+  </testPart>
+  <testPart identifier="testPart-2" navigationMode="nonlinear" submissionMode="individual">
+    <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+    <timeLimits allowLateSubmission="false"/>
+    <assessmentSection identifier="assessmentSection-6" required="false" fixed="false" title="問題１" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-6" required="false" fixed="false" href="../../items/i6513d99fa2893110499144bf5286f04e696/qti.xml" adaptive="false" timeDependent="false" title="問題１_はじめに" label="CH_R5_小5_問題_1_1">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseProcessing/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-7" required="false" fixed="false" href="../../items/i652d15d41b2051177713b649dcd5b2dea1f/qti.xml" adaptive="false" timeDependent="false" title="問題１" label="CH_R5_小5_問題_1_2">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE"/>
+                <correct identifier="RESPONSE"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_1"/>
+                <correct identifier="RESPONSE_1"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+        </responseProcessing>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+    </assessmentSection>
+    <assessmentSection identifier="assessmentSection-4" required="false" fixed="false" title="問題２" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-5" required="false" fixed="false" href="../../items/i651a89f40107d3139d639e6b9c6ef65de/qti.xml" adaptive="false" timeDependent="false" title="問題２_はじめに" label="CH_R5_小5_問題_2_1">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseProcessing/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-8" required="false" fixed="false" href="../../items/i651a8e1a92c9725603ca346013abb7622/qti.xml" adaptive="false" timeDependent="false" title="問題２" label="CH_R5_小5_問題_2_2">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_2" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_3" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE"/>
+                <correct identifier="RESPONSE"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_1"/>
+                <correct identifier="RESPONSE_1"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_2"/>
+                <correct identifier="RESPONSE_2"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_3"/>
+                <correct identifier="RESPONSE_3"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+        </responseProcessing>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_2" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_3" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+    </assessmentSection>
+    <assessmentSection identifier="assessmentSection-5" required="false" fixed="false" title="問題３" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-14" required="false" fixed="false" href="../../items/i651b7fb5da73965087c4280d46f82abe51/qti.xml" adaptive="false" timeDependent="false" title="問題 ３" label="CH_R5_小5_問題_3">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="2"/>
+      </assessmentItemRef>
+    </assessmentSection>
+    <assessmentSection identifier="assessmentSection-7" required="false" fixed="false" title="問題４" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-19" required="false" fixed="false" href="../../items/i651b8301b7f627854190df12b0657bda97/qti.xml" adaptive="false" timeDependent="false" title="問題 ４" label="CH_R5_小5_問題_4">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+    </assessmentSection>
+    <assessmentSection identifier="assessmentSection-8" required="false" fixed="false" title="問題５" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-20" required="false" fixed="false" href="../../items/i651a58d1b8ae3218338e82c408e666c5583/qti.xml" adaptive="false" timeDependent="false" title="問題 ５" label="CH_R5_小5_問題_5">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE"/>
+                <correct identifier="RESPONSE"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_1"/>
+                <correct identifier="RESPONSE_1"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+        </responseProcessing>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+    </assessmentSection>
+    <assessmentSection identifier="assessmentSection-10" required="false" fixed="false" title="問題６" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-23" required="false" fixed="false" href="../../items/i652cf8d3c5ec21168390fc425143637fcb6/qti.xml" adaptive="false" timeDependent="false" title="問題 ６" label="CH_R5_小5_問題_6">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE"/>
+                <correct identifier="RESPONSE"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_1"/>
+                <correct identifier="RESPONSE_1"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+        </responseProcessing>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+    </assessmentSection>
+    <assessmentSection identifier="assessmentSection-11" required="false" fixed="false" title="問題７" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-24" required="false" fixed="false" href="../../items/i651bcebe57505840048775aa5ad6f1527c/qti.xml" adaptive="false" timeDependent="false" title="問題 ７" label="CH_R5_小5_問題_7">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <responseProcessing>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE"/>
+                <correct identifier="RESPONSE"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_1"/>
+                <correct identifier="RESPONSE_1"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+        </responseProcessing>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+    </assessmentSection>
+    <assessmentSection identifier="assessmentSection-14" required="false" fixed="false" title="問題８" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-26" required="false" fixed="false" href="../../items/i653a0c0bb465e68933fab1170482bbbde1/qti.xml" adaptive="false" timeDependent="false" title="問題 ８" label="CH_R5_小5_問題_8 ">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE_3" cardinality="single" baseType="integer"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_4" cardinality="single" baseType="string"/>
+        <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="string"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_3"/>
+                <correct identifier="RESPONSE_3"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE"/>
+                <correct identifier="RESPONSE"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_4"/>
+                <correct identifier="RESPONSE_4"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_1"/>
+                <correct identifier="RESPONSE_1"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+        </responseProcessing>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_4" minConstraint="0" maxConstraint="0" patternMask="^[\s\S]{0,30}$"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="0" patternMask="^[\s\S]{0,15}$"/>
+      </assessmentItemRef>
+    </assessmentSection>
+    <assessmentSection identifier="assessmentSection-15" required="false" fixed="false" title="問題９" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-27" required="false" fixed="false" href="../../items/i652d0a53dae0926198381e8298a839dc797/qti.xml" adaptive="false" timeDependent="false" title="問題 ９" label="CH_R5_小5_問題_9">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE"/>
+                <correct identifier="RESPONSE"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_1"/>
+                <correct identifier="RESPONSE_1"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+        </responseProcessing>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_1" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+    </assessmentSection>
+    <assessmentSection identifier="assessmentSection-16" required="false" fixed="false" title="おわりに" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-36" required="false" fixed="false" href="../../items/i651f844668d7e5547572d96c4cf032d564/qti.xml" adaptive="false" timeDependent="false" title="問題_おわり" label="CH_R5_小5_問題_END">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <responseProcessing/>
+      </assessmentItemRef>
+    </assessmentSection>
+  </testPart>
+  <testPart identifier="testPart-3" navigationMode="linear" submissionMode="individual">
+    <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+    <timeLimits allowLateSubmission="false"/>
+    <assessmentSection identifier="assessmentSection-9" required="false" fixed="false" title="文字入力課題" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-1" required="false" fixed="false" href="../../items/i64e80e04d5f3e2197cd4c8cdcb9bb4740/qti.xml" adaptive="false" timeDependent="false" title="問題_おわり２" label="41_問題_おわり２">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-16" required="false" fixed="false" href="../../items/i64e80e0cc5f08219771f8f9845d932928/qti.xml" category="x-tao-option-zoom" adaptive="false" timeDependent="false" title="文字入力課題＿説明" label="49_文字入力課題_説明">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseProcessing/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-17" required="false" fixed="false" href="../../items/i64e80e1566af521974dcde9b064749d60/qti.xml" category="x-tao-option-zoom" adaptive="false" timeDependent="false" title="文字入力課題＿はじめ" label="50_文字入力課題_はじめ">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing/>
+      </assessmentItemRef>
+    </assessmentSection>
+    <assessmentSection identifier="assessmentSection-3" required="false" fixed="false" title="文字入力課題" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-9" required="false" fixed="false" href="../../items/i64e80e1e1480721979c8cf1dc32e3fb3d/qti.xml" category="x-tao-option-zoom" adaptive="false" timeDependent="false" title="文字入力課題 １" label="51_文字入力課題1">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+        <timeLimits maxTime="30" allowLateSubmission="true"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1" patternMask="^[\s\S]{0,255}$"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-29" required="false" fixed="false" href="../../items/i64e80e262c3322197600979bca508890d/qti.xml" category="x-tao-option-zoom" adaptive="false" timeDependent="false" title="文字入力課題 ２" label="52_文字入力課題2">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+        <timeLimits maxTime="30" allowLateSubmission="true"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1" patternMask="^[\s\S]{0,255}$"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-30" required="false" fixed="false" href="../../items/i64e80e2f2c9f021978913fa9ee50d31a8/qti.xml" category="x-tao-option-zoom" adaptive="false" timeDependent="false" title="文字入力課題３" label="53_文字入力課題3">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+        <timeLimits maxTime="30" allowLateSubmission="true"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1" patternMask="^[\s\S]{0,255}$"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-31" required="false" fixed="false" href="../../items/i64e80e38495ab21979d20720fa5eedada/qti.xml" category="x-tao-option-zoom" adaptive="false" timeDependent="false" title="文字入力課題４" label="54_文字入力課題4">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+        <timeLimits maxTime="30" allowLateSubmission="true"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1" patternMask="^[\s\S]{0,255}$"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-32" required="false" fixed="false" href="../../items/i64e80e40839da219750259b048f551e57/qti.xml" category="x-tao-option-zoom" adaptive="false" timeDependent="false" title="文字入力課題５" label="55_文字入力課題5">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+        <timeLimits maxTime="30" allowLateSubmission="true"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1" patternMask="^[\s\S]{0,255}$"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-33" required="false" fixed="false" href="../../items/i64e80e48ab54a21971860d1eb53c40aa7/qti.xml" category="x-tao-option-zoom" adaptive="false" timeDependent="false" title="文字入力課題６" label="56_文字入力課題6">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+        <timeLimits maxTime="30" allowLateSubmission="true"/>
+        <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing template="http://www.imsglobal.org/question/qti_v2p2/rptemplates/match_correct"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE" minConstraint="0" maxConstraint="1" patternMask="^[\s\S]{0,255}$"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-18" required="false" fixed="false" href="../../items/i64e80e50ca61d2197c2304297c7142f8b/qti.xml" adaptive="false" timeDependent="false" title="文字入力課題_おわり" label="59_文字入力課題_おわり">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseProcessing/>
+      </assessmentItemRef>
+    </assessmentSection>
+  </testPart>
+  <testPart identifier="testPart-9" navigationMode="linear" submissionMode="individual">
+    <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+    <timeLimits allowLateSubmission="false"/>
+    <assessmentSection identifier="assessmentSection-12" required="false" fixed="false" title="アンケート" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-10" required="false" fixed="false" href="../../items/i64e80e5977d632197cf1a803f3902b24a/qti.xml" adaptive="false" timeDependent="false" title="アンケートはじめ" label="60_アンケートはじめ">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-37" required="false" fixed="false" href="../../items/i6541b464c8a9c1196337a4a09399879f94e/qti.xml" adaptive="false" timeDependent="false" title="アンケート小学校" label="61_アンケートR5（小学）">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseDeclaration identifier="RESPONSE_01" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_02" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_03" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_04" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_05" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_06" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_07" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_08" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_11" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_10" cardinality="single" baseType="identifier"/>
+        <responseDeclaration identifier="RESPONSE_09" cardinality="single" baseType="identifier"/>
+        <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float" normalMaximum="0"/>
+        <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+          <defaultValue>
+            <value>0</value>
+          </defaultValue>
+        </outcomeDeclaration>
+        <responseProcessing>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_01"/>
+                <correct identifier="RESPONSE_01"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_02"/>
+                <correct identifier="RESPONSE_02"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_03"/>
+                <correct identifier="RESPONSE_03"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_04"/>
+                <correct identifier="RESPONSE_04"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_05"/>
+                <correct identifier="RESPONSE_05"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_06"/>
+                <correct identifier="RESPONSE_06"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_07"/>
+                <correct identifier="RESPONSE_07"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_08"/>
+                <correct identifier="RESPONSE_08"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_09"/>
+                <correct identifier="RESPONSE_09"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_10"/>
+                <correct identifier="RESPONSE_10"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+          <responseCondition>
+            <responseIf>
+              <match>
+                <variable identifier="RESPONSE_11"/>
+                <correct identifier="RESPONSE_11"/>
+              </match>
+              <setOutcomeValue identifier="SCORE">
+                <sum>
+                  <variable identifier="SCORE"/>
+                  <baseValue baseType="integer">1</baseValue>
+                </sum>
+              </setOutcomeValue>
+            </responseIf>
+          </responseCondition>
+        </responseProcessing>
+        <responseValidityConstraint responseIdentifier="RESPONSE_01" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_02" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_03" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_04" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_05" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_06" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_07" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_08" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_09" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_10" minConstraint="0" maxConstraint="1"/>
+        <responseValidityConstraint responseIdentifier="RESPONSE_11" minConstraint="0" maxConstraint="1"/>
+      </assessmentItemRef>
+      <assessmentItemRef identifier="item-15" required="false" fixed="false" href="../../items/i64e80e6a5c92a219747cb5e72035f1fcb/qti.xml" adaptive="false" timeDependent="false" title="アンケートおわり" label="62_アンケートおわり">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="false" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseProcessing/>
+      </assessmentItemRef>
+    </assessmentSection>
+  </testPart>
+  <testPart identifier="testPart-10" navigationMode="linear" submissionMode="individual">
+    <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+    <timeLimits allowLateSubmission="false"/>
+    <assessmentSection identifier="assessmentSection-13" required="false" fixed="false" title="全体おわり" visible="true" keepTogether="true">
+      <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+      <timeLimits allowLateSubmission="false"/>
+      <assessmentItemRef identifier="item-28" required="false" fixed="false" href="../../items/i64e80e7347032219751790adc01e8a784/qti.xml" category="x-tao-option-noAlertTimeout x-tao-option-zoom" adaptive="false" timeDependent="false" title="全体おわり" label="99_全体おわり">
+        <itemSessionControl maxAttempts="0" showFeedback="false" allowReview="true" showSolution="false" allowComment="false" allowSkipping="true" validateResponses="false"/>
+        <timeLimits allowLateSubmission="false"/>
+        <responseProcessing/>
+      </assessmentItemRef>
+    </assessmentSection>
+  </testPart>
+  <outcomeProcessing/>
+</assessmentTest>

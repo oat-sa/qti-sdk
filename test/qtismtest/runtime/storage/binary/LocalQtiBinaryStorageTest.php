@@ -10,6 +10,7 @@ use qtism\common\datatypes\QtiDuration;
 use qtism\common\datatypes\QtiIdentifier;
 use qtism\common\datatypes\QtiPair;
 use qtism\common\datatypes\QtiPoint;
+use qtism\common\datatypes\QtiString;
 use qtism\common\enums\BaseType;
 use qtism\common\enums\Cardinality;
 use qtism\data\QtiComponentIterator;
@@ -1401,5 +1402,894 @@ class LocalQtiBinaryStorageTest extends QtiSmTestCase
         $session = $storage->retrieve($sessionId);
 
         $this::assertEquals($config, $session->getConfig());
+    }
+
+    public function testChibaSession()
+    {
+        $url = self::samplesDir() . 'custom/runtime/chiba-compact-test.xml';
+        $doc = new XmlCompactDocument();
+        $doc->load($url);
+        $test = $doc->getDocumentComponent();
+        $sessionManager = new SessionManager(new FileSystemFileManager());
+        $storage = new LocalQtiBinaryStorage($sessionManager, $test);
+        $session = $storage->instantiate();
+        $sessionId = $session->getSessionId();
+
+        $session->setTime(self::createDate('2024-01-22 09:00:00'));
+        $session->beginTestSession();
+
+        // item-2
+        $this->assertEquals('item-2', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:00:20'));
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-3
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-3', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:00:22'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:00:30'));
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-4
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-4', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:00:31'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:00:40'));
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-11
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-11', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:00:41'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:01:10'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_s5')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-12
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-12', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:01:12'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:01:20'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::MULTIPLE,
+                    BaseType::IDENTIFIER,
+                    new MultipleContainer(
+                        BaseType::IDENTIFIER,
+                        [
+                            new QtiIdentifier('choice_supermarket'),
+                            new QtiIdentifier('choice_convenience'),
+                            new QtiIdentifier('choice_school'),
+                            new QtiIdentifier('choice_station'),
+                            new QtiIdentifier('choice_park')
+                        ]
+                    )
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-13
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-13', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:01:23'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:01:30'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_2')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_1',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_6')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-34
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-34', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:01:31'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:01:40'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_star')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-35
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-35', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:01:42'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:02:02'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
+                    new QtiString('あいうえお')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-21
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-21', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:02:03'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:02:15'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::MULTIPLE,
+                    BaseType::DIRECTED_PAIR,
+                    new MultipleContainer(
+                        BaseType::DIRECTED_PAIR,
+                        [
+                            new QtiDirectedPair('gapimg_1', 'associablehotspot_1'),
+                            new QtiDirectedPair('gapimg_2', 'associablehotspot_2'),
+                            new QtiDirectedPair('gapimg_3', 'associablehotspot_3')
+                        ]
+                    )
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-22
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-22', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:02:16'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:02:23'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_1')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-6
+        $this->assertEquals('item-6', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:02:24'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:02:30'));
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-7
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-7', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:02:31'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:02:40'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_2')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_1',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_7')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-5
+        $this->assertEquals('item-5', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:02:41'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:02:52'));
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-8
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-8', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:02:53'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:03:11'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_2')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_1',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_5')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_2',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_11')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_3',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_7')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-14
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-14', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:03:12'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:03:20'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::MULTIPLE,
+                    BaseType::IDENTIFIER,
+                    new MultipleContainer(
+                        BaseType::IDENTIFIER,
+                        [
+                            new QtiIdentifier('choice_D'),
+                            new QtiIdentifier('choice_F')
+                        ]
+                    )
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-19
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-19', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:03:21'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:03:33'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_6')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-20
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-20', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:03:34'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:03:41'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_1')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_1',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_8')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-23
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-23', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:03:42'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:03:50'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_2')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_1',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_8')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-24
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-24', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:03:51'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:04:00'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_1')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_1',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_5')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-26
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-26', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:04:01'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:04:10'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE_3',
+                    Cardinality::SINGLE,
+                    BaseType::INTEGER,
+                    new QtiInteger(1)
+                ),
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_5')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_4',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
+                    new QtiString('言葉だけじゃなく、グラフも入れてある')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_1',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
+                    new QtiString('国民1人当たりのごみ処理費用')
+                ),
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-27
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-27', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:04:11'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:04:22'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_4')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_1',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_8')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-36
+        $this->assertEquals('item-36', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:04:23'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:04:25'));
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-1
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-1', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:04:26'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:04:32'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_1')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-16
+        $this->assertEquals('item-16', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:04:33'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:04:40'));
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-17
+        $this->assertEquals('item-17', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:04:41'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:04:52'));
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-9
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-9', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:04:53'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:05:04'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
+                    new QtiString('あいこは、くだものがすきです。')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-29
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-29', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:05:05'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:05:20'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
+                    new QtiString('あなたの妹は、左にいる子ですね。')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-30
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-30', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:05:21'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:05:30'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
+                    new QtiString('雨の日は、室内で読書をします。')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-31
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-31', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:05:31'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:05:44'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
+                    new QtiString('ぼくのクラスは、３ねん')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-32
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-32', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:05:45'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:06:00'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
+                    new QtiString('もんしろちょうが、キャベツばたけにい')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-33
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-33', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:06:01'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:06:20'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE',
+                    Cardinality::SINGLE,
+                    BaseType::STRING,
+                    new QtiString('さっかーで、Aちーむ')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-18
+        $this->assertEquals('item-18', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:06:21'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:06:23'));
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-10
+        $this->assertEquals('item-10', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:06:24'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:06:27'));
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-37
+        $session = $storage->retrieve($sessionId);
+        $this->assertEquals('item-37', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->setTime(self::createDate('2024-01-22 09:06:28'));
+        $session->beginAttempt();
+        $session->setTime(self::createDate('2024-01-22 09:06:53'));
+        $session->endAttempt(
+            new State([
+                new ResponseVariable(
+                    'RESPONSE_01',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_01_1')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_02',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_02_2')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_03',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_03_1')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_04',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_04_2')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_05',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_05_2')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_06',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_06_2')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_07',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_07_1')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_08',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_08_2')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_09',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_09_3')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_10',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_10_3')
+                ),
+                new ResponseVariable(
+                    'RESPONSE_11',
+                    Cardinality::SINGLE,
+                    BaseType::IDENTIFIER,
+                    new QtiIdentifier('choice_11_1')
+                )
+            ])
+        );
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-15
+        $this->assertEquals('item-15', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $session->moveNext();
+        $storage->persist($session);
+
+        // item-28
+        $this->assertEquals('item-28', $session->getCurrentAssessmentItemRef()->getIdentifier());
+        $session->beginAttempt();
+        $session->endAttempt(new State());
+        $session->moveNext();
+
+        $this->assertEquals(AssessmentTestSessionState::CLOSED, $session->getState());
+        $storage->persist($session);
+
+
+        // Check data.
+        $session = $storage->retrieve($sessionId);
+
+        // item-2
+        $this->assertEquals('PT20S', $session['item-2.duration']->__toString());
+
+        // item-3
+        $this->assertEquals('PT8S', $session['item-3.duration']->__toString());
+
+        // item-4
+        $this->assertEquals('PT9S', $session['item-4.duration']->__toString());
+
+        // item-11
+        $this->assertEquals('choice_s5', $session->getAssessmentItemSessions('item-11')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT29S', $session['item-11.duration']->__toString());
+
+        // item-12
+        $this->assertEquals(
+            ['choice_supermarket', 'choice_convenience', 'choice_school', 'choice_station', 'choice_park'],
+            $session->getAssessmentItemSessions('item-12')[0]['RESPONSE']->getArrayCopy()
+        );
+        $this->assertEquals('PT8S', $session['item-12.duration']->__toString());
+
+
+        // item-13
+        $this->assertEquals('choice_2', $session->getAssessmentItemSessions('item-13')[0]['RESPONSE']->getValue());
+        $this->assertEquals('choice_6', $session->getAssessmentItemSessions('item-13')[0]['RESPONSE_1']->getValue());
+        $this->assertEquals('PT7S', $session['item-13.duration']->__toString());
+
+        // item-34
+        $this->assertEquals('choice_star', $session->getAssessmentItemSessions('item-34')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT9S', $session['item-34.duration']->__toString());
+
+        // item-35
+        $this->assertEquals('あいうえお', $session->getAssessmentItemSessions('item-35')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT20S', $session['item-35.duration']->__toString());
+
+        // item-21
+        $this->assertTrue($session->getAssessmentItemSessions('item-21')[0]['RESPONSE'][0]->equals(new QtiDirectedPair('gapimg_1', 'associablehotspot_1')));
+        $this->assertTrue($session->getAssessmentItemSessions('item-21')[0]['RESPONSE'][1]->equals(new QtiDirectedPair('gapimg_2', 'associablehotspot_2')));
+        $this->assertTrue($session->getAssessmentItemSessions('item-21')[0]['RESPONSE'][2]->equals(new QtiDirectedPair('gapimg_3', 'associablehotspot_3')));
+        $this->assertEquals('PT12S', $session['item-21.duration']->__toString());
+
+        // item-22
+        $this->assertEquals('choice_1', $session->getAssessmentItemSessions('item-22')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT7S', $session['item-22.duration']->__toString());
+
+        // item-6
+        $this->assertEquals('PT6S', $session['item-6.duration']->__toString());
+
+        // item-7
+        $this->assertEquals('choice_2', $session->getAssessmentItemSessions('item-7')[0]['RESPONSE']->getValue());
+        $this->assertEquals('choice_7', $session->getAssessmentItemSessions('item-7')[0]['RESPONSE_1']->getValue());
+        $this->assertEquals('PT9S', $session['item-7.duration']->__toString());
+
+        // item-5
+        $this->assertEquals('PT11S', $session['item-5.duration']->__toString());
+
+        // item-8
+        $this->assertEquals('choice_2', $session->getAssessmentItemSessions('item-8')[0]['RESPONSE']->getValue());
+        $this->assertEquals('choice_5', $session->getAssessmentItemSessions('item-8')[0]['RESPONSE_1']->getValue());
+        $this->assertEquals('PT18S', $session['item-8.duration']->__toString());
+
+        // item-14
+        $this->assertTrue($session->getAssessmentItemSessions('item-14')[0]['RESPONSE'][0]->equals('choice_D'));
+        $this->assertTrue($session->getAssessmentItemSessions('item-14')[0]['RESPONSE'][1]->equals('choice_F'));
+        $this->assertEquals('PT8S', $session['item-14.duration']->__toString());
+
+        // item-19
+        $this->assertEquals('choice_6', $session->getAssessmentItemSessions('item-19')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT12S', $session['item-19.duration']->__toString());
+
+        // item-20
+        $this->assertEquals('choice_1', $session->getAssessmentItemSessions('item-20')[0]['RESPONSE']->getValue());
+        $this->assertEquals('choice_8', $session->getAssessmentItemSessions('item-20')[0]['RESPONSE_1']->getValue());
+        $this->assertEquals('PT7S', $session['item-20.duration']->__toString());
+
+        // item-23
+        $this->assertEquals('choice_2', $session->getAssessmentItemSessions('item-23')[0]['RESPONSE']->getValue());
+        $this->assertEquals('choice_8', $session->getAssessmentItemSessions('item-23')[0]['RESPONSE_1']->getValue());
+        $this->assertEquals('PT8S', $session['item-23.duration']->__toString());
+
+        // item-24
+        $this->assertEquals('choice_1', $session->getAssessmentItemSessions('item-24')[0]['RESPONSE']->getValue());
+        $this->assertEquals('choice_5', $session->getAssessmentItemSessions('item-24')[0]['RESPONSE_1']->getValue());
+        $this->assertEquals('PT9S', $session['item-24.duration']->__toString());
+
+        // item-26
+        $this->assertEquals(1, $session->getAssessmentItemSessions('item-26')[0]['RESPONSE_3']->getValue());
+        $this->assertEquals('choice_5', $session->getAssessmentItemSessions('item-26')[0]['RESPONSE']->getValue());
+        $this->assertEquals('言葉だけじゃなく、グラフも入れてある', $session->getAssessmentItemSessions('item-26')[0]['RESPONSE_4']->getValue());
+        $this->assertEquals('国民1人当たりのごみ処理費用', $session->getAssessmentItemSessions('item-26')[0]['RESPONSE_1']->getValue());
+        $this->assertEquals('PT9S', $session['item-26.duration']->__toString());
+
+        // item-27
+        $this->assertEquals('choice_4', $session->getAssessmentItemSessions('item-27')[0]['RESPONSE']->getValue());
+        $this->assertEquals('choice_8', $session->getAssessmentItemSessions('item-27')[0]['RESPONSE_1']->getValue());
+        $this->assertEquals('PT11S', $session['item-27.duration']->__toString());
+
+        // item-36
+        $this->assertEquals('PT2S', $session['item-36.duration']->__toString());
+
+        // item-1
+        $this->assertEquals('choice_1', $session->getAssessmentItemSessions('item-1')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT6S', $session['item-1.duration']->__toString());
+
+        // item-16
+        $this->assertEquals('PT7S', $session['item-16.duration']->__toString());
+
+        // item-17
+        $this->assertEquals('PT11S', $session['item-17.duration']->__toString());
+
+        // item-9
+        $this->assertEquals('あいこは、くだものがすきです。', $session->getAssessmentItemSessions('item-9')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT11S', $session['item-9.duration']->__toString());
+
+        // item-29
+        $this->assertEquals('あなたの妹は、左にいる子ですね。', $session->getAssessmentItemSessions('item-29')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT15S', $session['item-29.duration']->__toString());
+
+        // item-30
+        $this->assertEquals('雨の日は、室内で読書をします。', $session->getAssessmentItemSessions('item-30')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT9S', $session['item-30.duration']->__toString());
+
+        // item-31
+        $this->assertEquals('ぼくのクラスは、３ねん', $session->getAssessmentItemSessions('item-31')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT13S', $session['item-31.duration']->__toString());
+
+        // item-32
+        $this->assertEquals('もんしろちょうが、キャベツばたけにい', $session->getAssessmentItemSessions('item-32')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT15S', $session['item-32.duration']->__toString());
+
+        // item-33
+        $this->assertEquals('さっかーで、Aちーむ', $session->getAssessmentItemSessions('item-33')[0]['RESPONSE']->getValue());
+        $this->assertEquals('PT19S', $session['item-33.duration']->__toString());
+
+        // item-18
+        $this->assertEquals('PT2S', $session['item-18.duration']->__toString());
+
+        // item-10
+        $this->assertEquals('PT3S', $session['item-10.duration']->__toString());
+
+        // item-37
+        $this->assertEquals('choice_01_1', $session->getAssessmentItemSessions('item-37')[0]['RESPONSE_01']->getValue());
+        $this->assertEquals('choice_02_2', $session->getAssessmentItemSessions('item-37')[0]['RESPONSE_02']->getValue());
+        $this->assertEquals('choice_03_1', $session->getAssessmentItemSessions('item-37')[0]['RESPONSE_03']->getValue());
+        $this->assertEquals('choice_04_2', $session->getAssessmentItemSessions('item-37')[0]['RESPONSE_04']->getValue());
+        $this->assertEquals('choice_05_2', $session->getAssessmentItemSessions('item-37')[0]['RESPONSE_05']->getValue());
+        $this->assertEquals('choice_06_2', $session->getAssessmentItemSessions('item-37')[0]['RESPONSE_06']->getValue());
+        $this->assertEquals('choice_07_1', $session->getAssessmentItemSessions('item-37')[0]['RESPONSE_07']->getValue());
+        $this->assertEquals('choice_08_2', $session->getAssessmentItemSessions('item-37')[0]['RESPONSE_08']->getValue());
+        $this->assertEquals('choice_09_3', $session->getAssessmentItemSessions('item-37')[0]['RESPONSE_09']->getValue());
+        $this->assertEquals('choice_10_3', $session->getAssessmentItemSessions('item-37')[0]['RESPONSE_10']->getValue());
+        $this->assertEquals('choice_11_1', $session->getAssessmentItemSessions('item-37')[0]['RESPONSE_11']->getValue());
+        $this->assertEquals('PT25S', $session['item-37.duration']->__toString());
     }
 }
