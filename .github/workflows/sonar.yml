@@ -24,7 +24,7 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: 'https://sonarqube.taotesting.info/sonarqube/'
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       # Job will fail when the Quality Gate is red
       - name: Sonarqube quality gate check
