@@ -100,6 +100,19 @@ class RubricBlockMarshallerTest extends QtiSmTestCase
         $this::assertInstanceOf(RubricBlock::class, $rubricBlock);
     }
 
+    public function testUnmarshallTestConstructorLegacyAndCamelCaseViews()
+    {
+        $rubricBlock = $this->createComponentFromXml(' 
+            <rubricBlock view="test_constructor testConstructor candidate">
+                <p>Rubric content.</p>
+            </rubricBlock>
+        ');
+
+        $this::assertInstanceOf(RubricBlock::class, $rubricBlock);
+        $this::assertTrue($rubricBlock->getViews()->contains(View::TEST_CONSTRUCTOR));
+        $this::assertTrue($rubricBlock->getViews()->contains(View::CANDIDATE));
+    }
+
     public function testMarshall()
     {
         $stylesheet = new Stylesheet('./stylesheet.css');

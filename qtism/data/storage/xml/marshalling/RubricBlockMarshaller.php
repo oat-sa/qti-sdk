@@ -53,9 +53,10 @@ class RubricBlockMarshaller extends Marshaller
 
         $arrayViews = [];
         foreach ($component->getViews() as $view) {
-            $key = array_search($view, View::asArray());
-            // replace '_' by the space char.
-            $arrayViews[] = strtolower(str_replace("\xf2", "\x20", $key));
+            $viewName = View::getNameByConstant($view);
+            if ($viewName !== false) {
+                $arrayViews[] = $viewName;
+            }
         }
 
         if (count($arrayViews) > 0) {
@@ -97,14 +98,14 @@ class RubricBlockMarshaller extends Marshaller
     {
         // First we retrieve the mandatory views.
         if (($value = $this->getDOMElementAttributeAs($element, 'view', 'string')) !== null) {
-            $viewsArray = explode("\x20", $value);
+            $viewsArray = preg_split('/\s+/', trim($value));
             $viewsCollection = new ViewCollection();
-            $ref = View::asArray();
-
             foreach ($viewsArray as $viewString) {
-                $key = strtoupper(str_replace("\xf2", "\x20", $viewString));
-                if (array_key_exists($key, $ref)) {
-                    $viewsCollection[] = $ref[$key];
+                $normalizedView = preg_replace('/[_\-\s]+/', '', trim($viewString));
+
+                $viewConstant = View::getConstantByName($normalizedView);
+                if ($viewConstant !== false) {
+                    $viewsCollection[] = $viewConstant;
                 }
             }
 
