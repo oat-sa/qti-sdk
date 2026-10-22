@@ -59,7 +59,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * An ordered list of choices for filling the gaps. There may be
      * fewer choices than gaps if required.
      *
-     * @var GapImgCollection
+     * @var GapChoiceCollection
      * @qtism-bean-property
      */
     private $gapImgs;
@@ -80,7 +80,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      *
      * @param string $responseIdentifier The identifier of the response associated with the interaction.
      * @param ObjectElement $object An image as an ObjectElement object.
-     * @param GapImgCollection $gapImgs A collection of GapImg objects.
+     * @param GapChoiceCollection $gapImgs A collection of GapChoice objects.
      * @param AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -88,7 +88,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException
      */
-    public function __construct($responseIdentifier, ObjectElement $object, GapImgCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, GapChoiceCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setGapImgs($gapImgs);
@@ -98,15 +98,15 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     /**
      * Set the list of choices for filling the gaps.
      *
-     * @param GapImgCollection $gapImgs A collection of GapImg objects.
+     * @param GapChoiceCollection $gapImgs A collection of GapChoice objects.
      * @throws InvalidArgumentException If $gapImgs is empty.
      */
-    public function setGapImgs(GapImgCollection $gapImgs): void
+    public function setGapImgs(GapChoiceCollection $gapImgs): void
     {
         if (count($gapImgs) > 0) {
             $this->gapImgs = $gapImgs;
         } else {
-            $msg = 'A GraphicGapMatch interaction must composed of at least 1 GapImg object, none given.';
+            $msg = 'A GraphicGapMatch interaction must composed of at least 1 GapChoice object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -114,9 +114,9 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     /**
      * Get the list of choices for filling the gaps.
      *
-     * @return GapImgCollection A collection of GapImg objects.
+     * @return GapChoiceCollection A collection of GapChoice objects.
      */
-    public function getGapImgs(): GapImgCollection
+    public function getGapImgs(): GapChoiceCollection
     {
         return $this->gapImgs;
     }

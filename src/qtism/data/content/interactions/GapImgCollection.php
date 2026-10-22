@@ -24,12 +24,11 @@
 namespace qtism\data\content\interactions;
 
 use InvalidArgumentException;
-use qtism\data\QtiComponentCollection;
 
 /**
  * A specialized AbstractCollection aiming at storing GapImg objects only.
  */
-class GapImgCollection extends QtiComponentCollection
+class GapImgCollection extends GapChoiceCollection
 {
     /**
      * Check if $value is an instanceof GapImg.
