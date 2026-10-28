@@ -659,7 +659,10 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                     if ($this->readBoolean()) {
                         $variable->applyDefaultValue();
                     }
-                } elseif($variable->getValue() === $variable->getDefaultValue()) {
+                } elseif (
+                    $variable->getValue() === $variable->getDefaultValue()
+                    || $variable->getValue()?->equals($variable->getDefaultValue())
+                ) {
                     $variable->applyDefaultValue();
                 }
                 $session->setVariable($variable);
