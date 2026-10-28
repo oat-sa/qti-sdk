@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2013-2020 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ * Copyright (c) 2013-2026 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  * @author Jérôme Bogaerts <jerome@taotesting.com>
  * @license GPLv2
@@ -178,7 +178,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                     $variable->$setterToCall(Utils::valueToRuntime($this->$toCall(), $baseType));
                 } else {
                     // Deal with multiple values.
-                    $values = ($cardinality === Cardinality::MULTIPLE) ? new MultipleContainer($baseType) : new OrderedContainer($baseType);
+                    $values = $cardinality === Cardinality::MULTIPLE
+                        ? new MultipleContainer($baseType)
+                        : new OrderedContainer($baseType);
                     for ($i = 0; $i < $count; $i++) {
                         $isNull = $this->readBoolean();
                         $values[] = ($isNull === true) ? null : Utils::valueToRuntime($this->$toCall(), $baseType);
@@ -563,7 +565,10 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                 $this->writeBoolean(false);
                 $this->writeString($intOrIdentifier);
             } else {
-                $msg = "The intOrIdentifier value to be written must be an integer or a string, '" . gettype($intOrIdentifier) . "' given.";
+                $msg = sprintf(
+                    'The intOrIdentifier value to be written must be an integer or a string, \'%s\' given.',
+                    gettype($intOrIdentifier)
+                );
                 throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::INTORIDENTIFIER);
             }
         } catch (BinaryStreamAccessException $e) {
@@ -576,7 +581,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
      * Read an AssessmentItemSession from the current binary stream.
      *
      * @param AbstractSessionManager $manager
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef', 'outcomeDeclaration' and 'responseDeclaration' QTI components will be pulled out.
+     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where 'assessmentItemRef',
+     *                                     'outcomeDeclaration' and 'responseDeclaration' QTI components
+     *                                     will be pulled out.
      * @param QtiBinaryVersion $version
      * @return AssessmentItemSession
      * @throws QtiBinaryStreamAccessException
@@ -648,6 +655,9 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
 
                 // If we are here, we have our variable.
                 $this->readVariableValue($variable);
+                if ($version->storesVariableDefaultValueInitializationFlag() && $this->readBoolean()) {
+                    $variable->applyDefaultValue();
+                }
                 $session->setVariable($variable);
             }
 
@@ -664,7 +674,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write an AssessmetnItemSession from the current binary stream.
      *
-     * @param AssessmentTestSeeker $seeker The AssessmentTestSeeker object from where the position of components will be pulled out.
+     * @param AssessmentTestSeeker $seeker The AssessmentTestSeeker object from where the position of components
+     *                                     will be pulled out.
      * @param AssessmentItemSession $session An AssessmentItemSession object.
      * @throws QtiBinaryStreamAccessException
      */
@@ -713,9 +724,15 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                         $this->writeBoolean($isOutcome);
                         $this->writeShort($seeker->seekPosition($variableDeclaration));
                         $this->writeVariableValue($var);
+                        $this->writeBoolean($var->isInitializedFromDefaultValue());
                     } catch (OutOfBoundsException $e) {
                         $msg = 'No variable found in the assessmentTest tree structure.';
-                        throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::ITEM_SESSION, $e);
+                        throw new QtiBinaryStreamAccessException(
+                            $msg,
+                            $this,
+                            QtiBinaryStreamAccessException::ITEM_SESSION,
+                            $e
+                        );
                     }
                 }
             }
@@ -731,7 +748,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read a route item from the current binary stream.
      *
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object where components will be pulled out by position.
+     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object where components
+     *                                     will be pulled out by position.
      * @param QtiBinaryVersion $version
      *
      * @return RouteItem
@@ -794,7 +812,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Write a route item in the current binary stream.
      *
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object in order to know tree position for involved QTI Components.
+     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object in order to know tree position
+     *                                     for involved QTI Components.
      * @param RouteItem $routeItem A RouteItem object.
      * @throws QtiBinaryStreamAccessException
      */
@@ -837,7 +856,8 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
     /**
      * Read a PendingResponse object from the current binary stream.
      *
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object in order to know tree position for involved QTI Components.
+     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object in order to know tree position
+     *                                     for involved QTI Components.
      * @return PendingResponses A PendingResponses object.
      * @throws QtiBinaryStreamAccessException
      */
@@ -866,17 +886,22 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             return new PendingResponses($state, $itemRef, $occurrence);
         } catch (BinaryStreamAccessException $e) {
             $msg = 'An error occurred while reading some pending responses.';
-            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
+            throw new QtiBinaryStreamAccessException(
+                $msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e
+            );
         } catch (OutOfBoundsException $e) {
             $msg = 'A QTI component was not found in the assessmentTest tree structure.';
-            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
+            throw new QtiBinaryStreamAccessException(
+                $msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e
+            );
         }
     }
 
     /**
      * Write a PendingResponses object in the current binary stream.
      *
-     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where positions in the assessmentTest tree will be pulled out.
+     * @param AssessmentTestSeeker $seeker An AssessmentTestSeeker object from where positions
+     *                                     in the assessmentTest tree will be pulled out.
      * @param PendingResponses $pendingResponses The read PendingResponses object.
      * @throws QtiBinaryStreamAccessException
      */
@@ -899,7 +924,11 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
                     $this->writeVariableValue($responseVariable);
                 } else {
                     $msg = "No response variable with identifier '${respId}' found in related assessmentItemRef.";
-                    throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES);
+                    throw new QtiBinaryStreamAccessException(
+                        $msg,
+                        $this,
+                        QtiBinaryStreamAccessException::PENDING_RESPONSES
+                    );
                 }
             }
 
@@ -910,10 +939,14 @@ class QtiBinaryStreamAccess extends BinaryStreamAccess
             $this->writeTinyInt($occurrence);
         } catch (BinaryStreamAccessException $e) {
             $msg = 'An error occurred while reading some pending responses.';
-            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
+            throw new QtiBinaryStreamAccessException(
+                $msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e
+            );
         } catch (OutOfBoundsException $e) {
             $msg = 'A QTI component position could not be found in the assessmentTest tree structure.';
-            throw new QtiBinaryStreamAccessException($msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e);
+            throw new QtiBinaryStreamAccessException(
+                $msg, $this, QtiBinaryStreamAccessException::PENDING_RESPONSES, $e
+            );
         }
     }
 

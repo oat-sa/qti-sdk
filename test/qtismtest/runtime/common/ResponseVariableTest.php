@@ -59,8 +59,10 @@ class ResponseVariableTest extends QtiSmTestCase
         $this::assertTrue($responseVariable->isNull());
 
         $defaultValue = $responseVariable->getDefaultValue();
-        $this::assertInstanceOf(OrderedContainer::class, $defaultValue);
-        $this::assertCount(3, $defaultValue);
+        $this::assertEquals(
+            $defaultValue,
+            new OrderedContainer(BaseType::PAIR, [new QtiPair('A', 'B'), new QtiPair('C', 'D'), new QtiPair('E', 'F')])
+        );
 
         $mapping = $responseVariable->getMapping();
         $this::assertInstanceOf(Mapping::class, $mapping);
@@ -95,7 +97,12 @@ class ResponseVariableTest extends QtiSmTestCase
         $responseVariable->applyDefaultValue();
         $this::assertInstanceOf(OrderedContainer::class, $responseVariable->getValue());
         $this::assertCount(3, $responseVariable->getValue());
-        $this::assertTrue($responseVariable->getValue()->equals(new OrderedContainer(BaseType::PAIR, [new QtiPair('A', 'B'), new QtiPair('C', 'D'), new QtiPair('E', 'F')])));
+        $this::assertTrue($responseVariable->getValue()->equals($defaultValue));
+        $this::assertTrue($responseVariable->isInitializedFromDefaultValue());
+
+        // If I set value once more...
+        $responseVariable->setValue($defaultValue);
+        $this::assertFalse($responseVariable->isInitializedFromDefaultValue());
     }
 
     public function testIsCorrectWithNullCorrectResponse()
