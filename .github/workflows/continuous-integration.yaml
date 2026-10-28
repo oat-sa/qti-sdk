@@ -6,16 +6,23 @@ on:
   pull_request:
     branches: [ legacy ]
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
 
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        operating-system: [ ubuntu-latest ]
-        php-versions: [ '8.1', '8.2', '8.3' ]
+        php-version: [ '8.1', '8.2', '8.3', '8.4' ]
+        coverage: [ false ]
+        include:
+          - php-version: '8.5'
+            coverage: true
 
     steps:
       - uses: actions/checkout@v3
@@ -23,10 +30,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
-
-      - name: Check PHP Version
-        run: php -v
+          php-version: ${{ matrix.php-version }}
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
@@ -47,4 +51,7 @@ jobs:
         run: php -dxdebug.mode=coverage vendor/bin/phpunit --coverage-clover coverage.xml
 
       - name: Push coverage report
-        run: bash <(curl -s https://codecov.io/bash)
+        if: ${{ matrix.coverage }}
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
