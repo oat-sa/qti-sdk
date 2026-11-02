@@ -27,6 +27,7 @@ use DOMCharacterData;
 use DOMElement;
 use InvalidArgumentException;
 use qtism\common\utils\Version;
+use qtism\data\content\Math;
 use qtism\data\content\TextOrVariableCollection;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
@@ -59,6 +60,15 @@ class InlineChoiceMarshaller extends ContentMarshaller
             if (Version::compare($version, '2.1.0', '<') === true && $children->exclusivelyContainsComponentsWithClassName('textRun') === false) {
                 $msg = "An 'inlineChoice' element must only contain text. Children elements found.";
                 throw new UnmarshallingException($msg, $element);
+            }
+
+            if (Version::compare($version, '2.2.0', '<') === true) {
+                foreach ($children as $child) {
+                    if ($child instanceof Math) {
+                        $msg = "An 'inlineChoice' element must not contain 'math' elements before QTI 2.2.";
+                        throw new UnmarshallingException($msg, $element);
+                    }
+                }
             }
 
             try {
@@ -97,6 +107,16 @@ class InlineChoiceMarshaller extends ContentMarshaller
     protected function marshallChildrenKnown(QtiComponent $component, array $elements): DOMElement
     {
         $version = $this->getVersion();
+
+        if (Version::compare($version, '2.2.0', '<') === true) {
+            foreach ($component->getContent() as $contentElement) {
+                if ($contentElement instanceof Math) {
+                    $msg = "An 'inlineChoice' element must not contain 'math' elements before QTI 2.2.";
+                    throw new MarshallingException($msg, $component);
+                }
+            }
+        }
+
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
