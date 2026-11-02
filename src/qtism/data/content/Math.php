@@ -32,7 +32,7 @@ use qtism\data\ExternalQtiComponent;
  * primary purpose of MathML is to provide a language for embedding mathematical
  * expressions into other documents, in particular into HTML documents.
  */
-class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, InlineStatic
+class Math extends ExternalQtiComponent implements BlockStatic, FlowStatic, InlineStatic, TextOrVariable
 {
     use FlowTrait;
 
