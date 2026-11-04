@@ -25,7 +25,7 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use qtism\data\content\interactions\AssociableHotspotCollection;
-use qtism\data\content\interactions\GapImgCollection;
+use qtism\data\content\interactions\GapChoiceCollection;
 use qtism\data\content\interactions\GraphicGapMatchInteraction;
 use qtism\data\QtiComponent;
 
@@ -58,10 +58,10 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
                         $associableHotspots[] = $this->getMarshallerFactory()->createMarshaller($associableHotspotElt)->unmarshall($associableHotspotElt);
                     }
 
-                    $gapImgElts = $this->getChildElementsByTagName($element, 'gapImg');
+                    $gapImgElts = $this->getChildElementsByTagName($element, ['gapImg', 'gapText']);
 
                     if (count($gapImgElts) > 0) {
-                        $gapImgs = new GapImgCollection();
+                        $gapImgs = new GapChoiceCollection();
 
                         foreach ($gapImgElts as $gapImgElt) {
                             $gapImgs[] = $this->getMarshallerFactory()->createMarshaller($gapImgElt)->unmarshall($gapImgElt);
@@ -84,7 +84,7 @@ class GraphicGapMatchInteractionMarshaller extends Marshaller
 
                         return $component;
                     } else {
-                        $msg = "A 'graphicGapMatchInteraction' element must contain at least one 'gapImg' element, none given.";
+                        $msg = "A 'graphicGapMatchInteraction' element must contain at least one 'gapImg' or 'gapText' element, none given.";
                         throw new UnmarshallingException($msg, $element);
                     }
                 } else {

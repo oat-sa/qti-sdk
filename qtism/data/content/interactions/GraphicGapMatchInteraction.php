@@ -59,7 +59,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * An ordered list of choices for filling the gaps. There may be
      * fewer choices than gaps if required.
      *
-     * @var GapImgCollection
+     * @var GapChoiceCollection
      * @qtism-bean-property
      */
     private $gapImgs;
@@ -80,7 +80,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      *
      * @param string $responseIdentifier The identifier of the response associated with the interaction.
      * @param ObjectElement $object An image as an ObjectElement object.
-     * @param GapImgCollection $gapImgs A collection of GapImg objects.
+     * @param GapChoiceCollection $gapImgs A collection of GapChoice objects.
      * @param AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot object.
      * @param string $id The id of the bodyElement.
      * @param string $class The class of the bodyElement.
@@ -88,7 +88,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * @param string $label The label of the bodyElement.
      * @throws InvalidArgumentException
      */
-    public function __construct($responseIdentifier, ObjectElement $object, GapImgCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
+    public function __construct($responseIdentifier, ObjectElement $object, GapChoiceCollection $gapImgs, AssociableHotspotCollection $associableHotspots, $id = '', $class = '', $lang = '', $label = '')
     {
         parent::__construct($responseIdentifier, $object, $id, $class, $lang, $label);
         $this->setGapImgs($gapImgs);
@@ -98,15 +98,15 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     /**
      * Set the list of choices for filling the gaps.
      *
-     * @param GapImgCollection $gapImgs A collection of GapImg objects.
+     * @param GapChoiceCollection $gapImgs A collection of GapChoice objects.
      * @throws InvalidArgumentException If $gapImgs is empty.
      */
-    public function setGapImgs(GapImgCollection $gapImgs)
+    public function setGapImgs(GapChoiceCollection $gapImgs): void
     {
         if (count($gapImgs) > 0) {
             $this->gapImgs = $gapImgs;
         } else {
-            $msg = 'A GraphicGapMatch interaction must composed of at least 1 GapImg object, none given.';
+            $msg = 'A GraphicGapMatch interaction must composed of at least 1 GapChoice object, none given.';
             throw new InvalidArgumentException($msg);
         }
     }
@@ -114,9 +114,9 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     /**
      * Get the list of choices for filling the gaps.
      *
-     * @return GapImgCollection A collection of GapImg objects.
+     * @return GapChoiceCollection A collection of GapChoice objects.
      */
-    public function getGapImgs()
+    public function getGapImgs(): GapChoiceCollection
     {
         return $this->gapImgs;
     }
@@ -127,7 +127,7 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      * @param AssociableHotspotCollection $associableHotspots A collection of AssociableHotspot objects.
      * @throws InvalidArgumentException If $associableHotspots is empty.
      */
-    public function setAssociableHotspots(AssociableHotspotCollection $associableHotspots)
+    public function setAssociableHotspots(AssociableHotspotCollection $associableHotspots): void
     {
         if (count($associableHotspots) > 0) {
             $this->associableHotspots = $associableHotspots;
@@ -142,25 +142,14 @@ class GraphicGapMatchInteraction extends GraphicInteraction
      *
      * @return AssociableHotspotCollection A collection of AssociableHotspot objects.
      */
-    public function getAssociableHotspots()
+    public function getAssociableHotspots(): AssociableHotspotCollection
     {
         return $this->associableHotspots;
     }
 
     /**
-     * @return QtiComponentCollection
+     * @return ResponseValidityConstraint|null
      */
-    public function getComponents()
-    {
-        return new QtiComponentCollection(
-            array_merge(
-                [$this->getObject()],
-                $this->getGapImgs()->getArrayCopy(),
-                $this->getAssociableHotspots()->getArrayCopy()
-            )
-        );
-    }
-
     public function getResponseValidityConstraint(): ?ResponseValidityConstraint
     {
         $responseValidityConstraint = new ResponseValidityConstraint(
@@ -183,9 +172,29 @@ class GraphicGapMatchInteraction extends GraphicInteraction
     }
 
     /**
+     * @return QtiComponentCollection
+     */
+    public function getComponents(): QtiComponentCollection
+    {
+        $prompt = $this->getPrompt();
+        $components = $prompt
+            ? [$prompt]
+            : [];
+
+        return new QtiComponentCollection(
+            array_merge(
+                $components,
+                [$this->getObject()],
+                $this->getGapImgs()->getArrayCopy(),
+                $this->getAssociableHotspots()->getArrayCopy()
+            )
+        );
+    }
+
+    /**
      * @return string
      */
-    public function getQtiClassName()
+    public function getQtiClassName(): string
     {
         return 'graphicGapMatchInteraction';
     }
