@@ -17,6 +17,7 @@ use qtism\data\content\TextRun;
 use qtism\data\content\xhtml\ObjectElement;
 use qtismtest\QtiSmTestCase;
 use qtism\data\storage\xml\marshalling\UnmarshallingException;
+use qtism\data\state\AssociationValidityConstraint;
 
 /**
  * Class GraphicGapMatchInteractionMarshallerTest
@@ -58,6 +59,94 @@ class GraphicGapMatchInteractionMarshallerTest extends QtiSmTestCase
             '<graphicGapMatchInteraction id="my-gaps" responseIdentifier="RESPONSE" xml:base="/home/jerome"><prompt>Prompt...</prompt><object data="myimg.png" type="image/png"/><gapImg identifier="gapImg1" matchMax="1"><object data="img1.png" type="image/png"/></gapImg><gapText identifier="gapText1" matchMax="1">Gap Text</gapText><gapImg identifier="gapImg2" matchMax="1"><object data="img2.png" type="image/png"/></gapImg><gapImg identifier="gapImg3" matchMax="1"><object data="img3.png" type="image/png"/></gapImg><associableHotspot identifier="choice1" shape="circle" coords="0,0,15" matchMax="1"/><associableHotspot identifier="choice2" shape="circle" coords="2,2,15" matchMax="1"/><associableHotspot identifier="choice3" shape="circle" coords="4,4,15" matchMax="1"/></graphicGapMatchInteraction>',
             $dom->saveXML($element)
         );
+    }
+
+    public function testGetResponseValidityConstraintIncludesGapTextAndGapImg(): void
+    {
+        $object = new ObjectElement('myimg.png', 'image/png');
+
+        $img = new ObjectElement('img1.png', 'image/png');
+        $gapImg = new GapImg('gapImg1', 2, $img);
+
+        $gapText = new GapText('gapText1', 1);
+        $gapText->setMatchMin(1);
+
+        $gapChoices = new GapChoiceCollection([$gapImg, $gapText]);
+
+        $choice = new AssociableHotspot('choice1', 1, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, [0, 0, 15]));
+        $interaction = new GraphicGapMatchInteraction(
+            'RESPONSE',
+            $object,
+            $gapChoices,
+            new AssociableHotspotCollection([$choice])
+        );
+
+        $constraint = $interaction->getResponseValidityConstraint();
+        $this->assertNotNull($constraint);
+        $this->assertSame('RESPONSE', $constraint->getResponseIdentifier());
+
+        $constraintsById = [];
+        foreach ($constraint->getAssociationValidityConstraints()->getArrayCopy() as $associationConstraint) {
+            $this->assertInstanceOf(AssociationValidityConstraint::class, $associationConstraint);
+            $constraintsById[$associationConstraint->getIdentifier()] = $associationConstraint;
+        }
+
+        $this->assertCount(2, $constraintsById);
+        $this->assertSame(0, $constraintsById['gapImg1']->getMinConstraint());
+        $this->assertSame(2, $constraintsById['gapImg1']->getMaxConstraint());
+        $this->assertSame(1, $constraintsById['gapText1']->getMinConstraint());
+        $this->assertSame(1, $constraintsById['gapText1']->getMaxConstraint());
+    }
+
+    public function testGetComponentsIncludesPromptObjectGapChoicesAndHotspots(): void
+    {
+        $prompt = new Prompt();
+        $prompt->setContent(new FlowStaticCollection([new TextRun('Prompt...')]));
+
+        $object = new ObjectElement('myimg.png', 'image/png');
+
+        $img = new ObjectElement('img1.png', 'image/png');
+        $gapImg = new GapImg('gapImg1', 1, $img);
+        $gapText = new GapText('gapText1', 1);
+
+        $gapChoices = new GapChoiceCollection([$gapImg, $gapText]);
+
+        $choice = new AssociableHotspot('choice1', 1, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, [0, 0, 15]));
+        $interaction = new GraphicGapMatchInteraction(
+            'RESPONSE',
+            $object,
+            $gapChoices,
+            new AssociableHotspotCollection([$choice])
+        );
+        $interaction->setPrompt($prompt);
+
+        $components = $interaction->getComponents()->getArrayCopy();
+        $this->assertSame($prompt, $components[0]);
+        $this->assertSame($object, $components[1]);
+        $this->assertSame($gapImg, $components[2]);
+        $this->assertSame($gapText, $components[3]);
+        $this->assertSame($choice, $components[4]);
+    }
+
+    public function testGetComponentsWithoutPrompt(): void
+    {
+        $object = new ObjectElement('myimg.png', 'image/png');
+        $img = new ObjectElement('img1.png', 'image/png');
+        $gapImg = new GapImg('gapImg1', 1, $img);
+        $gapChoices = new GapChoiceCollection([$gapImg]);
+        $choice = new AssociableHotspot('choice1', 1, QtiShape::CIRCLE, new QtiCoords(QtiShape::CIRCLE, [0, 0, 15]));
+
+        $interaction = new GraphicGapMatchInteraction(
+            'RESPONSE',
+            $object,
+            $gapChoices,
+            new AssociableHotspotCollection([$choice])
+        );
+
+        $components = $interaction->getComponents()->getArrayCopy();
+        $this->assertSame($object, $components[0]);
+        $this->assertSame($gapImg, $components[1]);
+        $this->assertSame($choice, $components[2]);
     }
 
     public function testUnmarshall(): void
