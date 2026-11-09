@@ -25,6 +25,8 @@ namespace qtism\data\storage\xml\marshalling;
 
 use DOMElement;
 use InvalidArgumentException;
+use qtism\common\utils\Version;
+use qtism\data\content\Math;
 use qtism\data\content\TextOrVariableCollection;
 use qtism\data\QtiComponent;
 use qtism\data\QtiComponentCollection;
@@ -51,6 +53,15 @@ class InlineChoiceMarshaller extends ContentMarshaller
             } catch (InvalidArgumentException $e) {
                 $msg = "'${identifier}' is not a valid identifier for an 'inlineChoice' element.";
                 throw new UnmarshallingException($msg, $element, $e);
+            }
+
+            if (Version::compare($this->getVersion(), '2.2.0', '<') === true) {
+                foreach ($children as $child) {
+                    if ($child instanceof Math) {
+                        $msg = "An 'inlineChoice' element must not contain 'math' elements before QTI 2.2.";
+                        throw new UnmarshallingException($msg, $element);
+                    }
+                }
             }
 
             try {
@@ -88,6 +99,15 @@ class InlineChoiceMarshaller extends ContentMarshaller
      */
     protected function marshallChildrenKnown(QtiComponent $component, array $elements)
     {
+        if (Version::compare($this->getVersion(), '2.2.0', '<') === true) {
+            foreach ($component->getContent() as $contentElement) {
+                if ($contentElement instanceof Math) {
+                    $msg = "An 'inlineChoice' element must not contain 'math' elements before QTI 2.2.";
+                    throw new MarshallingException($msg, $component);
+                }
+            }
+        }
+
         $element = $this->createElement($component);
         $this->fillElement($element, $component);
         $this->setDOMElementAttribute($element, 'identifier', $component->getIdentifier());
